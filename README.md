@@ -14,10 +14,20 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 - [UnrealEngine](https://github.com/kbfngg/uefn/blob/main/modules/UnrealEngine/UnrealEngine.digest.verse)
 - [Fortnite](https://github.com/kbfngg/uefn/blob/main/modules/Fortnite/Fortnite.digest.verse)
 
+## Verse API Versions:
+
+### Latest:
+
+- [`24.10`](https://github.com/kbfngg/uefn/tree/version_2/modules)
+
+### Past:
+
+- [`24.01`](https://github.com/kbfngg/uefn/tree/version_1/modules)
+
 
 ## Verse API Changes:
 
-- [`v24.01` - `v24.10`](https://github.com/kbfngg/uefn/commit/38b55ef332109f55d9cc50c463f267c167a4a311)
+- [`24.01` - `24.10`](https://github.com/kbfngg/uefn/commit/38b55ef332109f55d9cc50c463f267c167a4a311)
 
 ## Miscs
 
