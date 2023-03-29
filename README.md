@@ -5,10 +5,10 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 ## Guidelines:
 
-- [Code Style](https://github.com/kbfngg/uefn/blob/main/guidelines/code_style.md)
-- [API Design](https://github.com/kbfngg/uefn/blob/main/guidelines/api_design.md)
+- [Code Style](https://github.com/kbfngg/uefn/blob/main/guidelines/code_style.md) (tbd)
+- [API Design](https://github.com/kbfngg/uefn/blob/main/guidelines/api_design.md) (tbd)
 
-## Verse Module APIs:
+## Latest Verse Module APIs - `24.10`:
 
 - [Verse](https://github.com/kbfngg/uefn/blob/main/modules/Verse/Verse.digest.verse)
 - [UnrealEngine](https://github.com/kbfngg/uefn/blob/main/modules/UnrealEngine/UnrealEngine.digest.verse)
@@ -16,12 +16,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 ## Verse API Versions:
 
-### Latest:
-
 - [`24.10`](https://github.com/kbfngg/uefn/tree/version_2/modules)
-
-### Past:
-
 - [`24.01`](https://github.com/kbfngg/uefn/tree/version_1/modules)
 
 
