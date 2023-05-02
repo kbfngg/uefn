@@ -1,0 +1,52 @@
+using {/Verse.org/Restricted}
+# Module import path: /Verse.org/Assets
+Assets<public> := module:
+    # Create an asset reference to the given internal asset path
+    MakeAsset<native><epic_internal>(AssetType:subtype(asset), AssetPath:[]char)<converges>:AssetType
+
+    asset<native><epic_internal> := class<computes><epic_internal>:
+        SyncLoad<native><epic_internal>():logic
+
+        Async_Load<native><epic_internal>():?sticky_event(void)
+
+        GetAsyncLoadEvent<native><epic_internal>():?sticky_event(void)
+
+        GetAssetType<native><epic_internal>()<transacts><decides>:type
+
+    client_asset<native><epic_internal> := class<abstract><computes><epic_internal>(asset):
+
+
+    animation<native><epic_internal> := class<computes><final><epic_internal>(asset):
+
+
+    animation_instance<native><epic_internal> := class<computes><final><epic_internal>(asset):
+
+
+    animation_blueprint<native><epic_internal> := class<computes><final><epic_internal>(asset):
+
+
+    material<native><epic_internal> := class<computes><final><epic_internal>(asset):
+
+
+    particle_system<native><epic_internal> := class<computes><final><epic_internal>(client_asset):
+
+
+    skeletal_mesh<native><epic_internal> := class<computes><final><epic_internal>(asset):
+
+
+    static_mesh<native><epic_internal> := class<computes><final><epic_internal>(asset):
+
+
+    sound<native><epic_internal> := class<computes><final><epic_internal>(client_asset):
+
+
+    font<native><epic_internal> := class<computes><final><epic_internal>(client_asset):
+
+
+    level<native><epic_internal> := class<computes><final><epic_internal>(asset):
+
+
+    texture<native><epic_internal> := class<computes><epic_internal>(asset):
+
+
+    texture_2d<native><epic_internal> := class<computes><final><epic_internal>(texture):
