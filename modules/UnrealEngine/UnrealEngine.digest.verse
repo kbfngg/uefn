@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-24.20-CL-25156858
+# Generated from build: ++Fortnite+Release-24.30-CL-25210886
 #################################################
 
 Temporary<public> := module:
@@ -558,6 +558,9 @@ Temporary<public> := module:
         # Makes a `vector2` by dividing the components of `Left` by `Right`.
         operator'/'<public>(Left:vector2, Right:float)<computes>:vector2 = external {}
 
+        # Makes a `vector2` by component-wise division of `Left` by `Right`.
+        operator'/'<public>(Left:vector2, Right:vector2)<computes>:vector2 = external {}
+
         # Makes a `vector2` by converting the components of `V` to `float`s.
         ToVector2<public>(V:vector2i)<transacts>:vector2 = external {}
 
@@ -684,6 +687,9 @@ Temporary<public> := module:
 
         # Makes a `vector3` by dividing the components of `Left` by `Right`.
         operator'/'<public>(Left:vector3, Right:float)<computes>:vector3 = external {}
+
+        # Makes a `vector3` by component-wise division of `Left` by `Right`.
+        operator'/'<public>(Left:vector3, Right:vector3)<computes>:vector3 = external {}
 
         # Returns `V` if all components are finite.
         # Fails if any of the components are not finite.
