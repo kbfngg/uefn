@@ -11,7 +11,17 @@ Vehicles<public> := module:
 
     # Main API implemented by Fortnite vehicles.
     fort_vehicle<native><public> := interface<unique><epic_internal>(positional, healthful, damageable):
+        # Succeeds if this `fort_vehicle` is standing on ground.
+        IsOnGround<public>()<transacts><decides>:void
 
+        # Succeeds if this `fort_vehicle` is standing in air.
+        IsInAir<public>()<transacts><decides>:void
+
+        # Succeeds if this `fort_vehicle` is standing in water.
+        IsInWater<public>()<transacts><decides>:void
+
+        # Returns an array with all the passengers of the vehicle.
+        GetPassengers<public>():[]fort_character
 
 # Module import path: /Fortnite.com/Teams
 Teams<public> := module:
@@ -151,10 +161,10 @@ Game<public> := module:
         # Use `Damage(:damage_args):void` when damage is being applied from a known instigator and source.
         Damage<public>(Amount:float):void
 
-        # Damage the `damagable` object by `Args.Amount`. Setting `Amount` to less than 0 will cause no damage.
+        # Damage the `damageable` object by `Args.Amount`. Setting `Amount` to less than 0 will cause no damage.
         Damage<public>(Args:damage_args):void
 
-        # Signaled when damage is applied to the `damagable` object.
+        # Signaled when damage is applied to the `damageable` object.
         DamagedEvent<public>():listenable(damage_result)
 
     # Implemented by Fortnite objects that can be healed.
@@ -260,8 +270,11 @@ Characters<public> := module:
         # Signaled when this `fort_character` is eliminated from the match.
         EliminatedEvent<public>():listenable(elimination_result)
 
-        # Returns the rotation defining where this `fort_character` is looking/aiming.
+        # Returns the rotation where this `fort_character` is looking or aiming at.
         GetViewRotation<public>()<transacts>:rotation
+
+        # Returns the location where this `fort_character` is looking or aiming from.
+        GetViewLocation<public>()<transacts>:vector3
 
         # Signaled when this `fort_character` jumps. Returns a listenable with a payload of this `fort_character`.
         JumpedEvent<public>():listenable(fort_character)
@@ -284,6 +297,27 @@ Characters<public> := module:
         # Succeeds if this `fort_character` is in the 'Down But Not Out' state. In this state the character is down but
         # can still be revived by teammates for a period of time.
         IsDownButNotOut<public>()<transacts><decides>:void
+
+        # Succeeds if this `fort_character` is crouching.
+        IsCrouching<public>()<transacts><decides>:void
+
+        # Succeeds if this `fort_character` is standing on the ground.
+        IsOnGround<public>()<transacts><decides>:void
+
+        # Succeeds if this `fort_character` is standing in the air.
+        IsInAir<public>()<transacts><decides>:void
+
+        # Succeeds if this `fort_character` is inside water volume.
+        IsInWater<public>()<transacts><decides>:void
+
+        # Succeeds if this `fort_character` is in falling locomotion state.
+        IsFalling<public>()<transacts><decides>:void
+
+        # Succeeds if this `fort_character` is in gliding locomotion state.
+        IsGliding<public>()<transacts><decides>:void
+
+        # Succeeds if this `fort_character` is in flying locomotion state.
+        IsFlying<public>()<transacts><decides>:void
 
         # Puts this `fort_character` into stasis, preventing certain types of movement specificed by `Args`.
         PutInStasis<public>(Args:stasis_args)<transacts>:void

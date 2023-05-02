@@ -14,9 +14,15 @@ guard_spawner_device<public> := class<concrete><final>(creative_device_base):
     # Resets the spawn count allowing spawning of a new batch of guards.
     Reset<public>():void = external {}
 
+    # Tries to spawn a guard.
+    Spawn<public>():void = external {}
+
     # Tries to spawn a guard. If *Auto Hire When Spawned* is set to *Triggering Player* the guard will be
     # hired by `Instigator`.
     Spawn<public>(Instigator:agent):void = external {}
+
+    # Despawns guards.
+    Despawn<public>():void = external {}
 
     # Despawns guards. `Instigator` will be considered as the eliminator of those guards.
     Despawn<public>(Instigator:agent):void = external {}
@@ -30,7 +36,7 @@ guard_spawner_device<public> := class<concrete><final>(creative_device_base):
     # Dismisses all hired guards that were recruited by `Instigator`.
     DismissAgentHiredGuards<public>(Instigator:agent):void = external {}
 
-    # Forces guard to attack `Target`, bypassing perception checks.
+    # Forces guards to attack `Target`, bypassing perception checks.
     ForceAttackTarget<public>(Target:agent):void = external {}
 
     # Allows guards to be hired.

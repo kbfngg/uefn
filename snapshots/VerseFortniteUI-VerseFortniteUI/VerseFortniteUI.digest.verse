@@ -98,6 +98,9 @@ UI<public> := module:
     creative_hud_identifier_mimimap<public> := class<final>(hud_element_identifier):
 
 
+    creative_hud_identifier_minimap<public> := class<final>(hud_element_identifier):
+
+
     creative_hud_identifier_pickup_stream<public> := class<final>(hud_element_identifier):
 
 
@@ -117,6 +120,9 @@ UI<public> := module:
 
 
     creative_hud_identifier_shileds<public> := class<final>(hud_element_identifier):
+
+
+    creative_hud_identifier_shields<public> := class<final>(hud_element_identifier):
 
 
     creative_hud_identifier_storm_notifications<public> := class<final>(hud_element_identifier):

@@ -1,4 +1,5 @@
 using {/Fortnite.com/Game}
+using {/Verse.org/Simulation}
 using {/Fortnite.com/Playspaces}
 using {/Verse.org/Simulation/Tags}
 using {/UnrealEngine.com/Temporary/SpatialMath}
@@ -59,6 +60,10 @@ Devices<public> := module:
             # Target rotation for the `creative_prop`. Rotations are relative to the starting rotation of
             # the `creative_prop`
             DeltaRotation<native><public>:rotation
+
+            # Target scale for the `creative_prop`. Scale is multiplicative to the starting Scale of
+            # the `creative_prop`
+            DeltaScale<native><public>:vector3 = external {}
 
             # Time in seconds the `creative_prop` should animate between its last frame and this frame.
             Time<native><public>:float
@@ -181,6 +186,14 @@ Devices<public> := module:
     # Returns the `fort_playspace` that `CreativeObject` belongs to.
     (CreativeObject:creative_object_interface).GetPlayspace<native><public>()<transacts>:fort_playspace
 
+    # Payload of `device_event_ai_interaction`.
+    device_ai_interaction_result<native><public> := struct<epic_internal>:
+        # Optional agent that triggered the interaction
+        Source<native><public>:?agent
+
+        # Optional agent targeted by `Source`.
+        Target<native><public>:?agent
+
     creative_object_interface<native><public> := interface<epic_internal>(positional):
 
 
@@ -222,6 +235,9 @@ Devices<public> := module:
         # Teleport the `creative_prop` to the specified `Position` and `Rotation`.
         TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
 
+        # Teleport the `creative_prop` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
+        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
+
         # Destroy the `creative_prop` and remove it from the island.
         Dispose<native><override>():void
 
@@ -231,6 +247,10 @@ Devices<public> := module:
         # Move the `creative_prop` to the specified `Position` and `Rotation` over the specified time. If an animation
         # is currently playing on the `creative_prop` it will be stopped and put into the `AnimationNotSet` state.
         MoveTo<public>(Position:vector3, Rotation:rotation, OverTime:float)<suspends>:move_to_result = external {}
+
+        # Move the `creative_prop` to the specified `Transform` over the specified time. If an animation
+        # is currently playing on the `creative_prop` it will be stopped and put into the `AnimationNotSet` state.
+        MoveTo<public>(Transform:transform, OverTime:float)<suspends>:move_to_result = external {}
 
     # Asset used to spawn `creative_device` instances.
     creative_device_asset<native><public> := class<computes><final><epic_internal>:
@@ -248,3 +268,9 @@ Devices<public> := module:
     #  0: Instance of a `creative_prop`. False if no `creative_prop` could be created. See `spawn_prop_result` for failure cases.
     #  1: Success or failure results.
     SpawnProp<native><public>(Asset:creative_prop_asset, Position:vector3, Rotation:rotation)<transacts>:tuple(?creative_prop, spawn_prop_result)
+
+    # Spawns a `creative_prop` at the specified `Transform`. `Units are in cm.
+    # Returns tuple:
+    #  0: Instance of a `creative_prop`. False if no `creative_prop` could be created. See `spawn_prop_result` for failure cases.
+    #  1: Success or failure results.
+    SpawnProp<native><public>(Asset:creative_prop_asset, Transform:transform)<transacts>:tuple(?creative_prop, spawn_prop_result)

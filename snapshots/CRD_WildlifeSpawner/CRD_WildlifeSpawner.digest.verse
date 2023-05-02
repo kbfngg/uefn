@@ -5,6 +5,10 @@ wildlife_spawner_device<public> := class<concrete><final>(creative_device_base):
     # Sends the `agent` wildlife that was spawned.
     SpawnedEvent<public>:listenable(agent) = external {}
 
+    # Signaled when wildlife is force-spawned and causes the oldest wildlife to be eliminated.
+    # Sends the `agent` wildlife that was spawned.
+    ForceSpawnedEvent<public>:listenable(agent) = external {}
+
     # Enables this device.
     Enable<public>():void = external {}
 
