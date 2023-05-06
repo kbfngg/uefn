@@ -21,7 +21,11 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 - [`24.10`](https://github.com/kbfngg/uefn/tree/version_2/modules)
 - [`24.01`](https://github.com/kbfngg/uefn/tree/version_1/modules)
 
-## Verse API Changes:
+## Verse Snapshot API Changes:
+
+- [`24.20` - `24.30`](https://github.com/kbfngg/uefn/commit/4ff0bd98f21e45ae1e16f8bbdd21ad03699c56e6)
+
+## Verse Module API Changes:
 
 - [`24.20` - `24.30`](https://github.com/kbfngg/uefn/commit/c93a6918a36d61e4e03b306555e4ebe268773823)
 - [`24.10` - `24.20`](https://github.com/kbfngg/uefn/commit/453d84fc6432a1180a3f28546cc3fc23a8625895)
