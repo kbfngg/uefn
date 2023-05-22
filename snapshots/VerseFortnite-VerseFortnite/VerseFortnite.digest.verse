@@ -356,3 +356,6 @@ Characters<public> := module:
 
         # Controls if `fort_character` can still perform emotes while in stasis.
         AllowEmotes<native><public>:logic = external {}
+
+# Module import path: /Fortnite.com/AI
+AI<public> := module:
