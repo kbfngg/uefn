@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-24.30-CL-25347382
+# Generated from build: ++Fortnite+Release-24.40-CL-25521145
 #################################################
 
 using {/Verse.org/Colors}
@@ -1852,9 +1852,6 @@ Devices<public> := module:
     # Used in conjunction with `advanced_storm_controller_device` to customize individual storm phases.
     advanced_storm_beacon_device<public> := class<concrete><final>(creative_device_base):
 
-    # Spawns a lightweight vehicle made for defying gravity with its rocket boosting, jumping, and aerial maneuverability capabilities.
-    vehicle_spawner_octane_device<public> := class<concrete><final>(vehicle_spawner_device):
-
     # Used to spawn an `agent` on an island. Use multiple `player_spawner_device`s to spawn multiple `agent`s.
     player_spawner_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when an `agent` is spawned from this device.
@@ -1906,6 +1903,20 @@ Devices<public> := module:
         # Clears the state of this device.
         Clear<public>():void = external {}
 
+    # Spawns a lightweight vehicle made for defying gravity with its rocket boosting, jumping, and aerial maneuverability capabilities.
+    vehicle_spawner_octane_device<public> := class<concrete><final>(vehicle_spawner_device):
+
+    # Used to select, spawn, and configure a skeletal mesh to play a specific animation.
+    animated_mesh_device<public> := class<concrete><final>(creative_device_base):
+        # Starts or resumes playback of the animation.
+        Play<public>():void = external {}
+
+        # Pauses playback of the animation.
+        Pause<public>():void = external {}
+
+        # Starts or resumes reverse playback of the animation.
+        PlayReverse<public>():void = external {}
+
     # Used to trigger level sequences that allow coordination of cinematic animation, transformation, and audio tracks.
     cinematic_sequence_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when the sequence is stopped.
@@ -1939,17 +1950,6 @@ Devices<public> := module:
         # to anything except *Everyone*.
         TogglePause<public>(Agent:agent):void = external {}
 
-    # Used to select, spawn, and configure a skeletal mesh to play a specific animation.
-    animated_mesh_device<public> := class<concrete><final>(creative_device_base):
-        # Starts or resumes playback of the animation.
-        Play<public>():void = external {}
-
-        # Pauses playback of the animation.
-        Pause<public>():void = external {}
-
-        # Starts or resumes reverse playback of the animation.
-        PlayReverse<public>():void = external {}
-
     # Used to allow players to select their *Class* from a *Class Selector UI*.
     class_selector_ui_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when an `agent` selects a class.
@@ -1972,6 +1972,14 @@ Devices<public> := module:
 
         # Show the *Class Selector UI* to `Agent`.
         Show<public>(Agent:agent):void = external {}
+
+    # Spawns a crowd to cheer you on.
+    crowd_volume_device<public> := class<concrete><final>(creative_device_base):
+        # Enables this device.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        Disable<public>():void = external {}
 
     # Used to set up islands so players will earn Battle Pass XP when they interact with your island. Accolades
     # are achievements or accomplishments that players can complete to earn XP.
@@ -2036,14 +2044,6 @@ Devices<public> := module:
         # Extinguishes this device.
         Extinguish<public>(Agent:agent):void = external {}
 
-    # Spawns a crowd to cheer you on.
-    crowd_volume_device<public> := class<concrete><final>(creative_device_base):
-        # Enables this device.
-        Enable<public>():void = external {}
-
-        # Disables this device.
-        Disable<public>():void = external {}
-
     # Used to spawn guards that can patrol and attack other `agent`s.
     guard_spawner_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when a guard is spawned.
@@ -2093,8 +2093,17 @@ Devices<public> := module:
     # Specialized `vehicle_spawner_device` that allows a helicopter to be configured and spawned.
     vehicle_spawner_helicopter_device<public> := class<concrete><final>(vehicle_spawner_device):
 
-    # Specialized `vehicle_spawner_device` that allows an anti-vehicle turret to be configured and spawned.
-    vehicle_spawner_heavy_turret_device<public> := class<concrete><final>(vehicle_spawner_device):
+    # Used to cause `agent`s to drop or lose items from their inventory. For example, if an `agent` is *Down But Not Out*,
+    # they could drop items from their inventory, and other `agent`s could then pick up those items.
+    item_remover_device<public> := class<concrete><final>(creative_device_base):
+        # Enables this device.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        Disable<public>():void = external {}
+
+        # Remove items from `Agent`s inventory. The items that are removed can be configured using *Affected Items*.
+        Remove<public>(Agent:agent):void = external {}
 
     # Used to configure a single interactive mannequin, that can visualize characters, clothing, and perform emotes.
     character_device<public> := class<concrete>(creative_device_base):
@@ -2116,6 +2125,9 @@ Devices<public> := module:
 
         # Plays an emote on the character created by this device.
         PlayEmote<public>():void = external {}
+
+    # Specialized `vehicle_spawner_device` that allows an anti-vehicle turret to be configured and spawned.
+    vehicle_spawner_heavy_turret_device<public> := class<concrete><final>(vehicle_spawner_device):
 
     # Used to create HUD text boxes that give players information, and allows responses to be customized to player choices.
     popup_dialog_device<public> := class<concrete><final>(creative_device_base):
@@ -2182,9 +2194,6 @@ Devices<public> := module:
     # Specialized `vehicle_spawner_device` that allows a siege cannon to be configured and spawned.
     vehicle_spawner_siege_cannon_device<public> := class<concrete><final>(vehicle_spawner_device):
 
-    # Specialized `vehicle_spawner_device` that allows a UFO to be configured and spawned.
-    vehicle_spawner_ufo_device<public> := class<concrete><final>(vehicle_spawner_device):
-
     # Physics tree that can be chopped down, and damage players, vehicles, creatures, and structures.
     physics_tree_device<public> := class<concrete><final>(physics_object_base_device):
         # Signaled when a tree is spawned.
@@ -2234,6 +2243,9 @@ Devices<public> := module:
         # Destroys the current rolling boulder.
         DestroyRollingBoulder<public>():void = external {}
 
+    # Specialized `vehicle_spawner_device` that allows a UFO to be configured and spawned.
+    vehicle_spawner_ufo_device<public> := class<concrete><final>(vehicle_spawner_device):
+
     # Used to set an `agent`'s spawn point when activated. This can also clear the `agent`'s inventory.
     player_checkpoint_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when this device is first activated by any `agent`.
@@ -2253,18 +2265,6 @@ Devices<public> := module:
         # Registers this checkpoint for `Agent`. This sets the respawn point and can clear `Agent`'s inventory
         # depending on this device's settings. Multiple `agent`s can be registered to this device at one time.
         Register<public>(Agent:agent):void = external {}
-
-    # Used to cause `agent`s to drop or lose items from their inventory. For example, if an `agent` is *Down But Not Out*,
-    # they could drop items from their inventory, and other `agent`s could then pick up those items.
-    item_remover_device<public> := class<concrete><final>(creative_device_base):
-        # Enables this device.
-        Enable<public>():void = external {}
-
-        # Disables this device.
-        Disable<public>():void = external {}
-
-        # Remove items from `Agent`s inventory. The items that are removed can be configured using *Affected Items*.
-        Remove<public>(Agent:agent):void = external {}
 
     # Used to mark an `agent`'s position on the minimap and configure the information shown for marked `agent`s.
     # 
@@ -2372,104 +2372,6 @@ Devices<public> := module:
         # Returns the speed (in meters per second) at which the prop mover will move the prop to its destination.
         GetTargetSpeed<public>()<transacts>:float = external {}
 
-    # Used to trigger in game events based on real world time.
-    real_time_clock_device<public> := class<concrete><final>(creative_device_base):
-        # Signaled when the optional second *Duration* time has been reached.
-        DurationElapsedEvent<public>:listenable(tuple()) = external {}
-
-        # Signaled when the target time is reached.
-        TimeReachedEvent<public>:listenable(tuple()) = external {}
-
-        # Signaled when this device is enabled after the target time has been reached.
-        EnablingAfterTimeReachedEvent<public>:listenable(tuple()) = external {}
-
-        # Signaled when this device is enabled before the target time has been reached.
-        EnablingBeforeTimeReachedEvent<public>:listenable(tuple()) = external {}
-
-        # Enables this device.
-        Enable<public>():void = external {}
-
-        # Disables this device.
-        Disable<public>():void = external {}
-
-    # Used to allow agents to turn other linked devices on/off or other custom state changes.
-    switch_device<public> := class<concrete><final>(creative_device_base):
-        # Signaled when the switch is turned on by the specified `agent`.
-        # Sends the `agent` that turned on the device.
-        TurnedOnEvent<public>:listenable(agent) = external {}
-
-        # Signaled when the switch is turned off by the specified `agent`.
-        # Sends the `agent` that turned off the device.
-        TurnedOffEvent<public>:listenable(agent) = external {}
-
-        # Signaled if the switch is on when the state is checked.
-        IfOnWhenCheckedEvent<public>:listenable(tuple()) = external {}
-
-        # Signaled if the switch is off when the state is checked.
-        IfOffWhenCheckedEvent<public>:listenable(tuple()) = external {}
-
-        # Signaled when the switch state is saved.
-        StateSaveEvent<public>:listenable(tuple()) = external {}
-
-        # Signaled when the switch state changes.
-        StateChangesEvent<public>:listenable(tuple()) = external {}
-
-        # Enables this device.
-        Enable<public>():void = external {}
-
-        # Disables this device.
-        Disable<public>():void = external {}
-
-        # Turns on this device with `Agent` acting as the instigator of the action.
-        TurnOn<public>(Agent:agent):void = external {}
-
-        # Turns off the device with `Agent` acting as the instigator of the action.
-        TurnOff<public>(Agent:agent):void = external {}
-
-        # Toggles between `TurnOn` and `TurnOff` with `Agent` acting as the instigator of the action.
-        ToggleState<public>(Agent:agent):void = external {}
-
-        # Loads the device state with `Agent` acting as the instigator of the action.
-        LoadState<public>(Agent:agent):void = external {}
-
-        # Saves the device state with `Agent` acting as the instigator of the action.
-        SaveState<public>(Agent:agent):void = external {}
-
-        # Checks the device state with `Agent` acting as the instigator of the action.
-        CheckState<public>(Agent:agent):void = external {}
-
-        # Clears persistence data for `Agent`.
-        ClearPersistenceData<public>(Agent:agent):void = external {}
-
-        # Clears persistence data for all `agent`s.
-        ClearAllPersistenceData<public>():void = external {}
-
-        # Returns the current state of this switch: true (on) or false (off). Use this overload  of `GetCurrentState`
-        # when this device has *Store State Per Player* set to *Yes*.
-        GetCurrentState<public>(Agent:agent)<transacts><decides>:void = external {}
-
-        # Returns the current state of this switch: true (on) or false (off). Use this overload  of `GetCurrentState`
-        # when this device has *Store State Per Player* set to *No*.
-        GetCurrentState<public>()<transacts><decides>:void = external {}
-
-        # Query whether this device has a single global on/off state, or has a personalized on/off state for
-        # each individual agent.
-        IsStatePerAgent<public>()<transacts><decides>:void = external {}
-
-        # Sets the *Interaction Time* required to activate this device (in seconds).
-        SetInteractionTime<public>(Time:float):void = external {}
-
-        # Returns the *Interaction Time* required to activate this device (in seconds).
-        GetInteractionTime<public>()<transacts>:float = external {}
-
-        # Sets the *Turn On Text* to be displayed to a user when the switch is currently off, and offers an interaction to
-        # switch it on. Clamped to 150 characters.
-        SetTurnOnInteractionText<public>(Text:message):void = external {}
-
-        # Sets the *Turn Off Text* to be displayed to a user when the switch is currently on, and offers an interaction to
-        # switch it off. Clamped to 150 characters.
-        SetTurnOffInteractionText<public>(Text:message):void = external {}
-
     # Specialized `vehicle_spawner_device` that allows a Whiplash sports car to be configured and spawned.
     vehicle_spawner_sports_car_device<public> := class<concrete><final>(vehicle_spawner_device):
 
@@ -2551,6 +2453,84 @@ Devices<public> := module:
 
     # Specialized `vehicle_spawner_device` that allows a tank to be configured and spawned.
     vehicle_spawner_tank_device<public> := class<concrete><final>(vehicle_spawner_device):
+
+    # Used to trigger in game events based on real world time.
+    real_time_clock_device<public> := class<concrete><final>(creative_device_base):
+        # Signaled when the optional second *Duration* time has been reached.
+        DurationElapsedEvent<public>:listenable(tuple()) = external {}
+
+        # Signaled when the target time is reached.
+        TimeReachedEvent<public>:listenable(tuple()) = external {}
+
+        # Signaled when this device is enabled after the target time has been reached.
+        EnablingAfterTimeReachedEvent<public>:listenable(tuple()) = external {}
+
+        # Signaled when this device is enabled before the target time has been reached.
+        EnablingBeforeTimeReachedEvent<public>:listenable(tuple()) = external {}
+
+        # Enables this device.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        Disable<public>():void = external {}
+
+    # Used to spawn various wildlife that players can herd, hunt, or tame.
+    wildlife_spawner_device<public> := class<concrete><final>(creative_device_base):
+        # Signaled when this device spawns wildlife.
+        # Sends the `agent` wildlife that was spawned.
+        SpawnedEvent<public>:listenable(agent) = external {}
+
+        # Signaled when wildlife is force-spawned and causes the oldest wildlife to be eliminated.
+        # Sends the `agent` wildlife that was spawned.
+        ForceSpawnedEvent<public>:listenable(agent) = external {}
+
+        # Enables this device.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        Disable<public>():void = external {}
+
+        # Resets the count on the *Total Spawn Count* option.
+        Reset<public>():void = external {}
+
+        # Spawns wildlife from this device.
+        Spawn<public>():void = external {}
+
+        # Despawns wildlife. `Agent` is marked as the one who eliminated the wildlife.
+        Despawn<public>(Agent:agent):void = external {}
+
+        # Destroys this device, marking `Agent` as the destroyer of the device.
+        DestroySpawner<public>(Agent:agent):void = external {}
+
+        # Tames wildlife, making them AI partners of `Agent`.
+        Tame<public>(Agent:agent):void = external {}
+
+        # Untames any tamed wildlife that belong to `Agent`.
+        Untame<public>(Agent:agent):void = external {}
+
+        # Untames all wildlife.
+        UntameAll<public>():void = external {}
+
+        # Teleports `Agent` to the nearest wildlife, then `Agent` mounts that wildlife.
+        Ride<public>(Agent:agent):void = external {}
+
+        # Dismounts `Agent` from wildlife.
+        Dismount<public>(Agent:agent):void = external {}
+
+        # Dismounts all `agent`s from wildlife.
+        DismountAll<public>():void = external {}
+
+        # Restores energy to wildlife belonging to `Agent` by *Energy Restore Amount*.
+        RestoreEnergy<public>(Agent:agent):void = external {}
+
+        # Restores energy to wildlife by *Energy Restore Amount*.
+        RestoreEnergyForAll<public>():void = external {}
+
+        # Consumes energy from wildlife belonging to `Agent` by *Energy Consume Amount*.
+        ConsumeEnergy<public>(Agent:agent):void = external {}
+
+        # Consumes energy from wildlife by *Energy Consume Amount*.
+        ConsumeEnergyForAll<public>():void = external {}
 
     # Used to create a zone where players are put into a skydive state. Can customize the amount of force used to
     # push the player, and how fast players are launched into the air. The direction of the push is in relation to
@@ -2652,64 +2632,6 @@ Devices<public> := module:
         # Disables this device.
         Disable<public>():void = external {}
 
-    # Used to spawn various wildlife that players can herd, hunt, or tame.
-    wildlife_spawner_device<public> := class<concrete><final>(creative_device_base):
-        # Signaled when this device spawns wildlife.
-        # Sends the `agent` wildlife that was spawned.
-        SpawnedEvent<public>:listenable(agent) = external {}
-
-        # Signaled when wildlife is force-spawned and causes the oldest wildlife to be eliminated.
-        # Sends the `agent` wildlife that was spawned.
-        ForceSpawnedEvent<public>:listenable(agent) = external {}
-
-        # Enables this device.
-        Enable<public>():void = external {}
-
-        # Disables this device.
-        Disable<public>():void = external {}
-
-        # Resets the count on the *Total Spawn Count* option.
-        Reset<public>():void = external {}
-
-        # Spawns wildlife from this device.
-        Spawn<public>():void = external {}
-
-        # Despawns wildlife. `Agent` is marked as the one who eliminated the wildlife.
-        Despawn<public>(Agent:agent):void = external {}
-
-        # Destroys this device, marking `Agent` as the destroyer of the device.
-        DestroySpawner<public>(Agent:agent):void = external {}
-
-        # Tames wildlife, making them AI partners of `Agent`.
-        Tame<public>(Agent:agent):void = external {}
-
-        # Untames any tamed wildlife that belong to `Agent`.
-        Untame<public>(Agent:agent):void = external {}
-
-        # Untames all wildlife.
-        UntameAll<public>():void = external {}
-
-        # Teleports `Agent` to the nearest wildlife, then `Agent` mounts that wildlife.
-        Ride<public>(Agent:agent):void = external {}
-
-        # Dismounts `Agent` from wildlife.
-        Dismount<public>(Agent:agent):void = external {}
-
-        # Dismounts all `agent`s from wildlife.
-        DismountAll<public>():void = external {}
-
-        # Restores energy to wildlife belonging to `Agent` by *Energy Restore Amount*.
-        RestoreEnergy<public>(Agent:agent):void = external {}
-
-        # Restores energy to wildlife by *Energy Restore Amount*.
-        RestoreEnergyForAll<public>():void = external {}
-
-        # Consumes energy from wildlife belonging to `Agent` by *Energy Consume Amount*.
-        ConsumeEnergy<public>(Agent:agent):void = external {}
-
-        # Consumes energy from wildlife by *Energy Consume Amount*.
-        ConsumeEnergyForAll<public>():void = external {}
-
     # Used to place a crash pad that can bounce players and protect them from fall damage.
     crash_pad_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when an `agent` is launched by this device.
@@ -2747,6 +2669,95 @@ Devices<public> := module:
         # Returns all caught and removed items to the inventory. This only works when *Pool Type* is set to *Device Inventory*.
         Restock<public>():void = external {}
 
+    # Used to configure rules that can end the current round or game.
+    end_game_device<public> := class<concrete><final>(creative_device_base):
+        # Enables this device.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        Disable<public>():void = external {}
+
+        # Ends the round/game. Uses `Agent`'s team to determine if the round/game ends when *Activating Team* is enabled.
+        Activate<public>(Agent:agent):void = external {}
+
+    # Used to allow agents to turn other linked devices on/off or other custom state changes.
+    switch_device<public> := class<concrete><final>(creative_device_base):
+        # Signaled when the switch is turned on by the specified `agent`.
+        # Sends the `agent` that turned on the device.
+        TurnedOnEvent<public>:listenable(agent) = external {}
+
+        # Signaled when the switch is turned off by the specified `agent`.
+        # Sends the `agent` that turned off the device.
+        TurnedOffEvent<public>:listenable(agent) = external {}
+
+        # Signaled if the switch is on when the state is checked.
+        IfOnWhenCheckedEvent<public>:listenable(tuple()) = external {}
+
+        # Signaled if the switch is off when the state is checked.
+        IfOffWhenCheckedEvent<public>:listenable(tuple()) = external {}
+
+        # Signaled when the switch state is saved.
+        StateSaveEvent<public>:listenable(tuple()) = external {}
+
+        # Signaled when the switch state changes.
+        StateChangesEvent<public>:listenable(tuple()) = external {}
+
+        # Enables this device.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        Disable<public>():void = external {}
+
+        # Turns on this device with `Agent` acting as the instigator of the action.
+        TurnOn<public>(Agent:agent):void = external {}
+
+        # Turns off the device with `Agent` acting as the instigator of the action.
+        TurnOff<public>(Agent:agent):void = external {}
+
+        # Toggles between `TurnOn` and `TurnOff` with `Agent` acting as the instigator of the action.
+        ToggleState<public>(Agent:agent):void = external {}
+
+        # Loads the device state with `Agent` acting as the instigator of the action.
+        LoadState<public>(Agent:agent):void = external {}
+
+        # Saves the device state with `Agent` acting as the instigator of the action.
+        SaveState<public>(Agent:agent):void = external {}
+
+        # Checks the device state with `Agent` acting as the instigator of the action.
+        CheckState<public>(Agent:agent):void = external {}
+
+        # Clears persistence data for `Agent`.
+        ClearPersistenceData<public>(Agent:agent):void = external {}
+
+        # Clears persistence data for all `agent`s.
+        ClearAllPersistenceData<public>():void = external {}
+
+        # Returns the current state of this switch: true (on) or false (off). Use this overload  of `GetCurrentState`
+        # when this device has *Store State Per Player* set to *Yes*.
+        GetCurrentState<public>(Agent:agent)<transacts><decides>:void = external {}
+
+        # Returns the current state of this switch: true (on) or false (off). Use this overload  of `GetCurrentState`
+        # when this device has *Store State Per Player* set to *No*.
+        GetCurrentState<public>()<transacts><decides>:void = external {}
+
+        # Query whether this device has a single global on/off state, or has a personalized on/off state for
+        # each individual agent.
+        IsStatePerAgent<public>()<transacts><decides>:void = external {}
+
+        # Sets the *Interaction Time* required to activate this device (in seconds).
+        SetInteractionTime<public>(Time:float):void = external {}
+
+        # Returns the *Interaction Time* required to activate this device (in seconds).
+        GetInteractionTime<public>()<transacts>:float = external {}
+
+        # Sets the *Turn On Text* to be displayed to a user when the switch is currently off, and offers an interaction to
+        # switch it on. Clamped to 150 characters.
+        SetTurnOnInteractionText<public>(Text:message):void = external {}
+
+        # Sets the *Turn Off Text* to be displayed to a user when the switch is currently on, and offers an interaction to
+        # switch it off. Clamped to 150 characters.
+        SetTurnOffInteractionText<public>(Text:message):void = external {}
+
     # Used to show or hide parts of the HUD for players or teams. Use this with other devices such as the
     # `hud_message_device`, `map_indicator_device`, and `billboard_device` to control exactly how much information
     # players can see during a game, as well as how and when they see that information.
@@ -2769,22 +2780,11 @@ Devices<public> := module:
         # Resets the *Affected Team* option to its starting value.
         ResetAffectedTeam<public>():void = external {}
 
-    # Used to configure rules that can end the current round or game.
-    end_game_device<public> := class<concrete><final>(creative_device_base):
-        # Enables this device.
-        Enable<public>():void = external {}
-
-        # Disables this device.
-        Disable<public>():void = external {}
-
-        # Ends the round/game. Uses `Agent`'s team to determine if the round/game ends when *Activating Team* is enabled.
-        Activate<public>(Agent:agent):void = external {}
+    # Used to regenerate an `agent`'s health and/or shields.
+    health_powerup_device<public> := class<concrete><final>(powerup_device):
 
     # Allows players to change their outfit in game!
     changing_booth_device<public> := class<concrete><final>(creative_device_base):
-
-    # Used to regenerate an `agent`'s health and/or shields.
-    health_powerup_device<public> := class<concrete><final>(powerup_device):
 
     # Used with the `race_checkpoint_device` to create more advanced racing modes.
     race_manager_device<public> := class<concrete><final>(creative_device_base):
@@ -2840,6 +2840,9 @@ Devices<public> := module:
         # passed this checkpoint.
         SetAsCurrentCheckpoint<public>(Agent:agent):void = external {}
 
+    # Specialized `vehicle_spawner_device` that allows an armored battle bus to be configured and spawned.
+    vehicle_spawner_armored_battle_bus_device<public> := class<concrete><final>(vehicle_spawner_device):
+
     # Used to create patrolling behavior for guards spawned with the `guard_spawner_device`.
     ai_patrol_path_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when a guard reaches this device.
@@ -2862,9 +2865,6 @@ Devices<public> := module:
 
         # Commands current patrollers to follow the *Next Patrol Path Group* instead of the default *Patrol Path Group*.
         GoToNextPatrolGroup<public>():void = external {}
-
-    # Specialized `vehicle_spawner_device` that allows an armored battle bus to be configured and spawned.
-    vehicle_spawner_armored_battle_bus_device<public> := class<concrete><final>(vehicle_spawner_device):
 
     # Used to configure and play audio from the device location or from registered `agent`s.
     audio_player_device<public> := class<concrete><final>(creative_device_base):
@@ -2956,9 +2956,6 @@ Devices<public> := module:
         # Disables this device.
         Disable<public>():void = external {}
 
-    # Specialized `vehicle_spawner_device` that allows a dirtbike to be configured and spawned.
-    vehicle_spawner_dirtbike_device<public> := class<concrete><final>(vehicle_spawner_device):
-
     # Used to customize (or prevent) the 'down but not out' player state between 'healthy' and 'removed from game'.
     down_but_not_out_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when an `agent` is set to the `down but not out` player state.
@@ -3011,6 +3008,27 @@ Devices<public> := module:
 
         # Activates this device. `Agent` is used as the instigator of the action.
         Activate<public>(Agent:agent):void = external {}
+
+    # Specialized `vehicle_spawner_device` that allows a dirtbike to be configured and spawned.
+    vehicle_spawner_dirtbike_device<public> := class<concrete><final>(vehicle_spawner_device):
+
+    # Used to spawn fireflies that can be collected by `agent`s.
+    firefly_spawner_device<public> := class<concrete><final>(creative_device_base):
+        # Signaled when a firefly is collected.
+        # Sends the `agent` collected the firefly.
+        OnFirefliesCollected<public>:listenable(agent) = external {}
+
+        # Enables this device.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        Disable<public>():void = external {}
+
+        # Spawns new fireflies. The previous fireflies will be destroyed before a new fireflies spawn.
+        Respawn<public>():void = external {}
+
+        # Resets respawn count.
+        ResetRespawnCount<public>():void = external {}
 
     # Allows pickup items to be placed in the world..
     item_placer_device<public> := class<concrete><final>(creative_device_base):
@@ -3095,51 +3113,6 @@ Devices<public> := module:
     # Specialized `vehicle_spawner_device` that allows a Nitro Drifter sedan to be configured and spawned.
     vehicle_spawner_nitro_drifter_sedan_device<public> := class<concrete><final>(vehicle_spawner_device):
 
-    # Used to manipulate the properties of one or more props in a specified area (e.g. Visibility/Destructibility).
-    prop_manipulator_device<public> := class<concrete><final>(creative_device_base):
-        # Signaled when props affected by this device are damaged.
-        # Sends the `agent` that damaged the prop.
-        DamagedEvent<public>:listenable(agent) = external {}
-
-        # Signaled when props affected by this device are destroyed.
-        # Sends the `agent` that destroyed the prop.
-        DestroyedEvent<public>:listenable(agent) = external {}
-
-        # Signaled when prop resource nodes affected by this device are harvested.
-        # Sends the `agent` that harvested resources from the prop.
-        HarvestingEvent<public>:listenable(agent) = external {}
-
-        # Signaled when prop resource nodes affected by this device are completely depleted of energy.
-        # Sends the `agent` that depleted the prop's energy.
-        ResourceDepletionEvent<public>:listenable(agent) = external {}
-
-        # Enables this device.
-        Enable<public>():void = external {}
-
-        # Disables this device.
-        Disable<public>():void = external {}
-
-        # Shows all props affected by this device.
-        ShowProps<public>():void = external {}
-
-        # Hides all props affected by this device.
-        HideProps<public>():void = external {}
-
-        # Empties the resources of all props affected by this device.
-        ExhaustResources<public>():void = external {}
-
-        # Restocks the resources of all props affected by this device.
-        RestockResources<public>():void = external {}
-
-        # Restores health of all props affected by this device.
-        RestoreHealth<public>():void = external {}
-
-        # Sets the *Override Resource* option to *Yes*.
-        SetResourceOverridesActive<public>():void = external {}
-
-        # Sets the *Override Resource* option to *No*.
-        DisableResourceNodeOverrides<public>():void = external {}
-
     # Used to track and react to how many players are in a particular area, and optionally display that information in game.
     player_counter_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when the player count matches *Target Player Count*. The frequency of evaluation
@@ -3198,6 +3171,51 @@ Devices<public> := module:
         # Returns the number of players required for this counter to succeed.
         GetTargetCount<public>()<transacts>:int = external {}
 
+    # Used to manipulate the properties of one or more props in a specified area (e.g. Visibility/Destructibility).
+    prop_manipulator_device<public> := class<concrete><final>(creative_device_base):
+        # Signaled when props affected by this device are damaged.
+        # Sends the `agent` that damaged the prop.
+        DamagedEvent<public>:listenable(agent) = external {}
+
+        # Signaled when props affected by this device are destroyed.
+        # Sends the `agent` that destroyed the prop.
+        DestroyedEvent<public>:listenable(agent) = external {}
+
+        # Signaled when prop resource nodes affected by this device are harvested.
+        # Sends the `agent` that harvested resources from the prop.
+        HarvestingEvent<public>:listenable(agent) = external {}
+
+        # Signaled when prop resource nodes affected by this device are completely depleted of energy.
+        # Sends the `agent` that depleted the prop's energy.
+        ResourceDepletionEvent<public>:listenable(agent) = external {}
+
+        # Enables this device.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        Disable<public>():void = external {}
+
+        # Shows all props affected by this device.
+        ShowProps<public>():void = external {}
+
+        # Hides all props affected by this device.
+        HideProps<public>():void = external {}
+
+        # Empties the resources of all props affected by this device.
+        ExhaustResources<public>():void = external {}
+
+        # Restocks the resources of all props affected by this device.
+        RestockResources<public>():void = external {}
+
+        # Restores health of all props affected by this device.
+        RestoreHealth<public>():void = external {}
+
+        # Sets the *Override Resource* option to *Yes*.
+        SetResourceOverridesActive<public>():void = external {}
+
+        # Sets the *Override Resource* option to *No*.
+        DisableResourceNodeOverrides<public>():void = external {}
+
     # Used to create a light which can have its color and brightness manipulated in response to in-game events.
     customizable_light_device<public> := class<concrete><final>(creative_device_base):
         # Enables this device.
@@ -3234,6 +3252,9 @@ Devices<public> := module:
 
         # Disables this device.
         Disable<public>():void = external {}
+
+    # Specialized `vehicle_spawner_device` that allows a sportbike to be configured and spawned.
+    vehicle_spawner_sportbike_device<public> := class<concrete><final>(vehicle_spawner_device):
 
     # Generates an AI bot that spawns in a location and usually attacks players when they come in range.
     sentry_device<public> := class<concrete><final>(creative_device_base):
@@ -3292,9 +3313,6 @@ Devices<public> := module:
 
         # Resets the alert state.
         ResetAlertCooldown<public>():void = external {}
-
-    # Specialized `vehicle_spawner_device` that allows a sportbike to be configured and spawned.
-    vehicle_spawner_sportbike_device<public> := class<concrete><final>(vehicle_spawner_device):
 
     # Used to spawn and configure an aerial supply drop that can provide players with customized weapons/supplies.
     supply_drop_spawner_device<public> := class<concrete><final>(creative_device_base):
@@ -3390,24 +3408,6 @@ Devices<public> := module:
 
         # Spawns the effect at `Agent`'s location. This option is only valid if *Stick to Player* is enabled.
         SpawnAt<public>(Agent:agent):void = external {}
-
-    # Used to spawn fireflies that can be collected by `agent`s.
-    firefly_spawner_device<public> := class<concrete><final>(creative_device_base):
-        # Signaled when a firefly is collected.
-        # Sends the `agent` collected the firefly.
-        OnFirefliesCollected<public>:listenable(agent) = external {}
-
-        # Enables this device.
-        Enable<public>():void = external {}
-
-        # Disables this device.
-        Disable<public>():void = external {}
-
-        # Spawns new fireflies. The previous fireflies will be destroyed before a new fireflies spawn.
-        Respawn<public>():void = external {}
-
-        # Resets respawn count.
-        ResetRespawnCount<public>():void = external {}
 
     # Used to place visual effects around your island. You can use these effects to enhance the overall theme
     # and experience of your game.
@@ -3814,3 +3814,6 @@ Characters<public> := module:
 
         # Controls if `fort_character` can still perform emotes while in stasis.
         AllowEmotes<native><public>:logic = external {}
+
+# Module import path: /Fortnite.com/AI
+AI<public> := module:
