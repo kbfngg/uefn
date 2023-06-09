@@ -142,21 +142,21 @@ Verse<public> := module:
     # Makes a `string` by localizing `Message` based on the current `locale`.
     Localize<native_callable><public>(Message:message)<varies>:[]char = external {}
 
-    localizable_value<epic_internal> := interface:
+    localizable_value<native><epic_internal> := interface:
+        LocalizeValue<epic_internal>(Where:locale)<varies>:[]char
 
-
-    localizable_string<epic_internal> := class<computes><internal>(localizable_value):
-
+    localizable_string<native><epic_internal> := class<computes><internal>(localizable_value):
+        LocalizeValue<override>(Where:locale)<varies>:[]char = external {}
 
     MakeLocalizableValue<epic_internal>(V:[]char)<computes>:localizable_string = external {}
 
-    localizable_int<epic_internal> := class<computes><internal>(localizable_value):
-
+    localizable_int<native><epic_internal> := class<computes><internal>(localizable_value):
+        LocalizeValue<override>(Where:locale)<varies>:[]char = external {}
 
     MakeLocalizableValue<epic_internal>(V:int)<computes>:localizable_int = external {}
 
-    localizable_float<epic_internal> := class<computes><internal>(localizable_value):
-
+    localizable_float<native><epic_internal> := class<computes><internal>(localizable_value):
+        LocalizeValue<override>(Where:locale)<varies>:[]char = external {}
 
     MakeLocalizableValue<epic_internal>(V:float)<computes>:localizable_float = external {}
 

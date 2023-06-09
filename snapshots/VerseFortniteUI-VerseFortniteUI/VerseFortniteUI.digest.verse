@@ -173,19 +173,19 @@ UI<public> := module:
         # The amount to adjust the value by, when using a controller or keyboard. Used only during initialization of the widget and not modified by SetStepSize.
         DefaultStepSize<native><public>:float = external {}
 
-        # Sets the value of the slider.
+        # Sets the value of the slider, will clamp the value to be within the sliders minimum and maximum value.
         SetValue<native><public>(InValue:float):void
 
         # Gets the value of the slider.
         GetValue<native><public>():float
 
-        # Sets the minimum value of the slider.
+        # Sets the minimum value of the slider, will enforce that the sliders maximum value is always larger than or equal to the minimum value.
         SetMinValue<native><public>(InMinValue:float):void
 
         # Gets the minimum value of the slider.
         GetMinValue<native><public>():float
 
-        # Sets the maximum value of the slider.
+        # Sets the maximum value of the slider, will enforce that the sliders maximum value is always larger than or equal to the minimum value.
         SetMaxValue<native><public>(InMaxValue:float):void
 
         # Gets the maximum value of the slider.

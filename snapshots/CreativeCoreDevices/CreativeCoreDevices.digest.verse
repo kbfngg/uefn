@@ -755,7 +755,17 @@ prop_spawner_base_device<public> := class<abstract><epic_internal>(creative_devi
 
 # Allows customization of the Prop-o-Matic weapon functions and how the game reacts to players using it.
 prop_o_matic_manager_device<public> := class<concrete><final>(creative_device_base):
+    # Signaled when an `agent` begins entering a disguise.
+    # Sends the `agent` that began entering the disguise.
+    BeginEnteringDisguiseEvent<public>:listenable(agent) = external {}
 
+    # Signaled when an `agent` finishes entering a disguise.
+    # Sends the `agent` that finished entering the disguise.
+    FinishEnteringDisguiseEvent<public>:listenable(agent) = external {}
+
+    # Signaled when an `agent` exits a disguise.
+    # Sends the `agent` that exited the disguise.
+    ExitingDisguiseEvent<public>:listenable(agent) = external {}
 
 # Base class for various powerup devices offering common events like `ItemPickedUpEvent`.
 powerup_device<public> := class<abstract><epic_internal>(creative_device_base):
@@ -1118,6 +1128,25 @@ color_changing_tiles_device<public> := class<concrete><final>(creative_device_ba
 
     # Sets the color of the tile to `Agent`'s team color.
     SetTeam<public>(Agent:agent):void = external {}
+
+# Used to place a collectible item into the world.
+collectible_object_device<public> := class<concrete><final>(creative_device_base):
+    # Signaled when the collectible item is collected.
+    # Sends the `agent` that collected the item.
+    CollectedEvent<public>:listenable(agent) = external {}
+
+    # Makes the collectible visible.
+    Show<public>():void = external {}
+
+    # Makes the collectible invisible.
+    Hide<public>():void = external {}
+
+    # Immediately respawns the object for the instigating agent.
+    # This will be affected by the option *Consume If Collected By*.
+    Respawn<public>(Agent:agent):void = external {}
+
+    # Immediately respawns the object for all agents.
+    RespawnForAll<public>():void = external {}
 
 # Used together with `class_selector_device` to create class based gameplay. Defines custom class attributes and inventory loadouts.
 class_designer_device<public> := class<concrete><final>(creative_device_base):
