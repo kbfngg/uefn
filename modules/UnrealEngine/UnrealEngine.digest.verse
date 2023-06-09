@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-24.40-CL-25521145
+# Generated from build: ++Fortnite+Release-25.00-CL-25784668
 #################################################
 
 Temporary<public> := module:
@@ -362,6 +362,90 @@ Temporary<public> := module:
             # Gets the opacity of the displayed text.
             GetTextOpacity<native><public>():type {_X:float where 0.000000 <= _X, _X <= 1.000000}
 
+    # Module import path: /UnrealEngine.com/Temporary/Diagnostics
+    Diagnostics<public> := module:
+        # Enumerated presets for policies describing a desired draw duration.
+        debug_draw_duration_policy<native><public> := enum:
+            SingleFrame
+            FiniteDuration
+            Persistent
+
+        # debug_draw_channel is the base class used to define debug draw channels.
+        debug_draw_channel<native><public> := class<abstract>:
+
+        # debug draw class to draw debug shapes on screen.
+        debug_draw<native><public> := class:
+            # Channel will be used to clear specific debug draw.
+            Channel<native><public>:subtype(debug_draw_channel) = external {}
+
+            # Show Debug Draw for the channel for all users.
+            ShowChannel<native><public>():void
+
+            # Hide Debug Draw for the channel for all users.
+            HideChannel<native><public>():void
+
+            # Clears all debug draw for the channel.
+            ClearChannel<native><public>():void
+
+            # Clears all debug draw from this debug_draw instance.
+            Clear<native><public>():void
+
+            # Draws a sphere at the named location, and using the provided draw parameters.
+            DrawSphere<native><public>(Center:vector3, ?Radius:float = external {}, ?Color:color = external {}, ?NumSegments:int = external {}, ?Thickness:float = external {}, ?DrawDurationPolicy:debug_draw_duration_policy = external {}, ?Duration:float = external {}):void
+
+            # Draws a box at the named location, and using the provided draw parameters
+            DrawBox<native><public>(Center:vector3, Rotation:rotation, ?Extent:vector3 = external {}, ?Color:color = external {}, ?Thickness:float = external {}, ?DrawDurationPolicy:debug_draw_duration_policy = external {}, ?Duration:float = external {}):void
+
+            # Draws a capsule at the named location, and using the provided draw parameters.
+            DrawCapsule<native><public>(Center:vector3, Rotation:rotation, ?Height:float = external {}, ?Radius:float = external {}, ?Color:color = external {}, ?Thickness:float = external {}, ?DrawDurationPolicy:debug_draw_duration_policy = external {}, ?Duration:float = external {}):void
+
+            # Draws a cone at the named location, and using the provided draw parameters.
+            DrawCone<native><public>(Origin:vector3, Direction:vector3, ?Height:float = external {}, ?NumSides:int = external {}, ?AngleWidthRadians:float = external {}, ?AngleHeightRadians:float = external {}, ?Color:color = external {}, ?Thickness:float = external {}, ?DrawDurationPolicy:debug_draw_duration_policy = external {}, ?Duration:float = external {}):void
+
+            # Draws a cylinder at the named location, and using the provided draw parameters.
+            DrawCylinder<native><public>(Start:vector3, End:vector3, ?NumSegments:int = external {}, ?Radius:float = external {}, ?Color:color = external {}, ?Thickness:float = external {}, ?DrawDurationPolicy:debug_draw_duration_policy = external {}, ?Duration:float = external {}):void
+
+            # Draws a line from Start to End locations, and using the provided draw parameters.
+            DrawLine<native><public>(Start:vector3, End:vector3, ?Color:color = external {}, ?Thickness:float = external {}, ?DrawDurationPolicy:debug_draw_duration_policy = external {}, ?Duration:float = external {}):void
+
+            # Draws a point at the named location, and using the provided draw parameters.
+            DrawPoint<native><public>(Position:vector3, ?Color:color = external {}, ?Thickness:float = external {}, ?DrawDurationPolicy:debug_draw_duration_policy = external {}, ?Duration:float = external {}):void
+
+            # Draws an arrow pointing from Start to End locations, and using the provided draw parameters.
+            DrawArrow<native><public>(Start:vector3, End:vector3, ?ArrowSize:float = external {}, ?Color:color = external {}, ?Thickness:float = external {}, ?DrawDurationPolicy:debug_draw_duration_policy = external {}, ?Duration:float = external {}):void
+
+        # log levels available for various log commands
+        log_level<native><public> := enum:
+            Debug
+            Verbose
+            Normal
+            Warning
+            Error
+
+        # log_channel is the base class used to define log channels. When printing a message to a log, the log channel class name will be prefixed to the output message.
+        log_channel<native><public> := class<abstract>:
+
+        # log class to send messages to the default log
+        log<native><public> := class:
+            # Channel class name will be added as a prefix used when printing the message e.g. '[log_channel]: #Message
+            Channel<native><public>:subtype(log_channel)
+
+            # Sets the default log level of the displayed message. See log_level enum for more info on log levels. Defaults to log_level.Normal.
+            DefaultLevel<native><public>:log_level = external {}
+
+            # Print message using the given log level
+            (log:)Print<native><public>(Message:[]char, ?Level:log_level = external {})<computes>:void
+
+            # Prints current script call stack using the give log level
+            PrintCallStack<native><public>(?Level:log_level = external {})<computes>:void
+
+    # Module import path: /UnrealEngine.com/Temporary/Curves
+    Curves<public> := module:
+        editable_curve<native><public> := class<final>:
+            # Evaluates this float curve at the specified time and returns the result as a float
+            Evaluate<native><public>(Time:float):float
+
+
     using {/Verse.org/Native}
     # Module import path: /UnrealEngine.com/Temporary/SpatialMath
     SpatialMath<public> := module:
@@ -700,38 +784,4 @@ Temporary<public> := module:
 
         # Succeeds when each component of `V1` and `V2` are within `AbsoluteTolerance` of each other.
         IsAlmostEqual<public>(V1:vector3, V2:vector3, AbsoluteTolerance:float)<computes><decides>:void = external {}
-
-    # Module import path: /UnrealEngine.com/Temporary/Diagnostics
-    Diagnostics<public> := module:
-        # log levels available for various log commands
-        log_level<native><public> := enum:
-            Debug
-            Verbose
-            Normal
-            Warning
-            Error
-
-        # log_channel is the base class used to define log channels. When printing a message to a log, the log channel class name will be prefixed to the output message.
-        log_channel<native><public> := class<abstract>:
-
-        # log class to send messages to the default log
-        log<native><public> := class:
-            # Channel class name will be added as a prefix used when printing the message e.g. '[log_channel]: #Message
-            Channel<native><public>:subtype(log_channel)
-
-            # Sets the default log level of the displayed message. See log_level enum for more info on log levels. Defaults to log_level.Normal.
-            DefaultLevel<native><public>:log_level = external {}
-
-            # Print message using the given log level
-            (log:)Print<native><public>(Message:[]char, ?Level:log_level = external {})<computes>:void
-
-            # Prints current script call stack using the give log level
-            PrintCallStack<native><public>(?Level:log_level = external {})<computes>:void
-
-    # Module import path: /UnrealEngine.com/Temporary/Curves
-    Curves<public> := module:
-        editable_curve<native><public> := class<final>:
-            # Evaluates this float curve at the specified time and returns the result as a float
-            Evaluate<native><public>(Time:float):float
-
 
