@@ -3,15 +3,12 @@ using {/Verse.org/Simulation}
 vehicle_spawner_sports_car_device<public> := class<concrete><final>(vehicle_spawner_device):
 
 
-# Base class for various specialized vehicle spawners which allow specific vehicle types to be spawned and 
-# configured with specialized options.
+# Base class for various specialized vehicle spawners which allow specific vehicle types to be spawned and configured with specialized options.
 vehicle_spawner_device<public> := class<abstract><epic_internal>(creative_device_base):
-    # Signaled when an `agent` enters the vehicle.
-    # Sends the `agent` that entered the vehicle.
+    # Signaled when an `agent` enters the vehicle.Sends the `agent` that entered the vehicle.
     AgentEntersVehicleEvent<public>:listenable(agent) = external {}
 
-    # Signaled when an `agent` exits the vehicle.
-    # Sends the `agent` that exited the vehicle.
+    # Signaled when an `agent` exits the vehicle.Sends the `agent` that exited the vehicle.
     AgentExitsVehicleEvent<public>:listenable(agent) = external {}
 
     # Signaled when a vehicle is spawned or respawned by this device.

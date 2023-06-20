@@ -1,7 +1,5 @@
 using {/Verse.org/Simulation}
-# Used to create and customize your own visual effects. This is more flexible than the `vfx_spawner_device`,
-# which gives you a selection of pre-made visual effects to choose from but limits how much you can customize
-# or change those effects.
+# Used to create and customize your own visual effects. This is more flexible than the `vfx_spawner_device`,which gives you a selection of pre-made visual effects to choose from but limits how much you can customizeor change those effects.
 vfx_creator_device<public> := class<concrete><final>(creative_device_base):
     # Enables this device.
     Enable<public>():void = external {}
@@ -39,24 +37,19 @@ vfx_creator_device<public> := class<concrete><final>(creative_device_base):
     # Toggles between `BeginForAll` and `EndForAll`.
     ToggleForAll<public>():void = external {}
 
-    # Pauses the effect if the effect is running. If the effect is paused, unpauses the effect. Pausing an effect
-    # causes the effect to freeze in place.
+    # Pauses the effect if the effect is running. If the effect is paused, unpauses the effect. Pausing an effectcauses the effect to freeze in place.
     TogglePause<public>():void = external {}
 
-    # Pauses the effect at `Agent`'s locations if it is playing, or resumes the effect if it is paused.
-    # When paused the effect freezes in place.
+    # Pauses the effect at `Agent`'s locations if it is playing, or resumes the effect if it is paused.When paused the effect freezes in place.
     TogglePause<public>(Agent:agent):void = external {}
 
-    # Pauses the effect at every `agent`'s locations if it is playing, or resumes the effect if it is paused.
-    # When paused the effect freezes in place.
+    # Pauses the effect at every `agent`'s locations if it is playing, or resumes the effect if it is paused.When paused the effect freezes in place.
     TogglePauseForAll<public>():void = external {}
 
-    # Removes the effect from `Agent` and continues playing at the device location. This option is only valid if
-    # *Stick to Player* is enabled.
+    # Removes the effect from `Agent` and continues playing at the device location. This option is only valid if*Stick to Player* is enabled.
     Remove<public>(Agent:agent):void = external {}
 
-    # Removes the effect for every `agent` and continues playing at the device location. This option is only valid if
-    # *Stick to Player* is enabled.
+    # Removes the effect for every `agent` and continues playing at the device location. This option is only valid if*Stick to Player* is enabled.
     RemoveFromAll<public>():void = external {}
 
     # Spawns the effect at `Agent`'s location. This option is only valid if *Stick to Player* is enabled.

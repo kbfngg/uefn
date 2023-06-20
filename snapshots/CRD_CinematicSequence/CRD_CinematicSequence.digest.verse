@@ -7,27 +7,23 @@ cinematic_sequence_device<public> := class<concrete><final>(creative_device_base
     # Plays the sequence. This will only work when the device is set to *Everyone*
     Play<public>():void = external {}
 
-    # Plays the sequence. An instigating 'Agent' is required when the device is set 
-    # to anything except *Everyone*.
+    # Plays the sequence. An instigating 'Agent' is required when the device is set to anything except *Everyone*.
     Play<public>(Agent:agent):void = external {}
 
     # Stops the sequence.
     Stop<public>():void = external {}
 
-    # Stops the sequence. An instigating 'Agent' is required when the device is set 
-    # to anything except *Everyone*.
+    # Stops the sequence. An instigating 'Agent' is required when the device is set to anything except *Everyone*.
     Stop<public>(Agent:agent):void = external {}
 
     # Pauses the sequence.
     Pause<public>():void = external {}
 
-    # Pauses the sequence. An instigating 'Agent' is required when the device is set 
-    # to anything except *Everyone*.
+    # Pauses the sequence. An instigating 'Agent' is required when the device is set to anything except *Everyone*.
     Pause<public>(Agent:agent):void = external {}
 
     # Toggles between `Play` and `Stop`.
     TogglePause<public>():void = external {}
 
-    # Toggles between `Play` and `Stop`. An instigating 'Agent' is required when the device is set 
-    # to anything except *Everyone*.
+    # Toggles between `Play` and `Stop`. An instigating 'Agent' is required when the device is set to anything except *Everyone*.
     TogglePause<public>(Agent:agent):void = external {}

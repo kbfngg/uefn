@@ -40,10 +40,8 @@ video_player_device<public> := class<concrete><final>(creative_device_base):
     # Seeks to the *Triggered Seek Time*. Caution: The stream will pause while the video buffers when seeking.
     Seek<public>():void = external {}
 
-    # Stops the currently playing stream and starts the custom stream with the audio only playing
-    # from this device. *Stream Priority* will not work until control is released.
+    # Stops the currently playing stream and starts the custom stream with the audio only playingfrom this device. *Stream Priority* will not work until control is released.
     TakeControl<public>():void = external {}
 
-    # If any streaming device has forced control of the stream, this will release it and play the highest
-    # priority stream in line.
+    # If any streaming device has forced control of the stream, this will release it and play the highestpriority stream in line.
     ReleaseControl<public>():void = external {}

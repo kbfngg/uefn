@@ -1,13 +1,10 @@
 using {/Verse.org/Simulation}
 # Used to spawn and configure an aerial supply drop that can provide players with customized weapons/supplies.
 supply_drop_spawner_device<public> := class<concrete><final>(creative_device_base):
-    # Signaled when the balloon on the supply crate is popped.
-    # Sends the `?agent` that popped the balloon. If no `agent` popped the balloon
-    # returns `false`.
+    # Signaled when the balloon on the supply crate is popped.Sends the `?agent` that popped the balloon. If no `agent` popped the balloonreturns `false`.
     BalloonPoppedEvent<public>:listenable(?agent) = external {}
 
-    # Signaled when the supply crate is opened.
-    # Sends the `agent` that opened the crate.
+    # Signaled when the supply crate is opened.Sends the `agent` that opened the crate.
     OpenedEvent<public>:listenable(agent) = external {}
 
     # Signaled when the supply crate lands for the first time.

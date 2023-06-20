@@ -1,24 +1,16 @@
 using {/Verse.org/Simulation}
-# Used to create a zone where players are put into a skydive state. Can customize the amount of force used to
-# push the player, and how fast players are launched into the air. The direction of the push is in relation to
-# the device, so you can rotate and overlap several devices, then use variable speeds to create pneumatic tubes
-# that propel players in different directions. You can even create unique traversal (traveling) options, where
-# players can use these zones to reach places on your island they couldn't reach any other way.
+# Used to create a zone where players are put into a skydive state. Can customize the amount of force used topush the player, and how fast players are launched into the air. The direction of the push is in relation tothe device, so you can rotate and overlap several devices, then use variable speeds to create pneumatic tubesthat propel players in different directions. You can even create unique traversal (traveling) options, whereplayers can use these zones to reach places on your island they couldn't reach any other way.
 skydive_volume_device<public> := class<concrete><final>(effect_volume_device):
-    # Signaled when an `agent` enters the volume.
-    # Sends the `agent` that entered the volume.
+    # Signaled when an `agent` enters the volume.Sends the `agent` that entered the volume.
     AgentEntersEvent<public>:listenable(agent) = external {}
 
-    # Signaled when an `agent` exits the volume.
-    # Sends the `agent` that exited the volume.
+    # Signaled when an `agent` exits the volume.Sends the `agent` that exited the volume.
     AgentExitsEvent<public>:listenable(agent) = external {}
 
-    # Signaled when the zone changes from empty to occupied.
-    # Sends the `agent` that entered the volume.
+    # Signaled when the zone changes from empty to occupied.Sends the `agent` that entered the volume.
     ZoneOccupiedEvent<public>:listenable(agent) = external {}
 
-    # Signaled when the zone changes from occupied to empty.
-    # Sends the `agent` that last left the volume.
+    # Signaled when the zone changes from occupied to empty.Sends the `agent` that last left the volume.
     ZoneEmptiedEvent<public>:listenable(agent) = external {}
 
     # Enables volume locking which prevents users from leaving the volume once they've entered.
@@ -29,22 +21,16 @@ skydive_volume_device<public> := class<concrete><final>(effect_volume_device):
 
 # Used to specify a zone where custom gameplay effects can be applied (e.g. gravity, no build, no weapons).
 mutator_zone_device<public> := class<concrete><final>(effect_volume_device):
-    # Signaled when an `agent` in this zone begins emoting. This will not signal if the `agent` is on the
-    # *Safe Team* or if *Affects Players* is disabled.
-    # Sends the `agent` that started emoting.
+    # Signaled when an `agent` in this zone begins emoting. This will not signal if the `agent` is on the*Safe Team* or if *Affects Players* is disabled.Sends the `agent` that started emoting.
     AgentBeginsEmotingEvent<public>:listenable(agent) = external {}
 
-    # Signaled when an `agent` in this zone ends emoting. This will not signal if the `agent` is on the
-    # *Safe Team* or if *Affects Players* is disabled.
-    # Sends the `agent` that stopped emoting.
+    # Signaled when an `agent` in this zone ends emoting. This will not signal if the `agent` is on the*Safe Team* or if *Affects Players* is disabled.Sends the `agent` that stopped emoting.
     AgentEndsEmotingEvent<public>:listenable(agent) = external {}
 
-    # Signaled when an `agent` enters this zone.
-    # Sends the `agent` entering this zone.
+    # Signaled when an `agent` enters this zone.Sends the `agent` entering this zone.
     AgentEntersEvent<public>:listenable(agent) = external {}
 
-    # Signaled when an `agent` exits this zone.
-    # Sends the `agent` exiting this zone.
+    # Signaled when an `agent` exits this zone.Sends the `agent` exiting this zone.
     AgentExitsEvent<public>:listenable(agent) = external {}
 
     # Updates *Selected Class* to `Agent`'s class.
@@ -71,12 +57,10 @@ effect_volume_device<public> := class<abstract><epic_internal>(creative_device_b
 
 # Used to specify an area volume which can damage `agent`s, vehicles, and creatures.
 damage_volume_device<public> := class<concrete><final>(effect_volume_device):
-    # Signaled when an `agent` enters the volume.
-    # Sends the `agent` entering the volume.
+    # Signaled when an `agent` enters the volume.Sends the `agent` entering the volume.
     AgentEntersEvent<public>:listenable(agent) = external {}
 
-    # Signaled when an `agent` exits the volume.
-    # Sends the `agent` exiting the volume.
+    # Signaled when an `agent` exits the volume.Sends the `agent` exiting the volume.
     AgentExitsEvent<public>:listenable(agent) = external {}
 
     # Updates *Selected Class* to `Agent`'s class.

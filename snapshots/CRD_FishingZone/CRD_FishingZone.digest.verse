@@ -1,15 +1,10 @@
 using {/Verse.org/Simulation}
-# Used to add fishing mechanics to experiences, such as:
-#  * Fishing competitions between players.
-#  * Collecting fish as a resource.
-#  * Fishing minigames with their own rewards.
+# Used to add fishing mechanics to experiences, such as: * Fishing competitions between players. * Collecting fish as a resource. * Fishing minigames with their own rewards.
 fishing_zone_device<public> := class<concrete><final>(creative_device_base):
-    # Signaled when an `agent` catches a fish.
-    # Sends the `agent` that caught the fish.
+    # Signaled when an `agent` catches a fish.Sends the `agent` that caught the fish.
     CaughtEvent<public>:listenable(agent) = external {}
 
-    # Signaled when all items have been caught and removed.
-    # Sends the `agent` that caught the last fish.
+    # Signaled when all items have been caught and removed.Sends the `agent` that caught the last fish.
     EmptyEvent<public>:listenable(agent) = external {}
 
     # Enables this device.

@@ -30,16 +30,13 @@ UI<public> := module:
     button_quiet<native><public> := class<final>(text_button_base):
 
 
-    # Deprecated. This function affects all players. Please use `fort_playspace.GetHUDController().ShowElements()`.
-    # Shows a set of HUD elements.
+    # Deprecated. This function affects all players. Please use `fort_playspace.GetHUDController().ShowElements()`.Shows a set of HUD elements.
     (PlayerUI:player_ui).ShowHUDElements<native><public>(HUDElements:[]hud_element_identifier):void
 
-    # Deprecated. This function affects all players. Please use `fort_playspace.GetHUDController().HideElements()`.
-    # Hides a set of HUD elements.
+    # Deprecated. This function affects all players. Please use `fort_playspace.GetHUDController().HideElements()`.Hides a set of HUD elements.
     (PlayerUI:player_ui).HideHUDElements<native><public>(HUDElements:[]hud_element_identifier):void
 
-    # Deprecated. This function affects all players. Please use `fort_playspace.GetHUDController().ResetElementVisibility()`.
-    # Resets the visibility for a set of HUD elements.
+    # Deprecated. This function affects all players. Please use `fort_playspace.GetHUDController().ResetElementVisibility()`.Resets the visibility for a set of HUD elements.
     (PlayerUI:player_ui).ResetHUDElementVisibility<native><public>(HUDElements:[]hud_element_identifier):void
 
     # A HUD controller that allows for showing and hiding of HUD elements.
