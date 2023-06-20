@@ -16,7 +16,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 ## Verse API Versions:
 
-- [`25.00`](https://github.com/kbfngg/uefn/tree/game_v25.10/modules)
+- [`25.10`](https://github.com/kbfngg/uefn/tree/game_v25.10/modules)
 - [`25.00`](https://github.com/kbfngg/uefn/tree/game_v25.00/modules)
 - [`24.40`](https://github.com/kbfngg/uefn/tree/game_v24.40/modules)
 - [`24.30`](https://github.com/kbfngg/uefn/tree/game_v24.30/modules)
