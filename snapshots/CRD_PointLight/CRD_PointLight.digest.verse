@@ -1,3 +1,4 @@
+using {/UnrealEngine.com/Temporary/SpatialMath}
 # Used to create a light which can have its color and brightness manipulated in response to in-game events.
 customizable_light_device<public> := class<concrete><final>(creative_device_base):
     # Enables this device.
@@ -23,3 +24,9 @@ customizable_light_device<public> := class<concrete><final>(creative_device_base
 
     # Brightens the light by *Dimming Amount*.
     UndimLight<public>():void = external {}
+
+    # Teleports the `device` to the specified `Position` and `Rotation`.
+    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
+
+    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
+    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}

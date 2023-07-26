@@ -1,10 +1,12 @@
 using {/Verse.org/Simulation}
 # Used to create and manipulate volumes of water where players can swim, fish, or drive boats.
 water_device<public> := class<concrete><final>(creative_device_base):
-    # Signaled when an `agent` enters the water.Sends `agent` that entered the water.
+    # Signaled when an `agent` enters the water.
+    # Sends `agent` that entered the water.
     AgentEntersWaterEvent<public>:listenable(agent) = external {}
 
-    # Signaled when an `agent` exits the water.Sends `agent` that exited the water.
+    # Signaled when an `agent` exits the water.
+    # Sends `agent` that exited the water.
     AgentExitsWaterEvent<public>:listenable(agent) = external {}
 
     # Signals when the volume is filled to the water level set in the *Default Vertical Water Percentage* option.

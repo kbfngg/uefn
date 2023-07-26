@@ -7,5 +7,5 @@ analytics_device<public> := class<concrete><final>(creative_device_base):
     # Disables this device.
     Disable<public>():void = external {}
 
-    # Adds an event for `Agent`.
-    AddEvent<public>(Agent:agent):void = external {}
+    # Submits an event for `Agent`.
+    Submit<public>(Agent:agent):void = external {}

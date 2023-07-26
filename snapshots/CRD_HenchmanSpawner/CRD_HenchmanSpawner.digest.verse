@@ -1,34 +1,52 @@
+using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Verse.org/Simulation}
 # Used to spawn guards that can patrol and attack other `agent`s.
 guard_spawner_device<public> := class<concrete><final>(creative_device_base):
-    # Signaled when a guard is spawned. Sends the `agent` guard who was spawned.
+    # Signaled when a guard is spawned.
+    # Sends the `agent` guard who was spawned.
     SpawnedEvent<public>:listenable(agent) = external {}
 
-    # Signaled when a guard has identified an opponent. `Source` is the guard who is aware. `Target` is the agent who alerted the guard.
+    # Signaled when a guard has identified an opponent.
+    # `Source` is the guard who is aware.
+    # `Target` is the agent who alerted the guard.
     AlertedEvent<public>:listenable(device_ai_interaction_result) = external {}
 
-    # Signaled when a guard has lost track of a target. `Source` is the guard that lost track of a target. `Target` is the `agent` no longer targeted by the guard.
+    # Signaled when a guard has lost track of a target.
+    # `Source` is the guard that lost track of a target.
+    # `Target` is the `agent` no longer targeted by the guard.
     TargetLostEvent<public>:listenable(device_ai_interaction_result) = external {}
 
-    # Signaled when a guard becomes suspicious. Sends the `agent` guard who is suspicious.
+    # Signaled when a guard becomes suspicious.
+    # Sends the `agent` guard who is suspicious.
     SuspiciousEvent<public>:listenable(agent) = external {}
 
-    # Signaled when a guard becomes unaware. Sends the `agent` guard who is unaware.
+    # Signaled when a guard becomes unaware.
+    # Sends the `agent` guard who is unaware.
     UnawareEvent<public>:listenable(agent) = external {}
 
-    # Signaled when guard is damaged. `Source` is the `agent` that damaged the guard. If the guard was damaged by a non-agent then `false` is returned. `Target` is the guard that was damaged.
+    # Signaled when guard is damaged.
+    # `Source` is the `agent` that damaged the guard. If the guard was damaged by a non-agent then `false` is returned.
+    # `Target` is the guard that was damaged.
     DamagedEvent<public>:listenable(device_ai_interaction_result) = external {}
 
-    # Signaled when a guard is eliminated. `Source` is the `agent` that eliminated the guard. If the guard was eliminated by a non-agent then `Source` is 'false'. `Target` is the guard that was eliminated.
+    # Signaled when a guard is eliminated.
+    # `Source` is the `agent` that eliminated the guard. If the guard was eliminated by a non-agent then `Source` is 'false'.
+    # `Target` is the guard that was eliminated.
     EliminatedEvent<public>:listenable(device_ai_interaction_result) = external {}
 
-    # Signaled when a guard eliminates an agent. `Source` is the guard that eliminated the agent. `Target` is the agent that was eliminated.
+    # Signaled when a guard eliminates an agent.
+    # `Source` is the guard that eliminated the agent.
+    # `Target` is the agent that was eliminated.
     EliminatingEvent<public>:listenable(device_ai_interaction_result) = external {}
 
-    # Signaled when a guard is hired by a player. `Source` is the `agent` who hired the guard. `Target` is the guard that was hired.
+    # Signaled when a guard is hired by a player.
+    # `Source` is the `agent` who hired the guard.
+    # `Target` is the guard that was hired.
     HiredEvent<public>:listenable(device_ai_interaction_result) = external {}
 
-    # Signaled when a guard is dismissed by a player. `Source` is the `agent` who dismissed the guard. `Target` is the guard that was dismissed.
+    # Signaled when a guard is dismissed by a player.
+    # `Source` is the `agent` who dismissed the guard.
+    # `Target` is the guard that was dismissed.
     DismissedEvent<public>:listenable(device_ai_interaction_result) = external {}
 
     # Enables this device. Guards will start to spawn.
@@ -61,7 +79,9 @@ guard_spawner_device<public> := class<concrete><final>(creative_device_base):
     # Dismisses all hired guards that were recruited by `Instigator`.
     DismissAgentHiredGuards<public>(Instigator:agent):void = external {}
 
-    # Forces guards to attack `Target`, bypassing perception checks. 'ForgetTime' ranges from 0.0 to 600.0 (in seconds, default is 600.0), it is the time after which the target will be ignored if not found. 'ForgetDistance' ranges from 0.0 to 100000.0 (in centimeters, default is 100000.0), it is the distance at which the target will be ignored if not found.
+    # Forces guards to attack `Target`, bypassing perception checks.
+    # 'ForgetTime' ranges from 0.0 to 600.0 (in seconds, default is 600.0), it is the time after which the target will be ignored if not found.
+    # 'ForgetDistance' ranges from 0.0 to 100000.0 (in centimeters, default is 100000.0), it is the distance at which the target will be ignored if not found.
     ForceAttackTarget<public>(Target:agent, ?ForgetTime:float = external {}, ?ForgetDistance:float = external {}):void = external {}
 
     # Allows guards to be hired.
@@ -72,3 +92,9 @@ guard_spawner_device<public> := class<concrete><final>(creative_device_base):
 
     # Returns the spawn limit of the device.
     GetSpawnLimit<public>()<transacts>:int = external {}
+
+    # Teleports the `device` to the specified `Position` and `Rotation`.
+    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
+
+    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
+    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}

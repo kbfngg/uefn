@@ -1,3 +1,4 @@
+using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Verse.org/Simulation}
 # Used to trigger level sequences that allow coordination of cinematic animation, transformation, and audio tracks.
 cinematic_sequence_device<public> := class<concrete><final>(creative_device_base):
@@ -27,3 +28,9 @@ cinematic_sequence_device<public> := class<concrete><final>(creative_device_base
 
     # Toggles between `Play` and `Stop`. An instigating 'Agent' is required when the device is set to anything except *Everyone*.
     TogglePause<public>(Agent:agent):void = external {}
+
+    # Teleports the `device` to the specified `Position` and `Rotation`.
+    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
+
+    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
+    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}

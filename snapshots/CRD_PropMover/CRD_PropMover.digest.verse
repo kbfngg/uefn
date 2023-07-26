@@ -19,7 +19,8 @@ prop_mover_device<public> := class<concrete><final>(creative_device_base):
     # Signaled when the prop changes its direction.
     MovementModeChangedEvent<public>:listenable(tuple()) = external {}
 
-    # Signaled when the prop hits an `agent`.Sends the `agent` hit by the prop.
+    # Signaled when the prop hits an `agent`.
+    # Sends the `agent` hit by the prop.
     AgentHitEvent<public>:listenable(agent) = external {}
 
     # Signaled when the prop hits a creature, animal, or NPC.

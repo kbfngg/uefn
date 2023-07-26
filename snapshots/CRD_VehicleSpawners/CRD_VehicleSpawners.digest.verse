@@ -1,3 +1,4 @@
+using {/Fortnite.com/Vehicles}
 using {/Verse.org/Simulation}
 # Specialized `vehicle_spawner_device` that allows a Whiplash sports car to be configured and spawned.
 vehicle_spawner_sports_car_device<public> := class<concrete><final>(vehicle_spawner_device):
@@ -5,17 +6,28 @@ vehicle_spawner_sports_car_device<public> := class<concrete><final>(vehicle_spaw
 
 # Base class for various specialized vehicle spawners which allow specific vehicle types to be spawned and configured with specialized options.
 vehicle_spawner_device<public> := class<abstract><epic_internal>(creative_device_base):
-    # Signaled when an `agent` enters the vehicle.Sends the `agent` that entered the vehicle.
+    # Signaled when an `agent` enters the vehicle.
+    # Sends the `agent` that entered the vehicle.
     AgentEntersVehicleEvent<public>:listenable(agent) = external {}
 
-    # Signaled when an `agent` exits the vehicle.Sends the `agent` that exited the vehicle.
+    # Signaled when an `agent` exits the vehicle.
+    # Sends the `agent` that exited the vehicle.
     AgentExitsVehicleEvent<public>:listenable(agent) = external {}
 
     # Signaled when a vehicle is spawned or respawned by this device.
+    # Sends the fort_vehicle who was spawned.
+    SpawnedEvent<public>:listenable(fort_vehicle) = external {}
+
+    # Signaled when a vehicle is spawned or respawned by this device.
+    # Deprecated, use SpawnedEvent instead.
     VehicleSpawnedEvent<public>:listenable(tuple()) = external {}
 
     # Signaled when a vehicle is destroyed.
+    # Deprecated, use DestroyedEvent instead.
     VehicleDestroyedEvent<public>:listenable(tuple()) = external {}
+
+    # Signaled when a vehicle is destroyed.
+    DestroyedEvent<public>:listenable(tuple()) = external {}
 
     # Enables this device.
     Enable<public>():void = external {}
@@ -23,10 +35,10 @@ vehicle_spawner_device<public> := class<abstract><epic_internal>(creative_device
     # Disables this device.
     Disable<public>():void = external {}
 
-    # Sets `Agent` as the vehicle's driver.
+    # Sets `agent` as the vehicle's driver.
     AssignDriver<public>(Agent:agent):void = external {}
 
-    # Destroys the spawned vehicle if it exists.
+    # Destroys the vehicle if it exists.
     DestroyVehicle<public>():void = external {}
 
     # Spawns a new vehicle. The previous vehicle will be destroyed before a new vehicle spawns.

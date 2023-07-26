@@ -2,7 +2,7 @@ using {/Verse.org/Restricted}
 # Module import path: /Verse.org/Assets
 Assets<public> := module:
     # Create an asset reference to the given internal asset path
-    MakeAsset<native><epic_internal>(AssetType:subtype(asset), AssetPath:[]char)<converges>:AssetType
+    MakeAsset<native><epic_internal>(AssetType:type, AssetPath:[]char)<converges>:AssetType
 
     asset<native><epic_internal> := class<computes><epic_internal>:
         SyncLoad<native><epic_internal>():logic
@@ -34,7 +34,7 @@ Assets<public> := module:
     skeletal_mesh<native><epic_internal> := class<computes><final><epic_internal>(asset):
 
 
-    static_mesh<native><epic_internal> := class<computes><final><epic_internal>(asset):
+    mesh<native><epic_internal> := class<computes><final><epic_internal>(asset):
 
 
     sound<native><epic_internal> := class<computes><final><epic_internal>(client_asset):
@@ -46,7 +46,7 @@ Assets<public> := module:
     level<native><epic_internal> := class<computes><final><epic_internal>(asset):
 
 
-    texture<native><epic_internal> := class<computes><epic_internal>(asset):
+    texture_base<native><epic_internal> := class<computes><epic_internal>(asset):
 
 
-    texture_2d<native><epic_internal> := class<computes><final><epic_internal>(texture):
+    texture<native><epic_internal> := class<computes><final><epic_internal>(texture_base):

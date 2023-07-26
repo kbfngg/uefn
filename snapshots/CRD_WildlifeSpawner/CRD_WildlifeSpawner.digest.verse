@@ -1,34 +1,52 @@
+using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Verse.org/Simulation}
 # Used to spawn various wildlife that players can herd, hunt, or tame.
 wildlife_spawner_device<public> := class<concrete><final>(creative_device_base):
-    # Signaled when this device spawns wildlife. Sends the `agent` wildlife that was spawned.
+    # Signaled when this device spawns wildlife.
+    # Sends the `agent` wildlife that was spawned.
     SpawnedEvent<public>:listenable(agent) = external {}
 
-    # Signaled when wildlife is eliminated. `Source` is the `agent` that eliminated the wildlife. If the wildlife was eliminated by a non-agent then `Source` is 'false'. `Target` is the wildlife that was eliminated.
+    # Signaled when wildlife is eliminated.
+    # `Source` is the `agent` that eliminated the wildlife. If the wildlife was eliminated by a non-agent then `Source` is 'false'.
+    # `Target` is the wildlife that was eliminated.
     EliminatedEvent<public>:listenable(device_ai_interaction_result) = external {}
 
-    # Signaled when a wildlife eliminates an agent. `Source` is the wildlife that eliminated the agent. `Target` is the agent that was eliminated.
+    # Signaled when a wildlife eliminates an agent.
+    # `Source` is the wildlife that eliminated the agent.
+    # `Target` is the agent that was eliminated.
     EliminatingEvent<public>:listenable(device_ai_interaction_result) = external {}
 
-    # Signaled when wildlife is tamed. `Source` is the `agent` that tamed the wildlife. `Target` is the wildlife that was tamed.
+    # Signaled when wildlife is tamed.
+    # `Source` is the `agent` that tamed the wildlife.
+    # `Target` is the wildlife that was tamed.
     TamedEvent<public>:listenable(device_ai_interaction_result) = external {}
 
-    # Signaled when wildlife is untamed. `Source` is the `agent` that tamed the wildlife. `Target` is the wildlife that was untamed.
+    # Signaled when wildlife is untamed.
+    # `Source` is the `agent` that tamed the wildlife.
+    # `Target` is the wildlife that was untamed.
     UntamedEvent<public>:listenable(device_ai_interaction_result) = external {}
 
-    # Signaled when wildlife is force-spawned and causes the oldest wildlife to be eliminated. Sends the `agent` wildlife that was spawned.
+    # Signaled when wildlife is force-spawned and causes the oldest wildlife to be eliminated.
+    # Sends the `agent` wildlife that was spawned.
     ForceSpawnedEvent<public>:listenable(agent) = external {}
 
-    # Signaled when wildlife is damaged. `Source` is the `agent` that damaged the wildlife. If the wildlife was damaged by a non-agent then `false` is returned. `Target` is the wildlife that was damaged.
+    # Signaled when wildlife is damaged.
+    # `Source` is the `agent` that damaged the wildlife. If the wildlife was damaged by a non-agent then `false` is returned.
+    # `Target` is the wildlife that was damaged.
     DamagedEvent<public>:listenable(device_ai_interaction_result) = external {}
 
-    # Signaled when wildlife eats a pickup such as a Shroom or Meat. Sends the wildlife that ate something.
+    # Signaled when wildlife eats a pickup such as a Shroom or Meat.
+    #  Sends the wildlife that ate something.
     SomethingIsEatenEvent<public>:listenable(agent) = external {}
 
-    # Signaled when an `agent` rides wildlife. `Source` is the `agent` that started riding the wildlife. `Target` is the wildlife that was ridden.
+    # Signaled when an `agent` rides wildlife.
+    # `Source` is the `agent` that started riding the wildlife.
+    # `Target` is the wildlife that was ridden.
     RiddenEvent<public>:listenable(device_ai_interaction_result) = external {}
 
-    # Signaled when an `agent` dismounts wildlife. `Source` is the `agent` that dismounted the wildlife. `Target` is the wildlife that was dismounted.
+    # Signaled when an `agent` dismounts wildlife.
+    # `Source` is the `agent` that dismounted the wildlife.
+    # `Target` is the wildlife that was dismounted.
     DismountedEvent<public>:listenable(device_ai_interaction_result) = external {}
 
     # Enables this device.
@@ -81,3 +99,9 @@ wildlife_spawner_device<public> := class<concrete><final>(creative_device_base):
 
     # Returns the spawn limit of the device.
     GetSpawnLimit<public>()<transacts>:int = external {}
+
+    # Teleports the `device` to the specified `Position` and `Rotation`.
+    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
+
+    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
+    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}

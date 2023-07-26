@@ -1,5 +1,5 @@
 using {/Verse.org/Simulation}
-# Used to show or hide parts of the HUD for players or teams. Use this with other devices such as the`hud_message_device`, `map_indicator_device`, and `billboard_device` to control exactly how much informationplayers can see during a game, as well as how and when they see that information.
+# Used to show or hide parts of the HUD for players or teams. Use this with other devices such as the `hud_message_device`, `map_indicator_device`, and `billboard_device` to control exactly how much information players can see during a game, as well as how and when they see that information.
 hud_controller_device<public> := class<concrete><final>(creative_device_base):
     # Enables this device.
     Enable<public>():void = external {}
