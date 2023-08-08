@@ -123,13 +123,13 @@ Devices<public> := module:
             SetAnimation<public>(Keyframes:[]keyframe_delta, ?Mode:animation_mode):void = external {}
 
             # Signaled each time a keyframe is reached. Callback(KeyframeIndex:int, InReverse:logic). Note that the KeyframeIndex in the callback is generally in [1, NumDeltaKeyframes] except that in a PingPong animation the final keyframe played in reverse is identified as index 0. This is because SetAnimation takes *delta* keyframes whereas this event notifies the listener that a specific keyframe has been reached.
-            KeyframeReachedEvent<native><public>:subscribable(tuple(int, logic)) = external {}
+            KeyframeReachedEvent<native><public>:listenable(tuple(int, logic)) = external {}
 
             # Signaled when the entire animation is complete. This will only fire for `OneShot` animations.
-            MovementCompleteEvent<native><public>:subscribable(tuple()) = external {}
+            MovementCompleteEvent<native><public>:listenable(tuple()) = external {}
 
             # Signaled when the state has changed. Use `GetState` to get the new state.
-            StateChangedEvent<native><public>:subscribable(tuple()) = external {}
+            StateChangedEvent<native><public>:listenable(tuple()) = external {}
 
         # Returns an `animation_controller` used to animate `Prop`. Only a subset of `creative_prop` types can be animated, though this may change in the future. A few examples of props that cannot be animated yet are:
         #  * Walls attached to buildings

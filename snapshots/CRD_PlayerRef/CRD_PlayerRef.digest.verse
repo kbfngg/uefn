@@ -35,3 +35,12 @@ player_reference_device<public> := class<concrete><final>(creative_device_base):
 
     # Clears the state of this device.
     Clear<public>():void = external {}
+
+    # Is true when `Agent` is the player being referenced by the device.
+    IsReferenced<public>(Agent:agent)<transacts><decides>:void = external {}
+
+    # Returns the `agent` currently referenced by the device.
+    GetAgent<public>():?agent = external {}
+
+    # Returns the stat value that this device is currently tracking
+    GetStatValue<public>():int = external {}
