@@ -2,18 +2,16 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-25.30-CL-26867995
+# Generated from build: ++Fortnite+Release-26.00-CL-27233190
 #################################################
 
 Temporary<public> := module:
+    using {/Verse.org/Assets}
     using {/Verse.org/Colors}
     using {/UnrealEngine.com/Temporary/SpatialMath}
     using {/Verse.org/Simulation}
     # Module import path: /UnrealEngine.com/Temporary/UI
     UI<public> := module:
-        # Verse interface to native `widget_class`.
-        widget_class<native><public> := class<computes><final>:
-
         # Returns the `player_ui` component associated with `Player`.
         # Fails if there is no `player_ui` associated with `Player`.
         GetPlayerUI<native><public>(Player:player)<transacts><decides>:player_ui
@@ -233,6 +231,54 @@ Temporary<public> := module:
             # Gets the size this widget desired to be displayed in.
             GetDesiredSize<native><public>():vector2
 
+        # Tiling options values
+        image_tiling<native><public> := enum:
+            # Stretch the image to fit the available space.
+            Stretch
+            # Repeat/Wrap the image to fill the available space.
+            Repeat
+
+        # A widget to display a texture.
+        texture_block<native><public> := class(widget):
+            # The image to render. Used only during initialization of the widget and not modified by SetImage.
+            DefaultImage<native><public>:texture
+
+            # Tinting applied to the image. Used only during initialization of the widget and not modified by SetTint.
+            DefaultTint<native><public>:color = external {}
+
+            # The size this widget desired to be displayed in. Used only during initialization of the widget and not modified by SetDesiredSize.
+            DefaultDesiredSize<native><public>:vector2 = external {}
+
+            # The horizontal tiling option. Used only during initialization of the widget and not modified by SetTiling.
+            DefaultHorizontalTiling<native><public>:image_tiling = external {}
+
+            # The vertical tiling option. Used only during initialization of the widget and not modified by SetTiling.
+            DefaultVerticalTiling<native><public>:image_tiling = external {}
+
+            # Sets the image to render.
+            SetImage<native><public>(InImage:texture):void
+
+            # Gets the image to render.
+            GetImage<native><public>():texture
+
+            # Sets the tint applied to the image.
+            SetTint<native><public>(InColor:color):void
+
+            # Gets the tint applied to the image.
+            GetTint<native><public>():color
+
+            # Sets the size this widget desired to be displayed in.
+            SetDesiredSize<native><public>(InDesiredSize:vector2):void
+
+            # Gets the size this widget desired to be displayed in.
+            GetDesiredSize<native><public>():vector2
+
+            # Sets the tiling option when the image is smaller than the allocated size.
+            SetTiling<native><public>(InHorizontalTiling:image_tiling, InVerticalTiling:image_tiling):void
+
+            # Gets the tiling option.
+            GetTiling<native><public>():tuple(image_tiling, image_tiling)
+
         # Overlay is a container consisting of widgets stacked on top of each other.
         overlay<native><public> := class<final>(widget):
             # The child widgets of the overlay. Used only during initialization of the widget and not modified by Add/RemoveWidget.
@@ -295,14 +341,16 @@ Temporary<public> := module:
             Distribution<native><public>:?float = external {}
 
         # Text justification values:
-        #   Left: Justify the text logically to the left.
+        #   Left: Justify the text logically to the left based on current culture.
         #   Center: Justify the text in the center.
-        #   Right: Justify the text logically to the right.
+        #   Right: Justify the text logically to the right based on current culture.
         # The Left and Right value will flip when the local culture is right-to-left.
         text_justification<native><public> := enum:
             Left
             Center
             Right
+            InvariantLeft
+            InvariantRight
 
         # Text overflow policy values:
         #   Clip: Overflowing text will be clipped.
@@ -467,6 +515,9 @@ Temporary<public> := module:
         #  * `0.0`, representing equivalent rotations and
         #  * `1.0` representing rotations which are 180 degrees apart (i.e., the shortest rotation between them is 180 degrees around some axis).
         Distance<native><public>(Rotation1:rotation, Rotation2:rotation)<varies>:float
+
+        # Returns the 'smallest angular distance' between `Rotation1` and `Rotation2` in radians.
+        AngularDistance<native><public>(Rotation1:rotation, Rotation2:rotation)<varies>:float
 
         # Makes a `rotation` by applying `PitchUpRadians` of right-handed rotation around the local +Y axis to `InitialRotation`.
         (InitialRotation:rotation).ApplyPitch<native><public>(PitchUpRadians:float)<transacts>:rotation
