@@ -2,6 +2,10 @@ using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Verse.org/Simulation}
 # Used to spawn one or more waves of creatures of customizable types at selected time intervals.
 creature_spawner_device<public> := class<concrete><final>(creative_device_base):
+    # Signaled when a creature is spawned.
+    # Sends the `agent` creature who was spawned.
+    SpawnedEvent<public>:listenable(agent) = external {}
+
     # Signaled when a creature is eliminated.
     #  `Source` is the `agent` that has eliminated the creature. If the creature was eliminated by a non-agent then `Source` is 'false'.
     #  `Target` is the creature that was eliminated.
@@ -24,6 +28,10 @@ creature_spawner_device<public> := class<concrete><final>(creative_device_base):
 
 # Used to spawn a creature at a specified location.
 creature_placer_device<public> := class<concrete><final>(creative_device_base):
+    # Signaled when a creature is spawned.
+    # Sends the `agent` creature who was spawned.
+    SpawnedEvent<public>:listenable(agent) = external {}
+
     # Signaled when the creature is eliminated.
     #  * Sends the `agent` that eliminated the creature.
     #  * Sends `false` if the creature was eliminated by something other than an `agent` (e.g. a vehicle).

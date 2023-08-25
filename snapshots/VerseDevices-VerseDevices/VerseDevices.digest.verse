@@ -1,4 +1,5 @@
 using {/Verse.org/Simulation}
+using {/Verse.org/Assets}
 using {/Fortnite.com/Playspaces}
 using {/Verse.org/Simulation/Tags}
 using {/Fortnite.com/Game}
@@ -214,6 +215,9 @@ Devices<public> := module:
 
         # Moves the `creative_prop` to the specified `Transform` over the specified time. If an animation is currently playing on the `creative_prop` it will be stopped and put into the `AnimationNotSet` state.
         MoveTo<public>(Transform:transform, OverTime:float)<suspends>:move_to_result = external {}
+
+        # Changes the Mesh used by this instance.
+        SetMesh<native><public>(Mesh:mesh)<transacts>:void
 
         # Shows the `creative_prop` in the world and enable collisions.
         Show<native><public>()<transacts>:void

@@ -34,7 +34,7 @@ Assets<public> := module:
     skeletal_mesh<native><epic_internal> := class<computes><final><epic_internal>(asset):
 
 
-    mesh<native><epic_internal> := class<computes><final><epic_internal>(asset):
+    mesh<native><public> := class<computes><final><epic_internal>(asset):
 
 
     sound<native><epic_internal> := class<computes><final><epic_internal>(client_asset):
@@ -49,4 +49,4 @@ Assets<public> := module:
     texture_base<native><epic_internal> := class<computes><epic_internal>(asset):
 
 
-    texture<native><epic_internal> := class<computes><final><epic_internal>(texture_base):
+    texture<native><public> := class<computes><final><epic_internal>(texture_base):

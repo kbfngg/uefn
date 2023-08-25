@@ -25,6 +25,9 @@ SpatialMath<public> := module:
     #  * `1.0` representing rotations which are 180 degrees apart (i.e., the shortest rotation between them is 180 degrees around some axis).
     Distance<native><public>(Rotation1:rotation, Rotation2:rotation)<varies>:float
 
+    # Returns the 'smallest angular distance' between `Rotation1` and `Rotation2` in radians.
+    AngularDistance<native><public>(Rotation1:rotation, Rotation2:rotation)<varies>:float
+
     # Makes a `rotation` by applying `PitchUpRadians` of right-handed rotation around the local +Y axis to `InitialRotation`.
     (InitialRotation:rotation).ApplyPitch<native><public>(PitchUpRadians:float)<transacts>:rotation
 

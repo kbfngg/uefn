@@ -170,9 +170,37 @@ tracker_device<public> := class<concrete><final>(creative_device_base):
     # Clamped to `0 <= GetTarget <= 10000`.
     GetTarget<public>()<transacts>:int = external {}
 
+    # Sets the current tracked value for the device for all active players.
+    SetValue<public>(Value:int):void = external {}
+
+    # Sets the current tracked value for the device for the Team at the `TeamIndex`.
+    # If *Sharing* is set to *Individual*, this will set the value for all team members.
+    # If *Sharing* is set to *All*, this will set the value for all players.
+    SetValue<public>(TeamIndex:int, Value:int):void = external {}
+
+    # Sets the current tracked value for the device for a specific 'Agent'.
+    # If *Sharing* is set to *Team*, this will set the value for their team.
+    # If *Sharing* is set to *All*, this will set the value for everyone.
+    SetValue<public>(Agent:agent, Value:int):void = external {}
+
+    # Returns the current total tracked value for all players.
+    GetValue<public>()<transacts>:int = external {}
+
+    # Returns the current total tracked value for the team at `TeamIndex`.
+    GetValue<public>(TeamIndex:int)<transacts>:int = external {}
+
+    # Returns the current tracked value for `Agent`.
+    GetValue<public>(Agent:agent)<transacts>:int = external {}
+
     # Sets the title for the `tracker_device`, which is displayed if *Show on HUD* is enabled.
     # `Text` has a 32 character limit.
     SetTitleText<public>(Text:message):void = external {}
+
+    # Is true if `Agent` currently has the quest active.
+    IsActive<public>(Agent:agent)<transacts><decides>:void = external {}
+
+    # Is true if `Agent` has reached the *TargetValue* for the tracker.
+    HasReachedTarget<public>(Agent:agent)<transacts><decides>:void = external {}
 
 # Provides a way to keep track of the time something has taken, either for scoreboard purposes, or to trigger actions. It can be configured in several ways, either acting as a countdown to an event that is triggered at the end, or as a stopwatch for an action that needs to be completed before a set time runs out.
 timer_device<public> := class<concrete><final>(creative_device_base):
@@ -415,17 +443,23 @@ team_settings_and_inventory_device<public> := class<concrete><final>(creative_de
     # Sends the `agent` that was eliminated.
     TeamMemberEliminatedEvent<public>:listenable(agent) = external {}
 
+    # Signaled when a member of *Team* is spawned.Sends the `agent` that has spawned.
+    TeamMemberSpawnedEvent<public>:listenable(agent) = external {}
+
     # Signaled when *Team* runs out of respawns.
     TeamOutOfRespawnsEvent<public>:listenable(tuple()) = external {}
 
     # Ends the round and *Team* wins the round.
     EndRound<public>():void = external {}
 
+    # Is true if `Agent` is on *Team*.
+    IsOnTeam<public>(Agent:agent)<transacts><decides>:void = external {}
+
 # Used to place the Infinity Blade on your island. When placed, the Infinity Blade becomes available to any player regardless of team affiliation.
 sword_in_the_stone_device<public> := class<concrete><final>(creative_device_base):
 
 
-# Used to inform players of other content made by a creator using a Support-A-Creator code. When players activate the device, it will bring up the same Support-A-Creator dialog box they would see in the Creative hub. The Support-A-Creator information shows when the dialog box opens for the player.
+# DEPRECATED This device is no longer supported.Used to inform players of other content made by a creator using a Support-A-Creator code. When players activate the device, it will bring up the same Support-A-Creator dialog box they would see in the Creative hub. The Support-A-Creator information shows when the dialog box opens for the player.
 support_a_creator_device<public> := class<concrete><final>(creative_device_base):
 
 
@@ -776,6 +810,27 @@ prop_o_matic_manager_device<public> := class<concrete><final>(creative_device_ba
     # Sends the `agent` that exited the disguise.
     ExitingDisguiseEvent<public>:listenable(agent) = external {}
 
+    # Toggle Pinging props on/off.
+    SetPingProps<public>(On:logic):void = external {}
+
+    # Adjust the ping time.
+    SetPingFrequency<public>(Time:float):void = external {}
+
+    # Toggle showing the props remaining on the UI.
+    SetShowPropsRemaining<public>(On:logic):void = external {}
+
+    # Toggle showing the prop ping cooldown.
+    SetShowPropPingCooldown<public>(On:logic):void = external {}
+
+    # Manually ping all players that are currently hiding as props.
+    PingPlayerProps<public>():void = external {}
+
+    # Manually ping a specific player if they are currently a prop.
+    PingPlayerProp<public>(Agent:agent):void = external {}
+
+    # Returns whether a player is currently hiding or not.
+    IsPlayerProp<public>(Agent:agent)<transacts><decides>:void = external {}
+
 # Base class for various powerup devices offering common events like `ItemPickedUpEvent`.
 powerup_device<public> := class<abstract><epic_internal>(creative_device_base):
     # Signaled when the powerup is picked up by an `agent`.
@@ -788,8 +843,27 @@ powerup_device<public> := class<abstract><epic_internal>(creative_device_base):
     # Despawns this powerup from the experience.
     Despawn<public>():void = external {}
 
+    # Updates the *Duration* for this powerup, clamped to the Min and Max defined in the device.
+    # Will not apply to any currently applied effects.
+    SetDuration<public>(Time:float):void = external {}
+
+    # Returns the *Duration* that this powerup will be active for on any player it is applied to.
+    GetDuration<public>()<transacts>:float = external {}
+
+    # If the `Agent` has the effect applied to them, this will return the remaining time the effect has.
+    # Returns -1.0 if the effect has an infinite duration.
+    # Returns 0 if the `Agent` does not have the effect applied.
+    GetRemainingTime<public>(Agent:agent)<transacts>:float = external {}
+
+    # Returns the `Agent` has the powerup's effect (or another of the same type) applied to them.
+    HasEffect<public>(Agent:agent)<transacts><decides>:void = external {}
+
     # Grants this powerup to `Agent`.
     Pickup<public>(Agent:agent):void = external {}
+
+    # Grants this powerup without an agent reference.
+    # Requires *Apply To* set to *All Players*.
+    Pickup<public>():void = external {}
 
     # Teleports the `device` to the specified `Position` and `Rotation`.
     TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
@@ -1020,6 +1094,12 @@ hud_message_device<public> := class<concrete><final>(creative_device_base):
     # Hides the HUD message.
     Hide<public>():void = external {}
 
+    # Displays a Custom message to a specific *Agent* that you define.Setting *DisplayTime* to `0.0` will display the HUD message persistently.If not defined, or less than `0.0` the message will show for the time set on the device.
+    Show<public>(Agent:agent, Message:message, ?DisplayTime:float = external {}):void = external {}
+
+    # Displays a Custom message that you define for all PlayersSetting *DisplayTime* to `0.0` will display the HUD message persistently.If not defined, or less than `0.0` the message will show for the time set on the device.
+    Show<public>(Message:message, ?DisplayTime:float = external {}):void = external {}
+
     # Sets the time (in seconds) the HUD message will be displayed. `0.0` will display the HUD message persistently.
     SetDisplayTime<public>(Time:float):void = external {}
 
@@ -1105,7 +1185,14 @@ elimination_manager_device<public> := class<concrete><final>(base_item_spawner_d
 
 # Used to amplify an `agent`'s damage temporarily. This applies to any weapon the `agent` is using at the time of the powerup.
 damage_amplifier_powerup_device<public> := class<concrete><final>(powerup_device):
+    # Sets the *Magnitude* for this powerup, clamped to the Min and Max defined in the device.
+    # Will not apply to any currently applied effects.
+    # For the Damage Amplifier Powerup, this is the damage multiplier.
+    SetMagnitude<public>(Magnitude:float):void = external {}
 
+    # Returns the current *Magnitude* for the powerup.
+    # For the Damage Amplifier Powerup, this is the damage multiplier.
+    GetMagnitude<public>()<transacts>:float = external {}
 
 # Used to create a specialized button which can only be activated when `agent`s are carrying specific items.
 conditional_button_device<public> := class<concrete><final>(creative_device_base):

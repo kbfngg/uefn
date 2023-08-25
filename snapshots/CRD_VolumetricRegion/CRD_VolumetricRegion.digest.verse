@@ -24,6 +24,9 @@ skydive_volume_device<public> := class<concrete><final>(effect_volume_device):
     # Disables volume locking which prevents users from leaving the volume once they've entered.
     DisableVolumeLocking<public>():void = external {}
 
+    # Is true when `Agent` is in the volume.
+    IsInVolume<public>(Agent:agent)<transacts><decides>:void = external {}
+
 # Used to specify a zone where custom gameplay effects can be applied (e.g. gravity, no build, no weapons).
 mutator_zone_device<public> := class<concrete><final>(effect_volume_device):
     # Signaled when an `agent` in this zone begins emoting. This will not signal if the `agent` is on the *Safe Team* or if *Affects Players* is disabled.
@@ -47,6 +50,9 @@ mutator_zone_device<public> := class<concrete><final>(effect_volume_device):
 
     # Updates *Selected Team* to `Agent`'s team.
     UpdateSelectedTeam<public>(Agent:agent):void = external {}
+
+    # Is true when `Agent` is in the zone.
+    IsInVolume<public>(Agent:agent)<transacts><decides>:void = external {}
 
 # Used to specify an area which allows (or prevents) various objects, terrain, or buildings from being set on fire.
 fire_volume_device<public> := class<concrete><final>(effect_volume_device):
@@ -91,6 +97,9 @@ damage_volume_device<public> := class<concrete><final>(effect_volume_device):
 
     # Returns the damage to be applied each tick within the volume.
     GetDamage<public>()<transacts>:int = external {}
+
+    # Is true when `Agent` is in the zone.
+    IsInVolume<public>(Agent:agent)<transacts><decides>:void = external {}
 
 # Creates an impenetrable zone that can block `agent` movement and weapon fire.
 barrier_device<public> := class<concrete><final>(creative_device_base):

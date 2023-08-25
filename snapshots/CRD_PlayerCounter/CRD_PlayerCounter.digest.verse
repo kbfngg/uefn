@@ -37,6 +37,18 @@ player_counter_device<public> := class<concrete><final>(creative_device_base):
     # Triggers `CountedEvent` for all `agent`s currently being counted.
     TransmitForAllCounted<public>():void = external {}
 
+    # Adds the player to the registered player list.
+    # *Track Registered Players* determines how registered players are counted.
+    Register<public>(Agent:agent):void = external {}
+
+    # Removes the player from the registered player list.
+    # *Track Registered Players* determines how registered players are counted.
+    Unregister<public>(Agent:agent):void = external {}
+
+    # Clears all players from the list of registered players.
+    # *Track Registered Players* determines how registered players are counted.
+    UnregisterAll<public>():void = external {}
+
     # Show this device in the world as an info panel showing Current + Required player counts.
     ShowInfoPanel<public>():void = external {}
 
@@ -57,3 +69,12 @@ player_counter_device<public> := class<concrete><final>(creative_device_base):
 
     # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
     TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
+
+    # Returns the number of players currently counted by this device
+    GetCount<public>()<transacts>:int = external {}
+
+    # Is true if the device is currently succeeding in its comparison.
+    IsPassingTest<public>()<transacts><decides>:void = external {}
+
+    # Is true if `Agent` is currently counted by this device.
+    IsCounted<public>(Agent:agent)<transacts><decides>:void = external {}

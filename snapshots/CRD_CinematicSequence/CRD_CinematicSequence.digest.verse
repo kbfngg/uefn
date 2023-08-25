@@ -17,6 +17,12 @@ cinematic_sequence_device<public> := class<concrete><final>(creative_device_base
     # Stops the sequence. An instigating 'Agent' is required when the device is set to anything except *Everyone*.
     Stop<public>(Agent:agent):void = external {}
 
+    # Go to the end and stop the sequence.
+    GoToEndAndStop<public>():void = external {}
+
+    # Go to the end and stop the sequence. An instigating 'Agent' is required when the device is set to anything except *Everyone*.
+    GoToEndAndStop<public>(Agent:agent):void = external {}
+
     # Pauses the sequence.
     Pause<public>():void = external {}
 
