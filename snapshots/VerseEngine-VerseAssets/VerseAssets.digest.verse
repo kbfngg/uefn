@@ -25,7 +25,7 @@ Assets<public> := module:
     animation_blueprint<native><epic_internal> := class<computes><final><epic_internal>(asset):
 
 
-    material<native><epic_internal> := class<computes><final><epic_internal>(asset):
+    material<native><public> := class<computes><epic_internal>(asset):
 
 
     particle_system<native><epic_internal> := class<computes><final><epic_internal>(client_asset):

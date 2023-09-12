@@ -22,6 +22,14 @@ switch_device<public> := class<concrete><final>(creative_device_base):
     # Signaled when the switch state changes.
     StateChangesEvent<public>:listenable(tuple()) = external {}
 
+    # Signaled when the switch state is loaded by the specified `agent`.
+    # Sends the `agent` that loaded the state on the device.
+    StateLoadEvent<public>:listenable(agent) = external {}
+
+    # Signaled when the persistent data is cleared by the specified `agent`.
+    # Sends the `agent` that cleared persistent data on the device.
+    ClearEvent<public>:listenable(agent) = external {}
+
     # Enables this device.
     Enable<public>():void = external {}
 
@@ -42,6 +50,12 @@ switch_device<public> := class<concrete><final>(creative_device_base):
 
     # Saves the device state with `Agent` acting as the instigator of the action.
     SaveState<public>(Agent:agent):void = external {}
+
+    # Loads the device state for all players.
+    LoadStateForAll<public>():void = external {}
+
+    # Saves the device state for all players
+    SaveStateForAll<public>():void = external {}
 
     # Checks the device state with `Agent` acting as the instigator of the action.
     CheckState<public>(Agent:agent):void = external {}
