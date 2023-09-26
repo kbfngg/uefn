@@ -184,6 +184,18 @@ Devices<public> := module:
         # Otherwise a runtime error will result.
         GetTransform<override>()<transacts>:transform = external {}
 
+        # Teleports the `creative_object` to the specified `Position` and `Rotation`.
+        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
+
+        # Teleports the `creative_object` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
+        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
+
+        # Moves the `creative_object` to the specified `Position` and `Rotation` over the specified time. If an animation is currently playing on the `creative_object` it will be stopped and put into the `AnimationNotSet` state.
+        MoveTo<public>(Position:vector3, Rotation:rotation, OverTime:float)<suspends>:move_to_result = external {}
+
+        # Moves the `creative_object` to the specified `Transform` over the specified time. If an animation is currently playing on the `creative_object` it will be stopped and put into the `AnimationNotSet` state.
+        MoveTo<public>(Transform:transform, OverTime:float)<suspends>:move_to_result = external {}
+
     # Returns an array containing all creative objects which have been marked with the specified `Tag`.
     GetCreativeObjectsWithTag<native><public>(Tag:tag)<transacts>:[]creative_object_interface
 
@@ -203,18 +215,6 @@ Devices<public> := module:
 
         # Succeeds if this object has not been disposed of either via `Dispose()` or through an external system.
         IsValid<native><override>()<transacts><decides>:void
-
-        # Teleports the `creative_prop` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `creative_prop` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
-        # Moves the `creative_prop` to the specified `Position` and `Rotation` over the specified time. If an animation is currently playing on the `creative_prop` it will be stopped and put into the `AnimationNotSet` state.
-        MoveTo<public>(Position:vector3, Rotation:rotation, OverTime:float)<suspends>:move_to_result = external {}
-
-        # Moves the `creative_prop` to the specified `Transform` over the specified time. If an animation is currently playing on the `creative_prop` it will be stopped and put into the `AnimationNotSet` state.
-        MoveTo<public>(Transform:transform, OverTime:float)<suspends>:move_to_result = external {}
 
         # Changes the Mesh used by this instance.
         SetMesh<native><public>(Mesh:mesh)<transacts>:void

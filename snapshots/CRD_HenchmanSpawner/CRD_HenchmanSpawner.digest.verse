@@ -1,4 +1,3 @@
-using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Verse.org/Simulation}
 # Used to spawn guards that can patrol and attack other `agent`s.
 guard_spawner_device<public> := class<concrete><final>(creative_device_base):
@@ -92,9 +91,3 @@ guard_spawner_device<public> := class<concrete><final>(creative_device_base):
 
     # Returns the spawn limit of the device.
     GetSpawnLimit<public>()<transacts>:int = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}

@@ -321,7 +321,7 @@ Characters<public> := module:
         # Succeeds if this `fort_character` can be damaged. Fails if this `fort_character` cannot be damaged.
         IsVulnerable<public>()<transacts><decides>:void
 
-        # Teleports this `fort_character` to the provided `Position` and applies the yaw of `Rotation`.
+        # Teleports this `fort_character` to the provided `Position` and applies the yaw of `Rotation`. Will fail if the `Position` specified is e.g. outside of the playspace or specifies a place where the character cannot fit.
         TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void
 
     # Returns the `fort_character` for `InAgent`. Fails if `InAgent` is not a `fort_character`.

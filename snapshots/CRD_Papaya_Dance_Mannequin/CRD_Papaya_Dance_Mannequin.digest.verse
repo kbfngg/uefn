@@ -1,4 +1,3 @@
-using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Verse.org/Simulation}
 # Used to project a hologram of a character performing dance emotes.
 dance_mannequin_device<public> := class<concrete><final>(creative_device_base):
@@ -22,9 +21,3 @@ dance_mannequin_device<public> := class<concrete><final>(creative_device_base):
 
     # Deactivates the hologram.
     DeactivateSkinAndEmoteCapture<public>():void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}

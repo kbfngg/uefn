@@ -1,4 +1,3 @@
-using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Verse.org/Simulation}
 # Used to spawn one or more waves of creatures of customizable types at selected time intervals.
 creature_spawner_device<public> := class<concrete><final>(creative_device_base):
@@ -42,12 +41,6 @@ creature_placer_device<public> := class<concrete><final>(creative_device_base):
 
     # Despawns the creature.
     Despawn<public>():void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
 # Used to customize one creature type at a time. Place multiple `creature_manager_device`s for each type of creature on your island.
 creature_manager_device<public> := class<concrete><final>(creative_device_base):

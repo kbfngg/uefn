@@ -1,4 +1,3 @@
-using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Verse.org/Simulation}
 # Used to track and react to how many players are in a particular area, and optionally display that information in game.
 player_counter_device<public> := class<concrete><final>(creative_device_base):
@@ -63,12 +62,6 @@ player_counter_device<public> := class<concrete><final>(creative_device_base):
 
     # Returns the number of players required for this counter to succeed.
     GetTargetCount<public>()<transacts>:int = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
     # Returns the number of players currently counted by this device
     GetCount<public>()<transacts>:int = external {}

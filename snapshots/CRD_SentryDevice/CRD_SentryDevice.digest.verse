@@ -1,4 +1,3 @@
-using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Verse.org/Simulation}
 # Generates an AI bot that spawns in a location and usually attacks players when they come in range.
 sentry_device<public> := class<concrete><final>(creative_device_base):
@@ -56,9 +55,3 @@ sentry_device<public> := class<concrete><final>(creative_device_base):
 
     # Resets the alert state.
     ResetAlertCooldown<public>():void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}

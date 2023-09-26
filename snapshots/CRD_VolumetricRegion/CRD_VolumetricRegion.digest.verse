@@ -1,4 +1,3 @@
-using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Verse.org/Simulation}
 # Used to create a zone where players are put into a skydive state. Can customize the amount of force used to push the player, and how fast players are launched into the air. The direction of the push is in relation to the device, so you can rotate and overlap several devices, then use variable speeds to create pneumatic tubes that propel players in different directions. You can even create unique traversal (traveling) options, where players can use these zones to reach places on your island they couldn't reach any other way.
 skydive_volume_device<public> := class<concrete><final>(effect_volume_device):
@@ -70,12 +69,6 @@ effect_volume_device<public> := class<abstract><epic_internal>(creative_device_b
     # Disables this device.
     Disable<public>():void = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
 # Used to specify an area volume which can damage `agent`s, vehicles, and creatures.
 damage_volume_device<public> := class<concrete><final>(effect_volume_device):
     # Signaled when an `agent` enters the volume.
@@ -117,9 +110,3 @@ barrier_device<public> := class<concrete><final>(creative_device_base):
 
     # Removes all `agent`s from the ignore list. `Agent`s will still be ignored if they are on an ignored team or of an ignored class.
     RemoveAllFromIgnoreList<public>():void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}

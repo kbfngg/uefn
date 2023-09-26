@@ -70,12 +70,6 @@ trigger_base_device<public> := class<abstract><epic_internal>(creative_device_ba
     # Gets the time (in seconds) which must pass after triggering, before this device informs other external devices that it has been triggered.
     GetTransmitDelay<public>()<transacts>:float = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
 # A trap device that destroys the tile it's placed on when activated.
 trick_tile_device<public> := class<concrete><final>(creative_device_base):
     # Signaled when the tile this device is attached to is removed. This may occur later than `TriggeredEvent` if *Activation Delay* is set on the device.
@@ -109,6 +103,22 @@ trick_tile_device<public> := class<concrete><final>(creative_device_base):
 
     # Triggers the device, removing the associated tile.
     Trigger<public>():void = external {}
+
+    # Teleports the `trick_tile_device` to the specified `Position` and `Rotation`. 
+    # Only the trigger will teleport, the target buildings will not change. 
+    TeleportTo<override>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
+
+    # Teleports the `trick_tile_device` to the specified location defined by `Transform`, also applies rotation and scale accordingly. 
+    # Only the trigger will teleport, the target buildings will not change. 
+    TeleportTo<override>(Transform:transform)<transacts><decides>:void = external {}
+
+    # Moves the `trick_tile_device` to the specified `Position` and `Rotation` over the specified time. 
+    # Only the trigger will move, the target buildings will not change. 
+    MoveTo<override>(Position:vector3, Rotation:rotation, OverTime:float)<suspends>:move_to_result = external {}
+
+    # Moves the `trick_tile_device` to the specified `Transform` over the specified time. 
+    # Only the trigger will move, the target buildings will not change. 
+    MoveTo<override>(Transform:transform, OverTime:float)<suspends>:move_to_result = external {}
 
 # Allows creation and HUD tracking of custom objectives for `agent`s to complete.
 tracker_device<public> := class<concrete><final>(creative_device_base):
@@ -330,12 +340,6 @@ timer_device<public> := class<concrete><final>(creative_device_base):
     # Returns the maximum duration of the timer (in seconds).
     GetMaxDuration<public>()<transacts>:float = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
     # Succeeds if this device is tracking timer state for each individual `agent` independently. Fails if state is being tracked globally for all `agent`'s.
     IsStatePerAgent<public>()<transacts><decides>:void = external {}
 
@@ -394,12 +398,6 @@ timed_objective_device<public> := class<concrete><final>(creative_device_base):
 
     # Completes the objective with `Agent` acting as the user the interacted this device.
     Complete<public>(Agent:agent):void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
 # Customizable rift that allows `agent`s to move instantly between locations. You can use this to move players around your island, or create multi-island experiences with teleporters that take players from one island to another.
 teleporter_device<public> := class<concrete><final>(creative_device_base):
@@ -473,6 +471,22 @@ storm_controller_device<public> := class<abstract><epic_internal>(creative_devic
 
     # Destroys the storm.
     DestroyStorm<public>():void = external {}
+
+    # Teleports the `storm_controller_device` to the specified `Position` and `Rotation`. 
+    # Existing storms will not target the new location, but newly generated storms will.
+    TeleportTo<override>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
+
+    # Teleports the `storm_controller_device` to the specified location defined by `Transform`, also applies rotation and scale accordingly. 
+    # Existing storms will not target the new location, but newly generated storms will.
+    TeleportTo<override>(Transform:transform)<transacts><decides>:void = external {}
+
+    # Moves the `storm_controller_device` to the specified `Position` and `Rotation` over the specified time. 
+    # Existing storms will not target the new location, but newly generated storms will.
+    MoveTo<override>(Position:vector3, Rotation:rotation, OverTime:float)<suspends>:move_to_result = external {}
+
+    # Moves the `storm_controller_device` to the specified `Transform` over the specified time. 
+    # Existing storms will not target the new location, but newly generated storms will.
+    MoveTo<override>(Transform:transform, OverTime:float)<suspends>:move_to_result = external {}
 
 # A set of customizable pop up targets that can be hit by players to trigger various events.
 shooting_range_target_track_device<public> := class<concrete><final>(creative_device_base):
@@ -638,12 +652,6 @@ score_manager_device<public> := class<concrete><final>(creative_device_base):
     # Returns the current score for `Agent`.
     GetCurrentScore<public>(Agent:agent)<transacts>:int = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
 # Used to customize gameplay for any round-based game. It generally defines what happens to the`agent`'s inventory and rewards in each round.
 round_settings_device<public> := class<concrete><final>(creative_device_base):
     # Signaled when a game round starts.
@@ -669,12 +677,6 @@ round_settings_device<public> := class<concrete><final>(creative_device_base):
 
     # Ends the round immediately with `Agent`'s team set as the winner of the round.
     EndRound<public>(Agent:agent):void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
 # Used to generate random numbers between a minimum and maximum value. Events are signaled when numbers are generated.
 #  * *Value Limit 1* is the minimum value for generation.
@@ -732,12 +734,6 @@ radio_device<public> := class<concrete><final>(creative_device_base):
 
     # Removes all previously registered agents as targets for the Radio to play audio from
     UnregisterAll<public>():void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
     # Shows this device in the world.
     Show<public>()<transacts>:void = external {}
@@ -865,12 +861,6 @@ powerup_device<public> := class<abstract><epic_internal>(creative_device_base):
     # Requires *Apply To* set to *All Players*.
     Pickup<public>():void = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
 # Used to move, damage, and give scores to players that interact with it. By default, it is activated by any player touching its front face, which rotates it counterclockwise and knocks those players away from it and slightly upward.
 pinball_flipper_device<public> := class<concrete><final>(creative_device_base):
     # Signaled when this device is activated by an `agent`.
@@ -886,12 +876,6 @@ pinball_flipper_device<public> := class<concrete><final>(creative_device_base):
     # Causes `Agent` to activate this device.
     Activate<public>(Agent:agent):void = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
 # A triggered bumper that can knock players back, damage them, and award points.
 pinball_bumper_device<public> := class<concrete><final>(creative_device_base):
     # Signaled when this device is activated by an `agent`.
@@ -906,12 +890,6 @@ pinball_bumper_device<public> := class<concrete><final>(creative_device_base):
 
     # Activates this device.
     Activate<public>():void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
 # Specialized `trigger_base_device` that will fire output events based on line of sight between `agent`s and the device.
 perception_trigger_device<public> := class<concrete><final>(trigger_base_device):
@@ -952,12 +930,6 @@ objective_device<public> := class<concrete><final>(creative_device_base):
     # Destroys the objective item. This is done regardless of the visibility or health of the item.
     Destroy<public>(Agent:agent):void = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
 # Used to temporarily modify the speed of `agent`s and vehicles.
 movement_modulator_device<public> := class<concrete><final>(creative_device_base):
     # Signaled when this device is activated by an `agent`.
@@ -995,12 +967,6 @@ map_indicator_device<public> := class<concrete><final>(creative_device_base):
     # Deactivates the objective pulse at `Agent`'s location.
     DeactivateObjectivePulse<public>(Agent:agent):void = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
 # Used to customize the state and accessibility of doors. `lock_device` only works with assets that have a door attached.
 lock_device<public> := class<concrete><final>(creative_device_base):
     # Locks the door. `Agent` is the instigator of the action.
@@ -1020,12 +986,6 @@ lock_device<public> := class<concrete><final>(creative_device_base):
 
     # Toggles between `Open` and `Close`. `Agent` is the instigator of the action.
     ToggleOpened<public>(Agent:agent):void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
 # Used to configuration and spawn items that players can pick up and use.
 item_spawner_device<public> := class<concrete><final>(base_item_spawner_device):
@@ -1111,11 +1071,7 @@ hud_message_device<public> := class<concrete><final>(creative_device_base):
 
 # Used to create a holographic screen that displays a clock or other curated images.
 holoscreen_device<public> := class<concrete><final>(creative_device_base):
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
 
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
 # Used to let `agent`s slide on any surface with accompanying visual and audio effects.
 grind_powerup_device<public> := class<concrete><final>(powerup_device):
@@ -1139,12 +1095,6 @@ fuel_pump_device<public> := class<concrete><final>(creative_device_base):
     # Grants fuel to `Agent`.
     Empty<public>(Agent:agent):void = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
 # Hazard which deals damage in a radius around it when destroyed or triggered.
 explosive_device<public> := class<concrete><final>(creative_device_base):
     # Signaled when this device explodes.
@@ -1162,12 +1112,6 @@ explosive_device<public> := class<concrete><final>(creative_device_base):
 
     # Triggers this device to explode. Passes `Agent` as the instigator of the explosion.
     Explode<public>(Agent:agent):void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
 # Used to customize high level properties of the game mode.
 experience_settings_device<public> := class<concrete><final>(creative_device_base):
@@ -1256,12 +1200,6 @@ conditional_button_device<public> := class<concrete><final>(creative_device_base
     # Returns if the `Agent` is currently holding the item stored at `KeyItemIndex`.
     IsHoldingItem<public>(Agent:agent, KeyItemIndex:int)<transacts><decides>:void = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
 # Used to create a tile that changes colors when `agent`s interact with it.
 color_changing_tiles_device<public> := class<concrete><final>(creative_device_base):
     # Signaled when this device changes color.
@@ -1286,12 +1224,6 @@ color_changing_tiles_device<public> := class<concrete><final>(creative_device_ba
     # Sets the color of the tile to `Agent`'s team color.
     SetTeam<public>(Agent:agent):void = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
 # Used to place a collectible item into the world.
 collectible_object_device<public> := class<concrete><final>(creative_device_base):
     # Signaled when the collectible item is collected.
@@ -1311,19 +1243,9 @@ collectible_object_device<public> := class<concrete><final>(creative_device_base
     # Immediately respawns the object for all agents.
     RespawnForAll<public>():void = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
 # Used together with `class_selector_device` to create class based gameplay. Defines custom class attributes and inventory loadouts.
 class_designer_device<public> := class<concrete><final>(creative_device_base):
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
 
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
 # Used together with `class_designer_device` to control how/when created classes can be accessed by `agent`s.
 class_and_team_selector_device<public> := class<concrete><final>(creative_device_base):
@@ -1353,12 +1275,6 @@ class_and_team_selector_device<public> := class<concrete><final>(creative_device
     # Changes the selecting team.
     ChangeSelectorTeam<public>(Agent:agent):void = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
 # Spawns and tracks a single item as a game objective (e.g. flag).
 capture_item_spawner_device<public> := class<concrete><final>(creative_device_base):
     # Signaled when spawned item is captured.
@@ -1382,12 +1298,6 @@ capture_item_spawner_device<public> := class<concrete><final>(creative_device_ba
 
     # Disables this device.
     Disable<public>():void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
 # Used to create a zone that can trigger effects once players enter it. Can be set up to be capturable by a team, to provide a score while held, or to require a specific item as a drop-off.
 capture_area_device<public> := class<concrete><final>(creative_device_base):
@@ -1476,12 +1386,6 @@ capture_area_device<public> := class<concrete><final>(creative_device_base):
     # Returns the *Capture Radius* (in meters) of the capture area.
     GetRadius<public>()<varies>:float = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
 # Used to create a button which can trigger other devices when an agent interacts with it.
 button_device<public> := class<concrete><final>(creative_device_base):
     # Signaled when an `agent` successfully interacts with the button for `GetInteractionTime` seconds.
@@ -1516,12 +1420,6 @@ button_device<public> := class<concrete><final>(creative_device_base):
     # Returns the number of times that this button can still be interacted with before it will be disabled. Will return `0` if `GetMaxTriggerCount` is unlimited.
     GetTriggerCountRemaining<public>()<transacts>:int = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
 # Used to display custom text messages on a billboard.
 billboard_device<public> := class<concrete><final>(creative_device_base):
     # Shows the billboard text.
@@ -1547,12 +1445,6 @@ billboard_device<public> := class<concrete><final>(creative_device_base):
 
     # Returns the *Text Size* of the device *Text*.
     GetTextSize<public>()<transacts>:int = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
 # Used to show an in world visual effect and/or a HUD marker at the desired location.
 beacon_device<public> := class<concrete><final>(creative_device_base):
@@ -1620,12 +1512,6 @@ air_vent_device<public> := class<concrete><final>(creative_device_base):
     # Activates this device.
     Activate<public>():void = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
 # Used to control a Battle Royale-style storm with up to 50 phases.
 # 
 # Like `basic_storm_controller_device`s, you can use this storm to keep players inside a playable area, but unlike the `basic_storm_controller_device`, this device generates multiple storm phases. When used in conjunction with `advanced_storm_beacon_device`s, you can customize each phase of the storm by applying one or more beacons and setting customization options for the specific phase you assign to that beacon.
@@ -1634,3 +1520,18 @@ advanced_storm_controller_device<public> := class<concrete><final>(storm_control
 
 # Used in conjunction with `advanced_storm_controller_device` to customize individual storm phases.
 advanced_storm_beacon_device<public> := class<concrete><final>(creative_device_base):
+    # Teleports the `advanced_storm_beacon_device` to the specified `Position` and `Rotation`. 
+    # Existing storms will not target the new location, but newly generated storms will.
+    TeleportTo<override>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
+
+    # Teleports the `advanced_storm_beacon_device` to the specified location defined by `Transform`, also applies rotation and scale accordingly. 
+    # Existing storms will not target the new location, but newly generated storms will.
+    TeleportTo<override>(Transform:transform)<transacts><decides>:void = external {}
+
+    # Moves the `advanced_storm_beacon_device` to the specified `Position` and `Rotation` over the specified time. 
+    # Existing storms will not target the new location, but newly generated storms will.
+    MoveTo<override>(Position:vector3, Rotation:rotation, OverTime:float)<suspends>:move_to_result = external {}
+
+    # Moves the `advanced_storm_beacon_device` to the specified `Transform` over the specified time. 
+    # Existing storms will not target the new location, but newly generated storms will.
+    MoveTo<override>(Transform:transform, OverTime:float)<suspends>:move_to_result = external {}
