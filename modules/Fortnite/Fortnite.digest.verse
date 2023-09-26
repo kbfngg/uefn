@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-26.10-CL-27681420
+# Generated from build: ++Fortnite+Release-26.20-CL-28096793
 #################################################
 
 using {/Verse.org/Colors}
@@ -376,6 +376,18 @@ Devices<public> := module:
         # Otherwise a runtime error will result.
         GetTransform<override>()<transacts>:transform = external {}
 
+        # Teleports the `creative_object` to the specified `Position` and `Rotation`.
+        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
+
+        # Teleports the `creative_object` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
+        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
+
+        # Moves the `creative_object` to the specified `Position` and `Rotation` over the specified time. If an animation is currently playing on the `creative_object` it will be stopped and put into the `AnimationNotSet` state.
+        MoveTo<public>(Position:vector3, Rotation:rotation, OverTime:float)<suspends>:move_to_result = external {}
+
+        # Moves the `creative_object` to the specified `Transform` over the specified time. If an animation is currently playing on the `creative_object` it will be stopped and put into the `AnimationNotSet` state.
+        MoveTo<public>(Transform:transform, OverTime:float)<suspends>:move_to_result = external {}
+
     # Returns an array containing all creative objects which have been marked with the specified `Tag`.
     GetCreativeObjectsWithTag<native><public>(Tag:tag)<transacts>:[]creative_object_interface
 
@@ -395,18 +407,6 @@ Devices<public> := module:
 
         # Succeeds if this object has not been disposed of either via `Dispose()` or through an external system.
         IsValid<native><override>()<transacts><decides>:void
-
-        # Teleports the `creative_prop` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `creative_prop` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
-        # Moves the `creative_prop` to the specified `Position` and `Rotation` over the specified time. If an animation is currently playing on the `creative_prop` it will be stopped and put into the `AnimationNotSet` state.
-        MoveTo<public>(Position:vector3, Rotation:rotation, OverTime:float)<suspends>:move_to_result = external {}
-
-        # Moves the `creative_prop` to the specified `Transform` over the specified time. If an animation is currently playing on the `creative_prop` it will be stopped and put into the `AnimationNotSet` state.
-        MoveTo<public>(Transform:transform, OverTime:float)<suspends>:move_to_result = external {}
 
         # Changes the Mesh used by this instance.
         SetMesh<native><public>(Mesh:mesh)<transacts>:void
@@ -539,12 +539,6 @@ Devices<public> := module:
         # Gets the time (in seconds) which must pass after triggering, before this device informs other external devices that it has been triggered.
         GetTransmitDelay<public>()<transacts>:float = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
     # A trap device that destroys the tile it's placed on when activated.
     trick_tile_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when the tile this device is attached to is removed. This may occur later than `TriggeredEvent` if *Activation Delay* is set on the device.
@@ -578,6 +572,22 @@ Devices<public> := module:
 
         # Triggers the device, removing the associated tile.
         Trigger<public>():void = external {}
+
+        # Teleports the `trick_tile_device` to the specified `Position` and `Rotation`. 
+        # Only the trigger will teleport, the target buildings will not change. 
+        TeleportTo<override>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
+
+        # Teleports the `trick_tile_device` to the specified location defined by `Transform`, also applies rotation and scale accordingly. 
+        # Only the trigger will teleport, the target buildings will not change. 
+        TeleportTo<override>(Transform:transform)<transacts><decides>:void = external {}
+
+        # Moves the `trick_tile_device` to the specified `Position` and `Rotation` over the specified time. 
+        # Only the trigger will move, the target buildings will not change. 
+        MoveTo<override>(Position:vector3, Rotation:rotation, OverTime:float)<suspends>:move_to_result = external {}
+
+        # Moves the `trick_tile_device` to the specified `Transform` over the specified time. 
+        # Only the trigger will move, the target buildings will not change. 
+        MoveTo<override>(Transform:transform, OverTime:float)<suspends>:move_to_result = external {}
 
     # Allows creation and HUD tracking of custom objectives for `agent`s to complete.
     tracker_device<public> := class<concrete><final>(creative_device_base):
@@ -799,12 +809,6 @@ Devices<public> := module:
         # Returns the maximum duration of the timer (in seconds).
         GetMaxDuration<public>()<transacts>:float = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
         # Succeeds if this device is tracking timer state for each individual `agent` independently. Fails if state is being tracked globally for all `agent`'s.
         IsStatePerAgent<public>()<transacts><decides>:void = external {}
 
@@ -863,12 +867,6 @@ Devices<public> := module:
 
         # Completes the objective with `Agent` acting as the user the interacted this device.
         Complete<public>(Agent:agent):void = external {}
-
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
     # Customizable rift that allows `agent`s to move instantly between locations. You can use this to move players around your island, or create multi-island experiences with teleporters that take players from one island to another.
     teleporter_device<public> := class<concrete><final>(creative_device_base):
@@ -940,6 +938,22 @@ Devices<public> := module:
 
         # Destroys the storm.
         DestroyStorm<public>():void = external {}
+
+        # Teleports the `storm_controller_device` to the specified `Position` and `Rotation`. 
+        # Existing storms will not target the new location, but newly generated storms will.
+        TeleportTo<override>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
+
+        # Teleports the `storm_controller_device` to the specified location defined by `Transform`, also applies rotation and scale accordingly. 
+        # Existing storms will not target the new location, but newly generated storms will.
+        TeleportTo<override>(Transform:transform)<transacts><decides>:void = external {}
+
+        # Moves the `storm_controller_device` to the specified `Position` and `Rotation` over the specified time. 
+        # Existing storms will not target the new location, but newly generated storms will.
+        MoveTo<override>(Position:vector3, Rotation:rotation, OverTime:float)<suspends>:move_to_result = external {}
+
+        # Moves the `storm_controller_device` to the specified `Transform` over the specified time. 
+        # Existing storms will not target the new location, but newly generated storms will.
+        MoveTo<override>(Transform:transform, OverTime:float)<suspends>:move_to_result = external {}
 
     # A set of customizable pop up targets that can be hit by players to trigger various events.
     shooting_range_target_track_device<public> := class<concrete><final>(creative_device_base):
@@ -1105,12 +1119,6 @@ Devices<public> := module:
         # Returns the current score for `Agent`.
         GetCurrentScore<public>(Agent:agent)<transacts>:int = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
     # Used to customize gameplay for any round-based game. It generally defines what happens to the`agent`'s inventory and rewards in each round.
     round_settings_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when a game round starts.
@@ -1136,12 +1144,6 @@ Devices<public> := module:
 
         # Ends the round immediately with `Agent`'s team set as the winner of the round.
         EndRound<public>(Agent:agent):void = external {}
-
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
     # Used to generate random numbers between a minimum and maximum value. Events are signaled when numbers are generated.
     #  * *Value Limit 1* is the minimum value for generation.
@@ -1199,12 +1201,6 @@ Devices<public> := module:
 
         # Removes all previously registered agents as targets for the Radio to play audio from
         UnregisterAll<public>():void = external {}
-
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
         # Shows this device in the world.
         Show<public>()<transacts>:void = external {}
@@ -1332,12 +1328,6 @@ Devices<public> := module:
         # Requires *Apply To* set to *All Players*.
         Pickup<public>():void = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
     # Used to move, damage, and give scores to players that interact with it. By default, it is activated by any player touching its front face, which rotates it counterclockwise and knocks those players away from it and slightly upward.
     pinball_flipper_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when this device is activated by an `agent`.
@@ -1353,12 +1343,6 @@ Devices<public> := module:
         # Causes `Agent` to activate this device.
         Activate<public>(Agent:agent):void = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
     # A triggered bumper that can knock players back, damage them, and award points.
     pinball_bumper_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when this device is activated by an `agent`.
@@ -1373,12 +1357,6 @@ Devices<public> := module:
 
         # Activates this device.
         Activate<public>():void = external {}
-
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
     # Specialized `trigger_base_device` that will fire output events based on line of sight between `agent`s and the device.
     perception_trigger_device<public> := class<concrete><final>(trigger_base_device):
@@ -1419,12 +1397,6 @@ Devices<public> := module:
         # Destroys the objective item. This is done regardless of the visibility or health of the item.
         Destroy<public>(Agent:agent):void = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
     # Used to temporarily modify the speed of `agent`s and vehicles.
     movement_modulator_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when this device is activated by an `agent`.
@@ -1462,12 +1434,6 @@ Devices<public> := module:
         # Deactivates the objective pulse at `Agent`'s location.
         DeactivateObjectivePulse<public>(Agent:agent):void = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
     # Used to customize the state and accessibility of doors. `lock_device` only works with assets that have a door attached.
     lock_device<public> := class<concrete><final>(creative_device_base):
         # Locks the door. `Agent` is the instigator of the action.
@@ -1487,12 +1453,6 @@ Devices<public> := module:
 
         # Toggles between `Open` and `Close`. `Agent` is the instigator of the action.
         ToggleOpened<public>(Agent:agent):void = external {}
-
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
     # Used to configuration and spawn items that players can pick up and use.
     item_spawner_device<public> := class<concrete><final>(base_item_spawner_device):
@@ -1578,11 +1538,6 @@ Devices<public> := module:
 
     # Used to create a holographic screen that displays a clock or other curated images.
     holoscreen_device<public> := class<concrete><final>(creative_device_base):
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
     # Used to let `agent`s slide on any surface with accompanying visual and audio effects.
     grind_powerup_device<public> := class<concrete><final>(powerup_device):
@@ -1605,12 +1560,6 @@ Devices<public> := module:
         # Grants fuel to `Agent`.
         Empty<public>(Agent:agent):void = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
     # Hazard which deals damage in a radius around it when destroyed or triggered.
     explosive_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when this device explodes.
@@ -1628,12 +1577,6 @@ Devices<public> := module:
 
         # Triggers this device to explode. Passes `Agent` as the instigator of the explosion.
         Explode<public>(Agent:agent):void = external {}
-
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
     # Used to customize high level properties of the game mode.
     experience_settings_device<public> := class<concrete><final>(creative_device_base):
@@ -1721,12 +1664,6 @@ Devices<public> := module:
         # Returns if the `Agent` is currently holding the item stored at `KeyItemIndex`.
         IsHoldingItem<public>(Agent:agent, KeyItemIndex:int)<transacts><decides>:void = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
     # Used to create a tile that changes colors when `agent`s interact with it.
     color_changing_tiles_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when this device changes color.
@@ -1751,12 +1688,6 @@ Devices<public> := module:
         # Sets the color of the tile to `Agent`'s team color.
         SetTeam<public>(Agent:agent):void = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
     # Used to place a collectible item into the world.
     collectible_object_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when the collectible item is collected.
@@ -1776,19 +1707,8 @@ Devices<public> := module:
         # Immediately respawns the object for all agents.
         RespawnForAll<public>():void = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
     # Used together with `class_selector_device` to create class based gameplay. Defines custom class attributes and inventory loadouts.
     class_designer_device<public> := class<concrete><final>(creative_device_base):
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
     # Used together with `class_designer_device` to control how/when created classes can be accessed by `agent`s.
     class_and_team_selector_device<public> := class<concrete><final>(creative_device_base):
@@ -1818,12 +1738,6 @@ Devices<public> := module:
         # Changes the selecting team.
         ChangeSelectorTeam<public>(Agent:agent):void = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
     # Spawns and tracks a single item as a game objective (e.g. flag).
     capture_item_spawner_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when spawned item is captured.
@@ -1847,12 +1761,6 @@ Devices<public> := module:
 
         # Disables this device.
         Disable<public>():void = external {}
-
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
     # Used to create a zone that can trigger effects once players enter it. Can be set up to be capturable by a team, to provide a score while held, or to require a specific item as a drop-off.
     capture_area_device<public> := class<concrete><final>(creative_device_base):
@@ -1941,12 +1849,6 @@ Devices<public> := module:
         # Returns the *Capture Radius* (in meters) of the capture area.
         GetRadius<public>()<varies>:float = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
     # Used to create a button which can trigger other devices when an agent interacts with it.
     button_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when an `agent` successfully interacts with the button for `GetInteractionTime` seconds.
@@ -1981,12 +1883,6 @@ Devices<public> := module:
         # Returns the number of times that this button can still be interacted with before it will be disabled. Will return `0` if `GetMaxTriggerCount` is unlimited.
         GetTriggerCountRemaining<public>()<transacts>:int = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
     # Used to display custom text messages on a billboard.
     billboard_device<public> := class<concrete><final>(creative_device_base):
         # Shows the billboard text.
@@ -2012,12 +1908,6 @@ Devices<public> := module:
 
         # Returns the *Text Size* of the device *Text*.
         GetTextSize<public>()<transacts>:int = external {}
-
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
     # Used to show an in world visual effect and/or a HUD marker at the desired location.
     beacon_device<public> := class<concrete><final>(creative_device_base):
@@ -2084,12 +1974,6 @@ Devices<public> := module:
         # Activates this device.
         Activate<public>():void = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
     # Used to control a Battle Royale-style storm with up to 50 phases.
     # 
     # Like `basic_storm_controller_device`s, you can use this storm to keep players inside a playable area, but unlike the `basic_storm_controller_device`, this device generates multiple storm phases. When used in conjunction with `advanced_storm_beacon_device`s, you can customize each phase of the storm by applying one or more beacons and setting customization options for the specific phase you assign to that beacon.
@@ -2097,9 +1981,21 @@ Devices<public> := module:
 
     # Used in conjunction with `advanced_storm_controller_device` to customize individual storm phases.
     advanced_storm_beacon_device<public> := class<concrete><final>(creative_device_base):
+        # Teleports the `advanced_storm_beacon_device` to the specified `Position` and `Rotation`. 
+        # Existing storms will not target the new location, but newly generated storms will.
+        TeleportTo<override>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
 
-    # Spawns a lightweight vehicle made for defying gravity with its rocket boosting, jumping, and aerial maneuverability capabilities.
-    vehicle_spawner_octane_device<public> := class<concrete><final>(vehicle_spawner_device):
+        # Teleports the `advanced_storm_beacon_device` to the specified location defined by `Transform`, also applies rotation and scale accordingly. 
+        # Existing storms will not target the new location, but newly generated storms will.
+        TeleportTo<override>(Transform:transform)<transacts><decides>:void = external {}
+
+        # Moves the `advanced_storm_beacon_device` to the specified `Position` and `Rotation` over the specified time. 
+        # Existing storms will not target the new location, but newly generated storms will.
+        MoveTo<override>(Position:vector3, Rotation:rotation, OverTime:float)<suspends>:move_to_result = external {}
+
+        # Moves the `advanced_storm_beacon_device` to the specified `Transform` over the specified time. 
+        # Existing storms will not target the new location, but newly generated storms will.
+        MoveTo<override>(Transform:transform, OverTime:float)<suspends>:move_to_result = external {}
 
     # Used to spawn an `agent` on an island. Use multiple `player_spawner_device`s to spawn multiple `agent`s.
     player_spawner_device<public> := class<concrete><final>(creative_device_base):
@@ -2112,12 +2008,6 @@ Devices<public> := module:
 
         # Disables this device.
         Disable<public>():void = external {}
-
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
     # Used to relay `agent` statistics to other devices and `agent`s. Can transmit statistics such as elimination count, eliminated count, or scores when certain conditions are met. Can also project a hologram of the `agent` and display text that can be altered in various positions and curvatures.
     player_reference_device<public> := class<concrete><final>(creative_device_base):
@@ -2165,6 +2055,9 @@ Devices<public> := module:
         # Returns the stat value that this device is currently tracking
         GetStatValue<public>():int = external {}
 
+    # Spawns a lightweight vehicle made for defying gravity with its rocket boosting, jumping, and aerial maneuverability capabilities.
+    vehicle_spawner_octane_device<public> := class<concrete><final>(vehicle_spawner_device):
+
     # Used to select, spawn, and configure a skeletal mesh to play a specific animation.
     animated_mesh_device<public> := class<concrete><final>(creative_device_base):
         # Starts or resumes playback of the animation.
@@ -2176,28 +2069,37 @@ Devices<public> := module:
         # Starts or resumes reverse playback of the animation.
         PlayReverse<public>():void = external {}
 
-    # Used to allow players to select their *Class* from a *Class Selector UI*.
-    class_selector_ui_device<public> := class<concrete><final>(creative_device_base):
-        # Signaled when an `agent` selects a class.
-        # Sends the `agent` that selected a class.
-        ClassSelectedEvent<public>:listenable(agent) = external {}
+    # Used to create a customizable turret that can search for nearby targets.
+    automated_turret_device<public> := class<concrete><final>(creative_device_base):
+        # Triggers when someone enters the activation radius while nobody else is there.
+        # Sends the activating `agent`. If the activator is a non-agent then `false` is returned.
+        ActivatedEvent<public>:listenable(?agent) = external {}
 
-        # Signaled when an `agent` closes the UI.
-        # Sends the `agent` that closed the UI.
-        UIClosedEvent<public>:listenable(agent) = external {}
+        # Triggers when the turret is damaged.
+        # Sends the triggering `agent`. If the activator is a non-agent then `false` is returned.
+        DamagedEvent<public>:listenable(?agent) = external {}
 
-        # Signaled when the UI is opened.
-        # Sends the `agent` that is responsible for opening the UI.
-        UIOpenedEvent<public>:listenable(agent) = external {}
+        # Triggers when the turret is destroyed.
+        # Sends the triggering `agent`. If the activator is a non-agent then `false` is returned.
+        DestroyedEvent<public>:listenable(?agent) = external {}
 
-        # Enables this device.
+        # Enables the turret to rotate, target, and track.
         Enable<public>():void = external {}
 
-        # Disables this device.
+        # Disables the turret, causing it to close and ignore its activation radius.
         Disable<public>():void = external {}
 
-        # Show the *Class Selector UI* to `Agent`.
-        Show<public>(Agent:agent):void = external {}
+        # Set the turret to the Default Team.
+        #  * Only usable if `Possible Targets` is not set to `Everyone`.
+        UseDefaultTeam<public>():void = external {}
+
+        # Set the turret to the Wildlife & Creatures team.
+        #  * Only usable if `Possible Targets` is not set to `Everyone`.
+        UseTeamWildlifeAndCreatures<public>():void = external {}
+
+        # Set the turret to the same team as the supplied `Agent`.
+        #  * Only usable if `Possible Targets` is not set to `Everyone`.
+        SetTeam<public>(Agent:agent):void = external {}
 
     # Used to trigger level sequences that allow coordination of cinematic animation, transformation, and audio tracks.
     cinematic_sequence_device<public> := class<concrete><final>(creative_device_base):
@@ -2234,11 +2136,28 @@ Devices<public> := module:
         # Toggles between `Play` and `Stop`. An instigating 'Agent' is required when the device is set to anything except *Everyone*.
         TogglePause<public>(Agent:agent):void = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
+    # Used to allow players to select their *Class* from a *Class Selector UI*.
+    class_selector_ui_device<public> := class<concrete><final>(creative_device_base):
+        # Signaled when an `agent` selects a class.
+        # Sends the `agent` that selected a class.
+        ClassSelectedEvent<public>:listenable(agent) = external {}
 
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
+        # Signaled when an `agent` closes the UI.
+        # Sends the `agent` that closed the UI.
+        UIClosedEvent<public>:listenable(agent) = external {}
+
+        # Signaled when the UI is opened.
+        # Sends the `agent` that is responsible for opening the UI.
+        UIOpenedEvent<public>:listenable(agent) = external {}
+
+        # Enables this device.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        Disable<public>():void = external {}
+
+        # Show the *Class Selector UI* to `Agent`.
+        Show<public>(Agent:agent):void = external {}
 
     # Used to create plants with explosive pods that players can detonate and launch.
     wilds_plant_device<public> := class<concrete><final>(creative_device_base):
@@ -2335,12 +2254,6 @@ Devices<public> := module:
 
         # Extinguishes this device.
         Extinguish<public>(Agent:agent):void = external {}
-
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
     # Spawns a crowd to cheer you on.
     crowd_volume_device<public> := class<concrete><final>(creative_device_base):
@@ -2443,12 +2356,6 @@ Devices<public> := module:
         # Returns the spawn limit of the device.
         GetSpawnLimit<public>()<transacts>:int = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
     # Specialized `vehicle_spawner_device` that allows a helicopter to be configured and spawned.
     vehicle_spawner_helicopter_device<public> := class<concrete><final>(vehicle_spawner_device):
 
@@ -2465,95 +2372,6 @@ Devices<public> := module:
 
     # Specialized `vehicle_spawner_device` that allows an anti-vehicle turret to be configured and spawned.
     vehicle_spawner_heavy_turret_device<public> := class<concrete><final>(vehicle_spawner_device):
-
-    # Used to configure a single interactive mannequin, that can visualize characters, clothing, and perform emotes.
-    character_device<public> := class<concrete>(creative_device_base):
-        # Signaled when an `agent` interacts with this device.
-        # Sends the `agent` that interacted with this device.
-        InteractedWithEvent<public>:listenable(agent) = external {}
-
-        # Enables this device.
-        Enable<public>():void = external {}
-
-        # Disables this device.
-        Disable<public>():void = external {}
-
-        # Shows this device.
-        Show<public>():void = external {}
-
-        # Hides this device.
-        Hide<public>():void = external {}
-
-        # Plays an emote on the character created by this device.
-        PlayEmote<public>():void = external {}
-
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
-    # Used to create HUD text boxes that give players information, and allows responses to be customized to player choices.
-    popup_dialog_device<public> := class<concrete><final>(creative_device_base):
-        # Signaled when *Button <Index>* on this device is pushed by an `agent`.
-        # Sends the `agent` that pushed the button.
-        # Sends the `int` index of the clicked the button.
-        RespondingButtonEvent<public>:listenable(tuple(agent, int)) = external {}
-
-        # Signaled when this device is shown to an `agent`.
-        # Sends the `agent` looking at the popup.
-        ShownEvent<public>:listenable(agent) = external {}
-
-        # Signaled when this device is dismissed by an `agent`.
-        # Sends the `agent` who dismissed the popup.
-        DismissedEvent<public>:listenable(agent) = external {}
-
-        # Signaled when this device times out while an `agent` is looking at it.
-        # Sends the `agent` who was looking at the popup.
-        TimeOutEvent<public>:listenable(agent) = external {}
-
-        # Enables this device.
-        Enable<public>():void = external {}
-
-        # Disables this device.
-        Disable<public>():void = external {}
-
-        # Shows the popup to `Agent`.
-        Show<public>(Agent:agent):void = external {}
-
-        # Shows the popup to all `agent`s in the experience.
-        Show<public>():void = external {}
-
-        # Hides the popup from `Agent`.
-        Hide<public>(Agent:agent):void = external {}
-
-        # Hides the popup from all `agent`s in the experience.
-        Hide<public>():void = external {}
-
-        # Sets the number of buttons this popup has.
-        # Button Count is not updated on active Popups.
-        SetButtonCount<public>(Count:int):void = external {}
-
-        # Returns the *Button Text* for this popup at a specified index.
-        GetButtonText<public>(Index:int)<transacts>:[]char = external {}
-
-        # Sets the *Button Text* for a button at a specific index on this popup.
-        #  * `Text` should be no more than `8` characters.
-        #  * If `Text` is empty the button will show *OK* instead.
-        #  * Button 1 uses `Index` 0.
-        SetButtonText<public>(Text:message, Index:int):void = external {}
-
-        # Sets the *Description* text for this popup. `Text` should be no more than `350` characters.
-        SetDescriptionText<public>(Text:message):void = external {}
-
-        # Returns the *Description* text for this popup.
-        GetDescriptionText<public>()<transacts>:[]char = external {}
-
-        # Sets the *Title* text for this popup. `Text` should be no more than `32` characters.
-        SetTitleText<public>(Text:message):void = external {}
-
-        # Returns the *Title* text for this popup.
-        GetTitleText<public>()<transacts>:[]char = external {}
 
     # Specialized `vehicle_spawner_device` that allows a siege cannon to be configured and spawned.
     vehicle_spawner_siege_cannon_device<public> := class<concrete><final>(vehicle_spawner_device):
@@ -2629,12 +2447,6 @@ Devices<public> := module:
         # Registers this checkpoint for `Agent`. This sets the respawn point and can clear `Agent`'s inventory depending on this device's settings. Multiple `agent`s can be registered to this device at one time.
         Register<public>(Agent:agent):void = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
     # Used to mark an `agent`'s position on the minimap and configure the information shown for marked `agent`s.
     # 
     # Example configuration options:
@@ -2675,32 +2487,6 @@ Devices<public> := module:
 
         # Detaches markers from all marked `agent`s.
         DetachFromAll<public>():void = external {}
-
-    # Used to trigger in game events based on real world time.
-    real_time_clock_device<public> := class<concrete><final>(creative_device_base):
-        # Signaled when the optional second *Duration* time has been reached.
-        DurationElapsedEvent<public>:listenable(tuple()) = external {}
-
-        # Signaled when the target time is reached.
-        TimeReachedEvent<public>:listenable(tuple()) = external {}
-
-        # Signaled when this device is enabled after the target time has been reached.
-        EnablingAfterTimeReachedEvent<public>:listenable(tuple()) = external {}
-
-        # Signaled when this device is enabled before the target time has been reached.
-        EnablingBeforeTimeReachedEvent<public>:listenable(tuple()) = external {}
-
-        # Enables this device.
-        Enable<public>():void = external {}
-
-        # Disables this device.
-        Disable<public>():void = external {}
-
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
     # Used to move around a building or prop, and customize responses to various collision event types.
     prop_mover_device<public> := class<concrete><final>(creative_device_base):
@@ -2764,6 +2550,29 @@ Devices<public> := module:
 
         # Returns the speed (in meters per second) at which the prop mover will move the prop to its destination.
         GetTargetSpeed<public>()<transacts>:float = external {}
+
+    # Used to trigger in game events based on real world time.
+    real_time_clock_device<public> := class<concrete><final>(creative_device_base):
+        # Signaled when the optional second *Duration* time has been reached.
+        DurationElapsedEvent<public>:listenable(tuple()) = external {}
+
+        # Signaled when the target time is reached.
+        TimeReachedEvent<public>:listenable(tuple()) = external {}
+
+        # Signaled when this device is enabled after the target time has been reached.
+        EnablingAfterTimeReachedEvent<public>:listenable(tuple()) = external {}
+
+        # Signaled when this device is enabled before the target time has been reached.
+        EnablingBeforeTimeReachedEvent<public>:listenable(tuple()) = external {}
+
+        # Enables this device.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        Disable<public>():void = external {}
+
+    # Specialized `vehicle_spawner_device` that allows a tank to be configured and spawned.
+    vehicle_spawner_tank_device<public> := class<concrete><final>(vehicle_spawner_device):
 
     using {/Fortnite.com/Vehicles}
     # Specialized `vehicle_spawner_device` that allows a Whiplash sports car to be configured and spawned.
@@ -2853,8 +2662,117 @@ Devices<public> := module:
     # Specialized `vehicle_spawner_device` that allows an ATK (all terrain kart) to be configured and spawned.
     vehicle_spawner_atk_device<public> := class<concrete><final>(vehicle_spawner_device):
 
-    # Specialized `vehicle_spawner_device` that allows a tank to be configured and spawned.
-    vehicle_spawner_tank_device<public> := class<concrete><final>(vehicle_spawner_device):
+    # Used to create a zone where players are put into a skydive state. Can customize the amount of force used to push the player, and how fast players are launched into the air. The direction of the push is in relation to the device, so you can rotate and overlap several devices, then use variable speeds to create pneumatic tubes that propel players in different directions. You can even create unique traversal (traveling) options, where players can use these zones to reach places on your island they couldn't reach any other way.
+    skydive_volume_device<public> := class<concrete><final>(effect_volume_device):
+        # Signaled when an `agent` enters the volume.
+        # Sends the `agent` that entered the volume.
+        AgentEntersEvent<public>:listenable(agent) = external {}
+
+        # Signaled when an `agent` exits the volume.
+        # Sends the `agent` that exited the volume.
+        AgentExitsEvent<public>:listenable(agent) = external {}
+
+        # Signaled when the zone changes from empty to occupied.
+        # Sends the `agent` that entered the volume.
+        ZoneOccupiedEvent<public>:listenable(agent) = external {}
+
+        # Signaled when the zone changes from occupied to empty.
+        # Sends the `agent` that last left the volume.
+        ZoneEmptiedEvent<public>:listenable(agent) = external {}
+
+        # Enables volume locking which prevents users from leaving the volume once they've entered.
+        EnableVolumeLocking<public>():void = external {}
+
+        # Disables volume locking which prevents users from leaving the volume once they've entered.
+        DisableVolumeLocking<public>():void = external {}
+
+        # Is true when `Agent` is in the volume.
+        IsInVolume<public>(Agent:agent)<transacts><decides>:void = external {}
+
+    # Used to specify a zone where custom gameplay effects can be applied (e.g. gravity, no build, no weapons).
+    mutator_zone_device<public> := class<concrete><final>(effect_volume_device):
+        # Signaled when an `agent` in this zone begins emoting. This will not signal if the `agent` is on the *Safe Team* or if *Affects Players* is disabled.
+        # Sends the `agent` that started emoting.
+        AgentBeginsEmotingEvent<public>:listenable(agent) = external {}
+
+        # Signaled when an `agent` in this zone ends emoting. This will not signal if the `agent` is on the *Safe Team* or if *Affects Players* is disabled.
+        # Sends the `agent` that stopped emoting.
+        AgentEndsEmotingEvent<public>:listenable(agent) = external {}
+
+        # Signaled when an `agent` enters this zone.
+        # Sends the `agent` entering this zone.
+        AgentEntersEvent<public>:listenable(agent) = external {}
+
+        # Signaled when an `agent` exits this zone.
+        # Sends the `agent` exiting this zone.
+        AgentExitsEvent<public>:listenable(agent) = external {}
+
+        # Updates *Selected Class* to `Agent`'s class.
+        UpdateSelectedClass<public>(Agent:agent):void = external {}
+
+        # Updates *Selected Team* to `Agent`'s team.
+        UpdateSelectedTeam<public>(Agent:agent):void = external {}
+
+        # Is true when `Agent` is in the zone.
+        IsInVolume<public>(Agent:agent)<transacts><decides>:void = external {}
+
+    # Used to specify an area which allows (or prevents) various objects, terrain, or buildings from being set on fire.
+    fire_volume_device<public> := class<concrete><final>(effect_volume_device):
+        # Extinguishes objects inside this device area.
+        Extinguish<public>():void = external {}
+
+        # Ignites objects inside this device area.
+        Ignite<public>():void = external {}
+
+    # Base class for types of volumes with special gameplay properties.
+    effect_volume_device<public> := class<abstract><epic_internal>(creative_device_base):
+        # Enables this device.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        Disable<public>():void = external {}
+
+    # Used to specify an area volume which can damage `agent`s, vehicles, and creatures.
+    damage_volume_device<public> := class<concrete><final>(effect_volume_device):
+        # Signaled when an `agent` enters the volume.
+        # Sends the `agent` entering the volume.
+        AgentEntersEvent<public>:listenable(agent) = external {}
+
+        # Signaled when an `agent` exits the volume.
+        # Sends the `agent` exiting the volume.
+        AgentExitsEvent<public>:listenable(agent) = external {}
+
+        # Updates *Selected Class* to `Agent`'s class.
+        UpdateSelectedClass<public>(Agent:agent):void = external {}
+
+        # Updates *Selected Team* to `Agent`'s team.
+        UpdateSelectedTeam<public>(Agent:agent):void = external {}
+
+        # Sets the damage to be applied each tick within the volume. `Damage` is clamped between `1` and `500`.
+        SetDamage<public>(Damage:int):void = external {}
+
+        # Returns the damage to be applied each tick within the volume.
+        GetDamage<public>()<transacts>:int = external {}
+
+        # Is true when `Agent` is in the zone.
+        IsInVolume<public>(Agent:agent)<transacts><decides>:void = external {}
+
+    # Creates an impenetrable zone that can block `agent` movement and weapon fire.
+    barrier_device<public> := class<concrete><final>(creative_device_base):
+        # Enables this device.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        Disable<public>():void = external {}
+
+        # Adds the specified `agent` to a list of additional `agent`s that the Barrier should ignore. This list is in addition to the Ignore Team and Ignore Class options. Note: Has no effect on bullets.
+        AddToIgnoreList<public>(Agent:agent):void = external {}
+
+        # Removes the specified `agent` from the ignore list. The `agent` will still be ignored if they are on an ignored team or of an ignored class.
+        RemoveFromIgnoreList<public>(Agent:agent):void = external {}
+
+        # Removes all `agent`s from the ignore list. `Agent`s will still be ignored if they are on an ignored team or of an ignored class.
+        RemoveAllFromIgnoreList<public>():void = external {}
 
     # Used to allow agents to turn other linked devices on/off or other custom state changes.
     switch_device<public> := class<concrete><final>(creative_device_base):
@@ -2943,135 +2861,37 @@ Devices<public> := module:
         # Sets the *Turn Off Text* to be displayed to a user when the switch is currently on, and offers an interaction to switch it off. Clamped to 150 characters.
         SetTurnOffInteractionText<public>(Text:message):void = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
+        # Sets the state of the switch to a specific value for a specific `Agent`.
+        #  Use when the device has *Store State Per Player* set to *Yes*.
+        SetState<public>(Agent:agent, State:logic):void = external {}
 
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
+        # Sets the state of the switch to a specific value.
+        #  Use when the device has *Store State Per Player* set to *No*.
+        SetState<public>(State:logic):void = external {}
 
-    # Used to create a zone where players are put into a skydive state. Can customize the amount of force used to push the player, and how fast players are launched into the air. The direction of the push is in relation to the device, so you can rotate and overlap several devices, then use variable speeds to create pneumatic tubes that propel players in different directions. You can even create unique traversal (traveling) options, where players can use these zones to reach places on your island they couldn't reach any other way.
-    skydive_volume_device<public> := class<concrete><final>(effect_volume_device):
-        # Signaled when an `agent` enters the volume.
-        # Sends the `agent` that entered the volume.
-        AgentEntersEvent<public>:listenable(agent) = external {}
+        # Updates the *State Reset Time* for the device, clamped to the Min and Max defined in the device.
+        #  This will not apply to any state reset timers currently in effect.
+        #  Set to 0.0 to disable the State Reset Time. Set to less than 0.0 to reset to default.
+        SetStateResetTime<public>(Time:float):void = external {}
 
-        # Signaled when an `agent` exits the volume.
-        # Sends the `agent` that exited the volume.
-        AgentExitsEvent<public>:listenable(agent) = external {}
+        # Updates the *State Reset Time* for the device, for a specific player (if *Store State Per Player* is *Yes*), clamped to the Min and Max defined in the device.
+        #  This will not apply to any state reset timers currently in effect.
+        #  Set to 0.0 to disable the State Reset Time. Set to less than 0.0 to reset to default.
+        SetStateResetTime<public>(Agent:agent, Time:float):void = external {}
 
-        # Signaled when the zone changes from empty to occupied.
-        # Sends the `agent` that entered the volume.
-        ZoneOccupiedEvent<public>:listenable(agent) = external {}
+        # Returns the value of *State Reset Time* for the device. Returns -1.0 if *State Reset Time* is not used.
+        GetStateResetTime<public>()<transacts>:float = external {}
 
-        # Signaled when the zone changes from occupied to empty.
-        # Sends the `agent` that last left the volume.
-        ZoneEmptiedEvent<public>:listenable(agent) = external {}
+        # Returns the value of *State Reset Time* for the device, for a specific player. Returns -1.0 if *State Reset Time* is not used.
+        GetStateResetTime<public>(Agent:agent)<transacts>:float = external {}
 
-        # Enables volume locking which prevents users from leaving the volume once they've entered.
-        EnableVolumeLocking<public>():void = external {}
+        # Returns the time before the switch will reset itself to default.
+        #  Returns -1.0 if *Store State Per Player* is *Yes* or if  there is no active reset timer.
+        GetCurrentResetTime<public>():float = external {}
 
-        # Disables volume locking which prevents users from leaving the volume once they've entered.
-        DisableVolumeLocking<public>():void = external {}
-
-        # Is true when `Agent` is in the volume.
-        IsInVolume<public>(Agent:agent)<transacts><decides>:void = external {}
-
-    # Used to specify a zone where custom gameplay effects can be applied (e.g. gravity, no build, no weapons).
-    mutator_zone_device<public> := class<concrete><final>(effect_volume_device):
-        # Signaled when an `agent` in this zone begins emoting. This will not signal if the `agent` is on the *Safe Team* or if *Affects Players* is disabled.
-        # Sends the `agent` that started emoting.
-        AgentBeginsEmotingEvent<public>:listenable(agent) = external {}
-
-        # Signaled when an `agent` in this zone ends emoting. This will not signal if the `agent` is on the *Safe Team* or if *Affects Players* is disabled.
-        # Sends the `agent` that stopped emoting.
-        AgentEndsEmotingEvent<public>:listenable(agent) = external {}
-
-        # Signaled when an `agent` enters this zone.
-        # Sends the `agent` entering this zone.
-        AgentEntersEvent<public>:listenable(agent) = external {}
-
-        # Signaled when an `agent` exits this zone.
-        # Sends the `agent` exiting this zone.
-        AgentExitsEvent<public>:listenable(agent) = external {}
-
-        # Updates *Selected Class* to `Agent`'s class.
-        UpdateSelectedClass<public>(Agent:agent):void = external {}
-
-        # Updates *Selected Team* to `Agent`'s team.
-        UpdateSelectedTeam<public>(Agent:agent):void = external {}
-
-        # Is true when `Agent` is in the zone.
-        IsInVolume<public>(Agent:agent)<transacts><decides>:void = external {}
-
-    # Used to specify an area which allows (or prevents) various objects, terrain, or buildings from being set on fire.
-    fire_volume_device<public> := class<concrete><final>(effect_volume_device):
-        # Extinguishes objects inside this device area.
-        Extinguish<public>():void = external {}
-
-        # Ignites objects inside this device area.
-        Ignite<public>():void = external {}
-
-    # Base class for types of volumes with special gameplay properties.
-    effect_volume_device<public> := class<abstract><epic_internal>(creative_device_base):
-        # Enables this device.
-        Enable<public>():void = external {}
-
-        # Disables this device.
-        Disable<public>():void = external {}
-
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
-    # Used to specify an area volume which can damage `agent`s, vehicles, and creatures.
-    damage_volume_device<public> := class<concrete><final>(effect_volume_device):
-        # Signaled when an `agent` enters the volume.
-        # Sends the `agent` entering the volume.
-        AgentEntersEvent<public>:listenable(agent) = external {}
-
-        # Signaled when an `agent` exits the volume.
-        # Sends the `agent` exiting the volume.
-        AgentExitsEvent<public>:listenable(agent) = external {}
-
-        # Updates *Selected Class* to `Agent`'s class.
-        UpdateSelectedClass<public>(Agent:agent):void = external {}
-
-        # Updates *Selected Team* to `Agent`'s team.
-        UpdateSelectedTeam<public>(Agent:agent):void = external {}
-
-        # Sets the damage to be applied each tick within the volume. `Damage` is clamped between `1` and `500`.
-        SetDamage<public>(Damage:int):void = external {}
-
-        # Returns the damage to be applied each tick within the volume.
-        GetDamage<public>()<transacts>:int = external {}
-
-        # Is true when `Agent` is in the zone.
-        IsInVolume<public>(Agent:agent)<transacts><decides>:void = external {}
-
-    # Creates an impenetrable zone that can block `agent` movement and weapon fire.
-    barrier_device<public> := class<concrete><final>(creative_device_base):
-        # Enables this device.
-        Enable<public>():void = external {}
-
-        # Disables this device.
-        Disable<public>():void = external {}
-
-        # Adds the specified `agent` to a list of additional `agent`s that the Barrier should ignore. This list is in addition to the Ignore Team and Ignore Class options. Note: Has no effect on bullets.
-        AddToIgnoreList<public>(Agent:agent):void = external {}
-
-        # Removes the specified `agent` from the ignore list. The `agent` will still be ignored if they are on an ignored team or of an ignored class.
-        RemoveFromIgnoreList<public>(Agent:agent):void = external {}
-
-        # Removes all `agent`s from the ignore list. `Agent`s will still be ignored if they are on an ignored team or of an ignored class.
-        RemoveAllFromIgnoreList<public>():void = external {}
-
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
+        # Returns the time before the switch will reset itself to default for *Agent*.
+        #  Returns -1.0 if there is no active reset timer.
+        GetCurrentResetTime<public>(Agent:agent):float = external {}
 
     # Used to spawn various wildlife that players can herd, hunt, or tame.
     wildlife_spawner_device<public> := class<concrete><final>(creative_device_base):
@@ -3173,11 +2993,17 @@ Devices<public> := module:
         # Returns the spawn limit of the device.
         GetSpawnLimit<public>()<transacts>:int = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
+    # Used to place a crash pad that can bounce players and protect them from fall damage.
+    crash_pad_device<public> := class<concrete><final>(creative_device_base):
+        # Signaled when an `agent` is launched by this device.
+        # Sends the launched `agent`.
+        LaunchedEvent<public>:listenable(agent) = external {}
 
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
+        # Enables this device.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        Disable<public>():void = external {}
 
     # Used to add fishing mechanics to experiences, such as:
     #  * Fishing competitions between players.
@@ -3204,23 +3030,16 @@ Devices<public> := module:
         # Returns all caught and removed items to the inventory. This only works when *Pool Type* is set to *Device Inventory*.
         Restock<public>():void = external {}
 
-    # Used to place a crash pad that can bounce players and protect them from fall damage.
-    crash_pad_device<public> := class<concrete><final>(creative_device_base):
-        # Signaled when an `agent` is launched by this device.
-        # Sends the launched `agent`.
-        LaunchedEvent<public>:listenable(agent) = external {}
-
+    # Used to configure rules that can end the current round or game.
+    end_game_device<public> := class<concrete><final>(creative_device_base):
         # Enables this device.
         Enable<public>():void = external {}
 
         # Disables this device.
         Disable<public>():void = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
+        # Ends the round/game. Uses `Agent`'s team to determine if the round/game ends when *Activating Team* is enabled.
+        Activate<public>(Agent:agent):void = external {}
 
     # Used to regenerate an `agent`'s health and/or shields.
     health_powerup_device<public> := class<concrete><final>(powerup_device):
@@ -3252,31 +3071,6 @@ Devices<public> := module:
 
         # Resets the *Affected Team* option to its starting value.
         ResetAffectedTeam<public>():void = external {}
-
-    # Used to configure rules that can end the current round or game.
-    end_game_device<public> := class<concrete><final>(creative_device_base):
-        # Enables this device.
-        Enable<public>():void = external {}
-
-        # Disables this device.
-        Disable<public>():void = external {}
-
-        # Ends the round/game. Uses `Agent`'s team to determine if the round/game ends when *Activating Team* is enabled.
-        Activate<public>(Agent:agent):void = external {}
-
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
-    # Allows players to change their outfit in game!
-    changing_booth_device<public> := class<concrete><final>(creative_device_base):
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
     # Used with the `race_checkpoint_device` to create more advanced racing modes.
     race_manager_device<public> := class<concrete><final>(creative_device_base):
@@ -3331,6 +3125,28 @@ Devices<public> := module:
         # Sets this checkpoint as the current checkpoint for `Agent`. This only functions if `Agent` has not already passed this checkpoint.
         SetAsCurrentCheckpoint<public>(Agent:agent):void = external {}
 
+    # Allows players to change their outfit in game!
+    changing_booth_device<public> := class<concrete><final>(creative_device_base):
+
+    # Allows the item shop to be opened when activated
+    item_shop_device<public> := class<concrete><final>(creative_device_base):
+        # Enables this device.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        Disable<public>():void = external {}
+
+    # Used to track `agent` events used to generate analytics.
+    analytics_device<public> := class<concrete><final>(creative_device_base):
+        # Enables this device.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        Disable<public>():void = external {}
+
+        # Submits an event for `Agent`.
+        Submit<public>(Agent:agent):void = external {}
+
     # Used to create patrolling behavior for guards spawned with the `guard_spawner_device`.
     ai_patrol_path_device<public> := class<concrete><final>(creative_device_base):
         # Assign an AI to this patrol path.
@@ -3356,28 +3172,6 @@ Devices<public> := module:
 
         # Commands patroller to follow the *Next Patrol Path Group* instead of the default *Patrol Path Group*.
         GoToNextPatrolGroup<public>(Patroller:agent):void = external {}
-
-    # Allows the item shop to be opened when activated
-    item_shop_device<public> := class<concrete><final>(creative_device_base):
-        # Enables this device.
-        Enable<public>():void = external {}
-
-        # Disables this device.
-        Disable<public>():void = external {}
-
-    # Specialized `vehicle_spawner_device` that allows an armored battle bus to be configured and spawned.
-    vehicle_spawner_armored_battle_bus_device<public> := class<concrete><final>(vehicle_spawner_device):
-
-    # Used to track `agent` events used to generate analytics.
-    analytics_device<public> := class<concrete><final>(creative_device_base):
-        # Enables this device.
-        Enable<public>():void = external {}
-
-        # Disables this device.
-        Disable<public>():void = external {}
-
-        # Submits an event for `Agent`.
-        Submit<public>(Agent:agent):void = external {}
 
     # Used to configure and play audio from the device location or from registered `agent`s.
     audio_player_device<public> := class<concrete><final>(creative_device_base):
@@ -3429,6 +3223,9 @@ Devices<public> := module:
 
         # Disables this device.
         Disable<public>():void = external {}
+
+    # Specialized `vehicle_spawner_device` that allows an armored battle bus to be configured and spawned.
+    vehicle_spawner_armored_battle_bus_device<public> := class<concrete><final>(vehicle_spawner_device):
 
     # Used to create a bouncer that can launch players, vehicles, and more into the air with optional effects.
     bouncer_device<public> := class<concrete><final>(creative_device_base):
@@ -3492,12 +3289,6 @@ Devices<public> := module:
         # Despawns the creature.
         Despawn<public>():void = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
     # Used to customize one creature type at a time. Place multiple `creature_manager_device`s for each type of creature on your island.
     creature_manager_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when a creature of the selected *Creature Type* is eliminated.
@@ -3510,16 +3301,71 @@ Devices<public> := module:
         # Disables this device.
         Disable<public>():void = external {}
 
-    # Used to send custom messages to the elimination feed.
-    elimination_feed_device<public> := class<concrete><final>(creative_device_base):
+    # Specialized `vehicle_spawner_device` that allows a dirtbike to be configured and spawned.
+    vehicle_spawner_dirtbike_device<public> := class<concrete><final>(vehicle_spawner_device):
+
+    # Creates a chair where `Agent`s can sit.
+    chair_device<public> := class<concrete><final>(creative_device_base):
+        # Signaled when an `Agent` sits on this device.
+        # Sends the sitting `agent`.
+        SeatedEvent<public>:listenable(agent) = external {}
+
+        # Signaled when an `Agent` stops sitting on this device.
+        # Sends the standing `Agent`.
+        ExitedEvent<public>:listenable(agent) = external {}
+
+        # Enables this device.
+        # An enabled chair can be interacted with and occupied
+        # by any valid `agent`.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        # A disabled chair cannot be interacted with,
+        # and any `Agent` currently occupying the chair will be ejected.
+        Disable<public>():void = external {}
+
+        # Allows `Agent` to leave the chair, if `Agent` passes the tests.
+        EnableExit<public>(Agent:agent):void = external {}
+
+        # Prevents `Agent` from leaving the chair, if `Agent` passes the tests.
+        # Agents will then be trapped in the chair until released.
+        DisableExit<public>(Agent:agent):void = external {}
+
+        # Makes `Agent` sit on this chair.
+        Seat<public>(Agent:agent):void = external {}
+
+        # Makes `Agent` exit this chair if they are currently in the chair.
+        Eject<public>(Agent:agent):void = external {}
+
+        # Returns true if `Agent` is currently in the chair .
+        IsSeated<public>(Agent:agent)<transacts><decides>:void = external {}
+
+        # Returns true if the chair is currently occupied.
+        IsOccupied<public>()<transacts><decides>:void = external {}
+
+        # Returns the `agent` currently occupying the chair.
+        GetSeatedAgent<public>():?agent = external {}
+
+    # Used to configure a single interactive mannequin, that can visualize characters, clothing, and perform emotes.
+    character_device<public> := class<concrete>(creative_device_base):
+        # Signaled when an `agent` interacts with this device.
+        # Sends the `agent` that interacted with this device.
+        InteractedWithEvent<public>:listenable(agent) = external {}
+
         # Enables this device.
         Enable<public>():void = external {}
 
         # Disables this device.
         Disable<public>():void = external {}
 
-        # Activates this device. `Agent` is used as the instigator of the action.
-        Activate<public>(Agent:agent):void = external {}
+        # Shows this device.
+        Show<public>():void = external {}
+
+        # Hides this device.
+        Hide<public>():void = external {}
+
+        # Plays an emote on the character created by this device.
+        PlayEmote<public>():void = external {}
 
     # Used to customize (or prevent) the 'down but not out' player state between 'healthy' and 'removed from game'.
     down_but_not_out_device<public> := class<concrete><final>(creative_device_base):
@@ -3563,8 +3409,16 @@ Devices<public> := module:
         # Sets the `Agent` to the `healthy` player state if they are in the `down but not out` player state.
         Revive<public>(Agent:agent):void = external {}
 
-    # Specialized `vehicle_spawner_device` that allows a dirtbike to be configured and spawned.
-    vehicle_spawner_dirtbike_device<public> := class<concrete><final>(vehicle_spawner_device):
+    # Used to send custom messages to the elimination feed.
+    elimination_feed_device<public> := class<concrete><final>(creative_device_base):
+        # Enables this device.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        Disable<public>():void = external {}
+
+        # Activates this device. `Agent` is used as the instigator of the action.
+        Activate<public>(Agent:agent):void = external {}
 
     # Used to spawn fireflies that can be collected by `agent`s.
     firefly_spawner_device<public> := class<concrete><final>(creative_device_base):
@@ -3584,42 +3438,8 @@ Devices<public> := module:
         # Resets respawn count.
         ResetRespawnCount<public>():void = external {}
 
-    # Used to project a hologram of a character performing dance emotes.
-    dance_mannequin_device<public> := class<concrete><final>(creative_device_base):
-        # Enables this device.
-        Enable<public>():void = external {}
-
-        # Disables this device.
-        Disable<public>():void = external {}
-
-        # Activates the hologram using *Default Preset* options.
-        ActivateDefaultPreset<public>():void = external {}
-
-        # Activates the hologram using *Preset 2* options.
-        ActivatePreset2<public>():void = external {}
-
-        # Activates the hologram using *Preset 3* options.
-        ActivatePreset3<public>():void = external {}
-
-        # Activates the hologram using `Agent`'s skin and emotes.
-        ActivateSkinAndEmoteCapture<public>(Agent:agent):void = external {}
-
-        # Deactivates the hologram.
-        DeactivateSkinAndEmoteCapture<public>():void = external {}
-
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
-    # Allows pickup items to be placed in the world..
-    item_placer_device<public> := class<concrete><final>(creative_device_base):
-        # Enables this device.
-        Enable<public>():void = external {}
-
-        # Disables this device.
-        Disable<public>():void = external {}
+    # Specialized `vehicle_spawner_device` that allows a GetAway Car to be configured and spawned.
+    vehicle_spawner_getaway_device<public> := class<concrete><final>(vehicle_spawner_device):
 
     using {/Verse.org/Colors}
     # Used to create a customizable vine version of the Grind Rails.
@@ -3664,6 +3484,99 @@ Devices<public> := module:
 
         # Signaled when an `agent` starts grinding on this `grind_rail_device`.
         EndedGrindingEvent<public>:listenable(agent) = external {}
+
+    # Used to create HUD text boxes that give players information, and allows responses to be customized to player choices.
+    popup_dialog_device<public> := class<concrete><final>(creative_device_base):
+        # Signaled when *Button <Index>* on this device is pushed by an `agent`.
+        # Sends the `agent` that pushed the button.
+        # Sends the `int` index of the clicked the button.
+        RespondingButtonEvent<public>:listenable(tuple(agent, int)) = external {}
+
+        # Signaled when this device is shown to an `agent`.
+        # Sends the `agent` looking at the popup.
+        ShownEvent<public>:listenable(agent) = external {}
+
+        # Signaled when this device is dismissed by an `agent`.
+        # Sends the `agent` who dismissed the popup.
+        DismissedEvent<public>:listenable(agent) = external {}
+
+        # Signaled when this device times out while an `agent` is looking at it.
+        # Sends the `agent` who was looking at the popup.
+        TimeOutEvent<public>:listenable(agent) = external {}
+
+        # Enables this device.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        Disable<public>():void = external {}
+
+        # Shows the popup to `Agent`.
+        Show<public>(Agent:agent):void = external {}
+
+        # Shows the popup to all `agent`s in the experience.
+        Show<public>():void = external {}
+
+        # Hides the popup from `Agent`.
+        Hide<public>(Agent:agent):void = external {}
+
+        # Hides the popup from all `agent`s in the experience.
+        Hide<public>():void = external {}
+
+        # Sets the number of buttons this popup has.
+        # Button Count is not updated on active Popups.
+        SetButtonCount<public>(Count:int):void = external {}
+
+        # Returns the *Button Text* for this popup at a specified index.
+        GetButtonText<public>(Index:int)<transacts>:[]char = external {}
+
+        # Sets the *Button Text* for a button at a specific index on this popup.
+        #  * `Text` should be no more than `8` characters.
+        #  * If `Text` is empty the button will show *OK* instead.
+        #  * Button 1 uses `Index` 0.
+        SetButtonText<public>(Text:message, Index:int):void = external {}
+
+        # Sets the *Description* text for this popup. `Text` should be no more than `350` characters.
+        SetDescriptionText<public>(Text:message):void = external {}
+
+        # Returns the *Description* text for this popup.
+        GetDescriptionText<public>()<transacts>:[]char = external {}
+
+        # Sets the *Title* text for this popup. `Text` should be no more than `32` characters.
+        SetTitleText<public>(Text:message):void = external {}
+
+        # Returns the *Title* text for this popup.
+        GetTitleText<public>()<transacts>:[]char = external {}
+
+    # Allows pickup items to be placed in the world..
+    item_placer_device<public> := class<concrete><final>(creative_device_base):
+        # Enables this device.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        Disable<public>():void = external {}
+
+    # Used to project a hologram of a character performing dance emotes.
+    dance_mannequin_device<public> := class<concrete><final>(creative_device_base):
+        # Enables this device.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        Disable<public>():void = external {}
+
+        # Activates the hologram using *Default Preset* options.
+        ActivateDefaultPreset<public>():void = external {}
+
+        # Activates the hologram using *Preset 2* options.
+        ActivatePreset2<public>():void = external {}
+
+        # Activates the hologram using *Preset 3* options.
+        ActivatePreset3<public>():void = external {}
+
+        # Activates the hologram using `Agent`'s skin and emotes.
+        ActivateSkinAndEmoteCapture<public>(Agent:agent):void = external {}
+
+        # Deactivates the hologram.
+        DeactivateSkinAndEmoteCapture<public>():void = external {}
 
     # Specialized `vehicle_spawner_device` that allows a Nitro Drifter sedan to be configured and spawned.
     vehicle_spawner_nitro_drifter_sedan_device<public> := class<concrete><final>(vehicle_spawner_device):
@@ -3824,12 +3737,6 @@ Devices<public> := module:
         # Returns the number of players required for this counter to succeed.
         GetTargetCount<public>()<transacts>:int = external {}
 
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
         # Returns the number of players currently counted by this device
         GetCount<public>()<transacts>:int = external {}
 
@@ -3864,12 +3771,6 @@ Devices<public> := module:
 
         # Brightens the light by *Dimming Amount*.
         UndimLight<public>():void = external {}
-
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
     # Controls how the sky looks, as well as giving you options for changing the sun, clouds, stars or other objects in the sky above your island. You can control the sun and moon, and add other atmospheric elements like stars, fog and clouds. You can change the color of your light source, and blend different colors for your island's sky to create the perfect atmosphere for your game.
     skydome_device<public> := class<concrete><final>(creative_device_base):
@@ -3938,12 +3839,6 @@ Devices<public> := module:
 
         # Resets the alert state.
         ResetAlertCooldown<public>():void = external {}
-
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
     # Used to spawn and configure an aerial supply drop that can provide players with customized weapons/supplies.
     supply_drop_spawner_device<public> := class<concrete><final>(creative_device_base):
@@ -4034,26 +3929,6 @@ Devices<public> := module:
         # Spawns the effect at `Agent`'s location. This option is only valid if *Stick to Player* is enabled.
         SpawnAt<public>(Agent:agent):void = external {}
 
-    # Used to place visual effects around your island. You can use these effects to enhance the overall theme and experience of your game.
-    vfx_spawner_device<public> := class<concrete><final>(creative_device_base):
-        # Signaled when the effect is enabled.
-        EffectEnabledEvent<public>:listenable(tuple()) = external {}
-
-        # Signaled when the effect is disabled.
-        EffectDisabledEvent<public>:listenable(tuple()) = external {}
-
-        # Enables this device.
-        Enable<public>():void = external {}
-
-        # Disables this device.
-        Disable<public>():void = external {}
-
-        # Teleports the `device` to the specified `Position` and `Rotation`.
-        TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
-
-        # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-        TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
-
     # Used to create and manipulate volumes of water where players can swim, fish, or drive boats.
     water_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when an `agent` enters the water.
@@ -4090,6 +3965,20 @@ Devices<public> := module:
 
         # Resumes either filling or emptying the volume.
         ResumeVerticalMovement<public>():void = external {}
+
+    # Used to place visual effects around your island. You can use these effects to enhance the overall theme and experience of your game.
+    vfx_spawner_device<public> := class<concrete><final>(creative_device_base):
+        # Signaled when the effect is enabled.
+        EffectEnabledEvent<public>:listenable(tuple()) = external {}
+
+        # Signaled when the effect is disabled.
+        EffectDisabledEvent<public>:listenable(tuple()) = external {}
+
+        # Enables this device.
+        Enable<public>():void = external {}
+
+        # Disables this device.
+        Disable<public>():void = external {}
 
 using {/Fortnite.com/Teams}
 using {/Fortnite.com/Characters}
@@ -4409,7 +4298,7 @@ Characters<public> := module:
         # Succeeds if this `fort_character` can be damaged. Fails if this `fort_character` cannot be damaged.
         IsVulnerable<public>()<transacts><decides>:void
 
-        # Teleports this `fort_character` to the provided `Position` and applies the yaw of `Rotation`.
+        # Teleports this `fort_character` to the provided `Position` and applies the yaw of `Rotation`. Will fail if the `Position` specified is e.g. outside of the playspace or specifies a place where the character cannot fit.
         TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void
 
     # Returns the `fort_character` for `InAgent`. Fails if `InAgent` is not a `fort_character`.
