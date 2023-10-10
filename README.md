@@ -8,7 +8,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 - [Code Style](https://github.com/kbfngg/uefn/blob/main/guidelines/code_style.md) (tbd)
 - [API Design](https://github.com/kbfngg/uefn/blob/main/guidelines/api_design.md) (tbd)
 
-## Latest Verse Module APIs - `26.20`:
+## Latest Verse Module APIs - `26.30`:
 
 - [Verse](https://github.com/kbfngg/uefn/blob/main/modules/Verse/Verse.digest.verse)
 - [UnrealEngine](https://github.com/kbfngg/uefn/blob/main/modules/UnrealEngine/UnrealEngine.digest.verse)
@@ -16,6 +16,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 ## Verse API Versions:
 
+- [`26.30`](https://github.com/kbfngg/uefn/tree/game_v26.30/modules)
 - [`26.20`](https://github.com/kbfngg/uefn/tree/game_v26.20/modules)
 - [`26.10`](https://github.com/kbfngg/uefn/tree/game_v26.10/modules)
 - [`26.00`](https://github.com/kbfngg/uefn/tree/game_v26.00/modules)
@@ -32,6 +33,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 ## Verse Snapshot API Changes:
 
+- [`26.20` - `26.30`](https://github.com/kbfngg/uefn/commit/310c4255ad4e53bb6053f7c9a0d7647c56293703)
 - [`26.10` - `26.20`](https://github.com/kbfngg/uefn/commit/5db07d5ee7635e381caf09a46eed44c2470b8aad)
 - [`26.00` - `26.10`](https://github.com/kbfngg/uefn/commit/b45a2491f4a96a11d0381482de1d357cab818050)
 - [`25.30` - `26.00`](https://github.com/kbfngg/uefn/commit/751c7b4e59453ee8f4e0401e82d4bc0c2252d2cc)
@@ -45,6 +47,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 ## Verse Module API Changes:
 
+- [`26.20` - `26.30`](https://github.com/kbfngg/uefn/commit/ab7258e9743f5b85115e7fcd6ab4e899ecd6d364)
 - [`26.10` - `26.20`](https://github.com/kbfngg/uefn/commit/2a7eb40ceb255a882217f0508f01d0f7e4ef9331)
 - [`26.00` - `26.10`](https://github.com/kbfngg/uefn/commit/12df6e86ef674e2a30619087b27902e5474bf85b)
 - [`25.30` - `26.00`](https://github.com/kbfngg/uefn/commit/367bf7cf21bdc8be9f004557b08ffbf2bcea5cb2)
