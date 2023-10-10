@@ -155,10 +155,10 @@ Devices<public> := module:
         # Teleports the `creative_device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
         TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
-        # Moves the `creative_device` to the specified `Position` and `Rotation` over the specified time. If an animation is currently playing on the `creative_device` it will be stopped and put into the `AnimationNotSet` state.
+        # Moves the `creative_device` to the specified `Position` and `Rotation` over the specified time, in seconds. If an animation is currently playing on the `creative_device` it will be stopped and put into the `AnimationNotSet` state.
         MoveTo<public>(Position:vector3, Rotation:rotation, OverTime:float)<suspends>:move_to_result = external {}
 
-        # Moves the `creative_device` to the specified `Transform` over the specified time. If an animation is currently playing on the `creative_device` it will be stopped and put into the `AnimationNotSet` state.
+        # Moves the `creative_device` to the specified `Transform` over the specified time, in seconds. If an animation is currently playing on the `creative_device` it will be stopped and put into the `AnimationNotSet` state.
         MoveTo<public>(Transform:transform, OverTime:float)<suspends>:move_to_result = external {}
 
         # Shows this device in the world.
@@ -190,10 +190,10 @@ Devices<public> := module:
         # Teleports the `creative_object` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
         TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
-        # Moves the `creative_object` to the specified `Position` and `Rotation` over the specified time. If an animation is currently playing on the `creative_object` it will be stopped and put into the `AnimationNotSet` state.
+        # Moves the `creative_object` to the specified `Position` and `Rotation` over the specified time, in seconds. If an animation is currently playing on the `creative_object` it will be stopped and put into the `AnimationNotSet` state.
         MoveTo<public>(Position:vector3, Rotation:rotation, OverTime:float)<suspends>:move_to_result = external {}
 
-        # Moves the `creative_object` to the specified `Transform` over the specified time. If an animation is currently playing on the `creative_object` it will be stopped and put into the `AnimationNotSet` state.
+        # Moves the `creative_object` to the specified `Transform` over the specified time, in seconds. If an animation is currently playing on the `creative_object` it will be stopped and put into the `AnimationNotSet` state.
         MoveTo<public>(Transform:transform, OverTime:float)<suspends>:move_to_result = external {}
 
     # Returns an array containing all creative objects which have been marked with the specified `Tag`.

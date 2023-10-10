@@ -9,3 +9,7 @@ elimination_feed_device<public> := class<concrete><final>(creative_device_base):
 
     # Activates this device. `Agent` is used as the instigator of the action.
     Activate<public>(Agent:agent):void = external {}
+
+    # Activates this device.
+    # Requires *Activated by Team / Class* be set to `All`.
+    Activate<public>():void = external {}

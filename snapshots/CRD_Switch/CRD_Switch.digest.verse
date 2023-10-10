@@ -94,26 +94,26 @@ switch_device<public> := class<concrete><final>(creative_device_base):
     #  Use when the device has *Store State Per Player* set to *No*.
     SetState<public>(State:logic):void = external {}
 
-    # Updates the *State Reset Time* for the device, clamped to the Min and Max defined in the device.
+    # Updates the *State Reset Time* for the device, in seconds, clamped to the Min and Max defined in the device.
     #  This will not apply to any state reset timers currently in effect.
     #  Set to 0.0 to disable the State Reset Time. Set to less than 0.0 to reset to default.
     SetStateResetTime<public>(Time:float):void = external {}
 
-    # Updates the *State Reset Time* for the device, for a specific player (if *Store State Per Player* is *Yes*), clamped to the Min and Max defined in the device.
+    # Updates the *State Reset Time* for the device, in seconds,for a specific player (if *Store State Per Player* is *Yes*), clamped to the Min and Max defined in the device.
     #  This will not apply to any state reset timers currently in effect.
     #  Set to 0.0 to disable the State Reset Time. Set to less than 0.0 to reset to default.
     SetStateResetTime<public>(Agent:agent, Time:float):void = external {}
 
-    # Returns the value of *State Reset Time* for the device. Returns -1.0 if *State Reset Time* is not used.
+    # Returns the value of *State Reset Time*, in seconds, for the device. Returns -1.0 if *State Reset Time* is not used.
     GetStateResetTime<public>()<transacts>:float = external {}
 
-    # Returns the value of *State Reset Time* for the device, for a specific player. Returns -1.0 if *State Reset Time* is not used.
+    # Returns the value of *State Reset Time*, in seconds, for the device, for a specific player. Returns -1.0 if *State Reset Time* is not used.
     GetStateResetTime<public>(Agent:agent)<transacts>:float = external {}
 
-    # Returns the time before the switch will reset itself to default.
+    # Returns the time, in seconds, before the switch will reset itself to default.
     #  Returns -1.0 if *Store State Per Player* is *Yes* or if  there is no active reset timer.
     GetCurrentResetTime<public>():float = external {}
 
-    # Returns the time before the switch will reset itself to default for *Agent*.
+    # Returns the time, in seconds, before the switch will reset itself to default for *Agent*.
     #  Returns -1.0 if there is no active reset timer.
     GetCurrentResetTime<public>(Agent:agent):float = external {}

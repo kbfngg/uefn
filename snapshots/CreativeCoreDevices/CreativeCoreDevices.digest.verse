@@ -112,11 +112,11 @@ trick_tile_device<public> := class<concrete><final>(creative_device_base):
     # Only the trigger will teleport, the target buildings will not change. 
     TeleportTo<override>(Transform:transform)<transacts><decides>:void = external {}
 
-    # Moves the `trick_tile_device` to the specified `Position` and `Rotation` over the specified time. 
+    # Moves the `trick_tile_device` to the specified `Position` and `Rotation` over the specified time, in seconds. 
     # Only the trigger will move, the target buildings will not change. 
     MoveTo<override>(Position:vector3, Rotation:rotation, OverTime:float)<suspends>:move_to_result = external {}
 
-    # Moves the `trick_tile_device` to the specified `Transform` over the specified time. 
+    # Moves the `trick_tile_device` to the specified `Transform` over the specified time, in seconds. 
     # Only the trigger will move, the target buildings will not change. 
     MoveTo<override>(Transform:transform, OverTime:float)<suspends>:move_to_result = external {}
 
@@ -480,11 +480,11 @@ storm_controller_device<public> := class<abstract><epic_internal>(creative_devic
     # Existing storms will not target the new location, but newly generated storms will.
     TeleportTo<override>(Transform:transform)<transacts><decides>:void = external {}
 
-    # Moves the `storm_controller_device` to the specified `Position` and `Rotation` over the specified time. 
+    # Moves the `storm_controller_device` to the specified `Position` and `Rotation` over the specified time, in seconds. 
     # Existing storms will not target the new location, but newly generated storms will.
     MoveTo<override>(Position:vector3, Rotation:rotation, OverTime:float)<suspends>:move_to_result = external {}
 
-    # Moves the `storm_controller_device` to the specified `Transform` over the specified time. 
+    # Moves the `storm_controller_device` to the specified `Transform` over the specified time, in seconds. 
     # Existing storms will not target the new location, but newly generated storms will.
     MoveTo<override>(Transform:transform, OverTime:float)<suspends>:move_to_result = external {}
 
@@ -1528,10 +1528,10 @@ advanced_storm_beacon_device<public> := class<concrete><final>(creative_device_b
     # Existing storms will not target the new location, but newly generated storms will.
     TeleportTo<override>(Transform:transform)<transacts><decides>:void = external {}
 
-    # Moves the `advanced_storm_beacon_device` to the specified `Position` and `Rotation` over the specified time. 
+    # Moves the `advanced_storm_beacon_device` to the specified `Position` and `Rotation` over the specified time, in seconds. 
     # Existing storms will not target the new location, but newly generated storms will.
     MoveTo<override>(Position:vector3, Rotation:rotation, OverTime:float)<suspends>:move_to_result = external {}
 
-    # Moves the `advanced_storm_beacon_device` to the specified `Transform` over the specified time. 
+    # Moves the `advanced_storm_beacon_device` to the specified `Transform` over the specified time, in seconds. 
     # Existing storms will not target the new location, but newly generated storms will.
     MoveTo<override>(Transform:transform, OverTime:float)<suspends>:move_to_result = external {}
