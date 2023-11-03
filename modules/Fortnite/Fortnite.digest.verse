@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-26.30-CL-28688692
+# Generated from build: ++Fortnite+Release-27.00-CL-29072304
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -74,6 +74,9 @@ AI<public> := module:
         Unreachable
 
     navigation_target<native><public> := class<epic_internal>:
+
+# Module import path: /Fortnite.com/Assets
+Assets<public> := module:
 
 # Module import path: /Fortnite.com/Characters
 Characters<public> := module:
@@ -2143,6 +2146,7 @@ Devices<public> := module:
         # Sends the `agent` stored in the device.
         TrackedStatChangedEvent<public>:listenable(agent) = external {}
 
+    using {/Verse.org/Simulation}
     # Used to spawn an `agent` on an island. Use multiple `player_spawner_device`s to spawn multiple `agent`s.
     player_spawner_device<public> := class<concrete><final>(creative_device_base):
         # Disables this device.
@@ -3793,9 +3797,16 @@ Devices<public> := module:
         StartedGrindingEvent<public>:listenable(agent) = external {}
 
     using {/UnrealEngine.com/Temporary/SpatialMath}
-    using {/Verse.org/Simulation}
     # Used to trigger a visual effect (a glow or an outline) when `agent`s pick it up.
     visual_effect_powerup_device<public> := class<concrete><final>(powerup_device):
+
+    # Used to track when agents enter and exit a volume.
+    volume_device<public> := class<concrete><final>(creative_device_base):
+        # Signaled when an `agent` enters the device volume.
+        AgentEntersEvent<public>:listenable(agent) = external {}
+
+        # Signaled when an `agent` exits the device volume.
+        AgentExitsEvent<public>:listenable(agent) = external {}
 
     # Used to create and manipulate volumes of water where players can swim, fish, or drive boats.
     water_device<public> := class<concrete><final>(creative_device_base):
