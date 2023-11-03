@@ -96,7 +96,6 @@ Temporary<public> := module:
             Warning
 
     using {/Verse.org/Native}
-
     # Module import path: /UnrealEngine.com/Temporary/SpatialMath
     SpatialMath<public> := module:
         # Makes a `rotation` by applying `AngleRadians` of left-handed rotation around the local +Y axis to `InitialRotation`.
@@ -449,7 +448,6 @@ Temporary<public> := module:
     using {/Verse.org/Assets}
     using {/Verse.org/Colors}
     using {/Verse.org/Simulation}
-
     # Module import path: /UnrealEngine.com/Temporary/UI
     UI<public> := module:
         # Returns the `player_ui` component associated with `Player`.

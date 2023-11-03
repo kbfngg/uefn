@@ -495,7 +495,6 @@ Simulation<public> := module:
 
 using {/Verse.org/Colors}
 using {/Verse.org/Concurrency}
-
 # Module import path: /Verse.org/Verse
 Verse<public> := module:
     # Returns the first index whose element in `Input` equals `ElementToFind`.
@@ -791,4 +790,3 @@ Verse<public> := module:
         # Registers `Callback` to be invoked on matching calls to `signable.Signal`.
         # Returns an unsubscriber object. Call `cancelable.Cancel` on the unsubscriber to unregister `Callback`.
         Subscribe<public>(Callback:type {__(:t):void})<transacts>:cancelable
-

@@ -178,7 +178,6 @@ using {/Fortnite.com/Game}
 using {/Verse.org/Assets}
 using {/Verse.org/Simulation/Tags}
 using {/Verse.org/Simulation}
-
 # Module import path: /Fortnite.com/Devices
 Devices<public> := module:
     # Returns the `fort_playspace` that `CreativeObject` belongs to.
@@ -3620,7 +3619,6 @@ Devices<public> := module:
     vehicle_spawner_sportbike_device<public> := class<concrete><final>(vehicle_spawner_device):
 
     using {/Fortnite.com/Vehicles}
-
     # Specialized `vehicle_spawner_device` that allows a Whiplash sports car to be configured and spawned.
     vehicle_spawner_sports_car_device<public> := class<concrete><final>(vehicle_spawner_device):
 
@@ -3774,7 +3772,6 @@ Devices<public> := module:
         TakeControl<public>():void = external {}
 
     using {/Verse.org/Colors}
-
     # Used to create a customizable vine version of the Grind Rails.
     vine_rail_device<public> := class<concrete><final>(creative_device_base):
         # Disables this device, preventing players from grinding on the vines.
@@ -3797,7 +3794,6 @@ Devices<public> := module:
 
     using {/UnrealEngine.com/Temporary/SpatialMath}
     using {/Verse.org/Simulation}
-
     # Used to trigger a visual effect (a glow or an outline) when `agent`s pick it up.
     visual_effect_powerup_device<public> := class<concrete><final>(powerup_device):
 
@@ -4199,7 +4195,6 @@ using {/Fortnite.com/Playspaces}
 using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/UnrealEngine.com/Temporary/UI}
 using {/Verse.org/Colors}
-
 # Module import path: /Fortnite.com/UI
 UI<public> := module:
     # Deprecated. This function affects all players. Please use `fort_playspace.GetHUDController().HideElements()`.
@@ -4389,7 +4384,6 @@ UI<public> := module:
 
 using {/Fortnite.com/Characters}
 using {/Fortnite.com/Teams}
-
 # Module import path: /Fortnite.com/Vehicles
 Vehicles<public> := module:
     # Returns the `fort_vehicle` for `InCharacter`.
