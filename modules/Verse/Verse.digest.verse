@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-27.00-CL-29072304
+# Generated from build: ++Fortnite+Release-26.30-CL-28688692
 #################################################
 
 # Module import path: /Verse.org/Assets
@@ -13,7 +13,6 @@ Assets<public> := module:
 
     texture<native><public> := class<computes><final><epic_internal>:
 
-using {/Verse.org/Simulation}
 # Module import path: /Verse.org/Colors
 Colors<public> := module:
     # Makes an ACES 2065-1 `color` from `Hue`, `Saturation`, and `Value` components.
@@ -351,13 +350,7 @@ Colors<public> := module:
 
     # Represents colors as RGB triples in the ACES 2065-1 color space.
     # Component values are linear (i.e. `*gamma* = 1.0`).
-    color<native><public> := struct<concrete><computes>:
-        @editable
-
-        @editable
-
-        @editable
-
+    color<native><public> := struct<computes>:
         # Blue component of this `color`.
         B<native><public>:float = external {}
 
@@ -394,6 +387,7 @@ Colors<public> := module:
     # Makes an ACES 2065-1 `color` from each component of `c` divided by `factor`.
     operator'/'<native><public>(c:color, factor:int)<computes><decides>:color
 
+# Module import path: /Verse.org/Concurrency
 Concurrency<public> := module:
     awaitable<public>()<computes> := awaitable(void)
 
@@ -405,16 +399,14 @@ Concurrency<public> := module:
     task<native><public>(t:type)<computes> := class<abstract><final>(awaitable(t)):
         Await<native><override>()<suspends>:t
 
+# Module import path: /Verse.org/Native
 Native<public> := module:
-    @attribscope_class
-
-    @attribscope_struct
-
     import_as<epic_internal>(importName:[]char)<computes>:import_as_attribute
 
+    @attribscope_class
+    @attribscope_struct
     import_as_attribute<epic_internal> := class(attribute):
 
-using {/Verse.org/Concurrency}
 # Module import path: /Verse.org/Random
 Random<public> := module:
     # Returns a random `float` between `Low` and `High`, inclusive.
@@ -426,16 +418,7 @@ Random<public> := module:
     # Makes an `array` with the same elements as `Input` shuffled in a random order.
     Shuffle<public>(Input:[]t where t:type)<transacts>:[]t = external {}
 
-# Module import path: /Verse.org/Simulation
 Simulation<public> := module:
-    @attribscope_class
-
-    @attribscope_data
-
-    @attribscope_struct
-
-    @customattribhandler
-
     # Returns the `session` corresponding to the current round.  The result can be used with `weak_map` to implement global variables.
     # Note: may be changed in a future release to return a single instance per game. Round-local behavior should not be relied upon.
     GetSession<native><public>()<varies>:session
@@ -488,6 +471,10 @@ Simulation<public> := module:
 
     agent<native><public> := class<unique><epic_internal>:
 
+    @attribscope_class
+    @attribscope_struct
+    @attribscope_data
+    @customattribhandler
     editable<public> := class(attribute):
 
     localizable_agent<native><epic_internal> := class(localizable_value):
@@ -500,6 +487,9 @@ Simulation<public> := module:
 
     team<native><public> := class<unique><epic_internal>:
 
+using {/Verse.org/Colors}
+using {/Verse.org/Concurrency}
+# Module import path: /Verse.org/Verse
 Verse<public> := module:
     # Returns the first index whose element in `Input` equals `ElementToFind`.
     # Fails if ElementToFind does not exist in the array.
@@ -669,12 +659,8 @@ Verse<public> := module:
     # Returns `A` to the power of `B`.
     Pow<native><public>(A:float, B:float)<varies>:float
 
-    using {/Verse.org/Colors}
     # Writes `Message` to a dedicated `Print` log while displaying it in `Color` on the client screen for `Duration` seconds. By default, `Color` is `NamedColors.White` and `Duration` is `2.0` seconds.
     Print<native><public>(Message:[]char, ?Duration:float = external {}, ?Color:color = external {}):void
-
-    # Writes `Message` to a dedicated `Print` log while displaying it in `Color` on the client screen for `Duration` seconds. By default, `Color` is `NamedColors.White` and `Duration` is `2.0` seconds.
-    Print<native><public>(Message:message, ?Duration:float = external {}, ?Color:color = external {}):void
 
     # Returns the quotient `X/Y` as defined by Euclidean division, i.e.:
     #  * `Quotient[X/Y] = Floor[X/Y]` when `Y > 0`

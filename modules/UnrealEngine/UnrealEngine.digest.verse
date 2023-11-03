@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-27.00-CL-29072304
+# Generated from build: ++Fortnite+Release-26.30-CL-28688692
 #################################################
 
 Temporary<public> := module:
@@ -206,10 +206,6 @@ Temporary<public> := module:
         # Fails if `V.IsAlmostZero[] or not V.IsFinite[]`.
         (V:vector3).MakeUnitVector<native><public>()<varies><decides>:vector3
 
-        @editable
-
-        @import_as("/Script/EpicGamesTemporary.FVerseRotation")
-
         # Returns the 'smallest angular distance' between `Rotation1` and `Rotation2` in radians.
         AngularDistance<native><public>(Rotation1:rotation, Rotation2:rotation)<varies>:float
 
@@ -391,57 +387,49 @@ Temporary<public> := module:
         # Makes a `vector3` by inverting the signs of `Operand`.
         prefix'-'<public>(Operand:vector3)<computes>:vector3 = external {}
 
+        @editable
+        @import_as("/Script/EpicGamesTemporary.FVerseRotation")
         rotation<native><public> := struct<concrete>:
 
         # A combination of scale, rotation, and translation, applied in that order.
         transform<native><public> := struct<concrete><computes>:
             @editable
-
-            @editable
-
-            @editable
-
             # The rotation of this `transform`.
             Rotation<native><public>:rotation = external {}
 
+            @editable
             # The scale of this `transform`.
             Scale<native><public>:vector3 = external {}
 
+            @editable
             # The location of this `transform`.
             Translation<native><public>:vector3 = external {}
 
         # 2-dimensional vector with `float` components.
         vector2<native><public> := struct<concrete><computes>:
             @editable
-
-            @editable
-
             X<native><public>:float = external {}
 
+            @editable
             Y<native><public>:float = external {}
 
         # 2-dimensional vector with `int` components.
         vector2i<native><public> := struct<concrete><computes>:
             @editable
-
-            @editable
-
             X<native><public>:int = external {}
 
+            @editable
             Y<native><public>:int = external {}
 
         # 3-dimensional vector with `float` components.
         vector3<native><public> := struct<concrete><computes>:
             @editable
-
-            @editable
-
-            @editable
-
             X<native><public>:float = external {}
 
+            @editable
             Y<native><public>:float = external {}
 
+            @editable
             Z<native><public>:float = external {}
 
     using {/UnrealEngine.com/Temporary/SpatialMath}
