@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-26.30-CL-28688692
+# Generated from build: ++Fortnite+Release-27.00-CL-29072304
 #################################################
 
 Temporary<public> := module:
