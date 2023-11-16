@@ -8,7 +8,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 - [Code Style](https://github.com/kbfngg/uefn/blob/main/guidelines/code_style.md) (tbd)
 - [API Design](https://github.com/kbfngg/uefn/blob/main/guidelines/api_design.md) (tbd)
 
-## Latest Verse Module APIs - `27.00`:
+## Latest Verse Module APIs - `27.10`:
 
 - [Verse](https://github.com/kbfngg/uefn/blob/main/modules/Verse/Verse.digest.verse)
 - [UnrealEngine](https://github.com/kbfngg/uefn/blob/main/modules/UnrealEngine/UnrealEngine.digest.verse)
@@ -16,6 +16,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 ## Verse API Versions:
 
+- [`27.00`](https://github.com/kbfngg/uefn/tree/game_v27.10/modules)
 - [`27.00`](https://github.com/kbfngg/uefn/tree/game_v27.00/modules)
 - [`26.30`](https://github.com/kbfngg/uefn/tree/game_v26.30/modules)
 - [`26.20`](https://github.com/kbfngg/uefn/tree/game_v26.20/modules)
@@ -32,23 +33,9 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 - [`24.10`](https://github.com/kbfngg/uefn/tree/version_2/modules)
 - [`24.01`](https://github.com/kbfngg/uefn/tree/version_1/modules)
 
-## Verse Snapshot API Changes:
-
-- `26.30` - `27.00` (N/A)
-- [`26.20` - `26.30`](https://github.com/kbfngg/uefn/commit/310c4255ad4e53bb6053f7c9a0d7647c56293703)
-- [`26.10` - `26.20`](https://github.com/kbfngg/uefn/commit/5db07d5ee7635e381caf09a46eed44c2470b8aad)
-- [`26.00` - `26.10`](https://github.com/kbfngg/uefn/commit/b45a2491f4a96a11d0381482de1d357cab818050)
-- [`25.30` - `26.00`](https://github.com/kbfngg/uefn/commit/751c7b4e59453ee8f4e0401e82d4bc0c2252d2cc)
-- [`25.20` - `25.30`](https://github.com/kbfngg/uefn/commit/e3286d80d3307bb8a21fab7abfbbb29b40b64c42)
-- [`25.11` - `25.20`](https://github.com/kbfngg/uefn/commit/431fbad3603e52e7693f057a92ece1f090753431)
-- `25.10` - `25.11` (nothing new)
-- [`25.00` - `25.10`](https://github.com/kbfngg/uefn/commit/ec336031f82fa2e8e0f40157e465a8e7e889560b)
-- [`24.40` - `25.00`](https://github.com/kbfngg/uefn/commit/f74ca7d46109876212bed295c364ab3388427758)
-- [`24.30` - `24.40`](https://github.com/kbfngg/uefn/commit/ca8bf5fea7ff9a70c1b5c752164da403074d2aef)
-- [`24.20` - `24.30`](https://github.com/kbfngg/uefn/commit/4ff0bd98f21e45ae1e16f8bbdd21ad03699c56e6)
-
 ## Verse Module API Changes:
 
+- [`27.00` - `27.10`](https://github.com/kbfngg/uefn/commit/24041496b294c725eb352c354650f128651daeea)
 - [`26.30` - `27.00`](https://github.com/kbfngg/uefn/commit/1b60f95aba058478383f21c6c4eea1bc8db06aca)
 - [`26.20` - `26.30`](https://github.com/kbfngg/uefn/commit/ab7258e9743f5b85115e7fcd6ab4e899ecd6d364)
 - [`26.10` - `26.20`](https://github.com/kbfngg/uefn/commit/2a7eb40ceb255a882217f0508f01d0f7e4ef9331)
@@ -63,6 +50,22 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 - [`24.20` - `24.30`](https://github.com/kbfngg/uefn/commit/c93a6918a36d61e4e03b306555e4ebe268773823)
 - [`24.10` - `24.20`](https://github.com/kbfngg/uefn/commit/453d84fc6432a1180a3f28546cc3fc23a8625895)
 - [`24.01` - `24.10`](https://github.com/kbfngg/uefn/commit/38b55ef332109f55d9cc50c463f267c167a4a311)
+
+## Verse Snapshot API Changes:
+
+- Dicontinued
+- `26.30` - `27.00` (N/A)
+- [`26.20` - `26.30`](https://github.com/kbfngg/uefn/commit/310c4255ad4e53bb6053f7c9a0d7647c56293703)
+- [`26.10` - `26.20`](https://github.com/kbfngg/uefn/commit/5db07d5ee7635e381caf09a46eed44c2470b8aad)
+- [`26.00` - `26.10`](https://github.com/kbfngg/uefn/commit/b45a2491f4a96a11d0381482de1d357cab818050)
+- [`25.30` - `26.00`](https://github.com/kbfngg/uefn/commit/751c7b4e59453ee8f4e0401e82d4bc0c2252d2cc)
+- [`25.20` - `25.30`](https://github.com/kbfngg/uefn/commit/e3286d80d3307bb8a21fab7abfbbb29b40b64c42)
+- [`25.11` - `25.20`](https://github.com/kbfngg/uefn/commit/431fbad3603e52e7693f057a92ece1f090753431)
+- `25.10` - `25.11` (nothing new)
+- [`25.00` - `25.10`](https://github.com/kbfngg/uefn/commit/ec336031f82fa2e8e0f40157e465a8e7e889560b)
+- [`24.40` - `25.00`](https://github.com/kbfngg/uefn/commit/f74ca7d46109876212bed295c364ab3388427758)
+- [`24.30` - `24.40`](https://github.com/kbfngg/uefn/commit/ca8bf5fea7ff9a70c1b5c752164da403074d2aef)
+- [`24.20` - `24.30`](https://github.com/kbfngg/uefn/commit/4ff0bd98f21e45ae1e16f8bbdd21ad03699c56e6)
 
 ## Miscs
 
