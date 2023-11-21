@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-27.10-CL-29552510
+# Generated from build: ++Fortnite+Release-27.11-CL-29739262
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -1057,7 +1057,7 @@ Devices<public> := module:
         # Resets this device to its original settings.
         Reset<public>():void = external {}
 
-        # Sets the text that appears when `agent`s approach the device. `Text` is limited to `150` characters.
+        # Sets the text that appears when `agent`s approach the device. `Text` is limited to `150` characters and will revert back to default if empty.
         SetInteractionText<public>(Text:message):void = external {}
 
         # Sets the time (in seconds) that an interaction with this device should take to complete.
