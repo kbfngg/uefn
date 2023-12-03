@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-27.11-CL-29739262
+# Generated from build: ++Fortnite+Release-28.00-CL-29915848
 #################################################
 
 # Module import path: /Verse.org/Assets
@@ -421,7 +421,6 @@ Random<public> := module:
     # Makes an `array` with the same elements as `Input` shuffled in a random order.
     Shuffle<public>(Input:[]t where t:type)<transacts>:[]t = external {}
 
-# Module import path: /Verse.org/Simulation
 Simulation<public> := module:
     # Returns the `session` corresponding to the current round.  The result can be used with `weak_map` to implement global variables.
     # Note: may be changed in a future release to return a single instance per game. Round-local behavior should not be relied upon.
