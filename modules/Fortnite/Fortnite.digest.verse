@@ -2,11 +2,14 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-28.01-CL-30106568
+# Generated from build: ++Fortnite+Release-28.10-CL-30676362
 #################################################
 
 # Module import path: /Fortnite.com/AI
 AI<public> := module:
+    # Returns the `npc_behavior` for `InAgent`.
+    (InAgent:agent).GetNPCBehavior<native><public>()<transacts><decides>:npc_behavior
+
     # Get the focus_interface interface for the specified character.
     (InCharacter:fort_character).GetFocusInterface<native><public>()<transacts><decides>:focus_interface
 
@@ -74,6 +77,93 @@ AI<public> := module:
         Unreachable
 
     navigation_target<native><public> := class<epic_internal>:
+
+    # Inherit from this to create a custom NPC behavior.
+    # The npc_behavior can be defined for a character in a CharacterDefinition asset, or in a npc_spawner_device.
+    npc_behavior<native><public> := class<abstract>:
+        # Returns the agent associated with this behavior.
+        GetAgent<native><public>()<transacts><decides>:agent
+
+        # This function is called when the NPC is added to the simulation.
+        OnBegin<native_callable><public>()<suspends>:void = external {}
+
+        # This function is called when the NPC is removed from the simulation.
+        OnEnd<native_callable><public>():void = external {}
+
+# Module import path: /Fortnite.com/Animation
+Animation<public> := module:
+    # Module import path: /Fortnite.com/Animation/PlayAnimation
+    PlayAnimation<public> := module:
+        # Get the play_animation_controller for the specified character.
+        (InCharacter:fort_character).GetPlayAnimationController<native><public>()<transacts><decides>:play_animation_controller
+
+        # An interface for playing an animation on an object.
+        play_animation_controller<native><public> := interface:
+            # Start an animation sequence and obtain an instance to query and manipulate.
+            Play<public>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {}):play_animation_instance
+
+            # Play an animation sequence.
+            PlayAndAwait<public>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {})<suspends>:play_animation_result
+
+        # An animation instance created from play_animation_controller.Play that can be queried and manipulated.
+        play_animation_instance<native><public> := class<epic_internal>:
+            # Helper function that waits for the animation to complete or be interrupted.
+            Await<public>()<suspends>:play_animation_result = external {}
+
+            # Event triggered when the animation has finished to blend out.
+            BlendedInEvent<native><public>:listenable(tuple()) = external {}
+
+            # Event triggered when the animation is beginning to blend out.
+            BlendingOutEvent<native><public>:listenable(tuple()) = external {}
+
+            # Event triggered when the animation is completed.
+            CompletedEvent<native><public>:listenable(tuple()) = external {}
+
+            # Returns the state of the animation playback.
+            GetState<native><public>()<transacts>:play_animation_state
+
+            # Event triggered when the animation is interrupted.
+            InterruptedEvent<native><public>:listenable(tuple()) = external {}
+
+            # Helper function that succeeds if the state is Playing, BlendingIn, or BlendingOut.
+            IsPlaying<public>()<transacts><decides>:void = external {}
+
+            # Stops the animation.
+            Stop<native><public>():void
+
+        # Result of a PlayAndAwait request.
+        play_animation_result<native><public> := enum:
+            # The animation completed successfully.
+            Completed
+
+            # The animation encountered an error during initialization or whilst playing.
+            Error
+
+            # The animation was interrupted whilst playing.
+            Interrupted
+
+        # The potential states of a play animation instance.
+        play_animation_state<native><public> := enum:
+            # The animation is blending in.
+            BlendingIn
+
+            # The animation is playing and is blending out.
+            BlendingOut
+
+            # The animation completed successfully.
+            Completed
+
+            # An error occurred at creation or during playback.
+            Error
+
+            # The animation was interrupted externally.
+            Interrupted
+
+            # The animation has blended in, is playing, and has not begun blending out.
+            Playing
+
+            # The animation was stopped internally.
+            Stopped
 
 # Module import path: /Fortnite.com/Assets
 Assets<public> := module:
@@ -1961,6 +2051,32 @@ Devices<public> := module:
 
         # Updates *Selected Team* to `Agent`'s team.
         UpdateSelectedTeam<public>(Agent:agent):void = external {}
+
+    # Used to spawn NPCs made with Character Definition asset.
+    npc_spawner_device<public> := class<concrete><final>(creative_device_base):
+        # Despawns all characters. If set, `Instigator` will be considered as the eliminator of those characters.
+        DespawnAll<public>(Instigator:?agent):void = external {}
+
+        # Disables this device. Characters will despawn if *Despawn AIs When Disabled* is set.
+        Disable<public>():void = external {}
+
+        # Signaled when a character is eliminated.
+        # `Source` is the `agent` that eliminated the character. If the character was eliminated by a non-agent then `Source` is 'false'.
+        # `Target` is the character that was eliminated.
+        EliminatedEvent<public>:listenable(device_ai_interaction_result) = external {}
+
+        # Enables this device. Characters will start to spawn.
+        Enable<public>():void = external {}
+
+        # Resets the spawn count allowing spawning of a new batch of characters.
+        Reset<public>():void = external {}
+
+        # Tries to spawn a character.
+        Spawn<public>():void = external {}
+
+        # Signaled when a character is spawned.
+        # Sends the `agent` character who was spawned.
+        SpawnedEvent<public>:listenable(agent) = external {}
 
     # Provides a collection of destructible devices that you can select from to use as objectives in your game.
     objective_device<public> := class<concrete><final>(creative_device_base):
