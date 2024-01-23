@@ -39,7 +39,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 ## Verse Module API Changes:
 
-- `28.01` - `28.10` (TBD)
+- [`28.01` - `28.10`](https://github.com/kbfngg/uefn/commit/4a76a49ac04a4974d3487cb50846bc769b6e52a0)
 - [`28.00` - `28.01`](https://github.com/kbfngg/uefn/commit/24e391418adb22d6a5f1829b9ae332d885ab9712) (nothing new)
 - [`27.11` - `28.00`](https://github.com/kbfngg/uefn/commit/3b49dbd5815ac41130ec4645791c4090440e84cd)
 - [`27.00` - `27.10`](https://github.com/kbfngg/uefn/commit/24041496b294c725eb352c354650f128651daeea)
