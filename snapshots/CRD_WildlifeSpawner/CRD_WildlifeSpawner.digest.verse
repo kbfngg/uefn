@@ -66,6 +66,9 @@ wildlife_spawner_device<public> := class<concrete><final>(creative_device_base):
     # Destroys this device, marking `Agent` as the destroyer of the device.
     DestroySpawner<public>(Agent:agent):void = external {}
 
+    # Eliminates wildlife tamed by `Agent`.
+    EliminateTamed<epic_internal>(Agent:agent):void = external {}
+
     # Tames wildlife, making them AI partners of `Agent`.
     Tame<public>(Agent:agent):void = external {}
 

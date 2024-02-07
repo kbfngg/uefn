@@ -1,3 +1,8 @@
+using {/Fortnite.com/Assets}
+using {/Fortnite.com/Animation/PlayAnimation}
+using {/Verse.org/Native}
+using {/Fortnite.com/AI}
+using {/Verse.org/Assets}
 using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Fortnite.com/Teams}
 using {/Verse.org/Simulation}
@@ -231,6 +236,10 @@ Game<public> := module:
     game_action_causer<native><public> := interface:
 
 
+    # Implementation of the `game_action_instigator` interface for `agent`s.
+    agent_instigator_impl<native><epic_internal> := class(game_action_instigator):
+        TheAgent<native><epic_internal>:agent
+
 # Module import path: /Fortnite.com/FortPlayerUtilities
 FortPlayerUtilities<public> := module:
     # Sends `InPlayer` back to the main game lobby.
@@ -247,6 +256,9 @@ FortPlayerUtilities<public> := module:
 
 # Module import path: /Fortnite.com/Characters
 Characters<public> := module:
+    npc_character_modifier<native><epic_internal> := class<abstract>:
+        ModifyCharacter<native_callable><public>(Character:fort_character):void
+
     # Main API implemented by Fortnite characters.
     fort_character<native><public> := interface<unique><epic_internal>(positional, healable, healthful, damageable, shieldable, game_action_instigator, game_action_causer):
         # Returns the agent associated with this `fort_character`. Use this when interacting with APIs that require an `agent` reference.
@@ -344,8 +356,111 @@ Characters<public> := module:
         # Controls if `fort_character` can still perform emotes while in stasis.
         AllowEmotes<native><public>:logic = external {}
 
+# Module import path: /Fortnite.com/Assets
+Assets<public> := module:
+    emote<native><epic_internal> := class<computes><concrete><final>(asset):
+
+
+# Module import path: /Fortnite.com/Animation
+Animation<public> := module:
+    # Module import path: /Fortnite.com/Animation/PlayAnimation
+    PlayAnimation<public> := module:
+        # Result of a PlayAndAwait request.
+        play_animation_result<native><public> := enum:
+            # The animation completed successfully.
+            Completed
+            # The animation was interrupted whilst playing.
+            Interrupted
+            # The animation encountered an error during initialization or whilst playing.
+            Error
+
+        # An interface for playing an animation on an object.
+        play_animation_controller<native><public> := interface:
+            # Play an animation sequence.
+            PlayAndAwait<public>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {})<suspends>:play_animation_result
+
+            # Start an animation sequence and obtain an instance to query and manipulate.
+            Play<public>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {}):play_animation_instance
+
+        # An animation instance created from play_animation_controller.Play that can be queried and manipulated.
+        play_animation_instance<native><public> := class<epic_internal>:
+            # Returns the state of the animation playback.
+            GetState<native><public>()<transacts>:play_animation_state
+
+            # Stops the animation.
+            Stop<native><public>():void
+
+            # Event triggered when the animation is completed.
+            CompletedEvent<native><public>:listenable(tuple()) = external {}
+
+            # Event triggered when the animation is interrupted.
+            InterruptedEvent<native><public>:listenable(tuple()) = external {}
+
+            # Event triggered when the animation has finished to blend out.
+            BlendedInEvent<native><public>:listenable(tuple()) = external {}
+
+            # Event triggered when the animation is beginning to blend out.
+            BlendingOutEvent<native><public>:listenable(tuple()) = external {}
+
+            # Helper function that waits for the animation to complete or be interrupted.
+            Await<public>()<suspends>:play_animation_result = external {}
+
+            # Helper function that succeeds if the state is Playing, BlendingIn, or BlendingOut.
+            IsPlaying<public>()<transacts><decides>:void = external {}
+
+        # The potential states of a play animation instance.
+        play_animation_state<native><public> := enum:
+            # The animation is blending in.
+            BlendingIn
+            # The animation has blended in, is playing, and has not begun blending out.
+            Playing
+            # The animation is playing and is blending out.
+            BlendingOut
+            # The animation completed successfully.
+            Completed
+            # The animation was stopped internally.
+            Stopped
+            # The animation was interrupted externally.
+            Interrupted
+            # An error occurred at creation or during playback.
+            Error
+
+        # Get the play_animation_controller for the specified character.
+        (InCharacter:fort_character).GetPlayAnimationController<native><public>()<transacts><decides>:play_animation_controller
+
+    @import_as("/Script/VerseFortnite.UAIAnimationComponent")
+    ai_animation_component<native><epic_internal> := class<abstract>(ai_actions_component):
+
+
+    play_animation_controller_impl<native><epic_internal> := class(ai_animation_component, play_animation_controller):
+        PlayAndAwait<override>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {})<suspends>:play_animation_result = external {}
+
+        Play<override>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {}):play_animation_instance = external {}
+
 # Module import path: /Fortnite.com/AI
 AI<public> := module:
+    @import_as("/Script/VerseFortnite.UAIActionsComponent")
+    ai_actions_component<native><epic_internal> := class<abstract>:
+
+
+    # Result of a play emote action.
+    play_emote_result<native><epic_internal> := enum:
+        # The emote has been played successfully.
+        Success
+        # The character was not able to play the emote.
+        Error
+        # The emote has started but was interrupted before completion.
+        Interrupted
+
+    emote_interface<native><epic_internal> := interface:
+        # Play a random emote from the character emotes bank
+        PlayRandomEmote<public>()<suspends>:play_emote_result
+
+        PlayEmote<epic_internal>(Emote:emote)<suspends>:play_emote_result
+
+    # Get the current emote_interface for the specified character
+    (InCharacter:fort_character).GetEmoteInterface<native><epic_internal>()<transacts><decides>:emote_interface
+
     focus_interface<native><public> := interface:
         # Look At specified location. Will never complete unless interrupted.
         MaintainFocus<public>(Location:vector3)<suspends>:void
@@ -372,6 +487,60 @@ AI<public> := module:
 
     # Get the current fort_leashable interface for the specified character.
     (InCharacter:fort_character).GetFortLeashable<native><public>()<transacts><decides>:fort_leashable
+
+    # The different alert levels of a guard.
+    guard_alert_level<native><epic_internal> := enum:
+        # The guard has not detected any hostile target.
+        Unaware
+        # The guard has seen a hostile target but hasn't identified it yet.
+        Suspicious
+        # The guard has identified a hostile target but can't see it any more.
+        LostTarget
+        # The guard has identified a hostile target.
+        Alerted
+
+    guard_perception_interface<native><epic_internal> := interface(perception_interface):
+        # Get information about the current target.
+        GetCurrentTargetInfo<epic_internal>()<transacts><decides>:target_info
+
+        # Event when the current target has changed.
+        CurrentTargetChangedEvent<epic_internal>():listenable(target_info)
+
+        # Get the current alert level of the guard.
+        GetAlertLevel<public>()<transacts>:guard_alert_level
+
+        # Get the current alert level of a target for the guard.
+        GetAlertLevel<public>(TargetInfo:target_info)<transacts>:guard_alert_level
+
+        # Event when the alert level of the guard has changed.
+        AlertLevelChangedEvent<public>():listenable(guard_alert_level)
+
+        # Get the current sight settings of the guard for an alert level.
+        GetSightSettings<public>(GuardAlertLevel:guard_alert_level)<transacts>:sight_perception_settings
+
+        # Set the current sight settings of the guard for an alert level.
+        SetSightSettings<public>(GuardAlertLevel:guard_alert_level, SightSettings:sight_perception_settings):void
+
+        # Get the current hearing settings of the guard for an alert level.
+        GetHearingSettings<public>(GuardAlertLevel:guard_alert_level)<transacts>:hearing_perception_settings
+
+        # Set the current hearing settings of the guard for an alert level.
+        SetHearingSettings<public>(GuardAlertLevel:guard_alert_level, HearingSettings:hearing_perception_settings):void
+
+        # Get the current touch settings of the guard for an alert level.
+        GetTouchSettings<public>(GuardAlertLevel:guard_alert_level)<transacts>:touch_perception_settings
+
+        # Set the current touch settings of the guard for an alert level
+        SetTouchSettings<public>(GuardAlertLevel:guard_alert_level, TouchSettings:touch_perception_settings):void
+
+        # Get the current damage settings of the guard for an alert level.
+        GetDamageSettings<public>(GuardAlertLevel:guard_alert_level)<transacts>:damage_perception_settings
+
+        # Set the current damage settings of the guard for an alert level.
+        SetDamageSettings<public>(GuardAlertLevel:guard_alert_level, DamageSettings:damage_perception_settings):void
+
+    # Get the current guard_perception_interface for the specified guard character.
+    (InCharacter:fort_character).GetGuardPerception<native><epic_internal>()<transacts><decides>:guard_perception_interface
 
     navigation_target<native><public> := class<epic_internal>:
 
@@ -410,3 +579,182 @@ AI<public> := module:
 
     # Get the navigatable interface for the specified character.
     (InCharacter:fort_character).GetNavigatable<native><public>()<transacts><decides>:navigatable
+
+    # Inherit from this to create a custom NPC behavior.
+    # The npc_behavior can be defined for a character in a CharacterDefinition asset, or in a npc_spawner_device.
+    npc_behavior<native><public> := class<abstract>:
+        # This function is called when the NPC is added to the simulation.
+        OnBegin<native_callable><public>()<suspends>:void = external {}
+
+        # This function is called when the NPC is removed from the simulation.
+        OnEnd<native_callable><public>():void = external {}
+
+        # Returns the agent associated with this behavior.
+        GetAgent<native><public>()<transacts><decides>:agent
+
+    # Returns the `npc_behavior` for `InAgent`.
+    (InAgent:agent).GetNPCBehavior<native><public>()<transacts><decides>:npc_behavior
+
+    # Information about a perceived target.
+    target_info<native><epic_internal> := struct<epic_internal>:
+        # The source of the detection stimuli.
+        Target<native><public>:game_action_instigator
+
+        # True if the target can be seen.
+        HasLineOfSight<native><public>:logic
+
+        # Attitude toward this target.
+        Attitude<native><public>:team_attitude
+
+    # Get the last known position of the target.
+    (InTarget:target_info).GetLastKnownPosition<native><epic_internal>()<transacts>:vector3
+
+    # Create a `navigation_target` from a `target_info`.
+    MakeNavigationTarget<constructor><native><epic_internal>(TargetInfo:target_info):navigation_target
+
+    # Perception settings for sight.
+    sight_perception_settings<native><epic_internal> := class<final><concrete>:
+        @editable
+        # Maximum sight distance in meters to notice a target.
+        # This value will be clamped between 0 and 300 meters.
+        SightRadius<native><public>:float = external {}
+
+        @editable
+        # Maximum sight distance in meters to keep on seeing a target.
+        # This value will be clamped between 'SightRadius' and 300 meters.
+        LoseSightRadius<native><public>:float = external {}
+
+        @editable
+        # How far to the side AI can see, in radians.
+        # The value represents the angle measured in relation to the forward vector, not the whole range.
+        PeripheralVisionAngle<native><public>:float = external {}
+
+        @editable
+        # Specifies duration in seconds after sight stimuli generated by this sense become forgotten. 0 means never.
+        MaxStimulusDuration<native><public>:float = external {}
+
+        @editable
+        # Specifies if sight is enabled.
+        SenseEnabled<native><public>:logic = external {}
+
+        @editable
+        # Specifies if this sense is able to detect enemies.
+        EnemiesDetected<native><public>:logic = external {}
+
+        @editable
+        # Specifies if this sense is able to detect friendlies.
+        FriendliesDetected<native><public>:logic = external {}
+
+        @editable
+        # Specifies if this sense is able to detect neutral targets.
+        NeutralsDetected<native><public>:logic = external {}
+
+    # Perception settings for hearing.
+    hearing_perception_settings<native><epic_internal> := class<final><concrete>:
+        @editable
+        # Maximum hearing distance in meters to notice a target.
+        HearingRange<native><public>:float = external {}
+
+        @editable
+        # Specifies duration in seconds after audio stimuli generated by this sense become forgotten. 0 means never.
+        MaxStimulusDuration<native><public>:float = external {}
+
+        @editable
+        # Specifies if hearing is enabled.
+        SenseEnabled<native><public>:logic = external {}
+
+        @editable
+        # Specifies if this sense is able to detect enemies.
+        EnemiesDetected<native><public>:logic = external {}
+
+        @editable
+        # Specifies if this sense is able to detect friendlies.
+        FriendliesDetected<native><public>:logic = external {}
+
+        @editable
+        # Specifies if this sense is able to detect neutral targets.
+        NeutralsDetected<native><public>:logic = external {}
+
+    # Perception settings for touch.
+    touch_perception_settings<native><epic_internal> := class<final><concrete>:
+        @editable
+        # Specifies duration in seconds after touch stimuli generated by this sense become forgotten. 0 means never.
+        MaxStimulusDuration<native><public>:float = external {}
+
+        @editable
+        # Specifies if touch perception is enabled.
+        SenseEnabled<native><public>:logic = external {}
+
+        @editable
+        # Specifies if this sense is able to detect enemies.
+        EnemiesDetected<native><public>:logic = external {}
+
+        @editable
+        # Specifies if this sense is able to detect friendlies.
+        FriendliesDetected<native><public>:logic = external {}
+
+        @editable
+        # Specifies if this sense is able to detect neutral targets.
+        NeutralsDetected<native><public>:logic = external {}
+
+    # Perception settings for damage.
+    damage_perception_settings<native><epic_internal> := class<final><concrete>:
+        @editable
+        # Specifies duration in seconds after damage stimuli generated by this sense become forgotten. 0 means never.
+        MaxStimulusDuration<native><public>:float = external {}
+
+        @editable
+        # Specifies if damage perception is enabled.
+        SenseEnabled<native><public>:logic = external {}
+
+    perception_interface<native><epic_internal> := interface:
+        # Get information about all detected targets.
+        GetDetectedTargets<public>()<transacts>:[]target_info
+
+        # Get information about a specific agent.
+        GetDetectedTarget<public>(Agent:agent)<transacts><decides>:target_info
+
+        # Event when a target is added.
+        TargetAddedEvent<public>():listenable(target_info)
+
+        # Event when the info about a target has been updated.
+        TargetInfoUpdatedEvent<public>():listenable(target_info)
+
+        # Event when a target was removed.
+        TargetRemovedEvent<public>():listenable(game_action_instigator)
+
+        # Event when a target is seen. Sight sense must be active.
+        TargetSeenEvent<public>():listenable(target_info)
+
+        # Event when a target is heard. Hearing sense must be active.
+        TargetHeardEvent<public>():listenable(target_info)
+
+        # Event when a target is touched. Touch sense must be active.
+        TargetTouchedEvent<public>():listenable(target_info)
+
+        # Get the current sight settings.
+        GetSightSettings<public>()<transacts>:sight_perception_settings
+
+        # Set the current sight settings.
+        SetSightSettings<public>(SightSettings:sight_perception_settings):void
+
+        # Get the current hearing settings.
+        GetHearingSettings<public>()<transacts>:hearing_perception_settings
+
+        # Set the current hearing settings.
+        SetHearingSettings<public>(HearingSettings:hearing_perception_settings):void
+
+        # Get the current touch perception settings.
+        GetTouchSettings<public>()<transacts>:touch_perception_settings
+
+        # Set the current touch perception settings.
+        SetTouchSettings<public>(TouchSettings:touch_perception_settings):void
+
+        # Get the current damage perception settings.
+        GetDamageSettings<public>()<transacts>:damage_perception_settings
+
+        # Set the current damage perception settings.
+        SetDamageSettings<public>(DamageSettings:damage_perception_settings):void
+
+    # Get the current perception_interface for the specified character.
+    (InCharacter:fort_character).GetPerception<native><epic_internal>()<transacts><decides>:perception_interface

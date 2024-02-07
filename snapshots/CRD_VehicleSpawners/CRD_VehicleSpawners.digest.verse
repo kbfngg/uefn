@@ -44,6 +44,54 @@ vehicle_spawner_device<public> := class<abstract><epic_internal>(creative_device
     # Spawns a new vehicle. The previous vehicle will be destroyed before a new vehicle spawns.
     RespawnVehicle<public>():void = external {}
 
+    # Applies off-road tires to the vehicle if applicable.
+    ApplyOffRoadTires<epic_internal>():void = external {}
+
+    # Reverts to road tires on the vehicle if applicable.
+    RemoveTireMods<epic_internal>():void = external {}
+
+    # Pops all of the tires on the vehicle, if applicable.
+    PopAllTires<epic_internal>():void = external {}
+
+    # Repairs all of the tires on the vehicle, if applicable.
+    RepairAllTires<epic_internal>():void = external {}
+
+    # Sets the amount of fuel(or energy) in the vehicle as a percentage between `0.0` and `100.0`.
+    SetFuelRemaining<epic_internal>(Amount:float):void = external {}
+
+    # Gets the amount of fuel(or energy) in the vehicle as a percentage between `0.0` and `100.0`.
+    GetFuelRemaining<epic_internal>()<transacts>:float = external {}
+
+    # Checks to see if a vehicle is currently spawned from this device.
+    HasVehicle<epic_internal>()<transacts><decides>:void = external {}
+
+    # Succeeds if `agent` is the driver of the vehicle.
+    IsDriver<epic_internal>(Agent:agent)<transacts><decides>:void = external {}
+
+    # Succeeds if `agent` is the passenger of the vehicle.
+    IsPassenger<epic_internal>(Agent:agent)<transacts><decides>:void = external {}
+
+    # Restores the vehicle to full health.
+    RepairVehicle<epic_internal>():void = external {}
+
+    # Sets the vehicle's current health to the supplied amount.
+    # Health will be clamped between `1.0` and *Max Health*.
+    SetVehicleHealth<epic_internal>(Amount:float):void = external {}
+
+    # Returns the vehicle's current health.
+    # Returns 0.0 if the vehicle does not exist.
+    GetVehicleHealth<epic_internal>()<transacts>:float = external {}
+
+    # Sets the vehicle's maximum health to the supplied value.
+    # Health will be clamped between `1.0` and `9,999.0`.
+    SetVehicleMaxHealth<epic_internal>(Amount:float):void = external {}
+
+    # Returns the vehicle's maximum health.
+    GetVehicleMaxHealth<epic_internal>(Amount:float):void = external {}
+
+    # Returns the `agent` who is currently driving the vehicle.
+    GetDriver<epic_internal>()<transacts><decides>:agent = external {}
+
 # Specialized `vehicle_spawner_device` that allows a taxi to be configured and spawned.
 vehicle_spawner_taxi_device<public> := class<concrete><final>(vehicle_spawner_device):
 

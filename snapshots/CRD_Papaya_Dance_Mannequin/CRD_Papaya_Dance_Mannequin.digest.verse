@@ -21,3 +21,13 @@ dance_mannequin_device<public> := class<concrete><final>(creative_device_base):
 
     # Deactivates the hologram.
     DeactivateSkinAndEmoteCapture<public>():void = external {}
+
+# Used to capture `agent` dance moves.
+dance_capture_device<epic_internal> := class<concrete><final>(creative_device_base):
+    # Signaled when this device is activated by an `agent`.
+    # Sends the `agent` that activated this device.
+    ActivatedEvent<public>:listenable(agent) = external {}
+
+    # Signaled when this device is deactivated by an `agent`.
+    # Sends the `agent` that deactivated this device.
+    DeactivatedEvent<public>:listenable(agent) = external {}

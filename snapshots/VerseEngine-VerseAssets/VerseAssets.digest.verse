@@ -19,10 +19,13 @@ Assets<public> := module:
     animation<native><epic_internal> := class<computes><final><epic_internal>(asset):
 
 
+    animation_blueprint<native><epic_internal> := class<computes><final><epic_internal>(asset):
+
+
     animation_instance<native><epic_internal> := class<computes><final><epic_internal>(asset):
 
 
-    animation_blueprint<native><epic_internal> := class<computes><final><epic_internal>(asset):
+    animation_sequence<native><public> := class<computes><final><epic_internal>(asset):
 
 
     material<native><public> := class<computes><epic_internal>(asset):

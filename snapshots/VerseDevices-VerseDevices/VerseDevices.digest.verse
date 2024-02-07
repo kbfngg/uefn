@@ -1,8 +1,13 @@
+using {/Verse.org/Colors}
+using {/Fortnite.com/Vehicles}
 using {/Verse.org/Simulation}
-using {/Verse.org/Assets}
+using {/UnrealEngine.com/Temporary/Diagnostics}
+using {/UnrealEngine.com/VerseQuery}
 using {/Fortnite.com/Playspaces}
 using {/Verse.org/Simulation/Tags}
 using {/Fortnite.com/Game}
+using {/Verse.org/Native}
+using {/Verse.org/Assets}
 using {/UnrealEngine.com/Temporary/SpatialMath}
 # Module import path: /Fortnite.com/Devices
 Devices<public> := module:
@@ -72,6 +77,54 @@ Devices<public> := module:
             # Play the animation in a loop. This requires the animation ends exactly where it began.
             Loop
 
+        # Results for `animation_controller.SetAnimation` function.
+        set_animation_result<native><epic_internal> := enum:
+            # Function succeeded.
+            Ok
+            # An unknown error has occurred.
+            UnknownError
+            # No keyframes were provided.
+            NoKeyframes
+            # The animation mode was 'Loop' but there was a net translation or rotation in the keyframes.
+            LoopingAnimationDoesNotLoop
+            # The animation would cause the object to at least partially leave the boundaries of play.
+            KeyframeOutOfBounds
+            # The translation component of a keyframe contained a NaN or Inf.
+            InvalidLocation
+            # The delta time value of a keyframe was negative.
+            InvalidTime
+            # See the documentation for cubic_bezier_parameters for more information.
+            InvalidInterpolationParameters
+            # The target of the animation is not an animatable prop. This could be because:
+            #  * It is not a `creative_prop` that can be animated.
+            #  * It was disposed or otherwise destroyed.
+            #  * It has the 'Register with Structural Grid' option set in UEFN.
+            InvalidObject
+
+        # Results for `animation_controller.GetAnimationController' function.
+        get_animation_controller_result<native><epic_internal> := enum:
+            # Function succeeded.
+            Ok
+            # An unknown error has occurred.
+            UnknownError
+            # The target of the animation is not an animatable prop. This could be because:
+            #  * It is not a `creative_prop` that can be animated.
+            #  * It was disposed or otherwise destroyed.
+            #  * It has the 'Register with Structural Grid' option set in UEFN.
+            InvalidObject
+
+        # Results for `animation_controller`s play, pause, and stop functions.
+        playstoppause_result<native><epic_internal> := enum:
+            # Function succeeded.
+            Ok
+            # No animation has been successfully set via SetAnimation, or that animation has been cleared by a failed call to SetAnimation.
+            AnimationNotSet
+            # The target of the animation is not an animatable prop. This could be because:
+            #  * It is not a `creative_prop` that can be animated.
+            #  * It was disposed or otherwise destroyed.
+            #  * It has the 'Register with Structural Grid' option set in UEFN.
+            InvalidObject
+
         # `animation_controller` states.
         animation_controller_state<native><public> := enum:
             # The target of the animation is not an animatable prop. This could be because:
@@ -105,11 +158,20 @@ Devices<public> := module:
             # Suspends at the callsite until the next `keyframe_delta` is finished. This will also return if the animation is aborted or not playing. See `await_next_keyframe_result` if your code needs to take different paths based on why `AwaitNextKeyframe` returned.
             AwaitNextKeyframe<native><public>()<suspends>:await_next_keyframe_result
 
+            # Native implementation of `Play`.
+            PlayInternal<native><epic_internal>():playstoppause_result
+
             # Starts or resumes playback of the animation.
             Play<public>():void = external {}
 
+            # Native implementation of `Pause`.
+            PauseInternal<native><epic_internal>():playstoppause_result
+
             # Pauses the animation if it is already playing.
             Pause<public>():void = external {}
+
+            # Native implementation of `Stop`.
+            StopInternal<native><epic_internal>():playstoppause_result
 
             # Stops playback and resets the animation to the first keyframe. Also resets the prop transform. Calling this method is valid while the animation is in the `Playing` or `Paused` states.
             Stop<public>():void = external {}
@@ -119,6 +181,9 @@ Devices<public> := module:
 
             # Succeeds if this `animation_controller`s target is still valid (i.e., the target has not been disposed of either via `Dispose` or through any external system.)
             IsValid<native><public>()<transacts><decides>:void
+
+            # Native implementation of `SetAnimation`.
+            SetAnimationInternal<native><epic_internal>(Keyframes:[]keyframe_delta, ?AnimationMode:animation_mode = external {}):set_animation_result
 
             # Sets the animation for the `animation_controller`. Animations are processed in the order provided in `Keyframes`. See notes in `keyframe_delta` and `animation_mode` for more details on controlling the animations.
             SetAnimation<public>(Keyframes:[]keyframe_delta, ?Mode:animation_mode):void = external {}
@@ -132,6 +197,9 @@ Devices<public> := module:
             # Signaled when the state has changed. Use `GetState` to get the new state.
             StateChangedEvent<native><public>:listenable(tuple()) = external {}
 
+        # Native implementation of `GetAnimationController`.
+        GetAnimationController<native><epic_internal>(MovableObject:creative_movable_object_base)<transacts>:tuple(?animation_controller, get_animation_controller_result)
+
         # Returns an `animation_controller` used to animate `Prop`. Only a subset of `creative_prop` types can be animated, though this may change in the future. A few examples of props that cannot be animated yet are:
         #  * Walls attached to buildings
         #  * Treasure chests
@@ -139,7 +207,7 @@ Devices<public> := module:
         (Prop:creative_prop).GetAnimationController<public>()<transacts><decides>:animation_controller = external {}
 
     # Inherit from this to create a custom creative device. Inherited classes will appear in the UEFN content browser the next time Verse compiles. Instances of your derived `creative_device` can then be placed in the island by dragging them from the content browser into the scene.
-    creative_device<native><public> := class<concrete>(creative_object_interface):
+    creative_device<native><public> := class<concrete>(creative_movable_object_base, creative_object_interface):
         # Override to add custom logic when the game experience begins.
         OnBegin<public>()<suspends>:void = external {}
 
@@ -169,17 +237,41 @@ Devices<public> := module:
 
     # Base class for creative_device.
     creative_device_base<native><public> := class<abstract><epic_internal>(creative_object):
+        # Set this device visible in the world.
+        Show_Internal<native><epic_internal>()<transacts>:void
 
+        # Set this device invisible in the world.
+        Hide_Internal<native><epic_internal>()<transacts>:void
 
     # Internal asset for representing creative devices.
-    creative_device_asset<native><public> := class<computes><final><epic_internal>:
+    creative_device_asset<native><public> := class<computes><final><epic_internal>(asset):
 
+
+    @import_as("/Script/VerseDevices.UVerseMovableObjectBase")
+    creative_movable_object_base<native><epic_internal> := class<abstract><epic_internal>:
+
+
+    (MovableObject:creative_movable_object_base).GetTransformInternalImpl<native><epic_internal>()<transacts>:transform
+
+    (MovableObject:creative_movable_object_base).TeleportToInternalImpl<native><epic_internal>(Transform:transform)<transacts>:teleport_to_result
+
+    (MovableObject:creative_movable_object_base).TeleportToInternal<epic_internal>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
+
+    (MovableObject:creative_movable_object_base).TeleportToInternal<epic_internal>(Transform:transform)<transacts><decides>:void = external {}
+
+    (MovableObject:creative_movable_object_base).MoveToInternalImpl<epic_internal>(TargetTransform:transform, OverTime:float)<suspends>:move_to_internal_result = external {}
+
+    # Moves the `creative_movable_object_base` to the specified `Position` and `Rotation` over the specified time. If an animation is currently playing on the `creative_movable_object_base` it will be stopped and put into the `AnimationNotSet` state.
+    (MovableObject:creative_movable_object_base).MoveToInternal<epic_internal>(Position:vector3, Rotation:rotation, OverTime:float)<suspends>:move_to_result = external {}
+
+    # Moves the `creative_movable_object_base` to the specified `Transform` over the specified time. If an animation is currently playing on the `creative_movable_object_base` it will be stopped and put into the `AnimationNotSet` state.
+    (MovableObject:creative_movable_object_base).MoveToInternal<epic_internal>(Transform:transform, OverTime:float)<suspends>:move_to_result = external {}
 
     creative_object_interface<native><public> := interface<epic_internal>(positional):
 
 
     # Base class for creative devices and props.
-    creative_object<native><public> := class<epic_internal>(creative_object_interface):
+    creative_object<native><public> := class<epic_internal>(creative_movable_object_base, creative_object_interface):
         # Returns the transform of the `creative_object` with units in cm. You must check `creative_object.IsValid` before calling this if there is a possibility the object has been disposed or destroyed by gameplay.
         # Otherwise a runtime error will result.
         GetTransform<override>()<transacts>:transform = external {}
@@ -208,6 +300,9 @@ Devices<public> := module:
     # Returns the `fort_playspace` that `CreativeObject` belongs to.
     (CreativeObject:creative_object_interface).GetPlayspace<native><public>()<transacts>:fort_playspace
 
+    # Returns the `query_manager` that corresponds to the `CreativeObject`
+    (CreativeObject:creative_object_interface).GetQueryManagerFromObject<native><epic_internal>()<transacts>:query_manager
+
     # A Fortnite prop that has been placed or spawned in the island.
     creative_prop<native><public> := class<concrete><final>(creative_object, invalidatable):
         # Destroys the `creative_prop` and remove it from the island.
@@ -227,6 +322,9 @@ Devices<public> := module:
 
         # Hides the `creative_prop` in the world and disable collisions.
         Hide<native><public>()<transacts>:void
+
+        # Returns true if the `creative_prop` is hidden in the world.
+        IsHidden<native><epic_internal>()<transacts>:logic
 
     # Asset used to spawn `creative_prop` instances.
     creative_prop_asset<native><public> := class<computes><concrete><final><epic_internal>:
@@ -262,6 +360,65 @@ Devices<public> := module:
     #  1: Success or failure results.
     SpawnProp<native><public>(Asset:creative_prop_asset, Transform:transform)<transacts>:tuple(?creative_prop, spawn_prop_result)
 
+    creative_prop_debug_log<epic_internal> := class(log_channel):
+
+
+    # Base implementation for events on `creative_device`s.
+    device_event<native><epic_internal>(t:type)<computes> := class<abstract>(listenable(t)):
+        EventName<native><public>:[]char
+
+    # Partial implementation of `device_event(:type)` with no return payload.
+    device_event<epic_internal>()<computes> := device_event(tuple())
+
+    # Implementation of `device_event(:type)` with no payload.
+    device_event_void<native><epic_internal> := class(device_event(tuple())):
+        # Subscribes Callback to this event. That same Callback will only be triggered once per event even if it is called with Subscribe more than once.
+        Subscribe<native><override>(Callback:type {__():void})<transacts>:cancelable
+
+        Await<native><override>()<suspends>:tuple()
+
+    # Implementation of `device_event(:type)` with required `agent` payload.
+    device_event_agent<native><epic_internal> := class(device_event(agent)):
+        # Subscribes Callback to this event. That same Callback will only be triggered once per event even if it is called with Subscribe more than once.
+        Subscribe<native><override>(Callback:type {__(:agent):void})<transacts>:cancelable
+
+        Await<native><override>()<suspends>:agent
+
+    # Implementation of `device_event(:type)` with optional `agent` payload.
+    device_event_optional_agent<native><epic_internal> := class(device_event(?agent)):
+        # Subscribes Callback to this event. That same Callback will only be triggered once per event even if it is called with Subscribe more than once.
+        Subscribe<native><override>(Callback:type {__(:?agent):void})<transacts>:cancelable
+
+        Await<native><override>()<suspends>:?agent
+
+    # Implementation of `device_event(:type)` with a `tuple(agent, int)` payload.
+    device_event_agent_int<native><epic_internal> := class(device_event(tuple(agent, int))):
+        # Subscribes Callback to this event. That same Callback will only be triggered once per event even if it is called with Subscribe more than once.
+        Subscribe<native><override>(Callback:type {__(:agent, :int):void})<transacts>:cancelable
+
+        Await<native><override>()<suspends>:tuple(agent, int)
+
+    # Implementation of `device_event(:type)` with a `tuple(agent, float)` payload.
+    device_event_agent_float<native><epic_internal> := class(device_event(tuple(agent, float))):
+        # Subscribes Callback to this event. That same Callback will only be triggered once per event even if it is called with Subscribe more than once.
+        Subscribe<native><override>(Callback:type {__(:agent, :float):void})<transacts>:cancelable
+
+        Await<native><override>()<suspends>:tuple(agent, float)
+
+    # Implementation of `device_event(:type)` with a `tuple(?agent, int)` payload.
+    device_event_optional_agent_int<native><epic_internal> := class(device_event(tuple(?agent, int))):
+        # Subscribes Callback to this event. That same Callback will only be triggered once per event even if it is called with Subscribe more than once.
+        Subscribe<native><override>(Callback:type {__(:?agent, :int):void})<transacts>:cancelable
+
+        Await<native><override>()<suspends>:tuple(?agent, int)
+
+    # Implementation of `device_event(:type)` with required `fort_vehicle` payload.
+    device_event_vehicle<native><epic_internal> := class(device_event(fort_vehicle)):
+        # Subscribes Callback to this event. That same Callback will only be triggered once per event even if it is called with Subscribe more than once.
+        Subscribe<native><override>(Callback:type {__(:fort_vehicle):void})<transacts>:cancelable
+
+        Await<native><override>()<suspends>:fort_vehicle
+
     # Payload of `device_event_ai_interaction`.
     device_ai_interaction_result<native><public> := struct<epic_internal>:
         # Optional agent that triggered the interaction
@@ -270,9 +427,173 @@ Devices<public> := module:
         # Optional agent targeted by `Source`.
         Target<native><public>:?agent
 
+    # Implementation of `device_event(:type)` with `device_ai_interaction_result` payload.
+    device_event_ai_interaction<native><epic_internal> := class(device_event(device_ai_interaction_result)):
+        SourceName<native><public>:[]char
+
+        TargetName<native><public>:[]char
+
+        # Subscribes Callback to this event. That same Callback will only be triggered once per event even if it is called with Subscribe more than once.
+        Subscribe<native><override>(Callback:type {__(:device_ai_interaction_result):void})<transacts>:cancelable
+
+        Await<native><override>()<suspends>:device_ai_interaction_result
+
+    function_parameter_base<native><epic_internal> := class<abstract><computes>:
+
+
+    function_parameter_int<native><epic_internal> := class<computes>(function_parameter_base):
+        Value<native><epic_internal>:int
+
+    function_parameter_string<native><epic_internal> := class<computes>(function_parameter_base):
+        Value<native><epic_internal>:[]char
+
+    function_parameter_message<native><epic_internal> := class<computes>(function_parameter_base):
+        Value<native><epic_internal>:?message
+
+    function_parameter_color<native><epic_internal> := class<computes>(function_parameter_base):
+        Value<native><epic_internal>:color
+
+    function_parameter_float<native><epic_internal> := class<computes>(function_parameter_base):
+        Value<native><epic_internal>:float
+
+    function_parameter_agent<native><epic_internal> := class<computes>(function_parameter_base):
+        Value<native><epic_internal>:?agent
+
+    function_parameter_logic<native><epic_internal> := class<computes>(function_parameter_base):
+        Value<native><epic_internal>:logic
+
+    function_parameter_vector3<native><epic_internal> := class<computes>(function_parameter_base):
+        Value<native><epic_internal>:vector3
+
+    device_function<native><epic_internal> := class:
+        FunctionName<native><epic_internal>:[]char
+
+        Invoke<native><epic_internal>():void
+
+        Invoke<native><epic_internal>(InAgent:agent):void
+
+    device_function_set_base<native><epic_internal> := class<abstract>:
+        FunctionName<native><epic_internal>:[]char
+
+    device_function_set_int<native><epic_internal> := class(device_function_set_base):
+        Invoke<native><epic_internal>(Value:int):void
+
+    device_function_set_float<native><epic_internal> := class(device_function_set_base):
+        Invoke<native><epic_internal>(Value:float):void
+
+    device_function_set_logic<native><epic_internal> := class(device_function_set_base):
+        Invoke<native><epic_internal>(Value:logic):void
+
+    device_function_set_string<native><epic_internal> := class(device_function_set_base):
+        Invoke<native><epic_internal>(Value:[]char):void
+
+    device_function_set_message<native><epic_internal> := class(device_function_set_base):
+        Invoke<native><epic_internal>(Value:message):void
+
+    device_function_set_color<native><epic_internal> := class(device_function_set_base):
+        Invoke<native><epic_internal>(Value:color):void
+
+    device_function_set_agent<native><epic_internal> := class(device_function_set_base):
+        Invoke<native><epic_internal>(InAgent:?agent):void
+
+    device_function_set_vector3<native><epic_internal> := class(device_function_set_base):
+        Invoke<native><epic_internal>(Value:vector3):void
+
+    device_function_get_base<native><epic_internal> := class<abstract>:
+        FunctionName<native><epic_internal>:[]char
+
+    device_function_get_int<native><epic_internal> := class(device_function_get_base):
+        Invoke<native><epic_internal>()<varies>:int
+
+    device_function_get_float<native><epic_internal> := class(device_function_get_base):
+        Invoke<native><epic_internal>()<varies>:float
+
+    device_function_get_logic<native><epic_internal> := class(device_function_get_base):
+        Invoke<native><epic_internal>()<varies>:logic
+
+    device_function_get_string<native><epic_internal> := class(device_function_get_base):
+        Invoke<native><epic_internal>()<varies>:[]char
+
+    device_function_get_color<native><epic_internal> := class(device_function_get_base):
+        Invoke<native><epic_internal>()<varies>:color
+
+    device_function_get_agent<native><epic_internal> := class(device_function_get_base):
+        Invoke<native><epic_internal>()<varies>:?agent
+
+    device_function_get_vector3<native><epic_internal> := class(device_function_get_base):
+        Invoke<native><epic_internal>()<varies>:vector3
+
+    device_function_set_multi_parameter_base<native><epic_internal> := class<abstract>(device_function_set_base):
+        ReturnType<native><epic_internal>:?subtype(function_parameter_base) = external {}
+
+    device_function_set_params_by_name<native><epic_internal> := class(device_function_set_multi_parameter_base):
+        Invoke<native><epic_internal>(NamedParameters:[[]char]function_parameter_base)<transacts>:?function_parameter_base
+
+        ParameterTypes<native><epic_internal>:[[]char]subtype(function_parameter_base)
+
+    device_function_set_params_by_name_const<native><epic_internal> := class(device_function_set_params_by_name):
+        InvokeConst<native><epic_internal>(NamedParameters:[[]char]function_parameter_base)<varies>:?function_parameter_base
+
+    device_function_set_params_by_type<native><epic_internal> := class(device_function_set_multi_parameter_base):
+        Invoke<native><epic_internal>(TypeExclusiveParameters:[]function_parameter_base)<transacts>:?function_parameter_base
+
+        ParameterTypes<native><epic_internal>:[]subtype(function_parameter_base)
+
+    device_function_set_params_by_type_const<native><epic_internal> := class(device_function_set_params_by_type):
+        InvokeConst<native><epic_internal>(TypeExclusiveParameters:[]function_parameter_base)<varies>:?function_parameter_base
+
+    move_to_debug_log<epic_internal> := class(log_channel):
+
+
     # Results for `MoveTo`.
     move_to_result<public> := enum:
         # The destination has been reached.
         DestinationReached
         # The destination will not be reached. See debug log in UEFN for more info.
         WillNotReachDestination
+
+    # Results for `MoveToInternal`.
+    move_to_internal_result<epic_internal> := enum:
+        # The destination has been reached.
+        DestinationReached
+        # The move was terminated before completion (e.g., via the `animation_controller` API).
+        WillNotReachDestination
+        # An unknown error occurred. If this happens frequently, contact Epic support.
+        UnknownError
+        # NaN or Infinity in the requested destination.
+        InvalidDestination
+        # The `OverTime` parameter was not a float greater than zero.
+        InvalidTime
+        # The object being moved is no longer valid. Example invalid states:
+        #  * The object has been destroyed during gameplay.
+        #  * The object has been destroyed by Verse.
+        #  * The object has the 'Register with Structural Grid' option set in UEFN.
+        InvalidObject
+        # The destination would cause the object to be at least partially outside the island's boundaries.
+        DestinationOutOfBounds
+
+    HandleMoveToInternalResult<epic_internal>(Result:move_to_internal_result):move_to_result = external {}
+
+    # Returns a `string` representation of `move_to_internal_result` objects.
+    ToString<epic_internal>(MoveToInternalResult:move_to_internal_result)<computes>:[]char = external {}
+
+    teleport_to_debug_log<epic_internal> := class(log_channel):
+
+
+    # Results for `TeleportTo` of creative objects and devices.
+    teleport_to_result<native><epic_internal> := enum:
+        # Success.
+        Ok
+        # An unknown error occurred. If this happens frequently, contact Epic support.
+        UnknownError
+        # `NaN` or `Infinity` in the requested destination.
+        InvalidDestination
+        # The object being moved is no longer valid. Example invalid states:
+        #  * The object has been destroyed during gameplay.
+        #  * The object has been destroyed by Verse.
+        #  * The object has the *Register with Structural Grid* option set in UEFN.
+        InvalidObject
+        # The destination would cause the object to be at least partially outside the island's boundaries.
+        DestinationOutOfBounds
+
+    HandleTeleportToResult<epic_internal>(Result:teleport_to_result)<transacts><decides>:void = external {}

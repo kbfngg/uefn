@@ -129,6 +129,18 @@ tracker_device<public> := class<concrete><final>(creative_device_base):
     # Sends the `agent` that reached `GetTarget` for their tracked value.
     CompleteEvent<public>:listenable(agent) = external {}
 
+    # Signaled when the tracker saves data for an `agent`.
+    # Sends the `agent` that saved.
+    SavedEvent<epic_internal>:listenable(agent) = external {}
+
+    # Signaled when the tracker loads data for an `agent`.
+    # Sends the `agent` that loaded.
+    LoadedEvent<epic_internal>:listenable(agent) = external {}
+
+    # Signaled when the tracker clears persistent data for an `agent`.
+    # Sends the `agent` that cleared the persistent data.
+    ClearedEvent<epic_internal>:listenable(agent) = external {}
+
     # Assigns the device to `Agent` (and any `agent`s sharing progress).
     Assign<public>(Agent:agent):void = external {}
 
@@ -162,15 +174,25 @@ tracker_device<public> := class<concrete><final>(creative_device_base):
     # Loads tracked progress for `Agent`. Only valid if *Use Persistence* is set to *Use*.
     Load<public>(Agent:agent):void = external {}
 
+    # Saves tracked progress for all valid `agent`s. Only valid if *Use Persistence* is set to *Use*.
+    SaveForAll<epic_internal>():void = external {}
+
     # Loads tracked progress for all valid `agent`s. Only valid if *Use Persistence* is set to *Use*.
     LoadForAll<public>():void = external {}
 
     # Clears tracked progress for `Agent`. Only valid if *Use Persistence* is set to *Use*.
     ClearPersistence<public>(Agent:agent):void = external {}
 
+    # Clears tracked progress for all valid `agent`s. Only valid if *Use Persistence* is set to *Use*.
+    ClearPersistenceForAll<epic_internal>():void = external {}
+
     # Sets a description for the `tracker_device`, which is displayed if *Show on HUD* is enabled.
     # `Text` has a 64 character limit.
     SetDescriptionText<public>(Text:message):void = external {}
+
+    # Returns the description for the `tracker_device`, which is displayed if *Show on HUD* is enabled.
+    # `GetDescriptionText` has a 64 character limit.
+    GetDescriptionText<epic_internal>()<transacts>:[]char = external {}
 
     # Sets the target value that must be achieved in order for `CompleteEvent` to trigger.
     # Clamped to `0 <= TargetValue <= 10000`.
@@ -206,6 +228,10 @@ tracker_device<public> := class<concrete><final>(creative_device_base):
     # `Text` has a 32 character limit.
     SetTitleText<public>(Text:message):void = external {}
 
+    # Returns the title for the `tracker_device`, which is displayed if *Show on HUD* is enabled.
+    # `GetTitleText` has a 32 character limit.
+    GetTitleText<epic_internal>()<transacts>:[]char = external {}
+
     # Is true if `Agent` currently has the quest active.
     IsActive<public>(Agent:agent)<transacts><decides>:void = external {}
 
@@ -225,6 +251,18 @@ timer_device<public> := class<concrete><final>(creative_device_base):
     # Signaled when the timer enters *Urgency Mode*.
     # Sends the `agent` that activated the timer, if any.
     StartUrgencyModeEvent<public>:listenable(?agent) = external {}
+
+    # Signaled when the timer saves data for an `agent`.
+    # Sends the `agent` that saved.
+    SavedEvent<epic_internal>:listenable(agent) = external {}
+
+    # Signaled when the timer loads data for an `agent`.
+    # Sends the `agent` that loaded.
+    LoadedEvent<epic_internal>:listenable(agent) = external {}
+
+    # Signaled when the timer clears persistent data for an `agent`.
+    # Sends the `agent` that cleared the persistent data.
+    ClearedEvent<epic_internal>:listenable(agent) = external {}
 
     # Enables this device for `Agent`.
     Enable<public>(Agent:agent):void = external {}
@@ -303,6 +341,12 @@ timer_device<public> := class<concrete><final>(creative_device_base):
 
     # Loads this device's saved data for `Agent`.
     Load<public>(Agent:agent):void = external {}
+
+    # Saves this device's data for all players.
+    SaveForAll<epic_internal>():void = external {}
+
+    # Loads this device's saved data for all players.
+    LoadForAll<epic_internal>():void = external {}
 
     # Clears this device's saved data for `Agent`.
     ClearPersistenceData<public>(Agent:agent):void = external {}
@@ -652,6 +696,9 @@ score_manager_device<public> := class<concrete><final>(creative_device_base):
     # Returns the current score for `Agent`.
     GetCurrentScore<public>(Agent:agent)<transacts>:int = external {}
 
+    # Immediately awards the specified score quantity to the indicated agent. Does not require Activate to be called subsequently, and will not modify the device's current Score Award quantity
+    AwardScore<epic_internal>(Agent:agent, ScoreToAward:int):void = external {}
+
 # Used to customize gameplay for any round-based game. It generally defines what happens to the`agent`'s inventory and rewards in each round.
 round_settings_device<public> := class<concrete><final>(creative_device_base):
     # Signaled when a game round starts.
@@ -771,6 +818,12 @@ pulse_trigger_device<public> := class<concrete><final>(creative_device_base):
     # Returns the total number of waves this sequence will complete before ending its sequence.
     # `0` indicates the sequence will continue indefinitely.
     GetLoopCount<public>()<transacts>:int = external {}
+
+    # Sets the tempo (in beats per minute or BPM) at which the waves generated by this sequencer will travel.
+    SetTempo<epic_internal>(Tempo:float):void = external {}
+
+    # Returns the tempo (in beats per minute or BPM) at which the waves generated by this sequencer will travel.
+    GetTempo<epic_internal>()<transacts>:float = external {}
 
     # Sets the speed (in meters per second) at which the waves generated by this sequencer will travel.
     SetWaveSpeed<public>(Speed:float):void = external {}
@@ -1069,6 +1122,9 @@ hud_message_device<public> := class<concrete><final>(creative_device_base):
     # Sets the *Message* to be displayed when the HUD message is activated. `Text` is clamped to 150 characters.
     SetText<public>(Text:message):void = external {}
 
+    # Returns the *Message* to be displayed when the HUD message is activated.
+    GetText<epic_internal>()<transacts>:[]char = external {}
+
 # Used to create a holographic screen that displays a clock or other curated images.
 holoscreen_device<public> := class<concrete><final>(creative_device_base):
 
@@ -1138,6 +1194,31 @@ damage_amplifier_powerup_device<public> := class<concrete><final>(powerup_device
     # For the Damage Amplifier Powerup, this is the damage multiplier.
     GetMagnitude<public>()<transacts>:float = external {}
 
+# Used to create a specialized light which can be enabled and disabled and set to a desired color in response to in game events.
+customizable_color_light_device<epic_internal> := class<concrete><final>(creative_device_base):
+    # Signaled when this `popup_device` is turned on for an `agent`.
+    # Sends the `agent` looking at the popup.
+    TurnedOnEvent<public>:listenable(agent) = external {}
+
+    # Signaled when this `popup_device` is turned off for an `agent`.
+    # Sends the `agent` looking at the popup.
+    TurnedOffEvent<public>:listenable(agent) = external {}
+
+    # Turns on the light.
+    TurnOn<public>(Agent:agent):void = external {}
+
+    # Turns off the light.
+    TurnOff<public>(Agent:agent):void = external {}
+
+    # Toggles between `TurnOn` and `TurnOff`.
+    Toggle<public>(Agent:agent):void = external {}
+
+    # Resets the light to its initial state.
+    Reset<public>(Agent:agent):void = external {}
+
+    # Sets the light color to `Agent`'s team color.
+    SetToTeamColor<public>(Agent:agent):void = external {}
+
 # Used to create a specialized button which can only be activated when `agent`s are carrying specific items.
 conditional_button_device<public> := class<concrete><final>(creative_device_base):
     # Signaled when this device is activated.
@@ -1163,8 +1244,11 @@ conditional_button_device<public> := class<concrete><final>(creative_device_base
     # Toggles the conditional button state. `Agent` is used as the instigator of the action.
     Toggle<public>(Agent:agent):void = external {}
 
-    # Sets the text that appears when `agent`s approach the device. `Text` is limited to `150` characters.
+    # Sets the text that appears when `agent`s approach the device. `Text` is limited to `150` characters and will revert back to default if empty.
     SetInteractionText<public>(Text:message):void = external {}
+
+    # Returns the text that appears when `agent`s approach the device.
+    GetInteractionText<epic_internal>()<transacts>:[]char = external {}
 
     # Sets the time (in seconds) that an interaction with this device should take to complete.
     SetInteractionTime<public>(Time:float):void = external {}
@@ -1401,6 +1485,9 @@ button_device<public> := class<concrete><final>(creative_device_base):
     # Sets the text that displays when an `agent` is close to this button and looks at it. `Text` is limited to `64` characters.
     SetInteractionText<public>(Text:message):void = external {}
 
+    # Returns the text that displays when an `agent` is close to this button and looks at it.
+    GetInteractionText<epic_internal>()<transacts>:[]char = external {}
+
     # Sets the duration of the interaction required to activate this device (in seconds).
     SetInteractionTime<public>(Time:float):void = external {}
 
@@ -1439,6 +1526,9 @@ billboard_device<public> := class<concrete><final>(creative_device_base):
 
     # Sets the device *Text*.
     SetText<public>(Text:message):void = external {}
+
+    # Returns the device *Text*.
+    GetText<epic_internal>()<transacts>:[]char = external {}
 
     # Sets the *Text Size* of the device *Text*. Clamped to range [8, 24].
     SetTextSize<public>(Size:int):void = external {}

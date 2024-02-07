@@ -258,6 +258,21 @@ SpatialMath<public> := module:
         @editable
         Z<native><public>:float = external {}
 
+    # Makes a unit `vector3` pointing in the positive X axis (forward)
+    XAxis<epic_internal>()<computes>:vector3 = external {}
+
+    # Makes a unit `vector3` pointing in the positive Y axis (right)
+    YAxis<epic_internal>()<computes>:vector3 = external {}
+
+    # Makes a unit `vector3` pointing in the positive Z axis (up)
+    ZAxis<epic_internal>()<computes>:vector3 = external {}
+
+    # Makes a `vector3` with all components `0.0`.
+    Zero<epic_internal>()<computes>:vector3 = external {}
+
+    # Makes a `vector3` with all components `1.0`.
+    Ones<epic_internal>()<computes>:vector3 = external {}
+
     # Makes a `vector3` by inverting the `SurfaceNormal` component of `Direction`.
     # Fails if `not SurfaceNormal.MakeUnitVector[]`.
     ReflectVector<native><public>(Direction:vector3, SurfaceNormal:vector3)<varies><decides>:vector3

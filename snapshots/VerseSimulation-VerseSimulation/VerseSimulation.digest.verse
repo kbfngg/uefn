@@ -1,15 +1,17 @@
+using {/Verse.org/VerseEngine}
+using {/Verse.org/VerseEngine/Component}
 # Module import path: /Verse.org/Simulation
 Simulation<public> := module:
     agent<native><public> := class<unique><epic_internal>:
 
 
     localizable_agent<native><epic_internal> := class(localizable_value):
-
+        Value<native><epic_internal>:agent
 
     MakeLocalizableValue<epic_internal>(Agent:agent):localizable_agent = external {}
 
     player<native><public> := class<unique><persistent><epic_internal>(agent):
-
+        IsActive<native><epic_internal>()<varies><decides>:void
 
     # Type for which there is a single instance per round.  Use `GetSession` to get the current round's `session` instance. May be used with `weak_map` to implement global variables.
     # Note: may be changed in a future release to a single instance per game. Round-local behavior should not be relied upon.
@@ -30,3 +32,23 @@ Simulation<public> := module:
     GetSimulationElapsedTime<native><public>()<transacts>:float
 
     team<native><public> := class<unique><epic_internal>:
+
+
+    GetPlayerComponentByIndex<native><epic_internal>(PlayerIndex:int)<transacts><decides>:player_component
+
+    player_component<native><epic_internal> := class<unique>(component):
+        GetHandle<native><public>()<transacts>:player
+
+    GetComponentOfTypeForPlayer<native><epic_internal>(InPlayer:player_component, Type:type)<transacts><decides>:component
+
+    GetComponentOfTypeForPlayer<native><epic_internal>(PlayerIndex:int, Type:type)<transacts><decides>:component
+
+    GetOrCreateComponentOfTypeForPlayer<native><epic_internal>(InPlayer:player_component, Type:type)<transacts><decides>:component
+
+    GetOrCreateComponentOfTypeForPlayer<native><epic_internal>(PlayerIndex:int, Type:type)<transacts><decides>:component
+
+    # Module import path: /Verse.org/Simulation/player_array_helper
+    player_array_helper<epic_internal> := module:
+        TestFunc<native><epic_internal>(new_value:int):int
+
+    player_multicast_delegate<native><epic_internal> := class<final>(multicast_delegate(player)):

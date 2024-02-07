@@ -1,15 +1,20 @@
-using {/Verse.org/Assets}
 using {/Verse.org/Colors}
 using {/UnrealEngine.com/Temporary/SpatialMath}
+using {/Verse.org/VerseEngine/Component}
 using {/Verse.org/Simulation}
+using {/Verse.org/Assets}
 # Module import path: /UnrealEngine.com/Temporary/UI
 UI<public> := module:
+    # Verse interface to native `widget_class`.
+    widget_class<native><epic_internal> := class<computes><final>(client_asset):
+
+
     # Returns the `player_ui` component associated with `Player`.
     # Fails if there is no `player_ui` associated with `Player`.
     GetPlayerUI<native><public>(Player:player)<transacts><decides>:player_ui
 
     # The main interface for adding and removing `widget`s to a player's UI.
-    player_ui<native><public> := class<final><epic_internal>:
+    player_ui<native><public> := class<final><epic_internal>(component):
         # Adds `Widget` to this `player_ui` using default `player_ui_slot` configuration options.
         AddWidget<native><public>(Widget:widget):void
 
@@ -136,6 +141,14 @@ UI<public> := module:
         SetWidget<native><public>(InSlot:button_slot):void
 
         # Subscribable event that fires when the button is clicked.
+        OnClick<public>():listenable(widget_message) = external {}
+
+    # For internal use only.
+    simple_button_internal<native><epic_internal> := class<final>(widget):
+        DefaultText<localizes><native><public>:message = external {}
+
+        SetText<native><public>(InText:message):void
+
         OnClick<public>():listenable(widget_message) = external {}
 
     # Slot for button widget.
@@ -271,6 +284,35 @@ UI<public> := module:
         # Gets the tiling option.
         GetTiling<native><public>():tuple(image_tiling, image_tiling)
 
+    # A widget to display a material.
+    material_block<native><epic_internal> := class(widget):
+        # The image to render. Used only during initialization of the widget and not modified by SetImage.
+        DefaultImage<native><public>:material
+
+        # Tinting applied to the image. Used only during initialization of the widget and not modified by SetTint.
+        DefaultTint<native><public>:color = external {}
+
+        # The size this widget desired to be displayed in. Used only during initialization of the widget and not modified by SetDesiredSize.
+        DefaultDesiredSize<native><public>:vector2 = external {}
+
+        # Sets the image to render.
+        SetImage<native><public>(InImage:material):void
+
+        # Gets the image to render.
+        GetImage<native><public>():material
+
+        # Sets the tint applied to the image.
+        SetTint<native><public>(InColor:color):void
+
+        # Gets the tint applied to the image.
+        GetTint<native><public>():color
+
+        # Sets the size this widget desired to be displayed in.
+        SetDesiredSize<native><public>(InDesiredSize:vector2):void
+
+        # Gets the size this widget desired to be displayed in.
+        GetDesiredSize<native><public>():vector2
+
     # Overlay is a container consisting of widgets stacked on top of each other.
     overlay<native><public> := class<final>(widget):
         # The child widgets of the overlay. Used only during initialization of the widget and not modified by Add/RemoveWidget.
@@ -398,3 +440,29 @@ UI<public> := module:
 
         # Gets the opacity of the displayed text.
         GetTextOpacity<native><public>():type{_X:float where 0.000000 <= _X, _X <= 1.000000}
+
+    # Text block widget. Displays text to the user.
+    text_block_internal<native><epic_internal> := class(text_base):
+
+
+    # Widget created from a widget_class asset.
+    user_widget<native><epic_internal> := class<final>(widget):
+        # The widget_blueprint asset to create.
+        Asset<native><public>:widget_class
+
+        # The widgets used by the named slot.
+        # Named slot are special widget added in the widget editor.
+        # Used only during initialization of the widget and not modified by SetWidget.
+        Slots<native><public>:[]user_widget_slot = external {}
+
+        # Set the widget of the named slot.
+        # Named slot are special widget added in the widget editor.
+        SetWidget<native><public>(Slot:user_widget_slot):void
+
+    # Slot for a user_widget widget
+    user_widget_slot<native><epic_internal> := struct:
+        # The widget assigned to this slot.
+        Widget<native><public>:widget
+
+        # The name of the NamedSlot in the widget_class.
+        Name<native><public>:[]char
