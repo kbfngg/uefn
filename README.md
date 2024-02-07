@@ -8,7 +8,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 - [Code Style](https://github.com/kbfngg/uefn/blob/main/guidelines/code_style.md) (tbd)
 - [API Design](https://github.com/kbfngg/uefn/blob/main/guidelines/api_design.md) (tbd)
 
-## Latest Verse Module APIs - `28.10`:
+## Latest Verse Module APIs - `28.20`:
 
 - [Verse](https://github.com/kbfngg/uefn/blob/main/modules/Verse/Verse.digest.verse)
 - [UnrealEngine](https://github.com/kbfngg/uefn/blob/main/modules/UnrealEngine/UnrealEngine.digest.verse)
@@ -16,6 +16,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 ## Verse API Versions:
 
+- [`28.20`](https://github.com/kbfngg/uefn/tree/game_v28.20/modules)
 - [`28.10`](https://github.com/kbfngg/uefn/tree/game_v28.10/modules)
 - [`28.01`](https://github.com/kbfngg/uefn/tree/game_v28.01/modules)
 - [`28.00`](https://github.com/kbfngg/uefn/tree/game_v28.00/modules)
@@ -39,6 +40,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 ## Verse Module API Changes:
 
+- [`28.10` - `28.20`](https://github.com/kbfngg/uefn/commit/f18b44df4bfe519d45af9d36d26f6a6b111315bd)
 - [`28.01` - `28.10`](https://github.com/kbfngg/uefn/commit/4a76a49ac04a4974d3487cb50846bc769b6e52a0)
 - [`28.00` - `28.01`](https://github.com/kbfngg/uefn/commit/24e391418adb22d6a5f1829b9ae332d885ab9712) (nothing new)
 - [`27.11` - `28.00`](https://github.com/kbfngg/uefn/commit/3b49dbd5815ac41130ec4645791c4090440e84cd)
@@ -60,7 +62,8 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 ## Verse Snapshot API Changes:
 
-- Discontinued
+- Potentially resumed
+- [`27.00` - `28.10`](https://github.com/kbfngg/uefn/commit/143b426b0c2de5a00c2233168ee2234ad86eb812) (hidden 💎)
 - `26.30` - `27.00` (N/A)
 - [`26.20` - `26.30`](https://github.com/kbfngg/uefn/commit/310c4255ad4e53bb6053f7c9a0d7647c56293703)
 - [`26.10` - `26.20`](https://github.com/kbfngg/uefn/commit/5db07d5ee7635e381caf09a46eed44c2470b8aad)
