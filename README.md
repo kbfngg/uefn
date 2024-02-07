@@ -62,7 +62,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 ## Verse Snapshot API Changes:
 
-- Potentially resumed
+- [`28.10` - `28.20`](https://github.com/kbfngg/uefn/commit/ec11b66a63810cc6e5b8c3509f9b855c7c09f9b5)
 - [`27.00` - `28.10`](https://github.com/kbfngg/uefn/commit/143b426b0c2de5a00c2233168ee2234ad86eb812) (hidden 💎)
 - `26.30` - `27.00` (N/A)
 - [`26.20` - `26.30`](https://github.com/kbfngg/uefn/commit/310c4255ad4e53bb6053f7c9a0d7647c56293703)
