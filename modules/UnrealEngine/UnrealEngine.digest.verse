@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-28.10-CL-30676362
+# Generated from build: ++Fortnite+Release-28.20-CL-31165234
 #################################################
 
 Temporary<public> := module:
@@ -267,6 +267,10 @@ Temporary<public> := module:
         # Used to linearly interpolate/extrapolate between `From` (when `Parameter = 0.0`) and `To` (when `Parameter = 1.0`). Expects that all arguments are finite.
         # Returns `From*(1 - Parameter) + To*Parameter`.
         Lerp<public>(From:vector3, To:vector3, Parameter:float)<varies>:vector3 = external {}
+
+        # Makes a new `rotation` from the component wise subtraction of the Euler angle components in `RotationA` by
+        # the Euler angle components in `RotationB` and ensures the returned value is normalized.
+        MakeComponentWiseDeltaRotation<native><public>(RotationA:rotation, RotationB:rotation)<transacts>:rotation
 
         # Makes a `rotation` from `Axis` and `AngleRadians` using a left-handed sign convention (e.g. a positive rotation around +Z takes +X to +Y). If `Axis.IsAlmostZero[]`, make the identity rotation.
         MakeRotation<native><public>(Axis:vector3, AngleRadians:float)<varies>:rotation
