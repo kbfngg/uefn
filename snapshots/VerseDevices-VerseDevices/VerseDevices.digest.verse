@@ -209,7 +209,7 @@ Devices<public> := module:
     # Inherit from this to create a custom creative device. Inherited classes will appear in the UEFN content browser the next time Verse compiles. Instances of your derived `creative_device` can then be placed in the island by dragging them from the content browser into the scene.
     creative_device<native><public> := class<concrete>(creative_movable_object_base, creative_object_interface):
         # Override to add custom logic when the game experience begins.
-        OnBegin<public>()<suspends>:void = external {}
+        OnBegin<native_callable><public>()<suspends>:void = external {}
 
         # Override to add custom logic when the game experience ends. Any coroutines spawned inside `OnEnd` may never execute.
         OnEnd<native_callable><public>():void = external {}

@@ -1,3 +1,5 @@
+using {/Verse.org/ParameterCollections}
+using {/Verse.org/Native}
 using {/Verse.org/Restricted}
 # Module import path: /Verse.org/Assets
 Assets<public> := module:
@@ -28,8 +30,26 @@ Assets<public> := module:
     animation_sequence<native><public> := class<computes><final><epic_internal>(asset):
 
 
-    material<native><public> := class<computes><epic_internal>(asset):
+    @import_as("/Script/Engine.UMaterialInterface")
+    ue_material_interface<native><epic_internal> := class:
 
+
+    material<native><public> := interface<epic_internal>:
+        GetMaterialInterface<native_callable><epic_internal>():ue_material_interface
+
+        GetAsset<native_callable><epic_internal>():material_asset
+
+    material_asset<native><epic_internal> := class<final><epic_internal>(material, asset):
+        GetMaterialInterface<native><override>():ue_material_interface
+
+        GetAsset<override>():material_asset = external {}
+
+    parameterized_material<native><epic_internal> := class<epic_internal>(material, parameter_collection):
+        Material<native><epic_internal>:material
+
+        GetMaterialInterface<native><override>():ue_material_interface
+
+        GetAsset<override>():material_asset = external {}
 
     particle_system<native><epic_internal> := class<computes><final><epic_internal>(client_asset):
 

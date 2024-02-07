@@ -1,14 +1,10 @@
+using {/Verse.org/Assets}
 using {/Verse.org/Colors}
 using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Verse.org/VerseEngine/Component}
 using {/Verse.org/Simulation}
-using {/Verse.org/Assets}
 # Module import path: /UnrealEngine.com/Temporary/UI
 UI<public> := module:
-    # Verse interface to native `widget_class`.
-    widget_class<native><epic_internal> := class<computes><final>(client_asset):
-
-
     # Returns the `player_ui` component associated with `Player`.
     # Fails if there is no `player_ui` associated with `Player`.
     GetPlayerUI<native><public>(Player:player)<transacts><decides>:player_ui
@@ -445,24 +441,11 @@ UI<public> := module:
     text_block_internal<native><epic_internal> := class(text_base):
 
 
-    # Widget created from a widget_class asset.
-    user_widget<native><epic_internal> := class<final>(widget):
+    # Verse interface to native `umg asset`.
+    umg_widget_class_asset<native><epic_internal> := class<computes><final>(client_asset):
+
+
+    # Widget created from a umg_widget_class_asset.
+    umg_widget<native><epic_internal> := class<epic_internal>(widget):
         # The widget_blueprint asset to create.
-        Asset<native><public>:widget_class
-
-        # The widgets used by the named slot.
-        # Named slot are special widget added in the widget editor.
-        # Used only during initialization of the widget and not modified by SetWidget.
-        Slots<native><public>:[]user_widget_slot = external {}
-
-        # Set the widget of the named slot.
-        # Named slot are special widget added in the widget editor.
-        SetWidget<native><public>(Slot:user_widget_slot):void
-
-    # Slot for a user_widget widget
-    user_widget_slot<native><epic_internal> := struct:
-        # The widget assigned to this slot.
-        Widget<native><public>:widget
-
-        # The name of the NamedSlot in the widget_class.
-        Name<native><public>:[]char
+        Asset<native><epic_internal>:umg_widget_class_asset
