@@ -10,9 +10,13 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
   
 ******
 
+> [!NOTE]
+> Some of the following sections are collapsed and must to be expanded first.
+
+******
+
 <details open>
 <summary><h3>Verse Modules Diffs</h3></summary>
-
 
 - [`28.10` - `28.20`](https://github.com/kbfngg/uefn/commit/f18b44df4bfe519d45af9d36d26f6a6b111315bd)
 - [`28.01` - `28.10`](https://github.com/kbfngg/uefn/commit/4a76a49ac04a4974d3487cb50846bc769b6e52a0)
