@@ -66,6 +66,11 @@
 			"FriendlyName": "UE5-Dev-Cooker",
 			"Version": 0
 		},
+		"2763920D0F784B39986E4BB3A88D666D":
+		{
+			"FriendlyName": "PCGBaseVer",
+			"Version": 15
+		},
 		"28E21331501F47238110FA64EA10DA1E":
 		{
 			"FriendlyName": "StateTreeAsset",
@@ -251,6 +256,11 @@
 			"FriendlyName": "Replay",
 			"Version": 19
 		},
+		"860A4F4F4E87FB68CE1397B7BAA859A7":
+		{
+			"FriendlyName": "AtomFramework",
+			"Version": 6
+		},
 		"8DBC2C5B54A743E0A768FCBB7DA29060":
 		{
 			"FriendlyName": "FortniteValkyrie",
@@ -320,6 +330,16 @@
 		{
 			"FriendlyName": "Dev-Networking",
 			"Version": 0
+		},
+		"A6EBC74A3BAD46B8AA30D6B27D58EA26":
+		{
+			"FriendlyName": "JunoInsancedActors",
+			"Version": 2
+		},
+		"A6FC056045B83348D0E5E18A3129CD45":
+		{
+			"FriendlyName": "ZoneShapeComponent",
+			"Version": 1
 		},
 		"A76CBC6B51634CEE887E17DE463D4395":
 		{
@@ -25448,8 +25468,12 @@
 			"/Game/Items/Traps/Blueprints/Toy_Floor_DamageRailHalf.Toy_Floor_DamageRailHalf_C",
 			"/Game/Items/Traps/Blueprints/Toy_Floor_DamageRailParent.Toy_Floor_DamageRailParent_C",
 			"/Game/Items/Traps/Blueprints/Toy_Floor_SpeedBoost.Toy_Floor_SpeedBoost_C",
+			"/Game/Items/Traps/Blueprints/Toy_Floor_SpeedBoost_High.Toy_Floor_SpeedBoost_High_C",
+			"/Game/Items/Traps/Blueprints/Toy_Floor_SpeedBoost_Low.Toy_Floor_SpeedBoost_Low_C",
 			"/Game/Items/Traps/Blueprints/Toy_Floor_SpeedIncrease.Toy_Floor_SpeedIncrease_C",
 			"/Game/Items/Traps/Blueprints/Toy_Wall_SpeedBoost.Toy_Wall_SpeedBoost_C",
+			"/Game/Items/Traps/Blueprints/Toy_Wall_SpeedBoost_High.Toy_Wall_SpeedBoost_High_C",
+			"/Game/Items/Traps/Blueprints/Toy_Wall_SpeedBoost_Low.Toy_Wall_SpeedBoost_Low_C",
 			"/Game/Items/Traps/Blueprints/Toys/BuildingToy.BuildingToy_C",
 			"/Game/Items/Traps/Blueprints/Toys/Device_Volume_Floor.Device_Volume_Floor_C",
 			"/Game/Items/Traps/Blueprints/Toys/Toy_Floor_Siren.Toy_Floor_Siren_C",
