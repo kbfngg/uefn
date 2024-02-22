@@ -99,7 +99,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details open>
 <summary><h3>Valkyrie Sentry Manifest Diffs</h3></summary>
 
-- `28.20` - `28.30` (tbd)
+- [`28.20` - `28.30`](https://github.com/kbfngg/uefn/commit/e79d2a7374f920add9cfaba67af902a4cc8e0fa1)
 - [`28.10` - `28.20`](https://github.com/kbfngg/uefn/commit/54ac239fe3a9c1b94f8dd53b0219aab4d59c1343)
 - [`28.01` - `28.10`](https://github.com/kbfngg/uefn/commit/3660a44287bd92291d4ed5ef62861366f7413024)
 - [`27.11` - `28.00`](https://github.com/kbfngg/uefn/commit/705d93d60b218f632c90411f3d055f7af2c1fcc9)
