@@ -37,7 +37,7 @@ VerseAIBase<public> := module:
     # Get the fort_navigatable interface for the specified character
     (InCharacter:fort_character).GetFortNavigatable<native><epic_internal>()<transacts><decides>:fort_navigatable
 
-    fort_character_movement_interface<native><epic_internal> := interface:
+    fort_character_movement_interface<native><epic_internal> := interface<epic_internal>:
         # Change stance to crouch
         Crouch<public>()<suspends>:fallible_action_result
 
@@ -62,7 +62,7 @@ VerseAIBase<public> := module:
     # Get the current fort_character_movement_interface for the specified character
     (InCharacter:fort_character).GetFortCharacterMovement<native><epic_internal>()<transacts><decides>:fort_character_movement_interface
 
-    fort_creature_actions_interface<native><epic_internal> := interface:
+    fort_creature_actions_interface<native><epic_internal> := interface<epic_internal>:
 
 
     # Get the current fort_br_creature_actions_interface for the specified character
@@ -149,7 +149,7 @@ VerseAIBase<public> := module:
     fort_item_interface<epic_internal> := module:
         HasTag<native><public>(Item:fort_item_descriptor, Tag:fort_item_tag)<transacts>:logic
 
-    fort_inventory_interface<native><epic_internal> := interface:
+    fort_inventory_interface<native><epic_internal> := interface<epic_internal>:
         AddItemToInventory<epic_internal>(InventoryAsset:fort_inventory_item_asset, Count:int)<transacts><decides>:fort_item_descriptor
 
         GetAllItems<public>()<transacts>:[]fort_item_descriptor
@@ -186,7 +186,7 @@ VerseAIBase<public> := module:
 
     MakeNavigationTarget<constructor><native><epic_internal>(LootInfo:fort_loot_info):navigation_target
 
-    fort_loot_perception_interface<native><epic_internal> := interface:
+    fort_loot_perception_interface<native><epic_internal> := interface<epic_internal>:
         # Get information about the potential best loot object
         GetBestObjectToLoot<public>()<transacts><decides>:fort_loot_info
 
@@ -224,7 +224,7 @@ VerseAIBase<public> := module:
 
         Obstacle<native><epic_internal>:entity
 
-    fort_obstacle_perception_interface<native><epic_internal> := interface:
+    fort_obstacle_perception_interface<native><epic_internal> := interface<epic_internal>:
         # Get information about the potential current obstacle
         GetObstacleInfo<public>()<transacts><decides>:fort_obstacle_info
 
@@ -234,7 +234,7 @@ VerseAIBase<public> := module:
     # Get the current fort_obstacle_perception_interface for the specified character
     (InCharacter:fort_character).GetFortObstaclePerception<native><epic_internal>()<transacts><decides>:fort_obstacle_perception_interface
 
-    fort_weapon_actions_interface<native><epic_internal> := interface:
+    fort_weapon_actions_interface<native><epic_internal> := interface<epic_internal>:
         # Fire weapon
         Fire<public>():logic
 

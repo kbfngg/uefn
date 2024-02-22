@@ -3,7 +3,7 @@ using {/Verse.org/Simulation}
 Colors<public> := module:
     # Represents colors as RGB triples in the ACES 2065-1 color space.
     # Component values are linear (i.e. `*gamma* = 1.0`).
-    color<native><public> := struct<concrete><computes>:
+    color<native><public> := struct<concrete><computes><persistable>:
         @editable
         # Red component of this `color`.
         R<native><public>:float = external {}

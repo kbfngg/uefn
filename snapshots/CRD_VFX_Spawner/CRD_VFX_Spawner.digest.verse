@@ -13,6 +13,9 @@ vfx_spawner_device<public> := class<concrete><final>(creative_device_base):
     # Disables this device.
     Disable<public>():void = external {}
 
+    # Restarts the VFX. Triggers the VFX if it's Burst VFX.
+    Restart<public>():void = external {}
+
 # Used to transform character appearance.
 character_transformation_device<epic_internal> := class<concrete><final>(creative_device_base):
     # Transforms `Agent` into the character configured by this device.

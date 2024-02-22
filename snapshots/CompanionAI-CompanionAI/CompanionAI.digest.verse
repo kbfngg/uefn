@@ -58,7 +58,7 @@ CompanionAI<public> := module:
 
     (Character:fort_character).GetNPCLeashRadius<native><epic_internal>()<transacts>:tuple(float, float)
 
-    fort_ping_interface<native><epic_internal> := interface:
+    fort_ping_interface<native><epic_internal> := interface<epic_internal>:
         AreNPCCommandsEnabled<epic_internal>()<transacts>:logic
 
         CanAcceptPingCommand<epic_internal>()<transacts>:logic

@@ -44,13 +44,13 @@ popup_dialog_device<public> := class<concrete><final>(creative_device_base):
     GetButtonText<public>(Index:int)<transacts>:[]char = external {}
 
     # Sets the *Button Text* for a button at a specific index on this popup.
-    #  * `Text` should be no more than `8` characters.
+    #  * `Text` should be no more than `24` characters.
     #  * If `Text` is empty the button will show *OK* instead.
     #  * Button 1 uses `Index` 0.
     SetButtonText<public>(Text:message, Index:int):void = external {}
 
     # Sets the Button Text for a button at a specific index on this popup.
-    #  * `Text` should be no more than `8` characters.
+    #  * `Text` should be no more than `24` characters.
     #  * If `Text` is empty the button will show *OK* instead.
     #  * Button 1 uses `Index` 0. If set, `UpdateCount` will also update the number of buttons
     # if you are setting a button that isn't currently showing.
@@ -58,7 +58,7 @@ popup_dialog_device<public> := class<concrete><final>(creative_device_base):
 
     # Sets all *Button Text* based on the contents of an array of messages and alters the button count based on the size of the array.
     # Button count is not updated on active Popups.
-    # `Text` should be no more than `8` characters.
+    # `Text` should be no more than `24` characters.
     SetAllButtons<epic_internal>(Text:[]message):void = external {}
 
     # Sets the *Description* text for this popup. `Text` should be no more than `350` characters.

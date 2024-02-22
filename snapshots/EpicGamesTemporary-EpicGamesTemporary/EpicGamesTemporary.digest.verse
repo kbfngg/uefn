@@ -144,7 +144,7 @@ SpatialMath<public> := module:
     TransformVectorNoScale<native><public>(InTransform:transform, InVector:vector3)<varies>:vector3
 
     # 2-dimensional vector with `float` components.
-    vector2<native><public> := struct<concrete><computes>:
+    vector2<native><public> := struct<concrete><computes><persistable>:
         @editable
         X<native><public>:float = external {}
 
@@ -216,7 +216,7 @@ SpatialMath<public> := module:
     IsAlmostEqual<public>(V1:vector2, V2:vector2, AbsoluteTolerance:float)<computes><decides>:void = external {}
 
     # 2-dimensional vector with `int` components.
-    vector2i<native><public> := struct<concrete><computes>:
+    vector2i<native><public> := struct<concrete><computes><persistable>:
         @editable
         X<native><public>:int = external {}
 
@@ -252,7 +252,7 @@ SpatialMath<public> := module:
     operator'*'<public>(Left:int, Right:vector2i)<computes>:vector2i = external {}
 
     # 3-dimensional vector with `float` components.
-    vector3<native><public> := struct<concrete><computes>:
+    vector3<native><public> := struct<concrete><computes><persistable>:
         @editable
         X<native><public>:float = external {}
 

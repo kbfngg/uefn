@@ -44,7 +44,9 @@ VerseNPC<public> := module:
 
     # Fortnite NPC AI Management
     npc_component<native><epic_internal> := class(ai_actions_component, fort_navigatable, fort_character_movement_interface, fort_character_actions_interface, focus_interface, fort_weapon_actions_interface):
-        NavigateTo<native><override>(Target:navigation_target, ?ReachRadius:float = external {}, ?AllowPartialPath:logic = external {})<suspends>:navigation_result
+        NavigateTo<native><override>(Target:navigation_target, ?MovementType:movement_type = external {}, ?ReachRadius:float = external {}, ?AllowPartialPath:logic = external {})<suspends>:navigation_result
+
+        SetMovementSpeedMultiplier<native><override>(Multiplier:float):void
 
         Wait<native><override>(?Duration:float = external {})<suspends>:void
 

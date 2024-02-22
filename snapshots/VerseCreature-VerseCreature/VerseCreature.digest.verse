@@ -11,7 +11,9 @@ VerseCreature<public> := module:
     creature_component<native><epic_internal> := class(ai_actions_component, fort_navigatable, focus_interface):
         GetCurrentDestination<native><override>()<transacts><decides>:vector3
 
-        NavigateTo<native><override>(Target:navigation_target, ?ReachRadius:float = external {}, ?AllowPartialPath:logic = external {})<suspends>:navigation_result
+        NavigateTo<native><override>(Target:navigation_target, ?MovementType:movement_type = external {}, ?ReachRadius:float = external {}, ?AllowPartialPath:logic = external {})<suspends>:navigation_result
+
+        SetMovementSpeedMultiplier<native><override>(Multiplier:float):void
 
         StopNavigation<native><override>():void
 

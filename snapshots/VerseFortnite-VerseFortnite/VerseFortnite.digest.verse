@@ -375,7 +375,7 @@ Animation<public> := module:
             Error
 
         # An interface for playing an animation on an object.
-        play_animation_controller<native><public> := interface:
+        play_animation_controller<native><public> := interface<epic_internal>:
             # Play an animation sequence.
             PlayAndAwait<public>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {})<suspends>:play_animation_result
 
@@ -452,7 +452,7 @@ AI<public> := module:
         # The emote has started but was interrupted before completion.
         Interrupted
 
-    emote_interface<native><epic_internal> := interface:
+    emote_interface<native><epic_internal> := interface<epic_internal>:
         # Play a random emote from the character emotes bank
         PlayRandomEmote<public>()<suspends>:play_emote_result
 
@@ -461,7 +461,7 @@ AI<public> := module:
     # Get the current emote_interface for the specified character
     (InCharacter:fort_character).GetEmoteInterface<native><epic_internal>()<transacts><decides>:emote_interface
 
-    focus_interface<native><public> := interface:
+    focus_interface<native><public> := interface<epic_internal>:
         # Look At specified location. Will never complete unless interrupted.
         MaintainFocus<public>(Location:vector3)<suspends>:void
 
@@ -471,7 +471,7 @@ AI<public> := module:
     # Get the focus_interface interface for the specified character.
     (InCharacter:fort_character).GetFocusInterface<native><public>()<transacts><decides>:focus_interface
 
-    fort_leashable<native><public> := interface:
+    fort_leashable<native><public> := interface<epic_internal>:
         # Set custom leash position.
         #  'InnerRadius' ranges from 0.0 to 20000.0 (in centimeters).
         #  'OuterRadius' ranges from 0.0 to 20000.0 (in centimeters) and no less than 'InnerRadius'.
@@ -499,7 +499,7 @@ AI<public> := module:
         # The guard has identified a hostile target.
         Alerted
 
-    guard_perception_interface<native><epic_internal> := interface(perception_interface):
+    guard_perception_interface<native><epic_internal> := interface<epic_internal>(perception_interface):
         # Get information about the current target.
         GetCurrentTargetInfo<epic_internal>()<transacts><decides>:target_info
 
@@ -564,12 +564,25 @@ AI<public> := module:
         # The destination cannot be reached
         Unreachable
 
-    navigatable<native><public> := interface:
-        # Return the current destination of the NPC
+    movement_style<native><epic_internal> := enum:
+        Walking
+        Running
+
+    movement_type<native><public> := class<concrete><final><computes><epic_internal>:
+        MovementStyle<native><epic_internal>:movement_style = external {}
+
+    # Module import path: /Fortnite.com/AI/movement_types
+    movement_types<public> := module:
+        Walking<public>:movement_type = external {}
+
+        Running<public>:movement_type = external {}
+
+    navigatable<native><public> := interface<epic_internal>:
+        # Return the current destination of the character
         GetCurrentDestination<public>()<transacts><decides>:vector3
 
         # Navigate toward the specified target
-        NavigateTo<public>(Target:navigation_target, ?ReachRadius:float = external {}, ?AllowPartialPath:logic = external {})<suspends>:navigation_result
+        NavigateTo<public>(Target:navigation_target, ?MovementType:movement_type = external {}, ?ReachRadius:float = external {}, ?AllowPartialPath:logic = external {})<suspends>:navigation_result
 
         # Stop navigation
         StopNavigation<public>():void
@@ -577,7 +590,10 @@ AI<public> := module:
         # Wait for a specific duration
         Wait<public>(?Duration:float = external {})<suspends>:void
 
-    # Get the navigatable interface for the specified character.
+        # Apply a multiplier on the movement speed (Multiplier is clamped between 0.5 and 2)
+        SetMovementSpeedMultiplier<public>(Multiplier:float):void
+
+    # Get the navigatable interface for the specified character
     (InCharacter:fort_character).GetNavigatable<native><public>()<transacts><decides>:navigatable
 
     # Inherit from this to create a custom NPC behavior.
@@ -707,7 +723,7 @@ AI<public> := module:
         # Specifies if damage perception is enabled.
         SenseEnabled<native><public>:logic = external {}
 
-    perception_interface<native><epic_internal> := interface:
+    perception_interface<native><epic_internal> := interface<epic_internal>:
         # Get information about all detected targets.
         GetDetectedTargets<public>()<transacts>:[]target_info
 
