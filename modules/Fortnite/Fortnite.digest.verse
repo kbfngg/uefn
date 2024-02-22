@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-28.20-CL-31165234
+# Generated from build: ++Fortnite+Release-28.30-CL-31511038
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -16,7 +16,7 @@ AI<public> := module:
     # Get the current fort_leashable interface for the specified character.
     (InCharacter:fort_character).GetFortLeashable<native><public>()<transacts><decides>:fort_leashable
 
-    # Get the navigatable interface for the specified character.
+    # Get the navigatable interface for the specified character
     (InCharacter:fort_character).GetNavigatable<native><public>()<transacts><decides>:navigatable
 
     # Generate a navigation_target from any position
@@ -25,14 +25,14 @@ AI<public> := module:
     # Generate a navigation_target from an agent
     MakeNavigationTarget<constructor><native><public>(Target:agent):navigation_target
 
-    focus_interface<native><public> := interface:
+    focus_interface<native><public> := interface<epic_internal>:
         # Look At specified Agent. Will never complete unless interrupted.
         MaintainFocus<public>(Agent:agent)<suspends>:void
 
         # Look At specified location. Will never complete unless interrupted.
         MaintainFocus<public>(Location:vector3)<suspends>:void
 
-    fort_leashable<native><public> := interface:
+    fort_leashable<native><public> := interface<epic_internal>:
         # Removes the current leash.
         ClearLeash<public>():void
 
@@ -46,12 +46,23 @@ AI<public> := module:
         #  'OuterRadius' ranges from 0.0 to 20000.0 (in centimeters) and no less than 'InnerRadius'.
         SetLeashPosition<public>(Location:vector3, InnerRadius:float, OuterRadius:float):void
 
-    navigatable<native><public> := interface:
-        # Return the current destination of the NPC
+    movement_type<native><public> := class<concrete><final><computes><epic_internal>:
+
+    # Module import path: /Fortnite.com/AI/movement_types
+    movement_types<public> := module:
+        Running<public>:movement_type = external {}
+
+        Walking<public>:movement_type = external {}
+
+    navigatable<native><public> := interface<epic_internal>:
+        # Return the current destination of the character
         GetCurrentDestination<public>()<transacts><decides>:vector3
 
         # Navigate toward the specified target
-        NavigateTo<public>(Target:navigation_target, ?ReachRadius:float = external {}, ?AllowPartialPath:logic = external {})<suspends>:navigation_result
+        NavigateTo<public>(Target:navigation_target, ?MovementType:movement_type = external {}, ?ReachRadius:float = external {}, ?AllowPartialPath:logic = external {})<suspends>:navigation_result
+
+        # Apply a multiplier on the movement speed (Multiplier is clamped between 0.5 and 2)
+        SetMovementSpeedMultiplier<public>(Multiplier:float):void
 
         # Stop navigation
         StopNavigation<public>():void
@@ -98,7 +109,7 @@ Animation<public> := module:
         (InCharacter:fort_character).GetPlayAnimationController<native><public>()<transacts><decides>:play_animation_controller
 
         # An interface for playing an animation on an object.
-        play_animation_controller<native><public> := interface:
+        play_animation_controller<native><public> := interface<epic_internal>:
             # Start an animation sequence and obtain an instance to query and manipulate.
             Play<public>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {}):play_animation_instance
 
@@ -2543,7 +2554,7 @@ Devices<public> := module:
         SetButtonCount<public>(Count:int):void = external {}
 
         # Sets the *Button Text* for a button at a specific index on this popup.
-        #  * `Text` should be no more than `8` characters.
+        #  * `Text` should be no more than `24` characters.
         #  * If `Text` is empty the button will show *OK* instead.
         #  * Button 1 uses `Index` 0.
         SetButtonText<public>(Text:message, Index:int):void = external {}
@@ -4074,6 +4085,9 @@ Devices<public> := module:
 
         # Enables this device.
         Enable<public>():void = external {}
+
+        # Restarts the VFX. Triggers the VFX if it's Burst VFX.
+        Restart<public>():void = external {}
 
     # Used to display curated videos onto in-game screens or player HUDs.
     video_player_device<public> := class<concrete><final>(creative_device_base):
