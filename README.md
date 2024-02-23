@@ -96,7 +96,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 </details>
 
-<details open>
+<details>
 <summary><h3>Valkyrie Sentry Manifest Diffs</h3></summary>
 
 - [`28.20` - `28.30`](https://github.com/kbfngg/uefn/commit/e79d2a7374f920add9cfaba67af902a4cc8e0fa1)
