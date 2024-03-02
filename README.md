@@ -22,7 +22,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 ******
 
 <details open>
-<summary><h3>Verse Modules Diffs</h3></summary>
+<summary>Verse Modules Diffs</summary>
 
 - [`28.20` - `28.30`](https://github.com/kbfngg/uefn/commit/1d333115b880fd3d30ea32d20aa5a61e5be23b2c)
 - [`28.10` - `28.20`](https://github.com/kbfngg/uefn/commit/f18b44df4bfe519d45af9d36d26f6a6b111315bd)
@@ -48,7 +48,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 </details>
 
 <details>
-<summary><h3>Verse Snapshots Diffs</h3></summary>
+<summary>Verse Snapshots Diffs</summary>
 
 - [`28.20` - `28.30`](https://github.com/kbfngg/uefn/commit/44a1387de6f43e8c726be2b3d717217b33b3a80d)
 - [`28.10` - `28.20`](https://github.com/kbfngg/uefn/commit/ec11b66a63810cc6e5b8c3509f9b855c7c09f9b5)
@@ -69,7 +69,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 </details>
 
 <details>
-<summary><h3>Verse APIs</h3></summary>
+<summary>Verse APIs</summary>
 
 - [`28.30`](https://github.com/kbfngg/uefn/tree/game_v28.30/modules)
 - [`28.20`](https://github.com/kbfngg/uefn/tree/game_v28.20/modules)
@@ -97,7 +97,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 </details>
 
 <details>
-<summary><h3>Valkyrie Sentry Manifest Diffs</h3></summary>
+<summary>Valkyrie Sentry Manifest Diffs</summary>
 
 - [`28.20` - `28.30`](https://github.com/kbfngg/uefn/commit/e79d2a7374f920add9cfaba67af902a4cc8e0fa1)
 - [`28.10` - `28.20`](https://github.com/kbfngg/uefn/commit/54ac239fe3a9c1b94f8dd53b0219aab4d59c1343)
