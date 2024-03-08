@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-28.30-CL-31511038
+# Generated from build: ++Fortnite+Release-29.00-CL-31978752
 #################################################
 
 using {/UnrealEngine.com/Temporary/SpatialMath}
@@ -34,7 +34,7 @@ Engine<public> := module:
         move_config_asset<native><public> := class(asset):
 
         move_config_entry<native><public> := struct<computes>:
-            Name<native><public>:[]char = external {}
+            Name<native><public>:string = external {}
 
             Responses<native><public>:[]move_response = external {}
 
@@ -49,7 +49,7 @@ Engine<public> := module:
 
             IsAxis<native><public>:logic = external {}
 
-            Name<native><public>:[]char = external {}
+            Name<native><public>:string = external {}
 
         move_physics_trigger_params<native><public> := struct<computes>:
             SpeedInDirection<native><public>:vector3 = external {}
@@ -144,7 +144,7 @@ Engine<public> := module:
 
             move_trigger_type_MAX
 
-        movement_component<native><epic_internal> := class<unique>(component):
+        movement_component<native><epic_internal> := class<unique>(vk_component):
             AddAngularImpulse<native><public>(Impulse:vector3):void
 
             AddImpulse<native><public>(Impulse:vector3):void
@@ -167,18 +167,30 @@ Engine<public> := module:
 
 EntityFramework<public> := module:
     using {/UnrealEngine.com/EntityFramework/Entity}
+    using {/Verse.org/Native}
+    # Module import path: /UnrealEngine.com/EntityFramework/ActorBridgeComponent
+    ActorBridgeComponent<public> := module:
+        actor_bridge_component<native><epic_internal> := class(component):
+            # Internal epic method to know if this component is allowed on client
+            IsAllowedOnClient<override>():logic = external {}
+
+        @import_as("/Script/FortniteGame.ULevelSaveRecord")
+        level_save_record<native><epic_internal> := class<epic_internal>:
+
+    using {/UnrealEngine.com/EpicGamesRestricted/Network}
     using {/UnrealEngine.com/Temporary/SpatialMath}
+    using {/UnrealEngine.com/Temporary/UI}
     using {/Verse.org/Assets}
     using {/Verse.org/Colors}
     using {/Verse.org/Simulation}
     # Module import path: /UnrealEngine.com/EntityFramework/Component
     Component<public> := module:
-        attachment_component<native><epic_internal> := class(core_entity_component):
+        attachment_component<native><epic_internal> := class(component):
             # Attaches the owner entity to the specified entity. This method will compute relative transform from the current world transform of both entity
-            AttachTo<native><public>(InParentEntity:core_entity)<transacts><decides>:void
+            AttachTo<native><public>(InParentEntity:entity)<transacts><decides>:void
 
             # Attach the owner entity to the specified entity, use the specified transform as the relation to it
-            AttachTo<native><public>(InParentEntity:core_entity, NewRelativeTransform:transform)<transacts><decides>:void
+            AttachTo<native><public>(InParentEntity:entity, NewRelativeTransform:transform)<transacts><decides>:void
 
             # Automatically attach to owner at initialization
             AutoAttachToOwner<native><public>:logic = external {}
@@ -205,12 +217,12 @@ EntityFramework<public> := module:
             Uninitialize<native><override>():void
 
             # The relative transform to the attached entity
-            var ParentEntity<native><public>:?core_entity = external {}
+            var ParentEntity<native><public>:?entity = external {}
 
             # The relative transform to the attached entity
             var RelativeTransform<native><public>:?transform = external {}
 
-        camera_entity_component<native><epic_internal> := class(core_entity_component):
+        camera_entity_component<native><epic_internal> := class(component):
             # Notification called then the component owner entity was added to a world
             AddedToWorld<native><override>():void
 
@@ -244,8 +256,21 @@ EntityFramework<public> := module:
             # The component is being uninitialized, called when it is about to be detached from an entity
             Uninitialize<native><override>():void
 
+        hit_result<native><epic_internal> := struct:
+            HitLocation<native><public>:vector3
+
+            HitNormal<native><public>:vector3
+
+            OtherComponent<native><public>:?physics_component
+
+            OtherEntity<native><public>:?entity
+
+            ThisComponent<native><public>:?physics_component
+
+            ThisEntity<native><public>:?entity
+
         @hide_in_editor
-        light_entity_component<native><epic_internal> := class(core_entity_component):
+        light_entity_component<native><epic_internal> := class(component):
             # The component is being initialized, called when it is attach to an entity
             Initialize<native><override>():void
 
@@ -255,14 +280,58 @@ EntityFramework<public> := module:
             # The component is being uninitialized, called when it is about to be detached from an entity
             Uninitialize<native><override>():void
 
+        local_hud_component<epic_internal> := class(component):
+            BeginPlay<override>():void = external {}
+
+            EndPlay<override>():void = external {}
+
+            Hide<public>(Player:player):void = external {}
+
+            IsAllowedOnClient<override>():logic = external {}
+
+            Show<public>(Player:player):void = external {}
+
+            var Canvas<public>:canvas
+
+            var UISlot<public>:player_ui_slot
+
         @hide_in_editor
-        mesh_component<native><epic_internal> := class(core_entity_component):
+        mesh_component<native><epic_internal> := class(component):
             # Internal epic method to know if this component is allowed on client
             IsAllowedOnClient<override>():logic = external {}
 
-        physics_component<native><epic_internal> := class(core_entity_component):
+        particle_system_component<native><epic_internal> := class<final>(component):
+            # Activate the particle system
+            Activate<native><public>():void
+
             # Notification called then the component owner entity was added to a world
             AddedToWorld<native><override>():void
+
+            # Deactivate the particle system
+            Deactivate<native><public>():void
+
+            # The component is being initialized, called when it is attach to an entity
+            Initialize<native><override>():void
+
+            # Internal epic method to know if this component is allowed on client
+            IsAllowedOnClient<override>():logic = external {}
+
+            # Notification called when the component owner entity is about to be removed from world
+            RemovingFromWorld<native><override>():void
+
+            # The component is being uninitialized, called when it is about to be detached from an entity
+            Uninitialize<native><override>():void
+
+            @replicated("RepNotify")
+            # The path to the particle system asset
+            var ParticleSystem<native><public>:?particle_system = external {}
+
+        physics_component<native><epic_internal> := class(component):
+            # Notification called then the component owner entity was added to a world
+            AddedToWorld<native><override>():void
+
+            # Event signaled when the component experiences a blocking hit
+            HitEvent<native><public>:listenable(hit_result) = external {}
 
             # The component is being initialized, called when it is attach to an entity
             Initialize<native><override>():void
@@ -296,6 +365,27 @@ EntityFramework<public> := module:
             SetSourceLength<public>(NewLength:float):void = external {}
 
             SetSourceRadius<public>(NewRadius:float):void = external {}
+
+        sound_component<native><epic_internal> := class(component):
+            # The component is being initialized, called when it is attach to an entity
+            Initialize<native><override>():void
+
+            # Internal epic method to know if this component is allowed on client
+            IsAllowedOnClient<override>():logic = external {}
+
+            # Play the sound asset
+            Play<native><public>():void
+
+            # Play the sound asset
+            Stop<native><public>():void
+
+            # The component is being uninitialized, called when it is about to be detached from an entity
+            Uninitialize<native><override>():void
+
+            @editable
+            @replicated("RepNotify")
+            # The path to the sound asset
+            var Sound<native><public>:sound = external {}
 
         spot_light_entity_component<native><public> := class<final>(light_entity_component):
             GetAttenuationRadius<public>():float = external {}
@@ -336,55 +426,21 @@ EntityFramework<public> := module:
             # The component is being uninitialized, called when it is about to be detached from an entity
             Uninitialize<native><override>():void
 
+            @replicated("RepNotify")
             # The path to the material asset of a static mesh
             var Material<native><public>:?material = external {}
 
+            @replicated("RepNotify")
             # The path to the static mesh asset
             var Mesh<native><public>:mesh = external {}
 
-    using {/UnrealEngine.com/EpicGamesRestricted/Network}
     using {/UnrealEngine.com/Execution}
-    using {/Verse.org/Native}
     # Module import path: /UnrealEngine.com/EntityFramework/Entity
     Entity<public> := module:
-        @import_as("/Script/Entity.UBaseCoreEntity")
-        base_core_entity<native><public> := class<abstract>:
+        @import_as("/Script/Entity.UBaseEntity")
+        base_entity<native><public> := class<abstract>:
 
-        core_entity<native><epic_internal> := class<concrete><unique><transacts>(base_core_entity):
-            # Add a component to the list of component, it will fail if the component type is already in the list
-            AddComponent<native><public>(InComponent:core_entity_component)<transacts><decides>:void
-
-            # Adds an owned entity to an entity
-            AddEntity<native><public>(InEntity:core_entity)<transacts><decides>:void
-
-            # Create a component on the entity of the specified type
-            CreateComponent<native><public>(ComponentType:subtype(core_entity_component))<transacts><decides>:ComponentType
-
-            # Create and adds an owned entity to an entity
-            CreateEntity<native><public>(EntityType:subtype(core_entity))<transacts>:EntityType
-
-            # Destroy the entity
-            Dispose<native><public>():void
-
-            # Retreive a component of a specified type
-            GetComponentByType<native><public>(ComponentType:subtype(core_entity_component))<transacts><decides>:ComponentType
-
-            # Returns any accessible child entities of this entity
-            GetEntities<native><final><public>()<transacts>:[]core_entity
-
-            # Returns the owner of this entity if any
-            GetOwner<native><public>()<transacts><decides>:core_entity
-
-            # Determine if the entity has been disposed
-            IsDisposed<native><public>()<decides>:void
-
-            # Remove a component from the entity
-            RemoveComponent<native><public>(InComponent:core_entity_component)<transacts><decides>:void
-
-            # Removes an owned entity from an entity
-            RemoveEntity<native><public>(InEntity:core_entity)<transacts><decides>:void
-
-        core_entity_component<native><epic_internal> := class<abstract><unique>:
+        component<native><epic_internal> := class<abstract><unique>:
             # Notification called then the component owner entity was added to a world
             AddedToWorld<native><native_callable><protected>():void
 
@@ -395,7 +451,7 @@ EntityFramework<public> := module:
             EndPlay<native><native_callable><protected>():void
 
             # Returns the owner of this component
-            GetOwner<native><public>()<transacts><decides>:core_entity
+            GetOwner<native><public>()<transacts><decides>:entity
 
             # The component is being initialized, called when it is attach to an entity
             Initialize<native><native_callable><protected>():void
@@ -408,19 +464,9 @@ EntityFramework<public> := module:
             # The component is being uninitialized, called when it is about to be detached from an entity
             Uninitialize<native><native_callable><protected>():void
 
-        # Module import path: /UnrealEngine.com/EntityFramework/Entity/core_entity_initializer
-        core_entity_initializer<epic_internal> := module:
-            # Tells that specified component type need to be initialized before
-            InitializeDependency<native><public>(OwnerEntity:core_entity, ComponentType:subtype(core_entity_component), Mode:mode)<transacts><decides>:ComponentType
-
-            mode<native><public> := enum:
-                get
-
-                get_or_create
-
         # Module import path: /UnrealEngine.com/EntityFramework/Entity/engine_execution
         engine_execution<public> := module:
-            GetSubscribables<native><epic_internal>(ForEntity:core_entity):engine_execution_subscribables
+            GetSubscribables<native><epic_internal>(ForEntity:entity):engine_execution_subscribables
 
         engine_execution_subscribables<native><public> := class:
             DuringPhysics<native><public>:execution_subscribable = external {}
@@ -435,7 +481,47 @@ EntityFramework<public> := module:
 
             StartPhysics<native><public>:execution_subscribable = external {}
 
-        replication_component<native><epic_internal> := class(core_entity_component):
+        entity<native><epic_internal> := class<concrete><unique><transacts>(base_entity):
+            # Add a component to the list of component, it will fail if the component type is already in the list
+            AddComponent<native><public>(InComponent:component)<transacts><decides>:void
+
+            # Adds an owned entity to an entity
+            AddEntity<native><public>(InEntity:entity)<transacts><decides>:void
+
+            # Destroy the entity
+            Dispose<native><public>():void
+
+            # Retreive a component of a specified type
+            GetComponentByType<native><public>(ComponentType:subtype(component))<transacts><decides>:ComponentType
+
+            # Returns any accessible child entities of this entity
+            GetEntities<native><final><public>()<transacts>:[]entity
+
+            # Returns the owner of this entity if any
+            GetOwner<native><public>()<transacts><decides>:entity
+
+            # Determine if the entity has been disposed
+            IsDisposed<native><public>()<decides>:void
+
+            # Remove a component from the entity
+            RemoveComponent<native><public>(InComponent:component)<transacts><decides>:void
+
+            # Removes an owned entity from an entity
+            RemoveEntity<native><public>(InEntity:entity)<transacts><decides>:void
+
+        # Module import path: /UnrealEngine.com/EntityFramework/Entity/entity_initializer
+        entity_initializer<epic_internal> := module:
+            # Tells that specified component type need to be initialized before
+            InitializeDependency<native><public>(OwnerEntity:entity, ComponentType:subtype(component), Mode:mode)<transacts><decides>:ComponentType
+
+            mode<native><public> := enum:
+                get
+
+                get_or_create
+
+        entity_prefab<native><epic_internal> := class<computes>(asset):
+
+        replication_component<native><epic_internal> := class(component):
             # The component is being initialized, called when it is attach to an entity
             AddedToWorld<native><override>():void
 
@@ -445,7 +531,7 @@ EntityFramework<public> := module:
             # The component is being uninitialized, called when it is about to be detached from an entity
             RemovingFromWorld<native><override>():void
 
-        transform_component<native><epic_internal> := class(core_entity_component):
+        transform_component<native><epic_internal> := class(component):
             # The component is being initialized, called when it is attach to an entity
             Initialize<native><override>():void
 
@@ -466,18 +552,17 @@ EntityFramework<public> := module:
             # Current transform of the entity, relative to the world
             var Transform<native><public>:transform = external {}
 
-        typed_element_component<native><epic_internal> := class(core_entity_component):
+        typed_element_component<native><epic_internal> := class(component):
 
-using {/UnrealEngine.com/EntityFramework/Entity}
 # Module import path: /UnrealEngine.com/EntityTestSuite
 EntityTestSuite<public> := module:
     @hide_in_editor
-    init_test_component<native><epic_internal> := class(core_entity_component):
+    init_test_component<native><epic_internal> := class(component):
         # The component is being initialized, called when it is attach to an entity
         Initialize<native><override>():void
 
     @hide_in_editor
-    lambda_test_component<native><epic_internal> := class(core_entity_component):
+    lambda_test_component<native><epic_internal> := class(component):
         # Notification called then the component owner entity was added to a world
         AddedToWorld<native><override>():void
 
@@ -497,8 +582,9 @@ EntityTestSuite<public> := module:
         Uninitialize<native><override>():void
 
     @hide_in_editor
-    test_component<native><epic_internal> := class(core_entity_component):
+    test_component<native><epic_internal> := class(component):
 
+using {/Verse.org/VerseEngine/Component}
 # Module import path: /UnrealEngine.com/EpicGames
 EpicGames<public> := module:
     # Module import path: /UnrealEngine.com/EpicGames/Input
@@ -656,60 +742,60 @@ EpicGames<public> := module:
             Zero
 
         # Represents a type of event that can occur involving a verse_key
-        verse_ue_input_component<native><public> := class<final>(component):
-            # Requests that the input component adds a callback bound to whenever the action specified by ActionName occurs, in the manner specified by InputEvent e.g. press/release
-            AddActionBinding<native><public>(ActionName:[]char, InputEvent:input_event, Callback:type {__():void}):void
+        verse_ue_input_component<native><public> := class<final>(vk_component):
+            # Requests that the input vk_component adds a callback bound to whenever the action specified by ActionName occurs, in the manner specified by InputEvent e.g. press/release
+            AddActionBinding<native><public>(ActionName:string, InputEvent:input_event, Callback:type {__():void}):void
 
-            # Requests that the input component register an action mapping to the provided keys, with a description string provided for debugging/tracking
-            AddActionMapping<native><public>(ActionName:[]char, Description:[]char, Keys:[]verse_key):void
+            # Requests that the input vk_component register an action mapping to the provided keys, with a description string provided for debugging/tracking
+            AddActionMapping<native><public>(ActionName:string, Description:string, Keys:[]verse_key):void
 
             # Utility wrapper which both binds the specified Actionname to the keys + input event specified, and also registers an associated callback
-            AddActionMappingAndBinding<public>(ActionName:[]char, Description:[]char, Keys:[]verse_key, InputEvent:input_event, Callback:type {__():void}):void = external {}
+            AddActionMappingAndBinding<public>(ActionName:string, Description:string, Keys:[]verse_key, InputEvent:input_event, Callback:type {__():void}):void = external {}
 
-            # Requests that the input component adds a callback bound to whenever the Axis specified by AxisName changes value. The callback will be provided the current Axis value
-            AddAxisBinding<native><public>(AxisName:[]char, Callback:?type {__(:float):void}):void
+            # Requests that the input vk_component adds a callback bound to whenever the Axis specified by AxisName changes value. The callback will be provided the current Axis value
+            AddAxisBinding<native><public>(AxisName:string, Callback:?type {__(:float):void}):void
 
-            # Requests that the input component register an axis mapping to the provided keys, with a description string provided for debugging/tracking
-            AddAxisMapping<native><public>(ActionName:[]char, Description:[]char, Keys:[]verse_key, Scale:?float):void
+            # Requests that the input vk_component register an axis mapping to the provided keys, with a description string provided for debugging/tracking
+            AddAxisMapping<native><public>(ActionName:string, Description:string, Keys:[]verse_key, Scale:?float):void
 
             # Utility wrapper which both binds the specified Actionname to the Axis specified, and also registers an associated callback
-            AddAxisMappingAndBinding<public>(AxisName:[]char, Description:[]char, Keys:[]verse_key, Scale:?float, Callback:?type {__(:float):void}):void = external {}
+            AddAxisMappingAndBinding<public>(AxisName:string, Description:string, Keys:[]verse_key, Scale:?float, Callback:?type {__(:float):void}):void = external {}
 
-            # Clears all previously registered action mappings for the provided input component
+            # Clears all previously registered action mappings for the provided input vk_component
             ClearActionMappings<native><public>():void
 
-            # Clears all previously registered axis mappings for the provided input component
+            # Clears all previously registered axis mappings for the provided input vk_component
             ClearAxisMappings<native><public>():void
 
-            # Clears all input bindings for the provided input component. This is the equivalent of clearing all action + axis mappings, and all bindings
+            # Clears all input bindings for the provided input vk_component. This is the equivalent of clearing all action + axis mappings, and all bindings
             ClearInputBindings<native><public>():void
 
             # Utility wrapper which Clears action mappings, axis mappings, and input bindings
             ClearInputMappingsAndBindings<public>():void = external {}
 
             # Returns the current value associated with the specified AxisName. 0.0f if not currently being manipulated
-            GetAxisValue<native><public>(AxisName:[]char):float
+            GetAxisValue<native><public>(AxisName:string):float
 
             # Removes a previously added action mapping and associated callback binding. Requires the Action name the action was added with
-            RemoveActionBinding<native><public>(ActionName:[]char, InputEvent:input_event):void
+            RemoveActionBinding<native><public>(ActionName:string, InputEvent:input_event):void
 
             # Removes a previously added action mapping. Requires the Action name the action was added with
-            RemoveActionMapping<native><public>(ActionName:[]char):void
+            RemoveActionMapping<native><public>(ActionName:string):void
 
             # Utility wrapper which both removes the specified Actionname and associated callback
-            RemoveActionMappingAndBinding<public>(ActionName:[]char, InputEvent:input_event):void = external {}
+            RemoveActionMappingAndBinding<public>(ActionName:string, InputEvent:input_event):void = external {}
 
             # Removes a previously added axis mapping. Requires the Action name the action was added with
-            RemoveAxisBinding<native><public>(AxisName:[]char):void
+            RemoveAxisBinding<native><public>(AxisName:string):void
 
             # Async function which continues execution when the associated ActionName occurs, and in the manner specified by InputEvent e.g. press/release
-            WaitForAction<native><public>(InputComponent:verse_ue_input_component, ActionName:[]char, InputEvent:input_event)<suspends>:void
+            WaitForAction<native><public>(InputComponent:verse_ue_input_component, ActionName:string, InputEvent:input_event)<suspends>:void
 
 # Module import path: /UnrealEngine.com/EpicGamesRestricted
 EpicGamesRestricted<public> := module:
     # Module import path: /UnrealEngine.com/EpicGamesRestricted/Network
     Network<public> := module:
-        replicated<epic_internal>(ReplicationArgs:[]char)<computes>:replicated_attribute
+        replicated<epic_internal>(ReplicationArgs:string)<computes>:replicated_attribute
 
         @attribscope_data
         @customattribhandler
@@ -717,7 +803,7 @@ EpicGamesRestricted<public> := module:
 
     # Module import path: /UnrealEngine.com/EpicGamesRestricted/Spline
     Spline<public> := module:
-        spline_component<native><public> := class<final>(component):
+        spline_component<native><public> := class<final>(vk_component):
             # Given a world position, find the closest spline input key
             FindClosestInputKeyToWorldPosition<native><public>(Position:vector3)<transacts><decides>:float
 
@@ -751,15 +837,13 @@ Execution<public> := module:
     execution_subscription<native><public> := class(cancelable):
         Cancel<native><override>()<transacts>:void
 
-        RunAfter<native><public>(__dupe___unnamed_parameter_42:execution_subscription)<transacts>:void
+        RunAfter<native><public>(__dupe___unnamed_parameter_46:execution_subscription)<transacts>:void
 
-        RunBefore<native><public>(__dupe___unnamed_parameter_43:execution_subscription)<transacts>:void
+        RunBefore<native><public>(__dupe___unnamed_parameter_47:execution_subscription)<transacts>:void
 
 # Module import path: /UnrealEngine.com/ExecutionTestSuite
 ExecutionTestSuite<public> := module:
 
-using {/Verse.org/Simulation}
-using {/Verse.org/VerseEngine/Component}
 # Module import path: /UnrealEngine.com/Playspace
 Playspace<public> := module:
     PlayerType<native><epic_internal> := enum:
@@ -769,7 +853,7 @@ Playspace<public> := module:
 
         Spectator
 
-    playspace_component<native><epic_internal> := class(component):
+    playspace_component<native><epic_internal> := class(vk_component):
         SetPlayerComponentClass<native><public>(ComponentType:type):void
 
         _WaitForMatchBegin<native><public>()<suspends>:void
@@ -852,7 +936,7 @@ Temporary<public> := module:
         # log class to send messages to the default log
         log<native><public> := class:
             # Print message using the given log level
-            (log:)Print<native><public>(Message:[]char, ?Level:log_level = external {})<computes>:void
+            (log:)Print<native><public>(Message:string, ?Level:log_level = external {})<computes>:void
 
             # Channel class name will be added as a prefix used when printing the message e.g. '[log_channel]: #Message
             Channel<native><public>:subtype(log_channel)
@@ -1092,18 +1176,22 @@ Temporary<public> := module:
         # Used to perform spherical linear interpolation between `From` (when `Parameter = 0.0`) and `To` (when `Parameter = 1.0`). Expects that `0.0 <= Parameter <= 1.0`.
         Slerp<native><public>(InitialRotation:rotation, FinalRotation:rotation, Parameter:float)<transacts><decides>:rotation
 
+        # Makes a `string` representation of `InTransform` where the result is on the form.
+        # `"Scale: {ToString(`InTransform.Scale`)} Rotation: {ToString(`InTransform.Rotation`)} Translation: {ToString(`InTransform.Translation`)}.
+        ToString<native><epic_internal>(InTransform:transform)<varies>:string
+
         # Makes a `string` representation of `rotation` in axis/degrees format with a left-handed sign convention.
         # `ToString(MakeRotation(vector3{X:=1.0, Y:=0.0, Z:=0.0}, PiFloat/2.0))` produces the string: `"Axis: {x=1.000000,y=0.000000,z=0.000000} Angle: 90.000000"`.
-        ToString<native><public>(Rotation:rotation)<varies>:[]char
+        ToString<native><public>(Rotation:rotation)<varies>:string
 
         # Makes a `string` representation of `V`.
-        ToString<native><public>(V:vector2)<varies>:[]char
+        ToString<native><public>(V:vector2)<varies>:string
 
         # Makes a `string` representation of `V`.
-        ToString<native><public>(V:vector2i)<computes>:[]char
+        ToString<native><public>(V:vector2i)<computes>:string
 
         # Makes a `string` representation of `V`.
-        ToString<native><public>(V:vector3)<varies>:[]char
+        ToString<native><public>(V:vector3)<varies>:string
 
         # Makes a `vector2` by converting the components of `V` to `float`s.
         ToVector2<public>(V:vector2i)<transacts>:vector2 = external {}
@@ -1239,7 +1327,7 @@ Temporary<public> := module:
     using {/Verse.org/VerseEngine/Component}
     # Module import path: /UnrealEngine.com/Temporary/UI
     UI<public> := module:
-        # Returns the `player_ui` component associated with `Player`.
+        # Returns the `player_ui` vk_component associated with `Player`.
         # Fails if there is no `player_ui` associated with `Player`.
         GetPlayerUI<native><public>(Player:player)<transacts><decides>:player_ui
 
@@ -1450,7 +1538,7 @@ Temporary<public> := module:
             Widget<native><public>:widget
 
         # The main interface for adding and removing `widget`s to a player's UI.
-        player_ui<native><public> := class<final><epic_internal>(component):
+        player_ui<native><public> := class<final><epic_internal>(vk_component):
             # Adds `Widget` to this `player_ui` using default `player_ui_slot` configuration options.
             AddWidget<native><public>(Widget:widget):void
 
@@ -1467,14 +1555,6 @@ Temporary<public> := module:
 
             # Controls `widget` rendering order. Greater values will be draw in front of lesser values.
             ZOrder<native><public>:type {_X:int where 0 <= _X, _X <= 2147483647} = external {}
-
-        # For internal use only.
-        simple_button_internal<native><epic_internal> := class<final>(widget):
-            DefaultText<localizes><native><public>:message = external {}
-
-            OnClick<public>():listenable(widget_message) = external {}
-
-            SetText<native><public>(InText:message):void
 
         # Stack box is a container of a list of widgets stacked either vertically or horizontally.
         stack_box<native><public> := class<final>(widget):
@@ -1535,7 +1615,7 @@ Temporary<public> := module:
             GetOverflowPolicy<native><public>():text_overflow_policy
 
             # Gets the text currently in the widget.
-            GetText<native><public>():[]char
+            GetText<native><public>():string
 
             # Gets the color of the displayed text.
             GetTextColor<native><public>():color
@@ -1715,17 +1795,191 @@ Temporary<public> := module:
 
                 PlayerRemovedEvent<public>:subscribable(player)
 
+Tests<public> := module:
+    using {/UnrealEngine.com/Temporary/SpatialMath}
+    using {/UnrealEngine.com/VGameplayRst/Components}
+    using {/UnrealEngine.com/VGameplayRst/GameObjects}
+    using {/UnrealEngine.com/VGameplayRst/Geometry}
+    using {/UnrealEngine.com/VGameplayRst/Physics}
+    using {/UnrealEngine.com/VGameplayRst/Transform}
+    using {/Verse.org/Assets}
+    using {/Verse.org/Simulation/Tags}
+    using {/Verse.org/VerseEngine/Component}
+    using {/Verse.org/VerseEngine/Entity}
+    # Module import path: /UnrealEngine.com/Tests/VersePrototypeGameplay
+    VersePrototypeGameplay<public> := module:
+        # Build a path from the StartLocation to the EndLocation using GridSize, GridOccupany, and navigation cost hueristics. Pop from the returned object_stack like so: "{if (Node:= i_nav_grid_node_2d[ReturnedPath.Pop[]]) #Use Node.GetLocation() }"
+        BuildPathUsingAStar<public>(Args:build_path_astar_args)<transacts><decides>:[]vector2i = external {}
+
+        # Build a path from the StartLocation to the EndLocation using GridSize and GridOccupany.
+        BuildPathUsingAStarSimple<public>(GridOccupancy:i_grid_occupancy, GridSize:vector2i, StartLocation:vector2i, EndLocation:vector2i)<transacts><decides>:[]vector2i = external {}
+
+        CreateModelAdvanced<epic_internal>(AddComponentClasses:[]subtype(vk_component), InPosition:vector3, InRotation:rotation, InScale:vector3, Name:string, Mesh:mesh, Material:material):?model_advanced = external {}
+
+        CreateModelAdvanced<epic_internal>(AddComponentClasses:[]subtype(vk_component), InTransform:transform, Name:string, Mesh:mesh):?model_advanced = external {}
+
+        CreateModelAdvanced<epic_internal>(AddComponentClasses:[]subtype(vk_component), InTransform:transform, Name:string, Mesh:mesh, Material:material):?model_advanced = external {}
+
+        CreateModelAdvanced<epic_internal>(InPosition:vector3, InRotation:rotation, InScale:vector3, Name:string, Mesh:mesh, Material:material):?model_advanced = external {}
+
+        CreateModelAdvanced<epic_internal>(InPosition:vector3, InRotation:rotation, Name:string, Mesh:mesh, Material:material):?model_advanced = external {}
+
+        CreateModelAdvanced<epic_internal>(InPosition:vector3, Name:string, Mesh:mesh, Material:material):?model_advanced = external {}
+
+        CreateModelAdvanced<epic_internal>(InTransform:transform, Name:string, Mesh:mesh):?model_advanced = external {}
+
+        CreateModelAdvanced<epic_internal>(InTransform:transform, Name:string, Mesh:mesh, Material:material):?model_advanced = external {}
+
+        CreateModelAdvanced<public>(Entity:vk_entity):?model_advanced = external {}
+
+        CreateModelAdvanced<public>(InEntity:vk_entity, AddComponentClasses:[]subtype(vk_component)):?model_advanced = external {}
+
+        CreateModelAdvanced<public>(TagToFind:tag):?model_advanced = external {}
+
+        SimpleDistanceNavCost<public>(NodePosition:vector2i, NeighborPosition:vector2i)<transacts>:float = external {}
+
+        SimpleManhattanDistance2D<public>(NodePosition:vector2i, NavTargetPosition:vector2i)<transacts>:float = external {}
+
+        build_path_astar_args<public> := struct:
+            ActualNavigationCost<public>:navigation_cost_delegate
+
+            EndLocation<public>:vector2i
+
+            EstimatedNavigationCost<public>:navigation_cost_delegate
+
+            GridOccupancy<public>:i_grid_occupancy
+
+            GridSize<public>:vector2i
+
+            StartLocation<public>:vector2i
+
+        # Interface used for determining if a specific grid cell is considered occupied.
+        i_grid_occupancy<public> := interface:
+            # Fails if the grid location is not occupied.
+            IsOccupied<public>(Location:vector2i)<transacts><decides>:void
+
+        model_advanced<public> := class<internal>(mutable_model_interface):
+            ApplyAdditionalRotation<override>(r:rotation):void = external {}
+
+            Destroy<public>():void = external {}
+
+            DisableCollision<public>():void = external {}
+
+            EnableCollision<public>():void = external {}
+
+            ForwardVector<override>()<transacts>:vector3 = external {}
+
+            GetCollisionComponent<public>():collision_component = external {}
+
+            GetEntity<public>():vk_entity = external {}
+
+            GetMeshComponent<public>():fixed_mesh_component = external {}
+
+            GetPosition<override>()<transacts>:vector3 = external {}
+
+            GetPositionComponent<public>():position_component = external {}
+
+            GetRotationComponent<public>():rotation_component = external {}
+
+            GetScale<override>()<transacts>:vector3 = external {}
+
+            GetTransform<public>():transform = external {}
+
+            Hide<public>():void = external {}
+
+            IsVisible<public>():logic = external {}
+
+            RightVector<override>()<transacts>:vector3 = external {}
+
+            Rotation<override>()<transacts>:rotation = external {}
+
+            SetForwardVectorFromXY<override>(x:vector3, y:vector3):void = external {}
+
+            SetPosition<override>(NewPosition:vector3)<transacts>:void = external {}
+
+            SetRotation<override>(r:rotation)<transacts>:void = external {}
+
+            SetScale<override>(NewScale:vector3)<transacts>:void = external {}
+
+            SetTransform<public>(NewTransform:transform):void = external {}
+
+            Show<public>():void = external {}
+
+            UpVector<override>()<transacts>:vector3 = external {}
+
+        # This method is used for calculating the cost from the specified node to the target position. See SimpleManhattanDistance2D for an example.
+        navigation_cost_delegate<public> := type {__(:vector2i, :vector2i)<transacts>:float}
+
+        simple_gameplay_script_component<public> := class(script_component):
+            AddToPosition<public>(NewPosition:vector3):void = external {}
+
+            ApplyAdditionalRotation<public>(RotationToAdd:rotation):void = external {}
+
+            DisableCollision<public>():void = external {}
+
+            EnableCollision<public>():void = external {}
+
+            GetPosition<public>()<transacts>:vector3 = external {}
+
+            GetRotation<public>():rotation = external {}
+
+            GetScale<public>()<transacts>:vector3 = external {}
+
+            GetTransform<public>():transform = external {}
+
+            HandleOnBegin<protected>():void = external {}
+
+            HandleOnCreate<protected>():void = external {}
+
+            HandleOnPostCreate<protected>():void = external {}
+
+            Hide<public>():void = external {}
+
+            IsVisible<public>():logic = external {}
+
+            OnBegin<final><override>():void = external {}
+
+            OnCreate<final><override>():void = external {}
+
+            OnPostCreate<final><override>():void = external {}
+
+            SetDefaultMesh<public>(DefaultMesh:default_mesh_type):void = external {}
+
+            SetMaterial<epic_internal>(NewMaterial:material):void = external {}
+
+            SetMesh<epic_internal>(Mesh:mesh):void = external {}
+
+            SetPosition<public>(NewPosition:vector3)<transacts>:void = external {}
+
+            SetRotation<public>(NewRotation:rotation)<transacts>:void = external {}
+
+            SetScale<public>(NewScale:vector3):void = external {}
+
+            SetTransform<public>(NewTransform:transform):void = external {}
+
+            Show<public>():void = external {}
+
+        simple_grid_occupancy<public> := class(i_grid_occupancy):
+            Init<public>(InGridSize:int):void = external {}
+
+            IsOccupied<override>(Location:vector2i)<transacts><decides>:void = external {}
+
+            SetOccupancy<public>(X:int, Y:int, Occupied:logic):void = external {}
+
+            var GridSize<public>:int
+
+            var OccupancyGrid<public>:[][]logic
+
 using {/UnrealEngine.com/VGameplayRst/Transform}
 using {/Verse.org/Colors}
 using {/Verse.org/Restricted}
-using {/Verse.org/Simulation/Tags}
 using {/Verse.org/VerseEngine/Entity}
 using {/Verse.org/VerseExperimental}
 # Module import path: /UnrealEngine.com/VGameplayRst
 VGameplayRst<public> := module:
     # Module import path: /UnrealEngine.com/VGameplayRst/Audio
     Audio<public> := module:
-        audio_component<native><public> := class<final>(component):
+        audio_component<native><public> := class<final>(vk_component):
             BeginSound<native><public>():void
 
             EndSound<native><public>():void
@@ -1739,35 +1993,35 @@ VGameplayRst<public> := module:
 
             Inactive
 
-        dynamic_activation_component<native><public> := class<final>(component):
+        dynamic_activation_component<native><public> := class<final>(vk_component):
             BeginTransition<native><public>(SecondsToChange:float, TargetState:activation_state):void
 
-            LinkComponent<native><public>(ComponentToLink:component):void
+            LinkComponent<native><public>(ComponentToLink:vk_component):void
 
             Reset<native><public>():void
 
-            UnlinkComponent<native><public>(ComponentToUnlink:component):void
+            UnlinkComponent<native><public>(ComponentToUnlink:vk_component):void
 
             WaitForTransitionBegin<native><public>()<suspends>:void
 
             WaitForTransitionComplete<native><public>()<suspends>:void
 
-        script_component<native><public> := class<abstract><unique>(component):
-            AddToCreateComponentList<native><public>(__dupe___unnamed_parameter_100:[]subtype(component)):void
+        script_component<native><public> := class<abstract><unique>(vk_component):
+            AddToCreateComponentList<native><public>(__dupe___unnamed_parameter_106:[]subtype(vk_component)):void
 
-            AddToRequiredComponentList<native><public>(__dupe___unnamed_parameter_101:[]subtype(component)):void
+            AddToRequiredComponentList<native><public>(__dupe___unnamed_parameter_107:[]subtype(vk_component)):void
 
-            GetAllComponentsOfType<native><public>(componentType:type)<transacts>:[]component
+            GetAllComponentsOfType<native><public>(componentType:type)<transacts>:[]vk_component
 
-            GetComponentOfType<native><public>(componentType:type)<transacts>:?component
+            GetComponentOfType<native><public>(componentType:type)<transacts>:?vk_component
 
-            GetFullname<native><public>():[]char
+            GetFullname<native><public>():string
 
-            GetName<native><public>():[]char
+            GetName<native><public>():string
 
             IsEnabled<native><public>():logic
 
-            IsOwner<native><public>(Entity:entity):logic
+            IsOwner<native><public>(Entity:vk_entity):logic
 
             OnBegin<native_callable><public>():void = external {}
 
@@ -1793,64 +2047,64 @@ VGameplayRst<public> := module:
         DatastoreComponent<epic_internal> := module:
             ClearAllDatastoreValues<native><public>(Player:player_component):void
 
-            SetDatastoreValue<native><public>(Player:player_component, Key:[]char, Value:[]char):void
+            SetDatastoreValue<native><public>(Player:player_component, Key:string, Value:string):void
 
-            SetDatastoreValueInt<native><public>(Player:player_component, Key:[]char, Value:int):void
+            SetDatastoreValueInt<native><public>(Player:player_component, Key:string, Value:int):void
 
-        datastore_component<native><public> := class<final>(component):
+        datastore_component<native><public> := class<final>(vk_component):
 
     # Module import path: /UnrealEngine.com/VGameplayRst/DebugDraw
     DebugDraw<public> := module:
 
     # Module import path: /UnrealEngine.com/VGameplayRst/EntityUtil
     EntityUtil<public> := module:
-        # Creates a component of the specified type on the entity indicated by EntityID. Returns the spawned component object
-        CreateAndAddComponent<native><public>(EntityID:int, ComponentType:subtype(component))<transacts>:component
+        # Creates a vk_component of the specified type on the vk_entity indicated by EntityID. Returns the spawned vk_component object
+        CreateAndAddComponent<native><public>(EntityID:int, ComponentType:subtype(vk_component))<transacts>:vk_component
 
-        # Attempts to find a sub component of the specified type from the nominated component. Returns it if found, otherwise fails
-        GetComponentOfTypeFromComponent<native><public>(Component:component, Type:type)<transacts><decides>:component
+        # Attempts to find a sub vk_component of the specified type from the nominated vk_component. Returns it if found, otherwise fails
+        GetComponentOfTypeFromComponent<native><public>(Component:vk_component, Type:type)<transacts><decides>:vk_component
 
-        # Attempts to find a sub component of the specified type from the nominated component for the specified entity. Returns it if found, otherwise fails
-        GetComponentOfTypeFromComponentForEntity<native><public>(Component:component, EntityID:int, Type:type)<transacts><decides>:component
+        # Attempts to find a sub vk_component of the specified type from the nominated vk_component for the specified vk_entity. Returns it if found, otherwise fails
+        GetComponentOfTypeFromComponentForEntity<native><public>(Component:vk_component, EntityID:int, Type:type)<transacts><decides>:vk_component
 
-        # Spawn an empty entity with the specified transform. Returns the EntityID
-        SpawnEmptyEntity<native><public>(InTransform:transform, Name:[]char):int
+        # Spawn an empty vk_entity with the specified transform. Returns the EntityID
+        SpawnEmptyEntity<native><public>(InTransform:transform, Name:string):int
 
-        # Spawn an empty entity with the specified transform. Returns the entity.
-        SpawnEntity<native><public>(InTransform:transform, Name:[]char):?entity
+        # Spawn an empty vk_entity with the specified transform. Returns the vk_entity.
+        SpawnEntity<native><public>(InTransform:transform, Name:string):?vk_entity
 
-        # Spawn an empty entity with the specified position. Returns the entity
-        SpawnEntity<native><public>(Position:vector3, Name:[]char):?entity
+        # Spawn an empty vk_entity with the specified position. Returns the vk_entity
+        SpawnEntity<native><public>(Position:vector3, Name:string):?vk_entity
 
-        # Spawn an empty entity with the specified position, rotation, and scale. Returns the entity
-        SpawnEntity<native><public>(Position:vector3, Rotation:vector3, Scale:vector3, Name:[]char):?entity
+        # Spawn an empty vk_entity with the specified position, rotation, and scale. Returns the vk_entity
+        SpawnEntity<native><public>(Position:vector3, Rotation:vector3, Scale:vector3, Name:string):?vk_entity
 
-        # Spawn an entity from the specified assetPath with a transform. Returns the EntityID
-        SpawnEntityFromAsset<native><public>(AssetPath:[]char, InTransform:transform, Name:[]char):int
+        # Spawn an vk_entity from the specified assetPath with a transform. Returns the EntityID
+        SpawnEntityFromAsset<native><public>(AssetPath:string, InTransform:transform, Name:string):int
 
     # Module import path: /UnrealEngine.com/VGameplayRst/GameObjects
     GameObjects<public> := module:
         CreateImmutableModel<public>(TagToFind:tag):?immutable_model = external {}
 
-        CreateModel<epic_internal>(InPosition:vector3, InRotation:rotation, InScale:vector3, Name:[]char, Mesh:mesh, Material:material):?model = external {}
+        CreateModel<epic_internal>(InPosition:vector3, InRotation:rotation, InScale:vector3, Name:string, Mesh:mesh, Material:material):?model = external {}
 
-        CreateModel<epic_internal>(InPosition:vector3, InRotation:rotation, Name:[]char, Mesh:mesh, Material:material):?model = external {}
+        CreateModel<epic_internal>(InPosition:vector3, InRotation:rotation, Name:string, Mesh:mesh, Material:material):?model = external {}
 
-        CreateModel<epic_internal>(InPosition:vector3, Name:[]char, Mesh:mesh, Material:material):?model = external {}
+        CreateModel<epic_internal>(InPosition:vector3, Name:string, Mesh:mesh, Material:material):?model = external {}
 
-        CreateModel<epic_internal>(InTransform:transform, Name:[]char, Mesh:mesh):?model = external {}
+        CreateModel<epic_internal>(InTransform:transform, Name:string, Mesh:mesh):?model = external {}
 
-        CreateModel<epic_internal>(InTransform:transform, Name:[]char, Mesh:mesh, Material:material):?model = external {}
+        CreateModel<epic_internal>(InTransform:transform, Name:string, Mesh:mesh, Material:material):?model = external {}
 
         CreateModel<public>(TagToFind:tag):?model = external {}
 
-        CreateWorldAnchor<public>(Entity:entity):?world_anchor = external {}
+        CreateWorldAnchor<public>(Entity:vk_entity):?world_anchor = external {}
 
         CreateWorldAnchor<public>(TagToFind:tag):?world_anchor = external {}
 
         CreateWorldAnchor<public>(WorldPosition:vector3):?world_anchor = external {}
 
-        CreateWorldAnchor<public>(WorldPosition:vector3, DebugName:[]char):?world_anchor = external {}
+        CreateWorldAnchor<public>(WorldPosition:vector3, DebugName:string):?world_anchor = external {}
 
         # Model that can only be inspected, not modified.
         immutable_model<public> := class<internal>(model_interface):
@@ -1917,7 +2171,7 @@ VGameplayRst<public> := module:
         world_anchor<public> := class<internal>(mutable_positionable):
             Destroy<public>():void = external {}
 
-            GetComponent<public>()<transacts>:component = external {}
+            GetComponent<public>()<transacts>:vk_component = external {}
 
             GetPosition<override>()<transacts>:vector3 = external {}
 
@@ -1954,7 +2208,7 @@ VGameplayRst<public> := module:
 
             Sphere
 
-        fixed_mesh_component<native><public> := class<final>(component):
+        fixed_mesh_component<native><public> := class<final>(vk_component):
             IsVisible<native><public>():logic
 
             SetAsRootComponent<native><public>(KeepExistingRootTransform:logic, DestroyOldRoot:logic)<transacts>:void
@@ -1971,7 +2225,7 @@ VGameplayRst<public> := module:
 
             SetVisibility<native><public>(NewVisibility:logic)<transacts>:void
 
-        skeletal_mesh_component<native><public> := class(component):
+        skeletal_mesh_component<native><public> := class(vk_component):
             BeginAnimation<native><public>(Looping:logic):void
 
             EndAnimation<native><public>():void
@@ -2000,14 +2254,14 @@ VGameplayRst<public> := module:
 
     # Module import path: /UnrealEngine.com/VGameplayRst/LevelStreaming
     LevelStreaming<public> := module:
-        level_streaming_component<native><public> := class<final>(component):
-            RequestLoadLevel<native><epic_internal>(Level:level, Timeout:time_span, MessageToKickedPlayers:[]char):?sticky_event(void)
+        level_streaming_component<native><public> := class<final>(vk_component):
+            RequestLoadLevel<native><epic_internal>(Level:level, Timeout:time_span, MessageToKickedPlayers:string):?sticky_event(void)
 
-            RequestUnloadLevel<native><public>(Timeout:time_span, MessageToKickedPlayers:[]char):?sticky_event(void)
+            RequestUnloadLevel<native><public>(Timeout:time_span, MessageToKickedPlayers:string):?sticky_event(void)
 
     # Module import path: /UnrealEngine.com/VGameplayRst/Lights
     Lights<public> := module:
-        point_light_component<native><public> := class<final>(component):
+        point_light_component<native><public> := class<final>(vk_component):
             GetAttenuationRadius<native><public>():float
 
             GetColor<native><epic_internal>():color
@@ -2028,7 +2282,7 @@ VGameplayRst<public> := module:
 
             SetSourceRadius<native><public>(NewRadius:float):void
 
-        spot_light_component<native><public> := class<final>(component):
+        spot_light_component<native><public> := class<final>(vk_component):
             GetAttenuationRadius<native><public>():float
 
             GetColor<native><epic_internal>():color
@@ -2059,13 +2313,13 @@ VGameplayRst<public> := module:
 
     # Module import path: /UnrealEngine.com/VGameplayRst/Messaging
     Messaging<public> := module:
-        debug_command_component<native><public> := class(component):
-            _WaitForCommand<native><public>(CommandId:[]char)<suspends>:[]char
+        debug_command_component<native><public> := class(vk_component):
+            _WaitForCommand<native><public>(CommandId:string)<suspends>:string
 
     # Module import path: /UnrealEngine.com/VGameplayRst/Physics
     Physics<public> := module:
-        collision_component<native><public> := class<final>(component):
-            GetCollisionProfileName<native><public>()<transacts>:[]char
+        collision_component<native><public> := class<final>(vk_component):
+            GetCollisionProfileName<native><public>()<transacts>:string
 
             GetCollisionShapeMode<native><public>()<transacts>:collision_shape_mode
 
@@ -2085,7 +2339,7 @@ VGameplayRst<public> := module:
 
             SetCapsuleCollisionShapeMode<native><public>(Height:float, Radius:float)<transacts>:void
 
-            SetCollisionProfileName<native><public>(CollisionProfile:[]char)<transacts>:void
+            SetCollisionProfileName<native><public>(CollisionProfile:string)<transacts>:void
 
             SetCustomDegreeOfFreedomConstrain<native><public>(CustomMovementPlaneNormal:vector3):void
 
@@ -2114,7 +2368,7 @@ VGameplayRst<public> := module:
 
             WaitEndOverlap<native><public>()<suspends>:overlap_result
 
-            WaitHit<native><public>()<suspends>:hit_result
+            WaitHit<native><public>()<suspends>:hit_result_legacy
 
         collision_shape_mode<native><public> := enum:
             CollisionBox
@@ -2140,7 +2394,7 @@ VGameplayRst<public> := module:
 
             YZPlane
 
-        hit_result<native><public> := struct:
+        hit_result_legacy<native><public> := struct:
             # The location at which the hit occured on OtherEntityID
             HitLocation<native><public>:vector3
 
@@ -2165,9 +2419,9 @@ VGameplayRst<public> := module:
             SweepHitNormal<native><public>:vector3
 
         physics_trace<native><public> := class:
-            InitPhysicsTrace<native><public>(ContextObject:component, TraceCategory:physics_trace_category, TraceType:physics_trace_type, TraceShape:physics_trace_shape, TraceChannel:physics_trace_channel, Start:vector3, End:vector3, IgnoreCallingEntity:logic, TraceExtent:vector3, TraceRadius:float, ProfileName:[]char):void
+            InitPhysicsTrace<native><public>(ContextObject:vk_component, TraceCategory:physics_trace_category, TraceType:physics_trace_type, TraceShape:physics_trace_shape, TraceChannel:physics_trace_channel, Start:vector3, End:vector3, IgnoreCallingEntity:logic, TraceExtent:vector3, TraceRadius:float, ProfileName:string):void
 
-            WaitPhysicsTrace<native><public>()<suspends>:[]hit_result
+            WaitPhysicsTrace<native><public>()<suspends>:[]hit_result_legacy
 
         physics_trace_category<native><public> := enum:
             Channel
@@ -2234,7 +2488,7 @@ VGameplayRst<public> := module:
         mutable_scalable<native><public> := interface(scalable):
             SetScale<public>(v:vector3)<transacts>:void
 
-        position_component<native><public> := class<final>(component, mutable_positionable):
+        position_component<native><public> := class<final>(vk_component, mutable_positionable):
             AddToPosition<native><public>(v:vector3):void
 
             GetPosition<override><native>()<transacts>:vector3
@@ -2253,7 +2507,7 @@ VGameplayRst<public> := module:
 
             UpVector<public>()<transacts>:vector3
 
-        rotation_component<native><public> := class<final>(component, mutable_rotatable):
+        rotation_component<native><public> := class<final>(vk_component, mutable_rotatable):
             ApplyAdditionalRotation<override><native>(r:rotation):void
 
             ForwardVector<override>()<transacts>:vector3 = external {}
@@ -2271,78 +2525,87 @@ VGameplayRst<public> := module:
         scalable<native><public> := interface:
             GetScale<public>()<transacts>:vector3
 
-        scale_component<native><public> := class<final>(component, mutable_scalable):
+        scale_component<native><public> := class<final>(vk_component, mutable_scalable):
             AddToScale<native><public>(v:vector3):void
 
             GetScale<override><native>()<transacts>:vector3
 
             SetScale<override><native>(v:vector3)<transacts>:void
 
-    # Module import path: /UnrealEngine.com/VGameplayRst/VFX
-    VFX<public> := module:
-        particle_system_component<native><public> := class<final>(component):
-            Activate<native><public>():void
-
-            Deactivate<native><public>():void
-
-            SetParticleSystem<native><epic_internal>(ParticleSystem:particle_system)<transacts>:void
-
 using {/Verse.org/Native}
 # Module import path: /UnrealEngine.com/VerseQuery
 VerseQuery<public> := module:
-    (Component:component).GetQueryManager<native><epic_internal>():query_manager
+    (InEntity:entity).FindChildComponents<native><epic_internal>(ComponentType:subtype(component))<varies>:[]ComponentType
 
-    (Component:core_entity_component).GetQueryManager<native><epic_internal>():query_manager
+    (InEntity:entity).FindChildEntities<native><epic_internal>(EntityType:subtype(entity))<varies>:[]EntityType
 
-    (Entity:core_entity).GetQueryManager<native><epic_internal>():query_manager
+    (InEntity:entity).FindChildEntitiesIn<native><epic_internal>(Shape:query_shape)<varies>:[]entity
 
-    (QueryManager:query_manager).EntitiesOfType<native><epic_internal>(EntityClass:subtype(core_entity))<varies>:[]core_entity
+    (InEntity:entity).FindChildEntitiesWithComponent<native><epic_internal>(ComponentType:subtype(component))<varies>:[]entity
 
-    (QueryManager:query_manager).EntitiesOfTypeIterator<native><epic_internal>(EntityClass:subtype(core_entity))<varies>:query_iterator
+    (InEntity:entity).FindChildEntitiesWithTag<native><epic_internal>(Tag:tag)<varies>:[]entity
 
-    (QueryManager:query_manager).EntitiesWithComponents<native><epic_internal>(ComponentClass:subtype(core_entity_component))<varies>:[]core_entity
+    (InEntity:entity).FindParentComponents<native><epic_internal>(ComponentType:subtype(component))<varies>:[]ComponentType
 
-    (QueryManager:query_manager).EntitiesWithComponentsIterator<native><epic_internal>(ComponentClass:subtype(core_entity))<varies>:query_iterator
+    (InEntity:entity).FindParentEntities<native><epic_internal>(EntityType:subtype(entity))<varies>:[]EntityType
 
-    (QueryManager:query_manager).EntitiesWithTags<native><epic_internal>(AllRequiredTags:[]tag, AnyRequiredTag:[]tag, DisallowedTags:[]tag)<varies>:[]core_entity
+    (InEntity:entity).FindParentEntitiesIn<native><epic_internal>(Shape:query_shape)<varies>:[]entity
 
-    (QueryManager:query_manager).EntitiesWithinVolume<native><epic_internal>(Volume:query_volume)<varies>:[]core_entity
+    (InEntity:entity).FindParentEntitiesWithComponent<native><epic_internal>(ComponentType:subtype(component))<varies>:[]entity
+
+    (InEntity:entity).FindParentEntitiesWithTag<native><epic_internal>(Tag:tag)<varies>:[]entity
 
     core_entity_query_iterator<native><epic_internal> := class(query_iterator, query_iterator_base):
         IsValid<native><override>():logic
 
-        Next<native><override>():?core_entity
+        Next<native><override>():?entity
+
+    @import_as("/Script/VerseQuery.UEntityQueryManager")
+    entity_query_manager<native><epic_internal> := class:
 
     null_query_iterator<native><epic_internal> := class(query_iterator):
         IsValid<native><override>():logic
 
-        Next<native><override>():?core_entity
+        Next<native><override>():?entity
 
-    # Helper component used to associate a core_entity with a playspace
-    playspace_association_component<native><epic_internal> := class(core_entity_component):
+    @hide_in_editor
+    playspace_association_component<native><epic_internal> := class(component):
 
     query_iterator<native><epic_internal> := interface:
         IsValid<public>():logic
 
-        Next<public>():?core_entity
+        Next<public>():?entity
 
     @import_as("/Script/VerseQuery.UQueryIteratorBase")
     query_iterator_base<native><epic_internal> := class:
 
-    @import_as("/Script/VerseQuery.UEntityQueryManager")
-    query_manager<native><epic_internal> := class:
-
-    # Abstract base representation of volume
-    query_volume<native><epic_internal> := class<abstract>:
+    # Abstract base representation of a shape. SHOULD EVENTUALLY BE REPALCED BY WHETEVER PHYSICS TYPES WE WANT TO EXPOSE
+    query_shape<native><epic_internal> := class<abstract>:
 
     # Axis aligned box volume
-    query_volume_box<native><epic_internal> := class<concrete>(query_volume):
+    query_shape_box<native><epic_internal> := class<concrete>(query_shape):
         Extent<native><public>:vector3 = external {}
 
         Origin<native><public>:vector3 = external {}
 
     # Component used for tagging objects for retrieval later. Useful when connecting runtime scripts with editor placed objects.
-    tag_container_core_entity_component<native><epic_internal> := class<final>(core_entity_component):
+    tag_component<native><epic_internal> := class<final>(tag_component_base):
+        # Add a single tag to this component.
+        AddTag<native><override>(TagToAdd:tag):void
+
+        # Notification called then the component owner entity was added to a world
+        AddedToWorld<native><override>():void
+
+        # Remove a single tag from this component.
+        RemoveTag<native><override>(TagToRemove:tag):logic
+
+        # Notification called when the component owner entity is about to be removed from world
+        RemovingFromWorld<native><override>():void
+
+        # Set the tags associated with this component.
+        SetTags<native><override>(InTags:tag_container):void
+
+    tag_component_base<native><epic_internal> := class<abstract>(component):
         # Add a single tag to this component.
         AddTag<native><epic_internal>(TagToAdd:tag):void
 
@@ -2360,6 +2623,47 @@ VerseQuery<public> := module:
 
         # Set the tags associated with this component.
         SetTags<native><epic_internal>(InTags:tag_container):void
+
+using {/UnrealEngine.com/EntityFramework/Entity}
+using {/Verse.org/Simulation/Tags}
+using {/Verse.org/Simulation}
+# Module import path: /UnrealEngine.com/VerseQueryTestSuite
+VerseQueryTestSuite<public> := module:
+    @hide_in_editor
+    verse_query_not_used_test_entity<native><epic_internal> := class(entity):
+
+    @hide_in_editor
+    verse_query_other_test_component<native><epic_internal> := class(component):
+
+    @hide_in_editor
+    verse_query_tag_animal<native><epic_internal> := class(tag):
+
+    @hide_in_editor
+    verse_query_tag_cat<native><epic_internal> := class(verse_query_tag_animal):
+
+    @hide_in_editor
+    verse_query_tag_cheddar_cat<native><epic_internal> := class(verse_query_tag_cat):
+
+    @hide_in_editor
+    verse_query_tag_dog<native><epic_internal> := class(verse_query_tag_animal):
+
+    @hide_in_editor
+    verse_query_tag_jello_cat<native><epic_internal> := class(verse_query_tag_cat):
+
+    @hide_in_editor
+    verse_query_tag_kimchi_dog<native><epic_internal> := class(verse_query_tag_dog):
+
+    @hide_in_editor
+    verse_query_tag_pollo_dog<native><epic_internal> := class(verse_query_tag_dog):
+
+    @hide_in_editor
+    verse_query_test_component<native><epic_internal> := class(component):
+
+    @hide_in_editor
+    verse_query_test_entity<native><epic_internal> := class(entity):
+
+    @hide_in_editor
+    verse_query_unused_test_component<native><epic_internal> := class(component):
 
 WorldPartition<public> := module:
     using {/Verse.org/Assets}

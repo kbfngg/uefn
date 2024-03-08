@@ -2,16 +2,17 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-28.30-CL-31511038
+# Generated from build: ++Fortnite+Release-29.00-CL-31978752
 #################################################
 
-using {/Verse.org/Native}
 using {/Verse.org/ParameterCollections}
 using {/Verse.org/Restricted}
+using {/Verse.org/VerseEngine/Component}
+using {/Verse.org/VerseEngine}
 # Module import path: /Verse.org/Assets
 Assets<public> := module:
     # Create an asset reference to the given internal asset path
-    MakeAsset<native><epic_internal>(AssetType:type, AssetPath:[]char)<converges>:AssetType
+    MakeAsset<native><epic_internal>(AssetType:type, AssetPath:string)<converges>:AssetType
 
     animation<native><epic_internal> := class<computes><final><epic_internal>(asset):
 
@@ -59,7 +60,7 @@ Assets<public> := module:
 
     skeletal_mesh<native><epic_internal> := class<computes><final><epic_internal>(asset):
 
-    sound<native><epic_internal> := class<computes><final><epic_internal>(client_asset):
+    sound<native><epic_internal> := class<computes><concrete><final><epic_internal>(client_asset):
 
     texture<native><public> := class<computes><final><epic_internal>(texture_base):
 
@@ -68,7 +69,6 @@ Assets<public> := module:
     @import_as("/Script/Engine.UMaterialInterface")
     ue_material_interface<native><epic_internal> := class:
 
-using {/Verse.org/Simulation}
 # Module import path: /Verse.org/Colors
 Colors<public> := module:
     # Makes an ACES 2065-1 `color` from `Hue`, `Saturation`, and `Value` components.
@@ -87,7 +87,7 @@ Colors<public> := module:
     #  * #RRGGBB
     #  * #RRGGBBAA
     # An invalid hex string will return `Black`.
-    MakeColorFromHex<native><public>(hexString:[]char)<converges>:color
+    MakeColorFromHex<native><public>(hexString:string)<converges>:color
 
     # Makes an ACES 2065-1 `color` from sRGB components `Red`, `Green`, and `Blue`.
     # Normal sRGB component values are between `0.0` and `1.0`, but this can handle larger values.
@@ -446,15 +446,16 @@ Colors<public> := module:
     # Makes an ACES 2065-1 `color` from each component of `c` divided by `factor`.
     operator'/'<native><public>(c:color, factor:int)<computes><decides>:color
 
+# Module import path: /Verse.org/Concurrency
 Concurrency<public> := module:
-    awaitable<public>()<computes> := awaitable(void)
+    awaitable<public>() := awaitable(void)
 
     # A parametric interface implemented by events with a `payload` that can be waited on. Matched with `signalable.`
-    awaitable<public>(payload:type)<computes> := interface:
+    awaitable<public>(payload:type) := interface:
         # Suspends the current task until resumed by a matching call to `signalable.Signal`. Returns the event `payload`.
         Await<public>()<suspends>:payload
 
-    task<native><public>(t:type)<computes> := class<abstract><final>(awaitable(t)):
+    task<native><public>(t:type) := class<abstract><final>(awaitable(t)):
         Active<native><epic_internal>()<transacts><decides>:void
 
         Await<native><override>()<suspends>:t
@@ -475,8 +476,237 @@ Concurrency<public> := module:
 
         Unsettled<native><epic_internal>()<transacts><decides>:void
 
+using {/UnrealEngine.com/Temporary/SpatialMath}
+using {/Verse.org/Assets}
+using {/Verse.org/Native}
+using {/Verse.org/Simulation}
+# Module import path: /Verse.org/ControlInput
+ControlInput<public> := module:
+    GetPlayerInput<native><epic_internal>(Player:player)<transacts><decides>:player_input
+
+    # Module import path: /Verse.org/ControlInput/InputVerbs
+    InputVerbs<epic_internal> := module:
+        Boost<epic_internal>:verb = external {}
+
+        Brake<epic_internal>:verb = external {}
+
+        Crouch<epic_internal>:verb = external {}
+
+        Dismount<epic_internal>:verb = external {}
+
+        Emote<epic_internal>:verb = external {}
+
+        Exit<epic_internal>:verb = external {}
+
+        Fire<epic_internal>:verb = external {}
+
+        Harvest<epic_internal>:verb = external {}
+
+        Honk<epic_internal>:verb = external {}
+
+        Jog<epic_internal>:verb = external {}
+
+        Jump<epic_internal>:verb = external {}
+
+        LookAxis_2d<epic_internal>:verb = external {}
+
+        LookDown<epic_internal>:verb = external {}
+
+        LookLeft<epic_internal>:verb = external {}
+
+        LookRight<epic_internal>:verb = external {}
+
+        LookUp<epic_internal>:verb = external {}
+
+        MoveAxis_2d<epic_internal>:verb = external {}
+
+        MoveAxis_3d<epic_internal>:verb = external {}
+
+        MoveBackward<epic_internal>:verb = external {}
+
+        MoveDown<epic_internal>:verb = external {}
+
+        MoveForward<epic_internal>:verb = external {}
+
+        MoveLateralAxis<epic_internal>:verb = external {}
+
+        MoveLeft<epic_internal>:verb = external {}
+
+        MoveLongitudinalAxis<epic_internal>:verb = external {}
+
+        MovePitchAxis<epic_internal>:verb = external {}
+
+        MovePitchBackward<epic_internal>:verb = external {}
+
+        MovePitchForward<epic_internal>:verb = external {}
+
+        MoveRight<epic_internal>:verb = external {}
+
+        MoveRollAxis<epic_internal>:verb = external {}
+
+        MoveRollLeft<epic_internal>:verb = external {}
+
+        MoveRollRight<epic_internal>:verb = external {}
+
+        MoveRotation<epic_internal>:verb = external {}
+
+        MoveUp<epic_internal>:verb = external {}
+
+        MoveVerticalAxis<epic_internal>:verb = external {}
+
+        MoveYawAxis<epic_internal>:verb = external {}
+
+        MoveYawLeft<epic_internal>:verb = external {}
+
+        MoveYawRight<epic_internal>:verb = external {}
+
+        Push<epic_internal>:verb = external {}
+
+        Reload<epic_internal>:verb = external {}
+
+        Reverse<epic_internal>:verb = external {}
+
+        Scope<epic_internal>:verb = external {}
+
+        Slide<epic_internal>:verb = external {}
+
+        Sprint<epic_internal>:verb = external {}
+
+        Stomp<epic_internal>:verb = external {}
+
+        SwitchSeat<epic_internal>:verb = external {}
+
+        Target<epic_internal>:verb = external {}
+
+        Throttle<epic_internal>:verb = external {}
+
+        ToggleInventory<epic_internal>:verb = external {}
+
+        ToggleMap<epic_internal>:verb = external {}
+
+        Use<epic_internal>:verb = external {}
+
+    @import_as("/Script/VerseInput.UVerseInputClientActionBase")
+    action<native><epic_internal> := class<computes><abstract>:
+
+    apply_impulse_action<native><epic_internal> := class(action):
+        Impulse<native><epic_internal>:vector3
+
+    dead_zone<native><epic_internal> := class<computes>(modifier):
+        LowerThreshold<native><epic_internal>:float = external {}
+
+        Type<native><epic_internal>:dead_zone_type = external {}
+
+        UpperThreshold<native><epic_internal>:float = external {}
+
+    dead_zone_type<native><epic_internal> := enum:
+        Axial
+
+        Radial
+
+    down<native><epic_internal> := class<computes>(trigger):
+        ActuationThreshold<native><epic_internal>:float = external {}
+
+    exponential_response<native><epic_internal> := class<computes>(modifier):
+        CurveExponent<native><epic_internal>:vector3 = external {}
+
+    hold<native><epic_internal> := class<computes>(trigger):
+        ActuationThreshold<native><epic_internal>:float = external {}
+
+        AffectedByTimeDilation<native><epic_internal>:logic = external {}
+
+        HoldTimeThreshold<native><epic_internal>:float = external {}
+
+        IsOneShot<native><epic_internal>:logic = external {}
+
+    hold_and_release<native><epic_internal> := class<computes>(trigger):
+        ActuationThreshold<native><epic_internal>:float = external {}
+
+        AffectedByTimeDilation<native><epic_internal>:logic = external {}
+
+        HoldTimeThreshold<native><epic_internal>:float = external {}
+
+    input_action<native><epic_internal> := class<computes>:
+        Actions<native><epic_internal>:[]action
+
+        ConsumeInput<native><epic_internal>:logic = external {}
+
+        Modifiers<native><epic_internal>:[]modifier = external {}
+
+        Triggers<native><epic_internal>:[]trigger
+
+        Verb<native><epic_internal>:verb
+
+    launch_action<native><epic_internal> := class(action):
+        Velocity<native><epic_internal>:vector3
+
+    modifier<native><epic_internal> := class<computes><abstract><epic_internal>:
+
+    negate<native><epic_internal> := class<computes>(modifier):
+        X<native><epic_internal>:logic = external {}
+
+        Y<native><epic_internal>:logic = external {}
+
+        Z<native><epic_internal>:logic = external {}
+
+    play_animation_action<native><epic_internal> := class(action):
+        Animation<native><epic_internal>:animation
+
+    play_sound_action<native><epic_internal> := class(action):
+        Sound<native><epic_internal>:sound
+
+    player_input<native><epic_internal> := class:
+        AddInputAction<native><epic_internal>(InputAction:input_action):void
+
+        AddInputActions<epic_internal>(InputActions:[]input_action):void = external {}
+
+        RemoveInputAction<native><epic_internal>(InputAction:input_action):void
+
+        RemoveInputActions<epic_internal>(InputActions:[]input_action):void = external {}
+
+    pressed<native><epic_internal> := class<computes>(trigger):
+        ActuationThreshold<native><epic_internal>:float = external {}
+
+    released<native><epic_internal> := class<computes>(trigger):
+        ActuationThreshold<native><epic_internal>:float = external {}
+
+    scale<native><epic_internal> := class<computes>(modifier):
+        Scale<native><epic_internal>:vector3 = external {}
+
+    smooth<native><epic_internal> := class<computes>(modifier):
+
+    spawn_particle_effect_action<native><epic_internal> := class(action):
+        ParticleSystem<native><epic_internal>:particle_system
+
+    swizzle<native><epic_internal> := class<computes>(modifier):
+        Order<native><epic_internal>:swizzle_order = external {}
+
+    swizzle_order<native><epic_internal> := enum:
+        XZY
+
+        YXZ
+
+        YZX
+
+        ZXY
+
+        ZYX
+
+    tap<native><epic_internal> := class<computes>(trigger):
+        ActuationThreshold<native><epic_internal>:float = external {}
+
+        AffectedByTimeDilation<native><epic_internal>:logic = external {}
+
+        TapReleaseTimeThreshold<native><epic_internal>:float = external {}
+
+    trigger<native><epic_internal> := class<computes><abstract><epic_internal>:
+
+    verb<native><epic_internal> := class<computes><epic_internal>:
+        VerbName<native><epic_internal>:string
+
+# Module import path: /Verse.org/Native
 Native<public> := module:
-    doc<epic_internal>(documentationString:[]char)<computes>:doc_attribute
+    doc<epic_internal>(documentationString:string)<computes>:doc_attribute
 
     @attribscope_module
     @attribscope_class
@@ -489,13 +719,13 @@ Native<public> := module:
     @attribscope_typedefinition
     doc_attribute<epic_internal> := class(attribute):
 
-    import_as<epic_internal>(importName:[]char)<computes>:import_as_attribute
+    import_as<epic_internal>(importName:string)<computes>:import_as_attribute
 
     @attribscope_class
     @attribscope_struct
     import_as_attribute<epic_internal> := class(attribute):
 
-    validate_asset_path<epic_internal>(Modifiers:[]char)<computes>:validate_asset_path_attribute
+    validate_asset_path<epic_internal>(Modifiers:string)<computes>:validate_asset_path_attribute
 
     @attribscope_function
     @attribscope_data
@@ -504,7 +734,7 @@ Native<public> := module:
 # Module import path: /Verse.org/ParameterCollections
 ParameterCollections<public> := module:
     parameter_collection<native><epic_internal> := class:
-        OnPropertyChangedFromVerse<native><epic_internal>(StringParam:[]char):void
+        OnPropertyChangedFromVerse<native><epic_internal>(StringParam:string):void
 
 # Module import path: /Verse.org/Random
 Random<public> := module:
@@ -520,7 +750,7 @@ Random<public> := module:
 using {/Verse.org/Concurrency}
 # Module import path: /Verse.org/Restricted
 Restricted<public> := module:
-    sticky_event<native><public>(t:type)<computes> := class(signalable(t), awaitable(t)):
+    sticky_event<native><public>(t:type) := class(signalable(t), awaitable(t)):
         Await<native><override>()<suspends>:t
 
         ClearSignal<native><public>():void
@@ -531,19 +761,16 @@ Restricted<public> := module:
 
         Signal<native><override>(__dupe___unnamed_parameter_29:t):void
 
-    sticky_event<public>()<computes> := sticky_event(void)
+    sticky_event<public>() := sticky_event(void)
 
-using {/Verse.org/VerseEngine/Component}
-using {/Verse.org/VerseEngine}
-# Module import path: /Verse.org/Simulation
 Simulation<public> := module:
-    GetComponentOfTypeForPlayer<native><epic_internal>(InPlayer:player_component, Type:type)<transacts><decides>:component
+    GetComponentOfTypeForPlayer<native><epic_internal>(InPlayer:player_component, Type:type)<transacts><decides>:vk_component
 
-    GetComponentOfTypeForPlayer<native><epic_internal>(PlayerIndex:int, Type:type)<transacts><decides>:component
+    GetComponentOfTypeForPlayer<native><epic_internal>(PlayerIndex:int, Type:type)<transacts><decides>:vk_component
 
-    GetOrCreateComponentOfTypeForPlayer<native><epic_internal>(InPlayer:player_component, Type:type)<transacts><decides>:component
+    GetOrCreateComponentOfTypeForPlayer<native><epic_internal>(InPlayer:player_component, Type:type)<transacts><decides>:vk_component
 
-    GetOrCreateComponentOfTypeForPlayer<native><epic_internal>(PlayerIndex:int, Type:type)<transacts><decides>:component
+    GetOrCreateComponentOfTypeForPlayer<native><epic_internal>(PlayerIndex:int, Type:type)<transacts><decides>:vk_component
 
     GetPlayerComponentByIndex<native><epic_internal>(PlayerIndex:int)<transacts><decides>:player_component
 
@@ -573,13 +800,13 @@ Simulation<public> := module:
         Equals<native><epic_internal>(Left:tag_container, Right:tag_container)<transacts><decides>:void
 
         # Get a list of components that match the specified tag.
-        FindObjectWithTag<native><epic_internal>(Tag:tag)<transacts><decides>:component
+        FindObjectWithTag<native><epic_internal>(Tag:tag)<transacts><decides>:vk_component
 
         # Get a list of components that match the specified tag.
-        FindObjectsWithTag<native><epic_internal>(Tag:tag)<transacts>:[]component
+        FindObjectsWithTag<native><epic_internal>(Tag:tag)<transacts>:[]vk_component
 
         # Get a list of components that match the specified criteria.
-        FindObjectsWithTags<native><epic_internal>(SearchCriteria:tag_search_criteria):[]component
+        FindObjectsWithTags<native><epic_internal>(SearchCriteria:tag_search_criteria):[]vk_component
 
         # Utility function to allow for easy construction from editor exposable tag_selector
         MakeGameplayTag<native><epic_internal>(Selector:tag_selector)<transacts><decides>:tag
@@ -594,10 +821,10 @@ Simulation<public> := module:
         MakeTagContainer<native><epic_internal>(Selector:tag_selector_container)<transacts><decides>:tag_container
 
         # Get a string representation of the gameplay tag. Useful for debugging.
-        ToString<native><epic_internal>(__dupe___unnamed_parameter_42:tag)<computes>:[]char
+        ToString<native><epic_internal>(__dupe___unnamed_parameter_46:tag)<computes>:string
 
         # Returns abbreviated human readable Tag list. Useful for debugging.
-        ToString<native><epic_internal>(__dupe___unnamed_parameter_45:tag_container)<computes>:[]char
+        ToString<native><epic_internal>(__dupe___unnamed_parameter_49:tag_container)<computes>:string
 
         # A single gameplay tag, which represents a hierarchical name of the form x.y that is registered in the GameplayTagsManager You can filter the gameplay tags displayed in the editor.
         tag<native><public> := class<abstract>:
@@ -641,17 +868,17 @@ Simulation<public> := module:
             ResetWithSlack<native><epic_internal>(slack:int):void
 
         # Component used for tagging objects for retrieval later. Useful when connecting runtime scripts with editor placed objects.
-        tag_container_component<native><epic_internal> := class<final>(component):
-            # Add a single tag to this component.
+        tag_container_component<native><epic_internal> := class<final>(vk_component):
+            # Add a single tag to this vk_component.
             AddTag<native><epic_internal>(TagToAdd:tag):void
 
-            # Get the tags associated with this component. These may be specified in the editor.
+            # Get the tags associated with this vk_component. These may be specified in the editor.
             GetTags<native><epic_internal>():tag_container
 
-            # Remove a single tag from this component.
+            # Remove a single tag from this vk_component.
             RemoveTag<native><epic_internal>(TagToRemove:tag):logic
 
-            # Set the tags associated with this component.
+            # Set the tags associated with this vk_component.
             SetTags<native><epic_internal>(InTags:tag_container):void
 
         # Advanced tag search criteria
@@ -694,7 +921,7 @@ Simulation<public> := module:
 
     agent<native><public> := class<unique><epic_internal>:
 
-    category<epic_internal>(Category:[]char)<computes>:category_attribute
+    category<epic_internal>(Category:string)<computes>:category_attribute
 
     @attribscope_class
     @attribscope_data
@@ -702,19 +929,19 @@ Simulation<public> := module:
     @customattribhandler
     category_attribute<epic_internal> := class(attribute):
 
-    clamp_max<epic_internal>(ClampMax:[]char)<computes>:clamp_max_attribute
+    clamp_max<epic_internal>(ClampMax:string)<computes>:clamp_max_attribute
 
     @attribscope_data
     @customattribhandler
     clamp_max_attribute<epic_internal> := class(attribute):
 
-    clamp_min<epic_internal>(ClampMin:[]char)<computes>:clamp_min_attribute
+    clamp_min<epic_internal>(ClampMin:string)<computes>:clamp_min_attribute
 
     @attribscope_data
     @customattribhandler
     clamp_min_attribute<epic_internal> := class(attribute):
 
-    display_name<epic_internal>(DisplayName:[]char)<computes>:display_name_attribute
+    display_name<epic_internal>(DisplayName:string)<computes>:display_name_attribute
 
     @attribscope_class
     @attribscope_data
@@ -722,7 +949,7 @@ Simulation<public> := module:
     @customattribhandler
     display_name_attribute<epic_internal> := class(attribute):
 
-    display_priority<epic_internal>(DisplayPriority:[]char)<computes>:display_priority_attribute
+    display_priority<epic_internal>(DisplayPriority:string)<computes>:display_priority_attribute
 
     @attribscope_class
     @attribscope_data
@@ -735,29 +962,39 @@ Simulation<public> := module:
     @attribscope_data
     @customattribhandler
     editable<public> := class(attribute):
-        Categories<epic_internal>:[]message = external {}
+        Categories<public>:[]message = external {}
 
-        ShortToolTip<localizes><epic_internal>:message = external {}
+        ShortToolTip<epic_internal>:message = external {}
 
         ShowThumbnail<epic_internal>:logic = external {}
 
-        ToolTip<localizes><epic_internal>:message = external {}
+        ToolTip<public>:message = external {}
 
-        Widget<epic_internal>:editable_widget = external {}
-
-    editable_container<epic_internal> := class<final>(editable_widget):
+    @attribscope_class
+    @attribscope_struct
+    @attribscope_data
+    @customattribhandler
+    editable_container<public> := class<final>(editable):
         AllowReordering<public>:logic = external {}
 
-    editable_number<epic_internal>(t:type)<computes> := class<final>(editable_widget):
+    editable_empty_message<localizes><epic_internal>:message = external {}
+
+    @attribscope_class
+    @attribscope_struct
+    @attribscope_data
+    @customattribhandler
+    editable_number<public>(t:type) := class<final>(editable):
         MaxValue<public>:?t = external {}
 
         MinValue<public>:?t = external {}
 
-        SpinBoxDelta<public>:?t = external {}
+        SpinBoxDelta<epic_internal>:?t = external {}
 
-    editable_slider<epic_internal>(t:type)<computes> := class<final>(editable_widget):
-        Exponent<public>:?t = external {}
-
+    @attribscope_class
+    @attribscope_struct
+    @attribscope_data
+    @customattribhandler
+    editable_slider<public>(t:type) := class<final>(editable):
         MaxValue<public>:?t = external {}
 
         MinValue<public>:?t = external {}
@@ -768,23 +1005,52 @@ Simulation<public> := module:
 
         SliderDelta<public>:?t = external {}
 
-    editable_text_box<epic_internal> := class<final>(editable_widget):
+        SliderExponent<public>:?t = external {}
+
+    @attribscope_class
+    @attribscope_struct
+    @attribscope_data
+    @customattribhandler
+    editable_text_box<public> := class<final>(attribute):
         MaxLength<public>:int = external {}
 
         MultiLine<public>:logic = external {}
 
-    editable_vector<epic_internal>(t:type)<computes> := class<final>(editable_widget):
+    @attribscope_class
+    @attribscope_struct
+    @attribscope_data
+    @customattribhandler
+    editable_vector_number<public>(t:type) := class<final>(editable):
         MaxComponentValue<public>:?t = external {}
 
         MinComponentValue<public>:?t = external {}
 
-        Normalize<public>:logic = external {}
+        ShowNormalize<epic_internal>:logic = external {}
 
-        PreserveRatio<public>:logic = external {}
+        ShowPreserveRatio<public>:logic = external {}
 
         SpinBoxDelta<public>:?t = external {}
 
-    editable_widget<epic_internal> := class<epic_internal>:
+    @attribscope_class
+    @attribscope_struct
+    @attribscope_data
+    @customattribhandler
+    editable_vector_slider<public>(t:type) := class<final>(editable):
+        MaxComponentValue<public>:?t = external {}
+
+        MinComponentValue<public>:?t = external {}
+
+        MouseLinearDeltaSensitivity<public>:float = external {}
+
+        MouseShiftMovePixelPerDelta<public>:float = external {}
+
+        ShowNormalize<epic_internal>:logic = external {}
+
+        ShowPreserveRatio<public>:logic = external {}
+
+        SliderDelta<public>:?t = external {}
+
+        SliderExponent<public>:?t = external {}
 
     @attribscope_class
     @customattribhandler
@@ -793,14 +1059,14 @@ Simulation<public> := module:
     localizable_agent<native><epic_internal> := class(localizable_value):
         Value<native><epic_internal>:agent
 
-    player<native><public> := class<unique><persistent><epic_internal>(agent):
-        IsActive<native><epic_internal>()<varies><decides>:void
+    player<native><public> := class<unique><persistent><module_scoped_var_weak_map_key><epic_internal>(agent):
+        IsActive<native><public>()<varies><decides>:void
 
     # Module import path: /Verse.org/Simulation/player_array_helper
     player_array_helper<epic_internal> := module:
         TestFunc<native><epic_internal>(new_value:int):int
 
-    player_component<native><epic_internal> := class<unique>(component):
+    player_component<native><epic_internal> := class<unique>(vk_component):
         GetHandle<native><public>()<transacts>:player
 
     player_multicast_delegate<native><epic_internal> := class<final>(multicast_delegate(player)):
@@ -809,7 +1075,7 @@ Simulation<public> := module:
     # Note: may be changed in a future release to a single instance per game. Round-local behavior should not be relied upon.
     session<native><public> := class<unique><module_scoped_var_weak_map_key><epic_internal>:
 
-    short_tool_tip<epic_internal>(ShortToolTip:[]char)<computes>:short_tool_tip_attribute
+    short_tool_tip<epic_internal>(ShortToolTip:string)<computes>:short_tool_tip_attribute
 
     @attribscope_class
     @attribscope_data
@@ -819,7 +1085,7 @@ Simulation<public> := module:
 
     team<native><public> := class<unique><epic_internal>:
 
-    tool_tip<epic_internal>(ToolTip:[]char)<computes>:tool_tip_attribute
+    tool_tip<epic_internal>(ToolTip:string)<computes>:tool_tip_attribute
 
     @attribscope_class
     @attribscope_data
@@ -827,17 +1093,138 @@ Simulation<public> := module:
     @customattribhandler
     tool_tip_attribute<epic_internal> := class(attribute):
 
-    ui_max<epic_internal>(UIMax:[]char)<computes>:ui_max_attribute
+    ui_max<epic_internal>(UIMax:string)<computes>:ui_max_attribute
 
     @attribscope_data
     @customattribhandler
     ui_max_attribute<epic_internal> := class(attribute):
 
-    ui_min<epic_internal>(UIMin:[]char)<computes>:ui_min_attribute
+    ui_min<epic_internal>(UIMin:string)<computes>:ui_min_attribute
 
     @attribscope_data
     @customattribhandler
     ui_min_attribute<epic_internal> := class(attribute):
+
+TestFramework<public> := module:
+    using {/UnrealEngine.com/Temporary/Diagnostics}
+    using {/UnrealEngine.com/Temporary/SpatialMath}
+    using {/Verse.org/Simulation}
+    test_case<public> := struct:
+        Category<public>:[]string
+
+        Func<public>:type {__()<suspends>:void}
+
+        Name<public>:string
+
+        TimeoutOverride<public>:?float = external {}
+
+    test_runner<epic_internal> := class<varies>:
+        AddExcludeFilter<public>(Filter:string)<transacts>:void = external {}
+
+        AddIncludeFilter<public>(Filter:string)<transacts>:void = external {}
+
+        CheckArrayContains<public>(ActualArray:[]string, Expected:string, Message:string):void = external {}
+
+        CheckArrayDoesNotContain<public>(ActualArray:[]string, Expected:string, Message:string):void = external {}
+
+        CheckEqual<public>(Expected:agent, Actual:agent, Message:string):void = external {}
+
+        CheckEqual<public>(Expected:float, Actual:float, Message:string):void = external {}
+
+        CheckEqual<public>(Expected:int, Actual:int, Message:string):void = external {}
+
+        CheckEqual<public>(Expected:string, Actual:string, Message:string):void = external {}
+
+        CheckEqual<public>(Expected:transform, Actual:transform, Message:string, ?Tolerance:float = external {}):void = external {}
+
+        CheckEqualFloatArray<public>(Expected:[]float, Actual:[]float, Message:string):void = external {}
+
+        CheckEqualIntArray<public>(Expected:[]int, Actual:[]int, Message:string):void = external {}
+
+        CheckFailure<public>(TestFuncEval:?any, FuncName:string)<decides>:void = external {}
+
+        CheckNotEqual<public>(Expected:agent, Actual:agent, Message:string):void = external {}
+
+        CheckNotEqual<public>(Expected:float, Actual:float, Message:string):void = external {}
+
+        CheckNotEqual<public>(Expected:int, Actual:int, Message:string):void = external {}
+
+        CheckNotEqual<public>(Expected:string, Actual:string, Message:string):void = external {}
+
+        CheckNotEqual<public>(Expected:transform, Actual:transform, Message:string, ?Tolerance:float = external {}):void = external {}
+
+        CheckNotTrue<public>(Actual:logic, Message:string):void = external {}
+
+        CheckTrue<public>(Actual:logic, Message:string):void = external {}
+
+        ClearLastTestResult<public>():void = external {}
+
+        ClearLogOutput<public>():void = external {}
+
+        ClearTests<public>()<transacts>:void = external {}
+
+        DefaultSetupFunctionTimeoutInSeconds<public>:float = external {}
+
+        DefaultTestTimeoutInSeconds<public>:float = external {}
+
+        GetDisplayTime<public>(DurationInSec:float):string = external {}
+
+        IsTestCaseIncluded<public>(TestCase:test_case)<transacts><decides>:void = external {}
+
+        Log<public>(Level:log_level, Message:string)<transacts>:void = external {}
+
+        PrintLogOutput<public>()<transacts>:void = external {}
+
+        RaiseFunctionFailure<public>(FuncName:string)<transacts>:void = external {}
+
+        RecordFlakinessTestResult<public>(TestName:string, Succeeded:logic)<transacts>:void = external {}
+
+        RegisterTests<public>(TestSuite:test_suite)<transacts>:void = external {}
+
+        Require<public>(OptionalAgent:?agent, Message:string)<transacts><decides>:agent = external {}
+
+        ResetExcludeFilters<public>()<transacts>:void = external {}
+
+        ResetIncludeFilters<public>()<transacts>:void = external {}
+
+        Run<public>()<suspends>:void = external {}
+
+        RunTestSuites<public>()<suspends>:void = external {}
+
+        var EnableDebugOutput<public>:logic = external {}
+
+        var EnableFlakinessEvaluation<public>:logic = external {}
+
+        var EnableLogOutput<public>:logic = external {}
+
+        var EnableTimeTracking<public>:logic = external {}
+
+        var EnableVerboseOutput<public>:logic = external {}
+
+        var FlakinessRunCount<public>:int = external {}
+
+        var LastTestErrors<public>:[]string = external {}
+
+        var LogOutput<public>:[]string = external {}
+
+        var SetupFunctionTimeoutInSeconds<public>:float = external {}
+
+        var TargetTestSuite<public>:string = external {}
+
+        var TestTimeoutInSeconds<public>:float = external {}
+
+    test_suite<public> := struct:
+        AfterAllFunc<public>:type {__()<suspends>:void}
+
+        AfterEachFunc<public>:type {__()<suspends>:void}
+
+        BeforeAllFunc<public>:type {__()<suspends>:void}
+
+        BeforeEachFunc<public>:type {__()<suspends>:void}
+
+        Cases<public>:[]test_case
+
+        Name<public>:string
 
 Verse<public> := module:
     # Returns the first index whose element in `Input` equals `ElementToFind`.
@@ -940,7 +1327,7 @@ Verse<public> := module:
     Cosh<native><public>(X:float)<varies>:float
 
     # Halts the Verse runtime with error `Message`.
-    Err<native><public>(Message:[]char)<computes>:false
+    Err<native><public>(Message:string)<computes>:false
 
     # Returns the natural exponent of `X`.
     Exp<native><public>(X:float)<varies>:float
@@ -957,7 +1344,7 @@ Verse<public> := module:
     IsAlmostEqual<public>(Val1:float, Val2:float, AbsoluteTolerance:float)<computes><decides>:void = external {}
 
     # Makes a `string` by concatenating `Separator` between the elements of `Strings`.
-    Join<native><public>(Strings:[][]char, Separator:[]char)<computes>:[]char
+    Join<native><public>(Strings:[]string, Separator:string)<computes>:string
 
     # Used to linearly interpolate/extrapolate between `From` (when `Parameter = 0.0`) and `To` (when `Parameter = 1.0`). Expects that all arguments are finite.
     # Returns `From*(1 - Parameter) + To*Parameter`.
@@ -967,12 +1354,10 @@ Verse<public> := module:
     Ln<native><public>(X:float)<varies>:float
 
     # Makes a `string` by localizing `Message` based on the current `locale`.
-    Localize<native><public>(Message:message)<varies>:[]char
+    Localize<native><public>(Message:message)<varies>:string
 
     # Returns the base `B` logarithm of `X`.
     Log<public>(B:float, X:float)<varies>:float = external {}
-
-    MakeLocalizableValue<epic_internal>(V:[]char):localizable_string = external {}
 
     MakeLocalizableValue<epic_internal>(V:float):localizable_float = external {}
 
@@ -980,7 +1365,9 @@ Verse<public> := module:
 
     MakeLocalizableValue<epic_internal>(V:message):localizable_message = external {}
 
-    MakeMessageInternal<native><epic_internal>(K:[]char, D:[]char, S:[[]char]localizable_value)<converges>:message
+    MakeLocalizableValue<epic_internal>(V:string):localizable_string = external {}
+
+    MakeMessageInternal<native><epic_internal>(K:string, D:string, S:[string]localizable_value)<converges>:message
 
     # Returns the maximum of `X` and `Y` unless either are `NaN`.
     # Returns `NaN` if either `X` or `Y` are `NaN`.
@@ -1008,12 +1395,12 @@ Verse<public> := module:
     # Returns `A` to the power of `B`.
     Pow<native><public>(A:float, B:float)<varies>:float
 
-    using {/Verse.org/Colors}
-    # Writes `Message` to a dedicated `Print` log while displaying it in `Color` on the client screen for `Duration` seconds. By default, `Color` is `NamedColors.White` and `Duration` is `2.0` seconds.
-    Print<native><public>(Message:[]char, ?Duration:float = external {}, ?Color:color = external {}):void
-
     # Writes `Message` to a dedicated `Print` log while displaying it in `Color` on the client screen for `Duration` seconds. By default, `Color` is `NamedColors.White` and `Duration` is `2.0` seconds.
     Print<native><public>(Message:message, ?Duration:float = external {}, ?Color:color = external {}):void
+
+    using {/Verse.org/Colors}
+    # Writes `Message` to a dedicated `Print` log while displaying it in `Color` on the client screen for `Duration` seconds. By default, `Color` is `NamedColors.White` and `Duration` is `2.0` seconds.
+    Print<native><public>(Message:string, ?Duration:float = external {}, ?Color:color = external {}):void
 
     # Returns the quotient `X/Y` as defined by Euclidean division, i.e.:
     #  * `Quotient[X/Y] = Floor[X/Y]` when `Y > 0`
@@ -1058,19 +1445,19 @@ Verse<public> := module:
     Tanh<native><public>(X:float)<varies>:float
 
     # Makes a `string` by converting `Character` to UTF-8 from UTF-32.
-    ToString<native><epic_internal>(Character:char32)<computes>:[]char
+    ToString<native><epic_internal>(Character:char32)<computes>:string
 
     # Makes a `string` from `Character`.
-    ToString<native><public>(Character:char)<computes>:[]char
+    ToString<native><public>(Character:char)<computes>:string
 
     # Makes a `string` representation of `Val`.
-    ToString<native><public>(Val:float)<varies>:[]char
+    ToString<native><public>(Val:float)<varies>:string
 
     # Makes a printable `string` representation of `Val`.
-    ToString<native><public>(Val:int)<computes>:[]char
+    ToString<native><public>(Val:int)<computes>:string
 
     # Returns `String` without modification.
-    ToString<public>(String:[]char)<computes>:[]char = external {}
+    ToString<public>(String:string)<computes>:string = external {}
 
     # Implemented by classes that allow users to cancel an operation. For example, calling `subscribable.Subscribe` with a callback returns a `cancelable` object. Calling `Cancel` on the return object unsubscribes the callback.
     cancelable<native><public> := interface:
@@ -1085,7 +1472,7 @@ Verse<public> := module:
     # A *recurring*, successively signaled parametric `event` with a `payload` allowing a simple mechanism to coordinate between concurrent tasks:
     #  * `Await` suspends tasks to wait on this `event`,
     #  * another task `Signal`s this `event` and resumes the suspended tasks in FIFO order.
-    event<native><public>(t:type)<computes> := class(signalable(t), awaitable(t)):
+    event<native><public>(t:type) := class(signalable(t), awaitable(t)):
         # Suspends the current task until another task calls `Signal`.
         # If called during another invocation of `Signal`, the the task will still suspend and resume during the next call to `Signal`.
         Await<native><override>()<suspends>:t
@@ -1099,7 +1486,7 @@ Verse<public> := module:
         Signal<native><override>(Val:t):void
 
     # A *recurring*, successively signaled event allowing a simple mechanism to coordinate between concurrent tasks.
-    event<public>()<computes> := event(tuple())
+    event<public>() := event(tuple())
 
     # Implemented by classes whose instances can become invalid at runtime.
     invalidatable<native><public> := interface(disposable):
@@ -1107,10 +1494,10 @@ Verse<public> := module:
         IsValid<public>()<transacts><decides>:void
 
     # A parameterless interface combining `awaitable` and `subscribable`.
-    listenable<public>()<computes> := listenable(tuple())
+    listenable<public>() := listenable(tuple())
 
     # A parametric interface combining `awaitable` and `subscribable`.
-    listenable<public>(payload:type)<computes> := interface(awaitable(payload), subscribable(payload)):
+    listenable<public>(payload:type) := interface(awaitable(payload), subscribable(payload)):
 
     # Used for message localization.
     locale<native><public> := struct<epic_internal>:
@@ -1127,24 +1514,24 @@ Verse<public> := module:
 
     # A localizable text message.
     message<native><public> := class<epic_internal>:
-        DefaultText<native><epic_internal>:[]char
+        DefaultText<native><epic_internal>:string
 
-        Key<native><epic_internal>:[]char
+        Key<native><epic_internal>:string
 
-        Substitutions<native><epic_internal>:[[]char]localizable_value
+        Substitutions<native><epic_internal>:[string]localizable_value
 
     # A parametric interface implemented by events with a `payload` that can be signaled.
     # Can be used with `awaitable`, `subscribable`, or both (see: `listenable`).
-    signalable<public>(payload:type)<computes> := interface:
+    signalable<public>(payload:type) := interface:
         # Concurrently resumes the tasks waiting for this event in `awaitable.Await` and synchronously invokes any callbacks added to this event by `subscribable.Subscribe`.
         Signal<public>(Val:payload):void
 
     # A parameterless interface implemented by events that can be subscribed to.
-    subscribable<public>()<computes> := subscribable(tuple())
+    subscribable<public>() := subscribable(tuple())
 
     # A parametric interface implemented by events with a `payload` that can be subscribed to.
     # Matched with `signalable.`
-    subscribable<public>(t:type)<computes> := interface:
+    subscribable<public>(t:type) := interface:
         # Registers `Callback` to be invoked on matching calls to `signable.Signal`.
         # Returns an unsubscriber object. Call `cancelable.Cancel` on the unsubscriber to unregister `Callback`.
         Subscribe<public>(Callback:type {__(:t):void})<transacts>:cancelable
@@ -1154,67 +1541,77 @@ VerseEngine<public> := module:
     # Module import path: /Verse.org/VerseEngine/Component
     Component<public> := module:
         @import_as("/Script/EntityCore.UEntityComponent")
-        component<native><public> := class<abstract>:
+        vk_component<native><public> := class<abstract>:
 
     # Module import path: /Verse.org/VerseEngine/Entity
     Entity<public> := module:
         # Module import path: /Verse.org/VerseEngine/Entity/EntityHelpers
         EntityHelpers<public> := module:
-            # Destroy the entity the component is attached to
-            DestroyObject<native><public>(__dupe___unnamed_parameter_43:component):logic
+            # Destroy the vk_entity the vk_component is attached to
+            DestroyObject<native><public>(__dupe___unnamed_parameter_43:vk_component):logic
 
-            # Get a component from the entity of the specified type
-            GetComponentOfTypeC<native><public>(InComponent:component, Type:type)<transacts><decides>:component
+            # Get a vk_component from the vk_entity of the specified type
+            GetComponentOfTypeC<native><public>(InComponent:vk_component, Type:type)<transacts><decides>:vk_component
 
-            # Gets the entity associated with the parameter provided component
-            GetEntityFromComponent<native><public>(__dupe___unnamed_parameter_44:component)<transacts><decides>:entity
+            # Gets the vk_entity associated with the parameter provided vk_component
+            GetEntityFromComponent<native><public>(__dupe___unnamed_parameter_44:vk_component)<transacts><decides>:vk_entity
 
-        entity<native><public> := class<final>:
-            # Add a component to the entity of the specified type
-            AddComponent<native><public>(ComponentType:type)<transacts>:?component
+        vk_entity<native><public> := class<final>:
+            # Add a vk_component to the vk_entity of the specified type
+            AddComponent<native><public>(ComponentType:type)<transacts>:?vk_component
 
-            # Destroy the entity
+            # Destroy the vk_entity
             Destroy<native><public>():logic
 
             # Helper method for ensuring components exist, creating them if they don't exist
-            EnsureComponents<public>(AddComponentClasses:[]subtype(component)):void = external {}
+            EnsureComponents<public>(AddComponentClasses:[]subtype(vk_component)):void = external {}
 
-            # Get all component(s) from the entity of the specified type
-            GetAllComponentsOfType<native><public>(ComponentType:type)<transacts>:[]component
+            # Get all vk_component(s) from the vk_entity of the specified type
+            GetAllComponentsOfType<native><public>(ComponentType:type)<transacts>:[]vk_component
 
-            # Get a component from the entity of the specified type
-            GetComponentOfType<native><public>(ComponentType:type)<transacts>:?component
+            # Get a vk_component from the vk_entity of the specified type
+            GetComponentOfType<native><public>(ComponentType:type)<transacts>:?vk_component
 
-            GetFullname<native><public>():[]char
+            GetFullname<native><public>():string
 
-            GetName<native><public>():[]char
+            GetName<native><public>():string
 
-            # Get a component from the entity of the specified type, if one does not exist, add it
-            GetOrCreateComponentOfType<native><public>(ComponentType:type):?component
+            # Get a vk_component from the vk_entity of the specified type, if one does not exist, add it
+            GetOrCreateComponentOfType<native><public>(ComponentType:type):?vk_component
 
             # Helper method for check if required components exist
-            HasComponents<public>(RequiredComponentClasses:[]subtype(component))<transacts><decides>:void = external {}
+            HasComponents<public>(RequiredComponentClasses:[]subtype(vk_component))<transacts><decides>:void = external {}
 
-            # Compare with another entity
-            IsEqual<native><public>(OtherEntity:entity)<transacts>:logic
+            # Compare with another vk_entity
+            IsEqual<native><public>(OtherEntity:vk_entity)<transacts>:logic
 
-            # Remove a component from the entity
-            RemoveComponent<native><public>(__dupe___unnamed_parameter_34:component):logic
+            # Remove a vk_component from the vk_entity
+            RemoveComponent<native><public>(__dupe___unnamed_parameter_34:vk_component):logic
 
-    multicast_delegate<native><public>(t:type)<computes> := class(multicast_delegate_base, subscribable(t)):
+    float_param_delegate_signature<public> := type {__(:float):void}
+
+    int_param_delegate_signature<public> := type {__(:int):void}
+
+    logic_param_delegate_signature<public> := type {__(:logic):void}
+
+    multicast_delegate<native><public>(t:type) := class(multicast_delegate_base, subscribable(t)):
         Broadcast<native><public>(__dupe___unnamed_parameter_46:t):void
 
         Empty<native><public>():void
 
         Subscribe<native><override>(Callback:type {__(:t):void})<transacts>:cancelable
 
-    multicast_delegate<public>()<computes> := multicast_delegate(tuple())
+    multicast_delegate<public>() := multicast_delegate(tuple())
 
     multicast_delegate_base<native><public> := class:
 
-    subscribable_event<epic_internal>()<computes> := subscribable_event(tuple())
+    no_param_delegate_signature<public> := type {__():void}
 
-    subscribable_event<native><epic_internal>(t:type)<computes> := class(multicast_delegate(t), listenable(t)):
+    string_param_delegate_signature<public> := type {__(:string):void}
+
+    subscribable_event<epic_internal>() := subscribable_event(tuple())
+
+    subscribable_event<native><epic_internal>(t:type) := class(multicast_delegate(t), listenable(t)):
         Await<native><override>()<suspends>:t
 
 # Module import path: /Verse.org/VerseExperimental
@@ -1273,6 +1670,9 @@ VerseExperimental<public> := module:
 
     GetSeconds<native><public>(Val:time_span):int
 
+    # Returns the number of seconds since January 1, 1970 UTC, as of the current transaction.
+    GetSecondsSinceEpoch<native><epic_internal>()<varies>:float
+
     GetTimeOfDay<native><public>(Val:date_time):time_of_day_parts
 
     GetTotalDays<native><public>(Val:time_span):int
@@ -1306,10 +1706,10 @@ VerseExperimental<public> := module:
     LessEqual<public>(Left:time_span, Right:time_span)<transacts><decides>:time_span = external {}
 
     # Returns a string representation of the datetime in the following format: yyyy.mm.dd-hh.mm.ss. Assumes Datetime is in UTC.
-    ToString<native><public>(Val:date_time):[]char
+    ToString<native><public>(Val:date_time):string
 
     # Returns a string representation of the time span in the following format: yyyy.mm.dd-hh.mm.ss.
-    ToString<native><public>(Val:time_span):[]char
+    ToString<native><public>(Val:time_span):string
 
     # Returns the current UTC date_time.
     UtcNow<native><public>():date_time
