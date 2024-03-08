@@ -59,7 +59,7 @@
 		"23D9FD274F6A0FDFEA0554807D4B3AB0":
 		{
 			"FriendlyName": "Dev-MLDeformer",
-			"Version": 0
+			"Version": 1
 		},
 		"24BB7AF356464F831F2F2DC249AD96FF":
 		{
@@ -74,12 +74,12 @@
 		"2763920D0F784B39986E4BB3A88D666D":
 		{
 			"FriendlyName": "PCGBaseVer",
-			"Version": 15
+			"Version": 21
 		},
 		"28E21331501F47238110FA64EA10DA1E":
 		{
 			"FriendlyName": "StateTreeAsset",
-			"Version": 10
+			"Version": 16
 		},
 		"29E575DDE0A346279D10D276232CDCEA":
 		{
@@ -134,7 +134,7 @@
 		"4588AE1FFC5B45108703A79221038375":
 		{
 			"FriendlyName": "FusionPatchVer",
-			"Version": 3
+			"Version": 6
 		},
 		"4A56EB4010F511DC92D3347EB2C96AE7":
 		{
@@ -179,7 +179,12 @@
 		"601D1886AC644F84AA16D3DE0DEAC7D6":
 		{
 			"FriendlyName": "FortniteMain",
-			"Version": 124
+			"Version": 134
+		},
+		"60C4F0DE8B264C34AA9372015DFF09CC":
+		{
+			"FriendlyName": "StateTreeInstanceStorage",
+			"Version": 1
 		},
 		"612FBE52DA53400B910D4F919FB1857C":
 		{
@@ -189,7 +194,7 @@
 		"62915CA31C8E4BF7A30E12C7C8219DF7":
 		{
 			"FriendlyName": "EngineNetworkVersion",
-			"Version": 33
+			"Version": 34
 		},
 		"6304A3E700594F598CFC21BD7721FD4E":
 		{
@@ -214,7 +219,7 @@
 		"697DD581E64F41ABAA4A51ECBEB7B628":
 		{
 			"FriendlyName": "UE5-Main",
-			"Version": 118
+			"Version": 119
 		},
 		"6B266CEC1EC74B8FA30BE4D90942FC07":
 		{
@@ -279,7 +284,7 @@
 		"8DBC2C5B54A743E0A768FCBB7DA29060":
 		{
 			"FriendlyName": "FortniteValkyrie",
-			"Version": 7
+			"Version": 8
 		},
 		"8E7DDCB380DA47BB9FD346A293984DF6":
 		{
@@ -299,7 +304,7 @@
 		"9513202EEBA1B279F17FE5BAAB90C3F2":
 		{
 			"FriendlyName": "NNEModelDataVersion",
-			"Version": 2
+			"Version": 3
 		},
 		"95A4F03E7E0B49E4BA43D35694FF87D9":
 		{
@@ -364,7 +369,7 @@
 		"A7820CFB20A743598C542C149623CF50":
 		{
 			"FriendlyName": "Dev-ControlRig",
-			"Version": 29
+			"Version": 30
 		},
 		"AAFE32BD53954C14B66A5E251032D1DD":
 		{
@@ -416,6 +421,11 @@
 			"FriendlyName": "ShapeComponentVer",
 			"Version": 1
 		},
+		"BA9262566C7947C496D1E4F4CE985342":
+		{
+			"FriendlyName": "NearestNeighborModelVer",
+			"Version": 0
+		},
 		"C1270312AB730B1E0B1EC74571C70F73":
 		{
 			"FriendlyName": "CustomizableObjectVer",
@@ -459,12 +469,12 @@
 		"D89B5E4224BD4D468412ACA8DF641779":
 		{
 			"FriendlyName": "UE5-Release",
-			"Version": 47
+			"Version": 51
 		},
 		"DC49959B53C04DE79156EA885E7C5D39":
 		{
 			"FriendlyName": "Dev-RigVM",
-			"Version": 7
+			"Version": 9
 		},
 		"DD659724936911EEB7B9E2F7A734574D":
 		{
@@ -499,7 +509,7 @@
 		"EF0A537D90DA4CD2BCA16D6AE21E3589":
 		{
 			"FriendlyName": "FortItemDefinitionVersion",
-			"Version": 2
+			"Version": 3
 		},
 		"F2AED0AC9AFE416F8664AA7FFA26D6FC":
 		{
@@ -524,7 +534,7 @@
 		"FCF57AFA50764283B9A9E658FFA02D32":
 		{
 			"FriendlyName": "NiagaraVer",
-			"Version": 83
+			"Version": 86
 		}
 	},
 	"ExtensionAllowList": [
@@ -566,6 +576,34 @@
 			"/CRD_AISpawner/SpawnDefinitions/Types/CharacterType_Wildlife.CharacterType_Wildlife_C",
 			"/CreativeCoreDevices/Beacon/UEFN_BeaconBadge_ViewModel.UEFN_BeaconBadge_ViewModel_C",
 			"/CreativeCoreDevices/HUDMessage/MVVM_UEFN_HUDMessage.MVVM_UEFN_HUDMessage_C",
+			"/Game/Creative/Devices/Quests/MVVM_UEFN_Tracker.MVVM_UEFN_Tracker_C",
+			"/Game/Creative/PostProcess/PP_70sPrint.PP_70sPrint_C",
+			"/Game/Creative/PostProcess/PP_ActionLines.PP_ActionLines_C",
+			"/Game/Creative/PostProcess/PP_CCTV.PP_CCTV_C",
+			"/Game/Creative/PostProcess/PP_Comic.PP_Comic_C",
+			"/Game/Creative/PostProcess/PP_Crazy.PP_Crazy_C",
+			"/Game/Creative/PostProcess/PP_Dark.PP_Dark_C",
+			"/Game/Creative/PostProcess/PP_Desolate.PP_Desolate_C",
+			"/Game/Creative/PostProcess/PP_FilmNoir.PP_FilmNoir_C",
+			"/Game/Creative/PostProcess/PP_FilmWarm.PP_FilmWarm_C",
+			"/Game/Creative/PostProcess/PP_Halftone.PP_Halftone_C",
+			"/Game/Creative/PostProcess/PP_HappyPlace.PP_HappyPlace_C",
+			"/Game/Creative/PostProcess/PP_HorrorMovie.PP_HorrorMovie_C",
+			"/Game/Creative/PostProcess/PP_LowExposure.PP_LowExposure_C",
+			"/Game/Creative/PostProcess/PP_NeoComic.PP_NeoComic_C",
+			"/Game/Creative/PostProcess/PP_NeonParty.PP_NeonParty_C",
+			"/Game/Creative/PostProcess/PP_NightVision.PP_NightVision_C",
+			"/Game/Creative/PostProcess/PP_Oak.PP_Oak_C",
+			"/Game/Creative/PostProcess/PP_OldCartoon.PP_OldCartoon_C",
+			"/Game/Creative/PostProcess/PP_Pixelizer.PP_Pixelizer_C",
+			"/Game/Creative/PostProcess/PP_RadialBlur.PP_RadialBlur_C",
+			"/Game/Creative/PostProcess/PP_Red.PP_Red_C",
+			"/Game/Creative/PostProcess/PP_Retro.PP_Retro_C",
+			"/Game/Creative/PostProcess/PP_Sepia.PP_Sepia_C",
+			"/Game/Creative/PostProcess/PP_SimpleBlurSharpen.PP_SimpleBlurSharpen_C",
+			"/Game/Creative/PostProcess/PP_Spooky.PP_Spooky_C",
+			"/Game/Creative/PostProcess/PP_VHS_Filter.PP_VHS_Filter_C",
+			"/Game/Creative/PostProcess/PP_VignetteMaskedColored.PP_VignetteMaskedColored_C",
 			"/Game/Creative/Sets/GrayBox/Blueprints/Balconies/GrayBox_Balcony_D.GrayBox_Balcony_D_C",
 			"/Game/Creative/Sets/GrayBox/Blueprints/Balconies/GrayBox_Balcony_D_Rail.GrayBox_Balcony_D_Rail_C",
 			"/Game/Creative/Sets/GrayBox/Blueprints/Balconies/GrayBox_Balcony_L.GrayBox_Balcony_L_C",
@@ -690,6 +728,7 @@
 			"/Script/CRD_ModalDialogUI.CreativeModalDialogConversionFunction",
 			"/Script/CRD_ModalDialogUI.CreativeModalDialogViewmodel",
 			"/Script/CRDLevelInstanceRuntime.LevelInstanceItemListComponent",
+			"/Script/CRDPostProcess.CRDPostProcessDeviceComponent",
 			"/Script/CrowdVolume.CrowdSpawner",
 			"/Script/CurveEditor.CurveEditorBakeFilter",
 			"/Script/CurveEditor.CurveEditorEulerFilter",
@@ -757,7 +796,6 @@
 			"/Script/Engine.Material",
 			"/Script/Engine.MaterialBillboardComponent",
 			"/Script/Engine.MaterialEditorOnlyData",
-			"/Script/Engine.MaterialExpression",
 			"/Script/Engine.MaterialExpressionAbs",
 			"/Script/Engine.MaterialExpressionAbsorptionMediumMaterialOutput",
 			"/Script/Engine.MaterialExpressionActorPositionWS",
@@ -776,7 +814,6 @@
 			"/Script/Engine.MaterialExpressionAtmosphericLightColor",
 			"/Script/Engine.MaterialExpressionAtmosphericLightVector",
 			"/Script/Engine.MaterialExpressionBentNormalCustomOutput",
-			"/Script/Engine.MaterialExpressionBinaryOp",
 			"/Script/Engine.MaterialExpressionBlackBody",
 			"/Script/Engine.MaterialExpressionBlendMaterialAttributes",
 			"/Script/Engine.MaterialExpressionBreakMaterialAttributes",
@@ -801,7 +838,6 @@
 			"/Script/Engine.MaterialExpressionCosine",
 			"/Script/Engine.MaterialExpressionCrossProduct",
 			"/Script/Engine.MaterialExpressionCurveAtlasRowParameter",
-			"/Script/Engine.MaterialExpressionCustomOutput",
 			"/Script/Engine.MaterialExpressionDataDrivenShaderPlatformInfoSwitch",
 			"/Script/Engine.MaterialExpressionDBufferTexture",
 			"/Script/Engine.MaterialExpressionDDX",
@@ -841,7 +877,6 @@
 			"/Script/Engine.MaterialExpressionFresnel",
 			"/Script/Engine.MaterialExpressionFunctionInput",
 			"/Script/Engine.MaterialExpressionFunctionOutput",
-			"/Script/Engine.MaterialExpressionGenericConstant",
 			"/Script/Engine.MaterialExpressionGetLocal",
 			"/Script/Engine.MaterialExpressionGetMaterialAttributes",
 			"/Script/Engine.MaterialExpressionGIReplace",
@@ -958,6 +993,7 @@
 			"/Script/Engine.MaterialExpressionSphereMask",
 			"/Script/Engine.MaterialExpressionSphericalParticleOpacity",
 			"/Script/Engine.MaterialExpressionSquareRoot",
+			"/Script/Engine.MaterialExpressionSRGBColorToWorkingColorSpace",
 			"/Script/Engine.MaterialExpressionStaticBool",
 			"/Script/Engine.MaterialExpressionStaticBoolParameter",
 			"/Script/Engine.MaterialExpressionStaticComponentMaskParameter",
@@ -970,7 +1006,6 @@
 			"/Script/Engine.MaterialExpressionTangent",
 			"/Script/Engine.MaterialExpressionTangentOutput",
 			"/Script/Engine.MaterialExpressionTemporalSobol",
-			"/Script/Engine.MaterialExpressionTextureBase",
 			"/Script/Engine.MaterialExpressionTextureCoordinate",
 			"/Script/Engine.MaterialExpressionTextureObject",
 			"/Script/Engine.MaterialExpressionTextureObjectParameter",
@@ -1016,6 +1051,7 @@
 			"/Script/Engine.MorphTarget",
 			"/Script/Engine.ParticleSystemComponent",
 			"/Script/Engine.PhysicsAsset",
+			"/Script/Engine.PhysicsConstraintTemplate",
 			"/Script/Engine.PointLight",
 			"/Script/Engine.PointLightComponent",
 			"/Script/Engine.Polys",
@@ -1033,6 +1069,7 @@
 			"/Script/Engine.SkeletalMesh",
 			"/Script/Engine.SkeletalMeshActor",
 			"/Script/Engine.SkeletalMeshComponent",
+			"/Script/Engine.SkeletalMeshDescriptionBulkData",
 			"/Script/Engine.SkeletalMeshEditorData",
 			"/Script/Engine.SkeletalMeshLODSettings",
 			"/Script/Engine.SkeletalMeshSocket",
@@ -1147,7 +1184,6 @@
 			"/Script/FortniteGame.BuildingRoof",
 			"/Script/FortniteGame.BuildingSMActor",
 			"/Script/FortniteGame.BuildingStairs",
-			"/Script/FortniteGame.BuildingStaticGeo",
 			"/Script/FortniteGame.BuildingTextureData",
 			"/Script/FortniteGame.BuildingTimeOfDayLights",
 			"/Script/FortniteGame.BuildingTrap",
@@ -1273,6 +1309,8 @@
 			"/Script/GameplayCameras.WaveOscillatorCameraShakePattern",
 			"/Script/GeometryCacheTracks.MovieSceneGeometryCacheSection",
 			"/Script/GeometryCacheTracks.MovieSceneGeometryCacheTrack",
+			"/Script/GeometryCollectionEngine.GeometryCollectionISMPoolActor",
+			"/Script/GeometryCollectionEngine.GeometryCollectionISMPoolComponent",
 			"/Script/GeometryCollectionTracks.MovieSceneGeometryCollectionSection",
 			"/Script/GeometryCollectionTracks.MovieSceneGeometryCollectionTrack",
 			"/Script/GeometryFramework.DynamicMesh",
@@ -1375,24 +1413,6 @@
 			"/Script/InterchangePipelines.InterchangeGenericMaterialPipeline",
 			"/Script/InterchangePipelines.InterchangeGenericMeshPipeline",
 			"/Script/InterchangePipelines.InterchangeGenericTexturePipeline",
-			"/Script/ItemizationCoreRuntime.InventoryCollection",
-			"/Script/ItemizationCoreRuntime.InventoryDefinition",
-			"/Script/ItemizationCoreRuntime.InventorySetupData",
-			"/Script/ItemizationCoreRuntime.ItemAbilityConfigurationAsset",
-			"/Script/ItemizationCoreRuntime.ItemAbilityCooldown",
-			"/Script/ItemizationCoreRuntime.ItemAbilityCost",
-			"/Script/ItemizationCoreRuntime.ItemAttachmentDefinition",
-			"/Script/ItemizationCoreRuntime.ItemComponentBase",
-			"/Script/ItemizationCoreRuntime.ItemDefinition",
-			"/Script/ItemizationCoreRuntime.ItemInputAction",
-			"/Script/ItemizationCoreRuntime.ItemInputMappingContext",
-			"/Script/ItemizationCoreRuntime.ItemOwnerPoseAsset",
-			"/Script/ItemizationCoreRuntime.ItemRarity",
-			"/Script/ItemizationCoreRuntime.ItemRequirements",
-			"/Script/ItemizationCoreRuntime.ItemType",
-			"/Script/ItemizationCoreUI.InventoryCollectionViewModel",
-			"/Script/ItemizationCoreUI.InventoryItemEntryViewModel",
-			"/Script/ItemizationCoreUI.InventoryViewModel",
 			"/Script/Landscape.ControlPointMeshActor",
 			"/Script/Landscape.ControlPointMeshComponent",
 			"/Script/Landscape.Landscape",
@@ -1669,6 +1689,7 @@
 			"/Script/TakeMovieScene.MovieSceneTakeSection",
 			"/Script/TakeMovieScene.MovieSceneTakeTrack",
 			"/Script/TakesCore.TakeMetaData",
+			"/Script/TakesCore.TakePreset",
 			"/Script/TemplateSequence.SequenceCameraShakePattern",
 			"/Script/UMG.CanvasPanel",
 			"/Script/UMG.CanvasPanelSlot",
@@ -2037,6 +2058,7 @@
 			"/Script/CoreUObject.Vector2f",
 			"/Script/CoreUObject.Vector3f",
 			"/Script/CoreUObject.Vector4f",
+			"/Script/Engine.AnimSyncMarker",
 			"/Script/Engine.FloatAnimationAttribute",
 			"/Script/Engine.InputRange",
 			"/Script/Engine.InputScaleBiasClamp",
@@ -2082,6 +2104,7 @@
 			"/Script/NiagaraEditor.NiagaraHierarchyIdentity",
 			"/Script/PBIK.PBIKEffector",
 			"/Script/RigVM.RigVMExecuteContext",
+			"/Script/RigVM.RigVMInstructionSetExecuteState",
 			"/Script/RigVM.RigVMUnknownType",
 			"/Script/SlateCore.Geometry",
 			"/Script/UMG.WidgetTransform"
@@ -2320,6 +2343,50 @@
 			"/CobraDMR/DMR/WID_DMR22_Athena_UC.WID_DMR22_Athena_UC",
 			"/CobraDMR/DMR/WID_DMR22_Athena_UR.WID_DMR22_Athena_UR",
 			"/CobraDMR/DMR/WID_DMR22_Athena_VR.WID_DMR22_Athena_VR",
+			"/ContentHall/Materials/M_DemoRoom.M_DemoRoom",
+			"/ContentHall/Materials/M_Display.M_Display",
+			"/ContentHall/Materials/M_EMGradient.M_EMGradient",
+			"/ContentHall/Materials/M_Glow.M_Glow",
+			"/ContentHall/Materials/M_Metal.M_Metal",
+			"/ContentHall/Materials/M_Tile.M_Tile",
+			"/ContentHall/Materials/M_Tile_2.M_Tile_2",
+			"/ContentHall/Materials/M_Tile_Glossy.M_Tile_Glossy",
+			"/ContentHall/Materials/M_UELogo.M_UELogo",
+			"/ContentHall/Materials/MI_Display_Blue.MI_Display_Blue",
+			"/ContentHall/Materials/MI_Tile_Ceiling.MI_Tile_Ceiling",
+			"/ContentHall/Materials/MI_TileBlack.MI_TileBlack",
+			"/ContentHall/Meshes/Display_Corner_B.Display_Corner_B",
+			"/ContentHall/Meshes/Display_Curve_B.Display_Curve_B",
+			"/ContentHall/Meshes/Display_EdgeCurve_B.Display_EdgeCurve_B",
+			"/ContentHall/Meshes/Display_Main_B.Display_Main_B",
+			"/ContentHall/Meshes/Display_Side_B.Display_Side_B",
+			"/ContentHall/Meshes/Floor_Corner.Floor_Corner",
+			"/ContentHall/Meshes/Floor_Edge.Floor_Edge",
+			"/ContentHall/Meshes/Pipe.Pipe",
+			"/ContentHall/Meshes/ShadowBox_1MPanel.ShadowBox_1MPanel",
+			"/ContentHall/Meshes/ShadowBox_1MPanel2.ShadowBox_1MPanel2",
+			"/ContentHall/Meshes/ShadowBox_RoundEdge.ShadowBox_RoundEdge",
+			"/ContentHall/Meshes/SM_FLogo.SM_FLogo",
+			"/ContentHall/Meshes/SM_UELogo.SM_UELogo",
+			"/ContentHall/Meshes/Splitter_Curve.Splitter_Curve",
+			"/ContentHall/Meshes/Splitter_Wall.Splitter_Wall",
+			"/ContentHall/Meshes/Splitter_Wall2.Splitter_Wall2",
+			"/ContentHall/Meshes/TagBar_Middle.TagBar_Middle",
+			"/ContentHall/Meshes/TagBar_TitleCap.TagBar_TitleCap",
+			"/ContentHall/Meshes/TagBar_TitleCap1.TagBar_TitleCap1",
+			"/ContentHall/Meshes/Tile_10MPillar_B.Tile_10MPillar_B",
+			"/ContentHall/Meshes/Tile_10MWall.Tile_10MWall",
+			"/ContentHall/Meshes/Tile_Edge.Tile_Edge",
+			"/ContentHall/Meshes/Tile_InnerCurve_B.Tile_InnerCurve_B",
+			"/ContentHall/Meshes/Tile_InnerCurveEdge.Tile_InnerCurveEdge",
+			"/ContentHall/Meshes/Tile_InnerCurveEdge2.Tile_InnerCurveEdge2",
+			"/ContentHall/Meshes/TrimFeature_MetalTrim_Bend.TrimFeature_MetalTrim_Bend",
+			"/ContentHall/Meshes/TrimFeature_MetalTrim_Straight.TrimFeature_MetalTrim_Straight",
+			"/ContentHall/Misc/DT_Colourways.DT_Colourways",
+			"/ContentHall/Misc/E_EnclosureLevel.E_EnclosureLevel",
+			"/ContentHall/Misc/E_RoomLighting.E_RoomLighting",
+			"/ContentHall/Misc/S_Colour.S_Colour",
+			"/ContentHall/Misc/S_RoomSettings.S_RoomSettings",
 			"/ControlRig/Controls/ControlRig_Arrow2_1mm.ControlRig_Arrow2_1mm",
 			"/ControlRig/Controls/ControlRig_Arrow2_3mm.ControlRig_Arrow2_3mm",
 			"/ControlRig/Controls/ControlRig_Arrow2_solid.ControlRig_Arrow2_solid",
@@ -3196,6 +3263,7 @@
 			"/CRD_BallSpawner/SetupAssets/PID_CP_Devices_BallSpawner.PID_CP_Devices_BallSpawner",
 			"/CRD_Bouncer/SetupAssets/PID_CP_Devices_BouncerGallery.PID_CP_Devices_BouncerGallery",
 			"/CRD_CameraModes/SetupAssets/PID_CP_Devices_FixedPoint.PID_CP_Devices_FixedPoint",
+			"/CRD_CameraModes/SetupAssets/PID_CP_Devices_Orbit.PID_CP_Devices_Orbit",
 			"/CRD_CameraModes/SetupAssets/PID_CP_Devices_Perspective.PID_CP_Devices_Perspective",
 			"/CRD_Campfire/SetupAssets/PID_CP_Devices_Campfire.PID_CP_Devices_Campfire",
 			"/CRD_Campfire/SetupAssets/PID_Device_Campfire_V2.PID_Device_Campfire_V2",
@@ -3313,6 +3381,7 @@
 			"/CRD_PlayerTracker/SetupAssets/PID_Device_PlayerMarker.PID_Device_PlayerMarker",
 			"/CRD_PointLight/SetupAssets/PID_CP_Devices_PointLight.PID_CP_Devices_PointLight",
 			"/CRD_PointLight/SetupAssets/PID_Device_PointLight.PID_Device_PointLight",
+			"/CRD_PostProcess/SetupAssets/PID_CP_Devices_PostProcess.PID_CP_Devices_PostProcess",
 			"/CRD_PropManipulationDevice/SetupAssets/PID_CP_Device_PropManipulation.PID_CP_Device_PropManipulation",
 			"/CRD_PropManipulationDevice/SetupAssets/PID_Device_PropManipulator.PID_Device_PropManipulator",
 			"/CRD_PropMover/SetupAssets/PID_CP_Devices_PropMover.PID_CP_Devices_PropMover",
@@ -4171,11 +4240,11 @@
 			"/CRP_Tilted/SetupAssets/Maps/PID_CP_Tilted_Gallery_m.PID_CP_Tilted_Gallery_m",
 			"/CRP_Tilted/SetupAssets/Maps/PID_CP_Tilted_Gallery_n.PID_CP_Tilted_Gallery_n",
 			"/CRP_Tilted/SetupAssets/Maps/PID_CP_Tilted_Gallery_o.PID_CP_Tilted_Gallery_o",
-			"/CRP_TorchLight/SetupAssets/PID_CP_Military_Lights_TorchLight_2.PID_CP_Military_Lights_TorchLight_2",
-			"/CRP_TorchLight/SetupAssets/PID_CP_Props_M_Military_Lights_TorchLight.PID_CP_Props_M_Military_Lights_TorchLight",
-			"/CRP_TorchLight/SetupAssets/PID_CP_Props_S_Ambient_b_Torchlight.PID_CP_Props_S_Ambient_b_Torchlight",
-			"/CRP_TorchLight/SetupAssets/PID_PG_Ambient_a_Torchlight_2.PID_PG_Ambient_a_Torchlight_2",
-			"/CRP_TorchLight/SetupAssets/PID_PG_Props_S_Ambient_a_Torchlight.PID_PG_Props_S_Ambient_a_Torchlight",
+			"/CRP_TorchLight/SetUpAssets/PID_CP_Military_Lights_TorchLight_2.PID_CP_Military_Lights_TorchLight_2",
+			"/CRP_TorchLight/SetUpAssets/PID_CP_Props_M_Military_Lights_TorchLight.PID_CP_Props_M_Military_Lights_TorchLight",
+			"/CRP_TorchLight/SetUpAssets/PID_CP_Props_S_Ambient_b_Torchlight.PID_CP_Props_S_Ambient_b_Torchlight",
+			"/CRP_TorchLight/SetUpAssets/PID_PG_Ambient_a_Torchlight_2.PID_PG_Ambient_a_Torchlight_2",
+			"/CRP_TorchLight/SetUpAssets/PID_PG_Props_S_Ambient_a_Torchlight.PID_PG_Props_S_Ambient_a_Torchlight",
 			"/CRP_TRV/SetupAssets/PID_CP_TRV_XL_Castle_a.PID_CP_TRV_XL_Castle_a",
 			"/CRP_TRV/SetupAssets/PID_CP_TRV_XL_Castle_b.PID_CP_TRV_XL_Castle_b",
 			"/CRP_TRV/SetupAssets/PID_CP_TRV_XL_Castle_c.PID_CP_TRV_XL_Castle_c",
@@ -4292,8 +4361,10 @@
 			"/Engine/EngineMaterials/Good64x64TilingNoiseHighFreq.Good64x64TilingNoiseHighFreq",
 			"/Engine/EngineMaterials/RandomVectors_WithXNeighbor.RandomVectors_WithXNeighbor",
 			"/Engine/EngineMaterials/T_SphereShadow_RGBA_5-15-30-60deg.T_SphereShadow_RGBA_5-15-30-60deg",
+			"/Engine/EngineMaterials/WeightMapArrayPlaceholderTexture.WeightMapArrayPlaceholderTexture",
 			"/Engine/EngineMaterials/WeightMapPlaceholderTexture.WeightMapPlaceholderTexture",
 			"/Engine/EngineMaterials/WorldGridMaterial.WorldGridMaterial",
+			"/Engine/EngineMeshes/SkeletalCube.SkeletalCube",
 			"/Engine/EngineProduction/ReferenceNormalMap.ReferenceNormalMap",
 			"/Engine/EngineResources/DefaultTexture.DefaultTexture",
 			"/Engine/EngineSky/VolumetricClouds/T_VolumeNoiseShape128.T_VolumeNoiseShape128",
@@ -4611,6 +4682,8 @@
 			"/Engine/Functions/Engine_MaterialFunctions03/Texturing/TextureVariation_RotateNormals.TextureVariation_RotateNormals",
 			"/Engine/Functions/Engine_MaterialFunctions03/Texturing/TextureVariation_RotateUV.TextureVariation_RotateUV",
 			"/Engine/Functions/Engine_MaterialFunctions03/Texturing/TwoSidedTexturing.TwoSidedTexturing",
+			"/Engine/Functions/Engine_MaterialFunctions03/Viewport/MF_OrthoHeight.MF_OrthoHeight",
+			"/Engine/Functions/Engine_MaterialFunctions03/Viewport/MF_OrthoWidth.MF_OrthoWidth",
 			"/Engine/Functions/GetPostProcessFunctions/GetAmbientCubemapIntensity.GetAmbientCubemapIntensity",
 			"/Engine/Functions/GetPostProcessFunctions/GetAmbientCubemapTint.GetAmbientCubemapTint",
 			"/Engine/Functions/MaterialLayerFunctions/MatLayerBlend_AddWorldPositionOffset.MatLayerBlend_AddWorldPositionOffset",
@@ -5106,7 +5179,10 @@
 			"/FortWater/Materials/Functions/WaterBodyData.WaterBodyData",
 			"/FortWater/Materials/Functions/WaveDepthFalloff_Overrides.WaveDepthFalloff_Overrides",
 			"/FortWater/Materials/WaterSurface/M_Water_Ocean_02_NewModel_Far.M_Water_Ocean_02_NewModel_Far",
+			"/FortWater/Materials/WaterSurface/M_Water_Ocean_02_NewModel_Inst.M_Water_Ocean_02_NewModel_Inst",
+			"/FortWater/Materials/WaterSurface/M_Water_Ocean_02_NewModel_Inst_HLOD.M_Water_Ocean_02_NewModel_Inst_HLOD",
 			"/FortWater/Materials/WaterSurface/M_Water_Ocean_02_NewModel_Lake_Inst_HLOD.M_Water_Ocean_02_NewModel_Lake_Inst_HLOD",
+			"/FortWater/Materials/WaterSurface/M_Water_Pool_01_Inst.M_Water_Pool_01_Inst",
 			"/FortWater/Materials/WaterSurface/M_Water_River_01_Inst_HLOD.M_Water_River_01_Inst_HLOD",
 			"/FortWater/Materials/WaterSurface/Water_FarMesh.Water_FarMesh",
 			"/FortWater/Materials/WaterSurface/WaterBody.WaterBody",
@@ -5120,6 +5196,7 @@
 			"/Game/Animation/Game/MainPlayer/Menu/BR/Male_Commando_Idle_01_M.Male_Commando_Idle_01_M",
 			"/Game/Animation/Game/MainPlayer/Poses/QuestGiver_Poses/Male/Male_Pose_306.Male_Pose_306",
 			"/Game/Animation/Settings/FortniteAnimBoneCompressionSettings.FortniteAnimBoneCompressionSettings",
+			"/Game/Animation/Settings/FortniteAnimCurveCompressionSettings.FortniteAnimCurveCompressionSettings",
 			"/Game/Athena/Apollo/Environments/Blueprints/T_TwistyClouds_01.T_TwistyClouds_01",
 			"/Game/Athena/Apollo/Environments/Blueprints/T_TwistyClouds_N.T_TwistyClouds_N",
 			"/Game/Athena/Apollo/Environments/BuildingActors/Bridges/Walls/DataAssets/SteelBridge_Blue.SteelBridge_Blue",
@@ -7869,6 +7946,7 @@
 			"/Game/Effects/Niagara/FXTypes/FXType_Enviroment_Looping.FXType_Enviroment_Looping",
 			"/Game/Effects/Niagara/Systems/CosmeticTemplates/Emote/PropSpawn/NS_Default_PropSpawn.NS_Default_PropSpawn",
 			"/Game/Effects/Niagara/Systems/NS_PlayerSwimming/NS_PlayerInShallowWater.NS_PlayerInShallowWater",
+			"/Game/Effects/Niagara/Validation/NVR_DefaultValidation.NVR_DefaultValidation",
 			"/Game/Environments/Apollo/Foliage/BigBush/Materials/M_BigBush_Fall_Orange.M_BigBush_Fall_Orange",
 			"/Game/Environments/Apollo/Foliage/BigBush/Materials/M_BigBush_Fall_Red.M_BigBush_Fall_Red",
 			"/Game/Environments/Apollo/Foliage/BigBush/Materials/M_BigBush_Fall_Yellow.M_BigBush_Fall_Yellow",
@@ -12156,6 +12234,8 @@
 			"/GrindRail/Materials/MI_Asteria_cyberRailing_Emissive_Master.MI_Asteria_cyberRailing_Emissive_Master",
 			"/GrindRail/Meshes/SM_GrindRail_A.SM_GrindRail_A",
 			"/GrindRail/Meshes/SM_GrindRail_A_Big.SM_GrindRail_A_Big",
+			"/HairStrands/Emitters/StableRodsSystem.StableRodsSystem",
+			"/HairStrands/Emitters/StableSpringsSystem.StableSpringsSystem",
 			"/HopscotchWeaponsGameplay/Items/FlipmagAR/WID_Assault_FlipMag_Athena_C.WID_Assault_FlipMag_Athena_C",
 			"/HopscotchWeaponsGameplay/Items/FlipmagAR/WID_Assault_FlipMag_Athena_R.WID_Assault_FlipMag_Athena_R",
 			"/HopscotchWeaponsGameplay/Items/FlipmagAR/WID_Assault_FlipMag_Athena_SR.WID_Assault_FlipMag_Athena_SR",
@@ -13475,6 +13555,25 @@
 			"/SpicyBerry/Gameplay/WID_Athena_SpicyBerry.WID_Athena_SpicyBerry",
 			"/SpringEvent/Items/HealEgg/WID_Athena_SpringEgg_Heal.WID_Athena_SpringEgg_Heal",
 			"/SpringEvent/Items/HopEgg/WID_Athena_SpringEgg_Hops.WID_Athena_SpringEgg_Hops",
+			"/SunRoseFlyingGameplay/Items/Wings/WID_Athena_SunRose_Wings.WID_Athena_SunRose_Wings",
+			"/SunRoseWeaponsGameplay/Items/Weapons/CerberusSG/WID_Shotgun_Break_Cerberus_Athena_C.WID_Shotgun_Break_Cerberus_Athena_C",
+			"/SunRoseWeaponsGameplay/Items/Weapons/CerberusSG/WID_Shotgun_Break_Cerberus_Athena_R.WID_Shotgun_Break_Cerberus_Athena_R",
+			"/SunRoseWeaponsGameplay/Items/Weapons/CerberusSG/WID_Shotgun_Break_Cerberus_Athena_SR.WID_Shotgun_Break_Cerberus_Athena_SR",
+			"/SunRoseWeaponsGameplay/Items/Weapons/CerberusSG/WID_Shotgun_Break_Cerberus_Athena_UC.WID_Shotgun_Break_Cerberus_Athena_UC",
+			"/SunRoseWeaponsGameplay/Items/Weapons/CerberusSG/WID_Shotgun_Break_Cerberus_Athena_UR.WID_Shotgun_Break_Cerberus_Athena_UR",
+			"/SunRoseWeaponsGameplay/Items/Weapons/CerberusSG/WID_Shotgun_Break_Cerberus_Athena_VR.WID_Shotgun_Break_Cerberus_Athena_VR",
+			"/SunRoseWeaponsGameplay/Items/Weapons/ModularDMR/WID_SunRose_ModularDMR_Athena_R.WID_SunRose_ModularDMR_Athena_R",
+			"/SunRoseWeaponsGameplay/Items/Weapons/ModularDMR/WID_SunRose_ModularDMR_Athena_SR.WID_SunRose_ModularDMR_Athena_SR",
+			"/SunRoseWeaponsGameplay/Items/Weapons/ModularDMR/WID_SunRose_ModularDMR_Athena_UC.WID_SunRose_ModularDMR_Athena_UC",
+			"/SunRoseWeaponsGameplay/Items/Weapons/ModularDMR/WID_SunRose_ModularDMR_Athena_UR.WID_SunRose_ModularDMR_Athena_UR",
+			"/SunRoseWeaponsGameplay/Items/Weapons/ModularDMR/WID_SunRose_ModularDMR_Athena_VR.WID_SunRose_ModularDMR_Athena_VR",
+			"/SunRoseWeaponsGameplay/Items/Weapons/WarforgedAR/WID_Assault_SunRose_Athena_C.WID_Assault_SunRose_Athena_C",
+			"/SunRoseWeaponsGameplay/Items/Weapons/WarforgedAR/WID_Assault_SunRose_Athena_R.WID_Assault_SunRose_Athena_R",
+			"/SunRoseWeaponsGameplay/Items/Weapons/WarforgedAR/WID_Assault_SunRose_Athena_SR.WID_Assault_SunRose_Athena_SR",
+			"/SunRoseWeaponsGameplay/Items/Weapons/WarforgedAR/WID_Assault_SunRose_Athena_UC.WID_Assault_SunRose_Athena_UC",
+			"/SunRoseWeaponsGameplay/Items/Weapons/WarforgedAR/WID_Assault_SunRose_Athena_UR.WID_Assault_SunRose_Athena_UR",
+			"/SunRoseWeaponsGameplay/Items/Weapons/WarforgedAR/WID_Assault_SunRose_Athena_VR.WID_Assault_SunRose_Athena_VR",
+			"/SunRoseZeusGameplay/Items/Lightning/WID_Athena_SunRose_Zeus_Lightning.WID_Athena_SunRose_Zeus_Lightning",
 			"/SupplyDropRadioGameplay/Items/SupplyDropRadio_Handheld/WID_SupplyDropRadio_Handheld.WID_SupplyDropRadio_Handheld",
 			"/ToggleZoomDMRGameplay/Items/ToggleZoomDMR/WID_DMRToggleZoom_Athena_C.WID_DMRToggleZoom_Athena_C",
 			"/ToggleZoomDMRGameplay/Items/ToggleZoomDMR/WID_DMRToggleZoom_Athena_R.WID_DMRToggleZoom_Athena_R",
@@ -13693,6 +13792,8 @@
 			"/AirJellyfish/AI/AISpawnerData/AirJellyfish/BP_AISpawnerData_Irwin_AirJellyfish.BP_AISpawnerData_Irwin_AirJellyfish_C",
 			"/BigLeafPile/Environmental/B_BigLeafPile.B_BigLeafPile_C",
 			"/ChronoEnviroItems/JungleGrindRails/Actors/BGA_Chrono_Jungle_GrindRail_Child.BGA_Chrono_Jungle_GrindRail_Child_C",
+			"/ContentHall/Blueprints/BP_DemoDisplay.BP_DemoDisplay_C",
+			"/ContentHall/Blueprints/BP_DemoRoom.BP_DemoRoom_C",
 			"/CorruptionItems/Gameplay/Items/ReinforcedTrap/Actors/B_Floor_Reinforced_Athena.B_Floor_Reinforced_Athena_C",
 			"/CorruptionItems/Gameplay/Items/ReinforcedTrap/Actors/B_Wall_Reinforced_Athena.B_Wall_Reinforced_Athena_C",
 			"/CRD_Accolades/SetupAssets/BP_Creative_Accolades.BP_Creative_Accolades_C",
@@ -13760,6 +13861,7 @@
 			"/CRD_Bouncer/SetupAssets/Tire_Bouncer/BP_Device_TireBouncerTall.BP_Device_TireBouncerTall_C",
 			"/CRD_Bouncer/SetupAssets/Tire_Bouncer/BP_Device_TireBouncerToppled.BP_Device_TireBouncerToppled_C",
 			"/CRD_CameraModes/Device_CameraModes_FixedPoint.Device_CameraModes_FixedPoint_C",
+			"/CRD_CameraModes/Device_CameraModes_Orbit.Device_CameraModes_Orbit_C",
 			"/CRD_CameraModes/Device_CameraModes_Parent.Device_CameraModes_Parent_C",
 			"/CRD_CameraModes/Device_CameraModes_Perspective.Device_CameraModes_Perspective_C",
 			"/CRD_Campfire/Device_Campfire.Device_Campfire_C",
@@ -13895,6 +13997,7 @@
 			"/CRD_PlayerTracker/Device_PlayerMarker_V2.Device_PlayerMarker_V2_C",
 			"/CRD_PointLight/Device_PointLight.Device_PointLight_C",
 			"/CRD_PointLight/Device_PointLight_V2.Device_PointLight_V2_C",
+			"/CRD_PostProcess/Device_PostProcess.Device_PostProcess_C",
 			"/CRD_PropManipulationDevice/CreativeResourceNodeComponent.CreativeResourceNodeComponent_C",
 			"/CRD_PropManipulationDevice/CreativeResourceNodeComponent_V2.CreativeResourceNodeComponent_V2_C",
 			"/CRD_PropManipulationDevice/Device_PropManipulation.Device_PropManipulation_C",
@@ -18677,7 +18780,6 @@
 			"/Game/Athena/Environments/Blueprints/SkyTube/BP_Athena_SkyTube.BP_Athena_SkyTube_C",
 			"/Game/Athena/Environments/Blueprints/SkyTube/BP_Athena_SkyTube_Base.BP_Athena_SkyTube_Base_C",
 			"/Game/Athena/Environments/Blueprints/SkyTube/BP_Athena_SkyTube_Ring_Prop.BP_Athena_SkyTube_Ring_Prop_C",
-			"/Game/Athena/Environments/Blueprints/Tiered_Athena_FloorLoot_01.Tiered_Athena_FloorLoot_01_C",
 			"/Game/Athena/Environments/Blueprints/Water/BP_Athena_Water.BP_Athena_Water_C",
 			"/Game/Athena/Environments/Blueprints/Water/BP_Creative_Island_Water.BP_Creative_Island_Water_C",
 			"/Game/Athena/Environments/Landscape/Blueprints/BP_Athena_SplineMesh.BP_Athena_SplineMesh_C",
@@ -23796,14 +23898,33 @@
 			"/Game/Creative/Misc/Razor/CP_Razor_Vein_01.CP_Razor_Vein_01_C",
 			"/Game/Creative/Misc/Razor/CP_Razor_Vein_03.CP_Razor_Vein_03_C",
 			"/Game/Creative/PostProcess/PostProcessEffectActor.PostProcessEffectActor_C",
+			"/Game/Creative/PostProcess/PP_70sPrint.PP_70sPrint_C",
+			"/Game/Creative/PostProcess/PP_ActionLines.PP_ActionLines_C",
+			"/Game/Creative/PostProcess/PP_CCTV.PP_CCTV_C",
+			"/Game/Creative/PostProcess/PP_Comic.PP_Comic_C",
+			"/Game/Creative/PostProcess/PP_Crazy.PP_Crazy_C",
+			"/Game/Creative/PostProcess/PP_Dark.PP_Dark_C",
+			"/Game/Creative/PostProcess/PP_Desolate.PP_Desolate_C",
 			"/Game/Creative/PostProcess/PP_FilmNoir.PP_FilmNoir_C",
+			"/Game/Creative/PostProcess/PP_FilmWarm.PP_FilmWarm_C",
+			"/Game/Creative/PostProcess/PP_Halftone.PP_Halftone_C",
+			"/Game/Creative/PostProcess/PP_HappyPlace.PP_HappyPlace_C",
 			"/Game/Creative/PostProcess/PP_HorrorMovie.PP_HorrorMovie_C",
+			"/Game/Creative/PostProcess/PP_LowExposure.PP_LowExposure_C",
+			"/Game/Creative/PostProcess/PP_NeoComic.PP_NeoComic_C",
 			"/Game/Creative/PostProcess/PP_NeonParty.PP_NeonParty_C",
+			"/Game/Creative/PostProcess/PP_NightVision.PP_NightVision_C",
 			"/Game/Creative/PostProcess/PP_Oak.PP_Oak_C",
 			"/Game/Creative/PostProcess/PP_OldCartoon.PP_OldCartoon_C",
+			"/Game/Creative/PostProcess/PP_Pixelizer.PP_Pixelizer_C",
+			"/Game/Creative/PostProcess/PP_RadialBlur.PP_RadialBlur_C",
+			"/Game/Creative/PostProcess/PP_Red.PP_Red_C",
 			"/Game/Creative/PostProcess/PP_Retro.PP_Retro_C",
 			"/Game/Creative/PostProcess/PP_Sepia.PP_Sepia_C",
+			"/Game/Creative/PostProcess/PP_SimpleBlurSharpen.PP_SimpleBlurSharpen_C",
 			"/Game/Creative/PostProcess/PP_Spooky.PP_Spooky_C",
+			"/Game/Creative/PostProcess/PP_VHS_Filter.PP_VHS_Filter_C",
+			"/Game/Creative/PostProcess/PP_VignetteMaskedColored.PP_VignetteMaskedColored_C",
 			"/Game/Creative/Sets/ArtDeco_Bank/BuildingPieces/AD_Balcony_I_Rail_01.AD_Balcony_I_Rail_01_C",
 			"/Game/Creative/Sets/ArtDeco_Bank/BuildingPieces/AD_Balcony_L_Rail.AD_Balcony_L_Rail_C",
 			"/Game/Creative/Sets/ArtDeco_Bank/BuildingPieces/AD_Balcony_O_Rail.AD_Balcony_O_Rail_C",
@@ -26001,7 +26122,6 @@
 			"/Game/Environments/Asteria/Sets/NeonCity/BluePrints/Buildings/BP_NeonCity_Building_H_B.BP_NeonCity_Building_H_B_C",
 			"/Game/Environments/Asteria/Sets/NeonCity/BluePrints/Buildings/BP_NeonCity_Building_H_C.BP_NeonCity_Building_H_C_C",
 			"/Game/Environments/Asteria/Sets/NeonCity/BluePrints/Buildings/BP_NeonCity_Building_H_D.BP_NeonCity_Building_H_D_C",
-			"/Game/Environments/Asteria/Sets/NeonCity/BluePrints/Buildings/BP_NeonCity_Parent.BP_NeonCity_Parent_C",
 			"/Game/Environments/Asteria/Sets/NeonCity/BluePrints/Props/BP_NeonCity_IndestructibleFloor_1x1_A.BP_NeonCity_IndestructibleFloor_1x1_A_C",
 			"/Game/Environments/Asteria/Sets/NeonCity/BluePrints/Props/BP_NeonCity_IndestructibleFloor_1x2_A.BP_NeonCity_IndestructibleFloor_1x2_A_C",
 			"/Game/Environments/Asteria/Sets/NeonCity/BluePrints/Props/BP_NeonCity_IndestructibleFloor_2x4_A.BP_NeonCity_IndestructibleFloor_2x4_A_C",
@@ -26823,7 +26943,6 @@
 	"ClassTypesList": [
 		"/Script/ControlRig.ControlRigBlueprintGeneratedClass",
 		"/Script/CoreUObject.Class",
-		"/Script/CoreUObject.DynamicClass",
 		"/Script/CoreUObject.LinkerPlaceholderClass",
 		"/Script/Engine.AnimBlueprintGeneratedClass",
 		"/Script/Engine.BlueprintGeneratedClass",
