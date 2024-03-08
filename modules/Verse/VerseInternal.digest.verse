@@ -1,0 +1,1385 @@
+# Copyright Epic Games, Inc. All Rights Reserved.
+#################################################
+# Generated Digest of Verse API
+# DO NOT modify this manually!
+# Generated from build: ++Fortnite+Release-28.30-CL-31511038
+#################################################
+
+using {/Verse.org/Native}
+using {/Verse.org/ParameterCollections}
+using {/Verse.org/Restricted}
+# Module import path: /Verse.org/Assets
+Assets<public> := module:
+    # Create an asset reference to the given internal asset path
+    MakeAsset<native><epic_internal>(AssetType:type, AssetPath:[]char)<converges>:AssetType
+
+    animation<native><epic_internal> := class<computes><final><epic_internal>(asset):
+
+    animation_blueprint<native><epic_internal> := class<computes><final><epic_internal>(asset):
+
+    animation_instance<native><epic_internal> := class<computes><final><epic_internal>(asset):
+
+    animation_sequence<native><public> := class<computes><final><epic_internal>(asset):
+
+    asset<native><epic_internal> := class<computes><epic_internal>:
+        Async_Load<native><epic_internal>():?sticky_event(void)
+
+        GetAssetType<native><epic_internal>()<transacts><decides>:type
+
+        GetAsyncLoadEvent<native><epic_internal>():?sticky_event(void)
+
+        SyncLoad<native><epic_internal>():logic
+
+    client_asset<native><epic_internal> := class<abstract><computes><epic_internal>(asset):
+
+    font<native><epic_internal> := class<computes><final><epic_internal>(client_asset):
+
+    level<native><epic_internal> := class<computes><final><epic_internal>(asset):
+
+    material<native><public> := interface<epic_internal>:
+        GetAsset<native_callable><epic_internal>():material_asset
+
+        GetMaterialInterface<native_callable><epic_internal>():ue_material_interface
+
+    material_asset<native><epic_internal> := class<final><epic_internal>(material, asset):
+        GetAsset<override>():material_asset = external {}
+
+        GetMaterialInterface<native><override>():ue_material_interface
+
+    mesh<native><public> := class<computes><final><epic_internal>(asset):
+
+    parameterized_material<native><epic_internal> := class<epic_internal>(material, parameter_collection):
+        GetAsset<override>():material_asset = external {}
+
+        GetMaterialInterface<native><override>():ue_material_interface
+
+        Material<native><epic_internal>:material
+
+    particle_system<native><epic_internal> := class<computes><final><epic_internal>(client_asset):
+
+    skeletal_mesh<native><epic_internal> := class<computes><final><epic_internal>(asset):
+
+    sound<native><epic_internal> := class<computes><final><epic_internal>(client_asset):
+
+    texture<native><public> := class<computes><final><epic_internal>(texture_base):
+
+    texture_base<native><epic_internal> := class<computes><epic_internal>(asset):
+
+    @import_as("/Script/Engine.UMaterialInterface")
+    ue_material_interface<native><epic_internal> := class:
+
+using {/Verse.org/Simulation}
+# Module import path: /Verse.org/Colors
+Colors<public> := module:
+    # Makes an ACES 2065-1 `color` from `Hue`, `Saturation`, and `Value` components.
+    # Components use the HSV color model in the sRGB color space. Expected ranges:
+    #  * `0.0 <= Hue <= 360.0`
+    #  * `0.0 <= Saturation <= 1.0`
+    #  * `0.0 <= Value <= 1.0`
+    # Values out of expected ranges will undergo range reduction and conversion.
+    MakeColorFromHSV<native><public>(Hue:float, Saturation:float, Value:float)<converges>:color
+
+    # Makes an ACES 2065-1 `color` from a CSS-style sRGB `hexString`. Supported formats are:
+    #  * RGB
+    #  * RRGGBB
+    #  * RRGGBBAA
+    #  * #RGB
+    #  * #RRGGBB
+    #  * #RRGGBBAA
+    # An invalid hex string will return `Black`.
+    MakeColorFromHex<native><public>(hexString:[]char)<converges>:color
+
+    # Makes an ACES 2065-1 `color` from sRGB components `Red`, `Green`, and `Blue`.
+    # Normal sRGB component values are between `0.0` and `1.0`, but this can handle larger values.
+    MakeColorFromSRGB<native><public>(Red:float, Green:float, Blue:float)<converges>:color
+
+    # Makes an ACES 2065-1 `color` from the integer sRGB components `Red`, `Green`, and `Blue`.
+    # Valid sRGB component values are between '0' and '255', inclusive.
+    MakeColorFromSRGBValues<native><public>(Red:int, Green:int, Blue:int)<converges>:color
+
+    # Makes an ACES 2065-1 `color` from the chromaticity of a blackbody radiator at `Temperature` Kelvin.
+    # `Temperature` is clamped such that `0 <= Temperature`.
+    MakeColorFromTemperature<native><public>(Temperature:float)<converges>:color
+
+    # Makes an HSV `tuple` by converting `InColor` from an ACES 2065-1 `color` to sRGB and applying the HSV color model.
+    MakeHSVFromColor<native><public>(InColor:color):tuple(float, float, float)
+
+    # Makes an sRGB `tuple` by converting `InColor` from an ACES 2065-1 `color` to sRGB.
+    MakeSRGBFromColor<native><public>(InColor:color)<converges>:tuple(float, float, float)
+
+    # Module import path: /Verse.org/Colors/NamedColors
+    # Color presets from CSS Color Module 3 Extended color keywords.
+    NamedColors<public> := module:
+        (NamedColors:)Tan<public>:color = external {}
+
+        AliceBlue<public>:color = external {}
+
+        AntiqueWhite<public>:color = external {}
+
+        Aqua<public>:color = external {}
+
+        Aquamarine<public>:color = external {}
+
+        Azure<public>:color = external {}
+
+        Beige<public>:color = external {}
+
+        Bisque<public>:color = external {}
+
+        Black<public>:color = external {}
+
+        BlanchedAlmond<public>:color = external {}
+
+        Blue<public>:color = external {}
+
+        BlueViolet<public>:color = external {}
+
+        Brown<public>:color = external {}
+
+        Burlywood<public>:color = external {}
+
+        CadetBlue<public>:color = external {}
+
+        Chartreuse<public>:color = external {}
+
+        Chocolate<public>:color = external {}
+
+        Coral<public>:color = external {}
+
+        CornflowerBlue<public>:color = external {}
+
+        Cornsilk<public>:color = external {}
+
+        Crimson<public>:color = external {}
+
+        Cyan<public>:color = external {}
+
+        DarkBlue<public>:color = external {}
+
+        DarkCyan<public>:color = external {}
+
+        DarkGoldenrod<public>:color = external {}
+
+        DarkGray<public>:color = external {}
+
+        DarkGreen<public>:color = external {}
+
+        DarkGrey<public>:color = external {}
+
+        DarkKhaki<public>:color = external {}
+
+        DarkMagenta<public>:color = external {}
+
+        DarkOliveGreen<public>:color = external {}
+
+        DarkOrange<public>:color = external {}
+
+        DarkOrchid<public>:color = external {}
+
+        DarkRed<public>:color = external {}
+
+        DarkSalmon<public>:color = external {}
+
+        DarkSeaGreen<public>:color = external {}
+
+        DarkSlateBlue<public>:color = external {}
+
+        DarkSlateGray<public>:color = external {}
+
+        DarkSlateGrey<public>:color = external {}
+
+        DarkTurquoise<public>:color = external {}
+
+        DarkViolet<public>:color = external {}
+
+        DeepPink<public>:color = external {}
+
+        DeepSkyBlue<public>:color = external {}
+
+        DimGray<public>:color = external {}
+
+        DimGrey<public>:color = external {}
+
+        DodgerBlue<public>:color = external {}
+
+        Firebrick<public>:color = external {}
+
+        FloralWhite<public>:color = external {}
+
+        ForestGreen<public>:color = external {}
+
+        Fuchsia<public>:color = external {}
+
+        Gainsboro<public>:color = external {}
+
+        GhostWhite<public>:color = external {}
+
+        Gold<public>:color = external {}
+
+        Goldenrod<public>:color = external {}
+
+        Gray<public>:color = external {}
+
+        Green<public>:color = external {}
+
+        GreenYellow<public>:color = external {}
+
+        Grey<public>:color = external {}
+
+        Honeydew<public>:color = external {}
+
+        Hotpink<public>:color = external {}
+
+        IndianRed<public>:color = external {}
+
+        Indigo<public>:color = external {}
+
+        Ivory<public>:color = external {}
+
+        Khaki<public>:color = external {}
+
+        Lavender<public>:color = external {}
+
+        LavenderBlush<public>:color = external {}
+
+        LawnGreen<public>:color = external {}
+
+        LemonChiffon<public>:color = external {}
+
+        LightBlue<public>:color = external {}
+
+        LightCoral<public>:color = external {}
+
+        LightCyan<public>:color = external {}
+
+        LightGoldenrodYellow<public>:color = external {}
+
+        LightGray<public>:color = external {}
+
+        LightGreen<public>:color = external {}
+
+        LightGrey<public>:color = external {}
+
+        LightPink<public>:color = external {}
+
+        LightSalmon<public>:color = external {}
+
+        LightSeaGreen<public>:color = external {}
+
+        LightSkyBlue<public>:color = external {}
+
+        LightSlateGray<public>:color = external {}
+
+        LightSlateGrey<public>:color = external {}
+
+        LightSteelBlue<public>:color = external {}
+
+        LightYellow<public>:color = external {}
+
+        Lime<public>:color = external {}
+
+        LimeGreen<public>:color = external {}
+
+        Linen<public>:color = external {}
+
+        Magenta<public>:color = external {}
+
+        Maroon<public>:color = external {}
+
+        MediumAquamarine<public>:color = external {}
+
+        MediumBlue<public>:color = external {}
+
+        MediumOrchid<public>:color = external {}
+
+        MediumPurple<public>:color = external {}
+
+        MediumSeaGreen<public>:color = external {}
+
+        MediumSlateBlue<public>:color = external {}
+
+        MediumSpringGreen<public>:color = external {}
+
+        MediumTurquoise<public>:color = external {}
+
+        MediumVioletRed<public>:color = external {}
+
+        MidnightBlue<public>:color = external {}
+
+        MintCream<public>:color = external {}
+
+        MistyRose<public>:color = external {}
+
+        Moccasin<public>:color = external {}
+
+        NavajoWhite<public>:color = external {}
+
+        Navy<public>:color = external {}
+
+        OldLace<public>:color = external {}
+
+        Olive<public>:color = external {}
+
+        OliveDrab<public>:color = external {}
+
+        Orange<public>:color = external {}
+
+        OrangeRed<public>:color = external {}
+
+        Orchid<public>:color = external {}
+
+        PaleGoldenrod<public>:color = external {}
+
+        PaleGreen<public>:color = external {}
+
+        PaleTurquoise<public>:color = external {}
+
+        PaleVioletred<public>:color = external {}
+
+        PapayaWhip<public>:color = external {}
+
+        PeachPuff<public>:color = external {}
+
+        Peru<public>:color = external {}
+
+        Pink<public>:color = external {}
+
+        Plum<public>:color = external {}
+
+        PowderBlue<public>:color = external {}
+
+        Purple<public>:color = external {}
+
+        Red<public>:color = external {}
+
+        RosyBrown<public>:color = external {}
+
+        RoyalBlue<public>:color = external {}
+
+        SaddleBrown<public>:color = external {}
+
+        Salmon<public>:color = external {}
+
+        SandyBrown<public>:color = external {}
+
+        SeaGreen<public>:color = external {}
+
+        SeaShell<public>:color = external {}
+
+        Sienna<public>:color = external {}
+
+        Silver<public>:color = external {}
+
+        SkyBlue<public>:color = external {}
+
+        SlateBlue<public>:color = external {}
+
+        SlateGray<public>:color = external {}
+
+        SlateGrey<public>:color = external {}
+
+        Snow<public>:color = external {}
+
+        SpringGreen<public>:color = external {}
+
+        SteelBlue<public>:color = external {}
+
+        Teal<public>:color = external {}
+
+        Thistle<public>:color = external {}
+
+        Tomato<public>:color = external {}
+
+        Turquoise<public>:color = external {}
+
+        Violet<public>:color = external {}
+
+        Wheat<public>:color = external {}
+
+        White<public>:color = external {}
+
+        WhiteSmoke<public>:color = external {}
+
+        Yellow<public>:color = external {}
+
+        YellowGreen<public>:color = external {}
+
+    # Represents colors as RGB triples in the ACES 2065-1 color space.
+    # Component values are linear (i.e. `*gamma* = 1.0`).
+    color<native><public> := struct<concrete><computes><persistable>:
+        @editable
+        # Blue component of this `color`.
+        B<native><public>:float = external {}
+
+        @editable
+        # Green component of this `color`.
+        G<native><public>:float = external {}
+
+        @editable
+        # Red component of this `color`.
+        R<native><public>:float = external {}
+
+    # Makes an ACES 2065-1 `color` from the component-wise product of `c0` and `c1`.
+    operator'*'<native><public>(c0:color, c1:color)<converges>:color
+
+    # Makes an ACES 2065-1 `color` from each component of `c` scaled by `factor`.
+    operator'*'<native><public>(c:color, factor:float)<converges>:color
+
+    # Makes an ACES 2065-1 `color` from each component of `c` scaled by `factor`.
+    operator'*'<native><public>(c:color, factor:int)<converges>:color
+
+    # Makes an ACES 2065-1 `color` from each component of `c` scaled by `factor`.
+    operator'*'<native><public>(factor:float, c:color)<converges>:color
+
+    # Makes an ACES 2065-1 `color` from each component of `c` scaled by `factor`.
+    operator'*'<native><public>(factor:int, c:color)<converges>:color
+
+    # Makes an ACES 2065-1 `color` from the component-wise sum of `c0` and `c1`.
+    operator'+'<native><public>(c0:color, c1:color)<converges>:color
+
+    # Makes an ACES 2065-1 `color` from the component-wise difference of `c0` and `c1`.
+    operator'-'<native><public>(c0:color, c1:color)<converges>:color
+
+    # Makes an ACES 2065-1 `color` from each component of `c` divided by `factor`.
+    operator'/'<native><public>(c:color, factor:float)<computes><decides>:color
+
+    # Makes an ACES 2065-1 `color` from each component of `c` divided by `factor`.
+    operator'/'<native><public>(c:color, factor:int)<computes><decides>:color
+
+Concurrency<public> := module:
+    awaitable<public>()<computes> := awaitable(void)
+
+    # A parametric interface implemented by events with a `payload` that can be waited on. Matched with `signalable.`
+    awaitable<public>(payload:type)<computes> := interface:
+        # Suspends the current task until resumed by a matching call to `signalable.Signal`. Returns the event `payload`.
+        Await<public>()<suspends>:payload
+
+    task<native><public>(t:type)<computes> := class<abstract><final>(awaitable(t)):
+        Active<native><epic_internal>()<transacts><decides>:void
+
+        Await<native><override>()<suspends>:t
+
+        Cancel<native><epic_internal>():void
+
+        Canceled<native><epic_internal>()<transacts><decides>:void
+
+        Canceling<native><epic_internal>()<transacts><decides>:void
+
+        Completed<native><epic_internal>()<transacts><decides>:void
+
+        Interrupted<native><epic_internal>()<transacts><decides>:void
+
+        Settled<native><epic_internal>()<transacts><decides>:void
+
+        Uninterrupted<native><epic_internal>()<transacts><decides>:void
+
+        Unsettled<native><epic_internal>()<transacts><decides>:void
+
+Native<public> := module:
+    doc<epic_internal>(documentationString:[]char)<computes>:doc_attribute
+
+    @attribscope_module
+    @attribscope_class
+    @attribscope_struct
+    @attribscope_function
+    @attribscope_data
+    @attribscope_enum
+    @attribscope_enumerator
+    @attribscope_interface
+    @attribscope_typedefinition
+    doc_attribute<epic_internal> := class(attribute):
+
+    import_as<epic_internal>(importName:[]char)<computes>:import_as_attribute
+
+    @attribscope_class
+    @attribscope_struct
+    import_as_attribute<epic_internal> := class(attribute):
+
+    validate_asset_path<epic_internal>(Modifiers:[]char)<computes>:validate_asset_path_attribute
+
+    @attribscope_function
+    @attribscope_data
+    validate_asset_path_attribute<epic_internal> := class(attribute):
+
+# Module import path: /Verse.org/ParameterCollections
+ParameterCollections<public> := module:
+    parameter_collection<native><epic_internal> := class:
+        OnPropertyChangedFromVerse<native><epic_internal>(StringParam:[]char):void
+
+# Module import path: /Verse.org/Random
+Random<public> := module:
+    # Returns a random `float` between `Low` and `High`, inclusive.
+    GetRandomFloat<native><public>(Low:float, High:float)<varies>:float
+
+    # Returns a random `int` between `Low` and `High`, inclusive.
+    GetRandomInt<native><public>(Low:int, High:int)<varies>:int
+
+    # Makes an `array` with the same elements as `Input` shuffled in a random order.
+    Shuffle<public>(Input:[]t where t:type)<transacts>:[]t = external {}
+
+using {/Verse.org/Concurrency}
+# Module import path: /Verse.org/Restricted
+Restricted<public> := module:
+    sticky_event<native><public>(t:type)<computes> := class(signalable(t), awaitable(t)):
+        Await<native><override>()<suspends>:t
+
+        ClearSignal<native><public>():void
+
+        GetAwaitCount<native><epic_internal>():int
+
+        IsSignaled<native><public>()<decides>:void
+
+        Signal<native><override>(__dupe___unnamed_parameter_29:t):void
+
+    sticky_event<public>()<computes> := sticky_event(void)
+
+using {/Verse.org/VerseEngine/Component}
+using {/Verse.org/VerseEngine}
+# Module import path: /Verse.org/Simulation
+Simulation<public> := module:
+    GetComponentOfTypeForPlayer<native><epic_internal>(InPlayer:player_component, Type:type)<transacts><decides>:component
+
+    GetComponentOfTypeForPlayer<native><epic_internal>(PlayerIndex:int, Type:type)<transacts><decides>:component
+
+    GetOrCreateComponentOfTypeForPlayer<native><epic_internal>(InPlayer:player_component, Type:type)<transacts><decides>:component
+
+    GetOrCreateComponentOfTypeForPlayer<native><epic_internal>(PlayerIndex:int, Type:type)<transacts><decides>:component
+
+    GetPlayerComponentByIndex<native><epic_internal>(PlayerIndex:int)<transacts><decides>:player_component
+
+    # Returns the `session` corresponding to the current round.  The result can be used with `weak_map` to implement global variables.
+    # Note: may be changed in a future release to return a single instance per game. Round-local behavior should not be relied upon.
+    GetSession<native><public>()<varies>:session
+
+    # Get the seconds that have elapsed since the world began simulating
+    GetSimulationElapsedTime<native><public>()<transacts>:float
+
+    MakeLocalizableValue<epic_internal>(Agent:agent):localizable_agent = external {}
+
+    # Waits specified number of seconds and then resumes. If `Seconds` = 0.0 then it waits until next tick/frame/update. If `Seconds` = Inf then it waits forever and only calls back if canceled - such as via `race`. If `Seconds` < 0.0 then it completes immediately and does not yield to other aysnc expressions.
+    # Waiting until the next update (0.0) is especially useful in a loop of a coroutine that needs to do some work every update and this yields to other coroutines so that it doesn't hog a processor's resources.
+    # Waiting forever (Inf) will have any expression that follows never be evaluated. Occasionally it is desireable to have a task never complete such as the last expression in a `race` subtask where the task must never win the race though it still may be canceled earlier.
+    # Immediately completing (less than 0) is useful when you want programmatic control over whether an expression yields or not.
+    Sleep<native><public>(Seconds:float)<suspends>:void
+
+    using {/Verse.org/Native}
+    using {/Verse.org/VerseEngine/Component}
+    # Module import path: /Verse.org/Simulation/Tags
+    Tags<public> := module:
+        # Succeeds if Left and Right are equal.
+        Equals<native><epic_internal>(Left:tag, Right:tag)<transacts><decides>:void
+
+        # Succeeds if all tags in Left are found in Right and all tags in Right are found in Left.
+        Equals<native><epic_internal>(Left:tag_container, Right:tag_container)<transacts><decides>:void
+
+        # Get a list of components that match the specified tag.
+        FindObjectWithTag<native><epic_internal>(Tag:tag)<transacts><decides>:component
+
+        # Get a list of components that match the specified tag.
+        FindObjectsWithTag<native><epic_internal>(Tag:tag)<transacts>:[]component
+
+        # Get a list of components that match the specified criteria.
+        FindObjectsWithTags<native><epic_internal>(SearchCriteria:tag_search_criteria):[]component
+
+        # Utility function to allow for easy construction from editor exposable tag_selector
+        MakeGameplayTag<native><epic_internal>(Selector:tag_selector)<transacts><decides>:tag
+
+        # Utility function to allow for easy construction from subclass
+        MakeGameplayTagFromSubClass<native><epic_internal>(Type:subtype(tag))<transacts><decides>:tag
+
+        # Create a tag container from an array of gameplay_tag.
+        MakeTagContainer<native><constructor><epic_internal>(InTags:[]tag):tag_container
+
+        # Utility function to allow for easy construction from editor exposable tag_selector_container
+        MakeTagContainer<native><epic_internal>(Selector:tag_selector_container)<transacts><decides>:tag_container
+
+        # Get a string representation of the gameplay tag. Useful for debugging.
+        ToString<native><epic_internal>(__dupe___unnamed_parameter_42:tag)<computes>:[]char
+
+        # Returns abbreviated human readable Tag list. Useful for debugging.
+        ToString<native><epic_internal>(__dupe___unnamed_parameter_45:tag_container)<computes>:[]char
+
+        # A single gameplay tag, which represents a hierarchical name of the form x.y that is registered in the GameplayTagsManager You can filter the gameplay tags displayed in the editor.
+        tag<native><public> := class<abstract>:
+
+        # A mutable collection of gameplay tags.
+        tag_container<native><epic_internal> := class<concrete>(tag_view):
+            # Add the specified tag to the container.
+            Add<native><epic_internal>(Tag:tag):void
+
+            # Adds all the tags from one container to this container NOTE: From set theory, this effectively is the union of the container this is called on with TagsToAdd.
+            Add<native><epic_internal>(TagsToAdd:[]tag):void
+
+            # Adds all the tags from one container to this container NOTE: From set theory, this effectively is the union of the container this is called on with TagsToAdd.
+            Add<native><epic_internal>(TagsToAdd:tag_container):void
+
+            # Determine if TagToCheck is present in this container, also checking against parent tags {"A.1"}.Has("A") will return True, {"A"}.Has("A.1") will return False If TagToCheck is not Valid it will always return False.
+            Has<native><override>(TagToCheck:tag)<transacts><decides>:void
+
+            # Checks if this container contains ALL of the tags in the specified container, also checks against parent tags {"A.1","B.1"}.HasAll({"A","B"}) will return True, {"A","B"}.HasAll({"A.1","B.1"}) will return False If InTags is empty/invalid it will always return True, because there were no failed checks.
+            HasAll<native><override>(InTags:[]tag)<transacts><decides>:void
+
+            # Checks if this container contains ANY of the tags in the specified container, also checks against parent tags {"A.1"}.HasAny({"A","B"}) will return True, {"A"}.HasAny({"A.1","B"}) will return False If InTags is empty/invalid it will always return False.
+            HasAny<native><override>(InTags:[]tag)<transacts><decides>:void
+
+            # Returns the number of explicitly added tags.
+            Num<native><epic_internal>()<transacts>:int
+
+            # Remove the specified tag from the container.
+            Remove<native><epic_internal>(Tag:tag)<decides>:void
+
+            # Removes all tags in TagsToRemove from this container.
+            Remove<native><epic_internal>(TagsToRemove:[]tag):void
+
+            # Removes all tags in TagsToRemove from this container.
+            Remove<native><epic_internal>(TagsToRemove:tag_container):void
+
+            # Remove all tags from the container. Will maintain slack by default.
+            Reset<native><epic_internal>():void
+
+            # Remove all tags from the container. Update the amount of slack pre-allocated for tags.
+            ResetWithSlack<native><epic_internal>(slack:int):void
+
+        # Component used for tagging objects for retrieval later. Useful when connecting runtime scripts with editor placed objects.
+        tag_container_component<native><epic_internal> := class<final>(component):
+            # Add a single tag to this component.
+            AddTag<native><epic_internal>(TagToAdd:tag):void
+
+            # Get the tags associated with this component. These may be specified in the editor.
+            GetTags<native><epic_internal>():tag_container
+
+            # Remove a single tag from this component.
+            RemoveTag<native><epic_internal>(TagToRemove:tag):logic
+
+            # Set the tags associated with this component.
+            SetTags<native><epic_internal>(InTags:tag_container):void
+
+        # Advanced tag search criteria
+        tag_search_criteria<native><public> := class:
+            # Tags that may NOT be on the object. All items with these tags are excluded from the search.
+            ExclusionTags<native><public>:[]tag = external {}
+
+            # Tags that are used if no required tags are specified. These are treated as if any of them will do.
+            PreferredTags<native><public>:[]tag = external {}
+
+            # Tags required to be on the object.
+            RequiredTags<native><public>:[]tag = external {}
+
+            # Flag to request sorting the results by tag.
+            SortType<native><public>:tag_search_sort_type = external {}
+
+        tag_search_sort_type<native><public> := enum:
+            Sorted
+
+            Unsorted
+
+        @import_as("/Script/VerseGameplayTags.FVerseGameplayTag")
+        # Utility structure which allows users to select a gameplay tag when exposed to editor
+        tag_selector<native><epic_internal> := struct<concrete>:
+
+        @import_as("/Script/VerseGameplayTags.FVerseGameplayTagContainer")
+        # Utility structure which allows users to select a gameplay tag when exposed to editor
+        tag_selector_container<native><epic_internal> := struct<concrete>:
+
+        # A queryable collection of gameplay tags.
+        tag_view<native><public> := interface<epic_internal>:
+            # Determine if TagToCheck is present in this container, also checking against parent tags {"A.1"}.Has("A") will return True, {"A"}.Has("A.1") will return False If TagToCheck is not Valid it will always return False.
+            Has<public>(TagToCheck:tag)<transacts><decides>:void
+
+            # Checks if this container contains ALL of the tags in the specified container, also checks against parent tags {"A.1","B.1"}.HasAll({"A","B"}) will return True, {"A","B"}.HasAll({"A.1","B.1"}) will return False If InTags is empty/invalid it will always return True, because there were no failed checks.
+            HasAll<public>(InTags:[]tag)<transacts><decides>:void
+
+            # Checks if this container contains ANY of the tags in the specified container, also checks against parent tags {"A.1"}.HasAny({"A","B"}) will return True, {"A"}.HasAny({"A.1","B"}) will return False If InTags is empty/invalid it will always return False.
+            HasAny<public>(InTags:[]tag)<transacts><decides>:void
+
+    agent<native><public> := class<unique><epic_internal>:
+
+    category<epic_internal>(Category:[]char)<computes>:category_attribute
+
+    @attribscope_class
+    @attribscope_data
+    @attribscope_function
+    @customattribhandler
+    category_attribute<epic_internal> := class(attribute):
+
+    clamp_max<epic_internal>(ClampMax:[]char)<computes>:clamp_max_attribute
+
+    @attribscope_data
+    @customattribhandler
+    clamp_max_attribute<epic_internal> := class(attribute):
+
+    clamp_min<epic_internal>(ClampMin:[]char)<computes>:clamp_min_attribute
+
+    @attribscope_data
+    @customattribhandler
+    clamp_min_attribute<epic_internal> := class(attribute):
+
+    display_name<epic_internal>(DisplayName:[]char)<computes>:display_name_attribute
+
+    @attribscope_class
+    @attribscope_data
+    @attribscope_function
+    @customattribhandler
+    display_name_attribute<epic_internal> := class(attribute):
+
+    display_priority<epic_internal>(DisplayPriority:[]char)<computes>:display_priority_attribute
+
+    @attribscope_class
+    @attribscope_data
+    @attribscope_function
+    @customattribhandler
+    display_priority_attribute<epic_internal> := class(attribute):
+
+    @attribscope_class
+    @attribscope_struct
+    @attribscope_data
+    @customattribhandler
+    editable<public> := class(attribute):
+        Categories<epic_internal>:[]message = external {}
+
+        ShortToolTip<localizes><epic_internal>:message = external {}
+
+        ShowThumbnail<epic_internal>:logic = external {}
+
+        ToolTip<localizes><epic_internal>:message = external {}
+
+        Widget<epic_internal>:editable_widget = external {}
+
+    editable_container<epic_internal> := class<final>(editable_widget):
+        AllowReordering<public>:logic = external {}
+
+    editable_number<epic_internal>(t:type)<computes> := class<final>(editable_widget):
+        MaxValue<public>:?t = external {}
+
+        MinValue<public>:?t = external {}
+
+        SpinBoxDelta<public>:?t = external {}
+
+    editable_slider<epic_internal>(t:type)<computes> := class<final>(editable_widget):
+        Exponent<public>:?t = external {}
+
+        MaxValue<public>:?t = external {}
+
+        MinValue<public>:?t = external {}
+
+        MouseLinearDeltaSensitivity<public>:float = external {}
+
+        MouseShiftMovePixelPerDelta<public>:float = external {}
+
+        SliderDelta<public>:?t = external {}
+
+    editable_text_box<epic_internal> := class<final>(editable_widget):
+        MaxLength<public>:int = external {}
+
+        MultiLine<public>:logic = external {}
+
+    editable_vector<epic_internal>(t:type)<computes> := class<final>(editable_widget):
+        MaxComponentValue<public>:?t = external {}
+
+        MinComponentValue<public>:?t = external {}
+
+        Normalize<public>:logic = external {}
+
+        PreserveRatio<public>:logic = external {}
+
+        SpinBoxDelta<public>:?t = external {}
+
+    editable_widget<epic_internal> := class<epic_internal>:
+
+    @attribscope_class
+    @customattribhandler
+    hide_in_editor<epic_internal> := class(attribute):
+
+    localizable_agent<native><epic_internal> := class(localizable_value):
+        Value<native><epic_internal>:agent
+
+    player<native><public> := class<unique><persistent><epic_internal>(agent):
+        IsActive<native><epic_internal>()<varies><decides>:void
+
+    # Module import path: /Verse.org/Simulation/player_array_helper
+    player_array_helper<epic_internal> := module:
+        TestFunc<native><epic_internal>(new_value:int):int
+
+    player_component<native><epic_internal> := class<unique>(component):
+        GetHandle<native><public>()<transacts>:player
+
+    player_multicast_delegate<native><epic_internal> := class<final>(multicast_delegate(player)):
+
+    # Type for which there is a single instance per round.  Use `GetSession` to get the current round's `session` instance. May be used with `weak_map` to implement global variables.
+    # Note: may be changed in a future release to a single instance per game. Round-local behavior should not be relied upon.
+    session<native><public> := class<unique><module_scoped_var_weak_map_key><epic_internal>:
+
+    short_tool_tip<epic_internal>(ShortToolTip:[]char)<computes>:short_tool_tip_attribute
+
+    @attribscope_class
+    @attribscope_data
+    @attribscope_function
+    @customattribhandler
+    short_tool_tip_attribute<epic_internal> := class(attribute):
+
+    team<native><public> := class<unique><epic_internal>:
+
+    tool_tip<epic_internal>(ToolTip:[]char)<computes>:tool_tip_attribute
+
+    @attribscope_class
+    @attribscope_data
+    @attribscope_function
+    @customattribhandler
+    tool_tip_attribute<epic_internal> := class(attribute):
+
+    ui_max<epic_internal>(UIMax:[]char)<computes>:ui_max_attribute
+
+    @attribscope_data
+    @customattribhandler
+    ui_max_attribute<epic_internal> := class(attribute):
+
+    ui_min<epic_internal>(UIMin:[]char)<computes>:ui_min_attribute
+
+    @attribscope_data
+    @customattribhandler
+    ui_min_attribute<epic_internal> := class(attribute):
+
+Verse<public> := module:
+    # Returns the first index whose element in `Input` equals `ElementToFind`.
+    # Fails if ElementToFind does not exist in the array.
+    (Input:[]t where t:subtype(comparable)).Find<public>(ElementToFind:t)<computes><decides>:int = external {}
+
+    # Makes an `array` by removing all elements that equal `ElementToRemove` from `Input`.
+    (Input:[]t where t:subtype(comparable)).RemoveAllElements<public>(ElementToRemove:t)<computes>:[]t = external {}
+
+    # Makes an `array` by removing the element at the lowest index that equals `ElementToRemove` from `Input`.
+    # Fails if `Input` did not contain any instances of `ElementToRemove`.
+    (Input:[]t where t:subtype(comparable)).RemoveFirstElement<public>(ElementToRemove:t)<computes><decides>:[]t = external {}
+
+    # Makes an `array` by replacing all ranges of elements that equal `ElementsToReplace` with `Replacement` in `Input`.
+    # When there are multiple overlapping instances of `ElementsToReplace` in `Input`, only the position with the lowest index is replaced.
+    (Input:[]t where t:subtype(comparable)).ReplaceAll<public>(ElementsToReplace:[]t, Replacement:[]t)<transacts>:[]t = external {}
+
+    # Makes an `array` by replacing all elements that equal `ElementToReplace` with `ElementToReplaceWith` in `Input`.
+    (Input:[]t where t:subtype(comparable)).ReplaceAllElements<public>(ElementToReplace:t, ElementToReplaceWith:t)<computes>:[]t = external {}
+
+    # Makes an `array` by replacing the element at the lowest index that equals `ElementToReplace` with `ElementToReplaceWith` in `Input`.
+    # Fails if `Input` did not contain any instances of `ElementToReplace`.
+    (Input:[]t where t:subtype(comparable)).ReplaceFirstElement<public>(ElementToReplace:t, ElementToReplaceWith:t)<computes><decides>:[]t = external {}
+
+    # Makes an `array` by inserting `ElementsToInsert` into `Input` such that the first element of `ElementsToInsert` is at `InsertionIndex`.
+    (Input:[]t where t:type).Insert<public>(InsertionIndex:int, ElementsToInsert:[]t)<computes><decides>:[]t = external {}
+
+    # Makes an `array` by removing `Input`'s elements from `StartIndex` to `StopIndex-1`.
+    # Succeeds if `0 <= StartIndex <= StopIndex <= Input.Length`.
+    (Input:[]t where t:type).Remove<public>(StartIndex:int, StopIndex:int)<computes><decides>:[]t = external {}
+
+    # Makes an `array` by removing the element at `IndexToRemove` from `Input`.
+    # Succeeds if `0 <= IndexToRemove <= Input.Length-1`.
+    (Input:[]t where t:type).RemoveElement<public>(IndexToRemove:int)<computes><decides>:[]t = external {}
+
+    # Makes an `array` by replacing the element at `IndexToReplace` with `ElementToReplaceWith` in `Input`.
+    # Succeeds if `0 <= IndexToReplace <= Input.Length-1`.
+    (Input:[]t where t:type).ReplaceElement<public>(IndexToReplace:int, ElementToReplaceWith:t)<computes><decides>:[]t = external {}
+
+    # Makes an `array` containing `Input`'s elements from `StartIndex` to `Input.Length-1`.
+    # Succeeds if `0 <= StartIndex <= Input.Length`.
+    (Input:[]t where t:type).Slice<public>(StartIndex:int)<computes><decides>:[]t = external {}
+
+    # Makes an `array` containing `Input`'s elements from `StartIndex` to `StopIndex-1`.
+    # Fails unless `0 <= StartIndex <= StopIndex <= Input.Length`.
+    (Input:[]t where t:type).Slice<public>(StartIndex:int, StopIndex:int)<computes><decides>:[]t = external {}
+
+    # Succeeds if `Val` is within `AbsoluteTolerance` of `0.0`.
+    (Val:float).IsAlmostZero<public>(AbsoluteTolerance:float)<computes><decides>:void = external {}
+
+    # Returns `X` if `X` is finite.
+    # Fails if `X` is one of:`
+    #  * `+Inf`
+    #  * `-Inf`
+    #  * `NaN`
+    (X:float).IsFinite<public>()<computes><decides>:float = external {}
+
+    # Returns the inverse hyperbolic cosine of `X` if `1.0 <= X`.
+    ArCosh<native><public>(X:float)<varies>:float
+
+    # Returns the inverse hyperbolic sine of `X` if `IsFinite(X)`.
+    ArSinh<native><public>(X:float)<varies>:float
+
+    # Returns the inverse hyperbolic tangent of `X` if `IsFinite(X)`.
+    ArTanh<native><public>(X:float)<varies>:float
+
+    # Returns the inverse cosine (arccosine) of `X` if `-1.0 <= X <= 1.0`.
+    ArcCos<native><public>(X:float)<varies>:float
+
+    # Returns the inverse sine (arcsine) of `X` if `-1.0 <= X <= 1.0`.
+    ArcSin<native><public>(X:float)<varies>:float
+
+    # Returns the inverse tangent (arctangent) of `X` such that:`-PiFloat/2.0 <= ArcTan(x) <= PiFloat/2.0`.
+    ArcTan<native><public>(X:float)<varies>:float
+
+    # Returns the angle in radians at the origin between a ray pointing to `(X, Y)` and the positive `X` axis such that `-PiFloat < ArcTan(Y, X) <= PiFloat`.
+    # Returns 0.0 if `X=0.0 and Y=0.0`.
+    ArcTan<native><public>(Y:float, X:float)<varies>:float
+
+    # Returns the smallest `int` that is greater than or equal to `Val`.
+    # Fails if `not IsFinite(Val)`.
+    Ceil<native><public>(Val:float)<varies><decides>:int
+
+    # Constrains the value of `Val` between `A` and `B`. Robustly handles different argument orderings.
+    # Returns the median of `Val`, `A`, and `B`.
+    Clamp<native><public>(Val:int, A:int, B:int)<computes>:int
+
+    # Constrains the value of `Val` between `A` and `B`. Robustly handles different argument orderings.
+    # Returns the median of `Val`, `A`, and `B`, such that comparisons with `NaN` operate as if `NaN > +Inf`.
+    Clamp<public>(Val:float, A:float, B:float)<computes>:float = external {}
+
+    # Makes a flattened `array` by concatenating the elements of `Arrays`.
+    Concatenate<public>(Arrays:[][]t where t:type)<computes>:[]t = external {}
+
+    # Returns the cosine of `X` if `IsFinite(X)`.
+    # Returns `NaN` if `not IsFinite(X)
+    Cos<native><public>(X:float)<varies>:float
+
+    # Returns the hyperbolic cosine of `X`.
+    Cosh<native><public>(X:float)<varies>:float
+
+    # Halts the Verse runtime with error `Message`.
+    Err<native><public>(Message:[]char)<computes>:false
+
+    # Returns the natural exponent of `X`.
+    Exp<native><public>(X:float)<varies>:float
+
+    # Returns the largest `int` that is less than or equal to `Val`.
+    # Fails if `not IsFinite(Val)`.
+    Floor<native><public>(Val:float)<varies><decides>:int
+
+    # Returns the `int` that equals `Val` without the fractional part.
+    # Fails if `not IsFinite(val)`.
+    Int<native><public>(Val:float)<varies><decides>:int
+
+    # Succeeds if `Val1` and `Val2` are within `AbsoluteTolerance` of each other.
+    IsAlmostEqual<public>(Val1:float, Val2:float, AbsoluteTolerance:float)<computes><decides>:void = external {}
+
+    # Makes a `string` by concatenating `Separator` between the elements of `Strings`.
+    Join<native><public>(Strings:[][]char, Separator:[]char)<computes>:[]char
+
+    # Used to linearly interpolate/extrapolate between `From` (when `Parameter = 0.0`) and `To` (when `Parameter = 1.0`). Expects that all arguments are finite.
+    # Returns `From*(1 - Parameter) + To*Parameter`.
+    Lerp<native><public>(From:float, To:float, Parameter:float)<varies>:float
+
+    # Returns the natural logarithm of `X`.
+    Ln<native><public>(X:float)<varies>:float
+
+    # Makes a `string` by localizing `Message` based on the current `locale`.
+    Localize<native><public>(Message:message)<varies>:[]char
+
+    # Returns the base `B` logarithm of `X`.
+    Log<public>(B:float, X:float)<varies>:float = external {}
+
+    MakeLocalizableValue<epic_internal>(V:[]char):localizable_string = external {}
+
+    MakeLocalizableValue<epic_internal>(V:float):localizable_float = external {}
+
+    MakeLocalizableValue<epic_internal>(V:int):localizable_int = external {}
+
+    MakeLocalizableValue<epic_internal>(V:message):localizable_message = external {}
+
+    MakeMessageInternal<native><epic_internal>(K:[]char, D:[]char, S:[[]char]localizable_value)<converges>:message
+
+    # Returns the maximum of `X` and `Y` unless either are `NaN`.
+    # Returns `NaN` if either `X` or `Y` are `NaN`.
+    Max<public>(X:float, Y:float)<computes>:float = external {}
+
+    # Returns the maximum of `X` and `Y`.
+    Max<public>(X:int, Y:int)<computes>:int = external {}
+
+    # Returns the minimum of `X` and `Y` unless either are `NaN`.
+    # Returns `NaN` if either `X` or `Y` are `NaN`.
+    Min<public>(X:float, Y:float)<computes>:float = external {}
+
+    # Returns the minimum of `X` and `Y`.
+    Min<public>(X:int, Y:int)<computes>:int = external {}
+
+    # Returns the remainder of `X/Y` as defined by Euclidean division, i.e.:
+    #  * `Mod[X,Y] = X - Quotient(X/Y)*Y`
+    #  * `0 <= Mod[X,Y] < Abs(Y)`
+    # Fails if `Y=0`.
+    Mod<native><public>(X:int, Y:int)<computes><decides>:int
+
+    # Pi, the ratio of the circumference of a circle to its diameter.
+    PiFloat<public>:float = external {}
+
+    # Returns `A` to the power of `B`.
+    Pow<native><public>(A:float, B:float)<varies>:float
+
+    using {/Verse.org/Colors}
+    # Writes `Message` to a dedicated `Print` log while displaying it in `Color` on the client screen for `Duration` seconds. By default, `Color` is `NamedColors.White` and `Duration` is `2.0` seconds.
+    Print<native><public>(Message:[]char, ?Duration:float = external {}, ?Color:color = external {}):void
+
+    # Writes `Message` to a dedicated `Print` log while displaying it in `Color` on the client screen for `Duration` seconds. By default, `Color` is `NamedColors.White` and `Duration` is `2.0` seconds.
+    Print<native><public>(Message:message, ?Duration:float = external {}, ?Color:color = external {}):void
+
+    # Returns the quotient `X/Y` as defined by Euclidean division, i.e.:
+    #  * `Quotient[X/Y] = Floor[X/Y]` when `Y > 0`
+    #  * `Quotient[X/Y] = Ceil[X/Y]` when `Y < 0`
+    #  * `Quotient[X/Y] * Y + Mod[X,Y] = X`
+    # Fails if `Y = 0`.
+    Quotient<native><public>(X:int, Y:int)<computes><decides>:int
+
+    # Returns `Val` rounded to the nearest `int`. When the fractional part of `Val` is `0.5`, rounds to the nearest *even* `int` (per the IEEE-754 default rounding mode).
+    # Fails if `not IsFinite(Val)`.
+    Round<native><public>(Val:float)<varies><decides>:int
+
+    # Returns the sign of `Val`:
+    #  * `1.0` if `Val > 0.0`
+    #  * `0.0` if `Val = 0.0`
+    #  * `-1.0` if `Val < 0.0`
+    #  * `NaN` if `Val = NaN`
+    Sgn<public>(Val:float)<computes>:float = external {}
+
+    # Returns the sign of `Val`:
+    #   * `1` if `Val > 0`
+    #  * `0` if `Val = 0`
+    #  * `-1` if `Val < 0`
+    Sgn<public>(Val:int)<computes>:int = external {}
+
+    # Returns the sine of `X` if `IsFinite(X)`.
+    # Returns `NaN` if `not IsFinite(X)
+    Sin<native><public>(X:float)<varies>:float
+
+    # Returns the hyperbolic sine of `X`.
+    Sinh<native><public>(X:float)<varies>:float
+
+    # Returns the square root of `X` if `X >= 0.0`.
+    # Returns `NaN` if `X < 0.0`.
+    Sqrt<native><public>(X:float)<varies>:float
+
+    # Returns the tangent of `X` if `IsFinite(X)`.
+    # Returns `NaN` if `not IsFinite(X).
+    Tan<native><public>(X:float)<varies>:float
+
+    # Returns the hyperbolic tangent of `X`.
+    Tanh<native><public>(X:float)<varies>:float
+
+    # Makes a `string` by converting `Character` to UTF-8 from UTF-32.
+    ToString<native><epic_internal>(Character:char32)<computes>:[]char
+
+    # Makes a `string` from `Character`.
+    ToString<native><public>(Character:char)<computes>:[]char
+
+    # Makes a `string` representation of `Val`.
+    ToString<native><public>(Val:float)<varies>:[]char
+
+    # Makes a printable `string` representation of `Val`.
+    ToString<native><public>(Val:int)<computes>:[]char
+
+    # Returns `String` without modification.
+    ToString<public>(String:[]char)<computes>:[]char = external {}
+
+    # Implemented by classes that allow users to cancel an operation. For example, calling `subscribable.Subscribe` with a callback returns a `cancelable` object. Calling `Cancel` on the return object unsubscribes the callback.
+    cancelable<native><public> := interface:
+        # Prevents any current or future work from completing.
+        Cancel<public>()<transacts>:void
+
+    # Implemented by classes whose instances have limited lifetimes.
+    disposable<native><public> := interface:
+        # Cleans up this object.
+        Dispose<public>():void
+
+    # A *recurring*, successively signaled parametric `event` with a `payload` allowing a simple mechanism to coordinate between concurrent tasks:
+    #  * `Await` suspends tasks to wait on this `event`,
+    #  * another task `Signal`s this `event` and resumes the suspended tasks in FIFO order.
+    event<native><public>(t:type)<computes> := class(signalable(t), awaitable(t)):
+        # Suspends the current task until another task calls `Signal`.
+        # If called during another invocation of `Signal`, the the task will still suspend and resume during the next call to `Signal`.
+        Await<native><override>()<suspends>:t
+
+        # Returns the number of suspended tasks added by calls to `Await` that have not been resumed by a call to `Signal`.
+        GetAwaitCount<native><epic_internal>():int
+
+        # Concurrently resumes the tasks that were suspended by `Await` calls before this call to `Signal`.
+        #
+        # Tasks are resumed in the order they were suspended. Each task will perform as much work as it can until it encounters a blocking call, whereupon it will transfer control to the next suspended task.
+        Signal<native><override>(Val:t):void
+
+    # A *recurring*, successively signaled event allowing a simple mechanism to coordinate between concurrent tasks.
+    event<public>()<computes> := event(tuple())
+
+    # Implemented by classes whose instances can become invalid at runtime.
+    invalidatable<native><public> := interface(disposable):
+        # Succeeds if this object is still valid.
+        IsValid<public>()<transacts><decides>:void
+
+    # A parameterless interface combining `awaitable` and `subscribable`.
+    listenable<public>()<computes> := listenable(tuple())
+
+    # A parametric interface combining `awaitable` and `subscribable`.
+    listenable<public>(payload:type)<computes> := interface(awaitable(payload), subscribable(payload)):
+
+    # Used for message localization.
+    locale<native><public> := struct<epic_internal>:
+
+    localizable_float<native><epic_internal> := class<internal>(localizable_value):
+
+    localizable_int<native><epic_internal> := class<internal>(localizable_value):
+
+    localizable_message<native><epic_internal> := class<internal>(localizable_value):
+
+    localizable_string<native><epic_internal> := class<internal>(localizable_value):
+
+    localizable_value<native><epic_internal> := class:
+
+    # A localizable text message.
+    message<native><public> := class<epic_internal>:
+        DefaultText<native><epic_internal>:[]char
+
+        Key<native><epic_internal>:[]char
+
+        Substitutions<native><epic_internal>:[[]char]localizable_value
+
+    # A parametric interface implemented by events with a `payload` that can be signaled.
+    # Can be used with `awaitable`, `subscribable`, or both (see: `listenable`).
+    signalable<public>(payload:type)<computes> := interface:
+        # Concurrently resumes the tasks waiting for this event in `awaitable.Await` and synchronously invokes any callbacks added to this event by `subscribable.Subscribe`.
+        Signal<public>(Val:payload):void
+
+    # A parameterless interface implemented by events that can be subscribed to.
+    subscribable<public>()<computes> := subscribable(tuple())
+
+    # A parametric interface implemented by events with a `payload` that can be subscribed to.
+    # Matched with `signalable.`
+    subscribable<public>(t:type)<computes> := interface:
+        # Registers `Callback` to be invoked on matching calls to `signable.Signal`.
+        # Returns an unsubscriber object. Call `cancelable.Cancel` on the unsubscriber to unregister `Callback`.
+        Subscribe<public>(Callback:type {__(:t):void})<transacts>:cancelable
+
+# Module import path: /Verse.org/VerseEngine
+VerseEngine<public> := module:
+    # Module import path: /Verse.org/VerseEngine/Component
+    Component<public> := module:
+        @import_as("/Script/EntityCore.UEntityComponent")
+        component<native><public> := class<abstract>:
+
+    # Module import path: /Verse.org/VerseEngine/Entity
+    Entity<public> := module:
+        # Module import path: /Verse.org/VerseEngine/Entity/EntityHelpers
+        EntityHelpers<public> := module:
+            # Destroy the entity the component is attached to
+            DestroyObject<native><public>(__dupe___unnamed_parameter_43:component):logic
+
+            # Get a component from the entity of the specified type
+            GetComponentOfTypeC<native><public>(InComponent:component, Type:type)<transacts><decides>:component
+
+            # Gets the entity associated with the parameter provided component
+            GetEntityFromComponent<native><public>(__dupe___unnamed_parameter_44:component)<transacts><decides>:entity
+
+        entity<native><public> := class<final>:
+            # Add a component to the entity of the specified type
+            AddComponent<native><public>(ComponentType:type)<transacts>:?component
+
+            # Destroy the entity
+            Destroy<native><public>():logic
+
+            # Helper method for ensuring components exist, creating them if they don't exist
+            EnsureComponents<public>(AddComponentClasses:[]subtype(component)):void = external {}
+
+            # Get all component(s) from the entity of the specified type
+            GetAllComponentsOfType<native><public>(ComponentType:type)<transacts>:[]component
+
+            # Get a component from the entity of the specified type
+            GetComponentOfType<native><public>(ComponentType:type)<transacts>:?component
+
+            GetFullname<native><public>():[]char
+
+            GetName<native><public>():[]char
+
+            # Get a component from the entity of the specified type, if one does not exist, add it
+            GetOrCreateComponentOfType<native><public>(ComponentType:type):?component
+
+            # Helper method for check if required components exist
+            HasComponents<public>(RequiredComponentClasses:[]subtype(component))<transacts><decides>:void = external {}
+
+            # Compare with another entity
+            IsEqual<native><public>(OtherEntity:entity)<transacts>:logic
+
+            # Remove a component from the entity
+            RemoveComponent<native><public>(__dupe___unnamed_parameter_34:component):logic
+
+    multicast_delegate<native><public>(t:type)<computes> := class(multicast_delegate_base, subscribable(t)):
+        Broadcast<native><public>(__dupe___unnamed_parameter_46:t):void
+
+        Empty<native><public>():void
+
+        Subscribe<native><override>(Callback:type {__(:t):void})<transacts>:cancelable
+
+    multicast_delegate<public>()<computes> := multicast_delegate(tuple())
+
+    multicast_delegate_base<native><public> := class:
+
+    subscribable_event<epic_internal>()<computes> := subscribable_event(tuple())
+
+    subscribable_event<native><epic_internal>(t:type)<computes> := class(multicast_delegate(t), listenable(t)):
+        Await<native><override>()<suspends>:t
+
+# Module import path: /Verse.org/VerseExperimental
+VerseExperimental<public> := module:
+    # Creates and initializes a new instance with the specified year, month, day, hour, minute, second and millisecond.
+    CreateDateTime<native><public>(Year:int, Month:int, Day:int, Hour:int, Minute:int, Second:int, Millisecond:int)<transacts><decides>:date_time
+
+    # Creates and initializes a new instance with the specified days, hours, minutes, seconds and milliseconds.
+    CreateTimeSpan<native><public>(Days:int, Hours:int, Minutes:int, Seconds:int, Milliseconds:int)<transacts>:time_span
+
+    # Returns the maximum date value. The maximum date value is December 31, 9999, 23:59:59.9999999. See DateTimeMin
+    DateTimeMax<public>()<transacts>:date_time = external {}
+
+    # Returns the minimum date value. The minimum date value is January 1, 0001, 00:00:00.0. See DateTimeMax
+    DateTimeMin<public>()<transacts>:date_time = external {}
+
+    # Return the number of days in the specified month of the specified year
+    DaysInMonth<native><public>(Year:int, Month:int):int
+
+    # Return the number of days in the specified year
+    DaysInYear<native><public>(Year:int):int
+
+    GetDate<native><public>(Val:date_time):date_parts
+
+    GetDay<native><public>(Val:date_time):int
+
+    GetDayOfWeek<native><public>(Val:date_time):day_of_week
+
+    GetDays<native><public>(Val:time_span):int
+
+    GetHours<native><public>(Val:date_time):int
+
+    GetHours<native><public>(Val:time_span):int
+
+    GetMicroseconds<native><public>(Val:date_time):int
+
+    GetMicroseconds<native><public>(Val:time_span):int
+
+    GetMilliseconds<native><public>(Val:date_time):int
+
+    GetMilliseconds<native><public>(Val:time_span):int
+
+    GetMinutes<native><public>(Val:date_time):int
+
+    GetMinutes<native><public>(Val:time_span):int
+
+    GetMonth<native><public>(Val:date_time):int
+
+    GetMonthOfYear<native><public>(Val:date_time):month_of_year
+
+    GetNanoseconds<native><public>(Val:date_time):int
+
+    GetNanoseconds<native><public>(Val:time_span):int
+
+    GetSeconds<native><public>(Val:date_time):int
+
+    GetSeconds<native><public>(Val:time_span):int
+
+    GetTimeOfDay<native><public>(Val:date_time):time_of_day_parts
+
+    GetTotalDays<native><public>(Val:time_span):int
+
+    GetTotalHours<native><public>(Val:time_span):int
+
+    GetTotalMicroseconds<native><public>(Val:time_span):int
+
+    GetTotalMilliseconds<native><public>(Val:time_span):int
+
+    GetTotalMinutes<native><public>(Val:time_span):int
+
+    GetTotalSeconds<native><public>(Val:time_span):int
+
+    GetYear<native><public>(Val:date_time):int
+
+    Greater<public>(Left:date_time, Right:date_time)<transacts><decides>:date_time = external {}
+
+    Greater<public>(Left:time_span, Right:time_span)<transacts><decides>:time_span = external {}
+
+    GreaterEqual<public>(Left:date_time, Right:date_time)<transacts><decides>:date_time = external {}
+
+    GreaterEqual<public>(Left:time_span, Right:time_span)<transacts><decides>:time_span = external {}
+
+    Less<public>(Left:date_time, Right:date_time)<transacts><decides>:date_time = external {}
+
+    Less<public>(Left:time_span, Right:time_span)<transacts><decides>:time_span = external {}
+
+    LessEqual<public>(Left:date_time, Right:date_time)<transacts><decides>:date_time = external {}
+
+    LessEqual<public>(Left:time_span, Right:time_span)<transacts><decides>:time_span = external {}
+
+    # Returns a string representation of the datetime in the following format: yyyy.mm.dd-hh.mm.ss. Assumes Datetime is in UTC.
+    ToString<native><public>(Val:date_time):[]char
+
+    # Returns a string representation of the time span in the following format: yyyy.mm.dd-hh.mm.ss.
+    ToString<native><public>(Val:time_span):[]char
+
+    # Returns the current UTC date_time.
+    UtcNow<native><public>():date_time
+
+    ValidateDateTime<native><public>(Year:int, Month:int, Day:int, Hour:int, Minute:int, Second:int, Millisecond:int):logic
+
+    date_parts<native><public> := struct<internal>:
+
+    date_time<native><public> := struct:
+
+    # Enumerates the days of the week in 7-day calendars.
+    day_of_week<native><public> := enum:
+        Friday
+
+        Monday
+
+        Saturday
+
+        Sunday
+
+        Thursday
+
+        Tuesday
+
+        Wednesday
+
+    # Enumerates the months of the year in 12-month calendars.
+    month_of_year<native><public> := enum:
+        April
+
+        August
+
+        December
+
+        February
+
+        January
+
+        July
+
+        June
+
+        March
+
+        May
+
+        November
+
+        October
+
+        September
+
+    operator'*'<public>(Left:float, Right:time_span):time_span = external {}
+
+    operator'*'<public>(Left:time_span, Right:float):time_span = external {}
+
+    operator'+'<public>(Left:date_time, Right:time_span):date_time = external {}
+
+    operator'+'<public>(Left:time_span, Right:time_span):time_span = external {}
+
+    operator'-'<public>(Left:date_time, Right:date_time):time_span = external {}
+
+    operator'-'<public>(Left:date_time, Right:time_span):date_time = external {}
+
+    operator'-'<public>(Left:time_span, Right:time_span):time_span = external {}
+
+    operator'-'<public>(Right:time_span):time_span = external {}
+
+    operator'/'<public>(Left:time_span, Right:float):time_span = external {}
+
+    time_of_day_parts<native><public> := struct<internal>:
+
+    time_span<native><public> := struct:
