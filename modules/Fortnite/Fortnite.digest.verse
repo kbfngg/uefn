@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-28.30-CL-31511038
+# Generated from build: ++Fortnite+Release-29.00-CL-31978752
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -178,6 +178,9 @@ Animation<public> := module:
 
 # Module import path: /Fortnite.com/Assets
 Assets<public> := module:
+
+# Module import path: /Fortnite.com/Building
+Building<public> := module:
 
 # Module import path: /Fortnite.com/Characters
 Characters<public> := module:
@@ -2530,13 +2533,13 @@ Devices<public> := module:
         Enable<public>():void = external {}
 
         # Returns the *Button Text* for this popup at a specified index.
-        GetButtonText<public>(Index:int)<transacts>:[]char = external {}
+        GetButtonText<public>(Index:int)<transacts>:string = external {}
 
         # Returns the *Description* text for this popup.
-        GetDescriptionText<public>()<transacts>:[]char = external {}
+        GetDescriptionText<public>()<transacts>:string = external {}
 
         # Returns the *Title* text for this popup.
-        GetTitleText<public>()<transacts>:[]char = external {}
+        GetTitleText<public>()<transacts>:string = external {}
 
         # Hides the popup from all `agent`s in the experience.
         Hide<public>():void = external {}
@@ -2578,6 +2581,44 @@ Devices<public> := module:
         # Signaled when this device times out while an `agent` is looking at it.
         # Sends the `agent` who was looking at the popup.
         TimeOutEvent<public>:listenable(agent) = external {}
+
+    # Used to apply Post Process Effects to players through the creative device rather than a Post Process Volume.
+    post_process_device<public> := class<concrete><final>(creative_device_base):
+        # Starts blending in the post process effect to the set strength only for the instigating `Agent`.
+        BlendIn<public>(Agent:agent):void = external {}
+
+        # Starts blending in the post process effect to the set strength for all players.
+        BlendInForAll<public>():void = external {}
+
+        # Starts blending out the post process effect to 0 strength only for the instigating `Agent`.
+        BlendOut<public>(Agent:agent):void = external {}
+
+        # Starts blending out the post process effect to 0 strength for all players.
+        BlendOutForAll<public>():void = external {}
+
+        # Signaled when a blend in event has finished. Sends the `agent` that used this device.
+        BlendingInCompleteEvent<public>:listenable(?agent) = external {}
+
+        # Signaled when a blend out event has finished. Sends the `agent` that used this device.
+        BlendingOutCompleteEvent<public>:listenable(?agent) = external {}
+
+        # Disables this device for all players.
+        Disable<public>():void = external {}
+
+        # Disables this device only for the instigating `Agent`.
+        Disable<public>(Agent:agent):void = external {}
+
+        # Enables this device for all players.
+        Enable<public>():void = external {}
+
+        # Enables this device only for the instigating `Agent`.
+        Enable<public>(Agent:agent):void = external {}
+
+        # Resets to the starting strength, ending any ongoing blending only for the instigating `Agent`.
+        Reset<public>(Agent:agent):void = external {}
+
+        # Resets to the starting strength, ending any ongoing blending for all players.
+        ResetForAll<public>():void = external {}
 
     # Base class for various powerup devices offering common events like `ItemPickedUpEvent`.
     powerup_device<public> := class<abstract><epic_internal>(creative_device_base):
@@ -4501,7 +4542,7 @@ Playspaces<public> := module:
     # A nested container that scopes objects, style, gameplay rules, visuals, etc. All objects and players in an experience will belong to a fort_playspace. There is typically one `fort_playspace` for an entire experience, though this may change in the future as the platform evolves.
     #
     # To access the `fort_playspace` for a `creative_device` use `creative_device.GetPlayspace`.
-    fort_playspace<native><public> := interface:
+    fort_playspace<native><public> := interface<epic_internal>:
         # Get an `[]player`s in the current `fort_playspace`.
         GetPlayers<public>()<transacts>:[]player
 
@@ -4518,7 +4559,7 @@ Playspaces<public> := module:
 Teams<public> := module:
     # Collection used to manage `team`s and `agent`s on those teams.
     # Use `fort_playspace.GetTeamCollection()` to get the `team_collection` for the active experience.
-    fort_team_collection<native><public> := interface:
+    fort_team_collection<native><public> := interface<epic_internal>:
         # Adds `InAgent` to `InTeam`.
         # Fails if `InTeam` is not part of the `fort_team_collection`.
         AddToTeam<public>(InAgent:agent, InTeam:team)<transacts><decides>:void
@@ -4646,7 +4687,7 @@ UI<public> := module:
     creative_hud_identifier_team_info<public> := class<final>(hud_element_identifier):
 
     # A HUD controller that allows for showing and hiding of HUD elements.
-    fort_hud_controller<native><public> := interface:
+    fort_hud_controller<native><public> := interface<epic_internal>:
         # Hides a set of HUD elements.
         HideElements<public>(HUDElements:[]hud_element_identifier):void
 
@@ -4746,7 +4787,7 @@ UI<public> := module:
         DefaultText<localizes><native><public>:message = external {}
 
         # Gets the text currently in the widget.
-        GetText<native><public>():[]char
+        GetText<native><public>():string
 
         # Subscribable event that fires when the button is clicked.
         OnClick<public>():listenable(widget_message) = external {}
