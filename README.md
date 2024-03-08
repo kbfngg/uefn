@@ -2,7 +2,7 @@
 
 A basic repository to accumulate a knowledgebase around UEFN and to track public API diffs.
 
-## Latest Verse - `28.30`:
+## Latest Verse - `29.00`:
 
 ### Module APIs
 
@@ -24,6 +24,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details open>
 <summary>Verse Modules Diffs</summary>
 
+- [`28.30` - `29.00`](https://github.com/kbfngg/uefn/commit/7343a0745a0945f1df31fb37827c232700268bfd)
 - [`28.20` - `28.30`](https://github.com/kbfngg/uefn/commit/1d333115b880fd3d30ea32d20aa5a61e5be23b2c)
 - [`28.10` - `28.20`](https://github.com/kbfngg/uefn/commit/f18b44df4bfe519d45af9d36d26f6a6b111315bd)
 - [`28.01` - `28.10`](https://github.com/kbfngg/uefn/commit/4a76a49ac04a4974d3487cb50846bc769b6e52a0)
@@ -50,6 +51,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>Verse Snapshots Diffs</summary>
 
+- [`28.30` - `29.00`](https://github.com/kbfngg/uefn/commit/947684c753174017373c47f9d9faf45d00c2b998)
 - [`28.20` - `28.30`](https://github.com/kbfngg/uefn/commit/44a1387de6f43e8c726be2b3d717217b33b3a80d)
 - [`28.10` - `28.20`](https://github.com/kbfngg/uefn/commit/ec11b66a63810cc6e5b8c3509f9b855c7c09f9b5)
 - [`27.00` - `28.10`](https://github.com/kbfngg/uefn/commit/143b426b0c2de5a00c2233168ee2234ad86eb812) (hidden 💎)
@@ -71,6 +73,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>Verse APIs</summary>
 
+- [`29.00`](https://github.com/kbfngg/uefn/tree/game_v29.00/modules)
 - [`28.30`](https://github.com/kbfngg/uefn/tree/game_v28.30/modules)
 - [`28.20`](https://github.com/kbfngg/uefn/tree/game_v28.20/modules)
 - [`28.10`](https://github.com/kbfngg/uefn/tree/game_v28.10/modules)
@@ -99,6 +102,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>Valkyrie Sentry Manifest Diffs</summary>
 
+- [`28.30` - `29.00`](https://github.com/kbfngg/uefn/commit/f9efbfd9ce6635bc45459a0ccb0f10fdc09c0c83)
 - [`28.20` - `28.30`](https://github.com/kbfngg/uefn/commit/e79d2a7374f920add9cfaba67af902a4cc8e0fa1)
 - [`28.10` - `28.20`](https://github.com/kbfngg/uefn/commit/54ac239fe3a9c1b94f8dd53b0219aab4d59c1343)
 - [`28.01` - `28.10`](https://github.com/kbfngg/uefn/commit/3660a44287bd92291d4ed5ef62861366f7413024)
