@@ -9,7 +9,7 @@ using {/Verse.org/VerseEngine/Component}
 Game<public> := module:
     # Module import path: /Fortnite.com/Game/StormController
     StormController<public> := module:
-        storm_controller_component<native><public> := class<final>(component):
+        storm_controller_component<native><public> := class<final>(vk_component):
             begin<native><public>():void
 
             end<native><public>():void
@@ -54,13 +54,13 @@ Game<public> := module:
     # Module import path: /Fortnite.com/Game/Player
     Player<public> := module:
         fort_player_component<native><public> := class(player_component):
-            PushActiveState<native><public>(stateToAdd:[]char):logic
+            PushActiveState<native><public>(stateToAdd:string):logic
 
-            PopActiveState<native><public>(stateToRemove:[]char):logic
+            PopActiveState<native><public>(stateToRemove:string):logic
 
-            IsActive<native><public>(state:[]char):logic
+            IsActive<native><public>(state:string):logic
 
-            GetUniqueID<native><public>():[]char
+            GetUniqueID<native><public>():string
 
         # Fortnite player attributes
         PlayerAttribute<native><public> := enum:
@@ -101,13 +101,13 @@ Game<public> := module:
         # Module import path: /Fortnite.com/Game/Player/PlayerInventory
         PlayerInventory<public> := module:
             # Add an inventory item to a player
-            TryAddToInventory<native><public>(PlayerHandle:player, AssetPath:[]char, Quantity:int, NotifyPlayerClient:logic):void
+            TryAddToInventory<native><public>(PlayerHandle:player, AssetPath:string, Quantity:int, NotifyPlayerClient:logic):void
 
             # Add an inventory item to a player
             TryAddItemToInventory<native><public>(PlayerHandle:player, ItemDefinition:fort_item_definition, Quantity:int, NotifyPlayerClient:logic)<transacts><decides>:void
 
             # Remove an inventory item from a player
-            RemoveFromInventory<native><public>(PlayerHandle:player, AssetPath:[]char, Quantity:int):logic
+            RemoveFromInventory<native><public>(PlayerHandle:player, AssetPath:string, Quantity:int):logic
 
             # Clear all droppable items from a player inventory
             ClearDroppableItems<native><public>(PlayerHandle:player):void
@@ -136,16 +136,16 @@ Game<public> := module:
             # Returns array of players currently spectating this player
             GetPlayersSpectatingTarget<native><public>(TargetPlayer:player)<transacts>:[]player
 
-        player_start_component<native><public> := class<final>(component):
-            @editable var tags<native><public>:[][]char
+        player_start_component<native><public> := class<final>(vk_component):
+            @editable var tags<native><public>:[]string
 
-            addTags<native><public>(newTags:[][]char):void
+            addTags<native><public>(newTags:[]string):void
 
             getPosition<native><public>():vector3
 
         # Module import path: /Fortnite.com/Game/Player/PlayerStartComponent
         PlayerStartComponent<public> := module:
-            findAllInPlayspaceWithTags<native><epic_internal>(contextObject:component, searchTags:[][]char):[]player_start_component
+            findAllInPlayspaceWithTags<native><epic_internal>(contextObject:vk_component, searchTags:[]string):[]player_start_component
 
         # Module import path: /Fortnite.com/Game/Player/PlayerStasis
         # Player stasis utilities
@@ -226,7 +226,7 @@ Game<public> := module:
 
     # Module import path: /Fortnite.com/Game/Movement
     Movement<public> := module:
-        projectile_movement_component<native><public> := class<final>(component):
+        projectile_movement_component<native><public> := class<final>(vk_component):
             SetDirection<native><public>(Direction:vector3):void
 
             SetSpeed<native><public>(Speed:float):void
@@ -244,7 +244,7 @@ Game<public> := module:
         item_type<native><public> := class:
 
 
-        player_pickup_component<native><epic_internal> := class(component):
+        player_pickup_component<native><epic_internal> := class(vk_component):
             givePickupTo<native><public>(TargetPlayer:player_component):void
 
             tossPickup<native><public>(finalLocation:vector3, owner:?player_component):void
@@ -257,7 +257,7 @@ Game<public> := module:
 
         # Module import path: /Fortnite.com/Game/Item/PlayerPickupComponent
         PlayerPickupComponent<epic_internal> := module:
-            createPickup<native><epic_internal>(contextObject:component, itemDefinition:fort_item_definition, count:int, location:vector3):?player_pickup_component
+            createPickup<native><epic_internal>(contextObject:vk_component, itemDefinition:fort_item_definition, count:int, location:vector3):?player_pickup_component
 
     match_stats<native><public> := class<final>(stat_container):
         SetPlayerStat<native><public>(InPlayer:player, StatIndex:int, NewValue:int):void
@@ -311,7 +311,7 @@ Game<public> := module:
         PlayerAllow
         PlayerDisallow
 
-    fort_building_settings_component<native><public> := class<final>(component):
+    fort_building_settings_component<native><public> := class<final>(vk_component):
         setBuilding<native><public>(state:PlayerSettingState):void
 
         setBuildingOnWater<native><public>(state:PlayerSettingState):void
@@ -332,15 +332,15 @@ Game<public> := module:
 
     # Module import path: /Fortnite.com/Game/VerseFortniteHacks
     VerseFortniteHacks<epic_internal> := module:
-        getAllComponentsOfType<native><epic_internal>(contextObject:component, Type:subtype(component)):[]component
+        getAllComponentsOfType<native><epic_internal>(contextObject:vk_component, Type:subtype(vk_component)):[]vk_component
 
         respawnPlayer<native><public>(TargetPlayer:player_component, spawnPoint:player_start_component):void
 
-        setAutoRespawnEnabled<native><epic_internal>(contextObject:component, Enabled:logic):void
+        setAutoRespawnEnabled<native><epic_internal>(contextObject:vk_component, Enabled:logic):void
 
-        GetPawnCollisionEntityID<native><public>(__dupe___unnamed_parameter_125:player_component):int
+        GetPawnCollisionEntityID<native><public>(__dupe___unnamed_parameter_169:player_component):int
 
-    fortnite_building_component<native><public> := class<final>(component):
+    fortnite_building_component<native><public> := class<final>(vk_component):
         wasPlayerBuilt<native><public>()<transacts>:logic
 
         canBeDamaged<native><public>():logic

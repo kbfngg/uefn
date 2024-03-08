@@ -132,7 +132,7 @@ item_attribute_logic<native><public> := class<abstract>(item_attribute_logic_bas
     DefaultValue<native><public>:logic
 
 item_attribute_string<native><public> := class<abstract>(item_attribute_string_base):
-    DefaultValue<native><public>:[]char
+    DefaultValue<native><public>:string
 
 @import_as("/Script/ItemizationCoreRuntime.UItemAttributeValueBase")
 item_attribute_value_base<native><public> := class<abstract>:
@@ -142,7 +142,7 @@ item_attribute_value_base<native><public> := class<abstract>:
 
     GetAsLogic<public>():logic = external {}
 
-    GetAsString<public>():[]char = external {}
+    GetAsString<public>():string = external {}
 
 @import_as("/Script/ItemizationCoreRuntime.UItemAttributeValue_Int")
 item_attribute_value_int_base<native><epic_internal> := class<abstract>(item_attribute_value_base):
@@ -169,7 +169,7 @@ item_attribute_value_int<native><public> := class<final>(item_attribute_value_in
 
     GetAsLogic<override>():logic = external {}
 
-    GetAsString<override>():[]char = external {}
+    GetAsString<override>():string = external {}
 
 item_attribute_value_float<native><public> := class<final>(item_attribute_value_float_base):
     Value<native><epic_internal>:float = external {}
@@ -180,7 +180,7 @@ item_attribute_value_float<native><public> := class<final>(item_attribute_value_
 
     GetAsLogic<override>():logic = external {}
 
-    GetAsString<override>():[]char = external {}
+    GetAsString<override>():string = external {}
 
 item_attribute_value_logic<native><public> := class<final>(item_attribute_value_logic_base):
     Value<native><epic_internal>:logic = external {}
@@ -191,12 +191,12 @@ item_attribute_value_logic<native><public> := class<final>(item_attribute_value_
 
     GetAsLogic<override>():logic = external {}
 
-    GetAsString<override>():[]char = external {}
+    GetAsString<override>():string = external {}
 
 item_attribute_value_string<native><public> := class<final>(item_attribute_value_string_base):
-    Value<native><epic_internal>:[]char = external {}
+    Value<native><epic_internal>:string = external {}
 
-    GetAsString<override>():[]char = external {}
+    GetAsString<override>():string = external {}
 
 @import_as("/Script/ItemizationCoreRuntime.UItemAttribute_StackSize")
 item_attribute_stack_size<native><public> := class<final>(item_attribute_int_base):

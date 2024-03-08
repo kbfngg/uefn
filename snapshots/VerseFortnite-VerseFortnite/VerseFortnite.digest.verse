@@ -4,6 +4,9 @@ using {/Verse.org/Native}
 using {/Fortnite.com/AI}
 using {/Verse.org/Assets}
 using {/UnrealEngine.com/Temporary/SpatialMath}
+using {/Verse.org/Simulation/Tags}
+using {/UnrealEngine.com/VerseQuery}
+using {/UnrealEngine.com/EntityFramework/Entity}
 using {/Fortnite.com/Teams}
 using {/Verse.org/Simulation}
 using {/Fortnite.com/Game}
@@ -41,7 +44,7 @@ Teams<public> := module:
 
     # Collection used to manage `team`s and `agent`s on those teams.
     # Use `fort_playspace.GetTeamCollection()` to get the `team_collection` for the active experience.
-    fort_team_collection<native><public> := interface:
+    fort_team_collection<native><public> := interface<epic_internal>:
         # Returns an array of all the `team`s known to this `fort_team_collection`
         GetTeams<public>()<transacts>:[]team
 
@@ -80,7 +83,7 @@ Playspaces<public> := module:
     # A nested container that scopes objects, style, gameplay rules, visuals, etc. All objects and players in an experience will belong to a fort_playspace. There is typically one `fort_playspace` for an entire experience, though this may change in the future as the platform evolves.
     # 
     # To access the `fort_playspace` for a `creative_device` use `creative_device.GetPlayspace`.
-    fort_playspace<native><public> := interface:
+    fort_playspace<native><public> := interface<epic_internal>:
         # Get an `[]player`s in the current `fort_playspace`.
         GetPlayers<public>()<transacts>:[]player
 
@@ -92,6 +95,22 @@ Playspaces<public> := module:
 
         # Signaled when a `player` leaves the `fort_playspace`. Returns a subscribable with a payload of the`fort_character` that left the `fort_playspace`.
         PlayerRemovedEvent<public>():listenable(player)
+
+        PlayspaceEntitiesOfTypeIterator<epic_internal>(EntityClass:subtype(entity))<varies>:query_iterator
+
+        PlayspaceEntitiesWithComponentIterator<epic_internal>(ComponentClass:subtype(entity))<varies>:query_iterator
+
+        FindEntities<epic_internal>(EntityType:subtype(entity))<varies>:[]entity
+
+        FindEntitiesWithComponent<epic_internal>(ComponentType:subtype(component))<varies>:[]entity
+
+        FindComponents<epic_internal>(ComponentType:subtype(component))<varies>:[]ComponentType
+
+        FindEntitiesWithTag<epic_internal>(Tag:tag)<varies>:[]entity
+
+        FindEntitiesInShape<epic_internal>(Shape:query_shape)<varies>:[]entity
+
+    (InEntity:entity).GetPlayspaceForEntity<native><epic_internal>()<transacts><decides>:fort_playspace
 
 # Module import path: /Fortnite.com/Game
 Game<public> := module:
@@ -336,6 +355,8 @@ Characters<public> := module:
         # Teleports this `fort_character` to the provided `Position` and applies the yaw of `Rotation`. Will fail if the `Position` specified is e.g. outside of the playspace or specifies a place where the character cannot fit.
         TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void
 
+        GetEntity<epic_internal>()<transacts><decides>:entity
+
     # Returns the `fort_character` for `InAgent`. Fails if `InAgent` is not a `fort_character`.
     (InAgent:agent).GetFortCharacter<native><public>()<transacts><decides>:fort_character
 
@@ -355,6 +376,13 @@ Characters<public> := module:
 
         # Controls if `fort_character` can still perform emotes while in stasis.
         AllowEmotes<native><public>:logic = external {}
+
+# Module import path: /Fortnite.com/Building
+Building<public> := module:
+    building_component<native><epic_internal> := class(component):
+        IsAllowedOnClient<override>():logic = external {}
+
+        Damage<native><public>(Amount:float):void
 
 # Module import path: /Fortnite.com/Assets
 Assets<public> := module:

@@ -84,51 +84,51 @@ EpicGames<public> := module:
             Released
 
         # Represents a type of event that can occur involving a verse_key
-        verse_ue_input_component<native><public> := class<final>(component):
-            # Requests that the input component register an action mapping to the provided keys, with a description string provided for debugging/tracking
-            AddActionMapping<native><public>(ActionName:[]char, Description:[]char, Keys:[]verse_key):void
+        verse_ue_input_component<native><public> := class<final>(vk_component):
+            # Requests that the input vk_component register an action mapping to the provided keys, with a description string provided for debugging/tracking
+            AddActionMapping<native><public>(ActionName:string, Description:string, Keys:[]verse_key):void
 
-            # Requests that the input component adds a callback bound to whenever the action specified by ActionName occurs, in the manner specified by InputEvent e.g. press/release
-            AddActionBinding<native><public>(ActionName:[]char, InputEvent:input_event, Callback:type {__():void}):void
+            # Requests that the input vk_component adds a callback bound to whenever the action specified by ActionName occurs, in the manner specified by InputEvent e.g. press/release
+            AddActionBinding<native><public>(ActionName:string, InputEvent:input_event, Callback:type {__():void}):void
 
-            # Requests that the input component register an axis mapping to the provided keys, with a description string provided for debugging/tracking
-            AddAxisMapping<native><public>(ActionName:[]char, Description:[]char, Keys:[]verse_key, Scale:?float):void
+            # Requests that the input vk_component register an axis mapping to the provided keys, with a description string provided for debugging/tracking
+            AddAxisMapping<native><public>(ActionName:string, Description:string, Keys:[]verse_key, Scale:?float):void
 
-            # Requests that the input component adds a callback bound to whenever the Axis specified by AxisName changes value. The callback will be provided the current Axis value
-            AddAxisBinding<native><public>(AxisName:[]char, Callback:?type {__(:float):void}):void
+            # Requests that the input vk_component adds a callback bound to whenever the Axis specified by AxisName changes value. The callback will be provided the current Axis value
+            AddAxisBinding<native><public>(AxisName:string, Callback:?type {__(:float):void}):void
 
             # Removes a previously added action mapping. Requires the Action name the action was added with
-            RemoveActionMapping<native><public>(ActionName:[]char):void
+            RemoveActionMapping<native><public>(ActionName:string):void
 
             # Removes a previously added action mapping and associated callback binding. Requires the Action name the action was added with
-            RemoveActionBinding<native><public>(ActionName:[]char, InputEvent:input_event):void
+            RemoveActionBinding<native><public>(ActionName:string, InputEvent:input_event):void
 
             # Removes a previously added axis mapping. Requires the Action name the action was added with
-            RemoveAxisBinding<native><public>(AxisName:[]char):void
+            RemoveAxisBinding<native><public>(AxisName:string):void
 
-            # Clears all previously registered action mappings for the provided input component
+            # Clears all previously registered action mappings for the provided input vk_component
             ClearActionMappings<native><public>():void
 
-            # Clears all previously registered axis mappings for the provided input component
+            # Clears all previously registered axis mappings for the provided input vk_component
             ClearAxisMappings<native><public>():void
 
-            # Clears all input bindings for the provided input component. This is the equivalent of clearing all action + axis mappings, and all bindings
+            # Clears all input bindings for the provided input vk_component. This is the equivalent of clearing all action + axis mappings, and all bindings
             ClearInputBindings<native><public>():void
 
             # Returns the current value associated with the specified AxisName. 0.0f if not currently being manipulated
-            GetAxisValue<native><public>(AxisName:[]char):float
+            GetAxisValue<native><public>(AxisName:string):float
 
             # Async function which continues execution when the associated ActionName occurs, and in the manner specified by InputEvent e.g. press/release
-            WaitForAction<native><public>(InputComponent:verse_ue_input_component, ActionName:[]char, InputEvent:input_event)<suspends>:void
+            WaitForAction<native><public>(InputComponent:verse_ue_input_component, ActionName:string, InputEvent:input_event)<suspends>:void
 
             # Utility wrapper which both binds the specified Actionname to the keys + input event specified, and also registers an associated callback
-            AddActionMappingAndBinding<public>(ActionName:[]char, Description:[]char, Keys:[]verse_key, InputEvent:input_event, Callback:type {__():void}):void = external {}
+            AddActionMappingAndBinding<public>(ActionName:string, Description:string, Keys:[]verse_key, InputEvent:input_event, Callback:type {__():void}):void = external {}
 
             # Utility wrapper which both removes the specified Actionname and associated callback
-            RemoveActionMappingAndBinding<public>(ActionName:[]char, InputEvent:input_event):void = external {}
+            RemoveActionMappingAndBinding<public>(ActionName:string, InputEvent:input_event):void = external {}
 
             # Utility wrapper which both binds the specified Actionname to the Axis specified, and also registers an associated callback
-            AddAxisMappingAndBinding<public>(AxisName:[]char, Description:[]char, Keys:[]verse_key, Scale:?float, Callback:?type {__(:float):void}):void = external {}
+            AddAxisMappingAndBinding<public>(AxisName:string, Description:string, Keys:[]verse_key, Scale:?float, Callback:?type {__(:float):void}):void = external {}
 
             # Utility wrapper which Clears action mappings, axis mappings, and input bindings
             ClearInputMappingsAndBindings<public>():void = external {}

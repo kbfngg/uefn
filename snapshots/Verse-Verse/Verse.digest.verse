@@ -60,12 +60,12 @@ Verse<public> := module:
         Dispose<public>():void
 
     # Halts the Verse runtime with error `Message`.
-    Err<native><public>(Message:[]char)<computes>:false
+    Err<native><public>(Message:string)<computes>:false
 
     # A *recurring*, successively signaled parametric `event` with a `payload` allowing a simple mechanism to coordinate between concurrent tasks:
     #  * `Await` suspends tasks to wait on this `event`,
     #  * another task `Signal`s this `event` and resumes the suspended tasks in FIFO order.
-    event<native><public>(t:type)<computes> := class(signalable(t), awaitable(t)):
+    event<native><public>(t:type) := class(signalable(t), awaitable(t)):
         # Returns the number of suspended tasks added by calls to `Await` that have not been resumed by a call to `Signal`.
         GetAwaitCount<native><epic_internal>():int
 
@@ -79,7 +79,7 @@ Verse<public> := module:
         Signal<native><override>(Val:t):void
 
     # A *recurring*, successively signaled event allowing a simple mechanism to coordinate between concurrent tasks.
-    event<public>()<computes> := event(tuple())
+    event<public>() := event(tuple())
 
     # Returns the smallest `int` that is greater than or equal to `Val`.
     # Fails if `not IsFinite(Val)`.
@@ -98,10 +98,10 @@ Verse<public> := module:
     Int<native><public>(Val:float)<varies><decides>:int
 
     # Makes a `string` representation of `Val`.
-    ToString<native><public>(Val:float)<varies>:[]char
+    ToString<native><public>(Val:float)<varies>:string
 
     # Makes a printable `string` representation of `Val`.
-    ToString<native><public>(Val:int)<computes>:[]char
+    ToString<native><public>(Val:int)<computes>:string
 
     # Implemented by classes whose instances can become invalid at runtime.
     invalidatable<native><public> := interface(disposable):
@@ -109,11 +109,11 @@ Verse<public> := module:
         IsValid<public>()<transacts><decides>:void
 
     # A parametric interface combining `awaitable` and `subscribable`.
-    listenable<public>(payload:type)<computes> := interface(awaitable(payload), subscribable(payload)):
+    listenable<public>(payload:type) := interface(awaitable(payload), subscribable(payload)):
 
 
     # A parameterless interface combining `awaitable` and `subscribable`.
-    listenable<public>()<computes> := listenable(tuple())
+    listenable<public>() := listenable(tuple())
 
     # Used for message localization.
     locale<native><public> := struct<epic_internal>:
@@ -121,14 +121,14 @@ Verse<public> := module:
 
     # A localizable text message.
     message<native><public> := class<epic_internal>:
-        Key<native><epic_internal>:[]char
+        Key<native><epic_internal>:string
 
-        DefaultText<native><epic_internal>:[]char
+        DefaultText<native><epic_internal>:string
 
-        Substitutions<native><epic_internal>:[[]char]localizable_value
+        Substitutions<native><epic_internal>:[string]localizable_value
 
     # Makes a `string` by localizing `Message` based on the current `locale`.
-    Localize<native><public>(Message:message)<varies>:[]char
+    Localize<native><public>(Message:message)<varies>:string
 
     localizable_value<native><epic_internal> := class:
 
@@ -136,7 +136,7 @@ Verse<public> := module:
     localizable_string<native><epic_internal> := class<internal>(localizable_value):
 
 
-    MakeLocalizableValue<epic_internal>(V:[]char):localizable_string = external {}
+    MakeLocalizableValue<epic_internal>(V:string):localizable_string = external {}
 
     localizable_int<native><epic_internal> := class<internal>(localizable_value):
 
@@ -153,7 +153,7 @@ Verse<public> := module:
 
     MakeLocalizableValue<epic_internal>(V:message):localizable_message = external {}
 
-    MakeMessageInternal<native><epic_internal>(K:[]char, D:[]char, S:[[]char]localizable_value)<converges>:message
+    MakeMessageInternal<native><epic_internal>(K:string, D:string, S:[string]localizable_value)<converges>:message
 
     # Pi, the ratio of the circumference of a circle to its diameter.
     PiFloat<public>:float = external {}
@@ -284,31 +284,31 @@ Verse<public> := module:
 
     # A parametric interface implemented by events with a `payload` that can be signaled.
     # Can be used with `awaitable`, `subscribable`, or both (see: `listenable`).
-    signalable<public>(payload:type)<computes> := interface:
+    signalable<public>(payload:type) := interface:
         # Concurrently resumes the tasks waiting for this event in `awaitable.Await` and synchronously invokes any callbacks added to this event by `subscribable.Subscribe`.
         Signal<public>(Val:payload):void
 
     # Makes a `string` by concatenating `Separator` between the elements of `Strings`.
-    Join<native><public>(Strings:[][]char, Separator:[]char)<computes>:[]char
+    Join<native><public>(Strings:[]string, Separator:string)<computes>:string
 
     # Returns `String` without modification.
-    ToString<public>(String:[]char)<computes>:[]char = external {}
+    ToString<public>(String:string)<computes>:string = external {}
 
     # Makes a `string` from `Character`.
-    ToString<native><public>(Character:char)<computes>:[]char
+    ToString<native><public>(Character:char)<computes>:string
 
     # Makes a `string` by converting `Character` to UTF-8 from UTF-32.
-    ToString<native><epic_internal>(Character:char32)<computes>:[]char
+    ToString<native><epic_internal>(Character:char32)<computes>:string
 
     # A parametric interface implemented by events with a `payload` that can be subscribed to.
     # Matched with `signalable.`
-    subscribable<public>(t:type)<computes> := interface:
+    subscribable<public>(t:type) := interface:
         # Registers `Callback` to be invoked on matching calls to `signable.Signal`.
         # Returns an unsubscriber object. Call `cancelable.Cancel` on the unsubscriber to unregister `Callback`.
         Subscribe<public>(Callback:type {__(:t):void})<transacts>:cancelable
 
     # A parameterless interface implemented by events that can be subscribed to.
-    subscribable<public>()<computes> := subscribable(tuple())
+    subscribable<public>() := subscribable(tuple())
 
 # Module import path: /Verse.org/Random
 Random<public> := module:

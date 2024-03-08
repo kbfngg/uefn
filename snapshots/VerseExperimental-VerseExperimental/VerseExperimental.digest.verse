@@ -46,10 +46,13 @@ VerseExperimental<public> := module:
     DateTimeMin<public>()<transacts>:date_time = external {}
 
     # Returns a string representation of the datetime in the following format: yyyy.mm.dd-hh.mm.ss. Assumes Datetime is in UTC.
-    ToString<native><public>(Val:date_time):[]char
+    ToString<native><public>(Val:date_time):string
 
     # Returns the current UTC date_time.
     UtcNow<native><public>():date_time
+
+    # Returns the number of seconds since January 1, 1970 UTC, as of the current transaction.
+    GetSecondsSinceEpoch<native><epic_internal>()<varies>:float
 
     date_parts<native><public> := struct<internal>:
 
@@ -102,7 +105,7 @@ VerseExperimental<public> := module:
     CreateTimeSpan<native><public>(Days:int, Hours:int, Minutes:int, Seconds:int, Milliseconds:int)<transacts>:time_span
 
     # Returns a string representation of the time span in the following format: yyyy.mm.dd-hh.mm.ss.
-    ToString<native><public>(Val:time_span):[]char
+    ToString<native><public>(Val:time_span):string
 
     GetDays<native><public>(Val:time_span):int
 

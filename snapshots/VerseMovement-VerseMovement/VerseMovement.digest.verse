@@ -45,7 +45,7 @@ VerseMovement<public> := module:
     move_input_trigger_params<native><public> := struct<computes>:
         IsAxis<native><public>:logic = external {}
 
-        Name<native><public>:[]char = external {}
+        Name<native><public>:string = external {}
 
         AxisToMagnitudeCurve<native><public>:?editable_curve = external {}
 
@@ -96,7 +96,7 @@ VerseMovement<public> := module:
         ClampFrame<native><public>:move_response_frame = external {}
 
     move_config_entry<native><public> := struct<computes>:
-        Name<native><public>:[]char = external {}
+        Name<native><public>:string = external {}
 
         Triggers<native><public>:[]move_trigger = external {}
 
@@ -108,7 +108,7 @@ VerseMovement<public> := module:
     move_config_asset<native><public> := class(asset):
 
 
-    movement_component<native><epic_internal> := class<unique>(component):
+    movement_component<native><epic_internal> := class<unique>(vk_component):
         SetEnabled<native><public>(Enabled:logic):void
 
         SetConfig<native><public>(Config:move_config_asset):void

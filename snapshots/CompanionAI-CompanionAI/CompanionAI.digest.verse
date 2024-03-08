@@ -48,11 +48,11 @@ CompanionAI<public> := module:
 
         IsFollowingBehaviorEnabled<native><override>()<transacts>:logic
 
-    (InEntity:entity).GetAgent<native><epic_internal>()<transacts>:?agent
+    (InEntity:vk_entity).GetAgent<native><epic_internal>()<transacts>:?agent
 
     (Agent:agent).GetTeamMembers<native><epic_internal>()<transacts>:[]agent
 
-    Compare<native><epic_internal>(Obstacle:fort_obstacle_info, Target:entity)<transacts>:logic
+    Compare<native><epic_internal>(Obstacle:fort_obstacle_info, Target:vk_entity)<transacts>:logic
 
     (Character:fort_character).IsBeingDBNOCarried<native><epic_internal>()<transacts><decides>:void
 
@@ -82,7 +82,7 @@ CompanionAI<public> := module:
     # Get the current fort_ping_interface for the specified character
     (InCharacter:fort_character).GetFortPing<native><epic_internal>()<transacts><decides>:fort_ping_interface
 
-    ping_component<native><epic_internal> := class(component, fort_ping_interface):
+    ping_component<native><epic_internal> := class(vk_component, fort_ping_interface):
         AreNPCCommandsEnabled<native><override>()<transacts>:logic
 
         CanAcceptPingCommand<native><override>()<transacts>:logic
@@ -122,9 +122,9 @@ CompanionAI<public> := module:
             building_actor
             undefined
 
-    ToString<epic_internal>(Type:command_type)<transacts>:[]char = external {}
+    ToString<epic_internal>(Type:command_type)<transacts>:string = external {}
 
-    ToString<epic_internal>(Type:entity_type)<transacts>:[]char = external {}
+    ToString<epic_internal>(Type:entity_type)<transacts>:string = external {}
 
     ping_info<native><epic_internal> := struct:
         Type<native><epic_internal>:command_type
@@ -135,6 +135,6 @@ CompanionAI<public> := module:
 
         LocationOnHorizontalSurface<native><epic_internal>:logic
 
-        Target<native><epic_internal>:?entity
+        Target<native><epic_internal>:?vk_entity
 
         Emitter<native><epic_internal>:?agent

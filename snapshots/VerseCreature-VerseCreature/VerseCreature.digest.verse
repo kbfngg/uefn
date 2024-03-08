@@ -28,7 +28,7 @@ VerseCreature<public> := module:
         MaintainFocus<native><override>(Agent:agent)<suspends>:void
 
     @import_as("/Script/VerseCreature.UCreaturePerceptionComponentBase")
-    creature_perception_component_base<native><epic_internal> := class(component):
+    creature_perception_component_base<native><epic_internal> := class(vk_component):
 
 
     creature_perception_component<native><epic_internal> := class(creature_perception_component_base, perception_interface):

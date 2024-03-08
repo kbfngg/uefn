@@ -74,7 +74,7 @@ Diagnostics<public> := module:
         DefaultLevel<native><public>:log_level = external {}
 
         # Print message using the given log level
-        (log:)Print<native><public>(Message:[]char, ?Level:log_level = external {})<computes>:void
+        (log:)Print<native><public>(Message:string, ?Level:log_level = external {})<computes>:void
 
         # Prints current script call stack using the give log level
         PrintCallStack<native><public>(?Level:log_level = external {})<computes>:void

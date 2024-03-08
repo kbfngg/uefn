@@ -12,10 +12,10 @@ Game<public> := module:
 
 
         gameplay_attribute<native><public> := class<abstract><epic_internal>(gameplay_attribute_base):
-            AttributePathString<native><epic_internal>:[]char
+            AttributePathString<native><epic_internal>:string
 
         health_attribute<public> := class<final>(gameplay_attribute):
-            AttributePathString<override>:[]char = external {}
+            AttributePathString<override>:string = external {}
 
     # Module import path: /Fortnite.com/Game/Abilities
     Abilities<public> := module:
@@ -55,7 +55,7 @@ Game<public> := module:
             # Ability asset was invalid
             Invalid
 
-        ability_component<native><public> := class<final>(component):
+        ability_component<native><public> := class<final>(vk_component):
             AddAbility<native><public>(AbilityAsset:gameplay_ability_asset):add_ability_result
 
             RemoveAbility<native><public>(AbilityAsset:gameplay_ability_asset):remove_ability_result
@@ -66,6 +66,6 @@ Game<public> := module:
 
         # Module import path: /Fortnite.com/Game/Abilities/AbilityComponent
         AbilityComponent<public> := module:
-            GetAbilityComponentForPlayer<native><epic_internal>(__dupe___unnamed_parameter_125:player_component)<transacts><decides>:ability_component
+            GetAbilityComponentForPlayer<native><epic_internal>(__dupe___unnamed_parameter_169:player_component)<transacts><decides>:ability_component
 
-            GetAbilityComponentForCharacter<native><public>(__dupe___unnamed_parameter_126:fort_character)<transacts><decides>:ability_component
+            GetAbilityComponentForCharacter<native><public>(__dupe___unnamed_parameter_170:fort_character)<transacts><decides>:ability_component

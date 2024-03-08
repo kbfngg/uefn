@@ -192,7 +192,7 @@ tracker_device<public> := class<concrete><final>(creative_device_base):
 
     # Returns the description for the `tracker_device`, which is displayed if *Show on HUD* is enabled.
     # `GetDescriptionText` has a 64 character limit.
-    GetDescriptionText<epic_internal>()<transacts>:[]char = external {}
+    GetDescriptionText<epic_internal>()<transacts>:string = external {}
 
     # Sets the target value that must be achieved in order for `CompleteEvent` to trigger.
     # Clamped to `0 <= TargetValue <= 10000`.
@@ -230,7 +230,7 @@ tracker_device<public> := class<concrete><final>(creative_device_base):
 
     # Returns the title for the `tracker_device`, which is displayed if *Show on HUD* is enabled.
     # `GetTitleText` has a 32 character limit.
-    GetTitleText<epic_internal>()<transacts>:[]char = external {}
+    GetTitleText<epic_internal>()<transacts>:string = external {}
 
     # Is true if `Agent` currently has the quest active.
     IsActive<public>(Agent:agent)<transacts><decides>:void = external {}
@@ -1123,7 +1123,7 @@ hud_message_device<public> := class<concrete><final>(creative_device_base):
     SetText<public>(Text:message):void = external {}
 
     # Returns the *Message* to be displayed when the HUD message is activated.
-    GetText<epic_internal>()<transacts>:[]char = external {}
+    GetText<epic_internal>()<transacts>:string = external {}
 
 # Used to create a holographic screen that displays a clock or other curated images.
 holoscreen_device<public> := class<concrete><final>(creative_device_base):
@@ -1248,7 +1248,7 @@ conditional_button_device<public> := class<concrete><final>(creative_device_base
     SetInteractionText<public>(Text:message):void = external {}
 
     # Returns the text that appears when `agent`s approach the device.
-    GetInteractionText<epic_internal>()<transacts>:[]char = external {}
+    GetInteractionText<epic_internal>()<transacts>:string = external {}
 
     # Sets the time (in seconds) that an interaction with this device should take to complete.
     SetInteractionTime<public>(Time:float):void = external {}
@@ -1486,7 +1486,7 @@ button_device<public> := class<concrete><final>(creative_device_base):
     SetInteractionText<public>(Text:message):void = external {}
 
     # Returns the text that displays when an `agent` is close to this button and looks at it.
-    GetInteractionText<epic_internal>()<transacts>:[]char = external {}
+    GetInteractionText<epic_internal>()<transacts>:string = external {}
 
     # Sets the duration of the interaction required to activate this device (in seconds).
     SetInteractionTime<public>(Time:float):void = external {}
@@ -1528,7 +1528,7 @@ billboard_device<public> := class<concrete><final>(creative_device_base):
     SetText<public>(Text:message):void = external {}
 
     # Returns the device *Text*.
-    GetText<epic_internal>()<transacts>:[]char = external {}
+    GetText<epic_internal>()<transacts>:string = external {}
 
     # Sets the *Text Size* of the device *Text*. Clamped to range [8, 24].
     SetTextSize<public>(Size:int):void = external {}

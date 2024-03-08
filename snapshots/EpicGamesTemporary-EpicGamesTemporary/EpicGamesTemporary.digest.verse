@@ -115,7 +115,7 @@ SpatialMath<public> := module:
 
     # Makes a `string` representation of `rotation` in axis/degrees format with a left-handed sign convention.
     # `ToString(MakeRotation(vector3{X:=1.0, Y:=0.0, Z:=0.0}, PiFloat/2.0))` produces the string: `"Axis: {x=1.000000,y=0.000000,z=0.000000} Angle: 90.000000"`.
-    ToString<native><public>(Rotation:rotation)<varies>:[]char
+    ToString<native><public>(Rotation:rotation)<varies>:string
 
     # Returns radians from `Degrees`.
     DegreesToRadians<public>(Degrees:float)<varies>:float = external {}
@@ -142,6 +142,10 @@ SpatialMath<public> := module:
 
     # Makes a `vector3` by applying `InTransform` to `InVector` without applying `InTransform.Scale`.
     TransformVectorNoScale<native><public>(InTransform:transform, InVector:vector3)<varies>:vector3
+
+    # Makes a `string` representation of `InTransform` where the result is on the form.
+    # `"Scale: {ToString(`InTransform.Scale`)} Rotation: {ToString(`InTransform.Rotation`)} Translation: {ToString(`InTransform.Translation`)}.
+    ToString<native><epic_internal>(InTransform:transform)<varies>:string
 
     # 2-dimensional vector with `float` components.
     vector2<native><public> := struct<concrete><computes><persistable>:
@@ -179,7 +183,7 @@ SpatialMath<public> := module:
     Lerp<public>(From:vector2, To:vector2, Parameter:float)<varies>:vector2 = external {}
 
     # Makes a `string` representation of `V`.
-    ToString<native><public>(V:vector2)<varies>:[]char
+    ToString<native><public>(V:vector2)<varies>:string
 
     # Makes a `vector2` by inverting the signs of `Operand`.
     prefix'-'<public>(Operand:vector2)<computes>:vector2 = external {}
@@ -231,7 +235,7 @@ SpatialMath<public> := module:
     Equals<public>(V1:vector2i, V2:vector2i)<computes><decides>:vector2i = external {}
 
     # Makes a `string` representation of `V`.
-    ToString<native><public>(V:vector2i)<computes>:[]char
+    ToString<native><public>(V:vector2i)<computes>:string
 
     # Makes a `vector2i` by component-wise truncation of `V` to `ints`s.
     ToVector2i<public>(V:vector2)<varies><decides>:vector2i = external {}
@@ -304,7 +308,7 @@ SpatialMath<public> := module:
     (V:vector3).MakeUnitVector<native><public>()<varies><decides>:vector3
 
     # Makes a `string` representation of `V`.
-    ToString<native><public>(V:vector3)<varies>:[]char
+    ToString<native><public>(V:vector3)<varies>:string
 
     # Returns the length of `V`.
     (V:vector3).Length<public>()<varies>:float = external {}

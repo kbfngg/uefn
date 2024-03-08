@@ -4,7 +4,7 @@ using {/Verse.org/Restricted}
 # Module import path: /Verse.org/Assets
 Assets<public> := module:
     # Create an asset reference to the given internal asset path
-    MakeAsset<native><epic_internal>(AssetType:type, AssetPath:[]char)<converges>:AssetType
+    MakeAsset<native><epic_internal>(AssetType:type, AssetPath:string)<converges>:AssetType
 
     asset<native><epic_internal> := class<computes><epic_internal>:
         SyncLoad<native><epic_internal>():logic
@@ -60,7 +60,7 @@ Assets<public> := module:
     mesh<native><public> := class<computes><final><epic_internal>(asset):
 
 
-    sound<native><epic_internal> := class<computes><final><epic_internal>(client_asset):
+    sound<native><epic_internal> := class<computes><concrete><final><epic_internal>(client_asset):
 
 
     font<native><epic_internal> := class<computes><final><epic_internal>(client_asset):

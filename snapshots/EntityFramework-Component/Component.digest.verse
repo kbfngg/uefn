@@ -1,11 +1,13 @@
-using {/Verse.org/Assets}
 using {/Verse.org/Colors}
+using {/UnrealEngine.com/EpicGamesRestricted/Network}
+using {/Verse.org/Assets}
+using {/UnrealEngine.com/Temporary/UI}
 using {/Verse.org/Simulation}
 using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/UnrealEngine.com/EntityFramework/Entity}
 # Module import path: /UnrealEngine.com/EntityFramework/Component
 Component<public> := module:
-    attachment_component<native><epic_internal> := class(core_entity_component):
+    attachment_component<native><epic_internal> := class(component):
         # The component is being initialized, called when it is attach to an entity
         Initialize<native><override>():void
 
@@ -13,10 +15,10 @@ Component<public> := module:
         Uninitialize<native><override>():void
 
         # Attaches the owner entity to the specified entity. This method will compute relative transform from the current world transform of both entity
-        AttachTo<native><public>(InParentEntity:core_entity)<transacts><decides>:void
+        AttachTo<native><public>(InParentEntity:entity)<transacts><decides>:void
 
         # Attach the owner entity to the specified entity, use the specified transform as the relation to it
-        AttachTo<native><public>(InParentEntity:core_entity, NewRelativeTransform:transform)<transacts><decides>:void
+        AttachTo<native><public>(InParentEntity:entity, NewRelativeTransform:transform)<transacts><decides>:void
 
         # Detaches the owner entity if it was attached to an other entity
         DetachFrom<native><public>()<transacts><decides>:void
@@ -40,9 +42,9 @@ Component<public> := module:
         var RelativeTransform<native><public>:?transform = external {}
 
         # The relative transform to the attached entity
-        var ParentEntity<native><public>:?core_entity = external {}
+        var ParentEntity<native><public>:?entity = external {}
 
-    camera_entity_component<native><epic_internal> := class(core_entity_component):
+    camera_entity_component<native><epic_internal> := class(component):
         # The component is being initialized, called when it is attach to an entity
         Initialize<native><override>():void
 
@@ -77,7 +79,7 @@ Component<public> := module:
         GetIsActive<public>():logic = external {}
 
     @hide_in_editor
-    light_entity_component<native><epic_internal> := class(core_entity_component):
+    light_entity_component<native><epic_internal> := class(component):
         # The component is being initialized, called when it is attach to an entity
         Initialize<native><override>():void
 
@@ -87,12 +89,66 @@ Component<public> := module:
         # Internal epic method to know if this component is allowed on client
         IsAllowedOnClient<override>():logic = external {}
 
+    local_hud_component<epic_internal> := class(component):
+        IsAllowedOnClient<override>():logic = external {}
+
+        var Canvas<public>:canvas
+
+        var UISlot<public>:player_ui_slot
+
+        BeginPlay<override>():void = external {}
+
+        EndPlay<override>():void = external {}
+
+        Show<public>(Player:player):void = external {}
+
+        Hide<public>(Player:player):void = external {}
+
     @hide_in_editor
-    mesh_component<native><epic_internal> := class(core_entity_component):
+    mesh_component<native><epic_internal> := class(component):
         # Internal epic method to know if this component is allowed on client
         IsAllowedOnClient<override>():logic = external {}
 
-    physics_component<native><epic_internal> := class(core_entity_component):
+    particle_system_component<native><epic_internal> := class<final>(component):
+        # The component is being initialized, called when it is attach to an entity
+        Initialize<native><override>():void
+
+        # The component is being uninitialized, called when it is about to be detached from an entity
+        Uninitialize<native><override>():void
+
+        # Notification called then the component owner entity was added to a world
+        AddedToWorld<native><override>():void
+
+        # Notification called when the component owner entity is about to be removed from world
+        RemovingFromWorld<native><override>():void
+
+        # Activate the particle system
+        Activate<native><public>():void
+
+        # Deactivate the particle system
+        Deactivate<native><public>():void
+
+        # Internal epic method to know if this component is allowed on client
+        IsAllowedOnClient<override>():logic = external {}
+
+        @replicated("RepNotify")
+        # The path to the particle system asset
+        var ParticleSystem<native><public>:?particle_system = external {}
+
+    hit_result<native><epic_internal> := struct:
+        ThisEntity<native><public>:?entity
+
+        ThisComponent<native><public>:?physics_component
+
+        OtherEntity<native><public>:?entity
+
+        OtherComponent<native><public>:?physics_component
+
+        HitNormal<native><public>:vector3
+
+        HitLocation<native><public>:vector3
+
+    physics_component<native><epic_internal> := class(component):
         # The component is being initialized, called when it is attach to an entity
         Initialize<native><override>():void
 
@@ -107,6 +163,9 @@ Component<public> := module:
 
         # Internal epic method to know if this component is allowed on client
         IsAllowedOnClient<override>():logic = external {}
+
+        # Event signaled when the component experiences a blocking hit
+        HitEvent<native><public>:listenable(hit_result) = external {}
 
     point_light_entity_component<native><public> := class<final>(light_entity_component):
         SetIntensity<public>(NewIntensity:float):void = external {}
@@ -128,6 +187,27 @@ Component<public> := module:
         GetSourceLength<public>():float = external {}
 
         GetAttenuationRadius<public>():float = external {}
+
+    sound_component<native><epic_internal> := class(component):
+        # The component is being initialized, called when it is attach to an entity
+        Initialize<native><override>():void
+
+        # The component is being uninitialized, called when it is about to be detached from an entity
+        Uninitialize<native><override>():void
+
+        # Internal epic method to know if this component is allowed on client
+        IsAllowedOnClient<override>():logic = external {}
+
+        @editable
+        @replicated("RepNotify")
+        # The path to the sound asset
+        var Sound<native><public>:sound = external {}
+
+        # Play the sound asset
+        Play<native><public>():void
+
+        # Play the sound asset
+        Stop<native><public>():void
 
     spot_light_entity_component<native><public> := class<final>(light_entity_component):
         SetIntensity<public>(NewIntensity:float):void = external {}
@@ -168,8 +248,10 @@ Component<public> := module:
         # Internal epic method to know if this component is allowed on client
         IsAllowedOnClient<override>():logic = external {}
 
+        @replicated("RepNotify")
         # The path to the static mesh asset
         var Mesh<native><public>:mesh = external {}
 
+        @replicated("RepNotify")
         # The path to the material asset of a static mesh
         var Material<native><public>:?material = external {}

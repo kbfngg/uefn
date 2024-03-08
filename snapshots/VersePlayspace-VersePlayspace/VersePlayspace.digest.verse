@@ -7,7 +7,7 @@ Playspace<public> := module:
         ActivePlayer
         Spectator
 
-    playspace_component<native><epic_internal> := class(component):
+    playspace_component<native><epic_internal> := class(vk_component):
         getPlayers<native><public>(Type:PlayerType)<transacts>:[]player_component
 
         getPlayerCount<native><public>(Type:PlayerType)<transacts>:int

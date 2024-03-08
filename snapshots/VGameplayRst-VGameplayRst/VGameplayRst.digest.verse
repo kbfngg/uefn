@@ -5,20 +5,11 @@ using {/UnrealEngine.com/VGameplayRst/Transform}
 using {/Verse.org/Restricted}
 using {/Verse.org/VerseExperimental}
 using {/Verse.org/Colors}
-using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Verse.org/Assets}
 using {/Verse.org/VerseEngine/Component}
+using {/UnrealEngine.com/Temporary/SpatialMath}
 # Module import path: /UnrealEngine.com/VGameplayRst
 VGameplayRst<public> := module:
-    # Module import path: /UnrealEngine.com/VGameplayRst/VFX
-    VFX<public> := module:
-        particle_system_component<native><public> := class<final>(component):
-            SetParticleSystem<native><epic_internal>(ParticleSystem:particle_system)<transacts>:void
-
-            Activate<native><public>():void
-
-            Deactivate<native><public>():void
-
     # Module import path: /UnrealEngine.com/VGameplayRst/Transform
     Transform<public> := module:
         positionable<native><public> := interface:
@@ -27,7 +18,7 @@ VGameplayRst<public> := module:
         mutable_positionable<native><public> := interface(positionable):
             SetPosition<public>(v:vector3)<transacts>:void
 
-        position_component<native><public> := class<final>(component, mutable_positionable):
+        position_component<native><public> := class<final>(vk_component, mutable_positionable):
             AddToPosition<native><public>(v:vector3):void
 
             SetPosition<override><native>(v:vector3)<transacts>:void
@@ -50,7 +41,7 @@ VGameplayRst<public> := module:
 
             SetForwardVectorFromXY<public>(x:vector3, y:vector3):void
 
-        rotation_component<native><public> := class<final>(component, mutable_rotatable):
+        rotation_component<native><public> := class<final>(vk_component, mutable_rotatable):
             ApplyAdditionalRotation<override><native>(r:rotation):void
 
             SetRotation<override><native>(r:rotation)<transacts>:void
@@ -71,7 +62,7 @@ VGameplayRst<public> := module:
         mutable_scalable<native><public> := interface(scalable):
             SetScale<public>(v:vector3)<transacts>:void
 
-        scale_component<native><public> := class<final>(component, mutable_scalable):
+        scale_component<native><public> := class<final>(vk_component, mutable_scalable):
             AddToScale<native><public>(v:vector3):void
 
             SetScale<override><native>(v:vector3)<transacts>:void
@@ -86,12 +77,12 @@ VGameplayRst<public> := module:
             CollisionCapsule
             CollisionSphere
 
-        collision_component<native><public> := class<final>(component):
+        collision_component<native><public> := class<final>(vk_component):
             SetEnabled<native><public>(InIsEnabled:logic):void
 
             GetEnabled<native><public>():logic
 
-            WaitHit<native><public>()<suspends>:hit_result
+            WaitHit<native><public>()<suspends>:hit_result_legacy
 
             WaitBeginOverlap<native><public>()<suspends>:overlap_result
 
@@ -109,9 +100,9 @@ VGameplayRst<public> := module:
 
             GetSendOverlapEvents<native><public>()<transacts>:logic
 
-            SetCollisionProfileName<native><public>(CollisionProfile:[]char)<transacts>:void
+            SetCollisionProfileName<native><public>(CollisionProfile:string)<transacts>:void
 
-            GetCollisionProfileName<native><public>()<transacts>:[]char
+            GetCollisionProfileName<native><public>()<transacts>:string
 
             SetMovable<native><public>(IsMovable:logic)<transacts>:void
 
@@ -147,7 +138,7 @@ VGameplayRst<public> := module:
             CustomPlane
             NoConstraints
 
-        hit_result<native><public> := struct:
+        hit_result_legacy<native><public> := struct:
             # The ID belonging to the entity hit
             OtherEntityID<native><public>:int
 
@@ -172,9 +163,9 @@ VGameplayRst<public> := module:
             SweepHitLocation<native><public>:vector3
 
         physics_trace<native><public> := class:
-            WaitPhysicsTrace<native><public>()<suspends>:[]hit_result
+            WaitPhysicsTrace<native><public>()<suspends>:[]hit_result_legacy
 
-            InitPhysicsTrace<native><public>(ContextObject:component, TraceCategory:physics_trace_category, TraceType:physics_trace_type, TraceShape:physics_trace_shape, TraceChannel:physics_trace_channel, Start:vector3, End:vector3, IgnoreCallingEntity:logic, TraceExtent:vector3, TraceRadius:float, ProfileName:[]char):void
+            InitPhysicsTrace<native><public>(ContextObject:vk_component, TraceCategory:physics_trace_category, TraceType:physics_trace_type, TraceShape:physics_trace_shape, TraceChannel:physics_trace_channel, Start:vector3, End:vector3, IgnoreCallingEntity:logic, TraceExtent:vector3, TraceRadius:float, ProfileName:string):void
 
         physics_trace_category<native><public> := enum:
             Channel
@@ -209,7 +200,7 @@ VGameplayRst<public> := module:
 
     # Module import path: /UnrealEngine.com/VGameplayRst/Lights
     Lights<public> := module:
-        point_light_component<native><public> := class<final>(component):
+        point_light_component<native><public> := class<final>(vk_component):
             SetIntensity<native><public>(NewIntensity:float):void
 
             SetColor<native><epic_internal>(NewColor:color):void
@@ -230,7 +221,7 @@ VGameplayRst<public> := module:
 
             GetAttenuationRadius<native><public>():float
 
-        spot_light_component<native><public> := class<final>(component):
+        spot_light_component<native><public> := class<final>(vk_component):
             SetIntensity<native><public>(NewIntensity:float):void
 
             SetColor<native><epic_internal>(NewColor:color):void
@@ -261,14 +252,14 @@ VGameplayRst<public> := module:
 
     # Module import path: /UnrealEngine.com/VGameplayRst/LevelStreaming
     LevelStreaming<public> := module:
-        level_streaming_component<native><public> := class<final>(component):
-            RequestLoadLevel<native><epic_internal>(Level:level, Timeout:time_span, MessageToKickedPlayers:[]char):?sticky_event(void)
+        level_streaming_component<native><public> := class<final>(vk_component):
+            RequestLoadLevel<native><epic_internal>(Level:level, Timeout:time_span, MessageToKickedPlayers:string):?sticky_event(void)
 
-            RequestUnloadLevel<native><public>(Timeout:time_span, MessageToKickedPlayers:[]char):?sticky_event(void)
+            RequestUnloadLevel<native><public>(Timeout:time_span, MessageToKickedPlayers:string):?sticky_event(void)
 
     # Module import path: /UnrealEngine.com/VGameplayRst/Geometry
     Geometry<public> := module:
-        fixed_mesh_component<native><public> := class<final>(component):
+        fixed_mesh_component<native><public> := class<final>(vk_component):
             SetMesh<native><epic_internal>(Mesh:mesh)<transacts>:void
 
             SetDefaultMesh<native><public>(DefaultMesh:default_mesh_type):void
@@ -298,7 +289,7 @@ VGameplayRst<public> := module:
             SimulationOnly
             QueryAndSimulation
 
-        skeletal_mesh_component<native><public> := class(component):
+        skeletal_mesh_component<native><public> := class(vk_component):
             SetSkeletalMesh<native><epic_internal>(Mesh:skeletal_mesh):void
 
             SetAnimationMode<native><public>(AnimMode:default_animation_mode_type):void
@@ -401,18 +392,18 @@ VGameplayRst<public> := module:
 
         CreateModel<public>(TagToFind:tag):?model = external {}
 
-        CreateModel<epic_internal>(InTransform:transform, Name:[]char, Mesh:mesh):?model = external {}
+        CreateModel<epic_internal>(InTransform:transform, Name:string, Mesh:mesh):?model = external {}
 
-        CreateModel<epic_internal>(InTransform:transform, Name:[]char, Mesh:mesh, Material:material):?model = external {}
+        CreateModel<epic_internal>(InTransform:transform, Name:string, Mesh:mesh, Material:material):?model = external {}
 
-        CreateModel<epic_internal>(InPosition:vector3, Name:[]char, Mesh:mesh, Material:material):?model = external {}
+        CreateModel<epic_internal>(InPosition:vector3, Name:string, Mesh:mesh, Material:material):?model = external {}
 
-        CreateModel<epic_internal>(InPosition:vector3, InRotation:rotation, Name:[]char, Mesh:mesh, Material:material):?model = external {}
+        CreateModel<epic_internal>(InPosition:vector3, InRotation:rotation, Name:string, Mesh:mesh, Material:material):?model = external {}
 
-        CreateModel<epic_internal>(InPosition:vector3, InRotation:rotation, InScale:vector3, Name:[]char, Mesh:mesh, Material:material):?model = external {}
+        CreateModel<epic_internal>(InPosition:vector3, InRotation:rotation, InScale:vector3, Name:string, Mesh:mesh, Material:material):?model = external {}
 
         world_anchor<public> := class<internal>(mutable_positionable):
-            GetComponent<public>()<transacts>:component = external {}
+            GetComponent<public>()<transacts>:vk_component = external {}
 
             GetPosition<override>()<transacts>:vector3 = external {}
 
@@ -422,37 +413,37 @@ VGameplayRst<public> := module:
 
         CreateWorldAnchor<public>(WorldPosition:vector3):?world_anchor = external {}
 
-        CreateWorldAnchor<public>(WorldPosition:vector3, DebugName:[]char):?world_anchor = external {}
+        CreateWorldAnchor<public>(WorldPosition:vector3, DebugName:string):?world_anchor = external {}
 
-        CreateWorldAnchor<public>(Entity:entity):?world_anchor = external {}
+        CreateWorldAnchor<public>(Entity:vk_entity):?world_anchor = external {}
 
         CreateWorldAnchor<public>(TagToFind:tag):?world_anchor = external {}
 
     # Module import path: /UnrealEngine.com/VGameplayRst/EntityUtil
     EntityUtil<public> := module:
-        # Spawn an empty entity with the specified transform. Returns the EntityID
-        SpawnEmptyEntity<native><public>(InTransform:transform, Name:[]char):int
+        # Spawn an empty vk_entity with the specified transform. Returns the EntityID
+        SpawnEmptyEntity<native><public>(InTransform:transform, Name:string):int
 
-        # Spawn an entity from the specified assetPath with a transform. Returns the EntityID
-        SpawnEntityFromAsset<native><public>(AssetPath:[]char, InTransform:transform, Name:[]char):int
+        # Spawn an vk_entity from the specified assetPath with a transform. Returns the EntityID
+        SpawnEntityFromAsset<native><public>(AssetPath:string, InTransform:transform, Name:string):int
 
-        # Creates a component of the specified type on the entity indicated by EntityID. Returns the spawned component object
-        CreateAndAddComponent<native><public>(EntityID:int, ComponentType:subtype(component))<transacts>:component
+        # Creates a vk_component of the specified type on the vk_entity indicated by EntityID. Returns the spawned vk_component object
+        CreateAndAddComponent<native><public>(EntityID:int, ComponentType:subtype(vk_component))<transacts>:vk_component
 
-        # Attempts to find a sub component of the specified type from the nominated component. Returns it if found, otherwise fails
-        GetComponentOfTypeFromComponent<native><public>(Component:component, Type:type)<transacts><decides>:component
+        # Attempts to find a sub vk_component of the specified type from the nominated vk_component. Returns it if found, otherwise fails
+        GetComponentOfTypeFromComponent<native><public>(Component:vk_component, Type:type)<transacts><decides>:vk_component
 
-        # Attempts to find a sub component of the specified type from the nominated component for the specified entity. Returns it if found, otherwise fails
-        GetComponentOfTypeFromComponentForEntity<native><public>(Component:component, EntityID:int, Type:type)<transacts><decides>:component
+        # Attempts to find a sub vk_component of the specified type from the nominated vk_component for the specified vk_entity. Returns it if found, otherwise fails
+        GetComponentOfTypeFromComponentForEntity<native><public>(Component:vk_component, EntityID:int, Type:type)<transacts><decides>:vk_component
 
-        # Spawn an empty entity with the specified transform. Returns the entity.
-        SpawnEntity<native><public>(InTransform:transform, Name:[]char):?entity
+        # Spawn an empty vk_entity with the specified transform. Returns the vk_entity.
+        SpawnEntity<native><public>(InTransform:transform, Name:string):?vk_entity
 
-        # Spawn an empty entity with the specified position, rotation, and scale. Returns the entity
-        SpawnEntity<native><public>(Position:vector3, Rotation:vector3, Scale:vector3, Name:[]char):?entity
+        # Spawn an empty vk_entity with the specified position, rotation, and scale. Returns the vk_entity
+        SpawnEntity<native><public>(Position:vector3, Rotation:vector3, Scale:vector3, Name:string):?vk_entity
 
-        # Spawn an empty entity with the specified position. Returns the entity
-        SpawnEntity<native><public>(Position:vector3, Name:[]char):?entity
+        # Spawn an empty vk_entity with the specified position. Returns the vk_entity
+        SpawnEntity<native><public>(Position:vector3, Name:string):?vk_entity
 
     # Module import path: /UnrealEngine.com/VGameplayRst/DebugDraw
     DebugDraw<public> := module:
@@ -460,19 +451,19 @@ VGameplayRst<public> := module:
 
     # Module import path: /UnrealEngine.com/VGameplayRst/Messaging
     Messaging<public> := module:
-        debug_command_component<native><public> := class(component):
-            _WaitForCommand<native><public>(CommandId:[]char)<suspends>:[]char
+        debug_command_component<native><public> := class(vk_component):
+            _WaitForCommand<native><public>(CommandId:string)<suspends>:string
 
     # Module import path: /UnrealEngine.com/VGameplayRst/Datastore
     Datastore<public> := module:
-        datastore_component<native><public> := class<final>(component):
+        datastore_component<native><public> := class<final>(vk_component):
 
 
         # Module import path: /UnrealEngine.com/VGameplayRst/Datastore/DatastoreComponent
         DatastoreComponent<epic_internal> := module:
-            SetDatastoreValue<native><public>(Player:player_component, Key:[]char, Value:[]char):void
+            SetDatastoreValue<native><public>(Player:player_component, Key:string, Value:string):void
 
-            SetDatastoreValueInt<native><public>(Player:player_component, Key:[]char, Value:int):void
+            SetDatastoreValueInt<native><public>(Player:player_component, Key:string, Value:int):void
 
             ClearAllDatastoreValues<native><public>(Player:player_component):void
 
@@ -482,25 +473,25 @@ VGameplayRst<public> := module:
             Active
             Inactive
 
-        dynamic_activation_component<native><public> := class<final>(component):
+        dynamic_activation_component<native><public> := class<final>(vk_component):
             BeginTransition<native><public>(SecondsToChange:float, TargetState:activation_state):void
 
             Reset<native><public>():void
 
-            LinkComponent<native><public>(ComponentToLink:component):void
+            LinkComponent<native><public>(ComponentToLink:vk_component):void
 
-            UnlinkComponent<native><public>(ComponentToUnlink:component):void
+            UnlinkComponent<native><public>(ComponentToUnlink:vk_component):void
 
             WaitForTransitionBegin<native><public>()<suspends>:void
 
             WaitForTransitionComplete<native><public>()<suspends>:void
 
-        script_component<native><public> := class<abstract><unique>(component):
+        script_component<native><public> := class<abstract><unique>(vk_component):
             var AllowMultiple<native><public>:logic = external {}
 
-            AddToCreateComponentList<native><public>(__dupe___unnamed_parameter_100:[]subtype(component)):void
+            AddToCreateComponentList<native><public>(__dupe___unnamed_parameter_106:[]subtype(vk_component)):void
 
-            AddToRequiredComponentList<native><public>(__dupe___unnamed_parameter_101:[]subtype(component)):void
+            AddToRequiredComponentList<native><public>(__dupe___unnamed_parameter_107:[]subtype(vk_component)):void
 
             SetTickEnabled<native><public>(InIsEnabled:logic):void
 
@@ -518,21 +509,21 @@ VGameplayRst<public> := module:
 
             IsEnabled<native><public>():logic
 
-            IsOwner<native><public>(Entity:entity):logic
+            IsOwner<native><public>(Entity:vk_entity):logic
 
             OnEnabledChanged<native_callable><public>(Enabled:logic):void = external {}
 
-            GetComponentOfType<native><public>(componentType:type)<transacts>:?component
+            GetComponentOfType<native><public>(componentType:type)<transacts>:?vk_component
 
-            GetAllComponentsOfType<native><public>(componentType:type)<transacts>:[]component
+            GetAllComponentsOfType<native><public>(componentType:type)<transacts>:[]vk_component
 
-            GetName<native><public>():[]char
+            GetName<native><public>():string
 
-            GetFullname<native><public>():[]char
+            GetFullname<native><public>():string
 
     # Module import path: /UnrealEngine.com/VGameplayRst/Audio
     Audio<public> := module:
-        audio_component<native><public> := class<final>(component):
+        audio_component<native><public> := class<final>(vk_component):
             SetSound<native><epic_internal>(Sound:sound)<transacts>:void
 
             BeginSound<native><public>():void

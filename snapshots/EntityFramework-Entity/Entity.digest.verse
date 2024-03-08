@@ -2,50 +2,13 @@ using {/Verse.org/Simulation}
 using {/UnrealEngine.com/EpicGamesRestricted/Network}
 using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/UnrealEngine.com/Execution}
+using {/Verse.org/Assets}
 using {/Verse.org/Native}
 # Module import path: /UnrealEngine.com/EntityFramework/Entity
 Entity<public> := module:
-    @import_as("/Script/Entity.UBaseCoreEntity")
-    base_core_entity<native><public> := class<abstract>:
-
-
-    core_entity<native><epic_internal> := class<concrete><unique><transacts>(base_core_entity):
-        # Returns the owner of this entity if any
-        GetOwner<native><public>()<transacts><decides>:core_entity
-
-        # Returns any accessible child entities of this entity
-        GetEntities<native><final><public>()<transacts>:[]core_entity
-
-        # Create and adds an owned entity to an entity
-        CreateEntity<native><public>(EntityType:subtype(core_entity))<transacts>:EntityType
-
-        # Adds an owned entity to an entity
-        AddEntity<native><public>(InEntity:core_entity)<transacts><decides>:void
-
-        # Removes an owned entity from an entity
-        RemoveEntity<native><public>(InEntity:core_entity)<transacts><decides>:void
-
-        # Create a component on the entity of the specified type
-        CreateComponent<native><public>(ComponentType:subtype(core_entity_component))<transacts><decides>:ComponentType
-
-        # Add a component to the list of component, it will fail if the component type is already in the list
-        AddComponent<native><public>(InComponent:core_entity_component)<transacts><decides>:void
-
-        # Remove a component from the entity
-        RemoveComponent<native><public>(InComponent:core_entity_component)<transacts><decides>:void
-
-        # Retreive a component of a specified type
-        GetComponentByType<native><public>(ComponentType:subtype(core_entity_component))<transacts><decides>:ComponentType
-
-        # Destroy the entity
-        Dispose<native><public>():void
-
-        # Determine if the entity has been disposed
-        IsDisposed<native><public>()<decides>:void
-
-    core_entity_component<native><epic_internal> := class<abstract><unique>:
+    component<native><epic_internal> := class<abstract><unique>:
         # Returns the owner of this component
-        GetOwner<native><public>()<transacts><decides>:core_entity
+        GetOwner<native><public>()<transacts><decides>:entity
 
         # The component is being initialized, called when it is attach to an entity
         Initialize<native><native_callable><protected>():void
@@ -67,14 +30,49 @@ Entity<public> := module:
 
         IsAllowedOnClient<native_callable><epic_internal>():logic = external {}
 
-    # Module import path: /UnrealEngine.com/EntityFramework/Entity/core_entity_initializer
-    core_entity_initializer<epic_internal> := module:
+    @import_as("/Script/Entity.UBaseEntity")
+    base_entity<native><public> := class<abstract>:
+
+
+    entity<native><epic_internal> := class<concrete><unique><transacts>(base_entity):
+        # Returns the owner of this entity if any
+        GetOwner<native><public>()<transacts><decides>:entity
+
+        # Returns any accessible child entities of this entity
+        GetEntities<native><final><public>()<transacts>:[]entity
+
+        # Adds an owned entity to an entity
+        AddEntity<native><public>(InEntity:entity)<transacts><decides>:void
+
+        # Removes an owned entity from an entity
+        RemoveEntity<native><public>(InEntity:entity)<transacts><decides>:void
+
+        # Add a component to the list of component, it will fail if the component type is already in the list
+        AddComponent<native><public>(InComponent:component)<transacts><decides>:void
+
+        # Remove a component from the entity
+        RemoveComponent<native><public>(InComponent:component)<transacts><decides>:void
+
+        # Retreive a component of a specified type
+        GetComponentByType<native><public>(ComponentType:subtype(component))<transacts><decides>:ComponentType
+
+        # Destroy the entity
+        Dispose<native><public>():void
+
+        # Determine if the entity has been disposed
+        IsDisposed<native><public>()<decides>:void
+
+    entity_prefab<native><epic_internal> := class<computes>(asset):
+
+
+    # Module import path: /UnrealEngine.com/EntityFramework/Entity/entity_initializer
+    entity_initializer<epic_internal> := module:
         mode<native><public> := enum:
             get
             get_or_create
 
         # Tells that specified component type need to be initialized before
-        InitializeDependency<native><public>(OwnerEntity:core_entity, ComponentType:subtype(core_entity_component), Mode:mode)<transacts><decides>:ComponentType
+        InitializeDependency<native><public>(OwnerEntity:entity, ComponentType:subtype(component), Mode:mode)<transacts><decides>:ComponentType
 
     engine_execution_subscribables<native><public> := class:
         PrePhysics<native><public>:execution_subscribable = external {}
@@ -91,9 +89,9 @@ Entity<public> := module:
 
     # Module import path: /UnrealEngine.com/EntityFramework/Entity/engine_execution
     engine_execution<public> := module:
-        GetSubscribables<native><epic_internal>(ForEntity:core_entity):engine_execution_subscribables
+        GetSubscribables<native><epic_internal>(ForEntity:entity):engine_execution_subscribables
 
-    replication_component<native><epic_internal> := class(core_entity_component):
+    replication_component<native><epic_internal> := class(component):
         # The component is being initialized, called when it is attach to an entity
         AddedToWorld<native><override>():void
 
@@ -103,7 +101,7 @@ Entity<public> := module:
         # Internal epic method to know if this component is allowed on client
         IsAllowedOnClient<override>():logic = external {}
 
-    transform_component<native><epic_internal> := class(core_entity_component):
+    transform_component<native><epic_internal> := class(component):
         # The component is being initialized, called when it is attach to an entity
         Initialize<native><override>():void
 
@@ -124,4 +122,4 @@ Entity<public> := module:
         # Initial value of the transform of the entity, relative to its owner if any
         var InitialRelativeTransform<native><public>:transform = external {}
 
-    typed_element_component<native><epic_internal> := class(core_entity_component):
+    typed_element_component<native><epic_internal> := class(component):

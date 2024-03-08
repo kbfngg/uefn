@@ -9,7 +9,7 @@ using {/Verse.org/VerseEngine/Component}
 # Module import path: /Fortnite.com/AI/VerseNPC
 VerseNPC<public> := module:
     @import_as("/Script/VerseNPC.UInventoryComponentBase")
-    inventory_component_base<native><epic_internal> := class(component):
+    inventory_component_base<native><epic_internal> := class(vk_component):
 
 
     inventory_component<native><epic_internal> := class(inventory_component_base, fort_inventory_interface):
@@ -32,7 +32,7 @@ VerseNPC<public> := module:
         UnregisterUseSuggestedWeaponCallback<native><override>(CallbackID:int):void
 
     @import_as("/Script/VerseNPC.ULeashComponentBase")
-    leash_component_base<native><epic_internal> := class(component):
+    leash_component_base<native><epic_internal> := class(vk_component):
 
 
     leash_component<native><epic_internal> := class(leash_component_base, fort_leashable):
@@ -95,7 +95,7 @@ VerseNPC<public> := module:
         MeleeAttack<native><override>():logic
 
     @import_as("/Script/VerseNPC.UNPCPerceptionComponentBase")
-    npc_perception_component_base<native><epic_internal> := class(component):
+    npc_perception_component_base<native><epic_internal> := class(vk_component):
 
 
     npc_perception_component<native><epic_internal> := class(npc_perception_component_base, guard_perception_interface, fort_obstacle_perception_interface, fort_loot_perception_interface):

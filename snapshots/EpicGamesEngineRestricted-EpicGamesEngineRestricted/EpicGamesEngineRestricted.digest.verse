@@ -9,7 +9,7 @@ EpicGamesRestricted<public> := module:
 
             tangent<native><public>:vector3
 
-        spline_component<native><public> := class<final>(component):
+        spline_component<native><public> := class<final>(vk_component):
             # Returns the length of the spline
             GetSplineLength<native><public>():float
 
@@ -35,4 +35,4 @@ EpicGamesRestricted<public> := module:
         replicated_attribute<epic_internal> := class(attribute):
 
 
-        replicated<epic_internal>(ReplicationArgs:[]char)<computes>:replicated_attribute
+        replicated<epic_internal>(ReplicationArgs:string)<computes>:replicated_attribute

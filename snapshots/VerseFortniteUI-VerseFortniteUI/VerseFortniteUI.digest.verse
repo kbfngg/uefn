@@ -18,7 +18,7 @@ UI<public> := module:
         SetText<native><public>(InText:message):void
 
         # Gets the text currently in the widget.
-        GetText<native><public>():[]char
+        GetText<native><public>():string
 
     # Text button with big and loud styling applied.
     button_loud<native><public> := class<final>(text_button_base):
@@ -45,7 +45,7 @@ UI<public> := module:
     (PlayerUI:player_ui).ResetHUDElementVisibility<native><public>(HUDElements:[]hud_element_identifier):void
 
     # A HUD controller that allows for showing and hiding of HUD elements.
-    fort_hud_controller<native><public> := interface:
+    fort_hud_controller<native><public> := interface<epic_internal>:
         # Shows a set of HUD elements.
         ShowElements<public>(HUDElements:[]hud_element_identifier):void
 
@@ -59,87 +59,87 @@ UI<public> := module:
     (Playspace:fort_playspace).GetHUDController<native><public>():fort_hud_controller
 
     creative_hud_identifier_all<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
         TreatAsChildTagCollection<override>:logic = external {}
 
     creative_hud_identifier_build_menu<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_crafting_resources<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_elimination_counter<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_equipped_item<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_experience_level<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_experience_supercharged<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_experience_ui<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_health<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_health_numbers<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_hud_info<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_interaction_prompts<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_map_prompts<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_mimimap<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_minimap<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_pickup_stream<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_player_count<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_player_inventory<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_round_info<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_round_timer<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_shield_numbers<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_shileds<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_shields<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_storm_notifications<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_storm_timer<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     creative_hud_identifier_team_info<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
     player_hud_identifier_all<public> := class<final>(hud_element_gameplay_tag_identifier_base):
-        InternalTag<override>:[]char = external {}
+        InternalTag<override>:string = external {}
 
         TreatAsChildTagCollection<override>:logic = external {}
 
@@ -201,7 +201,7 @@ UI<public> := module:
     # Base class for hud elements identified by a gameplay tag
     hud_element_gameplay_tag_identifier_base<native><epic_internal> := class<abstract><epic_internal>(hud_element_identifier):
         # Internal string used to make a lookup of an FGameplayTag
-        InternalTag<native><epic_internal>:[]char
+        InternalTag<native><epic_internal>:string
 
         # If set to true the only child tags from the InternalTag will be included in the identifier
         TreatAsChildTagCollection<native><epic_internal>:logic = external {}

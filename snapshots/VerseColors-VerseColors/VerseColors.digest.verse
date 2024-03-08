@@ -62,7 +62,7 @@ Colors<public> := module:
     #  * #RRGGBB
     #  * #RRGGBBAA
     # An invalid hex string will return `Black`.
-    MakeColorFromHex<native><public>(hexString:[]char)<converges>:color
+    MakeColorFromHex<native><public>(hexString:string)<converges>:color
 
     # Makes an ACES 2065-1 `color` from `Hue`, `Saturation`, and `Value` components.
     # Components use the HSV color model in the sRGB color space. Expected ranges:

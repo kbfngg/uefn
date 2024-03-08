@@ -5,12 +5,12 @@ using {/Verse.org/VerseEngine/Component}
 using {/Verse.org/Simulation}
 # Module import path: /UnrealEngine.com/Temporary/UI
 UI<public> := module:
-    # Returns the `player_ui` component associated with `Player`.
+    # Returns the `player_ui` vk_component associated with `Player`.
     # Fails if there is no `player_ui` associated with `Player`.
     GetPlayerUI<native><public>(Player:player)<transacts><decides>:player_ui
 
     # The main interface for adding and removing `widget`s to a player's UI.
-    player_ui<native><public> := class<final><epic_internal>(component):
+    player_ui<native><public> := class<final><epic_internal>(vk_component):
         # Adds `Widget` to this `player_ui` using default `player_ui_slot` configuration options.
         AddWidget<native><public>(Widget:widget):void
 
@@ -137,14 +137,6 @@ UI<public> := module:
         SetWidget<native><public>(InSlot:button_slot):void
 
         # Subscribable event that fires when the button is clicked.
-        OnClick<public>():listenable(widget_message) = external {}
-
-    # For internal use only.
-    simple_button_internal<native><epic_internal> := class<final>(widget):
-        DefaultText<localizes><native><public>:message = external {}
-
-        SetText<native><public>(InText:message):void
-
         OnClick<public>():listenable(widget_message) = external {}
 
     # Slot for button widget.
@@ -411,7 +403,7 @@ UI<public> := module:
         SetText<native><public>(InText:message):void
 
         # Gets the text currently in the widget.
-        GetText<native><public>():[]char
+        GetText<native><public>():string
 
         # Sets the text justification in the widget.
         SetJustification<native><public>(InJustification:text_justification):void

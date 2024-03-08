@@ -12,7 +12,7 @@ Tags<public> := module:
 
 
     # Get a string representation of the gameplay tag. Useful for debugging.
-    ToString<native><epic_internal>(__dupe___unnamed_parameter_42:tag)<computes>:[]char
+    ToString<native><epic_internal>(__dupe___unnamed_parameter_46:tag)<computes>:string
 
     # Succeeds if Left and Right are equal.
     Equals<native><epic_internal>(Left:tag, Right:tag)<transacts><decides>:void
@@ -73,7 +73,7 @@ Tags<public> := module:
         Num<native><epic_internal>()<transacts>:int
 
     # Returns abbreviated human readable Tag list. Useful for debugging.
-    ToString<native><epic_internal>(__dupe___unnamed_parameter_45:tag_container)<computes>:[]char
+    ToString<native><epic_internal>(__dupe___unnamed_parameter_49:tag_container)<computes>:string
 
     @import_as("/Script/VerseGameplayTags.FVerseGameplayTagContainer")
     # Utility structure which allows users to select a gameplay tag when exposed to editor
@@ -90,27 +90,27 @@ Tags<public> := module:
     MakeTagContainer<native><epic_internal>(Selector:tag_selector_container)<transacts><decides>:tag_container
 
     # Component used for tagging objects for retrieval later. Useful when connecting runtime scripts with editor placed objects.
-    tag_container_component<native><epic_internal> := class<final>(component):
-        # Get the tags associated with this component. These may be specified in the editor.
+    tag_container_component<native><epic_internal> := class<final>(vk_component):
+        # Get the tags associated with this vk_component. These may be specified in the editor.
         GetTags<native><epic_internal>():tag_container
 
-        # Set the tags associated with this component.
+        # Set the tags associated with this vk_component.
         SetTags<native><epic_internal>(InTags:tag_container):void
 
-        # Add a single tag to this component.
+        # Add a single tag to this vk_component.
         AddTag<native><epic_internal>(TagToAdd:tag):void
 
-        # Remove a single tag from this component.
+        # Remove a single tag from this vk_component.
         RemoveTag<native><epic_internal>(TagToRemove:tag):logic
 
     # Get a list of components that match the specified tag.
-    FindObjectWithTag<native><epic_internal>(Tag:tag)<transacts><decides>:component
+    FindObjectWithTag<native><epic_internal>(Tag:tag)<transacts><decides>:vk_component
 
     # Get a list of components that match the specified tag.
-    FindObjectsWithTag<native><epic_internal>(Tag:tag)<transacts>:[]component
+    FindObjectsWithTag<native><epic_internal>(Tag:tag)<transacts>:[]vk_component
 
     # Get a list of components that match the specified criteria.
-    FindObjectsWithTags<native><epic_internal>(SearchCriteria:tag_search_criteria):[]component
+    FindObjectsWithTags<native><epic_internal>(SearchCriteria:tag_search_criteria):[]vk_component
 
     tag_search_sort_type<native><public> := enum:
         Unsorted

@@ -4,68 +4,78 @@ using {/Verse.org/VerseEngine/Component}
 VerseEngine<public> := module:
     # Module import path: /Verse.org/VerseEngine/Entity
     Entity<public> := module:
-        entity<native><public> := class<final>:
-            # Add a component to the entity of the specified type
-            AddComponent<native><public>(ComponentType:type)<transacts>:?component
+        vk_entity<native><public> := class<final>:
+            # Add a vk_component to the vk_entity of the specified type
+            AddComponent<native><public>(ComponentType:type)<transacts>:?vk_component
 
-            # Remove a component from the entity
-            RemoveComponent<native><public>(__dupe___unnamed_parameter_34:component):logic
+            # Remove a vk_component from the vk_entity
+            RemoveComponent<native><public>(__dupe___unnamed_parameter_34:vk_component):logic
 
             # Helper method for check if required components exist
-            HasComponents<public>(RequiredComponentClasses:[]subtype(component))<transacts><decides>:void = external {}
+            HasComponents<public>(RequiredComponentClasses:[]subtype(vk_component))<transacts><decides>:void = external {}
 
             # Helper method for ensuring components exist, creating them if they don't exist
-            EnsureComponents<public>(AddComponentClasses:[]subtype(component)):void = external {}
+            EnsureComponents<public>(AddComponentClasses:[]subtype(vk_component)):void = external {}
 
-            # Get a component from the entity of the specified type
-            GetComponentOfType<native><public>(ComponentType:type)<transacts>:?component
+            # Get a vk_component from the vk_entity of the specified type
+            GetComponentOfType<native><public>(ComponentType:type)<transacts>:?vk_component
 
-            # Get all component(s) from the entity of the specified type
-            GetAllComponentsOfType<native><public>(ComponentType:type)<transacts>:[]component
+            # Get all vk_component(s) from the vk_entity of the specified type
+            GetAllComponentsOfType<native><public>(ComponentType:type)<transacts>:[]vk_component
 
-            # Get a component from the entity of the specified type, if one does not exist, add it
-            GetOrCreateComponentOfType<native><public>(ComponentType:type):?component
+            # Get a vk_component from the vk_entity of the specified type, if one does not exist, add it
+            GetOrCreateComponentOfType<native><public>(ComponentType:type):?vk_component
 
-            # Destroy the entity
+            # Destroy the vk_entity
             Destroy<native><public>():logic
 
-            GetName<native><public>():[]char
+            GetName<native><public>():string
 
-            GetFullname<native><public>():[]char
+            GetFullname<native><public>():string
 
-            # Compare with another entity
-            IsEqual<native><public>(OtherEntity:entity)<transacts>:logic
+            # Compare with another vk_entity
+            IsEqual<native><public>(OtherEntity:vk_entity)<transacts>:logic
 
         # Module import path: /Verse.org/VerseEngine/Entity/EntityHelpers
         EntityHelpers<public> := module:
-            # Get a component from the entity of the specified type
-            GetComponentOfTypeC<native><public>(InComponent:component, Type:type)<transacts><decides>:component
+            # Get a vk_component from the vk_entity of the specified type
+            GetComponentOfTypeC<native><public>(InComponent:vk_component, Type:type)<transacts><decides>:vk_component
 
-            # Destroy the entity the component is attached to
-            DestroyObject<native><public>(__dupe___unnamed_parameter_43:component):logic
+            # Destroy the vk_entity the vk_component is attached to
+            DestroyObject<native><public>(__dupe___unnamed_parameter_43:vk_component):logic
 
-            # Gets the entity associated with the parameter provided component
-            GetEntityFromComponent<native><public>(__dupe___unnamed_parameter_44:component)<transacts><decides>:entity
+            # Gets the vk_entity associated with the parameter provided vk_component
+            GetEntityFromComponent<native><public>(__dupe___unnamed_parameter_44:vk_component)<transacts><decides>:vk_entity
 
     # Module import path: /Verse.org/VerseEngine/Component
     Component<public> := module:
         @import_as("/Script/EntityCore.UEntityComponent")
-        component<native><public> := class<abstract>:
+        vk_component<native><public> := class<abstract>:
 
+
+    no_param_delegate_signature<public> := type {__():void}
+
+    logic_param_delegate_signature<public> := type {__(:logic):void}
+
+    int_param_delegate_signature<public> := type {__(:int):void}
+
+    float_param_delegate_signature<public> := type {__(:float):void}
+
+    string_param_delegate_signature<public> := type {__(:string):void}
 
     multicast_delegate_base<native><public> := class:
 
 
-    multicast_delegate<native><public>(t:type)<computes> := class(multicast_delegate_base, subscribable(t)):
+    multicast_delegate<native><public>(t:type) := class(multicast_delegate_base, subscribable(t)):
         Subscribe<native><override>(Callback:type {__(:t):void})<transacts>:cancelable
 
         Broadcast<native><public>(__dupe___unnamed_parameter_46:t):void
 
         Empty<native><public>():void
 
-    multicast_delegate<public>()<computes> := multicast_delegate(tuple())
+    multicast_delegate<public>() := multicast_delegate(tuple())
 
-    subscribable_event<native><epic_internal>(t:type)<computes> := class(multicast_delegate(t), listenable(t)):
+    subscribable_event<native><epic_internal>(t:type) := class(multicast_delegate(t), listenable(t)):
         Await<native><override>()<suspends>:t
 
-    subscribable_event<epic_internal>()<computes> := subscribable_event(tuple())
+    subscribable_event<epic_internal>() := subscribable_event(tuple())

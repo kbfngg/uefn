@@ -3,11 +3,11 @@ using {/UnrealEngine.com/EntityFramework/Entity}
 # Module import path: /UnrealEngine.com/EntityTestSuite
 EntityTestSuite<public> := module:
     @hide_in_editor
-    test_component<native><epic_internal> := class(core_entity_component):
+    test_component<native><epic_internal> := class(component):
 
 
     @hide_in_editor
-    lambda_test_component<native><epic_internal> := class(core_entity_component):
+    lambda_test_component<native><epic_internal> := class(component):
         # The component is being initialized, called when it is attach to an entity
         Initialize<native><override>():void
 
@@ -27,6 +27,6 @@ EntityTestSuite<public> := module:
         EndPlay<native><override>():void
 
     @hide_in_editor
-    init_test_component<native><epic_internal> := class(core_entity_component):
+    init_test_component<native><epic_internal> := class(component):
         # The component is being initialized, called when it is attach to an entity
         Initialize<native><override>():void

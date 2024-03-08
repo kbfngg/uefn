@@ -70,7 +70,7 @@ VerseAIBase<public> := module:
 
     # Module import path: /Fortnite.com/AI/VerseAIBase/FortCreatureActionsModule
     FortCreatureActionsModule<public> := module:
-        GetGameplayAbility<public>(path:[]char)<transacts>:gameplay_ability_asset = external {}
+        GetGameplayAbility<public>(path:string)<transacts>:gameplay_ability_asset = external {}
 
     fort_inventory_item_asset<native><epic_internal> := class<computes><final>(asset):
 
@@ -182,7 +182,7 @@ VerseAIBase<public> := module:
 
         Type<native><public>:fort_loot_type
 
-        Loot<native><epic_internal>:entity
+        Loot<native><epic_internal>:vk_entity
 
     MakeNavigationTarget<constructor><native><epic_internal>(LootInfo:fort_loot_info):navigation_target
 
@@ -222,7 +222,7 @@ VerseAIBase<public> := module:
 
         Status<native><public>:fort_obstacle_status
 
-        Obstacle<native><epic_internal>:entity
+        Obstacle<native><epic_internal>:vk_entity
 
     fort_obstacle_perception_interface<native><epic_internal> := interface<epic_internal>:
         # Get information about the potential current obstacle

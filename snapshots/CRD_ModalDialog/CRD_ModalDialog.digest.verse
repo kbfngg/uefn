@@ -41,7 +41,7 @@ popup_dialog_device<public> := class<concrete><final>(creative_device_base):
     SetButtonCount<public>(Count:int):void = external {}
 
     # Returns the *Button Text* for this popup at a specified index.
-    GetButtonText<public>(Index:int)<transacts>:[]char = external {}
+    GetButtonText<public>(Index:int)<transacts>:string = external {}
 
     # Sets the *Button Text* for a button at a specific index on this popup.
     #  * `Text` should be no more than `24` characters.
@@ -65,13 +65,13 @@ popup_dialog_device<public> := class<concrete><final>(creative_device_base):
     SetDescriptionText<public>(Text:message):void = external {}
 
     # Returns the *Description* text for this popup.
-    GetDescriptionText<public>()<transacts>:[]char = external {}
+    GetDescriptionText<public>()<transacts>:string = external {}
 
     # Sets the *Title* text for this popup. `Text` should be no more than `32` characters.
     SetTitleText<public>(Text:message):void = external {}
 
     # Returns the *Title* text for this popup.
-    GetTitleText<public>()<transacts>:[]char = external {}
+    GetTitleText<public>()<transacts>:string = external {}
 
     # Sets the *Title*, *Description* and *Buttons* for this popup then displays a message for a specific user.
     SetAndShow<epic_internal>(Title:message, Description:message, ButtonsText:[]message, Agent:agent):void = external {}

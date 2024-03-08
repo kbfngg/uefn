@@ -2,7 +2,7 @@ using {/Verse.org/Colors}
 using {/Fortnite.com/Vehicles}
 using {/Verse.org/Simulation}
 using {/UnrealEngine.com/Temporary/Diagnostics}
-using {/UnrealEngine.com/VerseQuery}
+using {/UnrealEngine.com/EntityFramework/Entity}
 using {/Fortnite.com/Playspaces}
 using {/Verse.org/Simulation/Tags}
 using {/Fortnite.com/Game}
@@ -300,9 +300,6 @@ Devices<public> := module:
     # Returns the `fort_playspace` that `CreativeObject` belongs to.
     (CreativeObject:creative_object_interface).GetPlayspace<native><public>()<transacts>:fort_playspace
 
-    # Returns the `query_manager` that corresponds to the `CreativeObject`
-    (CreativeObject:creative_object_interface).GetQueryManagerFromObject<native><epic_internal>()<transacts>:query_manager
-
     # A Fortnite prop that has been placed or spawned in the island.
     creative_prop<native><public> := class<concrete><final>(creative_object, invalidatable):
         # Destroys the `creative_prop` and remove it from the island.
@@ -325,6 +322,8 @@ Devices<public> := module:
 
         # Returns true if the `creative_prop` is hidden in the world.
         IsHidden<native><epic_internal>()<transacts>:logic
+
+        GetEntity<native><epic_internal>()<transacts><decides>:entity
 
     # Asset used to spawn `creative_prop` instances.
     creative_prop_asset<native><public> := class<computes><concrete><final><epic_internal>:
@@ -364,11 +363,11 @@ Devices<public> := module:
 
 
     # Base implementation for events on `creative_device`s.
-    device_event<native><epic_internal>(t:type)<computes> := class<abstract>(listenable(t)):
-        EventName<native><public>:[]char
+    device_event<native><epic_internal>(t:type) := class<abstract>(listenable(t)):
+        EventName<native><public>:string
 
     # Partial implementation of `device_event(:type)` with no return payload.
-    device_event<epic_internal>()<computes> := device_event(tuple())
+    device_event<epic_internal>() := device_event(tuple())
 
     # Implementation of `device_event(:type)` with no payload.
     device_event_void<native><epic_internal> := class(device_event(tuple())):
@@ -429,9 +428,9 @@ Devices<public> := module:
 
     # Implementation of `device_event(:type)` with `device_ai_interaction_result` payload.
     device_event_ai_interaction<native><epic_internal> := class(device_event(device_ai_interaction_result)):
-        SourceName<native><public>:[]char
+        SourceName<native><public>:string
 
-        TargetName<native><public>:[]char
+        TargetName<native><public>:string
 
         # Subscribes Callback to this event. That same Callback will only be triggered once per event even if it is called with Subscribe more than once.
         Subscribe<native><override>(Callback:type {__(:device_ai_interaction_result):void})<transacts>:cancelable
@@ -445,7 +444,7 @@ Devices<public> := module:
         Value<native><epic_internal>:int
 
     function_parameter_string<native><epic_internal> := class<computes>(function_parameter_base):
-        Value<native><epic_internal>:[]char
+        Value<native><epic_internal>:string
 
     function_parameter_message<native><epic_internal> := class<computes>(function_parameter_base):
         Value<native><epic_internal>:?message
@@ -466,14 +465,14 @@ Devices<public> := module:
         Value<native><epic_internal>:vector3
 
     device_function<native><epic_internal> := class:
-        FunctionName<native><epic_internal>:[]char
+        FunctionName<native><epic_internal>:string
 
         Invoke<native><epic_internal>():void
 
         Invoke<native><epic_internal>(InAgent:agent):void
 
     device_function_set_base<native><epic_internal> := class<abstract>:
-        FunctionName<native><epic_internal>:[]char
+        FunctionName<native><epic_internal>:string
 
     device_function_set_int<native><epic_internal> := class(device_function_set_base):
         Invoke<native><epic_internal>(Value:int):void
@@ -485,7 +484,7 @@ Devices<public> := module:
         Invoke<native><epic_internal>(Value:logic):void
 
     device_function_set_string<native><epic_internal> := class(device_function_set_base):
-        Invoke<native><epic_internal>(Value:[]char):void
+        Invoke<native><epic_internal>(Value:string):void
 
     device_function_set_message<native><epic_internal> := class(device_function_set_base):
         Invoke<native><epic_internal>(Value:message):void
@@ -500,7 +499,7 @@ Devices<public> := module:
         Invoke<native><epic_internal>(Value:vector3):void
 
     device_function_get_base<native><epic_internal> := class<abstract>:
-        FunctionName<native><epic_internal>:[]char
+        FunctionName<native><epic_internal>:string
 
     device_function_get_int<native><epic_internal> := class(device_function_get_base):
         Invoke<native><epic_internal>()<varies>:int
@@ -512,7 +511,7 @@ Devices<public> := module:
         Invoke<native><epic_internal>()<varies>:logic
 
     device_function_get_string<native><epic_internal> := class(device_function_get_base):
-        Invoke<native><epic_internal>()<varies>:[]char
+        Invoke<native><epic_internal>()<varies>:string
 
     device_function_get_color<native><epic_internal> := class(device_function_get_base):
         Invoke<native><epic_internal>()<varies>:color
@@ -527,12 +526,12 @@ Devices<public> := module:
         ReturnType<native><epic_internal>:?subtype(function_parameter_base) = external {}
 
     device_function_set_params_by_name<native><epic_internal> := class(device_function_set_multi_parameter_base):
-        Invoke<native><epic_internal>(NamedParameters:[[]char]function_parameter_base)<transacts>:?function_parameter_base
+        Invoke<native><epic_internal>(NamedParameters:[string]function_parameter_base)<transacts>:?function_parameter_base
 
-        ParameterTypes<native><epic_internal>:[[]char]subtype(function_parameter_base)
+        ParameterTypes<native><epic_internal>:[string]subtype(function_parameter_base)
 
     device_function_set_params_by_name_const<native><epic_internal> := class(device_function_set_params_by_name):
-        InvokeConst<native><epic_internal>(NamedParameters:[[]char]function_parameter_base)<varies>:?function_parameter_base
+        InvokeConst<native><epic_internal>(NamedParameters:[string]function_parameter_base)<varies>:?function_parameter_base
 
     device_function_set_params_by_type<native><epic_internal> := class(device_function_set_multi_parameter_base):
         Invoke<native><epic_internal>(TypeExclusiveParameters:[]function_parameter_base)<transacts>:?function_parameter_base
@@ -575,7 +574,7 @@ Devices<public> := module:
     HandleMoveToInternalResult<epic_internal>(Result:move_to_internal_result):move_to_result = external {}
 
     # Returns a `string` representation of `move_to_internal_result` objects.
-    ToString<epic_internal>(MoveToInternalResult:move_to_internal_result)<computes>:[]char = external {}
+    ToString<epic_internal>(MoveToInternalResult:move_to_internal_result)<computes>:string = external {}
 
     teleport_to_debug_log<epic_internal> := class(log_channel):
 
