@@ -24,7 +24,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details open>
 <summary>Verse Modules Diffs</summary>
 
-- [`28.30` - `29.00`](https://github.com/kbfngg/uefn/commit/7343a0745a0945f1df31fb37827c232700268bfd)
+- `28.30` - `29.00`: [`public`](https://github.com/kbfngg/uefn/commit/7343a0745a0945f1df31fb37827c232700268bfd) | [`internal`](https://github.com/kbfngg/uefn/commit/ef49d747b1b30fe882b0bbad824b1763fc296108)
 - [`28.20` - `28.30`](https://github.com/kbfngg/uefn/commit/1d333115b880fd3d30ea32d20aa5a61e5be23b2c)
 - [`28.10` - `28.20`](https://github.com/kbfngg/uefn/commit/f18b44df4bfe519d45af9d36d26f6a6b111315bd)
 - [`28.01` - `28.10`](https://github.com/kbfngg/uefn/commit/4a76a49ac04a4974d3487cb50846bc769b6e52a0)
