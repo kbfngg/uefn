@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.00-CL-31978752
+# Generated from build: ++Fortnite+Release-29.01-CL-32291970
 #################################################
 
 # Module import path: /Verse.org/Assets
@@ -412,6 +412,9 @@ Native<public> := module:
     @attribscope_class
     @attribscope_struct
     import_as_attribute<epic_internal> := class(attribute):
+
+# Module import path: /Verse.org/ParameterCollections
+ParameterCollections<public> := module:
 
 using {/Verse.org/Concurrency}
 # Module import path: /Verse.org/Random
