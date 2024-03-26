@@ -117,7 +117,7 @@ VerseFortniteGameScript<public> := module:
 
         GetMeshComponent<public>():fixed_mesh_component = external {}
 
-        GetCollisionComponent<public>()<transacts>:collision_component = external {}
+        GetCollisionComponent<public>()<transacts>:vk_collision_component = external {}
 
         GetPositionComponent<public>()<transacts>:position_component = external {}
 
@@ -184,11 +184,11 @@ VerseFortniteGameScript<public> := module:
 
         OnPlayerEliminated<protected>(ElimResult:player_eliminated_result):void = external {}
 
-        OnPlayerJoined<protected>(__dupe___unnamed_parameter_204:player_component):void = external {}
+        OnPlayerJoined<protected>(__dupe___unnamed_parameter_206:player_component):void = external {}
 
         WaitForDebugCommand<protected>(CommandId:string)<suspends>:string = external {}
 
-        OnPlayerLeft<protected>(__dupe___unnamed_parameter_205:player_component):void = external {}
+        OnPlayerLeft<protected>(__dupe___unnamed_parameter_207:player_component):void = external {}
 
         SetBuildingAllowed<protected>():void = external {}
 

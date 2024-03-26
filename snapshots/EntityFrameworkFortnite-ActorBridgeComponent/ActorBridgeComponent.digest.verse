@@ -1,4 +1,4 @@
-using {/UnrealEngine.com/EntityFramework/Entity}
+using {/UnrealEngine.com/Temporary/SceneGraph}
 using {/Verse.org/Native}
 # Module import path: /UnrealEngine.com/EntityFramework/ActorBridgeComponent
 ActorBridgeComponent<public> := module:

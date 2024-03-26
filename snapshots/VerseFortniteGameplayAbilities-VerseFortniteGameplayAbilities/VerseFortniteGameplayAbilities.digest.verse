@@ -55,7 +55,7 @@ Game<public> := module:
             # Ability asset was invalid
             Invalid
 
-        ability_component<native><public> := class<final>(vk_component):
+        fort_ability_component<native><public> := class<final>(vk_component):
             AddAbility<native><public>(AbilityAsset:gameplay_ability_asset):add_ability_result
 
             RemoveAbility<native><public>(AbilityAsset:gameplay_ability_asset):remove_ability_result
@@ -66,6 +66,6 @@ Game<public> := module:
 
         # Module import path: /Fortnite.com/Game/Abilities/AbilityComponent
         AbilityComponent<public> := module:
-            GetAbilityComponentForPlayer<native><epic_internal>(__dupe___unnamed_parameter_169:player_component)<transacts><decides>:ability_component
+            GetAbilityComponentForPlayer<native><epic_internal>(__dupe___unnamed_parameter_173:player_component)<transacts><decides>:fort_ability_component
 
-            GetAbilityComponentForCharacter<native><public>(__dupe___unnamed_parameter_170:fort_character)<transacts><decides>:ability_component
+            GetAbilityComponentForCharacter<native><public>(__dupe___unnamed_parameter_174:fort_character)<transacts><decides>:fort_ability_component

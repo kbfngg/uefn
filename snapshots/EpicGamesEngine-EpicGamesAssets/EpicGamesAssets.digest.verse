@@ -5,4 +5,4 @@ Assets<public> := module:
     spawn_particle_system_subscription<native><epic_internal> := class(cancelable):
         Cancel<native><override>()<transacts>:void
 
-    SpawnParticleSystem<native><epic_internal>(Asset:particle_system, Position:vector3, ?Rotation:rotation = external {}, ?StartDelay:float = external {})<transacts>:cancelable
+    SpawnParticleSystem<native><public>(Asset:particle_system, Position:vector3, ?Rotation:rotation = external {}, ?StartDelay:float = external {})<transacts>:cancelable

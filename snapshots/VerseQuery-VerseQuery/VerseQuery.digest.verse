@@ -1,28 +1,30 @@
 using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Verse.org/Simulation/Tags}
 using {/Verse.org/Simulation}
-using {/UnrealEngine.com/EntityFramework/Entity}
 using {/Verse.org/Native}
+using {/UnrealEngine.com/Temporary/SceneGraph}
 # Module import path: /UnrealEngine.com/VerseQuery
 VerseQuery<public> := module:
-    @import_as("/Script/VerseQuery.UQueryIteratorBase")
-    query_iterator_base<native><epic_internal> := class:
+    component_query_iterator_interface<native><epic_internal> := interface<epic_internal>:
+        NextValue<native_callable><public>()<transacts><decides>:component
 
+    null_component_query_iterator<native><epic_internal> := class<epic_internal>(component_query_iterator_interface):
+        NextValue<native><override>()<transacts><decides>:component
 
-    query_iterator<native><epic_internal> := interface:
-        IsValid<public>():logic
+    slow_component_array_copy_query_iterator<native><epic_internal> := class<epic_internal>(component_query_iterator_interface):
+        NextValue<native><override>()<transacts><decides>:component
 
-        Next<public>():?entity
+    entity_query_iterator_interface<native><epic_internal> := interface<epic_internal>:
+        NextValue<native_callable><public>()<transacts><decides>:entity
 
-    null_query_iterator<native><epic_internal> := class(query_iterator):
-        IsValid<native><override>():logic
+    null_entity_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface):
+        NextValue<native><override>()<transacts><decides>:entity
 
-        Next<native><override>():?entity
+    entity_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface):
+        NextValue<native><override>()<transacts><decides>:entity
 
-    core_entity_query_iterator<native><epic_internal> := class(query_iterator, query_iterator_base):
-        IsValid<native><override>():logic
-
-        Next<native><override>():?entity
+    slow_entity_array_copy_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface):
+        NextValue<native><override>()<transacts><decides>:entity
 
     @import_as("/Script/VerseQuery.UEntityQueryManager")
     entity_query_manager<native><epic_internal> := class:
@@ -32,33 +34,41 @@ VerseQuery<public> := module:
     playspace_association_component<native><epic_internal> := class(component):
 
 
-    (InEntity:entity).FindChildEntities<native><epic_internal>(EntityType:subtype(entity))<varies>:[]EntityType
+    (InEntity:entity).FindChildEntities<native><epic_internal>(EntityType:subtype(entity))<varies>:entity_query_iterator_interface
 
-    (InEntity:entity).FindChildEntitiesWithComponent<native><epic_internal>(ComponentType:subtype(component))<varies>:[]entity
+    (InEntity:entity).FindChildEntitiesWithComponent<native><epic_internal>(ComponentType:subtype(component))<varies>:entity_query_iterator_interface
 
-    (InEntity:entity).FindChildEntitiesWithTag<native><epic_internal>(Tag:tag)<varies>:[]entity
+    (InEntity:entity).FindChildEntitiesWithTag<native><epic_internal>(Tag:tag)<varies>:entity_query_iterator_interface
 
-    (InEntity:entity).FindChildEntitiesIn<native><epic_internal>(Shape:query_shape)<varies>:[]entity
+    (InEntity:entity).FindChildComponents<native><epic_internal>(ComponentType:subtype(component))<varies>:component_query_iterator_interface
 
-    (InEntity:entity).FindChildComponents<native><epic_internal>(ComponentType:subtype(component))<varies>:[]ComponentType
+    (InEntity:entity).FindChildEntitiesInside<native><epic_internal>(Shape:volume3):entity_query_iterator_interface
 
-    (InEntity:entity).FindParentEntities<native><epic_internal>(EntityType:subtype(entity))<varies>:[]EntityType
+    (InEntity:entity).FindChildEntitiesOverlapping<native><epic_internal>(Shape:shape3):entity_query_iterator_interface
 
-    (InEntity:entity).FindParentEntitiesWithComponent<native><epic_internal>(ComponentType:subtype(component))<varies>:[]entity
+    (InEntity:entity).FindChildEntitiesOriginInside<native><epic_internal>(Shape:volume3):entity_query_iterator_interface
 
-    (InEntity:entity).FindParentEntitiesWithTag<native><epic_internal>(Tag:tag)<varies>:[]entity
+    (InEntity:entity).FindParentEntities<native><epic_internal>(EntityType:subtype(entity))<varies>:entity_query_iterator_interface
 
-    (InEntity:entity).FindParentEntitiesIn<native><epic_internal>(Shape:query_shape)<varies>:[]entity
+    (InEntity:entity).FindParentEntitiesWithComponent<native><epic_internal>(ComponentType:subtype(component))<varies>:entity_query_iterator_interface
 
-    (InEntity:entity).FindParentComponents<native><epic_internal>(ComponentType:subtype(component))<varies>:[]ComponentType
+    (InEntity:entity).FindParentEntitiesWithTag<native><epic_internal>(Tag:tag)<varies>:entity_query_iterator_interface
+
+    (InEntity:entity).FindParentComponents<native><epic_internal>(ComponentType:subtype(component))<varies>:component_query_iterator_interface
+
+    (InEntity:entity).FindParentEntitiesInside<native><epic_internal>(Shape:volume3):entity_query_iterator_interface
+
+    (InEntity:entity).FindParentEntitiesOverlapping<native><epic_internal>(Shape:shape3):entity_query_iterator_interface
+
+    (InEntity:entity).FindParentEntitiesOriginInside<native><epic_internal>(Shape:volume3):entity_query_iterator_interface
 
     # Component used for tagging objects for retrieval later. Useful when connecting runtime scripts with editor placed objects.
     tag_component<native><epic_internal> := class<final>(tag_component_base):
-        # Notification called then the component owner entity was added to a world
-        AddedToWorld<native><override>():void
+        # Notification called then the component owner entity was added to a Scene
+        OnAddedToScene<native><override>():void
 
-        # Notification called when the component owner entity is about to be removed from world
-        RemovingFromWorld<native><override>():void
+        # Notification called when the component owner entity is about to be removed from Scene
+        OnRemovingFromScene<native><override>():void
 
         # Set the tags associated with this component.
         SetTags<native><override>(InTags:tag_container):void
@@ -70,11 +80,11 @@ VerseQuery<public> := module:
         RemoveTag<native><override>(TagToRemove:tag):logic
 
     tag_component_base<native><epic_internal> := class<abstract>(component):
-        # Notification called then the component owner entity was added to a world
-        AddedToWorld<native><override>():void
+        # Notification called then the component owner entity was added to a Scene
+        OnAddedToScene<native><override>():void
 
-        # Notification called when the component owner entity is about to be removed from world
-        RemovingFromWorld<native><override>():void
+        # Notification called when the component owner entity is about to be removed from Scene
+        OnRemovingFromScene<native><override>():void
 
         # Get the tags associated with this component. These may be specified in the editor.
         GetTags<native><epic_internal>():tag_container
@@ -88,12 +98,16 @@ VerseQuery<public> := module:
         # Remove a single tag from this component.
         RemoveTag<native><epic_internal>(TagToRemove:tag):logic
 
-    # Abstract base representation of a shape. SHOULD EVENTUALLY BE REPALCED BY WHETEVER PHYSICS TYPES WE WANT TO EXPOSE
-    query_shape<native><epic_internal> := class<abstract>:
-
-
     # Axis aligned box volume
-    query_shape_box<native><epic_internal> := class<concrete>(query_shape):
+    axis_aligned_box3<native><epic_internal> := class<final><concrete>(volume3):
         Origin<native><public>:vector3 = external {}
 
         Extent<native><public>:vector3 = external {}
+
+    shape2<native><epic_internal> := class<epic_internal>:
+
+
+    shape3<native><epic_internal> := class<epic_internal>:
+
+
+    volume3<native><epic_internal> := class<epic_internal>(shape3):

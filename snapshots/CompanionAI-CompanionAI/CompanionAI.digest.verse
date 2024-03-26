@@ -2,7 +2,7 @@ using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Fortnite.com/AI/CompanionAI/PingCommand}
 using {/Verse.org/VerseEngine/Component}
 using {/Verse.org/Simulation}
-using {/Verse.org/VerseEngine/Entity}
+using {/UnrealEngine.com/Temporary/SceneGraph}
 using {/Fortnite.com/AI/VerseNPC}
 using {/Fortnite.com/AI/VerseCreature}
 using {/Fortnite.com/Characters}
@@ -48,11 +48,9 @@ CompanionAI<public> := module:
 
         IsFollowingBehaviorEnabled<native><override>()<transacts>:logic
 
-    (InEntity:vk_entity).GetAgent<native><epic_internal>()<transacts>:?agent
+    (InEntity:entity).GetAgent<native><epic_internal>()<transacts>:?agent
 
     (Agent:agent).GetTeamMembers<native><epic_internal>()<transacts>:[]agent
-
-    Compare<native><epic_internal>(Obstacle:fort_obstacle_info, Target:vk_entity)<transacts>:logic
 
     (Character:fort_character).IsBeingDBNOCarried<native><epic_internal>()<transacts><decides>:void
 
@@ -135,6 +133,6 @@ CompanionAI<public> := module:
 
         LocationOnHorizontalSurface<native><epic_internal>:logic
 
-        Target<native><epic_internal>:?vk_entity
+        Target<native><epic_internal>:?entity
 
         Emitter<native><epic_internal>:?agent

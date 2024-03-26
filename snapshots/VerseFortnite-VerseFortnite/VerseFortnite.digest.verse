@@ -6,9 +6,9 @@ using {/Verse.org/Assets}
 using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Verse.org/Simulation/Tags}
 using {/UnrealEngine.com/VerseQuery}
-using {/UnrealEngine.com/EntityFramework/Entity}
 using {/Fortnite.com/Teams}
 using {/Verse.org/Simulation}
+using {/UnrealEngine.com/Temporary/SceneGraph}
 using {/Fortnite.com/Game}
 using {/Fortnite.com/Characters}
 # Module import path: /Fortnite.com/Vehicles
@@ -30,6 +30,8 @@ Vehicles<public> := module:
 
         # Returns an array with all the passengers of the vehicle.
         GetPassengers<public>():[]fort_character
+
+        GetEntity<epic_internal>()<transacts><decides>:entity
 
 # Module import path: /Fortnite.com/Teams
 Teams<public> := module:
@@ -96,19 +98,19 @@ Playspaces<public> := module:
         # Signaled when a `player` leaves the `fort_playspace`. Returns a subscribable with a payload of the`fort_character` that left the `fort_playspace`.
         PlayerRemovedEvent<public>():listenable(player)
 
-        PlayspaceEntitiesOfTypeIterator<epic_internal>(EntityClass:subtype(entity))<varies>:query_iterator
+        FindEntities<epic_internal>(EntityType:subtype(entity))<varies>:entity_query_iterator_interface
 
-        PlayspaceEntitiesWithComponentIterator<epic_internal>(ComponentClass:subtype(entity))<varies>:query_iterator
+        FindEntitiesWithComponent<epic_internal>(ComponentType:subtype(component))<varies>:entity_query_iterator_interface
 
-        FindEntities<epic_internal>(EntityType:subtype(entity))<varies>:[]entity
+        FindComponents<epic_internal>(ComponentType:subtype(component))<varies>:component_query_iterator_interface
 
-        FindEntitiesWithComponent<epic_internal>(ComponentType:subtype(component))<varies>:[]entity
+        FindEntitiesWithTag<epic_internal>(Tag:tag)<varies>:entity_query_iterator_interface
 
-        FindComponents<epic_internal>(ComponentType:subtype(component))<varies>:[]ComponentType
+        FindEntitiesInside<epic_internal>(Shape:volume3):entity_query_iterator_interface
 
-        FindEntitiesWithTag<epic_internal>(Tag:tag)<varies>:[]entity
+        FindEntitiesOverlapping<epic_internal>(Shape:shape3):entity_query_iterator_interface
 
-        FindEntitiesInShape<epic_internal>(Shape:query_shape)<varies>:[]entity
+        FindEntitiesOriginInside<epic_internal>(Shape:volume3):entity_query_iterator_interface
 
     (InEntity:entity).GetPlayspaceForEntity<native><epic_internal>()<transacts><decides>:fort_playspace
 
@@ -642,7 +644,7 @@ AI<public> := module:
     # Information about a perceived target.
     target_info<native><epic_internal> := struct<epic_internal>:
         # The source of the detection stimuli.
-        Target<native><public>:game_action_instigator
+        Target<native><epic_internal>:entity
 
         # True if the target can be seen.
         HasLineOfSight<native><public>:logic
@@ -765,7 +767,7 @@ AI<public> := module:
         TargetInfoUpdatedEvent<public>():listenable(target_info)
 
         # Event when a target was removed.
-        TargetRemovedEvent<public>():listenable(game_action_instigator)
+        TargetRemovedEvent<public>():listenable(entity)
 
         # Event when a target is seen. Sight sense must be active.
         TargetSeenEvent<public>():listenable(target_info)

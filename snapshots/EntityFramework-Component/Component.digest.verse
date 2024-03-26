@@ -4,254 +4,250 @@ using {/Verse.org/Assets}
 using {/UnrealEngine.com/Temporary/UI}
 using {/Verse.org/Simulation}
 using {/UnrealEngine.com/Temporary/SpatialMath}
-using {/UnrealEngine.com/EntityFramework/Entity}
-# Module import path: /UnrealEngine.com/EntityFramework/Component
-Component<public> := module:
-    attachment_component<native><epic_internal> := class(component):
-        # The component is being initialized, called when it is attach to an entity
-        Initialize<native><override>():void
+attachment_component<native><epic_internal> := class(component):
+    # The component is being initialized, called when it is attach to an entity
+    OnInitialized<native><override>():void
 
-        # The component is being uninitialized, called when it is about to be detached from an entity
-        Uninitialize<native><override>():void
+    # The component is being uninitialized, called when it is about to be detached from an entity
+    OnUninitializing<native><override>():void
 
-        # Attaches the owner entity to the specified entity. This method will compute relative transform from the current world transform of both entity
-        AttachTo<native><public>(InParentEntity:entity)<transacts><decides>:void
+    # Attaches the owner entity to the specified entity. This method will compute relative transform from the current world transform of both entity
+    AttachTo<native><public>(InParentEntity:entity)<transacts><decides>:void
 
-        # Attach the owner entity to the specified entity, use the specified transform as the relation to it
-        AttachTo<native><public>(InParentEntity:entity, NewRelativeTransform:transform)<transacts><decides>:void
+    # Attach the owner entity to the specified entity, use the specified transform as the relation to it
+    AttachTo<native><public>(InParentEntity:entity, NewRelativeTransform:transform)<transacts><decides>:void
 
-        # Detaches the owner entity if it was attached to an other entity
-        DetachFrom<native><public>()<transacts><decides>:void
+    # Detaches the owner entity if it was attached to an other entity
+    DetachFrom<native><public>()<transacts><decides>:void
 
-        # Set relative transform
-        SetRelativeTransform<native><public>(Transform:transform)<transacts><decides>:void
+    # Set relative transform
+    SetRelativeTransform<native><public>(Transform:transform)<transacts><decides>:void
 
-        # Set relative transform from a global transform
-        SetRelativeTransformFromGlobal<native><public>(Transform:transform)<transacts><decides>:void
+    # Set relative transform from a global transform
+    SetRelativeTransformFromGlobal<native><public>(Transform:transform)<transacts><decides>:void
 
-        # Retrieve the transform of the attachment
-        GetAttachedTransform<native><public>()<decides>:transform
+    # Retrieve the transform of the attachment
+    GetAttachedTransform<native><public>()<decides>:transform
 
-        # Internal epic method to know if this component is allowed on client
-        IsAllowedOnClient<override>():logic = external {}
+    # Internal epic method to know if this component is allowed on client
+    IsAllowedOnClient<override>():logic = external {}
 
-        # Automatically attach to owner at initialization
-        AutoAttachToOwner<native><public>:logic = external {}
+    # Automatically attach to owner at initialization
+    AutoAttachToOwner<native><public>:logic = external {}
 
-        # The relative transform to the attached entity
-        var RelativeTransform<native><public>:?transform = external {}
+    # The relative transform to the attached entity
+    var RelativeTransform<native><public>:?transform = external {}
 
-        # The relative transform to the attached entity
-        var ParentEntity<native><public>:?entity = external {}
+    # The relative transform to the attached entity
+    var ParentEntity<native><public>:?entity = external {}
 
-    camera_entity_component<native><epic_internal> := class(component):
-        # The component is being initialized, called when it is attach to an entity
-        Initialize<native><override>():void
+basic_camera_component<native><epic_internal> := class(component):
+    # The component is being initialized, called when it is attach to an entity
+    OnInitialized<native><override>():void
 
-        # The component is being uninitialized, called when it is about to be detached from an entity
-        Uninitialize<native><override>():void
+    # The component is being uninitialized, called when it is about to be detached from an entity
+    OnUninitializing<native><override>():void
 
-        # Notification called then the component owner entity was added to a world
-        AddedToWorld<native><override>():void
+    # Notification called then the component owner entity was added to a world
+    OnAddedToScene<native><override>():void
 
-        # Notification called when the component owner entity is about to be removed from world
-        RemovingFromWorld<native><override>():void
+    # Notification called when the component owner entity is about to be removed from world
+    OnRemovingFromScene<native><override>():void
 
-        # Notification called when the game simulation has started
-        BeginPlay<native><override>():void
+    # Internal epic method to know if this component is allowed on client
+    IsAllowedOnClient<override>():logic = external {}
 
-        # Internal epic method to know if this component is allowed on client
-        IsAllowedOnClient<override>():logic = external {}
+    # Set the field of view of the camera in degrees
+    SetFieldOfView<public>(InFieldOfView:float):void = external {}
 
-        # Set the field of view of the camera in degrees
-        SetFieldOfView<public>(InFieldOfView:float):void = external {}
+    GetFieldOfView<public>():float = external {}
 
-        GetFieldOfView<public>():float = external {}
+damage_component<native><epic_internal> := class(component):
+    Damage<native><public>(Amount:float):void
 
-        # Set the aspect ratio of the camera
-        SetAspectRatio<public>(InAspectRatio:float):void = external {}
+@hide_in_editor
+light_entity_component<native><epic_internal> := class(component):
+    # The component is being initialized, called when it is attach to an entity
+    OnInitialized<native><override>():void
 
-        GetAspectRatio<public>():float = external {}
+    # The component is being uninitialized, called when it is about to be detached from an entity
+    OnUninitializing<native><override>():void
 
-        # Enable or disable the camera
-        SetIsActive<public>(InIsActive:logic):void = external {}
+    # Internal epic method to know if this component is allowed on client
+    IsAllowedOnClient<override>():logic = external {}
 
-        GetIsActive<public>():logic = external {}
+local_hud_component<epic_internal> := class(component):
+    IsAllowedOnClient<override>():logic = external {}
 
-    @hide_in_editor
-    light_entity_component<native><epic_internal> := class(component):
-        # The component is being initialized, called when it is attach to an entity
-        Initialize<native><override>():void
+    var Canvas<public>:canvas
 
-        # The component is being uninitialized, called when it is about to be detached from an entity
-        Uninitialize<native><override>():void
+    var UISlot<public>:player_ui_slot
 
-        # Internal epic method to know if this component is allowed on client
-        IsAllowedOnClient<override>():logic = external {}
+    OnBeginSimulation<override>():void = external {}
 
-    local_hud_component<epic_internal> := class(component):
-        IsAllowedOnClient<override>():logic = external {}
+    OnEndSimulation<override>():void = external {}
 
-        var Canvas<public>:canvas
+    Show<public>(Player:player):void = external {}
 
-        var UISlot<public>:player_ui_slot
+    Hide<public>(Player:player):void = external {}
 
-        BeginPlay<override>():void = external {}
+@hide_in_editor
+mesh_component<native><epic_internal> := class(component):
+    # Internal epic method to know if this component is allowed on client
+    IsAllowedOnClient<override>():logic = external {}
 
-        EndPlay<override>():void = external {}
+particle_system_component<native><epic_internal> := class<final>(component):
+    # The component is being initialized, called when it is attach to an entity
+    OnInitialized<native><override>():void
 
-        Show<public>(Player:player):void = external {}
+    # The component is being uninitialized, called when it is about to be detached from an entity
+    OnUninitializing<native><override>():void
 
-        Hide<public>(Player:player):void = external {}
+    # Notification called then the component owner entity was added to a world
+    OnAddedToScene<native><override>():void
 
-    @hide_in_editor
-    mesh_component<native><epic_internal> := class(component):
-        # Internal epic method to know if this component is allowed on client
-        IsAllowedOnClient<override>():logic = external {}
+    # Notification called when the component owner entity is about to be removed from world
+    OnRemovingFromScene<native><override>():void
 
-    particle_system_component<native><epic_internal> := class<final>(component):
-        # The component is being initialized, called when it is attach to an entity
-        Initialize<native><override>():void
+    # Activate the particle system
+    Activate<native><public>():void
 
-        # The component is being uninitialized, called when it is about to be detached from an entity
-        Uninitialize<native><override>():void
+    # Deactivate the particle system
+    Deactivate<native><public>():void
 
-        # Notification called then the component owner entity was added to a world
-        AddedToWorld<native><override>():void
+    # Internal epic method to know if this component is allowed on client
+    IsAllowedOnClient<override>():logic = external {}
 
-        # Notification called when the component owner entity is about to be removed from world
-        RemovingFromWorld<native><override>():void
+    @replicated("RepNotify")
+    # The path to the particle system asset
+    var ParticleSystem<native><public>:particle_system = external {}
 
-        # Activate the particle system
-        Activate<native><public>():void
+    SetBeamStart<native><epic_internal>(BeamStart:vector3):void
 
-        # Deactivate the particle system
-        Deactivate<native><public>():void
+    SetBeamStartTangent<native><epic_internal>(BeamStartTangent:vector3):void
 
-        # Internal epic method to know if this component is allowed on client
-        IsAllowedOnClient<override>():logic = external {}
+    SetBeamEnd<native><epic_internal>(BeamEnd:vector3):void
 
-        @replicated("RepNotify")
-        # The path to the particle system asset
-        var ParticleSystem<native><public>:?particle_system = external {}
+    SetBeamEndTangent<native><epic_internal>(BeamEndTangent:vector3):void
 
-    hit_result<native><epic_internal> := struct:
-        ThisEntity<native><public>:?entity
+    SetBeamWidth<native><epic_internal>(BeamWidth:float):void
 
-        ThisComponent<native><public>:?physics_component
+hit_result<native><epic_internal> := struct:
+    ThisEntity<native><public>:?entity
 
-        OtherEntity<native><public>:?entity
+    ThisComponent<native><public>:?physics_component
 
-        OtherComponent<native><public>:?physics_component
+    OtherEntity<native><public>:?entity
 
-        HitNormal<native><public>:vector3
+    OtherComponent<native><public>:?physics_component
 
-        HitLocation<native><public>:vector3
+    HitNormal<native><public>:vector3
 
-    physics_component<native><epic_internal> := class(component):
-        # The component is being initialized, called when it is attach to an entity
-        Initialize<native><override>():void
+    HitLocation<native><public>:vector3
 
-        # The component is being uninitialized, called when it is about to be detached from an entity
-        Uninitialize<native><override>():void
+physics_component<native><epic_internal> := class(component):
+    # The component is being initialized, called when it is attach to an entity
+    OnInitialized<native><override>():void
 
-        # Notification called then the component owner entity was added to a world
-        AddedToWorld<native><override>():void
+    # The component is being uninitialized, called when it is about to be detached from an entity
+    OnUninitializing<native><override>():void
 
-        # Notification called when the component owner entity is about to be removed from world
-        RemovingFromWorld<native><override>():void
+    # Notification called then the component owner entity was added to a world
+    OnAddedToScene<native><override>():void
 
-        # Internal epic method to know if this component is allowed on client
-        IsAllowedOnClient<override>():logic = external {}
+    # Notification called when the component owner entity is about to be removed from world
+    OnRemovingFromScene<native><override>():void
 
-        # Event signaled when the component experiences a blocking hit
-        HitEvent<native><public>:listenable(hit_result) = external {}
+    # Internal epic method to know if this component is allowed on client
+    IsAllowedOnClient<override>():logic = external {}
 
-    point_light_entity_component<native><public> := class<final>(light_entity_component):
-        SetIntensity<public>(NewIntensity:float):void = external {}
+    # Event signaled when the component experiences a blocking hit
+    HitEvent<native><public>:listenable(hit_result) = external {}
 
-        SetColor<public>(NewColor:color):void = external {}
+point_light_entity_component<native><public> := class<final>(light_entity_component):
+    SetIntensity<public>(NewIntensity:float):void = external {}
 
-        SetSourceRadius<public>(NewRadius:float):void = external {}
+    SetColor<public>(NewColor:color):void = external {}
 
-        SetSourceLength<public>(NewLength:float):void = external {}
+    SetSourceRadius<public>(NewRadius:float):void = external {}
 
-        SetAttenuationRadius<public>(NewRadius:float):void = external {}
+    SetSourceLength<public>(NewLength:float):void = external {}
 
-        GetIntensity<public>():float = external {}
+    SetAttenuationRadius<public>(NewRadius:float):void = external {}
 
-        GetColor<public>():color = external {}
+    GetIntensity<public>():float = external {}
 
-        GetSourceRadius<public>():float = external {}
+    GetColor<public>():color = external {}
 
-        GetSourceLength<public>():float = external {}
+    GetSourceRadius<public>():float = external {}
 
-        GetAttenuationRadius<public>():float = external {}
+    GetSourceLength<public>():float = external {}
 
-    sound_component<native><epic_internal> := class(component):
-        # The component is being initialized, called when it is attach to an entity
-        Initialize<native><override>():void
+    GetAttenuationRadius<public>():float = external {}
 
-        # The component is being uninitialized, called when it is about to be detached from an entity
-        Uninitialize<native><override>():void
+sound_component<native><epic_internal> := class(component):
+    # The component is being initialized, called when it is attach to an entity
+    OnInitialized<native><override>():void
 
-        # Internal epic method to know if this component is allowed on client
-        IsAllowedOnClient<override>():logic = external {}
+    # The component is being uninitialized, called when it is about to be detached from an entity
+    OnUninitializing<native><override>():void
 
-        @editable
-        @replicated("RepNotify")
-        # The path to the sound asset
-        var Sound<native><public>:sound = external {}
+    # Internal epic method to know if this component is allowed on client
+    IsAllowedOnClient<override>():logic = external {}
 
-        # Play the sound asset
-        Play<native><public>():void
+    @replicated("RepNotify")
+    # The path to the sound asset
+    var Sound<native><public>:sound = external {}
 
-        # Play the sound asset
-        Stop<native><public>():void
+    # Play the sound asset
+    Play<native><public>():void
 
-    spot_light_entity_component<native><public> := class<final>(light_entity_component):
-        SetIntensity<public>(NewIntensity:float):void = external {}
+    # Play the sound asset
+    Stop<native><public>():void
 
-        SetColor<public>(NewColor:color):void = external {}
+spot_light_entity_component<native><public> := class<final>(light_entity_component):
+    SetIntensity<public>(NewIntensity:float):void = external {}
 
-        SetSourceRadius<public>(NewRadius:float):void = external {}
+    SetColor<public>(NewColor:color):void = external {}
 
-        SetSourceLength<public>(NewLength:float):void = external {}
+    SetSourceRadius<public>(NewRadius:float):void = external {}
 
-        SetInnerConeAngle<public>(NewInnerConeAngle:float):void = external {}
+    SetSourceLength<public>(NewLength:float):void = external {}
 
-        SetOuterConeAngle<public>(NewOuterConeAngle:float):void = external {}
+    SetInnerConeAngle<public>(NewInnerConeAngle:float):void = external {}
 
-        SetAttenuationRadius<public>(NewRadius:float):void = external {}
+    SetOuterConeAngle<public>(NewOuterConeAngle:float):void = external {}
 
-        GetIntensity<public>():float = external {}
+    SetAttenuationRadius<public>(NewRadius:float):void = external {}
 
-        GetColor<public>():color = external {}
+    GetIntensity<public>():float = external {}
 
-        GetSourceRadius<public>():float = external {}
+    GetColor<public>():color = external {}
 
-        GetSourceLength<public>():float = external {}
+    GetSourceRadius<public>():float = external {}
 
-        GetInnerConeAngle<public>():float = external {}
+    GetSourceLength<public>():float = external {}
 
-        GetOuterConeAngle<public>():float = external {}
+    GetInnerConeAngle<public>():float = external {}
 
-        GetAttenuationRadius<public>():float = external {}
+    GetOuterConeAngle<public>():float = external {}
 
-    static_mesh_component<native><epic_internal> := class(mesh_component):
-        # The component is being initialized, called when it is attach to an entity
-        Initialize<native><override>():void
+    GetAttenuationRadius<public>():float = external {}
 
-        # The component is being uninitialized, called when it is about to be detached from an entity
-        Uninitialize<native><override>():void
+static_mesh_component<native><epic_internal> := class(mesh_component):
+    OnInitialized<native><override>():void
 
-        # Internal epic method to know if this component is allowed on client
-        IsAllowedOnClient<override>():logic = external {}
+    OnAddedToScene<native><override>():void
 
-        @replicated("RepNotify")
-        # The path to the static mesh asset
-        var Mesh<native><public>:mesh = external {}
+    OnRemovingFromScene<native><override>():void
 
-        @replicated("RepNotify")
-        # The path to the material asset of a static mesh
-        var Material<native><public>:?material = external {}
+    # Internal epic method to know if this component is allowed on client
+    IsAllowedOnClient<override>():logic = external {}
+
+    @replicated("RepNotify")
+    # The path to the static mesh asset
+    var Mesh<native><public>:mesh = external {}
+
+    @replicated("RepNotify")
+    # The path to the material asset of a static mesh
+    var Material<native><public>:?material = external {}

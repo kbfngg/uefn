@@ -1,5 +1,6 @@
 using {/Verse.org/VerseEngine}
 using {/Fortnite.com/Game}
+using {/UnrealEngine.com/Temporary/SceneGraph}
 using {/Fortnite.com/Assets}
 using {/Verse.org/Simulation}
 using {/UnrealEngine.com/Temporary/SpatialMath}
@@ -84,9 +85,7 @@ VerseNPC<public> := module:
 
         LootObject<native><override>(ObjectInfo:fort_loot_info)<suspends>:action_result
 
-        AttackThreat<native><override>(Threat:target_info)<suspends>:action_result
-
-        AttackObstacle<native><override>(Obstacle:fort_obstacle_info)<suspends>:action_result
+        Attack<native><override>(Target:entity)<suspends>:action_result
 
         Fire<native><override>():logic
 

@@ -1,4 +1,5 @@
 using {/Verse.org/Simulation}
+using {/UnrealEngine.com/Temporary/SpatialMath}
 # Used to place visual effects around your island. You can use these effects to enhance the overall theme and experience of your game.
 vfx_spawner_device<public> := class<concrete><final>(creative_device_base):
     # Signaled when the effect is enabled.
@@ -15,6 +16,9 @@ vfx_spawner_device<public> := class<concrete><final>(creative_device_base):
 
     # Restarts the VFX. Triggers the VFX if it's Burst VFX.
     Restart<public>():void = external {}
+
+    # Restarts the VFX from the device and places it at the specified location.
+    RestartAt<epic_internal>(Position:vector3, Rotation:rotation):void = external {}
 
 # Used to transform character appearance.
 character_transformation_device<epic_internal> := class<concrete><final>(creative_device_base):

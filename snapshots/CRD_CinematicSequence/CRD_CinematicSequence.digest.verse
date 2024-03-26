@@ -10,6 +10,12 @@ cinematic_sequence_device<public> := class<concrete><final>(creative_device_base
     # Plays the sequence. An instigating 'Agent' is required when the device is set to anything except *Everyone*.
     Play<public>(Agent:agent):void = external {}
 
+    # Plays the sequence in reverse. This will only work when the device is set to *Everyone*
+    PlayReverse<public>():void = external {}
+
+    # Plays the sequence in reverse. An instigating 'Agent' is required when the device is set to anything except *Everyone*.
+    PlayReverse<public>(Agent:agent):void = external {}
+
     # Stops the sequence.
     Stop<public>():void = external {}
 

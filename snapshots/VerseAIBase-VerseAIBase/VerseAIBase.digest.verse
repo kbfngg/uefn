@@ -1,3 +1,4 @@
+using {/UnrealEngine.com/Temporary/SceneGraph}
 using {/Verse.org/Simulation}
 using {/Verse.org/VerseEngine/Entity}
 using {/UnrealEngine.com/Temporary/SpatialMath}
@@ -203,11 +204,8 @@ VerseAIBase<public> := module:
         # Navigate to and loot the specified object
         LootObject<epic_internal>(ObjectInfo:fort_loot_info)<suspends>:action_result
 
-        # Start fighting with the specified target
-        AttackThreat<public>(Threat:target_info)<suspends>:action_result
-
-        # Attack the navigation obstacle
-        AttackObstacle<epic_internal>(Obstacle:fort_obstacle_info)<suspends>:action_result
+        # Start attacking the specified target
+        Attack<epic_internal>(Target:entity)<suspends>:action_result
 
     # Get the current fort_character_actions_interface for the specified character
     (InCharacter:fort_character).GetFortCharacterActions<native><epic_internal>()<transacts><decides>:fort_character_actions_interface
@@ -222,7 +220,7 @@ VerseAIBase<public> := module:
 
         Status<native><public>:fort_obstacle_status
 
-        Obstacle<native><epic_internal>:vk_entity
+        Obstacle<native><epic_internal>:entity
 
     fort_obstacle_perception_interface<native><epic_internal> := interface<epic_internal>:
         # Get information about the potential current obstacle

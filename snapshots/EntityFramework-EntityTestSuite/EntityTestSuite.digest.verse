@@ -1,5 +1,5 @@
 using {/Verse.org/Simulation}
-using {/UnrealEngine.com/EntityFramework/Entity}
+using {/UnrealEngine.com/Temporary/SceneGraph}
 # Module import path: /UnrealEngine.com/EntityTestSuite
 EntityTestSuite<public> := module:
     @hide_in_editor
@@ -8,25 +8,32 @@ EntityTestSuite<public> := module:
 
     @hide_in_editor
     lambda_test_component<native><epic_internal> := class(component):
-        # The component is being initialized, called when it is attach to an entity
-        Initialize<native><override>():void
+        OnInitialized<native><override>():void
 
-        # The component is being uninitialized, called when it is about to be detached from an entity
-        Uninitialize<native><override>():void
+        OnAddedToScene<native><override>():void
 
-        # Notification called then the component owner entity was added to a world
-        AddedToWorld<native><override>():void
+        OnBeginSimulation<native><override>():void
 
-        # Notification called when the component owner entity is about to be removed from world
-        RemovingFromWorld<native><override>():void
+        OnSimulate<override>()<suspends>:void = external {}
 
-        # Notification called when the game simulation has started
-        BeginPlay<native><override>():void
+        OnEndSimulation<native><override>():void
 
-        # Notification called when the game simulation has ended
-        EndPlay<native><override>():void
+        OnRemovingFromScene<native><override>():void
+
+        OnUninitializing<native><override>():void
 
     @hide_in_editor
-    init_test_component<native><epic_internal> := class(component):
-        # The component is being initialized, called when it is attach to an entity
-        Initialize<native><override>():void
+    lambda_test_component_2<native><epic_internal> := class(component):
+        OnInitialized<native><override>():void
+
+        OnAddedToScene<native><override>():void
+
+        OnBeginSimulation<native><override>():void
+
+        OnSimulate<override>()<suspends>:void = external {}
+
+        OnEndSimulation<native><override>():void
+
+        OnRemovingFromScene<native><override>():void
+
+        OnUninitializing<native><override>():void

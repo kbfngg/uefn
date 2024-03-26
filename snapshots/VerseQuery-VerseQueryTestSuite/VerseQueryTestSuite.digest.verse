@@ -1,6 +1,6 @@
 using {/Verse.org/Simulation/Tags}
 using {/Verse.org/Simulation}
-using {/UnrealEngine.com/EntityFramework/Entity}
+using {/UnrealEngine.com/Temporary/SceneGraph}
 # Module import path: /UnrealEngine.com/VerseQueryTestSuite
 VerseQueryTestSuite<public> := module:
     @hide_in_editor

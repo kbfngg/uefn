@@ -71,13 +71,73 @@ VGameplayRst<public> := module:
 
     # Module import path: /UnrealEngine.com/VGameplayRst/Physics
     Physics<public> := module:
+        hit_result_legacy<native><public> := struct:
+            # The ID belonging to the entity hit
+            OtherEntityID<native><public>:int
+
+            # The vk_collision_component belonging to the entity hit
+            OtherComponent<native><public>:vk_collision_component
+
+            # The surface normal at the location at which the hit occured on OtherEntityID
+            HitNormal<native><public>:vector3
+
+            # The location at which the hit occured on OtherEntityID
+            HitLocation<native><public>:vector3
+
+        overlap_result<native><public> := class:
+            OtherEntityID<native><public>:int
+
+            OtherComponent<native><public>:vk_collision_component
+
+            FromSweep<native><public>:logic
+
+            SweepHitNormal<native><public>:vector3
+
+            SweepHitLocation<native><public>:vector3
+
+        physics_trace<native><public> := class:
+            WaitPhysicsTrace<native><public>()<suspends>:[]hit_result_legacy
+
+            InitPhysicsTrace<native><public>(ContextObject:vk_component, TraceCategory:physics_trace_category, TraceType:physics_trace_type, TraceShape:physics_trace_shape, TraceChannel:physics_trace_channel, Start:vector3, End:vector3, IgnoreCallingEntity:logic, TraceExtent:vector3, TraceRadius:float, ProfileName:string):void
+
+        physics_trace_category<native><public> := enum:
+            Channel
+            Profile
+            Object
+
+        physics_trace_channel<native><public> := enum:
+            WorldStatic
+            WorldDynamic
+            Pawn
+            Visibility
+            Camera
+            PhysicsBody
+            Vehicle
+            Destructible
+            GameTraceChannel1
+            GameTraceChannel2
+            GameTraceChannel3
+            GameTraceChannel4
+            GameTraceChannel5
+            GameTraceChannel6
+
+        physics_trace_shape<native><public> := enum:
+            Line
+            Box
+            ShapeSphere
+
+        physics_trace_type<native><public> := enum:
+            Single
+            Multi
+            Test
+
         collision_shape_mode<native><public> := enum:
             CollisionMesh
             CollisionBox
             CollisionCapsule
             CollisionSphere
 
-        collision_component<native><public> := class<final>(vk_component):
+        vk_collision_component<native><public> := class<final>(vk_component):
             SetEnabled<native><public>(InIsEnabled:logic):void
 
             GetEnabled<native><public>():logic
@@ -137,66 +197,6 @@ VGameplayRst<public> := module:
             XYPlane
             CustomPlane
             NoConstraints
-
-        hit_result_legacy<native><public> := struct:
-            # The ID belonging to the entity hit
-            OtherEntityID<native><public>:int
-
-            # The collision_component belonging to the entity hit
-            OtherComponent<native><public>:collision_component
-
-            # The surface normal at the location at which the hit occured on OtherEntityID
-            HitNormal<native><public>:vector3
-
-            # The location at which the hit occured on OtherEntityID
-            HitLocation<native><public>:vector3
-
-        overlap_result<native><public> := class:
-            OtherEntityID<native><public>:int
-
-            OtherComponent<native><public>:collision_component
-
-            FromSweep<native><public>:logic
-
-            SweepHitNormal<native><public>:vector3
-
-            SweepHitLocation<native><public>:vector3
-
-        physics_trace<native><public> := class:
-            WaitPhysicsTrace<native><public>()<suspends>:[]hit_result_legacy
-
-            InitPhysicsTrace<native><public>(ContextObject:vk_component, TraceCategory:physics_trace_category, TraceType:physics_trace_type, TraceShape:physics_trace_shape, TraceChannel:physics_trace_channel, Start:vector3, End:vector3, IgnoreCallingEntity:logic, TraceExtent:vector3, TraceRadius:float, ProfileName:string):void
-
-        physics_trace_category<native><public> := enum:
-            Channel
-            Profile
-            Object
-
-        physics_trace_channel<native><public> := enum:
-            WorldStatic
-            WorldDynamic
-            Pawn
-            Visibility
-            Camera
-            PhysicsBody
-            Vehicle
-            Destructible
-            GameTraceChannel1
-            GameTraceChannel2
-            GameTraceChannel3
-            GameTraceChannel4
-            GameTraceChannel5
-            GameTraceChannel6
-
-        physics_trace_shape<native><public> := enum:
-            Line
-            Box
-            ShapeSphere
-
-        physics_trace_type<native><public> := enum:
-            Single
-            Multi
-            Test
 
     # Module import path: /UnrealEngine.com/VGameplayRst/Lights
     Lights<public> := module:

@@ -338,7 +338,7 @@ Game<public> := module:
 
         setAutoRespawnEnabled<native><epic_internal>(contextObject:vk_component, Enabled:logic):void
 
-        GetPawnCollisionEntityID<native><public>(__dupe___unnamed_parameter_169:player_component):int
+        GetPawnCollisionEntityID<native><public>(__dupe___unnamed_parameter_173:player_component):int
 
     fortnite_building_component<native><public> := class<final>(vk_component):
         wasPlayerBuilt<native><public>()<transacts>:logic

@@ -106,7 +106,7 @@ VersePrototypeGameplay<public> := module:
 
         GetMeshComponent<public>():fixed_mesh_component = external {}
 
-        GetCollisionComponent<public>():collision_component = external {}
+        GetCollisionComponent<public>():vk_collision_component = external {}
 
         GetPositionComponent<public>():position_component = external {}
 

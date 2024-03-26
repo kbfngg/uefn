@@ -2,12 +2,12 @@ using {/Verse.org/Colors}
 using {/Fortnite.com/Vehicles}
 using {/Verse.org/Simulation}
 using {/UnrealEngine.com/Temporary/Diagnostics}
-using {/UnrealEngine.com/EntityFramework/Entity}
-using {/Fortnite.com/Playspaces}
+using {/UnrealEngine.com/Temporary/SceneGraph}
 using {/Verse.org/Simulation/Tags}
 using {/Fortnite.com/Game}
 using {/Verse.org/Native}
 using {/Verse.org/Assets}
+using {/Fortnite.com/Playspaces}
 using {/UnrealEngine.com/Temporary/SpatialMath}
 # Module import path: /Fortnite.com/Devices
 Devices<public> := module:
@@ -95,6 +95,8 @@ Devices<public> := module:
             InvalidTime
             # See the documentation for cubic_bezier_parameters for more information.
             InvalidInterpolationParameters
+            # The target of the animation cannot be scaled.
+            ScaleNotAllowed
             # The target of the animation is not an animatable prop. This could be because:
             #  * It is not a `creative_prop` that can be animated.
             #  * It was disposed or otherwise destroyed.
@@ -208,6 +210,11 @@ Devices<public> := module:
 
     # Inherit from this to create a custom creative device. Inherited classes will appear in the UEFN content browser the next time Verse compiles. Instances of your derived `creative_device` can then be placed in the island by dragging them from the content browser into the scene.
     creative_device<native><public> := class<concrete>(creative_movable_object_base, creative_object_interface):
+        PlayspaceEpicInternal<native><epic_internal>:?fort_playspace = external {}
+
+        # Returns the `fort_playspace` that `creative_device` belongs to.
+        GetPlayspaceEpicInternal<override><native>()<transacts>:fort_playspace
+
         # Override to add custom logic when the game experience begins.
         OnBegin<native_callable><public>()<suspends>:void = external {}
 
@@ -268,10 +275,14 @@ Devices<public> := module:
     (MovableObject:creative_movable_object_base).MoveToInternal<epic_internal>(Transform:transform, OverTime:float)<suspends>:move_to_result = external {}
 
     creative_object_interface<native><public> := interface<epic_internal>(positional):
-
+        # Returns the `fort_playspace` that `CreativeObject` belongs to.
+        GetPlayspaceEpicInternal<native_callable><epic_internal>()<transacts>:fort_playspace
 
     # Base class for creative devices and props.
     creative_object<native><public> := class<epic_internal>(creative_movable_object_base, creative_object_interface):
+        # Returns the `fort_playspace` that `creative_object` belongs to.
+        GetPlayspaceEpicInternal<override><native>()<transacts>:fort_playspace
+
         # Returns the transform of the `creative_object` with units in cm. You must check `creative_object.IsValid` before calling this if there is a possibility the object has been disposed or destroyed by gameplay.
         # Otherwise a runtime error will result.
         GetTransform<override>()<transacts>:transform = external {}
@@ -300,6 +311,9 @@ Devices<public> := module:
     # Returns the `fort_playspace` that `CreativeObject` belongs to.
     (CreativeObject:creative_object_interface).GetPlayspace<native><public>()<transacts>:fort_playspace
 
+    # Returns the `entity` associated to that `CreativeObject.
+    (CreativeObject:creative_object_interface).GetEntity<native><epic_internal>()<transacts><decides>:entity
+
     # A Fortnite prop that has been placed or spawned in the island.
     creative_prop<native><public> := class<concrete><final>(creative_object, invalidatable):
         # Destroys the `creative_prop` and remove it from the island.
@@ -322,8 +336,6 @@ Devices<public> := module:
 
         # Returns true if the `creative_prop` is hidden in the world.
         IsHidden<native><epic_internal>()<transacts>:logic
-
-        GetEntity<native><epic_internal>()<transacts><decides>:entity
 
     # Asset used to spawn `creative_prop` instances.
     creative_prop_asset<native><public> := class<computes><concrete><final><epic_internal>:
@@ -568,6 +580,8 @@ Devices<public> := module:
         #  * The object has been destroyed by Verse.
         #  * The object has the 'Register with Structural Grid' option set in UEFN.
         InvalidObject
+        # The object being moved cannot be scaled.
+        ScaleNotAllowed
         # The destination would cause the object to be at least partially outside the island's boundaries.
         DestinationOutOfBounds
 
@@ -592,6 +606,8 @@ Devices<public> := module:
         #  * The object has been destroyed by Verse.
         #  * The object has the *Register with Structural Grid* option set in UEFN.
         InvalidObject
+        # The object being moved cannot be scaled.
+        ScaleNotAllowed
         # The destination would cause the object to be at least partially outside the island's boundaries.
         DestinationOutOfBounds
 
