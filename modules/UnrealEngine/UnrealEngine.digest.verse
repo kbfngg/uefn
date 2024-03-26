@@ -2,11 +2,14 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.01-CL-32291970
+# Generated from build: ++Fortnite+Release-29.10-CL-32391220
 #################################################
 
+using {/UnrealEngine.com/Temporary/SpatialMath}
+using {/Verse.org/Assets}
 # Module import path: /UnrealEngine.com/Assets
 Assets<public> := module:
+    SpawnParticleSystem<native><public>(Asset:particle_system, Position:vector3, ?Rotation:rotation = external {}, ?StartDelay:float = external {})<transacts>:cancelable
 
 Temporary<public> := module:
     # Module import path: /UnrealEngine.com/Temporary/Curves
