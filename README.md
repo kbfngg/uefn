@@ -2,9 +2,9 @@
 
 A basic repository to accumulate a knowledgebase around UEFN and to track public API diffs.
 
-## Latest Verse - `29.00`:
+## Latest Verse - `29.01`
 
-### Module APIs
+### Modules
 
 - [Verse](https://github.com/kbfngg/uefn/blob/main/modules/Verse/Verse.digest.verse)
 - [UnrealEngine](https://github.com/kbfngg/uefn/blob/main/modules/UnrealEngine/UnrealEngine.digest.verse)
@@ -12,7 +12,11 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 ### Manifests
 
-- [Valkyrie Sentry Manifest](https://github.com/kbfngg/uefn/blob/main/manifests/ValkyrieSentryManifest/ValkyrieSentryManifest.json)
+- Valkyrie Sentry Manifests
+  - [Regular](https://github.com/kbfngg/uefn/blob/main/manifests/ValkyrieSentryManifest/ValkyrieSentryManifest.json)
+  - [LimeGFS](https://github.com/kbfngg/uefn/blob/main/manifests/ValkyrieSentryManifest/ValkyrieSentryManifest-LimeGFS.json)
+  - [PartnerLimeGFS](https://github.com/kbfngg/uefn/blob/main/manifests/ValkyrieSentryManifest/ValkyrieSentryManifest-PartnerLimeGFS.json)
+  - [DelMarGFS](https://github.com/kbfngg/uefn/blob/main/manifests/ValkyrieSentryManifest/ValkyrieSentryManifest-DelMarGFS.json)
 
 ******
 
@@ -21,9 +25,44 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 ******
 
+## Modules
+
+<details>
+<summary>Verse APIs</summary>
+
+- [`29.01`](https://github.com/kbfngg/uefn/tree/game_v29.01/modules)
+- [`29.00`](https://github.com/kbfngg/uefn/tree/game_v29.00/modules)
+- [`28.30`](https://github.com/kbfngg/uefn/tree/game_v28.30/modules)
+- [`28.20`](https://github.com/kbfngg/uefn/tree/game_v28.20/modules)
+- [`28.10`](https://github.com/kbfngg/uefn/tree/game_v28.10/modules)
+- [`28.01`](https://github.com/kbfngg/uefn/tree/game_v28.01/modules)
+- [`28.00`](https://github.com/kbfngg/uefn/tree/game_v28.00/modules)
+- [`27.11`](https://github.com/kbfngg/uefn/tree/game_v27.11/modules)
+- [`27.10`](https://github.com/kbfngg/uefn/tree/game_v27.10/modules)
+- [`27.00`](https://github.com/kbfngg/uefn/tree/game_v27.00/modules)
+- [`26.30`](https://github.com/kbfngg/uefn/tree/game_v26.30/modules)
+- [`26.20`](https://github.com/kbfngg/uefn/tree/game_v26.20/modules)
+- [`26.10`](https://github.com/kbfngg/uefn/tree/game_v26.10/modules)
+- [`26.00`](https://github.com/kbfngg/uefn/tree/game_v26.00/modules)
+- [`25.30`](https://github.com/kbfngg/uefn/tree/game_v25.30/modules)
+- [`25.20`](https://github.com/kbfngg/uefn/tree/game_v25.20/modules)
+- [`25.11`](https://github.com/kbfngg/uefn/tree/game_v25.11/modules)
+- [`25.10`](https://github.com/kbfngg/uefn/tree/game_v25.10/modules)
+- [`25.00`](https://github.com/kbfngg/uefn/tree/game_v25.00/modules)
+- [`24.40`](https://github.com/kbfngg/uefn/tree/game_v24.40/modules)
+- [`24.30`](https://github.com/kbfngg/uefn/tree/game_v24.30/modules)
+- [`24.20`](https://github.com/kbfngg/uefn/tree/version_3/modules)
+- [`24.10`](https://github.com/kbfngg/uefn/tree/version_2/modules)
+- [`24.01`](https://github.com/kbfngg/uefn/tree/version_1/modules)
+
+</details>
+
+## API Diffs
+
 <details open>
 <summary>Verse Modules Diffs</summary>
 
+- `29.00` - `29.01`: [`public`](https://github.com/kbfngg/uefn/commit/80cd71126239c000e6325e5eced21175b4b8df78) | [`internal`](https://github.com/kbfngg/uefn/commit/248cffda15774ed207584af553fea0668bcf0266)
 - `28.30` - `29.00`: [`public`](https://github.com/kbfngg/uefn/commit/7343a0745a0945f1df31fb37827c232700268bfd) | [`internal`](https://github.com/kbfngg/uefn/commit/ef49d747b1b30fe882b0bbad824b1763fc296108)
 - [`28.20` - `28.30`](https://github.com/kbfngg/uefn/commit/1d333115b880fd3d30ea32d20aa5a61e5be23b2c)
 - [`28.10` - `28.20`](https://github.com/kbfngg/uefn/commit/f18b44df4bfe519d45af9d36d26f6a6b111315bd)
@@ -51,6 +90,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>Verse Snapshots Diffs</summary>
 
+- `29.00` - `29.01` (nothing new)
 - [`28.30` - `29.00`](https://github.com/kbfngg/uefn/commit/947684c753174017373c47f9d9faf45d00c2b998)
 - [`28.20` - `28.30`](https://github.com/kbfngg/uefn/commit/44a1387de6f43e8c726be2b3d717217b33b3a80d)
 - [`28.10` - `28.20`](https://github.com/kbfngg/uefn/commit/ec11b66a63810cc6e5b8c3509f9b855c7c09f9b5)
@@ -70,38 +110,13 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
   
 </details>
 
-<details>
-<summary>Verse APIs</summary>
 
-- [`29.00`](https://github.com/kbfngg/uefn/tree/game_v29.00/modules)
-- [`28.30`](https://github.com/kbfngg/uefn/tree/game_v28.30/modules)
-- [`28.20`](https://github.com/kbfngg/uefn/tree/game_v28.20/modules)
-- [`28.10`](https://github.com/kbfngg/uefn/tree/game_v28.10/modules)
-- [`28.01`](https://github.com/kbfngg/uefn/tree/game_v28.01/modules)
-- [`28.00`](https://github.com/kbfngg/uefn/tree/game_v28.00/modules)
-- [`27.11`](https://github.com/kbfngg/uefn/tree/game_v27.11/modules)
-- [`27.10`](https://github.com/kbfngg/uefn/tree/game_v27.10/modules)
-- [`27.00`](https://github.com/kbfngg/uefn/tree/game_v27.00/modules)
-- [`26.30`](https://github.com/kbfngg/uefn/tree/game_v26.30/modules)
-- [`26.20`](https://github.com/kbfngg/uefn/tree/game_v26.20/modules)
-- [`26.10`](https://github.com/kbfngg/uefn/tree/game_v26.10/modules)
-- [`26.00`](https://github.com/kbfngg/uefn/tree/game_v26.00/modules)
-- [`25.30`](https://github.com/kbfngg/uefn/tree/game_v25.30/modules)
-- [`25.20`](https://github.com/kbfngg/uefn/tree/game_v25.20/modules)
-- [`25.11`](https://github.com/kbfngg/uefn/tree/game_v25.11/modules)
-- [`25.10`](https://github.com/kbfngg/uefn/tree/game_v25.10/modules)
-- [`25.00`](https://github.com/kbfngg/uefn/tree/game_v25.00/modules)
-- [`24.40`](https://github.com/kbfngg/uefn/tree/game_v24.40/modules)
-- [`24.30`](https://github.com/kbfngg/uefn/tree/game_v24.30/modules)
-- [`24.20`](https://github.com/kbfngg/uefn/tree/version_3/modules)
-- [`24.10`](https://github.com/kbfngg/uefn/tree/version_2/modules)
-- [`24.01`](https://github.com/kbfngg/uefn/tree/version_1/modules)
-
-</details>
+## Valkyrie Sentry Manifests Diffs
 
 <details>
-<summary>Valkyrie Sentry Manifest Diffs</summary>
+<summary>Regular</summary>
 
+- [`29.00` - `29.01`](https://github.com/kbfngg/uefn/commit/eb4a4ca10cd3c93fd5a5a89c6f104c8b8a69b3e1)
 - [`28.30` - `29.00`](https://github.com/kbfngg/uefn/commit/f9efbfd9ce6635bc45459a0ccb0f10fdc09c0c83)
 - [`28.20` - `28.30`](https://github.com/kbfngg/uefn/commit/e79d2a7374f920add9cfaba67af902a4cc8e0fa1)
 - [`28.10` - `28.20`](https://github.com/kbfngg/uefn/commit/54ac239fe3a9c1b94f8dd53b0219aab4d59c1343)
@@ -126,7 +141,14 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 </details>
 
-## Guidelines:
+<details>
+<summary>Partner vs. UGC Diffs</summary>
+
+- [`29.01`](https://github.com/kbfngg/uefn/commit/8ea45ed48cebc8af7391fc3e4792568e17f6fd69)
+
+</details>
+
+## Guidelines
 
 - [Code Style](https://github.com/kbfngg/uefn/blob/main/guidelines/code_style.md) (tbd)
 - [API Design](https://github.com/kbfngg/uefn/blob/main/guidelines/api_design.md) (tbd)
