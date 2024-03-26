@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.01-CL-32291970
+# Generated from build: ++Fortnite+Release-29.10-CL-32391220
 #################################################
 
 AI<public> := module:
@@ -35,10 +35,10 @@ AI<public> := module:
     using {/Fortnite.com/AI/VerseCreature}
     using {/Fortnite.com/AI/VerseNPC}
     using {/Fortnite.com/Characters}
+    using {/UnrealEngine.com/Temporary/SceneGraph}
     using {/UnrealEngine.com/Temporary/SpatialMath}
     using {/Verse.org/Simulation}
     using {/Verse.org/VerseEngine/Component}
-    using {/Verse.org/VerseEngine/Entity}
     # Module import path: /Fortnite.com/AI/CompanionAI
     CompanionAI<public> := module:
         (Agent:agent).GetTeamMembers<native><epic_internal>()<transacts>:[]agent
@@ -56,9 +56,7 @@ AI<public> := module:
         # Get the current fort_ping_interface for the specified character
         (InCharacter:fort_character).GetFortPing<native><epic_internal>()<transacts><decides>:fort_ping_interface
 
-        (InEntity:vk_entity).GetAgent<native><epic_internal>()<transacts>:?agent
-
-        Compare<native><epic_internal>(Obstacle:fort_obstacle_info, Target:vk_entity)<transacts>:logic
+        (InEntity:entity).GetAgent<native><epic_internal>()<transacts>:?agent
 
         # Module import path: /Fortnite.com/AI/CompanionAI/PingCommand
         PingCommand<epic_internal> := module:
@@ -178,7 +176,7 @@ AI<public> := module:
 
             LocationOnHorizontalSurface<native><epic_internal>:logic
 
-            Target<native><epic_internal>:?vk_entity
+            Target<native><epic_internal>:?entity
 
             Type<native><epic_internal>:command_type
 
@@ -194,6 +192,7 @@ AI<public> := module:
     using {/Fortnite.com/Game/Abilities}
     using {/Verse.org/Assets}
     using {/Verse.org/Simulation/Tags}
+    using {/Verse.org/VerseEngine/Entity}
     # Module import path: /Fortnite.com/AI/VerseAIBase
     VerseAIBase<public> := module:
         # Get the current fort_character_actions_interface for the specified character
@@ -260,11 +259,8 @@ AI<public> := module:
         fort_bow_tag<native><public> := class(fort_range_weapon_tag):
 
         fort_character_actions_interface<native><epic_internal> := interface(emote_interface):
-            # Attack the navigation obstacle
-            AttackObstacle<epic_internal>(Obstacle:fort_obstacle_info)<suspends>:action_result
-
-            # Start fighting with the specified target
-            AttackThreat<public>(Threat:target_info)<suspends>:action_result
+            # Start attacking the specified target
+            Attack<epic_internal>(Target:entity)<suspends>:action_result
 
             # Navigate to and loot the specified object
             LootObject<epic_internal>(ObjectInfo:fort_loot_info)<suspends>:action_result
@@ -367,7 +363,7 @@ AI<public> := module:
         fort_obstacle_info<native><epic_internal> := struct<epic_internal>:
             Location<native><public>:vector3
 
-            Obstacle<native><epic_internal>:vk_entity
+            Obstacle<native><epic_internal>:entity
 
             Status<native><public>:fort_obstacle_status
 
@@ -534,9 +530,7 @@ AI<public> := module:
 
         # Fortnite NPC AI Management
         npc_component<native><epic_internal> := class(ai_actions_component, fort_navigatable, fort_character_movement_interface, fort_character_actions_interface, focus_interface, fort_weapon_actions_interface):
-            AttackObstacle<native><override>(Obstacle:fort_obstacle_info)<suspends>:action_result
-
-            AttackThreat<native><override>(Threat:target_info)<suspends>:action_result
+            Attack<native><override>(Target:entity)<suspends>:action_result
 
             Crouch<native><override>()<suspends>:fallible_action_result
 
@@ -896,7 +890,7 @@ AI<public> := module:
         TargetInfoUpdatedEvent<public>():listenable(target_info)
 
         # Event when a target was removed.
-        TargetRemovedEvent<public>():listenable(game_action_instigator)
+        TargetRemovedEvent<public>():listenable(entity)
 
         # Event when a target is seen. Sight sense must be active.
         TargetSeenEvent<public>():listenable(target_info)
@@ -961,7 +955,7 @@ AI<public> := module:
         HasLineOfSight<native><public>:logic
 
         # The source of the detection stimuli.
-        Target<native><public>:game_action_instigator
+        Target<native><epic_internal>:entity
 
     # Perception settings for touch.
     touch_perception_settings<native><epic_internal> := class<final><concrete>:
@@ -1191,12 +1185,15 @@ Characters<public> := module:
 using {/Fortnite.com/Game/Player}
 using {/Fortnite.com/Game}
 using {/Fortnite.com/Vehicles}
-using {/UnrealEngine.com/EntityFramework/Entity}
 using {/UnrealEngine.com/Playspace}
 using {/UnrealEngine.com/Temporary/Diagnostics}
+using {/UnrealEngine.com/Temporary/SceneGraph}
 using {/Verse.org/Simulation/Tags}
 # Module import path: /Fortnite.com/Devices
 Devices<public> := module:
+    # Returns the `entity` associated to that `CreativeObject.
+    (CreativeObject:creative_object_interface).GetEntity<native><epic_internal>()<transacts><decides>:entity
+
     # Returns the `fort_playspace` that `CreativeObject` belongs to.
     (CreativeObject:creative_object_interface).GetPlayspace<native><public>()<transacts>:fort_playspace
 
@@ -1429,6 +1426,9 @@ Devices<public> := module:
 
             # Function succeeded.
             Ok
+
+            # The target of the animation cannot be scaled.
+            ScaleNotAllowed
 
             # An unknown error has occurred.
             UnknownError
@@ -2178,6 +2178,12 @@ Devices<public> := module:
         # Plays the sequence. An instigating 'Agent' is required when the device is set to anything except *Everyone*.
         Play<public>(Agent:agent):void = external {}
 
+        # Plays the sequence in reverse. This will only work when the device is set to *Everyone*
+        PlayReverse<public>():void = external {}
+
+        # Plays the sequence in reverse. An instigating 'Agent' is required when the device is set to anything except *Everyone*.
+        PlayReverse<public>(Agent:agent):void = external {}
+
         # Set the playback rate of the sequence.
         SetPlayRate<public>(PlayRate:float):void = external {}
 
@@ -2387,6 +2393,9 @@ Devices<public> := module:
 
     # Inherit from this to create a custom creative device. Inherited classes will appear in the UEFN content browser the next time Verse compiles. Instances of your derived `creative_device` can then be placed in the island by dragging them from the content browser into the scene.
     creative_device<native><public> := class<concrete>(creative_movable_object_base, creative_object_interface):
+        # Returns the `fort_playspace` that `creative_device` belongs to.
+        GetPlayspaceEpicInternal<override><native>()<transacts>:fort_playspace
+
         # Returns the transform of the `creative_device` with units in cm.
         GetTransform<override>()<transacts>:transform = external {}
 
@@ -2404,6 +2413,8 @@ Devices<public> := module:
 
         # Override to add custom logic when the game experience ends. Any coroutines spawned inside `OnEnd` may never execute.
         OnEnd<native_callable><public>():void = external {}
+
+        PlayspaceEpicInternal<native><epic_internal>:?fort_playspace = external {}
 
         # Shows this device in the world.
         Show<native><public>()<transacts>:void
@@ -2430,6 +2441,9 @@ Devices<public> := module:
 
     # Base class for creative devices and props.
     creative_object<native><public> := class<epic_internal>(creative_movable_object_base, creative_object_interface):
+        # Returns the `fort_playspace` that `creative_object` belongs to.
+        GetPlayspaceEpicInternal<override><native>()<transacts>:fort_playspace
+
         # Returns the transform of the `creative_object` with units in cm. You must check `creative_object.IsValid` before calling this if there is a possibility the object has been disposed or destroyed by gameplay.
         # Otherwise a runtime error will result.
         GetTransform<override>()<transacts>:transform = external {}
@@ -2447,13 +2461,13 @@ Devices<public> := module:
         TeleportTo<public>(Transform:transform)<transacts><decides>:void = external {}
 
     creative_object_interface<native><public> := interface<epic_internal>(positional):
+        # Returns the `fort_playspace` that `CreativeObject` belongs to.
+        GetPlayspaceEpicInternal<native_callable><epic_internal>()<transacts>:fort_playspace
 
     # A Fortnite prop that has been placed or spawned in the island.
     creative_prop<native><public> := class<concrete><final>(creative_object, invalidatable):
         # Destroys the `creative_prop` and remove it from the island.
         Dispose<native><override>():void
-
-        GetEntity<native><epic_internal>()<transacts><decides>:entity
 
         # Hides the `creative_prop` in the world and disable collisions.
         Hide<native><public>()<transacts>:void
@@ -3489,6 +3503,9 @@ Devices<public> := module:
 
         # The `OverTime` parameter was not a float greater than zero.
         InvalidTime
+
+        # The object being moved cannot be scaled.
+        ScaleNotAllowed
 
         # An unknown error occurred. If this happens frequently, contact Epic support.
         UnknownError
@@ -5011,6 +5028,9 @@ Devices<public> := module:
         # Success.
         Ok
 
+        # The object being moved cannot be scaled.
+        ScaleNotAllowed
+
         # An unknown error occurred. If this happens frequently, contact Epic support.
         UnknownError
 
@@ -5607,6 +5627,9 @@ Devices<public> := module:
     # Specialized `vehicle_spawner_device` that allows a Quadcrasher to be configured and spawned.
     vehicle_spawner_quadcrasher_device<public> := class<concrete><final>(vehicle_spawner_device):
 
+    # Specialized `vehicle_spawner_device` that allows a Rocket Racing Vehicle to be configured and spawned.
+    vehicle_spawner_rocketracing_device<public> := class<concrete><final>(vehicle_spawner_device):
+
     # Specialized `vehicle_spawner_device` that allows a Prevalent sedan to be configured and spawned.
     vehicle_spawner_sedan_device<public> := class<concrete><final>(vehicle_spawner_device):
 
@@ -5714,6 +5737,7 @@ Devices<public> := module:
         # When paused the effect freezes in place.
         TogglePauseForAll<public>():void = external {}
 
+    using {/UnrealEngine.com/Temporary/SpatialMath}
     # Used to place visual effects around your island. You can use these effects to enhance the overall theme and experience of your game.
     vfx_spawner_device<public> := class<concrete><final>(creative_device_base):
         # Disables this device.
@@ -5730,6 +5754,9 @@ Devices<public> := module:
 
         # Restarts the VFX. Triggers the VFX if it's Burst VFX.
         Restart<public>():void = external {}
+
+        # Restarts the VFX from the device and places it at the specified location.
+        RestartAt<epic_internal>(Position:vector3, Rotation:rotation):void = external {}
 
     # Used to display curated videos onto in-game screens or player HUDs.
     video_player_device<public> := class<concrete><final>(creative_device_base):
@@ -5799,7 +5826,6 @@ Devices<public> := module:
         # Signaled when an `agent` starts grinding on this `vine_rail_device`.
         StartedGrindingEvent<public>:listenable(agent) = external {}
 
-    using {/UnrealEngine.com/Temporary/SpatialMath}
     # Used to trigger a visual effect (a glow or an outline) when `agent`s pick it up.
     visual_effect_powerup_device<public> := class<concrete><final>(powerup_device):
 
@@ -6023,18 +6049,9 @@ Game<public> := module:
     Abilities<public> := module:
         # Module import path: /Fortnite.com/Game/Abilities/AbilityComponent
         AbilityComponent<public> := module:
-            GetAbilityComponentForCharacter<native><public>(__dupe___unnamed_parameter_170:fort_character)<transacts><decides>:ability_component
+            GetAbilityComponentForCharacter<native><public>(__dupe___unnamed_parameter_174:fort_character)<transacts><decides>:fort_ability_component
 
-            GetAbilityComponentForPlayer<native><epic_internal>(__dupe___unnamed_parameter_169:player_component)<transacts><decides>:ability_component
-
-        ability_component<native><public> := class<final>(vk_component):
-            ActivateAbility<native><public>(AbilityAsset:gameplay_ability_asset, ?Target:?agent = external {})<suspends>:activate_ability_result
-
-            AddAbility<native><public>(AbilityAsset:gameplay_ability_asset):add_ability_result
-
-            ApplyGameplayEffect<native><public>(EffectAsset:gameplay_effect_asset, Magnitude:float):void
-
-            RemoveAbility<native><public>(AbilityAsset:gameplay_ability_asset):remove_ability_result
+            GetAbilityComponentForPlayer<native><epic_internal>(__dupe___unnamed_parameter_173:player_component)<transacts><decides>:fort_ability_component
 
         activate_ability_result<native><public> := enum:
             # Ability was activated successfully
@@ -6064,6 +6081,15 @@ Game<public> := module:
 
             # Ability asset was invalid
             Invalid
+
+        fort_ability_component<native><public> := class<final>(vk_component):
+            ActivateAbility<native><public>(AbilityAsset:gameplay_ability_asset, ?Target:?agent = external {})<suspends>:activate_ability_result
+
+            AddAbility<native><public>(AbilityAsset:gameplay_ability_asset):add_ability_result
+
+            ApplyGameplayEffect<native><public>(EffectAsset:gameplay_effect_asset, Magnitude:float):void
+
+            RemoveAbility<native><public>(AbilityAsset:gameplay_ability_asset):remove_ability_result
 
         gameplay_ability_asset<native><public> := class<computes><final>(asset):
 
@@ -6364,7 +6390,7 @@ Game<public> := module:
 
     # Module import path: /Fortnite.com/Game/VerseFortniteHacks
     VerseFortniteHacks<epic_internal> := module:
-        GetPawnCollisionEntityID<native><public>(__dupe___unnamed_parameter_169:player_component):int
+        GetPawnCollisionEntityID<native><public>(__dupe___unnamed_parameter_173:player_component):int
 
         getAllComponentsOfType<native><epic_internal>(contextObject:vk_component, Type:subtype(vk_component)):[]vk_component
 
@@ -6594,223 +6620,6 @@ Game<public> := module:
         # The team this collection of stats corresponds to.
         Team<native><public>:player_team
 
-Itemization<public> := module:
-    (InCharacter:fort_character).GetPlayerInventoryCollection<native><public>()<transacts><decides>:fort_inventory_collection
-
-    (InCreativeObject:creative_object).GetInventoryCollection<native><public>()<transacts><decides>:fort_inventory_collection
-
-    (InCreativeObject:creative_object).GetOrCreateInventoryCollection<native><public>()<transacts><decides>:fort_inventory_collection
-
-    OnItemStateUpdate<native_callable><epic_internal>(Item:fort_item, NewItemState:item_state):void = external {}
-
-    fort_equippable_inventory<native><public> := class<final>(fort_inventory):
-        GetEquippedItemList<native><public>()<transacts><decides>:[]fort_item
-
-    fort_inventory<native><public> := class(fort_inventory_base):
-        GetItemList<native><public>()<transacts><decides>:[]fort_item
-
-        GetOwningInventoryCollection<native><public>()<transacts><decides>:fort_inventory_collection
-
-    using {/Fortnite.com/Characters}
-    using {/Fortnite.com/Devices}
-    using {/UnrealEngine.com/Temporary/SpatialMath}
-    using {/Verse.org/Assets}
-    using {/Verse.org/Native}
-    @import_as("/Script/ItemizationVerse.UVerseInventory")
-    fort_inventory_base<native><epic_internal> := class<abstract>:
-
-    fort_inventory_collection<native><public> := class<final>(fort_inventory_collection_base):
-        GetEquippableInventoryList<native><public>()<transacts>:[]fort_equippable_inventory
-
-        GetEquippedItemList<native><public>()<transacts>:[]fort_item
-
-        GetInventoryList<native><public>()<transacts>:[]fort_inventory
-
-        GetItemList<native><public>()<transacts>:[]fort_item
-
-        OnInventoryAdded<public>():listenable(fort_inventory) = external {}
-
-        OnInventoryRemoved<public>():listenable(fort_inventory) = external {}
-
-        OnItemSlotsChanged<public>():listenable([]fort_item) = external {}
-
-        OnItemsAdded<public>():listenable([]fort_item) = external {}
-
-        OnItemsRemoved<public>():listenable([]fort_item) = external {}
-
-    @import_as("/Script/ItemizationVerse.UVerseInventoryCollectionWrapper")
-    fort_inventory_collection_base<native><epic_internal> := class<abstract>:
-
-    fort_item<native><public> := class<final>(fort_item_base):
-        GetItemDefinition<public>()<decides>:item_definition_base_asset = external {}
-
-        GetItemOwnerTransform<native><public>()<transacts><decides>:transform
-
-        GetItemSlot<public>()<decides>:int = external {}
-
-        GetItemState<public>()<decides>:item_state = external {}
-
-        GetOwningInventory<native><public>()<transacts><decides>:fort_inventory
-
-        GetOwningInventoryCollection<native><public>()<transacts><decides>:fort_inventory_collection
-
-        ItemDefinition<native><epic_internal>:?item_definition_base_asset = external {}
-
-        OnItemSlotChanged<native_callable><epic_internal>(NewItemSlot:int):void = external {}
-
-        OnItemStateChanged<native_callable><epic_internal>(NewItemState:item_state):void = external {}
-
-        var<protected> ItemSlot<native><epic_internal>:int = external {}
-
-        var<protected> ItemState<native><epic_internal>:item_state = external {}
-
-    @import_as("/Script/ItemizationVerse.UVerseItem")
-    fort_item_base<native><epic_internal> := class<abstract>:
-
-    fort_item_component<native><public> := class<abstract>(fort_item_component_base):
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemComponent_Ability")
-    fort_item_component_ability<native><public> := class<final>(fort_item_component_base):
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemComponent_Attach")
-    fort_item_component_attach<native><public> := class<final>(fort_item_component_base):
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemComponentBase")
-    fort_item_component_base<native><epic_internal> := class<abstract>:
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemComponent_Core")
-    fort_item_component_core<native><public> := class<final>(fort_item_component_base):
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemComponent_DisplayUI")
-    fort_item_component_display_ui<native><public> := class<final>(fort_item_component_base):
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemComponentLocalStorage")
-    fort_item_component_local_storage<native><public> := class<abstract>:
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemComponentStorage_Ability")
-    fort_item_component_local_storage_ability<native><public> := class<final>(fort_item_component_local_storage):
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemComponentStorage_Attach")
-    fort_item_component_local_storage_attach<native><public> := class<final>(fort_item_component_local_storage):
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemComponent_Pickup")
-    fort_item_component_pickup<native><public> := class<final>(fort_item_component_base):
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemComponentSharedLocalStorage")
-    fort_item_component_shared_local_storage<native><public> := class<abstract>:
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemComponent_Stackable")
-    fort_item_component_stackable<native><public> := class<final>(fort_item_component_base):
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemAttribute")
-    item_attribute_base<native><public> := class<abstract>:
-
-    item_attribute_float<native><public> := class<abstract>(item_attribute_float_base):
-        DefaultValue<native><public>:float
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemAttribute_Decimal")
-    item_attribute_float_base<native><epic_internal> := class<abstract>(item_attribute_base):
-
-    item_attribute_int<native><public> := class<abstract>(item_attribute_int_base):
-        DefaultValue<native><public>:int
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemAttribute_Int")
-    item_attribute_int_base<native><epic_internal> := class<abstract>(item_attribute_base):
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemAttribute_WasLoadedFromSave")
-    item_attribute_loaded_from_save<native><public> := class<final>(item_attribute_logic_base):
-
-    item_attribute_logic<native><public> := class<abstract>(item_attribute_logic_base):
-        DefaultValue<native><public>:logic
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemAttribute_Bool")
-    item_attribute_logic_base<native><epic_internal> := class<abstract>(item_attribute_base):
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemAttribute_MaxStackSize")
-    item_attribute_max_stack_size<native><public> := class<final>(item_attribute_int_base):
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemAttribute_StackSize")
-    item_attribute_stack_size<native><public> := class<final>(item_attribute_int_base):
-
-    item_attribute_string<native><public> := class<abstract>(item_attribute_string_base):
-        DefaultValue<native><public>:string
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemAttribute_String")
-    item_attribute_string_base<native><epic_internal> := class<abstract>(item_attribute_base):
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemAttributeValueBase")
-    item_attribute_value_base<native><public> := class<abstract>:
-        GetAsFloat<public>():float = external {}
-
-        GetAsInt<public>():int = external {}
-
-        GetAsLogic<public>():logic = external {}
-
-        GetAsString<public>():string = external {}
-
-    item_attribute_value_float<native><public> := class<final>(item_attribute_value_float_base):
-        GetAsFloat<override>():float = external {}
-
-        GetAsInt<override>():int = external {}
-
-        GetAsLogic<override>():logic = external {}
-
-        GetAsString<override>():string = external {}
-
-        Value<native><epic_internal>:float = external {}
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemAttributeValue_Decimal")
-    item_attribute_value_float_base<native><epic_internal> := class<abstract>(item_attribute_value_base):
-
-    item_attribute_value_int<native><public> := class<final>(item_attribute_value_int_base):
-        GetAsFloat<override>():float = external {}
-
-        GetAsInt<override>():int = external {}
-
-        GetAsLogic<override>():logic = external {}
-
-        GetAsString<override>():string = external {}
-
-        Value<native><epic_internal>:int = external {}
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemAttributeValue_Int")
-    item_attribute_value_int_base<native><epic_internal> := class<abstract>(item_attribute_value_base):
-
-    item_attribute_value_logic<native><public> := class<final>(item_attribute_value_logic_base):
-        GetAsFloat<override>():float = external {}
-
-        GetAsInt<override>():int = external {}
-
-        GetAsLogic<override>():logic = external {}
-
-        GetAsString<override>():string = external {}
-
-        Value<native><epic_internal>:logic = external {}
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemAttributeValue_Bool")
-    item_attribute_value_logic_base<native><epic_internal> := class<abstract>(item_attribute_value_base):
-
-    item_attribute_value_string<native><public> := class<final>(item_attribute_value_string_base):
-        GetAsString<override>():string = external {}
-
-        Value<native><epic_internal>:string = external {}
-
-    @import_as("/Script/ItemizationCoreRuntime.UItemAttributeValue_String")
-    item_attribute_value_string_base<native><epic_internal> := class<abstract>(item_attribute_value_base):
-
-    item_definition_asset<native><public> := class<final><epic_internal>(item_definition_base_asset):
-
-    item_definition_base_asset<native><public> := class<epic_internal>(asset):
-
-    item_state<native><public> := enum:
-        Equipped
-
-        InInventory
-
-        NotInInventory
-
-    item_variant_asset<native><public> := class<final><epic_internal>(item_definition_base_asset):
-
 # Module import path: /Fortnite.com/Playspaces
 Playspaces<public> := module:
     (InEntity:entity).GetPlayspaceForEntity<native><epic_internal>()<transacts><decides>:fort_playspace
@@ -6819,15 +6628,19 @@ Playspaces<public> := module:
     #
     # To access the `fort_playspace` for a `creative_device` use `creative_device.GetPlayspace`.
     fort_playspace<native><public> := interface<epic_internal>:
-        FindComponents<epic_internal>(ComponentType:subtype(component))<varies>:[]ComponentType
+        FindComponents<epic_internal>(ComponentType:subtype(component))<varies>:component_query_iterator_interface
 
-        FindEntities<epic_internal>(EntityType:subtype(entity))<varies>:[]entity
+        FindEntities<epic_internal>(EntityType:subtype(entity))<varies>:entity_query_iterator_interface
 
-        FindEntitiesInShape<epic_internal>(Shape:query_shape)<varies>:[]entity
+        FindEntitiesInside<epic_internal>(Shape:volume3):entity_query_iterator_interface
 
-        FindEntitiesWithComponent<epic_internal>(ComponentType:subtype(component))<varies>:[]entity
+        FindEntitiesOriginInside<epic_internal>(Shape:volume3):entity_query_iterator_interface
 
-        FindEntitiesWithTag<epic_internal>(Tag:tag)<varies>:[]entity
+        FindEntitiesOverlapping<epic_internal>(Shape:shape3):entity_query_iterator_interface
+
+        FindEntitiesWithComponent<epic_internal>(ComponentType:subtype(component))<varies>:entity_query_iterator_interface
+
+        FindEntitiesWithTag<epic_internal>(Tag:tag)<varies>:entity_query_iterator_interface
 
         # Get an `[]player`s in the current `fort_playspace`.
         GetPlayers<public>()<transacts>:[]player
@@ -6840,10 +6653,6 @@ Playspaces<public> := module:
 
         # Signaled when a `player` leaves the `fort_playspace`. Returns a subscribable with a payload of the`fort_character` that left the `fort_playspace`.
         PlayerRemovedEvent<public>():listenable(player)
-
-        PlayspaceEntitiesOfTypeIterator<epic_internal>(EntityClass:subtype(entity))<varies>:query_iterator
-
-        PlayspaceEntitiesWithComponentIterator<epic_internal>(ComponentClass:subtype(entity))<varies>:query_iterator
 
 # Module import path: /Fortnite.com/Teams
 Teams<public> := module:
@@ -7286,6 +7095,8 @@ Vehicles<public> := module:
 
     # Main API implemented by Fortnite vehicles.
     fort_vehicle<native><public> := interface<unique><epic_internal>(positional, healthful, damageable, game_action_causer):
+        GetEntity<epic_internal>()<transacts><decides>:entity
+
         # Returns an array with all the passengers of the vehicle.
         GetPassengers<public>():[]fort_character
 
@@ -7340,9 +7151,9 @@ VerseFortniteGameScript<public> := module:
 
         OnPlayerEliminated<protected>(ElimResult:player_eliminated_result):void = external {}
 
-        OnPlayerJoined<protected>(__dupe___unnamed_parameter_204:player_component):void = external {}
+        OnPlayerJoined<protected>(__dupe___unnamed_parameter_206:player_component):void = external {}
 
-        OnPlayerLeft<protected>(__dupe___unnamed_parameter_205:player_component):void = external {}
+        OnPlayerLeft<protected>(__dupe___unnamed_parameter_207:player_component):void = external {}
 
         OnPostCreate<override>():void = external {}
 
@@ -7365,7 +7176,7 @@ VerseFortniteGameScript<public> := module:
 
         EnableCollision<public>():void = external {}
 
-        GetCollisionComponent<public>()<transacts>:collision_component = external {}
+        GetCollisionComponent<public>()<transacts>:vk_collision_component = external {}
 
         GetEntity<public>()<transacts>:vk_entity = external {}
 

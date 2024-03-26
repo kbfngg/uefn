@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.01-CL-32291970
+# Generated from build: ++Fortnite+Release-29.10-CL-32391220
 #################################################
 
 using {/Verse.org/ParameterCollections}
@@ -56,11 +56,11 @@ Assets<public> := module:
 
         Material<native><epic_internal>:material
 
-    particle_system<native><epic_internal> := class<computes><final><epic_internal>(client_asset):
+    particle_system<native><public> := class<computes><final><epic_internal>(client_asset):
 
     skeletal_mesh<native><epic_internal> := class<computes><final><epic_internal>(asset):
 
-    sound<native><epic_internal> := class<computes><concrete><final><epic_internal>(client_asset):
+    sound<native><epic_internal> := class<computes><final><epic_internal>(client_asset):
 
     texture<native><public> := class<computes><final><epic_internal>(texture_base):
 
