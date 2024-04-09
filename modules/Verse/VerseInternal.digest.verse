@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.10-CL-32391220
+# Generated from build: ++Fortnite+Release-29.20-CL-32716692
 #################################################
 
 using {/Verse.org/ParameterCollections}
@@ -867,20 +867,6 @@ Simulation<public> := module:
             # Remove all tags from the container. Update the amount of slack pre-allocated for tags.
             ResetWithSlack<native><epic_internal>(slack:int):void
 
-        # Component used for tagging objects for retrieval later. Useful when connecting runtime scripts with editor placed objects.
-        tag_container_component<native><epic_internal> := class<final>(vk_component):
-            # Add a single tag to this vk_component.
-            AddTag<native><epic_internal>(TagToAdd:tag):void
-
-            # Get the tags associated with this vk_component. These may be specified in the editor.
-            GetTags<native><epic_internal>():tag_container
-
-            # Remove a single tag from this vk_component.
-            RemoveTag<native><epic_internal>(TagToRemove:tag):logic
-
-            # Set the tags associated with this vk_component.
-            SetTags<native><epic_internal>(InTags:tag_container):void
-
         # Advanced tag search criteria
         tag_search_criteria<native><public> := class:
             # Tags that may NOT be on the object. All items with these tags are excluded from the search.
@@ -918,6 +904,20 @@ Simulation<public> := module:
 
             # Checks if this container contains ANY of the tags in the specified container, also checks against parent tags {"A.1"}.HasAny({"A","B"}) will return True, {"A"}.HasAny({"A.1","B"}) will return False If InTags is empty/invalid it will always return False.
             HasAny<public>(InTags:[]tag)<transacts><decides>:void
+
+        # Component used for tagging objects for retrieval later. Useful when connecting runtime scripts with editor placed objects.
+        vk_tag_container_component<native><epic_internal> := class<final>(vk_component):
+            # Add a single tag to this vk_component.
+            AddTag<native><epic_internal>(TagToAdd:tag):void
+
+            # Get the tags associated with this vk_component. These may be specified in the editor.
+            GetTags<native><epic_internal>():tag_container
+
+            # Remove a single tag from this vk_component.
+            RemoveTag<native><epic_internal>(TagToRemove:tag):logic
+
+            # Set the tags associated with this vk_component.
+            SetTags<native><epic_internal>(InTags:tag_container):void
 
     agent<native><public> := class<unique><epic_internal>:
 
@@ -1468,6 +1468,17 @@ Verse<public> := module:
     disposable<native><public> := interface:
         # Cleans up this object.
         Dispose<public>():void
+
+    # Implemented by classes whose instances can be enabled and disabled.
+    enableable<native><public> := interface<epic_internal>:
+        # Disable this object.
+        Disable<public>():void
+
+        # Enable this object.
+        Enable<public>():void
+
+        # Succeeds if the object is enabled, fails if it’s disabled.
+        IsEnabled<public>()<transacts><decides>:void
 
     # A *recurring*, successively signaled parametric `event` with a `payload` allowing a simple mechanism to coordinate between concurrent tasks:
     #  * `Await` suspends tasks to wait on this `event`,
