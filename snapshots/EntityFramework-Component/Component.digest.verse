@@ -62,8 +62,10 @@ basic_camera_component<native><epic_internal> := class(component):
 
     GetFieldOfView<public>():float = external {}
 
-damage_component<native><epic_internal> := class(component):
+damageable_component<native><epic_internal> := class(component):
     Damage<native><public>(Amount:float):void
+
+    DamagedEvent<native><public>:listenable(float) = external {}
 
 @hide_in_editor
 light_entity_component<native><epic_internal> := class(component):
@@ -96,7 +98,7 @@ mesh_component<native><epic_internal> := class(component):
     # Internal epic method to know if this component is allowed on client
     IsAllowedOnClient<override>():logic = external {}
 
-particle_system_component<native><epic_internal> := class<final>(component):
+particle_system_component<native><epic_internal> := class<final>(component, enableable):
     # The component is being initialized, called when it is attach to an entity
     OnInitialized<native><override>():void
 
@@ -117,6 +119,15 @@ particle_system_component<native><epic_internal> := class<final>(component):
 
     # Internal epic method to know if this component is allowed on client
     IsAllowedOnClient<override>():logic = external {}
+
+    # Enable the particle system
+    Enable<override>():void = external {}
+
+    # Disable the particle system
+    Disable<override>():void = external {}
+
+    # Internal epic method to know if this component is allowed on client
+    IsEnabled<override>()<transacts><decides>:void = external {}
 
     @replicated("RepNotify")
     # The path to the particle system asset
@@ -145,7 +156,7 @@ hit_result<native><epic_internal> := struct:
 
     HitLocation<native><public>:vector3
 
-physics_component<native><epic_internal> := class(component):
+physics_component<native><epic_internal> := class<final>(component, enableable):
     # The component is being initialized, called when it is attach to an entity
     OnInitialized<native><override>():void
 
@@ -160,6 +171,15 @@ physics_component<native><epic_internal> := class(component):
 
     # Internal epic method to know if this component is allowed on client
     IsAllowedOnClient<override>():logic = external {}
+
+    # Enable this object.
+    Enable<native><override>():void
+
+    # Disable this object.
+    Disable<native><override>():void
+
+    # Succeeds if the component is enabled, fails if it’s disabled.
+    IsEnabled<native><override>()<transacts><decides>:void
 
     # Event signaled when the component experiences a blocking hit
     HitEvent<native><public>:listenable(hit_result) = external {}
@@ -234,7 +254,7 @@ spot_light_entity_component<native><public> := class<final>(light_entity_compone
 
     GetAttenuationRadius<public>():float = external {}
 
-static_mesh_component<native><epic_internal> := class(mesh_component):
+static_mesh_component<native><epic_internal> := class<final>(mesh_component, enableable):
     OnInitialized<native><override>():void
 
     OnAddedToScene<native><override>():void
@@ -251,3 +271,27 @@ static_mesh_component<native><epic_internal> := class(mesh_component):
     @replicated("RepNotify")
     # The path to the material asset of a static mesh
     var Material<native><public>:?material = external {}
+
+    # Enable this object.
+    Enable<native><override>():void
+
+    # Disable this object.
+    Disable<native><override>():void
+
+    # Succeeds if the component is enabled, fails if it’s disabled.
+    IsEnabled<native><override>()<transacts><decides>:void
+
+text_display_component<native><epic_internal> := class<concrete><final>(component):
+    OnInitialized<native><override>():void
+
+    OnAddedToScene<native><override>():void
+
+    OnRemovingFromScene<native><override>():void
+
+    # Internal epic method to know if this component is allowed on client
+    IsAllowedOnClient<override>():logic = external {}
+
+    @editable
+    @replicated("RepNotify")
+    # The text to display.
+    var Text<native><public>:string = external {}

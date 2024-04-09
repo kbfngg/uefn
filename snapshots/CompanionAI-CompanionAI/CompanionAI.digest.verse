@@ -1,20 +1,15 @@
 using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Fortnite.com/AI/CompanionAI/PingCommand}
 using {/Verse.org/VerseEngine/Component}
+using {/Fortnite.com/AI/VerseCreature}
 using {/Verse.org/Simulation}
 using {/UnrealEngine.com/Temporary/SceneGraph}
 using {/Fortnite.com/AI/VerseNPC}
-using {/Fortnite.com/AI/VerseCreature}
 using {/Fortnite.com/Characters}
 using {/Fortnite.com/AI/VerseAIBase}
 # Module import path: /Fortnite.com/AI/CompanionAI
 CompanionAI<public> := module:
     companion_ai<epic_internal> := class(npc_behavior):
-        OnBegin<override>()<suspends>:void = external {}
-
-    companion_creature<epic_internal> := class(npc_behavior):
-        EngageThreatsWithinDistance<public>:float = external {}
-
         OnBegin<override>()<suspends>:void = external {}
 
     default_npc_behavior<epic_internal> := class(npc_behavior):
@@ -36,13 +31,8 @@ CompanionAI<public> := module:
     # Get the current fort_br_creature_actions_interface for the specified character
     (InCharacter:fort_character).GetFortBRCreatureActions<native><epic_internal>()<transacts><decides>:fort_br_creature_actions_interface
 
-    # Fortnite Creature AI Management
-    fort_creature_component<native><epic_internal> := class(creature_component, fort_br_creature_actions_interface):
-        # Run the Creature default behavior
-        RunDefaultBehavior<native><override>()<suspends>:action_result
-
     # Fortnite NPC AI Management
-    fort_npc_component<native><epic_internal> := class(npc_component, fort_br_character_actions_interface):
+    fort_guard_actions_component<native><epic_internal> := class(guard_actions_component, fort_br_character_actions_interface):
         # Run the NPC default behavior
         RunDefaultBehavior<native><override>()<suspends>:action_result
 
@@ -55,6 +45,11 @@ CompanionAI<public> := module:
     (Character:fort_character).IsBeingDBNOCarried<native><epic_internal>()<transacts><decides>:void
 
     (Character:fort_character).GetNPCLeashRadius<native><epic_internal>()<transacts>:tuple(float, float)
+
+    # Fortnite Creature AI Management
+    fort_npc_actions_component<native><epic_internal> := class(npc_actions_component, fort_br_creature_actions_interface):
+        # Run the Creature default behavior
+        RunDefaultBehavior<native><override>()<suspends>:action_result
 
     fort_ping_interface<native><epic_internal> := interface<epic_internal>:
         AreNPCCommandsEnabled<epic_internal>()<transacts>:logic

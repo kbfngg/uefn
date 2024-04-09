@@ -12,8 +12,12 @@ VerseCamera<public> := module:
         @replicated("")
         var DefaultEvaluatorContext<native><public>:?camera_evaluator_context = external {}
 
-    camera_component<native><epic_internal> := class(basic_camera_component):
+        # Internal epic method to know if this component is allowed on client
+        IsAllowedOnClient<override>():logic = external {}
 
+    camera_component<native><epic_internal> := class(basic_camera_component):
+        # Internal epic method to know if this component is allowed on client
+        IsAllowedOnClient<override>():logic = external {}
 
     camera_layer_tag<native><epic_internal> := class(tag):
 

@@ -1,113 +1,128 @@
-using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Verse.org/Simulation/Tags}
 using {/Verse.org/Simulation}
-using {/Verse.org/Native}
-using {/UnrealEngine.com/Temporary/SceneGraph}
-# Module import path: /UnrealEngine.com/VerseQuery
-VerseQuery<public> := module:
-    component_query_iterator_interface<native><epic_internal> := interface<epic_internal>:
-        NextValue<native_callable><public>()<transacts><decides>:component
+using {/UnrealEngine.com/Temporary/SpatialMath}
+# Axis aligned box volume
+axis_aligned_box3<native><epic_internal> := class<final><concrete>(convex_hull3):
+    Center<native><public>:vector3 = external {}
 
-    null_component_query_iterator<native><epic_internal> := class<epic_internal>(component_query_iterator_interface):
-        NextValue<native><override>()<transacts><decides>:component
+    Extent<native><public>:vector3 = external {}
 
-    slow_component_array_copy_query_iterator<native><epic_internal> := class<epic_internal>(component_query_iterator_interface):
-        NextValue<native><override>()<transacts><decides>:component
+    DebugDraw<native><override>()<computes><reads>:void
 
-    entity_query_iterator_interface<native><epic_internal> := interface<epic_internal>:
-        NextValue<native_callable><public>()<transacts><decides>:entity
+overlap_result<native><epic_internal> := struct:
+    CollisionComponent<native><public>:?collision_component
 
-    null_entity_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface):
-        NextValue<native><override>()<transacts><decides>:entity
+    Entities<native><public>:[]entity
 
-    entity_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface):
-        NextValue<native><override>()<transacts><decides>:entity
-
-    slow_entity_array_copy_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface):
-        NextValue<native><override>()<transacts><decides>:entity
-
-    @import_as("/Script/VerseQuery.UEntityQueryManager")
-    entity_query_manager<native><epic_internal> := class:
+collision_override<native><epic_internal> := class<abstract><epic_internal>:
 
 
-    @hide_in_editor
-    playspace_association_component<native><epic_internal> := class(component):
+no_collision_override<native><epic_internal> := class<concrete><final><epic_internal>(collision_override):
 
 
-    (InEntity:entity).FindChildEntities<native><epic_internal>(EntityType:subtype(entity))<varies>:entity_query_iterator_interface
+volume_collision_override<native><epic_internal> := class<concrete><final><epic_internal>(collision_override):
+    CollisionVolume<native><public>:convex_hull3 = external {}
 
-    (InEntity:entity).FindChildEntitiesWithComponent<native><epic_internal>(ComponentType:subtype(component))<varies>:entity_query_iterator_interface
+collision_component<native><epic_internal> := class<final>(component, enableable):
+    Enable<native><override>():void
 
-    (InEntity:entity).FindChildEntitiesWithTag<native><epic_internal>(Tag:tag)<varies>:entity_query_iterator_interface
+    Disable<native><override>():void
 
-    (InEntity:entity).FindChildComponents<native><epic_internal>(ComponentType:subtype(component))<varies>:component_query_iterator_interface
+    IsEnabled<native><override>()<transacts><decides>:void
 
-    (InEntity:entity).FindChildEntitiesInside<native><epic_internal>(Shape:volume3):entity_query_iterator_interface
+    BeginOverlap<native><final><public>:listenable(overlap_result) = external {}
 
-    (InEntity:entity).FindChildEntitiesOverlapping<native><epic_internal>(Shape:shape3):entity_query_iterator_interface
+    EndOverlap<native><final><public>:listenable(overlap_result) = external {}
 
-    (InEntity:entity).FindChildEntitiesOriginInside<native><epic_internal>(Shape:volume3):entity_query_iterator_interface
+    @editable
+    var SendOverlapEvents<native><public>:logic = external {}
 
-    (InEntity:entity).FindParentEntities<native><epic_internal>(EntityType:subtype(entity))<varies>:entity_query_iterator_interface
+    var CollisionOverride<public>:collision_override = external {}
 
-    (InEntity:entity).FindParentEntitiesWithComponent<native><epic_internal>(ComponentType:subtype(component))<varies>:entity_query_iterator_interface
+component_query_iterator_interface<native><epic_internal> := interface<epic_internal>:
+    NextValue<native_callable><public>()<transacts><decides>:component
 
-    (InEntity:entity).FindParentEntitiesWithTag<native><epic_internal>(Tag:tag)<varies>:entity_query_iterator_interface
+null_component_query_iterator<native><epic_internal> := class<epic_internal>(component_query_iterator_interface):
+    NextValue<native><override>()<transacts><decides>:component
 
-    (InEntity:entity).FindParentComponents<native><epic_internal>(ComponentType:subtype(component))<varies>:component_query_iterator_interface
+slow_component_array_copy_query_iterator<native><epic_internal> := class<epic_internal>(component_query_iterator_interface):
+    NextValue<native><override>()<transacts><decides>:component
 
-    (InEntity:entity).FindParentEntitiesInside<native><epic_internal>(Shape:volume3):entity_query_iterator_interface
+convex_hull3<native><epic_internal> := class<epic_internal>(volume3):
+    Contains<native><public>(Point:vector3)<computes><decides><reads>:void
 
-    (InEntity:entity).FindParentEntitiesOverlapping<native><epic_internal>(Shape:shape3):entity_query_iterator_interface
+entity_query_iterator_interface<native><epic_internal> := interface<epic_internal>:
+    NextValue<native_callable><public>()<transacts><decides>:entity
 
-    (InEntity:entity).FindParentEntitiesOriginInside<native><epic_internal>(Shape:volume3):entity_query_iterator_interface
+null_entity_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface):
+    NextValue<native><override>()<transacts><decides>:entity
 
-    # Component used for tagging objects for retrieval later. Useful when connecting runtime scripts with editor placed objects.
-    tag_component<native><epic_internal> := class<final>(tag_component_base):
-        # Notification called then the component owner entity was added to a Scene
-        OnAddedToScene<native><override>():void
+entity_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface):
+    NextValue<native><override>()<transacts><decides>:entity
 
-        # Notification called when the component owner entity is about to be removed from Scene
-        OnRemovingFromScene<native><override>():void
+slow_entity_array_copy_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface):
+    NextValue<native><override>()<transacts><decides>:entity
 
-        # Set the tags associated with this component.
-        SetTags<native><override>(InTags:tag_container):void
-
-        # Add a single tag to this component.
-        AddTag<native><override>(TagToAdd:tag):void
-
-        # Remove a single tag from this component.
-        RemoveTag<native><override>(TagToRemove:tag):logic
-
-    tag_component_base<native><epic_internal> := class<abstract>(component):
-        # Notification called then the component owner entity was added to a Scene
-        OnAddedToScene<native><override>():void
-
-        # Notification called when the component owner entity is about to be removed from Scene
-        OnRemovingFromScene<native><override>():void
-
-        # Get the tags associated with this component. These may be specified in the editor.
-        GetTags<native><epic_internal>():tag_container
-
-        # Set the tags associated with this component.
-        SetTags<native><epic_internal>(InTags:tag_container):void
-
-        # Add a single tag to this component.
-        AddTag<native><epic_internal>(TagToAdd:tag):void
-
-        # Remove a single tag from this component.
-        RemoveTag<native><epic_internal>(TagToRemove:tag):logic
-
-    # Axis aligned box volume
-    axis_aligned_box3<native><epic_internal> := class<final><concrete>(volume3):
-        Origin<native><public>:vector3 = external {}
-
-        Extent<native><public>:vector3 = external {}
-
-    shape2<native><epic_internal> := class<epic_internal>:
+@hide_in_editor
+playspace_association_component<native><epic_internal> := class<epic_internal>(component):
 
 
-    shape3<native><epic_internal> := class<epic_internal>:
+shape2<native><epic_internal> := class<epic_internal>:
 
 
-    volume3<native><epic_internal> := class<epic_internal>(shape3):
+shape3<native><epic_internal> := class<epic_internal>:
+    DebugDraw<native><public>()<computes><reads>:void
+
+sphere3<native><epic_internal> := class<final><concrete>(convex_hull3):
+    Center<native><public>:vector3 = external {}
+
+    Radius<native><public>:float = external {}
+
+    DebugDraw<native><override>()<computes><reads>:void
+
+# Component used for tagging objects for retrieval later. Useful when connecting runtime scripts with editor placed objects.
+tag_component<native><epic_internal> := class<final>(component):
+    # Notification called then the component owner entity was added to a Scene
+    OnAddedToScene<native><override>():void
+
+    # Notification called when the component owner entity is about to be removed from Scene
+    OnRemovingFromScene<native><override>():void
+
+    # Get the tags associated with this component. These may be specified in the editor.
+    GetTags<native><epic_internal>()<transacts>:tag_view
+
+    # Add a single tag to this component.
+    AddTag<native><epic_internal>(TagToAdd:tag)<transacts>:void
+
+    # Remove a single tag from this component.
+    RemoveTag<native><epic_internal>(TagToRemove:tag)<transacts>:logic
+
+(InEntity:entity).FindEntities<native><epic_internal>(EntityType:subtype(entity))<transacts>:entity_query_iterator_interface
+
+(InEntity:entity).FindEntitiesWithComponent<native><epic_internal>(ComponentType:subtype(component))<transacts>:entity_query_iterator_interface
+
+(InEntity:entity).FindEntitiesWithTag<native><epic_internal>(Tag:tag)<transacts>:entity_query_iterator_interface
+
+(InEntity:entity).FindComponents<native><epic_internal>(ComponentType:subtype(component))<transacts>:component_query_iterator_interface
+
+(InEntity:entity).FindEntitiesInside<native><epic_internal>(Shape:convex_hull3)<transacts>:entity_query_iterator_interface
+
+(InEntity:entity).FindEntitiesOverlapping<native><epic_internal>(Shape:convex_hull3)<transacts>:entity_query_iterator_interface
+
+(InEntity:entity).FindEntitiesOriginInside<native><epic_internal>(Shape:convex_hull3)<transacts>:entity_query_iterator_interface
+
+(InEntity:entity).FindParentEntities<native><epic_internal>(EntityType:subtype(entity))<transacts>:entity_query_iterator_interface
+
+(InEntity:entity).FindParentEntitiesWithComponent<native><epic_internal>(ComponentType:subtype(component))<transacts>:entity_query_iterator_interface
+
+(InEntity:entity).FindParentEntitiesWithTag<native><epic_internal>(Tag:tag)<transacts>:entity_query_iterator_interface
+
+(InEntity:entity).FindParentComponents<native><epic_internal>(ComponentType:subtype(component))<transacts>:component_query_iterator_interface
+
+(InEntity:entity).FindParentEntitiesInside<native><epic_internal>(Shape:convex_hull3)<transacts>:entity_query_iterator_interface
+
+(InEntity:entity).FindParentEntitiesOverlapping<native><epic_internal>(Shape:convex_hull3)<transacts>:entity_query_iterator_interface
+
+(InEntity:entity).FindParentEntitiesOriginInside<native><epic_internal>(Shape:convex_hull3)<transacts>:entity_query_iterator_interface
+
+volume3<native><epic_internal> := class<epic_internal>(shape3):

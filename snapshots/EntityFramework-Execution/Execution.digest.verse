@@ -1,11 +1,9 @@
-execution_subscription<native><public> := class(cancelable):
+execution_subscription<native><epic_internal> := class(cancelable):
     Cancel<native><override>()<transacts>:void
 
-    RunAfter<native><public>(__dupe___unnamed_parameter_46:execution_subscription)<transacts>:void
+    RunAfter<native><epic_internal>(__dupe___unnamed_parameter_46:execution_subscription):void
 
-    RunBefore<native><public>(__dupe___unnamed_parameter_47:execution_subscription)<transacts>:void
+    RunBefore<native><epic_internal>(__dupe___unnamed_parameter_47:execution_subscription):void
 
-execution_subscribable<native><public> := class:
-    Subscribe<native><public>(Callback:type {__():void}, ?Interval:float = external {})<transacts>:execution_subscription
-
-    SubscribeWithTime<native><public>(Callback:type {__(:float):void}, ?Interval:float = external {})<transacts>:execution_subscription
+execution_subscribable<native><epic_internal> := class(subscribable(float)):
+    Subscribe<native><override>(Callback:type {__(:float):void})<transacts>:cancelable

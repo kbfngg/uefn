@@ -29,7 +29,19 @@ component<native><epic_internal> := class<abstract><unique>(disposable):
 
     Dispose<native><override><final>():void
 
-    IsDisposed<native><final><public>()<decides>:void
+    # Determines if the component has been Disposed.
+    IsDisposed<native><final><public>()<transacts><decides>:void
+
+    # Determines if the component has been Initialized.
+    IsInitialized<native><final><public>()<transacts><decides>:void
+
+    # Determines if the component has been placed in the scene.
+    IsInScene<native><final><public>()<transacts><decides>:void
+
+    # Determines if the component is currently simulating.
+    IsSimulating<native><final><public>()<transacts><decides>:void
+
+    var<private> TickEvents<protected>:tick_events = external {}
 
     IsAllowedOnClient<native_callable><epic_internal>():logic = external {}
 
@@ -38,17 +50,17 @@ base_entity<native><public> := class<abstract>:
 
 
 entity<native><epic_internal> := class<concrete><unique><transacts>(base_entity, disposable):
-    GetParent<native><final><public>()<varies><decides>:entity
+    GetParent<native><final><public>()<transacts><decides>:entity
 
-    UnsetParent<native><final><public>()<transacts>:void
+    UnsetParent<native><final><public>():void
 
-    AttachEntities<native><final><public>(NewChildEntities:[]entity)<transacts>:void
+    AttachEntities<native><final><public>(NewChildEntities:[]entity):void
 
     GetEntities<native><final><public>()<transacts>:[]entity
 
-    GetComponents<native><final><public>(ComponentType:subtype(component))<varies>:[]ComponentType
+    GetComponents<native><final><public>(ComponentType:subtype(component))<transacts>:[]ComponentType
 
-    AttachComponents<native><final><public>(Components:[]component)<transacts>:void
+    AttachComponents<native><final><public>(Components:[]component):void
 
     Dispose<native><override><final>():void
 
@@ -66,23 +78,6 @@ entity_initializer<epic_internal> := module:
     # Tells that specified component type need to be initialized before
     InitializeDependency<native><public>(OwnerEntity:entity, ComponentType:subtype(component), Mode:mode)<transacts><decides>:ComponentType
 
-engine_execution_subscribables<native><public> := class:
-    PrePhysics<native><public>:execution_subscribable = external {}
-
-    StartPhysics<native><public>:execution_subscribable = external {}
-
-    DuringPhysics<native><public>:execution_subscribable = external {}
-
-    EndPhysics<native><public>:execution_subscribable = external {}
-
-    PostPhysics<native><public>:execution_subscribable = external {}
-
-    EndFrame<native><public>:execution_subscribable = external {}
-
-# Module import path: /UnrealEngine.com/Temporary/SceneGraph/engine_execution
-engine_execution<public> := module:
-    GetSubscribables<native><epic_internal>(ForEntity:entity):engine_execution_subscribables
-
 replication_component<native><epic_internal> := class(component):
     # The component is being initialized, called when it is attach to an entity
     OnAddedToScene<native><override>():void
@@ -93,7 +88,20 @@ replication_component<native><epic_internal> := class(component):
     # Internal epic method to know if this component is allowed on client
     IsAllowedOnClient<override>():logic = external {}
 
-transform_component<native><epic_internal> := class(component):
+tick_events<native><epic_internal> := class:
+    PrePhysics<native><public>:execution_subscribable = external {}
+
+    StartPhysics<native><epic_internal>:execution_subscribable = external {}
+
+    DuringPhysics<native><epic_internal>:execution_subscribable = external {}
+
+    EndPhysics<native><epic_internal>:execution_subscribable = external {}
+
+    PostPhysics<native><public>:execution_subscribable = external {}
+
+    EndFrame<native><epic_internal>:execution_subscribable = external {}
+
+transform_component<native><epic_internal> := class<final>(component):
     # The component is being initialized, called when it is attach to an entity
     OnInitialized<native><override>():void
 

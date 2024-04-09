@@ -89,8 +89,26 @@ Tags<public> := module:
     # Utility function to allow for easy construction from editor exposable tag_selector_container
     MakeTagContainer<native><epic_internal>(Selector:tag_selector_container)<transacts><decides>:tag_container
 
+    tag_search_sort_type<native><public> := enum:
+        Unsorted
+        Sorted
+
+    # Advanced tag search criteria
+    tag_search_criteria<native><public> := class:
+        # Tags required to be on the object.
+        RequiredTags<native><public>:[]tag = external {}
+
+        # Tags that are used if no required tags are specified. These are treated as if any of them will do.
+        PreferredTags<native><public>:[]tag = external {}
+
+        # Tags that may NOT be on the object. All items with these tags are excluded from the search.
+        ExclusionTags<native><public>:[]tag = external {}
+
+        # Flag to request sorting the results by tag.
+        SortType<native><public>:tag_search_sort_type = external {}
+
     # Component used for tagging objects for retrieval later. Useful when connecting runtime scripts with editor placed objects.
-    tag_container_component<native><epic_internal> := class<final>(vk_component):
+    vk_tag_container_component<native><epic_internal> := class<final>(vk_component):
         # Get the tags associated with this vk_component. These may be specified in the editor.
         GetTags<native><epic_internal>():tag_container
 
@@ -111,21 +129,3 @@ Tags<public> := module:
 
     # Get a list of components that match the specified criteria.
     FindObjectsWithTags<native><epic_internal>(SearchCriteria:tag_search_criteria):[]vk_component
-
-    tag_search_sort_type<native><public> := enum:
-        Unsorted
-        Sorted
-
-    # Advanced tag search criteria
-    tag_search_criteria<native><public> := class:
-        # Tags required to be on the object.
-        RequiredTags<native><public>:[]tag = external {}
-
-        # Tags that are used if no required tags are specified. These are treated as if any of them will do.
-        PreferredTags<native><public>:[]tag = external {}
-
-        # Tags that may NOT be on the object. All items with these tags are excluded from the search.
-        ExclusionTags<native><public>:[]tag = external {}
-
-        # Flag to request sorting the results by tag.
-        SortType<native><public>:tag_search_sort_type = external {}

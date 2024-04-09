@@ -1,12 +1,11 @@
 using {/Fortnite.com/Assets}
 using {/Fortnite.com/Animation/PlayAnimation}
-using {/Verse.org/Native}
 using {/Fortnite.com/AI}
 using {/Verse.org/Assets}
 using {/UnrealEngine.com/Temporary/SpatialMath}
-using {/Verse.org/Simulation/Tags}
-using {/UnrealEngine.com/VerseQuery}
+using {/UnrealEngine.com/Abilities}
 using {/Fortnite.com/Teams}
+using {/Verse.org/Simulation/Tags}
 using {/Verse.org/Simulation}
 using {/UnrealEngine.com/Temporary/SceneGraph}
 using {/Fortnite.com/Game}
@@ -50,9 +49,32 @@ Teams<public> := module:
         # Returns an array of all the `team`s known to this `fort_team_collection`
         GetTeams<public>()<transacts>:[]team
 
+        # Register a team component with the team collection, so that its team can automatically be changed as teams are associated with its tag. 
+        # Fails if:
+        #  * The team component's tag is not set
+        #  * The team component is not attached to an entity
+        #  * The owning entity of the team component is already registered.
+        RegisterTeamComponent<native_callable><epic_internal>(InTeamComponent:team_component)<transacts><decides>:void
+
+        # Unregister a team component from the team collection. Fails if the team component is not registered with the team collection
+        UnregisterTeamComponent<native_callable><epic_internal>(InTeamComponent:team_component)<transacts><decides>:void
+
+        # Associate the team `InTeam` with the tag `InTeamTag`, so that it can be accessed by team_component. Fails if `InTeam` is not a valid team within the team collection
+        SetTaggedTeam<epic_internal>(InTeamTag:team_tag, InTeam:team)<transacts><decides>:void
+
+        # Get the team associated with the tag `InTag`. Fails if no such team is associated with `InTag` 
+        GetTeamByTag<epic_internal>(InTeamTag:team_tag)<transacts><decides>:team
+
+        # Get all of the tags associated with the team `InTeam`. Fails if `InTeam` is not a valid team within the team collection
+        GetTeamTags<epic_internal>(InTeam:team)<transacts><decides>:tag_container
+
         # Adds `InAgent` to `InTeam`.
         # Fails if `InTeam` is not part of the `fort_team_collection`.
         AddToTeam<public>(InAgent:agent, InTeam:team)<transacts><decides>:void
+
+        # Adds `InEntity` to the team that matches `InTeamTag`.
+        # Fails if `InTeamTag` is not a registered team in the `fort_team_collection`.
+        AddToTeam<native_callable><epic_internal>(InEntity:entity, InTeamTag:team_tag)<transacts><decides>:void
 
         # Succeeds if `InAgent` is on `InTeam`.
         # Fails if:
@@ -60,13 +82,27 @@ Teams<public> := module:
         #  * `InTeam` is not part of the `fort_team_collection`.
         IsOnTeam<public>(InAgent:agent, InTeam:team)<transacts><decides>:void
 
+        # Succeeds if `InEntity` is on `InTeam`.
+        # Fails if:
+        #  * `InEntity` is not on `InTeam`.
+        #  * `InTeam` is not part of the `fort_team_collection`.
+        IsOnTeam<epic_internal>(InEntity:entity, InTeam:team)<transacts><decides>:void
+
         # Returns an array of all `agent`s on `InTeam`.
         # Fails if `InTeam` is not part of the `fort_team_collection`.
         GetAgents<public>(InTeam:team)<transacts><decides>:[]agent
 
+        # Returns an array of all `entities on `InTeam`.
+        # Fails if `InTeam` is not part of the `fort_team_collection`.
+        GetEntities<epic_internal>(InTeam:team)<transacts><decides>:[]entity
+
         # Get the `team` that `InAgent` is on.
         # Fails if `InAgent` is not on a team in this `fort_team_collection`.
         GetTeam<public>(InAgent:agent)<transacts><decides>:team
+
+        # Get the `team` that `InEntity` is on.
+        # Fails if `InEntity` is not on a team in this `fort_team_collection`.
+        GetTeam<epic_internal>(InEntity:entity)<transacts><decides>:team
 
         # Returns the `team_attitude` between `Team1` and `Team2`.
         # Fails if:
@@ -79,6 +115,39 @@ Teams<public> := module:
         #  * `Agent1` is not on a team in this `fort_team_collection`.
         #  * `Agent2` is not on a team in this `fort_team_collection`.
         GetTeamAttitude<public>(Agent1:agent, Agent2:agent)<transacts><decides>:team_attitude
+
+        # Returns the `team_attitude` between `Entity1` and `Entity2`.
+        # Fails if:
+        #  * `Entity1` is not on a team in this `fort_team_collection`.
+        #  * `Entity2` is not on a team in this `fort_team_collection`.
+        GetTeamAttitude<epic_internal>(Entity1:entity, Entity2:entity)<transacts><decides>:team_attitude
+
+        # Returns the `team_attitude` between `Agent` and `Entity`.
+        # Fails if:
+        #  * `Agent` is not on a team in this `fort_team_collection`.
+        #  * `Entity` is not on a team in this `fort_team_collection`.
+        GetTeamAttitude<epic_internal>(Agent:agent, Entity:entity)<transacts><decides>:team_attitude
+
+    team_tag<native><epic_internal> := class<concrete>(tag):
+
+
+    team_pvp_01_tag<native><epic_internal> := class<concrete>(team_tag):
+
+
+    team_pvp_02_tag<native><epic_internal> := class<concrete>(team_tag):
+
+
+    team_monster_tag<native><epic_internal> := class<concrete>(team_tag):
+
+
+    team_component<native><epic_internal> := class<final>(component):
+        OnSimulate<override>()<suspends>:void = external {}
+
+        # Tag that uniquely identifies the team this entity is on
+        var TeamTag<public>:team_tag = external {}
+
+        # Get the team object for the team this entity is on - Fails if team is not registered. team_pvp_01_tag, team_pvp_02_tag and team_monster_tag are registered already by default
+        GetTeam<native><public>()<transacts><decides>:team
 
 # Module import path: /Fortnite.com/Playspaces
 Playspaces<public> := module:
@@ -98,19 +167,19 @@ Playspaces<public> := module:
         # Signaled when a `player` leaves the `fort_playspace`. Returns a subscribable with a payload of the`fort_character` that left the `fort_playspace`.
         PlayerRemovedEvent<public>():listenable(player)
 
-        FindEntities<epic_internal>(EntityType:subtype(entity))<varies>:entity_query_iterator_interface
+        FindEntitiesInScene<epic_internal>(EntityType:subtype(entity))<varies>:entity_query_iterator_interface
 
-        FindEntitiesWithComponent<epic_internal>(ComponentType:subtype(component))<varies>:entity_query_iterator_interface
+        FindEntitiesInSceneWithComponent<epic_internal>(ComponentType:subtype(component))<varies>:entity_query_iterator_interface
 
-        FindComponents<epic_internal>(ComponentType:subtype(component))<varies>:component_query_iterator_interface
+        FindComponentsInScene<epic_internal>(ComponentType:subtype(component))<varies>:component_query_iterator_interface
 
-        FindEntitiesWithTag<epic_internal>(Tag:tag)<varies>:entity_query_iterator_interface
+        FindEntitiesInSceneWithTag<epic_internal>(Tag:tag)<varies>:entity_query_iterator_interface
 
-        FindEntitiesInside<epic_internal>(Shape:volume3):entity_query_iterator_interface
+        FindEntitiesInSceneInside<epic_internal>(Shape:convex_hull3):entity_query_iterator_interface
 
-        FindEntitiesOverlapping<epic_internal>(Shape:shape3):entity_query_iterator_interface
+        FindEntitiesInSceneOverlapping<epic_internal>(Shape:convex_hull3):entity_query_iterator_interface
 
-        FindEntitiesOriginInside<epic_internal>(Shape:volume3):entity_query_iterator_interface
+        FindEntitiesInSceneOriginInside<epic_internal>(Shape:convex_hull3):entity_query_iterator_interface
 
     (InEntity:entity).GetPlayspaceForEntity<native><epic_internal>()<transacts><decides>:fort_playspace
 
@@ -123,6 +192,12 @@ Game<public> := module:
 
         # `fort_character` that eliminated `EliminatedCharacter` from the match. `EliminatingCharacter` will be false when `EliminatedCharacter` was eliminated through non-character actions, such as environmental damage.
         EliminatingCharacter<native><public>:?fort_character
+
+    fort_ability_component<native><epic_internal> := class(ability_component):
+
+
+    fort_damageable_component<native><epic_internal> := class(damageable_component):
+        var<private> Health<native><public>:float = external {}
 
     # Implemented by objects to allow reading position information.
     positional<native><public> := interface<epic_internal>:
@@ -381,10 +456,16 @@ Characters<public> := module:
 
 # Module import path: /Fortnite.com/Building
 Building<public> := module:
-    building_component<native><epic_internal> := class(component):
+    building_component<native><epic_internal> := class<final>(component):
         IsAllowedOnClient<override>():logic = external {}
 
         Damage<native><public>(Amount:float):void
+
+        IsPlayerBuilt<native><public>()<decides>:void
+
+        var CanBeDamaged<public>:logic = external {}
+
+        var CanBeReplaced<public>:logic = external {}
 
 # Module import path: /Fortnite.com/Assets
 Assets<public> := module:
@@ -393,6 +474,15 @@ Assets<public> := module:
 
 # Module import path: /Fortnite.com/Animation
 Animation<public> := module:
+    play_animation_component<native><epic_internal> := class<epic_internal>(ai_actions_component, play_animation_controller):
+        PlayAndAwait<override>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {})<suspends>:play_animation_result = external {}
+
+        Play<override>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {}):play_animation_instance = external {}
+
+        CanPlayAnimation<native><epic_internal>(AnimationSequence:animation_sequence)<transacts><decides>:void
+
+        PlayAnimationInternal<native><epic_internal>(AnimationSequence:animation_sequence, PlayAnimationInstance:play_animation_instance, EndsOnBlendOut:logic, PlayRate:float, StartPositionSeconds:float, BlendInTime:float, BlendOutTime:float)<suspends>:play_animation_result
+
     # Module import path: /Fortnite.com/Animation/PlayAnimation
     PlayAnimation<public> := module:
         # Result of a PlayAndAwait request.
@@ -458,20 +548,17 @@ Animation<public> := module:
         # Get the play_animation_controller for the specified character.
         (InCharacter:fort_character).GetPlayAnimationController<native><public>()<transacts><decides>:play_animation_controller
 
-    @import_as("/Script/VerseFortnite.UAIAnimationComponent")
-    ai_animation_component<native><epic_internal> := class<abstract>(ai_actions_component):
-
-
-    play_animation_controller_impl<native><epic_internal> := class(ai_animation_component, play_animation_controller):
-        PlayAndAwait<override>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {})<suspends>:play_animation_result = external {}
-
-        Play<override>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {}):play_animation_instance = external {}
-
 # Module import path: /Fortnite.com/AI
 AI<public> := module:
-    @import_as("/Script/VerseFortnite.UAIActionsComponent")
-    ai_actions_component<native><epic_internal> := class<abstract>:
+    ai_component<native><epic_internal> := class<abstract>(component):
 
+
+    ai_actions_component<native><epic_internal> := class<abstract>(ai_component):
+
+
+    ai_target_component<native><epic_internal> := class<final>(component):
+        # Internal epic method to know if this component is allowed on client
+        IsAllowedOnClient<override>():logic = external {}
 
     # Result of a play emote action.
     play_emote_result<native><epic_internal> := enum:
@@ -576,10 +663,10 @@ AI<public> := module:
 
 
     # Generate a navigation_target from any position
-    MakeNavigationTarget<constructor><native><public>(Position:vector3):navigation_target
+    MakeNavigationTarget<native><public>(Position:vector3):navigation_target
 
     # Generate a navigation_target from an agent
-    MakeNavigationTarget<constructor><native><public>(Target:agent):navigation_target
+    MakeNavigationTarget<native><public>(Target:agent):navigation_target
 
     # Result of a navigation request
     navigation_result<native><public> := enum:
@@ -656,7 +743,7 @@ AI<public> := module:
     (InTarget:target_info).GetLastKnownPosition<native><epic_internal>()<transacts>:vector3
 
     # Create a `navigation_target` from a `target_info`.
-    MakeNavigationTarget<constructor><native><epic_internal>(TargetInfo:target_info):navigation_target
+    MakeNavigationTarget<native><epic_internal>(TargetInfo:target_info):navigation_target
 
     # Perception settings for sight.
     sight_perception_settings<native><epic_internal> := class<final><concrete>:

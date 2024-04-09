@@ -907,6 +907,9 @@ powerup_device<public> := class<abstract><epic_internal>(creative_device_base):
     # Returns the `Agent` has the powerup's effect (or another of the same type) applied to them.
     HasEffect<public>(Agent:agent)<transacts><decides>:void = external {}
 
+    # Succeeds if the powerup is currently spawned.
+    IsSpawned<epic_internal>()<transacts><decides>:void = external {}
+
     # Grants this powerup to `Agent`.
     Pickup<public>(Agent:agent):void = external {}
 
@@ -982,6 +985,9 @@ objective_device<public> := class<concrete><final>(creative_device_base):
 
     # Destroys the objective item. This is done regardless of the visibility or health of the item.
     Destroy<public>(Agent:agent):void = external {}
+
+    # Sets the device either invulnerable or damageable
+    SetInvulnerable<epic_internal>(Invulnerable:logic):void = external {}
 
 # Used to temporarily modify the speed of `agent`s and vehicles.
 movement_modulator_device<public> := class<concrete><final>(creative_device_base):
@@ -1086,6 +1092,20 @@ item_granter_device<public> := class<concrete><final>(creative_device_base):
 
     # Grants an item to `Agent`.
     GrantItem<public>(Agent:agent):void = external {}
+
+    # Grants an item without requiring an agent reference.
+    #  This only works when *Receiving Players* is set to *All* or *Team Index*
+    GrantItemTemp<epic_internal>():void = external {}
+
+    # Grants an item at a specific `ItemIndex` to an `Agent`.
+    GrantItemTemp<epic_internal>(Agent:agent, ItemIndex:int):void = external {}
+
+    # Grants an item at a specific `ItemIndex` to all players.
+    #  Only functions when *Receiving Players* is set to *All* or *Team Index*
+    GrantItemTemp<epic_internal>(ItemIndex:int):void = external {}
+
+    # Returns the current Item Index that this device will grant when activated
+    GetItemIndex<epic_internal>()<transacts>:int = external {}
 
     # Restocks this device back to its starting inventory count.
     RestockItems<public>():void = external {}

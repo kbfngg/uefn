@@ -299,6 +299,9 @@ Devices<public> := module:
         # Moves the `creative_object` to the specified `Transform` over the specified time, in seconds. If an animation is currently playing on the `creative_object` it will be stopped and put into the `AnimationNotSet` state.
         MoveTo<public>(Transform:transform, OverTime:float)<suspends>:move_to_result = external {}
 
+        # Sets the team to a specific user. 0 is no team.
+        SetTeam<native><epic_internal>(TeamIndex:type{_X:int where 0 <= _X, _X <= 255}):void
+
     # Returns an array containing all creative objects which have been marked with the specified `Tag`.
     GetCreativeObjectsWithTag<native><public>(Tag:tag)<transacts>:[]creative_object_interface
 
@@ -318,6 +321,9 @@ Devices<public> := module:
     creative_prop<native><public> := class<concrete><final>(creative_object, invalidatable):
         # Destroys the `creative_prop` and remove it from the island.
         Dispose<native><override>():void
+
+        # Succeeds if this object has been disposed of either via `Dispose()` or through an external system.
+        IsDisposed<native><final><public>()<decides>:void
 
         # Succeeds if this object has not been disposed of either via `Dispose()` or through an external system.
         IsValid<native><override>()<transacts><decides>:void

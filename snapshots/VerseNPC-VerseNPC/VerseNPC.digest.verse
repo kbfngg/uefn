@@ -1,42 +1,14 @@
 using {/Verse.org/VerseEngine}
 using {/Fortnite.com/Game}
-using {/UnrealEngine.com/Temporary/SceneGraph}
-using {/Fortnite.com/Assets}
-using {/Verse.org/Simulation}
-using {/UnrealEngine.com/Temporary/SpatialMath}
-using {/Fortnite.com/AI/VerseAIBase}
 using {/Verse.org/Native}
 using {/Verse.org/VerseEngine/Component}
+using {/Fortnite.com/Assets}
+using {/Fortnite.com/AI/VerseAIBase}
+using {/Verse.org/Simulation}
+using {/UnrealEngine.com/Temporary/SpatialMath}
 # Module import path: /Fortnite.com/AI/VerseNPC
 VerseNPC<public> := module:
-    @import_as("/Script/VerseNPC.UInventoryComponentBase")
-    inventory_component_base<native><epic_internal> := class(vk_component):
-
-
-    inventory_component<native><epic_internal> := class(inventory_component_base, fort_inventory_interface):
-        GetAllItems<native><override>()<transacts>:[]fort_item_descriptor
-
-        AddItemToInventory<native><override>(InventoryAsset:fort_inventory_item_asset, Count:int)<transacts><decides>:fort_item_descriptor
-
-        DropItem<native><override>(Item:fort_item_descriptor):logic
-
-        GetCurrentWeapon<native><override>()<transacts><decides>:fort_item_descriptor
-
-        EquipWeapon<native><override>(Weapon:fort_item_descriptor)<transacts><decides>:void
-
-        IsWeaponEquipped<native><override>(Weapon:fort_item_descriptor)<transacts>:logic
-
-        GetWeaponDescriptor<native><override>(Weapon:fort_item_descriptor)<transacts><decides>:fort_weapon_descriptor
-
-        RegisterUseSuggestedWeaponCallback<native><override>(Callback:type {__(:fort_item_descriptor):logic}):int
-
-        UnregisterUseSuggestedWeaponCallback<native><override>(CallbackID:int):void
-
-    @import_as("/Script/VerseNPC.ULeashComponentBase")
-    leash_component_base<native><epic_internal> := class(vk_component):
-
-
-    leash_component<native><epic_internal> := class(leash_component_base, fort_leashable):
+    fort_leashable_component<native><epic_internal> := class<epic_internal>(ai_component, fort_leashable):
         SetLeashPosition<native><override>(Location:vector3, InnerRadius:float, OuterRadius:float):void
 
         SetLeashAgent<native><override>(Agent:agent, InnerRadius:float, OuterRadius:float):void
@@ -44,7 +16,7 @@ VerseNPC<public> := module:
         ClearLeash<native><override>():void
 
     # Fortnite NPC AI Management
-    npc_component<native><epic_internal> := class(ai_actions_component, fort_navigatable, fort_character_movement_interface, fort_character_actions_interface, focus_interface, fort_weapon_actions_interface):
+    guard_actions_component<native><epic_internal> := class(ai_actions_component, fort_navigatable, fort_character_movement_interface, fort_character_actions_interface, focus_interface):
         NavigateTo<native><override>(Target:navigation_target, ?MovementType:movement_type = external {}, ?ReachRadius:float = external {}, ?AllowPartialPath:logic = external {})<suspends>:navigation_result
 
         SetMovementSpeedMultiplier<native><override>(Multiplier:float):void
@@ -83,21 +55,15 @@ VerseNPC<public> := module:
 
         MaintainFocus<native><override>(Target:agent)<suspends>:void
 
-        LootObject<native><override>(ObjectInfo:fort_loot_info)<suspends>:action_result
+        Attack<native><override>(Target:target_info)<suspends>:action_result
 
-        Attack<native><override>(Target:entity)<suspends>:action_result
-
-        Fire<native><override>():logic
-
-        Reload<native><override>():logic
-
-        MeleeAttack<native><override>():logic
+        Attack<native><override>(Target:fort_obstacle_info)<suspends>:action_result
 
     @import_as("/Script/VerseNPC.UNPCPerceptionComponentBase")
     npc_perception_component_base<native><epic_internal> := class(vk_component):
 
 
-    npc_perception_component<native><epic_internal> := class(npc_perception_component_base, guard_perception_interface, fort_obstacle_perception_interface, fort_loot_perception_interface):
+    npc_perception_component<native><epic_internal> := class(npc_perception_component_base, guard_perception_interface, fort_obstacle_perception_interface):
         GetDetectedTargets<native><override>()<transacts>:[]target_info
 
         GetDetectedTarget<native><override>(Agent:agent)<transacts><decides>:target_info
@@ -177,9 +143,3 @@ VerseNPC<public> := module:
         ObstacleChangedEvent<override>():listenable(fort_obstacle_info) = external {}
 
         ObstacleChangedEventInternal<native><epic_internal>:subscribable_event(fort_obstacle_info) = external {}
-
-        GetBestObjectToLoot<native><override>()<transacts><decides>:fort_loot_info
-
-        BestObjectToLootChangedEvent<override>():listenable(fort_loot_info) = external {}
-
-        BestObjectToLootChangedEventInternal<native><epic_internal>:subscribable_event(fort_loot_info) = external {}

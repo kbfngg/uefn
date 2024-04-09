@@ -1,32 +1,12 @@
-using {/Verse.org/VerseEngine}
-using {/Fortnite.com/Game}
-using {/Verse.org/Native}
-using {/Verse.org/VerseEngine/Component}
-using {/Verse.org/Simulation}
 using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Fortnite.com/AI/VerseAIBase}
+using {/Verse.org/VerseEngine}
+using {/Fortnite.com/Game}
+using {/Verse.org/Simulation}
+using {/Verse.org/Native}
+using {/Verse.org/VerseEngine/Component}
 # Module import path: /Fortnite.com/AI/VerseCreature
 VerseCreature<public> := module:
-    # Fortnite Creature AI Management
-    creature_component<native><epic_internal> := class(ai_actions_component, fort_navigatable, focus_interface):
-        GetCurrentDestination<native><override>()<transacts><decides>:vector3
-
-        NavigateTo<native><override>(Target:navigation_target, ?MovementType:movement_type = external {}, ?ReachRadius:float = external {}, ?AllowPartialPath:logic = external {})<suspends>:navigation_result
-
-        SetMovementSpeedMultiplier<native><override>(Multiplier:float):void
-
-        StopNavigation<native><override>():void
-
-        Wait<native><override>(?Duration:float = external {})<suspends>:void
-
-        RoamAround<native><override>()<suspends>:navigation_result
-
-        MoveInRangeToAttack<native><override>()<suspends>:action_result
-
-        MaintainFocus<native><override>(Location:vector3)<suspends>:void
-
-        MaintainFocus<native><override>(Agent:agent)<suspends>:void
-
     @import_as("/Script/VerseCreature.UCreaturePerceptionComponentBase")
     creature_perception_component_base<native><epic_internal> := class(vk_component):
 
@@ -75,3 +55,23 @@ VerseCreature<public> := module:
         TargetHeardEventInternal<native><epic_internal>:subscribable_event(target_info) = external {}
 
         TargetTouchedEventInternal<native><epic_internal>:subscribable_event(target_info) = external {}
+
+    # Fortnite NPC AI Management
+    npc_actions_component<native><epic_internal> := class(ai_actions_component, fort_navigatable, focus_interface):
+        GetCurrentDestination<native><override>()<transacts><decides>:vector3
+
+        NavigateTo<native><override>(Target:navigation_target, ?MovementType:movement_type = external {}, ?ReachRadius:float = external {}, ?AllowPartialPath:logic = external {})<suspends>:navigation_result
+
+        SetMovementSpeedMultiplier<native><override>(Multiplier:float):void
+
+        StopNavigation<native><override>():void
+
+        Wait<native><override>(?Duration:float = external {})<suspends>:void
+
+        RoamAround<native><override>()<suspends>:navigation_result
+
+        MoveInRangeToAttack<native><override>()<suspends>:action_result
+
+        MaintainFocus<native><override>(Location:vector3)<suspends>:void
+
+        MaintainFocus<native><override>(Agent:agent)<suspends>:void

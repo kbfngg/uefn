@@ -5,6 +5,10 @@ class_selector_ui_device<public> := class<concrete><final>(creative_device_base)
     # Sends the `agent` that selected a class.
     ClassSelectedEvent<public>:listenable(agent) = external {}
 
+    # Signaled when an `agent` changes a class.
+    # Sends the `agent` that selected a class and the `int` class that the player has changed to.
+    ClassChangedEvent<epic_internal>:listenable(tuple(agent, int)) = external {}
+
     # Signaled when an `agent` closes the UI.
     # Sends the `agent` that closed the UI.
     UIClosedEvent<public>:listenable(agent) = external {}

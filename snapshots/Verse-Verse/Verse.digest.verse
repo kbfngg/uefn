@@ -59,6 +59,17 @@ Verse<public> := module:
         # Cleans up this object.
         Dispose<public>():void
 
+    # Implemented by classes whose instances can be enabled and disabled.
+    enableable<native><public> := interface<epic_internal>:
+        # Enable this object.
+        Enable<public>():void
+
+        # Disable this object.
+        Disable<public>():void
+
+        # Succeeds if the object is enabled, fails if it’s disabled.
+        IsEnabled<public>()<transacts><decides>:void
+
     # Halts the Verse runtime with error `Message`.
     Err<native><public>(Message:string)<computes>:false
 

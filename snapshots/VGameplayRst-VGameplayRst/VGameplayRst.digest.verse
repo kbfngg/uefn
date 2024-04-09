@@ -84,17 +84,6 @@ VGameplayRst<public> := module:
             # The location at which the hit occured on OtherEntityID
             HitLocation<native><public>:vector3
 
-        overlap_result<native><public> := class:
-            OtherEntityID<native><public>:int
-
-            OtherComponent<native><public>:vk_collision_component
-
-            FromSweep<native><public>:logic
-
-            SweepHitNormal<native><public>:vector3
-
-            SweepHitLocation<native><public>:vector3
-
         physics_trace<native><public> := class:
             WaitPhysicsTrace<native><public>()<suspends>:[]hit_result_legacy
 
@@ -144,9 +133,9 @@ VGameplayRst<public> := module:
 
             WaitHit<native><public>()<suspends>:hit_result_legacy
 
-            WaitBeginOverlap<native><public>()<suspends>:overlap_result
+            WaitBeginOverlap<native><public>()<suspends>:vk_overlap_result
 
-            WaitEndOverlap<native><public>()<suspends>:overlap_result
+            WaitEndOverlap<native><public>()<suspends>:vk_overlap_result
 
             SetGravityEnabled<native><public>(EnableGravity:logic):void
 
@@ -197,6 +186,17 @@ VGameplayRst<public> := module:
             XYPlane
             CustomPlane
             NoConstraints
+
+        vk_overlap_result<native><public> := class:
+            OtherEntityID<native><public>:int
+
+            OtherComponent<native><public>:vk_collision_component
+
+            FromSweep<native><public>:logic
+
+            SweepHitNormal<native><public>:vector3
+
+            SweepHitLocation<native><public>:vector3
 
     # Module import path: /UnrealEngine.com/VGameplayRst/Lights
     Lights<public> := module:
