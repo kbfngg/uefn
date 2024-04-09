@@ -29,6 +29,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 <details>
 <summary>Verse APIs</summary>
+  
 - `29.20` (TBD)
 - [`29.10`](https://github.com/kbfngg/uefn/tree/game_v29.10/modules)
 - [`29.01`](https://github.com/kbfngg/uefn/tree/game_v29.01/modules)
