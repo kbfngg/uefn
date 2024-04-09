@@ -21,7 +21,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 ******
 
 > [!NOTE]
-> Some of the following sections are collapsed and must to be expanded first.
+> Some of the following sections are collapsed and must be expanded first.
 
 ******
 
