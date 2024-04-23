@@ -2,8 +2,31 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.20-CL-32716692
+# Generated from build: ++Fortnite+Release-29.30-CL-32982357
 #################################################
+
+AINavigation<public> := module:
+    using {/UnrealEngine.com/Temporary/SceneGraph}
+    using {/Verse.org/Simulation}
+    ai_navigation_relevant_component<native><epic_internal> := class(component):
+        # Internal epic method to know if this component is allowed on client
+        IsAllowedOnClient<override>():logic = external {}
+
+        # Notification called then the component owner entity was added to the scene
+        OnAddedToScene<native><override>():void
+
+        # The component is being initialized, called when it is attach to an entity
+        OnInitialized<native><override>():void
+
+        # Notification called when the component owner entity is about to be removed from the scene
+        OnRemovingFromScene<native><override>():void
+
+        # The component is being uninitialized, called when it is about to be detached from an entity
+        OnUninitializing<native><override>():void
+
+        @editable
+        # If set, navigation data will not be generated under the surface of the geometry
+        var FillCollisionUnderneathForNavData<native><public>:logic = external {}
 
 Abilities<public> := module:
     using {/UnrealEngine.com/Temporary/SceneGraph}
@@ -25,7 +48,14 @@ using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Verse.org/Assets}
 # Module import path: /UnrealEngine.com/Assets
 Assets<public> := module:
+    PlaySound<native><epic_internal>(Asset:sound, ?StartDelay:float = external {})<transacts>:cancelable
+
+    PlaySoundAtLocation<native><epic_internal>(Asset:sound, Position:vector3, ?Rotation:rotation = external {}, ?StartDelay:float = external {})<transacts>:cancelable
+
     SpawnParticleSystem<native><public>(Asset:particle_system, Position:vector3, ?Rotation:rotation = external {}, ?StartDelay:float = external {})<transacts>:cancelable
+
+    play_sound_subscription<native><epic_internal> := class(cancelable):
+        Cancel<native><override>()<transacts>:void
 
     spawn_particle_system_subscription<native><epic_internal> := class(cancelable):
         Cancel<native><override>()<transacts>:void
@@ -595,33 +625,33 @@ Temporary<public> := module:
             Warning
 
     SceneGraph<public> := module:
-        (InEntity:entity).FindComponents<native><epic_internal>(ComponentType:subtype(component))<transacts>:component_query_iterator_interface
+        (InEntity:entity).FindComponents<native><epic_internal>(ComponentType:subtype(component))<transacts>:[]ComponentType
 
-        (InEntity:entity).FindEntities<native><epic_internal>(EntityType:subtype(entity))<transacts>:entity_query_iterator_interface
+        (InEntity:entity).FindEntities<native><epic_internal>(EntityType:subtype(entity))<transacts>:[]EntityType
 
-        (InEntity:entity).FindEntitiesInside<native><epic_internal>(Shape:convex_hull3)<transacts>:entity_query_iterator_interface
+        (InEntity:entity).FindEntitiesInside<native><epic_internal>(Shape:convex_hull3)<transacts>:[]entity
 
-        (InEntity:entity).FindEntitiesOriginInside<native><epic_internal>(Shape:convex_hull3)<transacts>:entity_query_iterator_interface
+        (InEntity:entity).FindEntitiesOriginInside<native><epic_internal>(Shape:convex_hull3)<transacts>:[]entity
 
-        (InEntity:entity).FindEntitiesOverlapping<native><epic_internal>(Shape:convex_hull3)<transacts>:entity_query_iterator_interface
+        (InEntity:entity).FindEntitiesOverlapping<native><epic_internal>(Shape:convex_hull3)<transacts>:[]entity
 
-        (InEntity:entity).FindEntitiesWithComponent<native><epic_internal>(ComponentType:subtype(component))<transacts>:entity_query_iterator_interface
+        (InEntity:entity).FindEntitiesWithComponent<native><epic_internal>(ComponentType:subtype(component))<transacts>:[]entity
 
-        (InEntity:entity).FindEntitiesWithTag<native><epic_internal>(Tag:tag)<transacts>:entity_query_iterator_interface
+        (InEntity:entity).FindEntitiesWithTag<native><epic_internal>(Tag:tag)<transacts>:[]entity
 
-        (InEntity:entity).FindParentComponents<native><epic_internal>(ComponentType:subtype(component))<transacts>:component_query_iterator_interface
+        (InEntity:entity).FindParentComponents<native><epic_internal>(ComponentType:subtype(component))<transacts>:[]ComponentType
 
-        (InEntity:entity).FindParentEntities<native><epic_internal>(EntityType:subtype(entity))<transacts>:entity_query_iterator_interface
+        (InEntity:entity).FindParentEntities<native><epic_internal>(EntityType:subtype(entity))<transacts>:[]EntityType
 
-        (InEntity:entity).FindParentEntitiesInside<native><epic_internal>(Shape:convex_hull3)<transacts>:entity_query_iterator_interface
+        (InEntity:entity).FindParentEntitiesInside<native><epic_internal>(Shape:convex_hull3)<transacts>:[]entity
 
-        (InEntity:entity).FindParentEntitiesOriginInside<native><epic_internal>(Shape:convex_hull3)<transacts>:entity_query_iterator_interface
+        (InEntity:entity).FindParentEntitiesOriginInside<native><epic_internal>(Shape:convex_hull3)<transacts>:[]entity
 
-        (InEntity:entity).FindParentEntitiesOverlapping<native><epic_internal>(Shape:convex_hull3)<transacts>:entity_query_iterator_interface
+        (InEntity:entity).FindParentEntitiesOverlapping<native><epic_internal>(Shape:convex_hull3)<transacts>:[]entity
 
-        (InEntity:entity).FindParentEntitiesWithComponent<native><epic_internal>(ComponentType:subtype(component))<transacts>:entity_query_iterator_interface
+        (InEntity:entity).FindParentEntitiesWithComponent<native><epic_internal>(ComponentType:subtype(component))<transacts>:[]entity
 
-        (InEntity:entity).FindParentEntitiesWithTag<native><epic_internal>(Tag:tag)<transacts>:entity_query_iterator_interface
+        (InEntity:entity).FindParentEntitiesWithTag<native><epic_internal>(Tag:tag)<transacts>:[]entity
 
         using {/UnrealEngine.com/EpicGamesRestricted/Network}
         using {/UnrealEngine.com/Temporary/UI}
@@ -666,7 +696,6 @@ Temporary<public> := module:
 
         using {/UnrealEngine.com/Temporary/SpatialMath}
         using {/Verse.org/Simulation/Tags}
-        using {/Verse.org/Simulation}
         # Axis aligned box volume
         axis_aligned_box3<native><epic_internal> := class<final><concrete>(convex_hull3):
             Center<native><public>:vector3 = external {}
@@ -698,6 +727,13 @@ Temporary<public> := module:
 
             # Set the field of view of the camera in degrees
             SetFieldOfView<public>(InFieldOfView:float):void = external {}
+
+        collision_channel_response<native><epic_internal> := enum:
+            Block
+
+            Ignore
+
+            Overlap
 
         collision_component<native><epic_internal> := class<final>(component, enableable):
             BeginOverlap<native><final><public>:listenable(overlap_result) = external {}
@@ -771,6 +807,15 @@ Temporary<public> := module:
 
             DamagedEvent<native><public>:listenable(float) = external {}
 
+        directional_light_component<native><public> := class<final>(light_component):
+            GetShadowOpacity<native><protected>()<transacts>:type {_X:float where 0.000000 <= _X, _X <= 1.000000}
+
+            SetShadowOpacity<native><protected>(InShadowOpacity:type {_X:float where 0.000000 <= _X, _X <= 1.000000})<transacts>:void
+
+            @replicated("RepNotify")
+            # Control the amount of shadow occlusion. A value of 0 means no occlusion, thus no shadow.
+            var ShadowOpacity<public>:type {_X:float where 0.000000 <= _X, _X <= 1.000000} = external {}
+
         entity<native><epic_internal> := class<concrete><unique><transacts>(base_entity, disposable):
             AttachComponents<native><final><public>(Components:[]component):void
 
@@ -787,16 +832,6 @@ Temporary<public> := module:
             IsDisposed<native><final><public>()<decides>:void
 
             UnsetParent<native><final><public>():void
-
-        # Module import path: /UnrealEngine.com/Temporary/SceneGraph/entity_initializer
-        entity_initializer<epic_internal> := module:
-            # Tells that specified component type need to be initialized before
-            InitializeDependency<native><public>(OwnerEntity:entity, ComponentType:subtype(component), Mode:mode)<transacts><decides>:ComponentType
-
-            mode<native><public> := enum:
-                get
-
-                get_or_create
 
         entity_prefab<native><epic_internal> := class<computes>(asset):
 
@@ -828,6 +863,110 @@ Temporary<public> := module:
             ThisComponent<native><public>:?physics_component
 
             ThisEntity<native><public>:?entity
+
+        using {/Verse.org/Simulation}
+        # Used to handle general interaction.
+        interact_component<native><epic_internal> := class(component, enableable):
+            # The text to display to the user. Used only during initialization of the component and not modified by SetText.
+            DefaultInteractText<localizes><native><public>:message = external {}
+
+            # Disable this object.
+            Disable<native><override>():void
+
+            # Enable this object.
+            Enable<native><override>():void
+
+            # Gets the interact text.
+            GetInteractText<native><public>():string
+
+            InteractFinishedEvent<native><public>:listenable(agent) = external {}
+
+            # Internal epic method to know if this component is allowed on client
+            IsAllowedOnClient<override>():logic = external {}
+
+            # Succeeds if the component is enabled, fails if it’s disabled.
+            IsEnabled<native><override>()<transacts><decides>:void
+
+            # Sets the interact text.
+            SetInteractText<native><public>(InText:message):void
+
+            SuccessfullyInteract<native><public>():void
+
+            @editable
+            var InteractDistance<native><public>:float = external {}
+
+            @editable
+            var InteractTime<native><public>:float = external {}
+
+            @editable
+            var TimesCanTrigger<native><public>:float = external {}
+
+        @hide_in_editor
+        light_component<native><epic_internal> := class(component):
+            GetAffectGlobalIllumination<native><protected>()<transacts>:logic
+
+            GetAffectReflection<native><protected>()<transacts>:logic
+
+            GetCastDeepShadows<native><protected>()<transacts>:logic
+
+            GetCastShadows<native><protected>()<transacts>:logic
+
+            GetCastVolumetricShadow<native><protected>()<transacts>:logic
+
+            GetColor<native><public>()<transacts>:color
+
+            GetIntensity<native><protected>()<transacts>:float
+
+            # Internal epic method to know if this component is allowed on client
+            IsAllowedOnClient<override>():logic = external {}
+
+            # The component is being initialized, called when it is attach to an entity
+            OnInitialized<native><override>():void
+
+            # The component is being uninitialized, called when it is about to be detached from an entity
+            OnUninitializing<native><override>():void
+
+            SetAffectGlobalIllumination<native><protected>(InAffectGlobalIllumination:logic)<transacts>:void
+
+            SetAffectReflection<native><protected>(InAffectReflection:logic)<transacts>:void
+
+            SetCastDeepShadows<native><protected>(InCastDeepShadows:logic)<transacts>:void
+
+            SetCastShadows<native><protected>(InCastShadows:logic)<transacts>:void
+
+            SetCastVolumetricShadow<native><protected>(InCastVolumetricShadow:logic)<transacts>:void
+
+            SetColor<native><public>(InColor:color)<transacts>:void
+
+            SetIntensity<native><protected>(InIntensity:float)<transacts>:void
+
+            @replicated("RepNotify")
+            # Whether the light affects global illumination, when ray-traced global illumination is enabled.
+            var AffectGlobalIllumination<public>:logic = external {}
+
+            @replicated("RepNotify")
+            # Whether the light affects objects in reflections, when ray-traced reflection is enabled.
+            var AffectReflection<public>:logic = external {}
+
+            @replicated("RepNotify")
+            # Whether the light should cast high quality such that hair-strands are self-shadowing. When this option is enabled, there is an extra GPU cost for this light.
+            var CastDeepShadows<public>:logic = external {}
+
+            @replicated("RepNotify")
+            # Whether the light should cast any shadows. Whether the light should cast shadows from static objects.
+            var CastShadows<public>:logic = external {}
+
+            @replicated("RepNotify")
+            # Whether the light shadows volumetric fog.  Disabling this can save GPU time.
+            var CastVolumetricShadow<public>:logic = external {}
+
+            @replicated("RepNotify")
+            # Set the filter color of the light. Note that this can change the light’s effective intensity.
+            var Color<protected>:color = external {}
+
+            @replicated("RepNotify")
+            # Set the total energy the light emits in candela. The renderer clamps between 0.0 and 20.0.
+            var Intensity<public>:float = external {}
 
         @hide_in_editor
         light_entity_component<native><epic_internal> := class(component):
@@ -904,17 +1043,18 @@ Temporary<public> := module:
             # The component is being uninitialized, called when it is about to be detached from an entity
             OnUninitializing<native><override>():void
 
-            SetBeamEnd<native><epic_internal>(BeamEnd:vector3):void
+            SetBeamEnd<native><epic_internal>(InBeamEnd:vector3):void
 
-            SetBeamEndTangent<native><epic_internal>(BeamEndTangent:vector3):void
+            SetBeamEndTangent<native><epic_internal>(InBeamEndTangent:vector3):void
 
-            SetBeamStart<native><epic_internal>(BeamStart:vector3):void
+            SetBeamStart<native><epic_internal>(InBeamStart:vector3):void
 
-            SetBeamStartTangent<native><epic_internal>(BeamStartTangent:vector3):void
+            SetBeamStartTangent<native><epic_internal>(InBeamStartTangent:vector3):void
 
-            SetBeamWidth<native><epic_internal>(BeamWidth:float):void
+            SetBeamWidth<native><epic_internal>(InBeamWidth:float):void
 
             @replicated("RepNotify")
+            @editable
             # The path to the particle system asset
             var ParticleSystem<native><public>:particle_system = external {}
 
@@ -946,8 +1086,40 @@ Temporary<public> := module:
             # The component is being uninitialized, called when it is about to be detached from an entity
             OnUninitializing<native><override>():void
 
+            @editable
+            VisibilityChannelResponseOverride<native><epic_internal>:?collision_channel_response = external {}
+
         @hide_in_editor
         playspace_association_component<native><epic_internal> := class<epic_internal>(component):
+
+        point_light_component<native><public> := class<final>(point_light_component_base):
+
+        @hide_in_editor
+        point_light_component_base<native><epic_internal> := class(light_component):
+            GetAttenuationRadius<native><protected>()<transacts>:float
+
+            GetSourceLength<native><protected>()<transacts>:float
+
+            GetSourceRadius<native><protected>()<transacts>:float
+
+            SetAttenuationRadius<native><protected>(InAttenuationRadius:float)<transacts>:void
+
+            SetSourceLength<native><protected>(InSourceLength:float)<transacts>:void
+
+            SetSourceRadius<native><protected>(InSourceRadius:float)<transacts>:void
+
+            @replicated("RepNotify")
+            # The bounds of the light’s visible influence. This clamping of the light's influence is not physically correct but very important for performance, larger lights cost more.
+            # Clamped between 8.0 and 16384.0.
+            var AttenuationRadius<public>:float = external {}
+
+            @replicated("RepNotify")
+            # The length of the light source shape. Note that light source shapes which intersect shadow casting geometry can cause shadowing artifacts.
+            var SourceLength<public>:float = external {}
+
+            @replicated("RepNotify")
+            # The radius of the light source shape. Note that light source shapes which intersect shadow casting geometry can cause shadowing artifacts.
+            var SourceRadius<public>:float = external {}
 
         point_light_entity_component<native><public> := class<final>(light_entity_component):
             GetAttenuationRadius<public>():float = external {}
@@ -969,6 +1141,50 @@ Temporary<public> := module:
             SetSourceLength<public>(NewLength:float):void = external {}
 
             SetSourceRadius<public>(NewRadius:float):void = external {}
+
+        rect_light_component<native><public> := class<final>(light_component):
+            GetAttenuationRadius<native><protected>()<transacts>:float
+
+            GetBarnDoorAngle<native><protected>()<transacts>:float
+
+            GetBarnDoorLength<native><protected>()<transacts>:float
+
+            GetSourceHeight<native><protected>()<transacts>:float
+
+            GetSourceWidth<native><protected>()<transacts>:float
+
+            SetAttenuationRadius<native><protected>(InAttenuationRadius:float)<transacts>:void
+
+            SetBarnDoorAngle<native><protected>(InBarnDoorAngle:float)<transacts>:void
+
+            SetBarnDoorLength<native><protected>(InBarnDoorLength:float)<transacts>:void
+
+            SetSourceHeight<native><protected>(InSourceHeight:float)<transacts>:void
+
+            SetSourceWidth<native><protected>(InSourceWidth:float)<transacts>:void
+
+            @replicated("RepNotify")
+            # The bounds of the light’s visible influence. This clamping of the light's influence is not physically correct but very important for performance, larger lights cost more.
+            # This clamping of the light's influence is not physically correct but very important for performance, larger lights cost more. Clamped between 8.0 and 16384.0.
+            var AttenuationRadius<public>:float = external {}
+
+            @replicated("RepNotify")
+            # The angle of the barn door in degrees attached to the light source rect. Clamped between 0.0 and 90.0 degrees.
+            var BarnDoorAngle<public>:float = external {}
+
+            @replicated("RepNotify")
+            # The length of the barn door attached to the light source rect. Clamped to a minimum of 0.0 cm.
+            var BarnDoorLength<public>:float = external {}
+
+            @replicated("RepNotify")
+            # The height of the light source rect. Note that light source's shapes which intersect shadow casting geometry can cause shadowing artifacts.
+            # Clamped between 0.0 and 1000.0 cm.
+            var SourceHeight<public>:float = external {}
+
+            @replicated("RepNotify")
+            # The width of the light source rect. Note that light source shapes which intersect shadow casting geometry can cause shadowing artifacts.
+            # Clamped between 0.0 and 1000.0 cm.
+            var SourceWidth<public>:float = external {}
 
         replication_component<native><epic_internal> := class(component):
             # Internal epic method to know if this component is allowed on client
@@ -1007,6 +1223,7 @@ Temporary<public> := module:
             # Play the sound asset
             Stop<native><public>():void
 
+            @editable
             @replicated("RepNotify")
             # The path to the sound asset
             var Sound<native><public>:sound = external {}
@@ -1017,6 +1234,23 @@ Temporary<public> := module:
             DebugDraw<native><override>()<computes><reads>:void
 
             Radius<native><public>:float = external {}
+
+        spot_light_component<native><public> := class<final>(point_light_component_base):
+            GetInnerConeAngle<native><protected>()<transacts>:float
+
+            GetOuterConeAngle<native><protected>()<transacts>:float
+
+            SetInnerConeAngle<native><protected>(InInnerConeAngle:float)<transacts>:void
+
+            SetOuterConeAngle<native><protected>(InOuterConeAngle:float)<transacts>:void
+
+            @replicated("RepNotify")
+            # The light’s inner cone shaped angle in degrees. Clamped between 1.0 and 80.00.
+            var InnerConeAngle<public>:float = external {}
+
+            @replicated("RepNotify")
+            # The outer cone shaped angle in degrees. Clamped between 1.0 and 80.00.
+            var OuterConeAngle<public>:float = external {}
 
         spot_light_entity_component<native><public> := class<final>(light_entity_component):
             GetAttenuationRadius<public>():float = external {}
@@ -1070,6 +1304,7 @@ Temporary<public> := module:
             # The path to the material asset of a static mesh
             var Material<native><public>:?material = external {}
 
+            @editable
             @replicated("RepNotify")
             # The path to the static mesh asset
             var Mesh<native><public>:mesh = external {}
@@ -2447,7 +2682,7 @@ VGameplayRst<public> := module:
 
     # Module import path: /UnrealEngine.com/VGameplayRst/Lights
     Lights<public> := module:
-        point_light_component<native><public> := class<final>(vk_component):
+        vk_point_light_component<native><public> := class<final>(vk_component):
             GetAttenuationRadius<native><public>():float
 
             GetColor<native><epic_internal>():color
@@ -2468,7 +2703,7 @@ VGameplayRst<public> := module:
 
             SetSourceRadius<native><public>(NewRadius:float):void
 
-        spot_light_component<native><public> := class<final>(vk_component):
+        vk_spot_light_component<native><public> := class<final>(vk_component):
             GetAttenuationRadius<native><public>():float
 
             GetColor<native><epic_internal>():color
