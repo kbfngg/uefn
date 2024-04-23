@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.20-CL-32716692
+# Generated from build: ++Fortnite+Release-29.30-CL-32982357
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -442,6 +442,8 @@ Devices<public> := module:
     GetCreativeObjectsWithTags<native><public>(SearchCriteria:tag_search_criteria)<transacts>:[]creative_object_interface
 
     Patchwork<public> := module:
+        cable_splitter_device<public> := class<concrete><final>(patchwork_device):
+
         # Apply a distortion effect to Patchwork audio inputs.
         distortion_effect_device<public> := class<concrete><final>(patchwork_device):
 
@@ -1743,6 +1745,9 @@ Devices<public> := module:
     # Used to update the camera’s current viewpoint and rotation based on a fixed point.
     gameplay_camera_fixed_point_device<public> := class<concrete><final>(gameplay_camera_device):
 
+    # Used to update the camera's viewpoint to follow the target and be rotated manually.
+    gameplay_camera_orbit_device<public> := class<concrete><final>(gameplay_camera_device):
+
     # Used to update the gameplay controls scheme based on current control mode.
     gameplay_controls_device<public> := class<abstract><epic_internal>(creative_device_base):
         # Adds the gameplay control to the `Player`’s gameplay controls stack and pushes it to be the active control.
@@ -2470,6 +2475,7 @@ Devices<public> := module:
         # Sends the marked `agent`.
         SecondItemValueReachedEvent<public>:listenable(agent) = external {}
 
+    using {/Verse.org/Simulation}
     # Used to relay `agent` statistics to other devices and `agent`s. Can transmit statistics such as elimination count, eliminated count, or scores when certain conditions are met. Can also project a hologram of the `agent` and display text that can be altered in various positions and curvatures.
     player_reference_device<public> := class<concrete><final>(creative_device_base):
         # Ends the round/game.
@@ -2516,7 +2522,6 @@ Devices<public> := module:
         # Sends the `agent` stored in the device.
         TrackedStatChangedEvent<public>:listenable(agent) = external {}
 
-    using {/Verse.org/Simulation}
     # Used to spawn an `agent` on an island. Use multiple `player_spawner_device`s to spawn multiple `agent`s.
     player_spawner_device<public> := class<concrete><final>(creative_device_base):
         # Disables this device.
