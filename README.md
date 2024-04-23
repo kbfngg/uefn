@@ -65,7 +65,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details open>
 <summary>Verse Modules Diffs</summary>
 
-- `29.20` - `29.30`: [`public`]() | [`internal`]()
+- `29.20` - `29.30`: [`public`](https://github.com/kbfngg/uefn/commit/8526a3cee491e0c0ab15670ebc75cade0e5ad464) | [`internal`](https://github.com/kbfngg/uefn/commit/191bc36dcd5498f993462be7def84a2369bfd242)
 - `29.10` - `29.20`: [`public`](https://github.com/kbfngg/uefn/commit/8d47a5e9c8923c22d3ed914f09503d158d18e598) | [`internal`](https://github.com/kbfngg/uefn/commit/1fcf65ca2d13ad238bf1b4cf64fb6e36e735ece4)
 - `29.01` - `29.10`: [`public`](https://github.com/kbfngg/uefn/commit/61ab54f9556cbeea90802a097938f32b663d3dd2) | [`internal`](https://github.com/kbfngg/uefn/commit/626eb5daf7db662feb87176539a0ebc0824dae4c)
 - `29.00` - `29.01`: [`public`](https://github.com/kbfngg/uefn/commit/80cd71126239c000e6325e5eced21175b4b8df78) | [`internal`](https://github.com/kbfngg/uefn/commit/248cffda15774ed207584af553fea0668bcf0266)
@@ -96,7 +96,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>Verse Snapshots Diffs</summary>
 
-- [`29.20` - `29.30`]()
+- [`29.20` - `29.30`](https://github.com/kbfngg/uefn/commit/a0a18b97531b67cb11019c0442e92722b0dc1ce4)
 - [`29.10` - `29.20`](https://github.com/kbfngg/uefn/commit/9131d329deab4fdb040f0fbbe0501f8418a37bce)
 - [`29.01` - `29.10`](https://github.com/kbfngg/uefn/commit/b1fb447383d052dde1847b5123a6760cd3bb5e36)
 - `29.00` - `29.01` (nothing new)
