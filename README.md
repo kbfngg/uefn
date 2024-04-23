@@ -125,7 +125,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>Regular</summary>
 
-- [`29.20` - `29.30`]()
+- [`29.20` - `29.30`](https://github.com/kbfngg/uefn/commit/c7bdfb4847b03d0fa860d3e45e59f50effe1635e)
 - [`29.10` - `29.20`](https://github.com/kbfngg/uefn/commit/4c531afd25baeed338937c4782a6caab6e7c62ea)
 - [`29.01` - `29.10`](https://github.com/kbfngg/uefn/commit/4d0d3b4672e77351c4d5b973c15ad317650a0c73)
 - [`29.00` - `29.01`](https://github.com/kbfngg/uefn/commit/eb4a4ca10cd3c93fd5a5a89c6f104c8b8a69b3e1)
@@ -156,7 +156,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>DelMar</summary>
 
-- [`29.20` - `29.30`]()
+- [`29.20` - `29.30`](https://github.com/kbfngg/uefn/commit/70aa5a5656e5359e7c3d93dd42d59ebcc707bb20)
 - [`29.10` - `29.20`](https://github.com/kbfngg/uefn/commit/30a617bb50f825a212380fb9602d9d2b099caacf)
 - [`29.01` - `29.10`](https://github.com/kbfngg/uefn/commit/5390899270e7362555d4a175065006a4867d978f)
   
@@ -165,7 +165,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>LimeGFS</summary>
 
-- [`29.20` - `29.30`]()
+- [`29.20` - `29.30`](https://github.com/kbfngg/uefn/commit/90708011f03d6066ef7d3af30815920500358cc7)
 - [`29.10` - `29.20`](https://github.com/kbfngg/uefn/commit/0da69d7cd50bad6c4b17a611dc0f93a05ac1eea0)
 - [`29.01` - `29.10`](https://github.com/kbfngg/uefn/commit/4a561005fb23f300b4ea82d933b9f2288ad09dfd)
   
@@ -174,7 +174,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>PartnerLimeGFS</summary>
 
-- [`29.20` - `29.30`]()
+- [`29.20` - `29.30`](https://github.com/kbfngg/uefn/commit/841b596af5296c6e057e106077db9f632e1fd9d5)
 - [`29.10` - `29.20`](https://github.com/kbfngg/uefn/commit/b50cc508cbe196b3ef34b398ecac247b9883a4da)
 - [`29.01` - `29.10`](https://github.com/kbfngg/uefn/commit/849a1af97724052a3925b8502cdb8ab5b62a4e4f)
   
@@ -184,7 +184,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>Partner vs. UGC Diffs</summary>
 
-- [`29.30`]()
+- Discontinued
 - [`29.20`](https://github.com/kbfngg/uefn/commit/ed6c721796fd8fc8600c8ad93dc1bb88181ea5a2)
 - [`29.10`](https://github.com/kbfngg/uefn/commit/2dbfbbd5ea5d4b80ddbb622c4e402e18f8c8ea65)
 - [`29.01`](https://github.com/kbfngg/uefn/commit/8ea45ed48cebc8af7391fc3e4792568e17f6fd69)
