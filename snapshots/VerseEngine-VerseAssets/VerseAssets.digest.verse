@@ -51,16 +51,16 @@ Assets<public> := module:
 
         GetAsset<override>():material_asset = external {}
 
-    particle_system<native><public> := class<computes><final><epic_internal>(client_asset):
+    particle_system<native><public> := class<computes><concrete><final><epic_internal>(client_asset):
 
 
     skeletal_mesh<native><epic_internal> := class<computes><final><epic_internal>(asset):
 
 
-    mesh<native><public> := class<computes><final><epic_internal>(asset):
+    mesh<native><public> := class<computes><concrete><final><epic_internal>(asset):
 
 
-    sound<native><epic_internal> := class<computes><final><epic_internal>(client_asset):
+    sound<native><epic_internal> := class<computes><concrete><final><epic_internal>(client_asset):
 
 
     font<native><epic_internal> := class<computes><final><epic_internal>(client_asset):

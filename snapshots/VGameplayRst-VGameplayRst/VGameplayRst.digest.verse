@@ -200,7 +200,7 @@ VGameplayRst<public> := module:
 
     # Module import path: /UnrealEngine.com/VGameplayRst/Lights
     Lights<public> := module:
-        point_light_component<native><public> := class<final>(vk_component):
+        vk_point_light_component<native><public> := class<final>(vk_component):
             SetIntensity<native><public>(NewIntensity:float):void
 
             SetColor<native><epic_internal>(NewColor:color):void
@@ -221,7 +221,7 @@ VGameplayRst<public> := module:
 
             GetAttenuationRadius<native><public>():float
 
-        spot_light_component<native><public> := class<final>(vk_component):
+        vk_spot_light_component<native><public> := class<final>(vk_component):
             SetIntensity<native><public>(NewIntensity:float):void
 
             SetColor<native><epic_internal>(NewColor:color):void

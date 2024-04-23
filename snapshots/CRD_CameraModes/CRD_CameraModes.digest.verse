@@ -1,4 +1,8 @@
 using {/Verse.org/Simulation}
+# Used to update the camera's viewpoint to follow the target and be rotated manually.
+gameplay_camera_orbit_device<public> := class<concrete><final>(gameplay_camera_device):
+
+
 # Used to update the camera’s current viewpoint and rotation based on a fixed angle.
 gameplay_camera_fixed_angle_device<public> := class<concrete><final>(gameplay_camera_device):
 

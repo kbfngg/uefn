@@ -97,32 +97,32 @@ tag_component<native><epic_internal> := class<final>(component):
     # Remove a single tag from this component.
     RemoveTag<native><epic_internal>(TagToRemove:tag)<transacts>:logic
 
-(InEntity:entity).FindEntities<native><epic_internal>(EntityType:subtype(entity))<transacts>:entity_query_iterator_interface
+(InEntity:entity).FindEntities<native><epic_internal>(EntityType:subtype(entity))<transacts>:[]EntityType
 
-(InEntity:entity).FindEntitiesWithComponent<native><epic_internal>(ComponentType:subtype(component))<transacts>:entity_query_iterator_interface
+(InEntity:entity).FindEntitiesWithComponent<native><epic_internal>(ComponentType:subtype(component))<transacts>:[]entity
 
-(InEntity:entity).FindEntitiesWithTag<native><epic_internal>(Tag:tag)<transacts>:entity_query_iterator_interface
+(InEntity:entity).FindEntitiesWithTag<native><epic_internal>(Tag:tag)<transacts>:[]entity
 
-(InEntity:entity).FindComponents<native><epic_internal>(ComponentType:subtype(component))<transacts>:component_query_iterator_interface
+(InEntity:entity).FindComponents<native><epic_internal>(ComponentType:subtype(component))<transacts>:[]ComponentType
 
-(InEntity:entity).FindEntitiesInside<native><epic_internal>(Shape:convex_hull3)<transacts>:entity_query_iterator_interface
+(InEntity:entity).FindEntitiesInside<native><epic_internal>(Shape:convex_hull3)<transacts>:[]entity
 
-(InEntity:entity).FindEntitiesOverlapping<native><epic_internal>(Shape:convex_hull3)<transacts>:entity_query_iterator_interface
+(InEntity:entity).FindEntitiesOverlapping<native><epic_internal>(Shape:convex_hull3)<transacts>:[]entity
 
-(InEntity:entity).FindEntitiesOriginInside<native><epic_internal>(Shape:convex_hull3)<transacts>:entity_query_iterator_interface
+(InEntity:entity).FindEntitiesOriginInside<native><epic_internal>(Shape:convex_hull3)<transacts>:[]entity
 
-(InEntity:entity).FindParentEntities<native><epic_internal>(EntityType:subtype(entity))<transacts>:entity_query_iterator_interface
+(InEntity:entity).FindParentEntities<native><epic_internal>(EntityType:subtype(entity))<transacts>:[]EntityType
 
-(InEntity:entity).FindParentEntitiesWithComponent<native><epic_internal>(ComponentType:subtype(component))<transacts>:entity_query_iterator_interface
+(InEntity:entity).FindParentEntitiesWithComponent<native><epic_internal>(ComponentType:subtype(component))<transacts>:[]entity
 
-(InEntity:entity).FindParentEntitiesWithTag<native><epic_internal>(Tag:tag)<transacts>:entity_query_iterator_interface
+(InEntity:entity).FindParentEntitiesWithTag<native><epic_internal>(Tag:tag)<transacts>:[]entity
 
-(InEntity:entity).FindParentComponents<native><epic_internal>(ComponentType:subtype(component))<transacts>:component_query_iterator_interface
+(InEntity:entity).FindParentComponents<native><epic_internal>(ComponentType:subtype(component))<transacts>:[]ComponentType
 
-(InEntity:entity).FindParentEntitiesInside<native><epic_internal>(Shape:convex_hull3)<transacts>:entity_query_iterator_interface
+(InEntity:entity).FindParentEntitiesInside<native><epic_internal>(Shape:convex_hull3)<transacts>:[]entity
 
-(InEntity:entity).FindParentEntitiesOverlapping<native><epic_internal>(Shape:convex_hull3)<transacts>:entity_query_iterator_interface
+(InEntity:entity).FindParentEntitiesOverlapping<native><epic_internal>(Shape:convex_hull3)<transacts>:[]entity
 
-(InEntity:entity).FindParentEntitiesOriginInside<native><epic_internal>(Shape:convex_hull3)<transacts>:entity_query_iterator_interface
+(InEntity:entity).FindParentEntitiesOriginInside<native><epic_internal>(Shape:convex_hull3)<transacts>:[]entity
 
 volume3<native><epic_internal> := class<epic_internal>(shape3):

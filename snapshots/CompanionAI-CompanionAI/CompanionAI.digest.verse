@@ -1,12 +1,8 @@
 using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Fortnite.com/AI/CompanionAI/PingCommand}
-using {/Verse.org/VerseEngine/Component}
-using {/Fortnite.com/AI/VerseCreature}
+using {/Fortnite.com/Characters}
 using {/Verse.org/Simulation}
 using {/UnrealEngine.com/Temporary/SceneGraph}
-using {/Fortnite.com/AI/VerseNPC}
-using {/Fortnite.com/Characters}
-using {/Fortnite.com/AI/VerseAIBase}
 # Module import path: /Fortnite.com/AI/CompanionAI
 CompanionAI<public> := module:
     companion_ai<epic_internal> := class(npc_behavior):
@@ -15,28 +11,12 @@ CompanionAI<public> := module:
     default_npc_behavior<epic_internal> := class(npc_behavior):
         OnBegin<override>()<suspends>:void = external {}
 
-    fort_br_character_actions_interface<native><epic_internal> := interface(fort_character_actions_interface):
-        # Run the NPC default behavior
-        RunDefaultBehavior<epic_internal>()<suspends>:action_result
-
-        IsFollowingBehaviorEnabled<public>()<transacts>:logic
-
-    # Get the current fort_br_character_actions_interface for the specified character
-    (InCharacter:fort_character).GetFortBRCharacterActions<native><epic_internal>()<transacts><decides>:fort_br_character_actions_interface
-
-    fort_br_creature_actions_interface<native><epic_internal> := interface(fort_creature_actions_interface):
-        # Run the creature default behavior
-        RunDefaultBehavior<epic_internal>()<suspends>:action_result
-
-    # Get the current fort_br_creature_actions_interface for the specified character
-    (InCharacter:fort_character).GetFortBRCreatureActions<native><epic_internal>()<transacts><decides>:fort_br_creature_actions_interface
-
     # Fortnite NPC AI Management
-    fort_guard_actions_component<native><epic_internal> := class(guard_actions_component, fort_br_character_actions_interface):
+    fort_guard_actions_component<native><epic_internal> := class(guard_actions_component):
         # Run the NPC default behavior
-        RunDefaultBehavior<native><override>()<suspends>:action_result
+        RunDefaultBehavior<native><epic_internal>()<suspends>:action_result
 
-        IsFollowingBehaviorEnabled<native><override>()<transacts>:logic
+        IsFollowingBehaviorEnabled<native><epic_internal>()<transacts>:logic
 
     (InEntity:entity).GetAgent<native><epic_internal>()<transacts>:?agent
 
@@ -47,54 +27,30 @@ CompanionAI<public> := module:
     (Character:fort_character).GetNPCLeashRadius<native><epic_internal>()<transacts>:tuple(float, float)
 
     # Fortnite Creature AI Management
-    fort_npc_actions_component<native><epic_internal> := class(npc_actions_component, fort_br_creature_actions_interface):
+    fort_npc_actions_component<native><epic_internal> := class(npc_actions_component):
         # Run the Creature default behavior
-        RunDefaultBehavior<native><override>()<suspends>:action_result
+        RunDefaultBehavior<native><epic_internal>()<suspends>:action_result
 
-    fort_ping_interface<native><epic_internal> := interface<epic_internal>:
-        AreNPCCommandsEnabled<epic_internal>()<transacts>:logic
+    ping_component<native><epic_internal> := class<epic_internal>(ai_component):
+        AreNPCCommandsEnabled<native><epic_internal>()<transacts>:logic
 
-        CanAcceptPingCommand<epic_internal>()<transacts>:logic
+        CanAcceptPingCommand<native><epic_internal>()<transacts>:logic
 
-        EnableCommandWheel<epic_internal>(Enabled:logic):void
+        EnableCommandWheel<native><epic_internal>(Enabled:logic):void
 
-        GetCurrentNPCCommand<epic_internal>()<transacts><decides>:ping_info
+        GetCurrentNPCCommand<native><epic_internal>()<transacts><decides>:ping_info
 
-        OnNPCCommand<epic_internal>()<suspends>:?ping_info
+        OnNPCCommand<native><epic_internal>()<suspends>:?ping_info
 
-        DeclineNPCCommand<epic_internal>(PlayUnableToPerformAction:logic):void
+        DeclineNPCCommand<native><epic_internal>(PlayUnableToPerformAction:logic):void
 
-        IsAttackCommandEnabled<epic_internal>()<transacts>:logic
+        IsAttackCommandEnabled<native><epic_internal>()<transacts>:logic
 
-        ConvertPingToAttack<epic_internal>(AttackTarget:agent):void
+        ConvertPingToAttack<native><epic_internal>(AttackTarget:agent):void
 
-        ConvertedEvent<epic_internal>():subscribable(tuple())
+        ConvertedEvent<epic_internal>():subscribable(tuple()) = external {}
 
-        UnconvertedEvent<epic_internal>():subscribable(tuple())
-
-    # Get the current fort_ping_interface for the specified character
-    (InCharacter:fort_character).GetFortPing<native><epic_internal>()<transacts><decides>:fort_ping_interface
-
-    ping_component<native><epic_internal> := class(vk_component, fort_ping_interface):
-        AreNPCCommandsEnabled<native><override>()<transacts>:logic
-
-        CanAcceptPingCommand<native><override>()<transacts>:logic
-
-        EnableCommandWheel<native><override>(Enabled:logic):void
-
-        GetCurrentNPCCommand<native><override>()<transacts><decides>:ping_info
-
-        OnNPCCommand<native><override>()<suspends>:?ping_info
-
-        DeclineNPCCommand<native><override>(PlayUnableToPerformAction:logic):void
-
-        IsAttackCommandEnabled<native><override>()<transacts>:logic
-
-        ConvertPingToAttack<native><override>(AttackTarget:agent):void
-
-        ConvertedEvent<override>():subscribable(tuple()) = external {}
-
-        UnconvertedEvent<override>():subscribable(tuple()) = external {}
+        UnconvertedEvent<epic_internal>():subscribable(tuple()) = external {}
 
     # Module import path: /Fortnite.com/AI/CompanionAI/PingCommand
     PingCommand<epic_internal> := module:

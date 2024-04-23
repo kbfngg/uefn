@@ -69,15 +69,6 @@ entity<native><epic_internal> := class<concrete><unique><transacts>(base_entity,
 entity_prefab<native><epic_internal> := class<computes>(asset):
 
 
-# Module import path: /UnrealEngine.com/Temporary/SceneGraph/entity_initializer
-entity_initializer<epic_internal> := module:
-    mode<native><public> := enum:
-        get
-        get_or_create
-
-    # Tells that specified component type need to be initialized before
-    InitializeDependency<native><public>(OwnerEntity:entity, ComponentType:subtype(component), Mode:mode)<transacts><decides>:ComponentType
-
 replication_component<native><epic_internal> := class(component):
     # The component is being initialized, called when it is attach to an entity
     OnAddedToScene<native><override>():void
