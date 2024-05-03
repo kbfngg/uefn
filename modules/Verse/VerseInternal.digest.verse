@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.30-CL-32982357
+# Generated from build: ++Fortnite+Release-29.40-CL-33291686
 #################################################
 
 using {/Verse.org/ParameterCollections}
@@ -964,6 +964,8 @@ Simulation<public> := module:
     editable<public> := class(attribute):
         Categories<public>:[]message = external {}
 
+        EditInline<epic_internal>:logic = external {}
+
         ShortToolTip<epic_internal>:message = external {}
 
         ShowThumbnail<epic_internal>:logic = external {}
@@ -978,6 +980,13 @@ Simulation<public> := module:
         AllowReordering<public>:logic = external {}
 
     editable_empty_message<localizes><epic_internal>:message = external {}
+
+    @attribscope_class
+    @attribscope_struct
+    @attribscope_data
+    @customattribhandler
+    editable_non_concrete<epic_internal> := class(attribute):
+        EditInline<epic_internal>:logic = external {}
 
     @attribscope_class
     @attribscope_struct

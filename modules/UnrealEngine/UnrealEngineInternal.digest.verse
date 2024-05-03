@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.30-CL-32982357
+# Generated from build: ++Fortnite+Release-29.40-CL-33291686
 #################################################
 
 AINavigation<public> := module:
@@ -212,6 +212,7 @@ Engine<public> := module:
             SetVelocity<native><public>(Velocity:vector3):void
 
 EntityFramework<public> := module:
+    using {/Fortnite.com/Devices}
     using {/UnrealEngine.com/Temporary/SceneGraph}
     using {/Verse.org/Native}
     # Module import path: /UnrealEngine.com/EntityFramework/ActorBridgeComponent
@@ -219,6 +220,8 @@ EntityFramework<public> := module:
         actor_bridge_component<native><epic_internal> := class(component):
             # Internal epic method to know if this component is allowed on client
             IsAllowedOnClient<override>():logic = external {}
+
+            RequestRootActorAsDevice<public>(Type:subtype(creative_device_base))<suspends>:?Type = external {}
 
         @import_as("/Script/FortniteGame.ULevelSaveRecord")
         level_save_record<native><epic_internal> := class<epic_internal>:
@@ -1015,6 +1018,10 @@ Temporary<public> := module:
         particle_system_component<native><epic_internal> := class<final>(component, enableable):
             # Activate the particle system
             Activate<native><public>():void
+
+            @editable
+            # Whether the particle system should start activated
+            AutoActivate<native><public>:logic = external {}
 
             # Deactivate the particle system
             Deactivate<native><public>():void
