@@ -6,9 +6,11 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 ### Modules
 
-- [Verse](https://github.com/kbfngg/uefn/blob/main/modules/Verse/Verse.digest.verse)
-- [UnrealEngine](https://github.com/kbfngg/uefn/blob/main/modules/UnrealEngine/UnrealEngine.digest.verse)
-- [Fortnite](https://github.com/kbfngg/uefn/blob/main/modules/Fortnite/Fortnite.digest.verse)
+| | | |
+| -: | :-: | :-: |
+| Verse.org | [`public`](https://github.com/kbfngg/uefn/blob/main/modules/Verse/Verse.digest.verse) | [`internal`](https://github.com/kbfngg/uefn/blob/main/modules/Verse/VerseInternal.digest.verse) |
+| UnrealEngine.com | [`public`](https://github.com/kbfngg/uefn/blob/main/modules/UnrealEngine/UnrealEngine.digest.verse) | [`internal`](https://github.com/kbfngg/uefn/blob/main/modules/UnrealEngine/UnrealEngineInternal.digest.verse) |
+| Fortnite.com | [`public`](https://github.com/kbfngg/uefn/blob/main/modules/Fortnite/Fortnite.digest.verse) | [`internal`](https://github.com/kbfngg/uefn/blob/main/modules/Fortnite/FortniteInternal.digest.verse) |
 
 ### Manifests
 
