@@ -205,6 +205,10 @@ particle_system_component<native><epic_internal> := class<final>(component, enab
     # Internal epic method to know if this component is allowed on client
     IsEnabled<override>()<transacts><decides>:void = external {}
 
+    @editable
+    # Whether the particle system should start activated
+    AutoActivate<native><public>:logic = external {}
+
     @replicated("RepNotify")
     @editable
     # The path to the particle system asset

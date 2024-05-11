@@ -595,26 +595,3 @@ Devices<public> := module:
 
     # Returns a `string` representation of `move_to_internal_result` objects.
     ToString<epic_internal>(MoveToInternalResult:move_to_internal_result)<computes>:string = external {}
-
-    teleport_to_debug_log<epic_internal> := class(log_channel):
-
-
-    # Results for `TeleportTo` of creative objects and devices.
-    teleport_to_result<native><epic_internal> := enum:
-        # Success.
-        Ok
-        # An unknown error occurred. If this happens frequently, contact Epic support.
-        UnknownError
-        # `NaN` or `Infinity` in the requested destination.
-        InvalidDestination
-        # The object being moved is no longer valid. Example invalid states:
-        #  * The object has been destroyed during gameplay.
-        #  * The object has been destroyed by Verse.
-        #  * The object has the *Register with Structural Grid* option set in UEFN.
-        InvalidObject
-        # The object being moved cannot be scaled.
-        ScaleNotAllowed
-        # The destination would cause the object to be at least partially outside the island's boundaries.
-        DestinationOutOfBounds
-
-    HandleTeleportToResult<epic_internal>(Result:teleport_to_result)<transacts><decides>:void = external {}

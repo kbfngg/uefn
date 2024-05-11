@@ -56,6 +56,15 @@ Simulation<public> := module:
 
         Categories<public>:[]message = external {}
 
+        EditInline<epic_internal>:logic = external {}
+
+    @attribscope_class
+    @attribscope_struct
+    @attribscope_data
+    @customattribhandler
+    editable_non_concrete<epic_internal> := class(attribute):
+        EditInline<epic_internal>:logic = external {}
+
     @attribscope_class
     @attribscope_struct
     @attribscope_data

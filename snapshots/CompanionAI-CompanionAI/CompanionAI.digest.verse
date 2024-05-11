@@ -1,18 +1,20 @@
 using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Fortnite.com/AI/CompanionAI/PingCommand}
 using {/Fortnite.com/Characters}
-using {/Verse.org/Simulation}
 using {/UnrealEngine.com/Temporary/SceneGraph}
+using {/Verse.org/Simulation}
 # Module import path: /Fortnite.com/AI/CompanionAI
 CompanionAI<public> := module:
+    @hide_in_editor
     companion_ai<epic_internal> := class(npc_behavior):
         OnBegin<override>()<suspends>:void = external {}
 
+    @hide_in_editor
     default_npc_behavior<epic_internal> := class(npc_behavior):
-        OnBegin<override>()<suspends>:void = external {}
+
 
     # Fortnite NPC AI Management
-    fort_guard_actions_component<native><epic_internal> := class(guard_actions_component):
+    follower_actions_component<native><epic_internal> := class(fort_guard_actions_component):
         # Run the NPC default behavior
         RunDefaultBehavior<native><epic_internal>()<suspends>:action_result
 
@@ -25,11 +27,6 @@ CompanionAI<public> := module:
     (Character:fort_character).IsBeingDBNOCarried<native><epic_internal>()<transacts><decides>:void
 
     (Character:fort_character).GetNPCLeashRadius<native><epic_internal>()<transacts>:tuple(float, float)
-
-    # Fortnite Creature AI Management
-    fort_npc_actions_component<native><epic_internal> := class(npc_actions_component):
-        # Run the Creature default behavior
-        RunDefaultBehavior<native><epic_internal>()<suspends>:action_result
 
     ping_component<native><epic_internal> := class<epic_internal>(ai_component):
         AreNPCCommandsEnabled<native><epic_internal>()<transacts>:logic

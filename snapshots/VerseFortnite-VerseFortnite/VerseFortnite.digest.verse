@@ -1,8 +1,8 @@
 using {/Verse.org/VerseEngine}
 using {/Fortnite.com/Assets}
-using {/Fortnite.com/Animation/PlayAnimation}
 using {/Fortnite.com/AI}
 using {/Verse.org/Assets}
+using {/UnrealEngine.com/Temporary/Diagnostics}
 using {/UnrealEngine.com/Abilities}
 using {/Fortnite.com/Teams}
 using {/Verse.org/Simulation/Tags}
@@ -375,6 +375,31 @@ Game<public> := module:
     agent_instigator_impl<native><epic_internal> := class(game_action_instigator):
         TheAgent<native><epic_internal>:agent
 
+    teleport_to_debug_log<epic_internal> := class(log_channel):
+
+
+    # Results for `TeleportTo` of creative objects and devices.
+    teleport_to_result<native><epic_internal> := enum:
+        # Success.
+        Ok
+        # An unknown error occurred. If this happens frequently, contact Epic support.
+        UnknownError
+        # `NaN` or `Infinity` in the requested destination.
+        InvalidDestination
+        # There is something colliding with the requested destination.
+        CollidingDestination
+        # The object being moved is no longer valid. Example invalid states:
+        #  * The object has been destroyed during gameplay.
+        #  * The object has been destroyed by Verse.
+        #  * The object has the *Register with Structural Grid* option set in UEFN.
+        InvalidObject
+        # The object being moved cannot be scaled.
+        ScaleNotAllowed
+        # The destination would cause the object to be at least partially outside the island's boundaries.
+        DestinationOutOfBounds
+
+    HandleTeleportToResult<epic_internal>(Result:teleport_to_result, TargetTragsform:transform)<transacts><decides>:void = external {}
+
 # Module import path: /Fortnite.com/FortPlayerUtilities
 FortPlayerUtilities<public> := module:
     # Sends `InPlayer` back to the main game lobby.
@@ -602,15 +627,6 @@ Assets<public> := module:
 
 # Module import path: /Fortnite.com/Animation
 Animation<public> := module:
-    play_animation_component<native><epic_internal> := class<epic_internal>(ai_actions_component, play_animation_controller):
-        PlayAndAwait<override>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {})<suspends>:play_animation_result = external {}
-
-        Play<override>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {}):play_animation_instance = external {}
-
-        CanPlayAnimation<native><epic_internal>(AnimationSequence:animation_sequence)<transacts><decides>:void
-
-        PlayAnimationInternal<native><epic_internal>(AnimationSequence:animation_sequence, PlayAnimationInstance:play_animation_instance, EndsOnBlendOut:logic, PlayRate:float, StartPositionSeconds:float, BlendInTime:float, BlendOutTime:float)<suspends>:play_animation_result
-
     # Module import path: /Fortnite.com/Animation/PlayAnimation
     PlayAnimation<public> := module:
         # Result of a PlayAndAwait request.
@@ -675,6 +691,15 @@ Animation<public> := module:
 
         # Get the play_animation_controller for the specified character.
         (InCharacter:fort_character).GetPlayAnimationController<native><public>()<transacts><decides>:play_animation_controller
+
+        npc_play_animation_component<native><epic_internal> := class<epic_internal>(ai_actions_component, play_animation_controller):
+            PlayAndAwait<override>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {})<suspends>:play_animation_result = external {}
+
+            Play<override>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {}):play_animation_instance = external {}
+
+            CanPlayAnimation<native><epic_internal>(AnimationSequence:animation_sequence)<transacts><decides>:void
+
+            PlayAnimationInternal<native><epic_internal>(AnimationSequence:animation_sequence, PlayAnimationInstance:play_animation_instance, EndsOnBlendOut:logic, PlayRate:float, StartPositionSeconds:float, BlendInTime:float, BlendOutTime:float)<suspends>:play_animation_result
 
 # Module import path: /Fortnite.com/AI
 AI<public> := module:
@@ -759,15 +784,12 @@ AI<public> := module:
     (InCharacter:fort_character).GetFortLeashable<native><public>()<transacts><decides>:fort_leashable
 
     # Fortnite NPC AI Management
-    guard_actions_component<native><epic_internal> := class(npc_actions_component):
+    fort_guard_actions_component<native><epic_internal> := class(npc_actions_component):
         # Roam around the current position. Use the leash to specify the radius, else will roam anywhere.
         RoamAround<native><epic_internal>()<suspends>:navigation_result
 
         # Move in range to attack the current target
         MoveInRangeToAttack<native><epic_internal>()<suspends>:action_result
-
-        # Return the current destination of the character
-        GetCurrentDestination<native><override>()<transacts><decides>:vector3
 
         # Change stance to crouch
         Crouch<native><epic_internal>()<suspends>:fallible_action_result
@@ -793,45 +815,45 @@ AI<public> := module:
         # Attack the navigation obstacle
         Attack<native><epic_internal>(Target:fort_obstacle_info)<suspends>:action_result
 
-    guard_perception_component<native><epic_internal> := class<epic_internal>(npc_perception_component):
+    fort_guard_perception_component<native><epic_internal> := class<epic_internal>(npc_perception_component):
         # Get information about the current target.
         GetCurrentTargetInfo<native><epic_internal>()<transacts><decides>:target_info
 
         # Get the current alert level of the guard.
-        GetAlertLevel<native><epic_internal>()<transacts>:guard_alert_level
+        GetAlertLevel<native><epic_internal>()<transacts>:fort_guard_alert_level
 
         # Get the current alert level of a target for the guard.
-        GetAlertLevel<native><epic_internal>(TargetInfo:target_info)<transacts>:guard_alert_level
+        GetAlertLevel<native><epic_internal>(TargetInfo:target_info)<transacts>:fort_guard_alert_level
 
         # Event when the alert level of the guard has changed.
-        AlertLevelChangedEvent<epic_internal>():listenable(guard_alert_level) = external {}
+        AlertLevelChangedEvent<epic_internal>():listenable(fort_guard_alert_level) = external {}
 
         # Event when the current target has changed.
         CurrentTargetChangedEvent<epic_internal>():listenable(target_info) = external {}
 
         # Get the current sight settings of the guard for an alert level.
-        GetSightSettings<native><epic_internal>(GuardAlertLevel:guard_alert_level)<transacts>:sight_perception_settings
+        GetSightSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level)<transacts>:sight_perception_settings
 
         # Set the current sight settings of the guard for an alert level.
-        SetSightSettings<native><epic_internal>(GuardAlertLevel:guard_alert_level, SightSettings:sight_perception_settings):void
+        SetSightSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level, SightSettings:sight_perception_settings):void
 
         # Get the current hearing settings of the guard for an alert level.
-        GetHearingSettings<native><epic_internal>(GuardAlertLevel:guard_alert_level)<transacts>:hearing_perception_settings
+        GetHearingSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level)<transacts>:hearing_perception_settings
 
         # Set the current hearing settings of the guard for an alert level.
-        SetHearingSettings<native><epic_internal>(GuardAlertLevel:guard_alert_level, HearingSettings:hearing_perception_settings):void
+        SetHearingSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level, HearingSettings:hearing_perception_settings):void
 
         # Get the current touch settings of the guard for an alert level.
-        GetTouchSettings<native><epic_internal>(GuardAlertLevel:guard_alert_level)<transacts>:touch_perception_settings
+        GetTouchSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level)<transacts>:touch_perception_settings
 
         # Set the current touch settings of the guard for an alert level
-        SetTouchSettings<native><epic_internal>(GuardAlertLevel:guard_alert_level, TouchSettings:touch_perception_settings):void
+        SetTouchSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level, TouchSettings:touch_perception_settings):void
 
         # Get the current damage settings of the guard for an alert level.
-        GetDamageSettings<native><epic_internal>(GuardAlertLevel:guard_alert_level)<transacts>:damage_perception_settings
+        GetDamageSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level)<transacts>:damage_perception_settings
 
         # Set the current damage settings of the guard for an alert level.
-        SetDamageSettings<native><epic_internal>(GuardAlertLevel:guard_alert_level, DamageSettings:damage_perception_settings):void
+        SetDamageSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level, DamageSettings:damage_perception_settings):void
 
         # Get information about the potential current obstacle
         GetObstacleInfo<native><epic_internal>()<transacts><decides>:fort_obstacle_info
@@ -841,7 +863,7 @@ AI<public> := module:
 
         CurrentTargetChangedEventInternal<native><epic_internal>:subscribable_event(target_info) = external {}
 
-        AlertLevelChangedEventInternal<native><epic_internal>:subscribable_event(guard_alert_level) = external {}
+        AlertLevelChangedEventInternal<native><epic_internal>:subscribable_event(fort_guard_alert_level) = external {}
 
         ObstacleChangedEventInternal<native><epic_internal>:subscribable_event(fort_obstacle_info) = external {}
 
@@ -1006,7 +1028,7 @@ AI<public> := module:
         TargetTouchedEventInternal<native><epic_internal>:subscribable_event(target_info) = external {}
 
     # The different alert levels of a guard.
-    guard_alert_level<native><epic_internal> := enum:
+    fort_guard_alert_level<native><epic_internal> := enum:
         # The guard has not detected any hostile target.
         Unaware
         # The guard has seen a hostile target but hasn't identified it yet.
