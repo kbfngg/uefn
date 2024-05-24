@@ -73,14 +73,14 @@ CompanionAI<public> := module:
     ToString<epic_internal>(Type:entity_type)<transacts>:string = external {}
 
     ping_info<native><epic_internal> := struct:
-        Type<native><epic_internal>:command_type
+        Type<native><public>:command_type
 
-        EntityType<native><epic_internal>:entity_type
+        EntityType<native><public>:entity_type
 
-        Location<native><epic_internal>:vector3
+        Location<native><public>:vector3
 
-        LocationOnHorizontalSurface<native><epic_internal>:logic
+        LocationOnHorizontalSurface<native><public>:logic
 
-        Target<native><epic_internal>:?entity
+        Target<native><public>:?entity
 
-        Emitter<native><epic_internal>:?agent
+        Emitter<native><public>:?agent

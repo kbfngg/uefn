@@ -1,10 +1,10 @@
-using {/Verse.org/Simulation}
 using {/UnrealEngine.com/EpicGamesRestricted/Network}
 using {/UnrealEngine.com/Temporary/SpatialMath}
+using {/Verse.org/Simulation}
 using {/Verse.org/Assets}
 using {/Verse.org/Native}
 component<native><epic_internal> := class<abstract><unique>(disposable):
-    var<private> Entity<public>:entity = external {}
+    var<private> Entity<public>:entity
 
     # The component is being initialized, called when it is attached to an entity
     OnInitialized<native><native_callable><protected>():void
@@ -78,6 +78,13 @@ replication_component<native><epic_internal> := class(component):
 
     # Internal epic method to know if this component is allowed on client
     IsAllowedOnClient<override>():logic = external {}
+
+@hide_in_editor
+simulation_entity<native><epic_internal> := class<concrete><unique><transacts>(entity):
+
+
+# Returns the `simulation_entity` for the `InEntity.
+(InEntity:entity).GetSimulationEntity<native><epic_internal>()<transacts><decides>:simulation_entity
 
 tick_events<native><epic_internal> := class:
     PrePhysics<native><public>:execution_subscribable = external {}

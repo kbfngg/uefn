@@ -19,6 +19,8 @@ test_device_event_handler_mock<public> := class<concrete>:
 
     GetCallCount<public>():int = external {}
 
+    Cancel<public>():void = external {}
+
     Await<public>()<suspends>:void = external {}
 
 device_event_void_handler_mock<public> := class(test_device_event_handler_mock):

@@ -10,6 +10,6 @@ ability_component<native><public> := class(component):
 
 
 ability_property_link<native><epic_internal> := struct:
-    VersePropertyName<native><epic_internal>:string
+    VersePropertyName<native><public>:string
 
-    NativePropertyName<native><epic_internal>:string
+    NativePropertyName<native><public>:string

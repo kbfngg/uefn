@@ -1,8 +1,8 @@
 using {/Verse.org/Assets}
 using {/UnrealEngine.com/Temporary/UI}
-using {/Verse.org/Simulation}
 using {/Verse.org/Colors}
 using {/UnrealEngine.com/EpicGamesRestricted/Network}
+using {/Verse.org/Simulation}
 using {/UnrealEngine.com/Temporary/SpatialMath}
 attachment_component<native><epic_internal> := class(component):
     # The component is being initialized, called when it is attach to an entity
@@ -41,6 +41,7 @@ attachment_component<native><epic_internal> := class(component):
     # The relative transform to the attached entity
     var ParentEntity<native><public>:?entity = external {}
 
+@hide_in_editor
 basic_camera_component<native><epic_internal> := class(component):
     # The component is being initialized, called when it is attach to an entity
     OnInitialized<native><override>():void
@@ -463,7 +464,7 @@ static_mesh_component<native><epic_internal> := class<final>(mesh_component, ena
     # Succeeds if the component is enabled, fails if it’s disabled.
     IsEnabled<native><override>()<transacts><decides>:void
 
-text_display_component<native><epic_internal> := class<concrete><final>(component):
+text_display_component<native><epic_internal> := class<final>(component):
     OnInitialized<native><override>():void
 
     OnAddedToScene<native><override>():void

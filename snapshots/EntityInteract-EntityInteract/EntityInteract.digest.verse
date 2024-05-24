@@ -22,7 +22,10 @@ interact_component<native><epic_internal> := class(component, enableable):
     var InteractTime<native><public>:float = external {}
 
     @editable
-    var TimesCanTrigger<native><public>:float = external {}
+    var CoolDownTime<native><public>:float = external {}
+
+    @editable
+    var TimesCanTrigger<native><public>:?int = external {}
 
     SuccessfullyInteract<native><public>():void
 
@@ -34,3 +37,12 @@ interact_component<native><epic_internal> := class(component, enableable):
 
     # Gets the interact text.
     GetInteractText<native><public>():string
+
+    # The text to display to the user. Used only during initialization of the component and not modified by SetText.
+    DefaultCoolDownText<localizes><native><public>:message = external {}
+
+    # Sets the CoolDown text.
+    SetCoolDownText<native><public>(InText:message):void
+
+    # Gets the CoolDown text.
+    GetCoolDownText<native><public>():string

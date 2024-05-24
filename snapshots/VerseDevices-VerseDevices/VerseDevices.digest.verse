@@ -2,10 +2,10 @@ using {/Verse.org/Colors}
 using {/Fortnite.com/Vehicles}
 using {/Verse.org/Simulation}
 using {/UnrealEngine.com/Temporary/Diagnostics}
-using {/UnrealEngine.com/Temporary/SceneGraph}
 using {/Verse.org/Simulation/Tags}
 using {/Fortnite.com/Game}
 using {/Verse.org/Native}
+using {/UnrealEngine.com/Temporary/SceneGraph}
 using {/Verse.org/Assets}
 using {/Fortnite.com/Playspaces}
 using {/UnrealEngine.com/Temporary/SpatialMath}
@@ -254,6 +254,9 @@ Devices<public> := module:
     creative_device_asset<native><public> := class<computes><final><epic_internal>(asset):
 
 
+    # Returns the `simulation_entity` for the `CreativeDevice.
+    (CreativeDevice:creative_device).GetSimulationEntity<native><epic_internal>()<transacts><decides>:simulation_entity
+
     @import_as("/Script/VerseDevices.UVerseMovableObjectBase")
     creative_movable_object_base<native><epic_internal> := class<abstract><epic_internal>:
 
@@ -316,6 +319,9 @@ Devices<public> := module:
 
     # Returns the `entity` associated to that `CreativeObject.
     (CreativeObject:creative_object_interface).GetEntity<native><epic_internal>()<transacts><decides>:entity
+
+    # Returns the `simulation_entity` for the `CreativeObject.
+    (CreativeObject:creative_object).GetSimulationEntity<native><epic_internal>()<transacts><decides>:simulation_entity
 
     # A Fortnite prop that has been placed or spawned in the island.
     creative_prop<native><public> := class<concrete><final>(creative_object, invalidatable):

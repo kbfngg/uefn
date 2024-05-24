@@ -1,313 +1,255 @@
-using {/Verse.org/Simulation}
-using {/Verse.org/Native}
+using {/UnrealEngine.com/Temporary/SpatialMath}
+using {/Verse.org/Assets}
 using {/Verse.org/Simulation/Tags}
+using {/Verse.org/Native}
+using {/Verse.org/Simulation}
 using {/UnrealEngine.com/EpicGamesRestricted/Network}
-using {/UnrealEngine.com/Temporary/SceneGraph}
-# Module import path: /UnrealEngine.com/VerseCamera
+# Module import path: /UnrealEngine.com/Temporary/SceneGraph/VerseCamera
 VerseCamera<public> := module:
+    # Component that owns higher level camera behavior. 
+    # Owns a CameraDirector, which is responsible for selecting the best camera mode every update.
+    # Owns a default EvaluationContext, which is responsible for setting the default camera transform, before camera logic is applied
     camera_behavior_component<native><epic_internal> := class(component):
         @replicated("")
-        var CameraDirector<native><public>:camera_director_interface = external {}
+        # Reponsible for deciding which camera modes should be active on each layer
+        var CameraDirector<public>:camera_director = external {}
 
         @replicated("")
-        var DefaultEvaluatorContext<native><public>:?camera_evaluator_context = external {}
+        # The evaluation context sets an initial transform for the camera, before camera mode logic is applied. This evaluation context is used as the default if a camera mode does not provide its own
+        var DefaultEvaluationContext<public>:camera_evaluation_context = external {}
 
         # Internal epic method to know if this component is allowed on client
         IsAllowedOnClient<override>():logic = external {}
 
+    # Activate a camera behavior component for a player, setting it as the active view target
+    (InCameraBehavior:camera_behavior_component).ActivateForPlayer<native><epic_internal>(InPlayer:player)<transacts><decides>:void
+
+    # Deactivate a camera behavior component for a player, restoring the player's view target to the default
+    (InCameraBehavior:camera_behavior_component).DeactivateForPlayer<native><epic_internal>(InPlayer:player)<transacts><decides>:void
+
+    (InCameraBehavior:camera_behavior_component).ActivateForPlayerAtIndex<native><epic_internal>(InPlayerIndex:int)<transacts><decides>:void
+
+    (InCameraBehavior:camera_behavior_component).DeactivateForPlayerAtIndex<native><epic_internal>(InPlayerIndex:int)<transacts><decides>:void
+
+    # Represents the physical body, lens of the camera and other cinematographic qualities, such as sensor size, aspect ratio lock/constraint, focal length, focus distance, post-process settings, etc.
     camera_component<native><epic_internal> := class(basic_camera_component):
         # Internal epic method to know if this component is allowed on client
         IsAllowedOnClient<override>():logic = external {}
 
-    camera_layer_tag<native><epic_internal> := class(tag):
+    @import_as("/Script/VerseCamera.UVerseCameraDirectorBase")
+    camera_director_base<native><epic_internal> := class:
 
 
-    camera_layer_gameplay_tag<native><epic_internal> := class(camera_layer_tag):
+    # Base class for Camera Directors defined in Verse
+    camera_director<native><epic_internal> := class(camera_director_base):
+        # Determine which camera mode should be active
+        DetermineActiveCameraModes<native_callable><public>():[]camera_mode = external {}
 
+        # Add a camera mode to the list for consideration
+        AddCameraMode<native_callable><public>(CameraMode:camera_mode):void = external {}
 
-    camera_director_interface<native><epic_internal> := interface:
-        DetermineActiveCameraMode<native_callable><public>(CameraStackLayer:tag):?camera_mode
+        # Remove a camera mode from the list for consideration
+        RemoveCameraMode<native_callable><public>(CameraMode:camera_mode):void = external {}
 
-        AddCameraMode<native_callable><public>(CameraMode:camera_mode):void
+    # Default camera director implementation  - Simply returns the highest priority camera mode every update
+    camera_director_default<native><epic_internal> := class<final>(camera_director):
+        # Determine which camera mode should be active
+        DetermineActiveCameraModes<native><override>():[]camera_mode
 
-        RemoveCameraMode<native_callable><public>(CameraMode:camera_mode):void
-
-        AddSubDirector<native_callable><public>(Director:camera_director_interface):void
-
-        RemoveSubDirector<native_callable><public>(Director:camera_director_interface):void
-
-    camera_director_default<native><epic_internal> := class(camera_director_interface):
-        DetermineActiveCameraMode<native><override>(CameraStackLayer:tag):?camera_mode
-
+        # Add a camera mode to the list for consideration
         AddCameraMode<native><override>(CameraMode:camera_mode):void
 
+        # Remove a camera mode from the list for consideration
         RemoveCameraMode<native><override>(CameraMode:camera_mode):void
 
-        AddSubDirector<native><override>(Director:camera_director_interface):void
+    # Input params to a camera evaluation context update
+    camera_evaluation_context_input_parameters<native><epic_internal> := class<final>:
+        # Entity that owns the camera behavior component
+        var CameraBehaviorEntity<native><epic_internal>:entity = external {}
 
-        RemoveSubDirector<native><override>(Director:camera_director_interface):void
+        # Time elapsed since last update
+        var DeltaTime<native><public>:float = external {}
 
-    @import_as("/Script/VerseCamera.UVerseCameraEvaluatorContext")
-    camera_evaluator_context_base<native><epic_internal> := class<abstract>:
+    # Output params to a camera evaluation context update
+    camera_evaluation_context_output_parameters<native><epic_internal> := class<final>(camera_output_parameters):
+        # If written to, will set the target distance
+        var TargetDistance<native><epic_internal>:?float = external {}
+
+    @import_as("/Script/VerseCamera.UVerseCameraEvaluationContext")
+    camera_evaluation_context_base<native><epic_internal> := class<abstract>:
 
 
-    camera_evaluator_context<native><epic_internal> := class<unique>(camera_evaluator_context_base):
+    # Base class for Verse camera evaluation contexts
+    camera_evaluation_context<native><epic_internal> := class(camera_evaluation_context_base):
+        # Update the evaluation context. Override this to modify the initial camera transform and other initial camera parameters before any camera modes are run
+        Update<native_callable><public>(InputParameters:camera_evaluation_context_input_parameters, OutputParameters:camera_evaluation_context_output_parameters)<transacts><decides>:void = external {}
 
+    # Camera evaluation context for scene graph entities.
+    # Allows users of camera modes to supply a context object that provides more information about the context in whichthe camera mode is being used (for example, initial camera position)
+    entity_camera_evaluation_context<native><epic_internal> := class<final>(camera_evaluation_context):
+        Update<native><override>(InputParameters:camera_evaluation_context_input_parameters, OutputParameters:camera_evaluation_context_output_parameters)<transacts><decides>:void
 
-    entity_camera_evaluator_context<native><epic_internal> := class<unique>(camera_evaluator_context):
         @replicated("")
-        var CameraEntity<native><public>:?entity = external {}
+        # For cameras that are fixed in the world. This entity is used as a reference point for the initial world transform of the fixed camera.
+        # Leave this unset for cameras that should follow another entity around
+        var FixedWorldCameraEntity<native><public>:?entity = external {}
 
         @replicated("")
+        # Entity the camera is targeting. Used to provide an initial look-at rotation for the camera
         var TargetEntity<native><public>:?entity = external {}
 
-    camera_mode_tag<native><epic_internal> := class(tag):
+    verse_camera_mode_tag<native><epic_internal> := class(tag):
 
-
-    camera_mode_default_tag<native><epic_internal> := class(tag):
-
-
-    camera_boom_collision_type<native><epic_internal> := enum:
-        Instant
-        Predictive
-
-    camera_dead_zone_shape<native><epic_internal> := enum:
-        Sphere
-        Cylinder
-        Rectangle
-
-    camera_blend_mode<native><epic_internal> := enum:
-        Linear
-        Cubic
-        EaseInOut
-        EaseIn
-        EaseOut
-
-    camera_offset_space<native><epic_internal> := enum:
-        TargetSpace
-        WorldSpace
-        CameraSpace
-
-    camera_mode_blend_params<native><epic_internal> := struct<concrete>:
-        @editable
-        BlendFunction<native><epic_internal>:camera_blend_mode = external {}
-
-        @editable
-        BlendExponent<native><epic_internal>:float = external {}
-
-        @editable
-        BlendTime<native><epic_internal>:float = external {}
-
-        @editable
-        BlendPriority<native><epic_internal>:float = external {}
 
     @import_as("/Script/VerseCamera.UVerseCameraMode")
     camera_mode_base<native><epic_internal> := class<abstract>:
 
 
-    camera_mode<native><epic_internal> := class<concrete><unique>:
-        UpdateCameraModeParameters<native><public>():void
+    # A camera mode builds up a camera transform piece by piece by executing a camera rig asset
+    camera_mode<native><epic_internal> := class<concrete><unique><final>:
+        GetCameraModeTag<native><public>()<transacts><decides>:verse_camera_mode_tag
 
-        var CameraModeTag<native><public>:tag = external {}
-
-        @editable
         @replicated("")
-        var Priority<native><public>:float = external {}
+        # Camera rig asset that defines the behavior of the camera mode
+        var CameraRigAsset<public>:camera_rig_asset = external {}
 
-        @editable
         @replicated("")
-        var BlendInParams<native><public>:camera_mode_blend_params = external {}
-
         @editable
+        # Root camera operation - This is mutually exclusive with CameraRigAsset, but allows you to build up a camera mode completely in Verse
+        var RootCameraOperation<native><epic_internal>:?camera_operation = external {}
+
         @replicated("")
-        var BlendOutParams<native><public>:camera_mode_blend_params = external {}
+        # Priority level that can be used by camera directors to determine the best camera mode
+        var Priority<public>:float = external {}
 
-        SetEvaluatorContext<native><public>(OverriddenEvaluatorContext:camera_evaluator_context):void
+        @replicated("")
+        # Camera evaluation context. Used to override default camera transform, and set target entity
+        var CameraEvaluationContext<public>:camera_evaluation_context = external {}
 
-        ClearEvaluatorContext<native><public>():void
-
-    camera_fixed_angle_follow_type<native><epic_internal> := enum:
-        InterpolationFollow
-        SpringFollow
-
-    camera_mode_fixed_angle_tag<native><epic_internal> := class(camera_mode_tag):
+    # Camera operation initialization parameters
+    camera_operation_initialization_parameters<native><epic_internal> := class<final>:
 
 
-    camera_mode_fixed_angle<native><epic_internal> := class<unique>(camera_mode):
-        var CameraModeTag<override>:tag = external {}
+    # Input params to a camera operation
+    camera_operation_input_parameters<native><epic_internal> := class<final>:
+        # Camera evaluation context that the owning camera mode is running in
+        var EvaluationContext<native><public>:?camera_evaluation_context = external {}
+
+        # Camera location from the initial evaluator execution, or previous operation if an operation modified it before this one
+        var CameraLocation<native><public>:vector3 = external {}
+
+        # Camera rotation from the initial evaluator execution,  or previous operation if an operation modified it before this one
+        var CameraRotation<native><public>:rotation = external {}
+
+        # Delta time since last update
+        var DeltaTime<native><public>:float = external {}
+
+        # Get the value of a camera parameter
+        GetCameraParameterValue<native><epic_internal>(Parameter:camera_parameter_logic)<transacts><decides>:void
+
+        GetCameraParameterValue<native><epic_internal>(Parameter:camera_parameter_float)<transacts><decides>:float
+
+        GetCameraParameterValue<native><epic_internal>(Parameter:camera_parameter_integer)<transacts><decides>:int
+
+        GetCameraParameterValue<native><epic_internal>(Parameter:camera_parameter_vector2)<transacts><decides>:vector2
+
+        GetCameraParameterValue<native><epic_internal>(Parameter:camera_parameter_vector3)<transacts><decides>:vector3
+
+        GetCameraParameterValue<native><epic_internal>(Parameter:camera_parameter_rotation)<transacts><decides>:rotation
+
+        GetCameraParameterValue<native><epic_internal>(Parameter:camera_parameter_transform)<transacts><decides>:transform
+
+    # Output params to a camera operation
+    camera_operation_output_parameters<native><epic_internal> := class<final>(camera_output_parameters):
+
+
+    @import_as("/Script/VerseCamera.UVerseCameraNode")
+    camera_operation_base<native><epic_internal> := class<abstract>:
+
+
+    # A camera operation is a primitive operation that is used to build up a camera transform piece by piece
+    camera_operation<native><epic_internal> := class<concrete><unique>(camera_operation_base):
+        # Called when the camera mode is initialized
+        Initialize<native_callable><public>(InitParams:camera_operation_initialization_parameters)<transacts><decides>:void = external {}
+
+        # Called by the camera mode to build up the camera settings
+        Update<native_callable><public>(InputParams:camera_operation_input_parameters, OutputParams:camera_operation_output_parameters):void = external {}
+
+    camera_parameter_logic<native><epic_internal> := class:
+        @editable
+        Value<native><public>:logic = external {}
 
         @editable
-        var CameraDistance<native><public>:float = external {}
+        Variable<native><public>:camera_variable_logic = external {}
 
-        var OffsetSpace<native><public>:camera_offset_space = external {}
+    camera_parameter_float<native><epic_internal> := class:
+        @editable
+        Value<native><public>:float = external {}
 
         @editable
-        var OffsetHorizontal<native><public>:float = external {}
+        Variable<native><public>:camera_variable_float = external {}
+
+    camera_parameter_integer<native><epic_internal> := class:
+        @editable
+        Value<native><public>:int = external {}
 
         @editable
-        var OffsetVertical<native><public>:float = external {}
+        Variable<native><public>:camera_variable_integer = external {}
+
+    camera_parameter_vector2<native><epic_internal> := class:
+        @editable
+        Value<native><public>:vector2 = external {}
 
         @editable
-        var CameraAngleYaw<native><public>:float = external {}
+        Variable<native><public>:camera_variable_vector2 = external {}
+
+    camera_parameter_vector3<native><epic_internal> := class:
+        @editable
+        Value<native><public>:vector3 = external {}
 
         @editable
-        var CameraAnglePitch<native><public>:float = external {}
+        Variable<native><public>:camera_variable_vector3 = external {}
+
+    camera_parameter_rotation<native><epic_internal> := class:
+        @editable
+        Value<native><public>:rotation = external {}
 
         @editable
-        var FieldOfViewDegrees<native><public>:float = external {}
+        Variable<native><public>:camera_variable_rotation = external {}
+
+    camera_parameter_transform<native><epic_internal> := class:
+        @editable
+        Value<native><public>:transform = external {}
 
         @editable
-        var FollowType<native><public>:camera_fixed_angle_follow_type = external {}
+        Variable<native><public>:camera_variable_transform = external {}
 
-        @editable
-        var InterpolationFollowSpeed<native><public>:float = external {}
+    camera_output_parameters<native><epic_internal> := class:
+        # If written to, will set the camera location
+        var CameraLocation<native><public>:?vector3 = external {}
 
-        @editable
-        var InterpolationFollowMaxDistance<native><public>:float = external {}
+        # If written to, will set the camera rotation
+        var CameraRotation<native><public>:?rotation = external {}
 
-        @editable
-        var SpringFollowStiffness<native><public>:float = external {}
+        # If written to, will set the camera field of view
+        var CameraFieldOfViewDegrees<native><public>:?float = external {}
 
-        @editable
-        var SpringFollowMaxDistance<native><public>:float = external {}
+        # Set a camera variable value
+        SetCameraVariable<native><epic_internal>(CameraVariable:camera_variable_logic, Value:logic)<transacts><decides>:void
 
-        @editable
-        var DeadZoneEnabled<native><public>:logic = external {}
+        SetCameraVariable<native><epic_internal>(CameraVariable:camera_variable_float, Value:float)<transacts><decides>:void
 
-        @editable
-        var DeadzoneType<native><public>:camera_dead_zone_shape = external {}
+        SetCameraVariable<native><epic_internal>(CameraVariable:camera_variable_integer, Value:int)<transacts><decides>:void
 
-        @editable
-        var DeadzoneDiameter<native><public>:float = external {}
+        SetCameraVariable<native><epic_internal>(CameraVariable:camera_variable_vector2, Value:vector2)<transacts><decides>:void
 
-        @editable
-        var DeadzoneWidth<native><public>:float = external {}
+        SetCameraVariable<native><epic_internal>(CameraVariable:camera_variable_vector3, Value:vector3)<transacts><decides>:void
 
-        @editable
-        var DeadzoneHeight<native><public>:float = external {}
+        SetCameraVariable<native><epic_internal>(CameraVariable:camera_variable_rotation, Value:rotation)<transacts><decides>:void
 
-        @editable
-        var CollisionType<native><public>:camera_boom_collision_type = external {}
+        SetCameraVariable<native><epic_internal>(CameraVariable:camera_variable_transform, Value:transform)<transacts><decides>:void
 
-        @editable
-        var CollisionInTime<native><public>:float = external {}
-
-        @editable
-        var CollisionOutTime<native><public>:float = external {}
-
-        @editable
-        var CollisionSize<native><public>:float = external {}
-
-        @editable
-        var CollisionCutoutSize<native><public>:float = external {}
-
-    camera_mode_fixed_point_tag<native><epic_internal> := class(camera_mode_tag):
-
-
-    camera_mode_fixed_point<native><epic_internal> := class<unique>(camera_mode):
-        var CameraModeTag<override>:tag = external {}
-
-        @editable
-        var FieldOfViewDegrees<native><public>:float = external {}
-
-        @editable
-        var LookAtTargetEnabled<native><public>:logic = external {}
-
-        @editable
-        var LookAtTargetOffsetDistance<native><public>:float = external {}
-
-        @editable
-        var LookAtTargetOffsetHorizontal<native><public>:float = external {}
-
-        @editable
-        var LookAtTargetOffsetVertical<native><public>:float = external {}
-
-        @editable
-        var LookAtOffsetSpace<native><public>:camera_offset_space = external {}
-
-        @editable
-        var ClampEnabled<native><public>:logic = external {}
-
-        @editable
-        var ClampPitchMin<native><public>:float = external {}
-
-        @editable
-        var ClampPitchMax<native><public>:float = external {}
-
-        @editable
-        var ClampYawMin<native><public>:float = external {}
-
-        @editable
-        var ClampYawMax<native><public>:float = external {}
-
-        @editable
-        var DeadzoneEnabled<native><public>:logic = external {}
-
-        @editable
-        var DeadzonePitch<native><public>:float = external {}
-
-        @editable
-        var DeadzoneYaw<native><public>:float = external {}
-
-        @editable
-        var DeadzonePitchOffset<native><public>:float = external {}
-
-        @editable
-        var DeadzoneYawOffset<native><public>:float = external {}
-
-    camera_mode_third_person_tag<native><epic_internal> := class(camera_mode_tag):
-
-
-    camera_mode_third_person<native><epic_internal> := class<unique>(camera_mode):
-        var CameraModeTag<override>:tag = external {}
-
-        UpdateCameraModeParameters<override><native>():void
-
-        @editable
-        var CameraDistance<native><public>:float = external {}
-
-        @editable
-        var CameraOffsetHorizontal<native><public>:float = external {}
-
-        @editable
-        var CameraOffsetVertical<native><public>:float = external {}
-
-        @editable
-        var CameraOffsetSpace<native><public>:camera_offset_space = external {}
-
-        @editable
-        var LookAtTargetOffsetDistance<native><public>:float = external {}
-
-        @editable
-        var LookAtTargetOffsetHorizontal<native><public>:float = external {}
-
-        @editable
-        var LookAtTargetOffsetVertical<native><public>:float = external {}
-
-        @editable
-        var LookAtOffsetSpace<native><public>:camera_offset_space = external {}
-
-        @editable
-        var IsSpringFollowEnabled<native><public>:logic = external {}
-
-        @editable
-        var SpringFollowStiffness<native><public>:float = external {}
-
-        @editable
-        var SpringFollowMaxDistance<native><public>:float = external {}
-
-        @editable
-        var FieldOfViewDegrees<native><public>:float = external {}
-
-        var CollisionType<native><public>:camera_boom_collision_type = external {}
-
-        var CollisionInTime<native><public>:float = external {}
-
-        var CollisionOutTime<native><public>:float = external {}
-
-        var CollisionSize<native><public>:float = external {}
-
-        var CollisionCutoutSize<native><public>:float = external {}
+        Reset_Internal<native><epic_internal>():void
 
     GetPlayerCameraView<native><epic_internal>(Player:player)<transacts><decides>:player_camera_view
 
@@ -317,7 +259,10 @@ VerseCamera<public> := module:
     player_camera_view_base<native><epic_internal> := class<abstract>:
 
 
+    # Component used to associate a camera behavior component with a player
     player_camera_view<native><epic_internal> := class(player_camera_view_base):
-        SetCameraBehavior<native><epic_internal>(CameraBehavior:camera_behavior_component):void
+        SetActiveCameraBehavior<native><public>(CameraBehaviorIn:camera_behavior_component)<transacts><decides>:void
 
-        GetCameraBehavior<native><epic_internal>():?camera_behavior_component
+        ClearActiveCameraBehavior<native><public>()<transacts><decides>:void
+
+        GetActiveCameraBehavior<native><public>()<transacts><decides>:camera_behavior_component

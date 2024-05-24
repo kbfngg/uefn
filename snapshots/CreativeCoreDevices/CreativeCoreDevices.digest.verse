@@ -906,7 +906,7 @@ powerup_device<public> := class<abstract><epic_internal>(creative_device_base):
 
     # If the `Agent` has the effect applied to them, this will return the remaining time the effect has.
     # Returns -1.0 if the effect has an infinite duration.
-    # Returns 0 if the `Agent` does not have the effect applied.
+    # Returns 0.0 if the `Agent` does not have the effect applied.
     GetRemainingTime<public>(Agent:agent)<transacts>:float = external {}
 
     # Returns the `Agent` has the powerup's effect (or another of the same type) applied to them.

@@ -26,7 +26,7 @@ VerseExperimental<public> := module:
         December
 
     date_time<native><public> := struct:
-
+        Ticks<native><public>:int = external {}
 
     # Creates and initializes a new instance with the specified year, month, day, hour, minute, second and millisecond.
     CreateDateTime<native><public>(Year:int, Month:int, Day:int, Hour:int, Minute:int, Second:int, Millisecond:int)<transacts><decides>:date_time
@@ -99,7 +99,7 @@ VerseExperimental<public> := module:
     operator'-'<public>(Left:date_time, Right:time_span):date_time = external {}
 
     time_span<native><public> := struct:
-
+        Ticks<public>:int = external {}
 
     # Creates and initializes a new instance with the specified days, hours, minutes, seconds and milliseconds.
     CreateTimeSpan<native><public>(Days:int, Hours:int, Minutes:int, Seconds:int, Milliseconds:int)<transacts>:time_span

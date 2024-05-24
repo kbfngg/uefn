@@ -441,3 +441,19 @@ UI<public> := module:
     umg_widget<native><epic_internal> := class<epic_internal>(widget):
         # The widget_blueprint asset to create.
         Asset<native><epic_internal>:umg_widget_class_asset
+
+        GetViewmodel_<native><epic_internal>(ViewmodelType:type, ViewmodelName:[]char)<transacts>:ViewmodelType
+
+        SetViewmodel_<native><epic_internal>(ViewmodelType:type, ViewmodelName:[]char, ViewmodelInstance:ViewmodelType)<transacts>:void
+
+        GetViewmodelOptional_<native><epic_internal>(ViewmodelType:type, ViewmodelName:[]char)<transacts>:ViewmodelType
+
+        SetViewmodelOptional_<native><epic_internal>(ViewmodelType:type, ViewmodelName:[]char, ViewmodelInstance:ViewmodelType)<transacts>:void
+
+        GetNamedSlot_<native><epic_internal>(NamedSlotName:[]char)<transacts>:widget
+
+        SetNamedSlot_<native><epic_internal>(NamedSlotName:[]char, NamedSlotInstance:widget)<transacts>:void
+
+        GetNamedSlotOptional_<native><epic_internal>(NamedSlotName:[]char)<transacts>:?widget
+
+        SetNamedSlotOptional_<native><epic_internal>(NamedSlotName:[]char, NamedSlotInstance:?widget)<transacts>:void

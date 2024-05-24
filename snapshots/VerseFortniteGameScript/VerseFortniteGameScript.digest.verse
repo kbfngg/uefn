@@ -184,11 +184,11 @@ VerseFortniteGameScript<public> := module:
 
         OnPlayerEliminated<protected>(ElimResult:player_eliminated_result):void = external {}
 
-        OnPlayerJoined<protected>(__dupe___unnamed_parameter_199:player_component):void = external {}
+        OnPlayerJoined<protected>(__dupe___unnamed_parameter_214:player_component):void = external {}
 
         WaitForDebugCommand<protected>(CommandId:string)<suspends>:string = external {}
 
-        OnPlayerLeft<protected>(__dupe___unnamed_parameter_200:player_component):void = external {}
+        OnPlayerLeft<protected>(__dupe___unnamed_parameter_215:player_component):void = external {}
 
         SetBuildingAllowed<protected>():void = external {}
 

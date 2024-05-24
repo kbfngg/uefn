@@ -35,51 +35,21 @@ ControlInput<public> := module:
         ParticleSystem<native><epic_internal>:particle_system
 
     verb<native><epic_internal> := class<computes><epic_internal>:
-        VerbName<native><epic_internal>:string
+        InputNames<native><epic_internal>:[]string
+
+        IsAxis<native><epic_internal>:logic
 
     # Module import path: /Verse.org/ControlInput/InputVerbs
     InputVerbs<epic_internal> := module:
         MoveForward<epic_internal>:verb = external {}
 
-        MoveLeft<epic_internal>:verb = external {}
-
-        MoveBackward<epic_internal>:verb = external {}
-
         MoveRight<epic_internal>:verb = external {}
 
         MoveUp<epic_internal>:verb = external {}
 
-        MoveDown<epic_internal>:verb = external {}
+        Turn<epic_internal>:verb = external {}
 
-        MoveLongitudinalAxis<epic_internal>:verb = external {}
-
-        MoveLateralAxis<epic_internal>:verb = external {}
-
-        MoveVerticalAxis<epic_internal>:verb = external {}
-
-        MoveAxis_2d<epic_internal>:verb = external {}
-
-        MoveAxis_3d<epic_internal>:verb = external {}
-
-        MovePitchForward<epic_internal>:verb = external {}
-
-        MovePitchBackward<epic_internal>:verb = external {}
-
-        MoveRollLeft<epic_internal>:verb = external {}
-
-        MoveRollRight<epic_internal>:verb = external {}
-
-        MoveYawLeft<epic_internal>:verb = external {}
-
-        MoveYawRight<epic_internal>:verb = external {}
-
-        MovePitchAxis<epic_internal>:verb = external {}
-
-        MoveRollAxis<epic_internal>:verb = external {}
-
-        MoveYawAxis<epic_internal>:verb = external {}
-
-        MoveRotation<epic_internal>:verb = external {}
+        LookUp<epic_internal>:verb = external {}
 
         Jump<epic_internal>:verb = external {}
 
@@ -87,57 +57,15 @@ ControlInput<public> := module:
 
         Crouch<epic_internal>:verb = external {}
 
-        Slide<epic_internal>:verb = external {}
-
-        Jog<epic_internal>:verb = external {}
-
-        Dismount<epic_internal>:verb = external {}
-
-        Exit<epic_internal>:verb = external {}
-
-        Boost<epic_internal>:verb = external {}
-
-        Push<epic_internal>:verb = external {}
-
-        Honk<epic_internal>:verb = external {}
-
-        Stomp<epic_internal>:verb = external {}
-
-        SwitchSeat<epic_internal>:verb = external {}
-
-        LookUp<epic_internal>:verb = external {}
-
-        LookDown<epic_internal>:verb = external {}
-
-        LookLeft<epic_internal>:verb = external {}
-
-        LookRight<epic_internal>:verb = external {}
-
-        LookAxis_2d<epic_internal>:verb = external {}
-
         Fire<epic_internal>:verb = external {}
 
         Target<epic_internal>:verb = external {}
-
-        Scope<epic_internal>:verb = external {}
 
         Reload<epic_internal>:verb = external {}
 
         Use<epic_internal>:verb = external {}
 
-        Harvest<epic_internal>:verb = external {}
-
-        ToggleInventory<epic_internal>:verb = external {}
-
-        ToggleMap<epic_internal>:verb = external {}
-
         Emote<epic_internal>:verb = external {}
-
-        Throttle<epic_internal>:verb = external {}
-
-        Reverse<epic_internal>:verb = external {}
-
-        Brake<epic_internal>:verb = external {}
 
     modifier<native><epic_internal> := class<computes><abstract><epic_internal>:
 

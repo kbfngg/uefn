@@ -1041,13 +1041,17 @@ AI<public> := module:
     # Information about a perceived target.
     target_info<native><epic_internal> := struct<epic_internal>:
         # The source of the detection stimuli.
-        Target<native><epic_internal>:entity
+        Target<native><public>:entity
 
         # True if the target can be seen.
         HasLineOfSight<native><public>:logic
 
         # Attitude toward this target.
         Attitude<native><public>:team_attitude
+
+        LastKnownPosition<native><public>:vector3 = external {}
+
+        AlertLevel<native><public>:fort_guard_alert_level = external {}
 
     fort_obstacle_status<native><epic_internal> := enum:
         incoming_obstacle
@@ -1059,7 +1063,7 @@ AI<public> := module:
 
         Status<native><public>:fort_obstacle_status
 
-        Obstacle<native><epic_internal>:entity
+        Obstacle<native><public>:entity
 
     # Get the last known position of the target.
     (InTarget:target_info).GetLastKnownPosition<native><epic_internal>()<transacts>:vector3
