@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.40-CL-33291686
+# Generated from build: ++Fortnite+Release-30.00-CL-33760522
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -176,12 +176,6 @@ Animation<public> := module:
             # The animation was stopped internally.
             Stopped
 
-# Module import path: /Fortnite.com/Assets
-Assets<public> := module:
-
-# Module import path: /Fortnite.com/Building
-Building<public> := module:
-
 # Module import path: /Fortnite.com/Characters
 Characters<public> := module:
     # Returns the `fort_character` for `InAgent`. Fails if `InAgent` is not a `fort_character`.
@@ -292,9 +286,6 @@ Devices<public> := module:
 
     # Returns a queryable `tag_view` which can be used to query the tags on `CreativeObject`.
     (CreativeObject:creative_object_interface).GetTags<native><public>():tag_view
-
-    # Module import path: /Fortnite.com/Devices/Animation
-    Animation<public> := module:
 
     # Module import path: /Fortnite.com/Devices/CreativeAnimation
     CreativeAnimation<public> := module:
@@ -2644,7 +2635,7 @@ Devices<public> := module:
 
         # If the `Agent` has the effect applied to them, this will return the remaining time the effect has.
         # Returns -1.0 if the effect has an infinite duration.
-        # Returns 0 if the `Agent` does not have the effect applied.
+        # Returns 0.0 if the `Agent` does not have the effect applied.
         GetRemainingTime<public>(Agent:agent)<transacts>:float = external {}
 
         # Returns the `Agent` has the powerup's effect (or another of the same type) applied to them.
@@ -4058,6 +4049,9 @@ Devices<public> := module:
 
     # Specialized `vehicle_spawner_device` that allows a UFO to be configured and spawned.
     vehicle_spawner_ufo_device<public> := class<concrete><final>(vehicle_spawner_device):
+
+    # Specialized `vehicle_spawner_device` that allows a war bus to be configured and spawned.
+    vehicle_spawner_war_bus_device<public> := class<concrete><final>(vehicle_spawner_device):
 
     # Holds and spawns items, with an optional cost for each item. Can hold up to three items, and `agent`s can cycle between these by hitting the machine with their pickaxe.
     vending_machine_device<public> := class<concrete><final>(creative_device_base):
