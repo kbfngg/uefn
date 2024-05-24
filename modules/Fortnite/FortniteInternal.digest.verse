@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.40-CL-33291686
+# Generated from build: ++Fortnite+Release-30.00-CL-33760522
 #################################################
 
 AI<public> := module:
@@ -106,17 +106,17 @@ AI<public> := module:
             UnconvertedEvent<epic_internal>():subscribable(tuple()) = external {}
 
         ping_info<native><epic_internal> := struct:
-            Emitter<native><epic_internal>:?agent
+            Emitter<native><public>:?agent
 
-            EntityType<native><epic_internal>:entity_type
+            EntityType<native><public>:entity_type
 
-            Location<native><epic_internal>:vector3
+            Location<native><public>:vector3
 
-            LocationOnHorizontalSurface<native><epic_internal>:logic
+            LocationOnHorizontalSurface<native><public>:logic
 
-            Target<native><epic_internal>:?entity
+            Target<native><public>:?entity
 
-            Type<native><epic_internal>:command_type
+            Type<native><public>:command_type
 
     # Create a `navigation_target` from a `target_info`.
     MakeNavigationTarget<native><epic_internal>(TargetInfo:target_info):navigation_target
@@ -306,7 +306,7 @@ AI<public> := module:
     fort_obstacle_info<native><epic_internal> := struct<epic_internal>:
         Location<native><public>:vector3
 
-        Obstacle<native><epic_internal>:entity
+        Obstacle<native><public>:entity
 
         Status<native><public>:fort_obstacle_status
 
@@ -545,14 +545,18 @@ AI<public> := module:
 
     # Information about a perceived target.
     target_info<native><epic_internal> := struct<epic_internal>:
+        AlertLevel<native><public>:fort_guard_alert_level = external {}
+
         # Attitude toward this target.
         Attitude<native><public>:team_attitude
 
         # True if the target can be seen.
         HasLineOfSight<native><public>:logic
 
+        LastKnownPosition<native><public>:vector3 = external {}
+
         # The source of the detection stimuli.
-        Target<native><epic_internal>:entity
+        Target<native><public>:entity
 
     # Perception settings for touch.
     touch_perception_settings<native><epic_internal> := class<final><concrete>:
@@ -884,6 +888,12 @@ using {/UnrealEngine.com/Temporary/SceneGraph}
 using {/Verse.org/Simulation/Tags}
 # Module import path: /Fortnite.com/Devices
 Devices<public> := module:
+    # Returns the `simulation_entity` for the `CreativeDevice.
+    (CreativeDevice:creative_device).GetSimulationEntity<native><epic_internal>()<transacts><decides>:simulation_entity
+
+    # Returns the `simulation_entity` for the `CreativeObject.
+    (CreativeObject:creative_object).GetSimulationEntity<native><epic_internal>()<transacts><decides>:simulation_entity
+
     # Returns the `entity` associated to that `CreativeObject.
     (CreativeObject:creative_object_interface).GetEntity<native><epic_internal>()<transacts><decides>:entity
 
@@ -908,9 +918,6 @@ Devices<public> := module:
     (MovableObject:creative_movable_object_base).TeleportToInternal<epic_internal>(Transform:transform)<transacts><decides>:void = external {}
 
     (MovableObject:creative_movable_object_base).TeleportToInternalImpl<native><epic_internal>(Transform:transform)<transacts>:teleport_to_result
-
-    # Module import path: /Fortnite.com/Devices/Animation
-    Animation<public> := module:
 
     # Module import path: /Fortnite.com/Devices/CreativeAnimation
     CreativeAnimation<public> := module:
@@ -3769,7 +3776,7 @@ Devices<public> := module:
 
         # If the `Agent` has the effect applied to them, this will return the remaining time the effect has.
         # Returns -1.0 if the effect has an infinite duration.
-        # Returns 0 if the `Agent` does not have the effect applied.
+        # Returns 0.0 if the `Agent` does not have the effect applied.
         GetRemainingTime<public>(Agent:agent)<transacts>:float = external {}
 
         # Returns the `Agent` has the powerup's effect (or another of the same type) applied to them.
@@ -5386,6 +5393,9 @@ Devices<public> := module:
     # Specialized `vehicle_spawner_device` that allows a valet SUV to be configured and spawned.
     vehicle_spawner_valet_SUV_device<epic_internal> := class<concrete><final>(vehicle_spawner_device):
 
+    # Specialized `vehicle_spawner_device` that allows a war bus to be configured and spawned.
+    vehicle_spawner_war_bus_device<public> := class<concrete><final>(vehicle_spawner_device):
+
     # Holds and spawns items, with an optional cost for each item. Can hold up to three items, and `agent`s can cycle between these by hitting the machine with their pickaxe.
     vending_machine_device<public> := class<concrete><final>(creative_device_base):
         # Cycles the screen to show the next item.
@@ -5462,7 +5472,6 @@ Devices<public> := module:
         # When paused the effect freezes in place.
         TogglePauseForAll<public>():void = external {}
 
-    using {/UnrealEngine.com/Temporary/SpatialMath}
     # Used to place visual effects around your island. You can use these effects to enhance the overall theme and experience of your game.
     vfx_spawner_device<public> := class<concrete><final>(creative_device_base):
         # Disables this device.
@@ -5479,9 +5488,6 @@ Devices<public> := module:
 
         # Restarts the VFX. Triggers the VFX if it's Burst VFX.
         Restart<public>():void = external {}
-
-        # Restarts the VFX from the device and places it at the specified location.
-        RestartAt<epic_internal>(Position:vector3, Rotation:rotation):void = external {}
 
     # Used to display curated videos onto in-game screens or player HUDs.
     video_player_device<public> := class<concrete><final>(creative_device_base):
@@ -5551,6 +5557,7 @@ Devices<public> := module:
         # Signaled when an `agent` starts grinding on this `vine_rail_device`.
         StartedGrindingEvent<public>:listenable(agent) = external {}
 
+    using {/UnrealEngine.com/Temporary/SpatialMath}
     # Used to trigger a visual effect (a glow or an outline) when `agent`s pick it up.
     visual_effect_powerup_device<public> := class<concrete><final>(powerup_device):
 
@@ -5774,9 +5781,9 @@ Game<public> := module:
     Abilities<public> := module:
         # Module import path: /Fortnite.com/Game/Abilities/AbilityComponent
         AbilityComponent<public> := module:
-            GetAbilityComponentForCharacter<native><public>(__dupe___unnamed_parameter_165:fort_character)<transacts><decides>:vk_fort_ability_component
+            GetAbilityComponentForCharacter<native><public>(__dupe___unnamed_parameter_174:fort_character)<transacts><decides>:vk_fort_ability_component
 
-            GetAbilityComponentForPlayer<native><epic_internal>(__dupe___unnamed_parameter_164:player_component)<transacts><decides>:vk_fort_ability_component
+            GetAbilityComponentForPlayer<native><epic_internal>(__dupe___unnamed_parameter_173:player_component)<transacts><decides>:vk_fort_ability_component
 
         activate_ability_result<native><public> := enum:
             # Ability was activated successfully
@@ -6119,7 +6126,7 @@ Game<public> := module:
 
     # Module import path: /Fortnite.com/Game/VerseFortniteHacks
     VerseFortniteHacks<epic_internal> := module:
-        GetPawnCollisionEntityID<native><public>(__dupe___unnamed_parameter_164:player_component):int
+        GetPawnCollisionEntityID<native><public>(__dupe___unnamed_parameter_173:player_component):int
 
         getAllComponentsOfType<native><epic_internal>(contextObject:vk_component, Type:subtype(vk_component)):[]vk_component
 
@@ -6593,6 +6600,8 @@ TestDevices<public> := module:
     test_device_event_handler_mock<public> := class<concrete>:
         Await<public>()<suspends>:void = external {}
 
+        Cancel<public>():void = external {}
+
         GetCallCount<public>():int = external {}
 
         ResetCallCount<public>():void = external {}
@@ -6975,10 +6984,6 @@ Vehicles<public> := module:
 
         SetMaxHealth<override>(MaxHealth:float)<transacts>:void = external {}
 
-VerseAIBase<public> := module:
-    # Module import path: /Fortnite.com/VerseAIBase/VerseAIBase
-    VerseAIBase<public> := module:
-
 using {/UnrealEngine.com/VGameplayRst/Components}
 using {/UnrealEngine.com/VGameplayRst/Geometry}
 using {/UnrealEngine.com/VGameplayRst/Messaging}
@@ -6999,9 +7004,6 @@ VerseFortniteGameScript<public> := module:
     FortSceneObject<public> := module:
         MakeFromEntity<public>(Entity:vk_entity):?fort_scene_object = external {}
 
-    # Module import path: /Fortnite.com/VerseFortniteGameScript/fort_constants
-    fort_constants<public> := module:
-
     fort_game_script_base<epic_internal> := class<abstract>(script_component):
         CreateStormController<protected>(Location:vector3):void = external {}
 
@@ -7021,9 +7023,9 @@ VerseFortniteGameScript<public> := module:
 
         OnPlayerEliminated<protected>(ElimResult:player_eliminated_result):void = external {}
 
-        OnPlayerJoined<protected>(__dupe___unnamed_parameter_199:player_component):void = external {}
+        OnPlayerJoined<protected>(__dupe___unnamed_parameter_214:player_component):void = external {}
 
-        OnPlayerLeft<protected>(__dupe___unnamed_parameter_200:player_component):void = external {}
+        OnPlayerLeft<protected>(__dupe___unnamed_parameter_215:player_component):void = external {}
 
         OnPostCreate<override>():void = external {}
 
@@ -7171,7 +7173,3 @@ VerseFortniteGameScript<public> := module:
         SetScale<public>(NewScale:vector3):void = external {}
 
         SetTransform<public>(NewTransform:transform):void = external {}
-
-VerseNPC<public> := module:
-    # Module import path: /Fortnite.com/VerseNPC/VerseNPC
-    VerseNPC<public> := module:
