@@ -196,17 +196,6 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
   
 </details>
 
-
-<details>
-<summary>Partner vs. UGC Diffs</summary>
-
-- Discontinued
-- [`29.20`](https://github.com/kbfngg/uefn/commit/ed6c721796fd8fc8600c8ad93dc1bb88181ea5a2)
-- [`29.10`](https://github.com/kbfngg/uefn/commit/2dbfbbd5ea5d4b80ddbb622c4e402e18f8c8ea65)
-- [`29.01`](https://github.com/kbfngg/uefn/commit/8ea45ed48cebc8af7391fc3e4792568e17f6fd69)
-
-</details>
-
 ## Guidelines
 
 - [Code Style](https://github.com/kbfngg/uefn/blob/main/guidelines/code_style.md) (tbd)
