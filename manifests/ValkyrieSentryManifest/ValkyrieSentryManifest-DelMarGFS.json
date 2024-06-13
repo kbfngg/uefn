@@ -81,6 +81,11 @@
 			"FriendlyName": "PCGBaseVer",
 			"Version": 23
 		},
+		"28B0103666B4498F99425ACADB78A9B5":
+		{
+			"FriendlyName": "DatasmithCloth",
+			"Version": 2
+		},
 		"28E21331501F47238110FA64EA10DA1E":
 		{
 			"FriendlyName": "StateTreeAsset",
@@ -251,6 +256,11 @@
 			"FriendlyName": "Dev-MediaFramework",
 			"Version": 2
 		},
+		"70371DB9DD6C4D2EA51DF7BD2C462558":
+		{
+			"FriendlyName": "FortWeaponItemDefinitionVersion",
+			"Version": 1
+		},
 		"717F9EE7E9B0493A88B391321B388107":
 		{
 			"FriendlyName": "AssetRegistry",
@@ -299,7 +309,7 @@
 		"860A4F4F4E87FB68CE1397B7BAA859A7":
 		{
 			"FriendlyName": "AtomFramework",
-			"Version": 7
+			"Version": 9
 		},
 		"8DBC2C5B54A743E0A768FCBB7DA29060":
 		{
@@ -454,7 +464,7 @@
 		"C1270312AB730B1E0B1EC74571C70F73":
 		{
 			"FriendlyName": "CustomizableObjectVer",
-			"Version": 51
+			"Version": 53
 		},
 		"C1270312AB730B1E0B1EC790917A7105":
 		{
@@ -501,6 +511,11 @@
 			"FriendlyName": "Dev-RigVM",
 			"Version": 10
 		},
+		"DD09A19C88FE4EC2F7D9F60BC547C8BF":
+		{
+			"FriendlyName": "JunoBuildingSnapEntry",
+			"Version": 1
+		},
 		"DD659724936911EEB7B9E2F7A734574D":
 		{
 			"FriendlyName": "FortBehaviorValue",
@@ -534,7 +549,7 @@
 		"EF0A537D90DA4CD2BCA16D6AE21E3589":
 		{
 			"FriendlyName": "FortItemDefinitionVersion",
-			"Version": 10
+			"Version": 15
 		},
 		"F2AED0AC9AFE416F8664AA7FFA26D6FC":
 		{
@@ -1164,7 +1179,9 @@
 			"/Script/Engine.WorldPartitionMiniMap",
 			"/Script/Engine.WorldPartitionRuntimeSpatialHash",
 			"/Script/Engine.WorldPartitionStreamingSourceComponent",
+			"/Script/Entity.EntityPrefab",
 			"/Script/EntityActor.SimObject",
+			"/Script/EntityLevel.EntityLevel",
 			"/Script/FabricRuntime.FabricButtonComponentBase",
 			"/Script/FabricRuntime.FabricSequencerPreviewFXComponent",
 			"/Script/FabricRuntime.FabricSequencerSustainComponent",
@@ -1706,6 +1723,8 @@
 			"/Script/PerformanceCaptureCore.CapturePerformer",
 			"/Script/PerformanceCaptureCore.PerformerComponent",
 			"/Script/PerformanceCaptureCore.RetargetComponent",
+			"/Script/Persona.AnimAssetFindReplaceCurves",
+			"/Script/Persona.AnimAssetFindReplaceSyncMarkers",
 			"/Script/Persona.PersonaPreviewSceneAnimationController",
 			"/Script/Persona.PersonaPreviewSceneDefaultController",
 			"/Script/Persona.PersonaPreviewSceneRefPoseController",
@@ -1804,6 +1823,9 @@
 			"/Script/VerseFortnite.NPCCharacterType",
 			"/Script/VerseFortniteUI.VerseFortniteUIAllowedConversionLibrary",
 			"/Script/VerseGameplayTags.VerseTagMarkupComponent",
+			"/Script/VerseQuery.EntityQueryManager",
+			"/Script/VerseQuery.EntityTypeQueryContainer",
+			"/Script/VerseQuery.TaggedObjectQueryContainer",
 			"/Script/VirtualHeightfieldMesh.MaterialExpressionHeightfieldMinMaxTexture",
 			"/Script/VolumetricRegion.VolumetricRegionNativeComponent",
 			"/Script/Water.BuoyancyManager",
@@ -1997,18 +2019,16 @@
 			"/Script/Engine.PoseAsset",
 			"/Script/Engine.UserDefinedEnum",
 			"/Script/Engine.UserDefinedStruct",
-			"/Script/Entity.EntityPrefab",
-			"/Script/EntityLevel.EntityLevel",
+			"/Script/FabricEngineSequencer.FabricAudioSyncSection",
+			"/Script/FabricEngineSequencer.FabricAudioSyncTrack",
 			"/Script/FortniteGame.BaseUEFNAnimInstance",
 			"/Script/FortniteGame.UEFNCustomAgentAnimInstance",
 			"/Script/HarmonixMidi.MidiFile",
-			"/Script/ValkyrieCommon.ValkyrieContentWorkerDebugManager",
-			"/Script/VerseQuery.EntityQueryManager",
-			"/Script/VerseQuery.EntityTypeQueryContainer",
-			"/Script/VerseQuery.GlobalEntityQueryManagerComponent",
-			"/Script/VerseQuery.TaggedObjectQueryContainer"
+			"/Script/ValkyrieCommon.ValkyrieContentWorkerDebugManager"
 		],
-		"VKCreateUGCPartner": []
+		"VKCreateUGCPartner": [
+			"/Script/FortniteGame.BuildingEditModeMetadata"
+		]
 	},
 	"ClassPublicLists":
 	{
@@ -2133,6 +2153,9 @@
 			"/Script/FortniteGame.BuildingWallActorClassData",
 			"/Script/FortniteGame.UserOptionDefinitionContainer",
 			"/Script/GameplayTags.GameplayTag",
+			"/Script/ItemizationCoreRuntime.ItemComponentData_Icon",
+			"/Script/ItemizationCoreRuntime.ItemComponentData_MaxStackSize",
+			"/Script/ItemizationCoreRuntime.ItemComponentData_StackSize",
 			"/Script/LocalizableMessage.LocalizableMessage",
 			"/Script/LocalizableMessage.LocalizableMessageParameterEntry",
 			"/Script/MovieSceneGameplayEventTrack.MovieSceneGameplayEvent",
@@ -3094,6 +3117,8 @@
 			"/CRG_Background/SetupAssets/PID_CP_Props_EQBuildings_h.PID_CP_Props_EQBuildings_h",
 			"/CRG_Background/SetupAssets/PID_CP_Props_EQBuildings_i.PID_CP_Props_EQBuildings_i",
 			"/CRG_Background/SetupAssets/PID_CP_Props_EQBuildings_j.PID_CP_Props_EQBuildings_j",
+			"/CRG_DelMar/SetupAssets/PID_CP_NeonRush_Gallery_A.PID_CP_NeonRush_Gallery_A",
+			"/CRG_DelMar/SetupAssets/PID_CP_NeonRush_Gallery_B.PID_CP_NeonRush_Gallery_B",
 			"/CRG_DelMar/SetupAssets/PID_CP_Props_DelMar_Desert_Flora.PID_CP_Props_DelMar_Desert_Flora",
 			"/CRG_DelMar/SetupAssets/PID_CP_Props_DelMar_Desert_Props_a.PID_CP_Props_DelMar_Desert_Props_a",
 			"/CRG_DelMar/SetupAssets/PID_CP_Props_DelMar_Desert_Props_b.PID_CP_Props_DelMar_Desert_Props_b",
@@ -3727,6 +3752,17 @@
 			"/DelMarGame/Blueprints/OOBTube/OOBTube_Redo/SM_Tunnel2Oobtube_Redo.SM_Tunnel2Oobtube_Redo",
 			"/DelMarGame/Environments/Desert/Materials/OOBTube/M_OOBTUBE_Editor_v02.M_OOBTUBE_Editor_v02",
 			"/DelMarGame/Environments/Desert/Materials/OOBTube/M_OOBTube_Editor_v02_Inst.M_OOBTube_Editor_v02_Inst",
+			"/DelMarGame/Environments/Desert/Materials/Screens/MI_DM_LCD_Ad_Source_BobRamen.MI_DM_LCD_Ad_Source_BobRamen",
+			"/DelMarGame/Environments/Desert/Materials/Screens/MI_DM_LCD_Ad_Source_BuffySugo.MI_DM_LCD_Ad_Source_BuffySugo",
+			"/DelMarGame/Environments/Desert/Materials/Screens/MI_DM_LCD_Ad_Source_Diesel_Horizontal.MI_DM_LCD_Ad_Source_Diesel_Horizontal",
+			"/DelMarGame/Environments/Desert/Materials/Screens/MI_DM_LCD_Ad_Source_GirlBat.MI_DM_LCD_Ad_Source_GirlBat",
+			"/DelMarGame/Environments/Desert/Materials/Screens/MI_DM_LCD_Ad_Source_GuidrysGoods.MI_DM_LCD_Ad_Source_GuidrysGoods",
+			"/DelMarGame/Environments/Desert/Materials/Screens/MI_DM_LCD_Ad_Source_Octane_A_0.MI_DM_LCD_Ad_Source_Octane_A_0",
+			"/DelMarGame/Environments/Desert/Materials/Screens/MI_DM_LCD_Ad_Source_Rastelin.MI_DM_LCD_Ad_Source_Rastelin",
+			"/DelMarGame/Environments/Desert/Materials/Screens/MI_DM_LCD_Ad_Source_RR_Logo_Swap.MI_DM_LCD_Ad_Source_RR_Logo_Swap",
+			"/DelMarGame/Environments/Desert/Materials/Screens/MI_DM_LCD_Ad_Source_Sevens_Vert.MI_DM_LCD_Ad_Source_Sevens_Vert",
+			"/DelMarGame/Environments/Desert/Materials/Screens/MI_DM_LCD_Ad_Source_Spray_07.MI_DM_LCD_Ad_Source_Spray_07",
+			"/DelMarGame/Environments/Desert/Materials/Screens/MI_DM_LCD_Ad_Source_Tractrion.MI_DM_LCD_Ad_Source_Tractrion",
 			"/DelMarGame/TechArt/Meshes/CapsuleCap_v01.CapsuleCap_v01",
 			"/DelMarGame/TechArt/Meshes/Cube100.Cube100",
 			"/DelMarGame/TechArt/Meshes/CylinderCap_v01.CylinderCap_v01",
@@ -4404,6 +4440,7 @@
 			"/EpicBaseMaterials/EpicBase/wood/MI_Wooden_Planks.MI_Wooden_Planks",
 			"/EpicBaseMaterials/EpicBase/wood/MI_Wooden_Planks_WorldAligned.MI_Wooden_Planks_WorldAligned",
 			"/EpicBaseTextures/Blanks/T_Default_BaseColor_White.T_Default_BaseColor_White",
+			"/EpicBaseTextures/Blanks/T_Default_Cubemap_White.T_Default_Cubemap_White",
 			"/EpicBaseTextures/Blanks/T_Default_EmissiveColor_Black.T_Default_EmissiveColor_Black",
 			"/EpicBaseTextures/Blanks/T_Default_Masks_AllOne.T_Default_Masks_AllOne",
 			"/EpicBaseTextures/Blanks/T_Default_Masks_AllZero.T_Default_Masks_AllZero",
@@ -8593,12 +8630,18 @@
 			"/Game/Environments/Asteria/Props/AmberForestTown/AmberForestTown_ForgeWeaponRack_A/Meshes/SM_AmberForestTown_ForgeWeaponRack_C.SM_AmberForestTown_ForgeWeaponRack_C",
 			"/Game/Environments/Asteria/Props/Commerce/Commerce_CafeLight_A/TextureData/TD_Commerce_CafeLight_A_A.TD_Commerce_CafeLight_A_A",
 			"/Game/Environments/Asteria/Props/Commerce/Commerce_CafeLight_A/TextureData/TD_Commerce_CafeLight_A_C.TD_Commerce_CafeLight_A_C",
+			"/Game/Environments/Asteria/Props/Commerce/Commerce_LobbyChair_A/TextureData/TD_Commerce_LobbyChair_A_C.TD_Commerce_LobbyChair_A_C",
+			"/Game/Environments/Asteria/Props/Commerce/Commerce_LobbySideTable_A/TextureData/TD_Commerce_LobbySideTable_A_C.TD_Commerce_LobbySideTable_A_C",
 			"/Game/Environments/Asteria/Props/Commerce/Commerce_LobbySofas_A/TextureData/TD_Commerce_LobbySofa_A_C.TD_Commerce_LobbySofa_A_C",
 			"/Game/Environments/Asteria/Props/Commerce/Commerce_LobbyTable_A/TextureData/TD_Commerce_LobbyTable_A_D.TD_Commerce_LobbyTable_A_D",
+			"/Game/Environments/Asteria/Props/Commerce/Commerce_Plant_A/TextureData/TD_Commerce_Plant_A_C.TD_Commerce_Plant_A_C",
 			"/Game/Environments/Asteria/Props/Commerce/Kit_Commerce_TattooTray_A/Meshes/SM_Commerce_TattooTrayA_Set_A.SM_Commerce_TattooTrayA_Set_A",
 			"/Game/Environments/Asteria/Props/Commerce/Kit_Commerce_TattooTray_A/Meshes/SM_Commerce_TattooTrayA_Set_B.SM_Commerce_TattooTrayA_Set_B",
 			"/Game/Environments/Asteria/Props/Commerce/Kit_Commerce_TattooTray_A/Meshes/SM_Commerce_TattooTrayA_Set_C.SM_Commerce_TattooTrayA_Set_C",
 			"/Game/Environments/Asteria/Props/Construction/Kit_Construction_Pallets_A/Materials/MI_Construction_Pallet_Large_A_ISME.MI_Construction_Pallet_Large_A_ISME",
+			"/Game/Environments/Asteria/Props/Container/Container_HardCases_A/TextureData/TD_Container_HardCase_A1.TD_Container_HardCase_A1",
+			"/Game/Environments/Asteria/Props/Container/Container_HardCases_A/TextureData/TD_Container_HardCase_C1.TD_Container_HardCase_C1",
+			"/Game/Environments/Asteria/Props/Container/Container_HardCases_A/TextureData/TD_Container_HardCase_D1.TD_Container_HardCase_D1",
 			"/Game/Environments/Asteria/Props/CrateBarrel/Kit_CrateBarrel_Barrel_Oil_B/TextureData/TD_CrateBarrel_Barrel_Oil_B1.TD_CrateBarrel_Barrel_Oil_B1",
 			"/Game/Environments/Asteria/Props/CrateBarrel/Kit_CrateBarrel_Barrel_Oil_B/TextureData/TD_CrateBarrel_Barrel_Oil_B2.TD_CrateBarrel_Barrel_Oil_B2",
 			"/Game/Environments/Asteria/Props/CrateBarrel/Kit_CrateBarrel_Barrel_Oil_B/TextureData/TD_CrateBarrel_Barrel_Oil_B3.TD_CrateBarrel_Barrel_Oil_B3",
@@ -8618,6 +8661,7 @@
 			"/Game/Environments/Asteria/Props/CrateBarrel/Kit_CrateBarrel_CrateOpen_A/TextureData/CrateBarrel_CrateOpen_Small_A1.CrateBarrel_CrateOpen_Small_A1",
 			"/Game/Environments/Asteria/Props/CrateBarrel/Kit_CrateBarrel_CrateOpen_A/TextureData/CrateBarrel_CrateOpen_Small_A2.CrateBarrel_CrateOpen_Small_A2",
 			"/Game/Environments/Asteria/Props/CrateBarrel/Kit_CrateBarrel_CrateOpen_A/TextureData/CrateBarrel_CrateOpen_Small_A3.CrateBarrel_CrateOpen_Small_A3",
+			"/Game/Environments/Asteria/Props/Dojo/Dojo_Bed_C/TextureData/TD_Dojo_Bed_C_B.TD_Dojo_Bed_C_B",
 			"/Game/Environments/Asteria/Props/Dojo/Dojo_Ricepot_A/Meshes/SM_Dojo_RicePotSet_A.SM_Dojo_RicePotSet_A",
 			"/Game/Environments/Asteria/Props/Dojo/Dojo_Ricepot_A/Meshes/SM_Dojo_RicePotSet_B_A.SM_Dojo_RicePotSet_B_A",
 			"/Game/Environments/Asteria/Props/Dojo/Dojo_Ricepot_A/Meshes/SM_Dojo_RicePotSet_B_B.SM_Dojo_RicePotSet_B_B",
@@ -8671,6 +8715,7 @@
 			"/Game/Environments/Asteria/Props/Industrial/Industrial_SlapsBoxPallet_A/TextureData/TD_Asteria_Industrial_SlapsBoxPallet_A.TD_Asteria_Industrial_SlapsBoxPallet_A",
 			"/Game/Environments/Asteria/Props/Lair/Lair_EclipseSigns_A/TextureData/TD_Lair_EclipseSigns_A_C.TD_Lair_EclipseSigns_A_C",
 			"/Game/Environments/Asteria/Props/LightCastle/LightCastle_Statue_A/TextureData/TD_LightCastle_Statue_A_Interior.TD_LightCastle_Statue_A_Interior",
+			"/Game/Environments/Asteria/Props/NeonCity/NeonCIty_Bollard_C/TextureData/TD_NeonCity_Bollard_C.TD_NeonCity_Bollard_C",
 			"/Game/Environments/Asteria/Props/NeonCity/NeonCIty_BookShelf_A/Meshes/SM_NeonCity_BookShelf_A_SetA.SM_NeonCity_BookShelf_A_SetA",
 			"/Game/Environments/Asteria/Props/NeonCity/NeonCIty_BookShelf_A/Meshes/SM_NeonCity_BookShelf_A_SetB.SM_NeonCity_BookShelf_A_SetB",
 			"/Game/Environments/Asteria/Props/NeonCity/NeonCIty_BookShelf_A/Meshes/SM_NeonCity_BookShelf_A_SetC.SM_NeonCity_BookShelf_A_SetC",
@@ -8694,10 +8739,13 @@
 			"/Game/Environments/Asteria/Props/NeonCity/NeonCity_StreetSigns_A/TextureData/NeonCity_StreetSigns_C2.NeonCity_StreetSigns_C2",
 			"/Game/Environments/Asteria/Props/NeonCity/NeonCity_StreetSigns_A/TextureData/NeonCity_StreetSigns_D1.NeonCity_StreetSigns_D1",
 			"/Game/Environments/Asteria/Props/NeonCity/NeonCity_StreetSigns_A/TextureData/NeonCity_StreetSigns_D2.NeonCity_StreetSigns_D2",
+			"/Game/Environments/Asteria/Props/NeonCity/NeonCity_Tables_A/TextureData/TD_NeonCity_Tables_A_D.TD_NeonCity_Tables_A_D",
 			"/Game/Environments/Asteria/Props/NeonCity/NeonCity_Tableware_A/Meshes/SM_NeonCity_Tableware_E2.SM_NeonCity_Tableware_E2",
 			"/Game/Environments/Asteria/Props/NeonCity/NeonCity_Tableware_A/Meshes/SM_NeonCity_Tableware_E3.SM_NeonCity_Tableware_E3",
 			"/Game/Environments/Asteria/Props/NeonCity/NeonCity_VendingMachine_A/TextureData/TD_NeonCity_VendingMachine_A_D.TD_NeonCity_VendingMachine_A_D",
+			"/Game/Environments/Asteria/Props/Office/Office_EclipseScreen_A/TextureData/TD_Office_EclipseScreen_A.TD_Office_EclipseScreen_A",
 			"/Game/Environments/Asteria/Props/Office/Office_EclipseScreen_A/TextureData/TD_Office_EclipseScreen_B.TD_Office_EclipseScreen_B",
+			"/Game/Environments/Asteria/Props/Outdoor/Outdoor_HighTableSet_A/TextureData/TD_Outdoor_HighTable_A_B.TD_Outdoor_HighTable_A_B",
 			"/Game/Environments/Asteria/Props/Recreation/Recreation_Jukebox_B/TextureData/TD_Recreation_Jukebox_B.TD_Recreation_Jukebox_B",
 			"/Game/Environments/Asteria/Sets/AmberForestTown/Texture_Data/Quarry/TD_AmberForestTown_Bits_B_Quarry.TD_AmberForestTown_Bits_B_Quarry",
 			"/Game/Environments/Asteria/Sets/AmberForestTown/Texture_Data/Quarry/TD_AmberForestTown_Door_A_Dirt_Quarry.TD_AmberForestTown_Door_A_Dirt_Quarry",
@@ -9152,6 +9200,7 @@
 			"/Game/Environments/Asteria/Sets/NeonCityC/TextureDatas/TD_NeonCityC_VerticleLines.TD_NeonCityC_VerticleLines",
 			"/Game/Environments/Asteria/Sets/NeonCityStore/TextureData/Awnings/TD_NeonCityStore_ConvenientStore_D_B.TD_NeonCityStore_ConvenientStore_D_B",
 			"/Game/Environments/Asteria/Sets/NeonCityStore/TextureData/Awnings/TD_NeonCityStore_ConvenientStore_D_D.TD_NeonCityStore_ConvenientStore_D_D",
+			"/Game/Environments/Asteria/Sets/NeonCityStore/TextureData/Bars/TD_NeonCityStore_ConvenientStore_A_A.TD_NeonCityStore_ConvenientStore_A_A",
 			"/Game/Environments/Asteria/Sets/NeonCityStore/TextureData/Bars/TD_NeonCityStore_ConvenientStore_A_B.TD_NeonCityStore_ConvenientStore_A_B",
 			"/Game/Environments/Asteria/Sets/NeonCityStore/TextureData/Bars/TD_NeonCityStore_ConvenientStore_A_C.TD_NeonCityStore_ConvenientStore_A_C",
 			"/Game/Environments/Asteria/Sets/NeonCityStore/TextureData/TD_NeonCityStore_BookStore_Kiosk_A.TD_NeonCityStore_BookStore_Kiosk_A",
@@ -9212,6 +9261,7 @@
 			"/Game/Environments/Asteria/Sets/TattooShop/TextureData/TD_TattooShop_Interior_Wall_F.TD_TattooShop_Interior_Wall_F",
 			"/Game/Environments/Asteria/Sets/Village/TextureData/TD_Asteria_Village_Floor_B.TD_Asteria_Village_Floor_B",
 			"/Game/Environments/Asteria/Sets/Village/TextureData/TD_Asteria_Village_Floor_C_A.TD_Asteria_Village_Floor_C_A",
+			"/Game/Environments/Asteria/Sets/ZenGarden/TextureData/TD_Zen_BorderA.TD_Zen_BorderA",
 			"/Game/Environments/Asteria/Terrain/Cliffs/Materials/Default/MI_Cliff_Medium_Corner_90_A_NoRVT_Inst.MI_Cliff_Medium_Corner_90_A_NoRVT_Inst",
 			"/Game/Environments/Asteria/Terrain/Cliffs/Materials/Default/MI_Cliff_Small_Straight_A_NoRVT_Inst.MI_Cliff_Small_Straight_A_NoRVT_Inst",
 			"/Game/Environments/Asteria/Terrain/Textures/T_Asteria_DirtGravel_01_D.T_Asteria_DirtGravel_01_D",
@@ -9249,14 +9299,19 @@
 			"/Game/Environments/FrontEnd/Materials/M_Monitor_Frame.M_Monitor_Frame",
 			"/Game/Environments/FrontEnd/Materials/M_Monitor_Screen_Broken.M_Monitor_Screen_Broken",
 			"/Game/Environments/FrontEnd/Materials/M_Monitor_Screen_V_l0.M_Monitor_Screen_V_l0",
+			"/Game/Environments/Helios/Props/Appliance/Appliance_LoginScreen_A/TextureData/TD_Appliance_LoginScreen_A_A.TD_Appliance_LoginScreen_A_A",
 			"/Game/Environments/Helios/Props/Brimstone/Brimstone_Brazier_A/Materials/BP_Brimstone_Brazier_A.BP_Brimstone_Brazier_A",
 			"/Game/Environments/Helios/Props/Brimstone/Brimstone_Brazier_B/Materials/BP_Brimstone_Brazier_B.BP_Brimstone_Brazier_B",
+			"/Game/Environments/Helios/Props/Brimstone/Brimstone_Cell_Bench_A/TextureData/TD_Brimstone_Cell_Bench_A.TD_Brimstone_Cell_Bench_A",
 			"/Game/Environments/Helios/Props/Brimstone/Brimstone_Chandelier_A/Materials/MI_Brimstone_Chandelier_A.MI_Brimstone_Chandelier_A",
 			"/Game/Environments/Helios/Props/Brimstone/Brimstone_HoodedStatue_A/Materials/MI_Brimstone_HoodedStatue_A.MI_Brimstone_HoodedStatue_A",
 			"/Game/Environments/Helios/Props/Brimstone/Brimstone_HoodedStatue_A/Materials/Nanite/MI_NITE_Brimstone_HoodedStatue_A.MI_NITE_Brimstone_HoodedStatue_A",
 			"/Game/Environments/Helios/Props/Brimstone/Brimstone_Sconce_A/Materials/MI_Brimstone_Sconce_A.MI_Brimstone_Sconce_A",
 			"/Game/Environments/Helios/Props/Brimstone/Brimstone_Torch_A/Materials/BP_Brimstone_Torch_A.BP_Brimstone_Torch_A",
 			"/Game/Environments/Helios/Props/Commerce/Commerce_HangingLights_A/Materials/MI_Commerce_HangingLights_A.MI_Commerce_HangingLights_A",
+			"/Game/Environments/Helios/Props/Commerce/Commerce_VendingMachine_A/TextureData/TD_Commerce_VendingMachine_A_B.TD_Commerce_VendingMachine_A_B",
+			"/Game/Environments/Helios/Props/Construction/Construction_Barricades_A/TextureData/TD_Construction_Barricades_A.TD_Construction_Barricades_A",
+			"/Game/Environments/Helios/Props/Furniture/Furniture_OrnateSofa_A/TextureData/TD_Furniture_OrnateSofa_A_A.TD_Furniture_OrnateSofa_A_A",
 			"/Game/Environments/Helios/Props/LightSource/LightSource_ArmChandeliers_A/Materials/MI_LightSource_ArmChandelier_A.MI_LightSource_ArmChandelier_A",
 			"/Game/Environments/Helios/Props/LightSource/Lightsource_ArmSconce_A/Materials/MI_Lightsource_ArmSconce_A.MI_Lightsource_ArmSconce_A",
 			"/Game/Environments/Helios/Sets/Brimstone/TextureData/TD_Brimstone_BaseWall_A.TD_Brimstone_BaseWall_A",
@@ -13067,6 +13122,22 @@
 			"/CRG_Background/SetupAssets/Blueprints/CP_BG_Dune_Snow_Group_Small_01.CP_BG_Dune_Snow_Group_Small_01_C",
 			"/CRG_Background/SetupAssets/Blueprints/CP_BG_Dune_Snow_Med_01.CP_BG_Dune_Snow_Med_01_C",
 			"/CRG_Background/SetupAssets/Blueprints/CP_BG_Dune_Snow_Small_01.CP_BG_Dune_Snow_Small_01_C",
+			"/CRG_DelMar/SetupAssets/Blueprints/FNEC_Asteria_NeonCity_SignFrame_E.FNEC_Asteria_NeonCity_SignFrame_E_C",
+			"/CRG_DelMar/SetupAssets/Blueprints/FNEC_Asteria_NeonCity_SignFrame_E_10.FNEC_Asteria_NeonCity_SignFrame_E_10_C",
+			"/CRG_DelMar/SetupAssets/Blueprints/FNEC_Asteria_NeonCity_SignFrame_E_11.FNEC_Asteria_NeonCity_SignFrame_E_11_C",
+			"/CRG_DelMar/SetupAssets/Blueprints/FNEC_Asteria_NeonCity_SignFrame_E_12.FNEC_Asteria_NeonCity_SignFrame_E_12_C",
+			"/CRG_DelMar/SetupAssets/Blueprints/FNEC_Asteria_NeonCity_SignFrame_E_2.FNEC_Asteria_NeonCity_SignFrame_E_2_C",
+			"/CRG_DelMar/SetupAssets/Blueprints/FNEC_Asteria_NeonCity_SignFrame_E_3.FNEC_Asteria_NeonCity_SignFrame_E_3_C",
+			"/CRG_DelMar/SetupAssets/Blueprints/FNEC_Asteria_NeonCity_SignFrame_E_4.FNEC_Asteria_NeonCity_SignFrame_E_4_C",
+			"/CRG_DelMar/SetupAssets/Blueprints/FNEC_Asteria_NeonCity_SignFrame_E_5.FNEC_Asteria_NeonCity_SignFrame_E_5_C",
+			"/CRG_DelMar/SetupAssets/Blueprints/FNEC_Asteria_NeonCity_SignFrame_E_6.FNEC_Asteria_NeonCity_SignFrame_E_6_C",
+			"/CRG_DelMar/SetupAssets/Blueprints/FNEC_Asteria_NeonCity_SignFrame_E_7.FNEC_Asteria_NeonCity_SignFrame_E_7_C",
+			"/CRG_DelMar/SetupAssets/Blueprints/FNEC_Asteria_NeonCity_SignFrame_E_8.FNEC_Asteria_NeonCity_SignFrame_E_8_C",
+			"/CRG_DelMar/SetupAssets/Blueprints/FNEC_Asteria_NeonCity_SignFrame_E_9.FNEC_Asteria_NeonCity_SignFrame_E_9_C",
+			"/CRG_DelMar/SetupAssets/Blueprints/FNEC_BP_DM_RL_Drone_T1.FNEC_BP_DM_RL_Drone_T1_C",
+			"/CRG_DelMar/SetupAssets/Blueprints/FNEC_BP_DM_RL_RLOldPC.FNEC_BP_DM_RL_RLOldPC_C",
+			"/CRG_DelMar/SetupAssets/Blueprints/FNEC_BP_DM_RLRetroPhone.FNEC_BP_DM_RLRetroPhone_C",
+			"/CRG_DelMar/SetupAssets/Blueprints/FNEC_NP_DM_NeonCity_JuddzHologram.FNEC_NP_DM_NeonCity_JuddzHologram_C",
 			"/CRG_Foliage/SetupAssets/Blueprints/CP_Apollo_Tree_RedAlder_ColorPicker.CP_Apollo_Tree_RedAlder_ColorPicker_C",
 			"/CRG_Foliage/SetupAssets/Blueprints/CP_ColorPicker_Ivy_01.CP_ColorPicker_Ivy_01_C",
 			"/CRG_Foliage/SetupAssets/Blueprints/CP_ColorPicker_Ivy_02.CP_ColorPicker_Ivy_02_C",
@@ -14517,6 +14588,8 @@
 			"/DelMarGame/Environments/Desert/Meshes/Props/Flags/BuildingActors/CP_BP_Flag_Pennant_01.CP_BP_Flag_Pennant_01_C",
 			"/DelMarGame/Environments/Desert/Meshes/Props/Floating_Billboards/CP_BP_Delmar_DSRT_FruitBalloon_PlatformLarge1.CP_BP_Delmar_DSRT_FruitBalloon_PlatformLarge1_C",
 			"/DelMarGame/Environments/Desert/Meshes/Props/Floating_Billboards/CP_BP_Delmar_DSRT_FruitBalloon_PlatformSmall.CP_BP_Delmar_DSRT_FruitBalloon_PlatformSmall_C",
+			"/DelMarGame/Environments/Desert/Meshes/Props/Holograms/NP_DM_NeonCity_BobsRamenHlogram.NP_DM_NeonCity_BobsRamenHlogram_C",
+			"/DelMarGame/Environments/Desert/Meshes/Props/Holograms/NP_DM_NeonCity_BobsRamenHologram.NP_DM_NeonCity_BobsRamenHologram_C",
 			"/DelMarGame/Environments/Desert/Meshes/Props/Infrastructure/BuildingActors/BP_Bridge_00.BP_Bridge_00_C",
 			"/DelMarGame/Environments/Desert/Meshes/Props/Infrastructure/BuildingActors/BP_Bridge_End_00.BP_Bridge_End_00_C",
 			"/DelMarGame/Environments/Desert/Meshes/Props/Infrastructure/BuildingActors/BP_Concrete_Pillar_01.BP_Concrete_Pillar_01_C",
@@ -14654,6 +14727,7 @@
 			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Dog_Balloon/BP_DelMar_Prop_MM_Dog_Balloon.BP_DelMar_Prop_MM_Dog_Balloon_C",
 			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Elvesd/BP_DelMar_Prop_Hat_Elves.BP_DelMar_Prop_Hat_Elves_C",
 			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Foam_Hat/BP_DelMar_Prop_Hat_FoamHat.BP_DelMar_Prop_Hat_FoamHat_C",
+			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Glasses_DWI/BP_HAT_DWI_Glasses_infinite.BP_HAT_DWI_Glasses_infinite_C",
 			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Hot_Air_Balloon/BP_DelMar_Prop_Beach_Hab_A.BP_DelMar_Prop_Beach_Hab_A_C",
 			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Hot_Air_Balloon/BP_DelMar_Prop_Beach_Hab_B.BP_DelMar_Prop_Beach_Hab_B_C",
 			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Hot_Air_Balloon/BP_DelMar_Prop_Beach_Hab_C.BP_DelMar_Prop_Beach_Hab_C_C",
@@ -14665,7 +14739,16 @@
 			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Pigeon/BP_DelMar_Prop_Pigeon.BP_DelMar_Prop_Pigeon_C",
 			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Pineapple/BP_DelMar_Prop_InnerTube_A.BP_DelMar_Prop_InnerTube_A_C",
 			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Pineapple/BP_DelMar_Prop_Pineapple.BP_DelMar_Prop_Pineapple_C",
+			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Proto_Neo/BP_Delmar_Proto_Neo.BP_Delmar_Proto_Neo_C",
 			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Rubber_Duck/BP_DelMar_Prop_Rubber_Duck.BP_DelMar_Prop_Rubber_Duck_C",
+			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Sign_Beckwith/BP_RR_NeonSign_Beckwith.BP_RR_NeonSign_Beckwith_C",
+			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Sign_DubStone/BP_RR_NeonSign_DubStone.BP_RR_NeonSign_DubStone_C",
+			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Sign_Hexus/BP_RR_NeonSign_Hexus.BP_RR_NeonSign_Hexus_C",
+			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Sign_LazerFun/BP_RR_NeonSign_LazerFun.BP_RR_NeonSign_LazerFun_C",
+			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Sign_MajikaFish/BP_RR_NeonSign_MajkaFish.BP_RR_NeonSign_MajkaFish_C",
+			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Sign_Matkeyz/BP_RR_NeonSign_Matkeyz.BP_RR_NeonSign_Matkeyz_C",
+			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Sign_Mcn/BP_RR_NeonSign_MCN.BP_RR_NeonSign_MCN_C",
+			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Sign_Wizzle/BP_RR_NeonSign_Wizzle.BP_RR_NeonSign_Wizzle_C",
 			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Strawberry/BP_DelMar_Prop_Strawberry.BP_DelMar_Prop_Strawberry_C",
 			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Tall_Cactus/BP_DelMar_Prop_Tall_Cactus.BP_DelMar_Prop_Tall_Cactus_C",
 			"/DelMarGame/Environments/Shared/Rocket_League_Ported/Tangerine/BP_DelMar_Prop_Tangerine.BP_DelMar_Prop_Tangerine_C",
@@ -14733,6 +14816,7 @@
 			"/FortUILibrary/UGC/Widgets/Buttons/CTA/WBP_UEFN_ButtonCTA_Base.WBP_UEFN_ButtonCTA_Base_C",
 			"/FortWater/Blueprints/WaterBrushManager.WaterBrushManager_C",
 			"/FortWater/FluidSimulation/Blueprints/BP_FluidSim_01.BP_FluidSim_01_C",
+			"/FortWater/FluidSimulation/Blueprints/BP_FluidSimParent.BP_FluidSimParent_C",
 			"/Game/Abilities/Toys/Basketball/Minigame/B_BasketballHoopWithMinigame.B_BasketballHoopWithMinigame_C",
 			"/Game/Abilities/Toys/Basketball/Minigame/B_DowntownTrashCan_BasketballMinigame.B_DowntownTrashCan_BasketballMinigame_C",
 			"/Game/Abilities/Toys/Shared/B_BuildingPropToy_QuestMiniGame_Parent.B_BuildingPropToy_QuestMiniGame_Parent_C",
