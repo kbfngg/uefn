@@ -165,7 +165,7 @@ VGameplayRst<public> := module:
 
             SetCustomDegreeOfFreedomConstrain<native><public>(CustomMovementPlaneNormal:vector3):void
 
-            # Looks at the static_mesh_component for the mesh.
+            # Looks at the mesh_component for the mesh.
             SetMeshCollisionShapeMode<native><public>()<transacts>:void
 
             SetMeshCollisionShapeMode<native><epic_internal>(Mesh:mesh)<transacts>:void

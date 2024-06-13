@@ -254,8 +254,9 @@ Devices<public> := module:
     creative_device_asset<native><public> := class<computes><final><epic_internal>(asset):
 
 
-    # Returns the `simulation_entity` for the `CreativeDevice.
-    (CreativeDevice:creative_device).GetSimulationEntity<native><epic_internal>()<transacts><decides>:simulation_entity
+    @experimental
+    # Returns the simulation entity at the root of the experience this `creative_device` is operating within.  * The simulation entity is the rootmost entity in an experience.  * Fails if this `creative_device` is not operating in a context with a valid SimulationEntity.
+    (CreativeDevice:creative_device).GetSimulationEntity<native><public>()<transacts><decides>:entity
 
     @import_as("/Script/VerseDevices.UVerseMovableObjectBase")
     creative_movable_object_base<native><epic_internal> := class<abstract><epic_internal>:
@@ -317,11 +318,13 @@ Devices<public> := module:
     # Returns the `fort_playspace` that `CreativeObject` belongs to.
     (CreativeObject:creative_object_interface).GetPlayspace<native><public>()<transacts>:fort_playspace
 
+    @experimental
     # Returns the `entity` associated to that `CreativeObject.
     (CreativeObject:creative_object_interface).GetEntity<native><epic_internal>()<transacts><decides>:entity
 
-    # Returns the `simulation_entity` for the `CreativeObject.
-    (CreativeObject:creative_object).GetSimulationEntity<native><epic_internal>()<transacts><decides>:simulation_entity
+    @experimental
+    # Returns the simulation entity at the root of the experience this `creative_object` is operating within.  * The simulation entity is the rootmost entity in an experience.  * Fails if this `creative_object` is not operating in a context with a valid SimulationEntity.
+    (CreativeObject:creative_object).GetSimulationEntity<native><public>()<transacts><decides>:entity
 
     # A Fortnite prop that has been placed or spawned in the island.
     creative_prop<native><public> := class<concrete><final>(creative_object, invalidatable):
@@ -329,7 +332,7 @@ Devices<public> := module:
         Dispose<native><override>():void
 
         # Succeeds if this object has been disposed of either via `Dispose()` or through an external system.
-        IsDisposed<native><final><public>()<decides>:void
+        IsDisposed<native><final><public>()<transacts><decides>:void
 
         # Succeeds if this object has not been disposed of either via `Dispose()` or through an external system.
         IsValid<native><override>()<transacts><decides>:void

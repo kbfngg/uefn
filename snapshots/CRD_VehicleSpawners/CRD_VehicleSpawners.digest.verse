@@ -1,7 +1,59 @@
 using {/Fortnite.com/Vehicles}
 using {/Verse.org/Simulation}
-# Specialized `vehicle_spawner_device` that allows a Whiplash sports car to be configured and spawned.
-vehicle_spawner_sports_car_device<public> := class<concrete><final>(vehicle_spawner_device):
+# Specialized `vehicle_spawner_device` that allows an ATK (all terrain kart) to be configured and spawned.
+vehicle_spawner_atk_device<public> := class<concrete><final>(vehicle_spawner_device):
+
+
+# Specialized `vehicle_spawner_device` that allows a Baller vehicle to be configured and spawned.
+vehicle_spawner_baller_device<public> := class<concrete><final>(vehicle_spawner_device):
+    # Signaled when the vehicle runs out of energy.
+    OutOfEnergyEvent<public>:listenable(tuple()) = external {}
+
+    # Refills the vehicle's energy.
+    RefillEnergy<public>():void = external {}
+
+# Specialized `vehicle_spawner_device` that allows a pickup truck to be configured and spawned.
+vehicle_spawner_pickup_truck_device<public> := class<concrete><final>(vehicle_spawner_device):
+
+
+# Specialized `vehicle_spawner_device` that allows a Stormwing biplane to be configured and spawned.
+vehicle_spawner_biplane_device<public> := class<concrete><final>(vehicle_spawner_device):
+
+
+# Specialized `vehicle_spawner_device` that allows a boat to be configured and spawned.
+vehicle_spawner_boat_device<public> := class<concrete><final>(vehicle_spawner_device):
+
+
+# Specialized `vehicle_spawner_device` that allows a cannon to be configured and spawned.
+vehicle_spawner_cannon_device<public> := class<concrete><final>(vehicle_spawner_device):
+
+
+# Specialized `vehicle_spawner_device` that allows a Driftboard to be configured and spawned.
+vehicle_spawner_driftboard_device<public> := class<concrete><final>(vehicle_spawner_device):
+
+
+# Specialized `vehicle_spawner_device` that allows a Mudflap semi truck to be configured and spawned.
+vehicle_spawner_big_rig_device<public> := class<concrete><final>(vehicle_spawner_device):
+
+
+# Specialized `vehicle_spawner_device` that allows a Prevalent sedan to be configured and spawned.
+vehicle_spawner_sedan_device<public> := class<concrete><final>(vehicle_spawner_device):
+
+
+# Specialized `vehicle_spawner_device` that allows a Quadcrasher to be configured and spawned.
+vehicle_spawner_quadcrasher_device<public> := class<concrete><final>(vehicle_spawner_device):
+
+
+# Specialized `vehicle_spawner_device` that allows a shopping cart to be configured and spawned.
+vehicle_spawner_shopping_cart_device<public> := class<concrete><final>(vehicle_spawner_device):
+
+
+# Specialized `vehicle_spawner_device` that allows a surfboard to be configured and spawned.
+vehicle_spawner_surfboard_device<public> := class<concrete><final>(vehicle_spawner_device):
+
+
+# Specialized `vehicle_spawner_device` that allows a taxi to be configured and spawned.
+vehicle_spawner_taxi_device<public> := class<concrete><final>(vehicle_spawner_device):
 
 
 # Base class for various specialized vehicle spawners which allow specific vehicle types to be spawned and configured with specialized options.
@@ -92,57 +144,5 @@ vehicle_spawner_device<public> := class<abstract><epic_internal>(creative_device
     # Returns the `agent` who is currently driving the vehicle.
     GetDriver<epic_internal>()<transacts><decides>:agent = external {}
 
-# Specialized `vehicle_spawner_device` that allows a taxi to be configured and spawned.
-vehicle_spawner_taxi_device<public> := class<concrete><final>(vehicle_spawner_device):
-
-
-# Specialized `vehicle_spawner_device` that allows a surfboard to be configured and spawned.
-vehicle_spawner_surfboard_device<public> := class<concrete><final>(vehicle_spawner_device):
-
-
-# Specialized `vehicle_spawner_device` that allows a shopping cart to be configured and spawned.
-vehicle_spawner_shopping_cart_device<public> := class<concrete><final>(vehicle_spawner_device):
-
-
-# Specialized `vehicle_spawner_device` that allows a Quadcrasher to be configured and spawned.
-vehicle_spawner_quadcrasher_device<public> := class<concrete><final>(vehicle_spawner_device):
-
-
-# Specialized `vehicle_spawner_device` that allows a Prevalent sedan to be configured and spawned.
-vehicle_spawner_sedan_device<public> := class<concrete><final>(vehicle_spawner_device):
-
-
-# Specialized `vehicle_spawner_device` that allows a Mudflap semi truck to be configured and spawned.
-vehicle_spawner_big_rig_device<public> := class<concrete><final>(vehicle_spawner_device):
-
-
-# Specialized `vehicle_spawner_device` that allows a Driftboard to be configured and spawned.
-vehicle_spawner_driftboard_device<public> := class<concrete><final>(vehicle_spawner_device):
-
-
-# Specialized `vehicle_spawner_device` that allows a cannon to be configured and spawned.
-vehicle_spawner_cannon_device<public> := class<concrete><final>(vehicle_spawner_device):
-
-
-# Specialized `vehicle_spawner_device` that allows a boat to be configured and spawned.
-vehicle_spawner_boat_device<public> := class<concrete><final>(vehicle_spawner_device):
-
-
-# Specialized `vehicle_spawner_device` that allows a Stormwing biplane to be configured and spawned.
-vehicle_spawner_biplane_device<public> := class<concrete><final>(vehicle_spawner_device):
-
-
-# Specialized `vehicle_spawner_device` that allows a pickup truck to be configured and spawned.
-vehicle_spawner_pickup_truck_device<public> := class<concrete><final>(vehicle_spawner_device):
-
-
-# Specialized `vehicle_spawner_device` that allows a Baller vehicle to be configured and spawned.
-vehicle_spawner_baller_device<public> := class<concrete><final>(vehicle_spawner_device):
-    # Signaled when the vehicle runs out of energy.
-    OutOfEnergyEvent<public>:listenable(tuple()) = external {}
-
-    # Refills the vehicle's energy.
-    RefillEnergy<public>():void = external {}
-
-# Specialized `vehicle_spawner_device` that allows an ATK (all terrain kart) to be configured and spawned.
-vehicle_spawner_atk_device<public> := class<concrete><final>(vehicle_spawner_device):
+# Specialized `vehicle_spawner_device` that allows a Whiplash sports car to be configured and spawned.
+vehicle_spawner_sports_car_device<public> := class<concrete><final>(vehicle_spawner_device):

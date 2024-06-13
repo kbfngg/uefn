@@ -1,6 +1,6 @@
-using {/Verse.org/Assets}
 using {/UnrealEngine.com/Playspace}
 using {/Fortnite.com/Game/Player}
+using {/Verse.org/Assets}
 using {/Verse.org/Colors}
 using {/Verse.org/Simulation}
 using {/UnrealEngine.com/Temporary/SpatialMath}
@@ -260,6 +260,54 @@ Game<public> := module:
         PlayerPickupComponent<epic_internal> := module:
             createPickup<native><epic_internal>(contextObject:vk_component, itemDefinition:fort_item_definition, count:int, location:vector3):?player_pickup_component
 
+    fort_item_definition<native><public> := class<computes>(asset):
+
+
+    fortnite_building_component<native><public> := class<final>(vk_component):
+        wasPlayerBuilt<native><public>()<transacts>:logic
+
+        canBeDamaged<native><public>():logic
+
+        canBeReplaced<native><public>():logic
+
+        setCanBeDamaged<native><public>(canDamage:logic):void
+
+        setCanBeReplaced<native><public>(canReplace:logic):void
+
+    # Module import path: /Fortnite.com/Game/VerseFortniteHacks
+    VerseFortniteHacks<epic_internal> := module:
+        getAllComponentsOfType<native><epic_internal>(contextObject:vk_component, Type:subtype(vk_component)):[]vk_component
+
+        respawnPlayer<native><public>(TargetPlayer:player_component, spawnPoint:player_start_component):void
+
+        setAutoRespawnEnabled<native><epic_internal>(contextObject:vk_component, Enabled:logic):void
+
+        GetPawnCollisionEntityID<native><public>(__dupe___unnamed_parameter_172:player_component):int
+
+    PlayerSettingState<native><public> := enum:
+        PlayerDefault
+        PlayerAllow
+        PlayerDisallow
+
+    fort_building_settings_component<native><public> := class<final>(vk_component):
+        setBuilding<native><public>(state:PlayerSettingState):void
+
+        setBuildingOnWater<native><public>(state:PlayerSettingState):void
+
+        setEditing<native><public>(state:PlayerSettingState):void
+
+        setEditingHostile<native><public>(state:PlayerSettingState):void
+
+        setTrapPlacement<native><public>(state:PlayerSettingState):void
+
+    fort_playspace_component<native><epic_internal> := class(playspace_component):
+        _WaitForPlayerEliminated<native><public>()<suspends>:player_eliminated_result
+
+    player_eliminated_result<native><epic_internal> := class:
+        EliminatedPlayer<native><public>:player_component
+
+        Eliminator<native><public>:?player_component
+
     match_stats<native><public> := class<final>(stat_container):
         SetPlayerStat<native><public>(InPlayer:player, StatIndex:int, NewValue:int):void
 
@@ -306,50 +354,3 @@ Game<public> := module:
         GetPlayerStat<native><public>(InPlayer:player, StatIndex:int)<transacts>:int
 
         IncrementPlayerStat<native><public>(InPlayer:player, StatIndex:int, Increase:int):logic
-
-    PlayerSettingState<native><public> := enum:
-        PlayerDefault
-        PlayerAllow
-        PlayerDisallow
-
-    fort_building_settings_component<native><public> := class<final>(vk_component):
-        setBuilding<native><public>(state:PlayerSettingState):void
-
-        setBuildingOnWater<native><public>(state:PlayerSettingState):void
-
-        setEditing<native><public>(state:PlayerSettingState):void
-
-        setEditingHostile<native><public>(state:PlayerSettingState):void
-
-        setTrapPlacement<native><public>(state:PlayerSettingState):void
-
-    fort_playspace_component<native><epic_internal> := class(playspace_component):
-        _WaitForPlayerEliminated<native><public>()<suspends>:player_eliminated_result
-
-    player_eliminated_result<native><epic_internal> := class:
-        EliminatedPlayer<native><public>:player_component
-
-        Eliminator<native><public>:?player_component
-
-    # Module import path: /Fortnite.com/Game/VerseFortniteHacks
-    VerseFortniteHacks<epic_internal> := module:
-        getAllComponentsOfType<native><epic_internal>(contextObject:vk_component, Type:subtype(vk_component)):[]vk_component
-
-        respawnPlayer<native><public>(TargetPlayer:player_component, spawnPoint:player_start_component):void
-
-        setAutoRespawnEnabled<native><epic_internal>(contextObject:vk_component, Enabled:logic):void
-
-        GetPawnCollisionEntityID<native><public>(__dupe___unnamed_parameter_173:player_component):int
-
-    fortnite_building_component<native><public> := class<final>(vk_component):
-        wasPlayerBuilt<native><public>()<transacts>:logic
-
-        canBeDamaged<native><public>():logic
-
-        canBeReplaced<native><public>():logic
-
-        setCanBeDamaged<native><public>(canDamage:logic):void
-
-        setCanBeReplaced<native><public>(canReplace:logic):void
-
-    fort_item_definition<native><public> := class<computes>(asset):

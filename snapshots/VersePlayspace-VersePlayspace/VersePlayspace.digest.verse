@@ -1,7 +1,13 @@
-using {/Verse.org/Simulation}
 using {/Verse.org/VerseEngine/Component}
+using {/Verse.org/Simulation}
+using {/UnrealEngine.com/Temporary/SceneGraph}
 # Module import path: /UnrealEngine.com/Playspace
 Playspace<public> := module:
+    @hide_in_editor
+    @experimental
+    playspace_association_component<native><epic_internal> := class<epic_internal>(component):
+        IsAllowedOnClient<override>():logic = external {}
+
     PlayerType<native><epic_internal> := enum:
         All
         ActivePlayer

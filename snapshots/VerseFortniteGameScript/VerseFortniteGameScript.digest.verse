@@ -1,41 +1,106 @@
-using {/Verse.org/Colors}
-using {/UnrealEngine.com/Temporary/Diagnostics}
-using {/UnrealEngine.com/VGameplayRst/Messaging}
-using {/UnrealEngine.com/VGameplayRst/Components}
+using {/Fortnite.com/Game/Player}
 using {/Verse.org/Assets}
 using {/UnrealEngine.com/VGameplayRst/Transform}
 using {/UnrealEngine.com/VGameplayRst/Physics}
 using {/UnrealEngine.com/VGameplayRst/Geometry}
-using {/Fortnite.com/Game/Player}
-using {/Verse.org/VerseEngine/Component}
-using {/Verse.org/Simulation}
-using {/Fortnite.com/Game}
-using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/Verse.org/VerseEngine/Entity}
+using {/UnrealEngine.com/Temporary/SpatialMath}
+using {/Verse.org/Simulation}
+using {/Verse.org/VerseEngine/Component}
+using {/Verse.org/Colors}
+using {/UnrealEngine.com/Temporary/Diagnostics}
+using {/UnrealEngine.com/VGameplayRst/Messaging}
+using {/Fortnite.com/Game}
+using {/UnrealEngine.com/VGameplayRst/Components}
 # Module import path: /Fortnite.com/VerseFortniteGameScript
 VerseFortniteGameScript<public> := module:
-    fort_scene_object<public> := class<internal>:
-        GetEntity<public>():vk_entity = external {}
+    # Module import path: /Fortnite.com/VerseFortniteGameScript/fort_constants
+    fort_constants<public> := module:
 
-        GetPosition<public>():vector3 = external {}
+
+    fort_game_script_base<epic_internal> := class<abstract>(script_component):
+        var FortPlayspace<public>:?fort_playspace_component
+
+        var FortBuildingSettings<epic_internal>:?fort_building_settings_component
+
+        var DebugCommands<epic_internal>:?debug_command_component
+
+        var Players<epic_internal>:?fort_playspace_player_helper
+
+        OnCreate<override>():void = external {}
+
+        OnPostCreate<override>():void = external {}
+
+        OnInitialize<protected>():void = external {}
+
+        OnBegin<override>():void = external {}
+
+        IsSoloGame<protected>()<transacts>:logic = external {}
+
+        LogMessage<epic_internal>(VLogLevel:log_level, InChannel:subtype(log_channel), Message:string, ShowOnScreen:logic, InColor:color, InDuration:float):void = external {}
+
+        HACK_getAllScriptObjectsOfType<protected>(Type:subtype(vk_component)):[]vk_component = external {}
+
+        OnMatchBegin<protected>():void = external {}
+
+        OnPlayerEliminated<protected>(ElimResult:player_eliminated_result):void = external {}
+
+        OnPlayerJoined<protected>(__dupe___unnamed_parameter_213:player_component):void = external {}
+
+        WaitForDebugCommand<protected>(CommandId:string)<suspends>:string = external {}
+
+        OnPlayerLeft<protected>(__dupe___unnamed_parameter_214:player_component):void = external {}
+
+        SetBuildingAllowed<protected>():void = external {}
+
+        SetBuildingDisallowed<protected>():void = external {}
+
+        CreateStormController<protected>(Location:vector3):void = external {}
+
+    fort_model<public> := class<internal>:
+        GetEntity<public>()<transacts>:vk_entity = external {}
+
+        GetMeshComponent<public>():fixed_mesh_component = external {}
+
+        GetCollisionComponent<public>()<transacts>:vk_collision_component = external {}
+
+        GetPositionComponent<public>()<transacts>:position_component = external {}
+
+        GetRotationComponent<public>()<transacts>:rotation_component = external {}
+
+        Show<public>():void = external {}
+
+        Hide<public>():void = external {}
+
+        EnableCollision<public>():void = external {}
+
+        DisableCollision<public>():void = external {}
+
+        IsVisible<public>():logic = external {}
+
+        GetPosition<public>()<transacts>:vector3 = external {}
 
         SetPosition<public>(NewPosition:vector3)<transacts>:void = external {}
 
         GetRotation<public>():rotation = external {}
 
-        SetRotation<public>(NewRotation:rotation):void = external {}
+        SetRotation<public>(NewRotation:rotation)<transacts>:void = external {}
 
-        GetScale<public>():vector3 = external {}
+        GetScale<public>()<transacts>:vector3 = external {}
 
-        SetScale<public>(NewScale:vector3):void = external {}
+        SetScale<public>(NewScale:vector3)<transacts>:void = external {}
 
         GetTransform<public>():transform = external {}
 
         SetTransform<public>(NewTransform:transform):void = external {}
 
-    # Module import path: /Fortnite.com/VerseFortniteGameScript/FortSceneObject
-    FortSceneObject<public> := module:
-        MakeFromEntity<public>(Entity:vk_entity):?fort_scene_object = external {}
+    # Module import path: /Fortnite.com/VerseFortniteGameScript/FortModel
+    FortModel<public> := module:
+        MakeFromEntity<public>(Entity:vk_entity):?fort_model = external {}
+
+        MakeFromStaticMesh<epic_internal>(InTransform:transform, Name:string, Mesh:mesh):?fort_model = external {}
+
+        MakeFromStaticMeshAndMaterial<epic_internal>(InTransform:transform, Name:string, Mesh:mesh, Material:material):?fort_model = external {}
 
     fort_playspace_player_helper<epic_internal> := class:
         Init<public>(InPlayspace:fort_playspace_component):void = external {}
@@ -112,89 +177,25 @@ VerseFortniteGameScript<public> := module:
 
         GetPawnCollisionEntityID<public>(PlayerArg:player_component):int = external {}
 
-    fort_model<public> := class<internal>:
-        GetEntity<public>()<transacts>:vk_entity = external {}
+    fort_scene_object<public> := class<internal>:
+        GetEntity<public>():vk_entity = external {}
 
-        GetMeshComponent<public>():fixed_mesh_component = external {}
-
-        GetCollisionComponent<public>()<transacts>:vk_collision_component = external {}
-
-        GetPositionComponent<public>()<transacts>:position_component = external {}
-
-        GetRotationComponent<public>()<transacts>:rotation_component = external {}
-
-        Show<public>():void = external {}
-
-        Hide<public>():void = external {}
-
-        EnableCollision<public>():void = external {}
-
-        DisableCollision<public>():void = external {}
-
-        IsVisible<public>():logic = external {}
-
-        GetPosition<public>()<transacts>:vector3 = external {}
+        GetPosition<public>():vector3 = external {}
 
         SetPosition<public>(NewPosition:vector3)<transacts>:void = external {}
 
         GetRotation<public>():rotation = external {}
 
-        SetRotation<public>(NewRotation:rotation)<transacts>:void = external {}
+        SetRotation<public>(NewRotation:rotation):void = external {}
 
-        GetScale<public>()<transacts>:vector3 = external {}
+        GetScale<public>():vector3 = external {}
 
-        SetScale<public>(NewScale:vector3)<transacts>:void = external {}
+        SetScale<public>(NewScale:vector3):void = external {}
 
         GetTransform<public>():transform = external {}
 
         SetTransform<public>(NewTransform:transform):void = external {}
 
-    # Module import path: /Fortnite.com/VerseFortniteGameScript/FortModel
-    FortModel<public> := module:
-        MakeFromEntity<public>(Entity:vk_entity):?fort_model = external {}
-
-        MakeFromStaticMesh<epic_internal>(InTransform:transform, Name:string, Mesh:mesh):?fort_model = external {}
-
-        MakeFromStaticMeshAndMaterial<epic_internal>(InTransform:transform, Name:string, Mesh:mesh, Material:material):?fort_model = external {}
-
-    fort_game_script_base<epic_internal> := class<abstract>(script_component):
-        var FortPlayspace<public>:?fort_playspace_component
-
-        var FortBuildingSettings<epic_internal>:?fort_building_settings_component
-
-        var DebugCommands<epic_internal>:?debug_command_component
-
-        var Players<epic_internal>:?fort_playspace_player_helper
-
-        OnCreate<override>():void = external {}
-
-        OnPostCreate<override>():void = external {}
-
-        OnInitialize<protected>():void = external {}
-
-        OnBegin<override>():void = external {}
-
-        IsSoloGame<protected>()<transacts>:logic = external {}
-
-        LogMessage<epic_internal>(VLogLevel:log_level, InChannel:subtype(log_channel), Message:string, ShowOnScreen:logic, InColor:color, InDuration:float):void = external {}
-
-        HACK_getAllScriptObjectsOfType<protected>(Type:subtype(vk_component)):[]vk_component = external {}
-
-        OnMatchBegin<protected>():void = external {}
-
-        OnPlayerEliminated<protected>(ElimResult:player_eliminated_result):void = external {}
-
-        OnPlayerJoined<protected>(__dupe___unnamed_parameter_214:player_component):void = external {}
-
-        WaitForDebugCommand<protected>(CommandId:string)<suspends>:string = external {}
-
-        OnPlayerLeft<protected>(__dupe___unnamed_parameter_215:player_component):void = external {}
-
-        SetBuildingAllowed<protected>():void = external {}
-
-        SetBuildingDisallowed<protected>():void = external {}
-
-        CreateStormController<protected>(Location:vector3):void = external {}
-
-    # Module import path: /Fortnite.com/VerseFortniteGameScript/fort_constants
-    fort_constants<public> := module:
+    # Module import path: /Fortnite.com/VerseFortniteGameScript/FortSceneObject
+    FortSceneObject<public> := module:
+        MakeFromEntity<public>(Entity:vk_entity):?fort_scene_object = external {}

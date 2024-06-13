@@ -31,39 +31,55 @@ Vehicles<public> := module:
         # Returns an array with all the passengers of the vehicle.
         GetPassengers<public>():[]fort_character
 
+        @experimental
         GetEntity<epic_internal>()<transacts><decides>:entity
 
     @hide_in_editor
+    @experimental
     fort_vehicle_component<native><epic_internal> := class(component, fort_vehicle):
         # Internal epic method to know if this component is allowed on client
         IsAllowedOnClient<override>():logic = external {}
 
+        @experimental
         FortVehicle<native><public>:fort_vehicle
 
+        @experimental
         IsOnGround<override>()<transacts><decides>:void = external {}
 
+        @experimental
         IsInAir<override>()<transacts><decides>:void = external {}
 
+        @experimental
         IsInWater<override>()<transacts><decides>:void = external {}
 
+        @experimental
         GetPassengers<override>():[]fort_character = external {}
 
+        @experimental
         Damage<override>(Amount:float):void = external {}
 
+        @experimental
         Damage<override>(Args:damage_args):void = external {}
 
+        @experimental
         GetHealth<override>()<transacts>:float = external {}
 
+        @experimental
         SetHealth<override>(Health:float)<transacts>:void = external {}
 
+        @experimental
         GetMaxHealth<override>()<transacts>:float = external {}
 
+        @experimental
         SetMaxHealth<override>(MaxHealth:float)<transacts>:void = external {}
 
+        @experimental
         GetTransform<override>()<transacts>:transform = external {}
 
+        @experimental
         (fort_vehicle:)GetEntity<override>()<transacts><decides>:entity = external {}
 
+        @experimental
         DamagedEvent<override>():listenable(damage_result) = external {}
 
 # Module import path: /Fortnite.com/Teams
@@ -83,6 +99,7 @@ Teams<public> := module:
         # Returns an array of all the `team`s known to this `fort_team_collection`
         GetTeams<public>()<transacts>:[]team
 
+        @experimental
         # Register a team component with the team collection, so that its team can automatically be changed as teams are associated with its tag. 
         # Fails if:
         #  * The team component's tag is not set
@@ -90,12 +107,15 @@ Teams<public> := module:
         #  * The owning entity of the team component is already registered.
         RegisterTeamComponent<native_callable><epic_internal>(InTeamComponent:team_component)<transacts><decides>:void
 
+        @experimental
         # Unregister a team component from the team collection. Fails if the team component is not registered with the team collection
         UnregisterTeamComponent<native_callable><epic_internal>(InTeamComponent:team_component)<transacts><decides>:void
 
+        @experimental
         # Associate the team `InTeam` with the tag `InTeamTag`, so that it can be accessed by team_component. Fails if `InTeam` is not a valid team within the team collection
         SetTaggedTeam<epic_internal>(InTeamTag:team_tag, InTeam:team)<transacts><decides>:void
 
+        @experimental
         # Get the team associated with the tag `InTag`. Fails if no such team is associated with `InTag` 
         GetTeamByTag<epic_internal>(InTeamTag:team_tag)<transacts><decides>:team
 
@@ -106,6 +126,7 @@ Teams<public> := module:
         # Fails if `InTeam` is not part of the `fort_team_collection`.
         AddToTeam<public>(InAgent:agent, InTeam:team)<transacts><decides>:void
 
+        @experimental
         # Adds `InEntity` to the team that matches `InTeamTag`.
         # Fails if `InTeamTag` is not a registered team in the `fort_team_collection`.
         AddToTeam<native_callable><epic_internal>(InEntity:entity, InTeamTag:team_tag)<transacts><decides>:void
@@ -116,6 +137,7 @@ Teams<public> := module:
         #  * `InTeam` is not part of the `fort_team_collection`.
         IsOnTeam<public>(InAgent:agent, InTeam:team)<transacts><decides>:void
 
+        @experimental
         # Succeeds if `InEntity` is on `InTeam`.
         # Fails if:
         #  * `InEntity` is not on `InTeam`.
@@ -126,6 +148,7 @@ Teams<public> := module:
         # Fails if `InTeam` is not part of the `fort_team_collection`.
         GetAgents<public>(InTeam:team)<transacts><decides>:[]agent
 
+        @experimental
         # Returns an array of all `entities on `InTeam`.
         # Fails if `InTeam` is not part of the `fort_team_collection`.
         GetEntities<epic_internal>(InTeam:team)<transacts><decides>:[]entity
@@ -134,6 +157,7 @@ Teams<public> := module:
         # Fails if `InAgent` is not on a team in this `fort_team_collection`.
         GetTeam<public>(InAgent:agent)<transacts><decides>:team
 
+        @experimental
         # Get the `team` that `InEntity` is on.
         # Fails if `InEntity` is not on a team in this `fort_team_collection`.
         GetTeam<epic_internal>(InEntity:entity)<transacts><decides>:team
@@ -150,33 +174,41 @@ Teams<public> := module:
         #  * `Agent2` is not on a team in this `fort_team_collection`.
         GetTeamAttitude<public>(Agent1:agent, Agent2:agent)<transacts><decides>:team_attitude
 
+        @experimental
         # Returns the `team_attitude` between `Entity1` and `Entity2`.
         # Fails if:
         #  * `Entity1` is not on a team in this `fort_team_collection`.
         #  * `Entity2` is not on a team in this `fort_team_collection`.
         GetTeamAttitude<epic_internal>(Entity1:entity, Entity2:entity)<transacts><decides>:team_attitude
 
+        @experimental
         # Returns the `team_attitude` between `Agent` and `Entity`.
         # Fails if:
         #  * `Agent` is not on a team in this `fort_team_collection`.
         #  * `Entity` is not on a team in this `fort_team_collection`.
         GetTeamAttitude<epic_internal>(Agent:agent, Entity:entity)<transacts><decides>:team_attitude
 
+    @experimental
     team_tag<native><epic_internal> := class<concrete>(tag):
 
 
+    @experimental
     team_pvp_01_tag<native><epic_internal> := class<concrete>(team_tag):
 
 
+    @experimental
     team_pvp_02_tag<native><epic_internal> := class<concrete>(team_tag):
 
 
+    @experimental
     team_monster_tag<native><epic_internal> := class<concrete>(team_tag):
 
 
+    @experimental
     team_component<native><epic_internal> := class<final>(component):
         OnSimulate<override>()<suspends>:void = external {}
 
+        @experimental
         # Tag that uniquely identifies the team this entity is on
         var TeamTag<public>:team_tag = external {}
 
@@ -201,21 +233,9 @@ Playspaces<public> := module:
         # Signaled when a `player` leaves the `fort_playspace`. Returns a subscribable with a payload of the`fort_character` that left the `fort_playspace`.
         PlayerRemovedEvent<public>():listenable(player)
 
-        FindEntitiesInScene<epic_internal>(EntityType:subtype(entity))<transacts>:[]EntityType
-
-        FindEntitiesInSceneWithComponent<epic_internal>(ComponentType:subtype(component))<transacts>:[]entity
-
-        FindComponentsInScene<epic_internal>(ComponentType:subtype(component))<transacts>:[]ComponentType
-
-        FindEntitiesInSceneWithTag<epic_internal>(Tag:tag)<transacts>:[]entity
-
-        FindEntitiesInSceneInside<epic_internal>(Shape:convex_hull3)<transacts>:[]entity
-
-        FindEntitiesInSceneOverlapping<epic_internal>(Shape:convex_hull3)<transacts>:[]entity
-
-        FindEntitiesInSceneOriginInside<epic_internal>(Shape:convex_hull3)<transacts>:[]entity
-
-    (InEntity:entity).GetPlayspaceForEntity<native><epic_internal>()<transacts><decides>:fort_playspace
+    @experimental
+    # Returns an associated `fort_playspace` for this entity.  * Fails if this entity is not in the scene, and therefore not associated with a playspace.
+    (InEntity:entity).GetPlayspaceForEntity<native><public>()<transacts><decides>:fort_playspace
 
 # Module import path: /Fortnite.com/Game
 Game<public> := module:
@@ -227,16 +247,35 @@ Game<public> := module:
         # `fort_character` that eliminated `EliminatedCharacter` from the match. `EliminatingCharacter` will be false when `EliminatedCharacter` was eliminated through non-character actions, such as environmental damage.
         EliminatingCharacter<native><public>:?fort_character
 
+    @experimental
     fort_ability_component<native><epic_internal> := class(ability_component):
 
 
+    @experimental
     fort_damageable_component<native><epic_internal> := class(damageable_component):
         @editable
+        @experimental
         MaxHealth<native><epic_internal>:float = external {}
 
+        @experimental
         var Health<native><public>:float = external {}
 
+        @experimental
         DamagedEventWithAgent<native><epic_internal>:listenable(tuple(float, ?agent)) = external {}
+
+    @experimental
+    fort_game_component<native><epic_internal> := class<abstract>(component):
+        OnBeginSimulation<native><override>():void
+
+        OnEndSimulation<native><override>():void
+
+        @experimental
+        # Override to add custom logic when the game experience begins.
+        OnRoundBegin<native_callable><protected>()<suspends>:void = external {}
+
+        @experimental
+        # Override to add custom logic when the game experience ends. Any coroutines spawned inside `OnEnd` may never execute.
+        OnRoundEnd<native_callable><protected>():void = external {}
 
     # Implemented by objects to allow reading position information.
     positional<native><public> := interface<epic_internal>:
@@ -496,6 +535,7 @@ Characters<public> := module:
         # Teleports this `fort_character` to the provided `Position` and applies the yaw of `Rotation`. Will fail if the `Position` specified is e.g. outside of the playspace or specifies a place where the character cannot fit.
         TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void
 
+        @experimental
         GetEntity<epic_internal>()<transacts><decides>:entity
 
     # Returns the `fort_character` for `InAgent`. Fails if `InAgent` is not a `fort_character`.
@@ -519,76 +559,111 @@ Characters<public> := module:
         AllowEmotes<native><public>:logic = external {}
 
     @hide_in_editor
+    @experimental
     fort_character_component<native><epic_internal> := class<final>(component, fort_character):
         # Internal epic method to know if this component is allowed on client
         IsAllowedOnClient<override>():logic = external {}
 
+        @experimental
         FortCharacter<native><public>:fort_character
 
+        @experimental
         Damage<override>(Amount:float):void = external {}
 
+        @experimental
         Damage<override>(Args:damage_args):void = external {}
 
+        @experimental
         Heal<override>(Amount:float):void = external {}
 
+        @experimental
         Heal<override>(Args:healing_args):void = external {}
 
+        @experimental
         IsActive<override>()<transacts><decides>:void = external {}
 
+        @experimental
         IsDownButNotOut<override>()<transacts><decides>:void = external {}
 
+        @experimental
         IsCrouching<override>()<transacts><decides>:void = external {}
 
+        @experimental
         IsOnGround<override>()<transacts><decides>:void = external {}
 
+        @experimental
         IsInAir<override>()<transacts><decides>:void = external {}
 
+        @experimental
         IsInWater<override>()<transacts><decides>:void = external {}
 
+        @experimental
         IsFalling<override>()<transacts><decides>:void = external {}
 
+        @experimental
         IsGliding<override>()<transacts><decides>:void = external {}
 
+        @experimental
         IsFlying<override>()<transacts><decides>:void = external {}
 
+        @experimental
         GetHealth<override>()<transacts>:float = external {}
 
+        @experimental
         GetMaxHealth<override>()<transacts>:float = external {}
 
+        @experimental
         SetHealth<override>(Health:float)<transacts>:void = external {}
 
+        @experimental
         SetMaxHealth<override>(MaxHealth:float)<transacts>:void = external {}
 
+        @experimental
         GetShield<override>()<transacts>:float = external {}
 
+        @experimental
         GetMaxShield<override>()<transacts>:float = external {}
 
+        @experimental
         SetShield<override>(Shield:float)<transacts>:void = external {}
 
+        @experimental
         SetMaxShield<override>(MaxShield:float)<transacts>:void = external {}
 
+        @experimental
         GetAgent<override>()<transacts><decides>:agent = external {}
 
+        @experimental
         GetTransform<override>()<transacts>:transform = external {}
 
+        @experimental
         GetViewRotation<override>()<transacts>:rotation = external {}
 
+        @experimental
         GetViewLocation<override>()<transacts>:vector3 = external {}
 
+        @experimental
         PutInStasis<override>(Args:stasis_args)<transacts>:void = external {}
 
+        @experimental
         ReleaseFromStasis<override>()<transacts>:void = external {}
 
+        @experimental
         Show<override>():void = external {}
 
+        @experimental
         Hide<override>():void = external {}
 
+        @experimental
         SetVulnerability<override>(Vulnerable:logic)<transacts>:void = external {}
 
+        @experimental
         IsVulnerable<override>()<transacts><decides>:void = external {}
 
+        @experimental
         TeleportTo<override>(Position:vector3, Rotation:rotation)<transacts><decides>:void = external {}
 
+        @experimental
         (fort_character:)GetEntity<override>()<transacts><decides>:entity = external {}
 
         DamagedEvent<override>():listenable(damage_result) = external {}
@@ -609,15 +684,20 @@ Characters<public> := module:
 
 # Module import path: /Fortnite.com/Building
 Building<public> := module:
+    @experimental
     building_component<native><epic_internal> := class<final>(component):
         IsAllowedOnClient<override>():logic = external {}
 
+        @experimental
         Damage<native><public>(Amount:float):void
 
+        @experimental
         IsPlayerBuilt<native><public>()<decides>:void
 
+        @experimental
         var CanBeDamaged<public>:logic = external {}
 
+        @experimental
         var CanBeReplaced<public>:logic = external {}
 
 # Module import path: /Fortnite.com/Assets
@@ -692,6 +772,8 @@ Animation<public> := module:
         # Get the play_animation_controller for the specified character.
         (InCharacter:fort_character).GetPlayAnimationController<native><public>()<transacts><decides>:play_animation_controller
 
+        @experimental
+        @hide_in_editor
         npc_play_animation_component<native><epic_internal> := class<epic_internal>(ai_actions_component, play_animation_controller):
             PlayAndAwait<override>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {})<suspends>:play_animation_result = external {}
 
@@ -723,12 +805,15 @@ AI<public> := module:
         # The action was not allowed to start
         Disallowed
 
+    @experimental
     ai_component<native><epic_internal> := class<abstract>(component):
 
 
+    @experimental
     ai_actions_component<native><epic_internal> := class<abstract>(ai_component):
 
 
+    @experimental
     ai_target_component<native><epic_internal> := class<final>(component):
         # Internal epic method to know if this component is allowed on client
         IsAllowedOnClient<override>():logic = external {}
@@ -752,17 +837,22 @@ AI<public> := module:
     # Get the focus_interface interface for the specified character.
     (InCharacter:fort_character).GetFocusInterface<native><public>()<transacts><decides>:focus_interface
 
+    @experimental
+    @hide_in_editor
     fort_leashable_component<native><epic_internal> := class<epic_internal>(ai_component, fort_leashable):
+        @experimental
         # Set custom leash position.
         #  'InnerRadius' ranges from 0.0 to 20000.0 (in centimeters).
         #  'OuterRadius' ranges from 0.0 to 20000.0 (in centimeters) and no less than 'InnerRadius'.
         SetLeashPosition<native><override>(Location:vector3, InnerRadius:float, OuterRadius:float):void
 
+        @experimental
         # Set the agent to be the new center of the leash.
         #  'InnerRadius' ranges from 0.0 to 20000.0 (in centimeters).
         #  'OuterRadius' ranges from 0.0 to 20000.0 (in centimeters) and no less than 'InnerRadius'.
         SetLeashAgent<native><override>(Agent:agent, InnerRadius:float, OuterRadius:float):void
 
+        @experimental
         # Removes the current leash.
         ClearLeash<native><override>():void
 
@@ -783,81 +873,110 @@ AI<public> := module:
     # Get the current fort_leashable interface for the specified character.
     (InCharacter:fort_character).GetFortLeashable<native><public>()<transacts><decides>:fort_leashable
 
+    @experimental
+    @hide_in_editor
     # Fortnite NPC AI Management
     fort_guard_actions_component<native><epic_internal> := class(npc_actions_component):
+        @experimental
         # Roam around the current position. Use the leash to specify the radius, else will roam anywhere.
         RoamAround<native><epic_internal>()<suspends>:navigation_result
 
+        @experimental
         # Move in range to attack the current target
         MoveInRangeToAttack<native><epic_internal>()<suspends>:action_result
 
+        @experimental
         # Change stance to crouch
         Crouch<native><epic_internal>()<suspends>:fallible_action_result
 
+        @experimental
         # Go back to standing
         StandUp<native><epic_internal>():action_result
 
+        @experimental
         # Change movement speed to sprint and switch to tactical sprint when energy is full.
         TacticalSprint<native><epic_internal>()<suspends>:action_result
 
+        @experimental
         # Play a random emote from the character emotes bank
         PlayRandomEmote<native><epic_internal>()<suspends>:play_emote_result
 
+        @experimental
         # Play an emote
         PlayEmote<native><epic_internal>(Emote:emote)<suspends>:play_emote_result
 
+        @experimental
         # Revive the specified target
         Revive<native><epic_internal>(Target:agent)<suspends>:fallible_action_result
 
+        @experimental
         # Attack the target
         Attack<native><epic_internal>(Target:target_info)<suspends>:action_result
 
+        @experimental
         # Attack the navigation obstacle
         Attack<native><epic_internal>(Target:fort_obstacle_info)<suspends>:action_result
 
+    @experimental
+    @hide_in_editor
     fort_guard_perception_component<native><epic_internal> := class<epic_internal>(npc_perception_component):
+        @experimental
         # Get information about the current target.
         GetCurrentTargetInfo<native><epic_internal>()<transacts><decides>:target_info
 
+        @experimental
         # Get the current alert level of the guard.
         GetAlertLevel<native><epic_internal>()<transacts>:fort_guard_alert_level
 
+        @experimental
         # Get the current alert level of a target for the guard.
         GetAlertLevel<native><epic_internal>(TargetInfo:target_info)<transacts>:fort_guard_alert_level
 
+        @experimental
         # Event when the alert level of the guard has changed.
         AlertLevelChangedEvent<epic_internal>():listenable(fort_guard_alert_level) = external {}
 
+        @experimental
         # Event when the current target has changed.
         CurrentTargetChangedEvent<epic_internal>():listenable(target_info) = external {}
 
+        @experimental
         # Get the current sight settings of the guard for an alert level.
         GetSightSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level)<transacts>:sight_perception_settings
 
+        @experimental
         # Set the current sight settings of the guard for an alert level.
         SetSightSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level, SightSettings:sight_perception_settings):void
 
+        @experimental
         # Get the current hearing settings of the guard for an alert level.
         GetHearingSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level)<transacts>:hearing_perception_settings
 
+        @experimental
         # Set the current hearing settings of the guard for an alert level.
         SetHearingSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level, HearingSettings:hearing_perception_settings):void
 
+        @experimental
         # Get the current touch settings of the guard for an alert level.
         GetTouchSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level)<transacts>:touch_perception_settings
 
+        @experimental
         # Set the current touch settings of the guard for an alert level
         SetTouchSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level, TouchSettings:touch_perception_settings):void
 
+        @experimental
         # Get the current damage settings of the guard for an alert level.
         GetDamageSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level)<transacts>:damage_perception_settings
 
+        @experimental
         # Set the current damage settings of the guard for an alert level.
         SetDamageSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level, DamageSettings:damage_perception_settings):void
 
+        @experimental
         # Get information about the potential current obstacle
         GetObstacleInfo<native><epic_internal>()<transacts><decides>:fort_obstacle_info
 
+        @experimental
         # Event when a new best obstacle is detected
         ObstacleChangedEvent<epic_internal>():listenable(fort_obstacle_info) = external {}
 
@@ -921,32 +1040,37 @@ AI<public> := module:
     # Get the navigatable interface for the specified character
     (InCharacter:fort_character).GetNavigatable<native><public>()<transacts><decides>:navigatable
 
+    @experimental
+    @hide_in_editor
     # Fortnite NPC AI Management
     npc_actions_component<native><epic_internal> := class<epic_internal>(ai_actions_component, navigatable, focus_interface):
+        @experimental
         # Return the current destination of the character
         GetCurrentDestination<native><override>()<transacts><decides>:vector3
 
+        @experimental
         # Navigate toward the specified target
         NavigateTo<native><override>(Target:navigation_target, ?MovementType:movement_type = external {}, ?ReachRadius:float = external {}, ?AllowPartialPath:logic = external {})<suspends>:navigation_result
 
+        @experimental
         # Apply a multiplier on the movement speed (Multiplier is clamped between 0.5 and 2)
         SetMovementSpeedMultiplier<native><override>(Multiplier:float):void
 
+        @experimental
         # Stop navigation
         StopNavigation<native><override>():void
 
+        @experimental
         # Wait for a specific duration
         Wait<native><override>(?Duration:float = external {})<suspends>:void
 
+        @experimental
         # Look At specified location. Will never complete unless interrupted.
         MaintainFocus<native><override>(Location:vector3)<suspends>:void
 
+        @experimental
         # Look At specified Agent. Will never complete unless interrupted.
         MaintainFocus<native><override>(Agent:agent)<suspends>:void
-
-    @hide_in_editor
-    npc_behavior_component<native><epic_internal> := class<epic_internal>(ai_component):
-        NPCBehavior<native><public>:npc_behavior
 
     # Inherit from this to create a custom NPC behavior.
     # The npc_behavior can be defined for a character in a CharacterDefinition asset, or in a npc_spawner_device.
@@ -960,58 +1084,83 @@ AI<public> := module:
         # Returns the agent associated with this behavior.
         GetAgent<native><public>()<transacts><decides>:agent
 
-        # The entity associated with this behavior.
-        var<private> Entity<epic_internal>:entity = external {}
-
     # Returns the `npc_behavior` for `InAgent`.
     (InAgent:agent).GetNPCBehavior<native><public>()<transacts><decides>:npc_behavior
 
+    @hide_in_editor
+    @experimental
+    npc_behavior_component<native><epic_internal> := class<epic_internal>(ai_component):
+        @experimental
+        NPCBehavior<native><public>:npc_behavior
+
+    @experimental
+    # Returns the `entity` for `InNPCBehavior`.
+    (InNPCBehavior:npc_behavior).GetEntity<native><epic_internal>()<transacts>:entity
+
+    @experimental
+    @hide_in_editor
     npc_perception_component<native><epic_internal> := class<epic_internal>(ai_component):
+        @experimental
         # Get information about all detected targets.
         GetDetectedTargets<native><epic_internal>()<transacts>:[]target_info
 
+        @experimental
         # Get information about a specific agent.
         GetDetectedTarget<native><epic_internal>(Agent:agent)<transacts><decides>:target_info
 
+        @experimental
         # Event when a target is added.
         TargetAddedEvent<epic_internal>():listenable(target_info) = external {}
 
+        @experimental
         # Event when the info about a target has been updated.
         TargetInfoUpdatedEvent<epic_internal>():listenable(target_info) = external {}
 
+        @experimental
         # Event when a target was removed.
         TargetRemovedEvent<epic_internal>():listenable(entity) = external {}
 
+        @experimental
         # Event when a target is seen. Sight sense must be active.
         TargetSeenEvent<epic_internal>():listenable(target_info) = external {}
 
+        @experimental
         # Event when a target is heard. Hearing sense must be active.
         TargetHeardEvent<epic_internal>():listenable(target_info) = external {}
 
+        @experimental
         # Event when a target is touched. Touch sense must be active.
         TargetTouchedEvent<epic_internal>():listenable(target_info) = external {}
 
+        @experimental
         # Get the current sight settings.
         GetSightSettings<native><epic_internal>()<transacts>:sight_perception_settings
 
+        @experimental
         # Set the current sight settings.
         SetSightSettings<native><epic_internal>(SightSettings:sight_perception_settings):void
 
+        @experimental
         # Get the current hearing settings.
         GetHearingSettings<native><epic_internal>()<transacts>:hearing_perception_settings
 
+        @experimental
         # Set the current hearing settings.
         SetHearingSettings<native><epic_internal>(HearingSettings:hearing_perception_settings):void
 
+        @experimental
         # Get the current touch perception settings.
         GetTouchSettings<native><epic_internal>()<transacts>:touch_perception_settings
 
+        @experimental
         # Set the current touch perception settings.
         SetTouchSettings<native><epic_internal>(TouchSettings:touch_perception_settings):void
 
+        @experimental
         # Get the current damage perception settings.
         GetDamageSettings<native><epic_internal>()<transacts>:damage_perception_settings
 
+        @experimental
         # Set the current damage perception settings.
         SetDamageSettings<native><epic_internal>(DamageSettings:damage_perception_settings):void
 
@@ -1027,6 +1176,7 @@ AI<public> := module:
 
         TargetTouchedEventInternal<native><epic_internal>:subscribable_event(target_info) = external {}
 
+    @experimental
     # The different alert levels of a guard.
     fort_guard_alert_level<native><epic_internal> := enum:
         # The guard has not detected any hostile target.
@@ -1038,14 +1188,18 @@ AI<public> := module:
         # The guard has identified a hostile target.
         Alerted
 
+    @experimental
     # Information about a perceived target.
     target_info<native><epic_internal> := struct<epic_internal>:
+        @experimental
         # The source of the detection stimuli.
         Target<native><public>:entity
 
+        @experimental
         # True if the target can be seen.
         HasLineOfSight<native><public>:logic
 
+        @experimental
         # Attitude toward this target.
         Attitude<native><public>:team_attitude
 
@@ -1053,115 +1207,147 @@ AI<public> := module:
 
         AlertLevel<native><public>:fort_guard_alert_level = external {}
 
+    @experimental
     fort_obstacle_status<native><epic_internal> := enum:
         incoming_obstacle
         blocked_by_obstacle
         trap_obstacle
 
+    @experimental
     fort_obstacle_info<native><epic_internal> := struct<epic_internal>:
+        @experimental
         Location<native><public>:vector3
 
+        @experimental
         Status<native><public>:fort_obstacle_status
 
+        @experimental
         Obstacle<native><public>:entity
 
+    @experimental
     # Get the last known position of the target.
     (InTarget:target_info).GetLastKnownPosition<native><epic_internal>()<transacts>:vector3
 
+    @experimental
     # Create a `navigation_target` from a `target_info`.
     MakeNavigationTarget<native><epic_internal>(TargetInfo:target_info):navigation_target
 
+    @experimental
     # Perception settings for sight.
     sight_perception_settings<native><epic_internal> := class<final><concrete>:
+        @experimental
         @editable
         # Maximum sight distance in meters to notice a target.
         # This value will be clamped between 0 and 300 meters.
         SightRadius<native><public>:float = external {}
 
+        @experimental
         @editable
         # Maximum sight distance in meters to keep on seeing a target.
         # This value will be clamped between 'SightRadius' and 300 meters.
         LoseSightRadius<native><public>:float = external {}
 
+        @experimental
         @editable
         # How far to the side AI can see, in radians.
         # The value represents the angle measured in relation to the forward vector, not the whole range.
         PeripheralVisionAngle<native><public>:float = external {}
 
+        @experimental
         @editable
         # Specifies duration in seconds after sight stimuli generated by this sense become forgotten. 0 means never.
         MaxStimulusDuration<native><public>:float = external {}
 
+        @experimental
         @editable
         # Specifies if sight is enabled.
         SenseEnabled<native><public>:logic = external {}
 
+        @experimental
         @editable
         # Specifies if this sense is able to detect enemies.
         EnemiesDetected<native><public>:logic = external {}
 
+        @experimental
         @editable
         # Specifies if this sense is able to detect friendlies.
         FriendliesDetected<native><public>:logic = external {}
 
+        @experimental
         @editable
         # Specifies if this sense is able to detect neutral targets.
         NeutralsDetected<native><public>:logic = external {}
 
+    @experimental
     # Perception settings for hearing.
     hearing_perception_settings<native><epic_internal> := class<final><concrete>:
+        @experimental
         @editable
         # Maximum hearing distance in meters to notice a target.
         HearingRange<native><public>:float = external {}
 
+        @experimental
         @editable
         # Specifies duration in seconds after audio stimuli generated by this sense become forgotten. 0 means never.
         MaxStimulusDuration<native><public>:float = external {}
 
+        @experimental
         @editable
         # Specifies if hearing is enabled.
         SenseEnabled<native><public>:logic = external {}
 
+        @experimental
         @editable
         # Specifies if this sense is able to detect enemies.
         EnemiesDetected<native><public>:logic = external {}
 
+        @experimental
         @editable
         # Specifies if this sense is able to detect friendlies.
         FriendliesDetected<native><public>:logic = external {}
 
+        @experimental
         @editable
         # Specifies if this sense is able to detect neutral targets.
         NeutralsDetected<native><public>:logic = external {}
 
+    @experimental
     # Perception settings for touch.
     touch_perception_settings<native><epic_internal> := class<final><concrete>:
+        @experimental
         @editable
         # Specifies duration in seconds after touch stimuli generated by this sense become forgotten. 0 means never.
         MaxStimulusDuration<native><public>:float = external {}
 
+        @experimental
         @editable
         # Specifies if touch perception is enabled.
         SenseEnabled<native><public>:logic = external {}
 
+        @experimental
         @editable
         # Specifies if this sense is able to detect enemies.
         EnemiesDetected<native><public>:logic = external {}
 
+        @experimental
         @editable
         # Specifies if this sense is able to detect friendlies.
         FriendliesDetected<native><public>:logic = external {}
 
+        @experimental
         @editable
         # Specifies if this sense is able to detect neutral targets.
         NeutralsDetected<native><public>:logic = external {}
 
+    @experimental
     # Perception settings for damage.
     damage_perception_settings<native><epic_internal> := class<final><concrete>:
+        @experimental
         @editable
         # Specifies duration in seconds after damage stimuli generated by this sense become forgotten. 0 means never.
         MaxStimulusDuration<native><public>:float = external {}
 
+        @experimental
         @editable
         # Specifies if damage perception is enabled.
         SenseEnabled<native><public>:logic = external {}

@@ -1,10 +1,11 @@
 using {/Verse.org/Simulation}
 using {/UnrealEngine.com/Temporary/SceneGraph}
-ai_navigation_relevant_component<native><epic_internal> := class(component):
-    # The component is being initialized, called when it is attach to an entity
+@experimental
+ai_navigation_relevant_component<native><public> := class(component):
+    # The component is being initialized, called when it is added to an entity
     OnInitialized<native><override>():void
 
-    # The component is being uninitialized, called when it is about to be detached from an entity
+    # The component is being uninitialized, called when it is about to be removed from an entity
     OnUninitializing<native><override>():void
 
     # Notification called then the component owner entity was added to the scene
@@ -17,5 +18,6 @@ ai_navigation_relevant_component<native><epic_internal> := class(component):
     IsAllowedOnClient<override>():logic = external {}
 
     @editable
+    @experimental
     # If set, navigation data will not be generated under the surface of the geometry
-    var FillCollisionUnderneathForNavData<native><public>:logic = external {}
+    var FillCollisionUnderneathForNavData<native><epic_internal>:logic = external {}

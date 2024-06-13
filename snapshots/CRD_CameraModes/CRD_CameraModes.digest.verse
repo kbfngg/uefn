@@ -1,16 +1,4 @@
 using {/Verse.org/Simulation}
-# Used to update the camera's viewpoint to follow the target and be rotated manually.
-gameplay_camera_orbit_device<public> := class<concrete><final>(gameplay_camera_device):
-
-
-# Used to update the camera’s current viewpoint and rotation based on a fixed angle.
-gameplay_camera_fixed_angle_device<public> := class<concrete><final>(gameplay_camera_device):
-
-
-# Used to update the camera’s current viewpoint and rotation based on a fixed point.
-gameplay_camera_fixed_point_device<public> := class<concrete><final>(gameplay_camera_device):
-
-
 # Used to update the camera’s current viewpoint and rotation based on current camera mode.
 gameplay_camera_device<public> := class<abstract><epic_internal>(creative_device_base):
     # Enables this device.
@@ -30,3 +18,14 @@ gameplay_camera_device<public> := class<abstract><epic_internal>(creative_device
 
     # Removes the camera from all `Agent`s camera stacks and pops from being the active camera replacing it with the next one in the stack.
     RemoveFromAll<public>():void = external {}
+
+# Used to update the camera’s current viewpoint and rotation based on a fixed point.
+gameplay_camera_fixed_point_device<public> := class<concrete><final>(gameplay_camera_device):
+
+
+# Used to update the camera’s current viewpoint and rotation based on a fixed angle.
+gameplay_camera_fixed_angle_device<public> := class<concrete><final>(gameplay_camera_device):
+
+
+# Used to update the camera's viewpoint to follow the target and be rotated manually.
+gameplay_camera_orbit_device<public> := class<concrete><final>(gameplay_camera_device):

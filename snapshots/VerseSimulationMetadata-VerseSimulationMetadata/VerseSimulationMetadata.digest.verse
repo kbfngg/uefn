@@ -109,7 +109,7 @@ Simulation<public> := module:
     editable_vector_slider<public>(t:type) := class<final>(editable):
         ShowPreserveRatio<public>:logic = external {}
 
-        ShowNormalize<epic_internal>:logic = external {}
+        ShowNormalize<public>:logic = external {}
 
         MinComponentValue<public>:?t = external {}
 
@@ -130,7 +130,7 @@ Simulation<public> := module:
     editable_vector_number<public>(t:type) := class<final>(editable):
         ShowPreserveRatio<public>:logic = external {}
 
-        ShowNormalize<epic_internal>:logic = external {}
+        ShowNormalize<public>:logic = external {}
 
         MinComponentValue<public>:?t = external {}
 

@@ -1,18 +1,24 @@
 using {/Verse.org/Simulation}
 using {/Verse.org/TestFramework}
 using {/Fortnite.com/Devices}
-test_runner_status<public> := enum:
-    Pending
-    Setup
-    Running
-    Complete
+test_device<epic_internal> := class(creative_device):
+    var TestRunner<public>:test_runner = external {}
 
-test_runner_device<epic_internal> := class(creative_device):
-    TestRunner<public>:test_runner = external {}
+    SuiteName<public>:string = external {}
 
-    var Status<public>:test_runner_status = external {}
+    TestCases<public>():[]test_case = external {}
 
-    OnBegin<override>()<suspends>:void = external {}
+    BeforeAll<public>()<suspends>:void = external {}
+
+    AfterAll<public>()<suspends>:void = external {}
+
+    BeforeEach<public>()<suspends>:void = external {}
+
+    AfterEach<public>()<suspends>:void = external {}
+
+    OnBegin<override>():void = external {}
+
+    RegisterTests<public>():void = external {}
 
 test_device_event_handler_mock<public> := class<concrete>:
     ResetCallCount<public>():void = external {}
@@ -57,21 +63,15 @@ device_event_ai_interaction_handler_mock<public> := class(test_device_event_hand
 
     Subscribe<public>(Event:listenable(device_ai_interaction_result)):void = external {}
 
-test_device<epic_internal> := class(creative_device):
-    var TestRunner<public>:test_runner = external {}
+test_runner_status<public> := enum:
+    Pending
+    Setup
+    Running
+    Complete
 
-    SuiteName<public>:string = external {}
+test_runner_device<epic_internal> := class(creative_device):
+    TestRunner<public>:test_runner = external {}
 
-    TestCases<public>():[]test_case = external {}
+    var Status<public>:test_runner_status = external {}
 
-    BeforeAll<public>()<suspends>:void = external {}
-
-    AfterAll<public>()<suspends>:void = external {}
-
-    BeforeEach<public>()<suspends>:void = external {}
-
-    AfterEach<public>()<suspends>:void = external {}
-
-    OnBegin<override>():void = external {}
-
-    RegisterTests<public>():void = external {}
+    OnBegin<override>()<suspends>:void = external {}
