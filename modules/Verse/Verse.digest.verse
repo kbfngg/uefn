@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-30.00-CL-33760522
+# Generated from build: ++Fortnite+Release-30.10-CL-34184790
 #################################################
 
 # Module import path: /Verse.org/Assets
@@ -540,6 +540,8 @@ Simulation<public> := module:
 
         MinComponentValue<public>:?t = external {}
 
+        ShowNormalize<public>:logic = external {}
+
         ShowPreserveRatio<public>:logic = external {}
 
         SpinBoxDelta<public>:?t = external {}
@@ -556,6 +558,8 @@ Simulation<public> := module:
         MouseLinearDeltaSensitivity<public>:float = external {}
 
         MouseShiftMovePixelPerDelta<public>:float = external {}
+
+        ShowNormalize<public>:logic = external {}
 
         ShowPreserveRatio<public>:logic = external {}
 
@@ -883,3 +887,4 @@ Verse<public> := module:
         # Registers `Callback` to be invoked on matching calls to `signable.Signal`.
         # Returns an unsubscriber object. Call `cancelable.Cancel` on the unsubscriber to unregister `Callback`.
         Subscribe<public>(Callback:type {__(:t):void})<transacts>:cancelable
+

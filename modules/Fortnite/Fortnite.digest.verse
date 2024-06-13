@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-30.00-CL-33760522
+# Generated from build: ++Fortnite+Release-30.10-CL-34184790
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -276,11 +276,20 @@ Characters<public> := module:
         AllowTurning<native><public>:logic = external {}
 
 using {/Fortnite.com/Game}
+using {/UnrealEngine.com/Temporary/SceneGraph}
 using {/Verse.org/Assets}
 using {/Verse.org/Simulation/Tags}
 using {/Verse.org/Simulation}
 # Module import path: /Fortnite.com/Devices
 Devices<public> := module:
+    @experimental
+    # Returns the simulation entity at the root of the experience this `creative_device` is operating within.  * The simulation entity is the rootmost entity in an experience.  * Fails if this `creative_device` is not operating in a context with a valid SimulationEntity.
+    (CreativeDevice:creative_device).GetSimulationEntity<native><public>()<transacts><decides>:entity
+
+    @experimental
+    # Returns the simulation entity at the root of the experience this `creative_object` is operating within.  * The simulation entity is the rootmost entity in an experience.  * Fails if this `creative_object` is not operating in a context with a valid SimulationEntity.
+    (CreativeObject:creative_object).GetSimulationEntity<native><public>()<transacts><decides>:entity
+
     # Returns the `fort_playspace` that `CreativeObject` belongs to.
     (CreativeObject:creative_object_interface).GetPlayspace<native><public>()<transacts>:fort_playspace
 
@@ -512,6 +521,7 @@ Devices<public> := module:
         # Sends the `agent` receiving the achievement.
         TestAwardEvent<public>:listenable(agent) = external {}
 
+    using {/UnrealEngine.com/Temporary/SpatialMath}
     # Used in conjunction with `advanced_storm_controller_device` to customize individual storm phases.
     advanced_storm_beacon_device<public> := class<concrete><final>(creative_device_base):
         # Moves the `advanced_storm_beacon_device` to the specified `Position` and `Rotation` over the specified time, in seconds.
@@ -1361,7 +1371,7 @@ Devices<public> := module:
         Hide<native><public>()<transacts>:void
 
         # Succeeds if this object has been disposed of either via `Dispose()` or through an external system.
-        IsDisposed<native><final><public>()<decides>:void
+        IsDisposed<native><final><public>()<transacts><decides>:void
 
         # Succeeds if this object has not been disposed of either via `Dispose()` or through an external system.
         IsValid<native><override>()<transacts><decides>:void
@@ -1765,6 +1775,7 @@ Devices<public> := module:
     # Used to let `agent`s slide on any surface with accompanying visual and audio effects.
     grind_powerup_device<public> := class<concrete><final>(powerup_device):
 
+    using {/Verse.org/Colors}
     # Used to create customizable Grind Rails.
     grind_rail_device<public> := class<concrete><final>(creative_device_base):
         # Disables this device, preventing players from grinding on the rail.
@@ -2188,6 +2199,44 @@ Devices<public> := module:
 
         # Updates *Selected Team* to `Agent`'s team.
         UpdateSelectedTeam<public>(Agent:agent):void = external {}
+
+    # Used to create an environmental prop that applies Nitro to those around it when it is destroyed.
+    nitro_barrel_spawner_device<public> := class<concrete><final>(creative_device_base):
+        # Allows the barrel to respawn after it explodes, waiting *RespawnDelay* seconds.
+        AllowRespawn<public>():void = external {}
+
+        # Disables and hides the barrel.Disabling the device will remove an existing barrel and reset the respawn delay.
+        Disable<public>():void = external {}
+
+        # Prevents the barrel from respawning.The *RespawnDelay* countdown will not start. If the countdown has already started, the barrel will not respawn when it ends.
+        DisallowRespawn<public>():void = external {}
+
+        # Enables and shows the barrel.Enabling the device when it's disabled will spawn a new barrel.
+        Enable<public>():void = external {}
+
+        # Triggers when the barrel explodes after being launched. Sends the launching `agent`.If the launcher is a non-agent, sends `false`.
+        ExplodedEvent<public>:listenable(?agent) = external {}
+
+        # Returns the force multiplier to launch the barrel.
+        GetLaunchForceMultiplier<public>():float = external {}
+
+        # Returns the delay between exploding and respawning (if allowed), in seconds.
+        GetRespawnDelay<public>():float = external {}
+
+        # Succeeds if the barrel is enabled and visible.
+        IsEnabled<public>()<transacts><decides>:void = external {}
+
+        # Succeeds if the barrel has respawn allowed.
+        IsRespawnAllowed<public>()<transacts><decides>:void = external {}
+
+        # Triggers when an `agent` launches the barrel. Sends the launching `agent`.If the launcher is a non-agent, sends `false`.
+        LaunchedEvent<public>:listenable(?agent) = external {}
+
+        # Sets the multiplier applied to the force used when launching.This is clamped between `0.25` and `2.0`.
+        SetLaunchForceMultiplier<public>(LaunchForceMultiplier:float):void = external {}
+
+        # Sets the delay time to respawn the barrel, clamped between `0.0` and `1000.0` seconds.This will override the delay timer if set during the delay countdown.
+        SetRespawnDelay<public>(RespawnDelay:float):void = external {}
 
     # Used to spawn NPCs made with Character Definition asset.
     npc_spawner_device<public> := class<concrete><final>(creative_device_base):
@@ -3929,6 +3978,7 @@ Devices<public> := module:
     # Specialized `vehicle_spawner_device` that allows an armored battle bus to be configured and spawned.
     vehicle_spawner_armored_battle_bus_device<public> := class<concrete><final>(vehicle_spawner_device):
 
+    using {/Fortnite.com/Vehicles}
     # Specialized `vehicle_spawner_device` that allows an ATK (all terrain kart) to be configured and spawned.
     vehicle_spawner_atk_device<public> := class<concrete><final>(vehicle_spawner_device):
 
@@ -4034,7 +4084,6 @@ Devices<public> := module:
     # Specialized `vehicle_spawner_device` that allows a sportbike to be configured and spawned.
     vehicle_spawner_sportbike_device<public> := class<concrete><final>(vehicle_spawner_device):
 
-    using {/Fortnite.com/Vehicles}
     # Specialized `vehicle_spawner_device` that allows a Whiplash sports car to be configured and spawned.
     vehicle_spawner_sports_car_device<public> := class<concrete><final>(vehicle_spawner_device):
 
@@ -4193,7 +4242,6 @@ Devices<public> := module:
         # Stops the currently playing stream and starts the custom stream with the audio only playing from this device. *Stream Priority* will not work until control is released.
         TakeControl<public>():void = external {}
 
-    using {/Verse.org/Colors}
     # Used to create a customizable vine version of the Grind Rails.
     vine_rail_device<public> := class<concrete><final>(creative_device_base):
         # Disables this device, preventing players from grinding on the vines.
@@ -4214,7 +4262,6 @@ Devices<public> := module:
         # Signaled when an `agent` starts grinding on this `vine_rail_device`.
         StartedGrindingEvent<public>:listenable(agent) = external {}
 
-    using {/UnrealEngine.com/Temporary/SpatialMath}
     # Used to trigger a visual effect (a glow or an outline) when `agent`s pick it up.
     visual_effect_powerup_device<public> := class<concrete><final>(powerup_device):
 
@@ -4555,6 +4602,10 @@ Game<public> := module:
 
 # Module import path: /Fortnite.com/Playspaces
 Playspaces<public> := module:
+    @experimental
+    # Returns an associated `fort_playspace` for this entity.  * Fails if this entity is not in the scene, and therefore not associated with a playspace.
+    (InEntity:entity).GetPlayspaceForEntity<native><public>()<transacts><decides>:fort_playspace
+
     # A nested container that scopes objects, style, gameplay rules, visuals, etc. All objects and players in an experience will belong to a fort_playspace. There is typically one `fort_playspace` for an entire experience, though this may change in the future as the platform evolves.
     #
     # To access the `fort_playspace` for a `creative_device` use `creative_device.GetPlayspace`.
@@ -4832,3 +4883,4 @@ Vehicles<public> := module:
 
         # Succeeds if this `fort_vehicle` is standing on ground.
         IsOnGround<public>()<transacts><decides>:void
+
