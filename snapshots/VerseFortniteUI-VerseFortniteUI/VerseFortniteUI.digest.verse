@@ -265,6 +265,9 @@ UI<public> := module:
         # The color of the shadow. Used only during initialization of the widget and not modified by SetShadowColor.
         DefaultShadowColor<native><public>:color = external {}
 
+        # The opacity of the shadow. Used only during initialization of the widget and not modified by SetShadowOpacity.
+        DefaultShadowOpacity<native><public>:type{_X:float where 0.000000 <= _X, _X <= 1.000000} = external {}
+
         # Sets the direction the shadow is cast.
         SetShadowOffset<native><public>(InShadowOffset:?vector2):void
 
