@@ -136,6 +136,9 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 ## Valkyrie Sentry Manifests Diffs
 
+> [!NOTE]
+> This manifest represents a list of all engine / Fortnite components and assets which will pass validation. Anything not included in this list will always fail validation.
+
 <details>
 <summary>Regular</summary>
 
