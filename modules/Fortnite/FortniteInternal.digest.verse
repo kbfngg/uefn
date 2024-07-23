@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-30.20-CL-34554470
+# Generated from build: ++Fortnite+Release-30.30-CL-34891016
 #################################################
 
 AI<public> := module:
@@ -1548,6 +1548,7 @@ Devices<public> := module:
         # Removes all previously registered `agent`s as valid targets to play audio from when activated.
         UnregisterAll<public>():void = external {}
 
+    using {/Verse.org/Simulation}
     # Used to create a customizable turret that can search for nearby targets.
     automated_turret_device<public> := class<concrete><final>(creative_device_base):
         # Triggers when someone enters the activation radius while nobody else is there.
@@ -3016,6 +3017,9 @@ Devices<public> := module:
         # Removes the gameplay control from all `Agent`s gameplay controls stack and pops from being the active control replacing it with the next one in the stack.
         RemoveFromAll<public>():void = external {}
 
+    # Used to adapt the controls to side scroller functionality
+    gameplay_controls_side_scroller_device<public> := class<concrete><final>(gameplay_controls_device):
+
     # Used to adapt the controls to the camera perspective
     gameplay_controls_third_person_device<public> := class<concrete><final>(gameplay_controls_device):
 
@@ -3869,7 +3873,6 @@ Devices<public> := module:
         # Sends the marked `agent`.
         SecondItemValueReachedEvent<public>:listenable(agent) = external {}
 
-    using {/Verse.org/Simulation}
     # Used to relay `agent` statistics to other devices and `agent`s. Can transmit statistics such as elimination count, eliminated count, or scores when certain conditions are met. Can also project a hologram of the `agent` and display text that can be altered in various positions and curvatures.
     player_reference_device<public> := class<concrete><final>(creative_device_base):
         # Ends the round/game.
@@ -4608,6 +4611,66 @@ Devices<public> := module:
 
         # Sets the sentry to target `Agent`. The sentry will not target agents on the same team as the sentry.
         Target<public>(Agent:agent):void = external {}
+
+    using {/Fortnite.com/Vehicles}
+    # A one stop automated refueling and repairing station for your vehicles.
+    service_station_device<epic_internal> := class<concrete><final>(creative_device_base):
+        # Request to check if any vehicle is inside the service station.
+        CheckIfVehicleIsInside<epic_internal>():void = external {}
+
+        # Fires when the Service Station is damaged
+        DamagedEvent<epic_internal>:listenable(tuple()) = external {}
+
+        # Fires When the Service Station is destroyed
+        DestroyedEvent<epic_internal>:listenable(tuple()) = external {}
+
+        # Disables this device.
+        Disable<epic_internal>():void = external {}
+
+        # Enables this device.
+        Enable<epic_internal>():void = external {}
+
+        # Fires when a vehicle enters the service station at full fuel, returns the vehicle that entered
+        VehicleEnteredAtFullFuelEvent<epic_internal>:listenable(fort_vehicle) = external {}
+
+        # Fires when a vehicle enters the service station at full health, returns the vehicle that entered
+        VehicleEnteredAtFullHealthEvent<epic_internal>:listenable(fort_vehicle) = external {}
+
+        # Fires when a vehicle enters the service station, returns the vehicle that entered
+        VehicleEnteredEvent<epic_internal>:listenable(fort_vehicle) = external {}
+
+        # Response for if vehicle is inside service station
+        VehicleIsInsideEvent<epic_internal>:listenable(tuple()) = external {}
+
+        # Response for if vehicle is not inside service station
+        VehicleIsNotInsideEvent<epic_internal>:listenable(tuple()) = external {}
+
+        # Fires when a vehicle leaves the service station, returns the vehicle that left
+        VehicleLeftEvent<epic_internal>:listenable(fort_vehicle) = external {}
+
+        # Fires when a vehicle leaves the service station while full health, returns the vehicle that left
+        VehicleLeftUnderFullFuelEvent<epic_internal>:listenable(fort_vehicle) = external {}
+
+        # Fires when a vehicle leaves the service station while full health, returns the vehicle that left
+        VehicleLeftUnderFullHealthEvent<epic_internal>:listenable(fort_vehicle) = external {}
+
+        # Fires when a vehicle leaves the service station before it can receive any fuel, returns the vehicle that left
+        VehicleLeftWithoutBeingRefueledEvent<epic_internal>:listenable(fort_vehicle) = external {}
+
+        # Fires when a vehicle leaves the service station before it can receive any health, returns the vehicle that left
+        VehicleLeftWithoutBeingRepairedEvent<epic_internal>:listenable(fort_vehicle) = external {}
+
+        # Fires on the first tick of a vehicle refueling, returns the vehicle refueled
+        VehicleStartedFuelingEvent<epic_internal>:listenable(fort_vehicle) = external {}
+
+        # Fires when a vehicle starts repairing, returns the vehicle repaired
+        VehicleStartedRepairingEvent<epic_internal>:listenable(fort_vehicle) = external {}
+
+        # Fires when a vehicle finishes refueling, returns the vehicle refueled
+        VehicleStoppedFuelingEvent<epic_internal>:listenable(fort_vehicle) = external {}
+
+        # Fires when a vehicle stops repairing, returns the vehicle repaired
+        VehicleStoppedRepairingEvent<epic_internal>:listenable(fort_vehicle) = external {}
 
     shared_saved_data_device<epic_internal> := class<concrete><final>(creative_device_base):
         # Signaled if the save result is off when the state is checked.
@@ -5501,7 +5564,6 @@ Devices<public> := module:
     # Specialized `vehicle_spawner_device` that allows an armored battle bus to be configured and spawned.
     vehicle_spawner_armored_battle_bus_device<public> := class<concrete><final>(vehicle_spawner_device):
 
-    using {/Fortnite.com/Vehicles}
     # Specialized `vehicle_spawner_device` that allows an ATK (all terrain kart) to be configured and spawned.
     vehicle_spawner_atk_device<public> := class<concrete><final>(vehicle_spawner_device):
 
@@ -6128,25 +6190,6 @@ Game<public> := module:
 
     HandleTeleportToResult<epic_internal>(Result:teleport_to_result, TargetTragsform:transform)<transacts><decides>:void = external {}
 
-    # Module import path: /Fortnite.com/Game/Item
-    Item<public> := module:
-        # Module import path: /Fortnite.com/Game/Item/PlayerPickupComponent
-        PlayerPickupComponent<epic_internal> := module:
-            createPickup<native><epic_internal>(contextObject:vk_component, itemDefinition:fort_item_definition, count:int, location:vector3):?player_pickup_component
-
-        item_type<native><public> := class:
-
-        player_pickup_component<native><epic_internal> := class(vk_component):
-            attemptPartialCollect<native><public>(Type:item_type, count:int, TargetPlayer:player_component):void
-
-            getNumOfItemType<native><public>(Type:item_type):int
-
-            getPrimaryItemType<native><public>():item_type
-
-            givePickupTo<native><public>(TargetPlayer:player_component):void
-
-            tossPickup<native><public>(finalLocation:vector3, owner:?player_component):void
-
     # Module import path: /Fortnite.com/Game/Movement
     Movement<public> := module:
         projectile_movement_component<native><public> := class<final>(vk_component):
@@ -6690,6 +6733,339 @@ Game<public> := module:
 
         # An unknown error occurred. If this happens frequently, contact Epic support.
         UnknownError
+
+using {/UnrealEngine.com/EpicGamesRestricted/Network}
+# Module import path: /Fortnite.com/Itemization
+Itemization<public> := module:
+    @experimental
+    active_item_limit_behavior<native><public> := enum<persistable>:
+        Block
+
+        UnequipLeastRecentlyUsed
+
+    @experimental
+    add_inventory_result<native><public> := struct<epic_internal>:
+        Inventory<native><public>:inventory_component
+
+        InventoryCollection<native><public>:inventory_collection_component
+
+    @experimental
+    add_items_result<native><public> := struct<epic_internal>:
+        AddedItems<native><public>:[]item
+
+        Inventory<native><public>:inventory_component
+
+        InventoryCollection<native><public>:inventory_collection_component
+
+    @experimental
+    change_items_slot_result<native><public> := struct<epic_internal>:
+        Inventory<native><public>:inventory_component
+
+        InventoryCollection<native><public>:inventory_collection_component
+
+        SlotChangedItems<native><public>:[]item_slot_change
+
+    @experimental
+    equippable_inventory_component<native><public> := class(inventory_component):
+        @editable
+        AutoEquipRequirementList<native><public>:[]item_requirement_base = external {}
+
+        CanEquipItem<native><public>(Item:item)<decides>:void
+
+        EquipItem<native><public>(Item:item)<transacts><decides>:void
+
+        @editable
+        EquipmentRestrictionList<native><public>:[]equippable_item_restriction_base = external {}
+
+        @editable
+        ShowSlotBindings<native><public>:logic = external {}
+
+        @editable
+        SlotBindingList<native><epic_internal>:[]tuple(string, int) = external {}
+
+        UnequipItem<native><public>(Item:item)<transacts><decides>:void
+
+        var ActiveItemList<native><public>:[]item = external {}
+
+    @experimental
+    equippable_inventory_hotbar_component<native><public> := class(equippable_inventory_component):
+        AutoEquipRequirementList<override>:[]item_requirement_base = external {}
+
+        EquipmentRestrictionList<override>:[]equippable_item_restriction_base = external {}
+
+        var TotalSlots<override>:int = external {}
+
+    @experimental
+    equippable_inventory_slot_component<native><public> := class(equippable_inventory_component):
+        AutoEquipRequirementList<override>:[]item_requirement_base = external {}
+
+        EquipmentRestrictionList<override>:[]equippable_item_restriction_base = external {}
+
+        var TotalSlots<override>:int = external {}
+
+    @experimental
+    equippable_item_restriction<native><public> := class(equippable_item_restriction_base):
+        @editable
+        ActiveLimitBehaviour<native><public>:active_item_limit_behavior = external {}
+
+        @editable
+        ActiveSlotLimit<native><public>:int = external {}
+
+        AppliesTo<native><public>(Item:item)<transacts><decides>:void
+
+        GetActiveLimitBehaviour<native><public>(Item:item)<transacts><decides>:active_item_limit_behavior
+
+        GetActiveSlotLimit<native><public>(Item:item)<transacts><decides>:int
+
+        @editable
+        ItemRequirement<native><public>:?item_requirement_base = external {}
+
+    @import_as("/Script/ItemizationCoreRuntime.UEquippableItemRestrictionBase")
+    @experimental
+    equippable_item_restriction_base<native><public> := class<unique><concrete>:
+
+    @experimental
+    inventory_add_items_result<native><public> := struct<epic_internal>:
+        AddedItems<native><public>:[]item
+
+        Inventory<native><public>:inventory_component
+
+    @experimental
+    inventory_add_result<native><public> := struct:
+        AmountAdded<native><public>:int
+
+        ModifiedItemList<native><public>:[]item
+
+    @experimental
+    inventory_backpack_component<public> := class(inventory_component):
+        var TotalSlots<override>:int = external {}
+
+    @experimental
+    inventory_collection_component<native><public> := class<epic_internal>(component):
+        AddInventory<native><public>(InventoryClass:subtype(inventory_component))<transacts><decides>:inventory_component
+
+        InventoryAddedEvent<native><public>:listenable(add_inventory_result) = external {}
+
+        InventoryRemovedEvent<native><public>:listenable(remove_inventory_result) = external {}
+
+        @editable
+        InventorySetupData<native><protected>:?inventory_setup_data = external {}
+
+        IsAllowedOnClient<override>():logic = external {}
+
+        ItemsAddedEvent<native><public>:listenable(add_items_result) = external {}
+
+        ItemsRemovedEvent<native><public>:listenable(remove_items_result) = external {}
+
+        ItemsSlotChangedEvent<native><public>:listenable(change_items_slot_result) = external {}
+
+        RemoveInventory<native><public>(Inventory:inventory_component)<transacts><decides>:void
+
+        var<private> InventoryList<native><public>:[]inventory_component = external {}
+
+    @experimental
+    inventory_component<native><public> := class(component):
+        CanAcceptItem<native><public>(Item:item)<decides>:void
+
+        DisposeAllItems<native><public>():void
+
+        DuplicateItem<native><public>(Item:item, ?Amount:int = external {})<transacts><decides>:inventory_add_result
+
+        @editable
+        @replicated("")
+        InventoryDescription<native><public>:string = external {}
+
+        @editable
+        @replicated("")
+        InventoryName<native><public>:string = external {}
+
+        IsAllowedOnClient<override>():logic = external {}
+
+        @editable
+        ItemRequirement<native><public>:?item_requirement_base = external {}
+
+        ItemsAddedEvent<native><public>:listenable(add_items_result) = external {}
+
+        ItemsChangedSlotEvent<native><public>:listenable(change_items_slot_result) = external {}
+
+        ItemsRemovedEvent<native><public>:listenable(remove_items_result) = external {}
+
+        @editable
+        @replicated("")
+        PickupPriority<native><public>:int = external {}
+
+        RemoveItem<native><public>(Item:item, ?Amount:int = external {})<transacts><decides>:int
+
+        @editable
+        @replicated("")
+        RequireUniqueItemClassPerStack<native><public>:logic = external {}
+
+        TakeItem<native><public>(Item:item)<transacts><decides>:int
+
+        @editable
+        VerseGameplayTags<native><epic_internal>:tag_container = external {}
+
+        @editable
+        @replicated("")
+        var EnableItemStacking<native><public>:logic = external {}
+
+        @replicated("")
+        var InventoryMaxStackSizeOverride<native><public>:int = external {}
+
+        @replicated("")
+        var InventoryType<native><public>:inventory_creation_type = external {}
+
+        @editable
+        @replicated("")
+        var TotalSlots<native><protected>:int = external {}
+
+    @experimental
+    inventory_creation_type<native><public> := enum<persistable>:
+        Runtime
+
+        SetupData
+
+    @experimental
+    inventory_setup_data<native><public> := class<concrete>:
+        ApplyTo<native><public>(Target:inventory_collection_component)<decides>:inventory_setup_data_result
+
+        @editable
+        InventorySetupDataName<native><public>:string = external {}
+
+    @experimental
+    inventory_setup_data_result<native><public> := struct<epic_internal>:
+        AddedInventoryMap<native><public>:[]tuple(inventory_component, []item)
+
+        InventoryCollection<native><public>:inventory_collection_component
+
+    @experimental
+    item<native><public> := class(entity):
+
+    @experimental
+    item_amount_change<native><public> := struct<epic_internal>:
+        Item<native><public>:item
+
+        NewAmount<native><public>:int
+
+        PreviousAmount<native><public>:int
+
+    @experimental
+    item_component<native><public> := class<epic_internal>(component):
+        OnItemStateChanged<native><public>(Item:item)<transacts><decides>:void
+
+        ShouldBeUnique<native><public>()<decides>:void
+
+    @experimental
+    item_rarity<native><public> := class<computes><unique><concrete>:
+        @editable
+        RarityColor<native><public>:color = external {}
+
+        @editable
+        RarityDescription<native><public>:string = external {}
+
+        @editable
+        RarityName<native><public>:string = external {}
+
+        @editable
+        RarityTier<native><public>:float = external {}
+
+    @experimental
+    item_rarity_component<native><final><public> := class(item_component):
+        @editable
+        var<private> Rarity<native><public>:?item_rarity
+
+    @experimental
+    item_requirement<native><public> := class(item_requirement_base):
+        CanAcceptItem<native><public>(Item:item)<transacts><decides>:void
+
+        @editable
+        RequirementDescription<native><public>:string = external {}
+
+        @editable
+        RequirementName<native><public>:string = external {}
+
+    @import_as("/Script/ItemizationCoreRuntime.UItemRequirementBase")
+    @experimental
+    item_requirement_base<native><public> := class<unique><concrete>:
+
+    @experimental
+    item_slot_change<native><public> := struct<epic_internal>:
+        Item<native><public>:item
+
+        NewSlot<native><public>:int
+
+        PreviousSlot<native><public>:int
+
+    @experimental
+    item_state<native><public> := enum:
+        Equipped
+
+        InInventory
+
+        NotInInventory
+
+    @experimental
+    item_state_change<native><public> := struct<epic_internal>:
+        Item<native><public>:item
+
+        NewState<native><public>:item_state
+
+        PreviousState<native><public>:item_state
+
+    @experimental
+    item_state_component<native><final><public> := class(item_component):
+        IsAllowedOnClient<override>():logic = external {}
+
+        ItemChangedAmountEvent<native><public>:listenable(item_amount_change) = external {}
+
+        ItemChangedSlotEvent<native><public>:listenable(item_slot_change) = external {}
+
+        ItemChangedStateEvent<native><public>:listenable(item_state_change) = external {}
+
+        var<private> Amount<native><public>:int = external {}
+
+        var<private> Slot<native><public>:int = external {}
+
+        var<private> State<native><public>:item_state = external {}
+
+    @experimental
+    item_type<native><public> := class<concrete><computes><unique>:
+        @editable
+        ItemTypeDescription<native><public>:string = external {}
+
+        @editable
+        ItemTypeName<native><public>:string = external {}
+
+    @experimental
+    item_type_component<native><final><public> := class(item_component):
+        GetItemTypeTags<native><epic_internal>():tag_container
+
+        HasItemType<native_callable><public>(SearchItemType:item_type)<decides>:void = external {}
+
+        @editable
+        var<private> ItemTypeList<native><public>:[]item_type
+
+    item_type_metal_tag<native><public> := class(item_type_tag):
+
+    item_type_stone_tag<native><public> := class(item_type_tag):
+
+    item_type_tag<native><public> := class(tag):
+
+    item_type_wood_tag<native><public> := class(item_type_tag):
+
+    @experimental
+    remove_inventory_result<native><public> := struct<epic_internal>:
+        Inventory<native><public>:inventory_component
+
+        InventoryCollection<native><public>:inventory_collection_component
+
+    @experimental
+    remove_items_result<native><public> := struct<epic_internal>:
+        Inventory<native><public>:inventory_component
+
+        InventoryCollection<native><public>:inventory_collection_component
+
+        RemovedItems<native><public>:[]item
 
 # Module import path: /Fortnite.com/Playspaces
 Playspaces<public> := module:
@@ -7350,9 +7726,9 @@ VerseFortniteGameScript<public> := module:
 
         OnPlayerEliminated<protected>(ElimResult:player_eliminated_result):void = external {}
 
-        OnPlayerJoined<protected>(__dupe___unnamed_parameter_213:player_component):void = external {}
+        OnPlayerJoined<protected>(__dupe___unnamed_parameter_215:player_component):void = external {}
 
-        OnPlayerLeft<protected>(__dupe___unnamed_parameter_214:player_component):void = external {}
+        OnPlayerLeft<protected>(__dupe___unnamed_parameter_216:player_component):void = external {}
 
         OnPostCreate<override>():void = external {}
 
