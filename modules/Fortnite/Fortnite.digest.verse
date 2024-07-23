@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-30.20-CL-34554470
+# Generated from build: ++Fortnite+Release-30.30-CL-34891016
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -669,6 +669,7 @@ Devices<public> := module:
         # Removes all previously registered `agent`s as valid targets to play audio from when activated.
         UnregisterAll<public>():void = external {}
 
+    using {/Verse.org/Simulation}
     # Used to create a customizable turret that can search for nearby targets.
     automated_turret_device<public> := class<concrete><final>(creative_device_base):
         # Triggers when someone enters the activation radius while nobody else is there.
@@ -1769,6 +1770,9 @@ Devices<public> := module:
         # Removes the gameplay control from all `Agent`s gameplay controls stack and pops from being the active control replacing it with the next one in the stack.
         RemoveFromAll<public>():void = external {}
 
+    # Used to adapt the controls to side scroller functionality
+    gameplay_controls_side_scroller_device<public> := class<concrete><final>(gameplay_controls_device):
+
     # Used to adapt the controls to the camera perspective
     gameplay_controls_third_person_device<public> := class<concrete><final>(gameplay_controls_device):
 
@@ -2560,7 +2564,6 @@ Devices<public> := module:
         # Sends the marked `agent`.
         SecondItemValueReachedEvent<public>:listenable(agent) = external {}
 
-    using {/Verse.org/Simulation}
     # Used to relay `agent` statistics to other devices and `agent`s. Can transmit statistics such as elimination count, eliminated count, or scores when certain conditions are met. Can also project a hologram of the `agent` and display text that can be altered in various positions and curvatures.
     player_reference_device<public> := class<concrete><final>(creative_device_base):
         # Ends the round/game.
