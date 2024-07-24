@@ -240,26 +240,6 @@ Game<public> := module:
 
             SetFriction<native><public>(Friction:float):void
 
-    # Module import path: /Fortnite.com/Game/Item
-    Item<public> := module:
-        item_type<native><public> := class:
-
-
-        player_pickup_component<native><epic_internal> := class(vk_component):
-            givePickupTo<native><public>(TargetPlayer:player_component):void
-
-            tossPickup<native><public>(finalLocation:vector3, owner:?player_component):void
-
-            getNumOfItemType<native><public>(Type:item_type):int
-
-            attemptPartialCollect<native><public>(Type:item_type, count:int, TargetPlayer:player_component):void
-
-            getPrimaryItemType<native><public>():item_type
-
-        # Module import path: /Fortnite.com/Game/Item/PlayerPickupComponent
-        PlayerPickupComponent<epic_internal> := module:
-            createPickup<native><epic_internal>(contextObject:vk_component, itemDefinition:fort_item_definition, count:int, location:vector3):?player_pickup_component
-
     fort_item_definition<native><public> := class<computes>(asset):
 
 
