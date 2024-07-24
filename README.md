@@ -73,37 +73,76 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details open>
 <summary>Verse Modules Diffs</summary>
 
+<ul>
+<details open>
+<summary>v30</summary>
+
 - `30.20` - `30.30`: [`public`](https://github.com/kbfngg/uefn/commit/5245dfd16c00098f86406fad0e5976a26868e103) | [`internal`](https://github.com/kbfngg/uefn/commit/285b2405af377566c2e33dff769d61052cf2e191)
 - `30.10` - `30.20`: [`public`](https://github.com/kbfngg/uefn/commit/b4ef0c1aa1c771dfb223a56a0d8abc02ccfc9569) | [`internal`](https://github.com/kbfngg/uefn/commit/beb9e8f283d38db8f4a3656587211c9b5849ad05)
 - `30.00` - `30.10`: [`public`](https://github.com/kbfngg/uefn/commit/4e855c0712723c0494dce9062aefcd5c93c96d59) | [`internal`](https://github.com/kbfngg/uefn/commit/91846acd56e87bab95344197c0c136178817f455)
 - `29.40` - `30.00`: [`public`](https://github.com/kbfngg/uefn/commit/fbf8a45d2e3d822015565a7cd603adefcc71df8f) | [`internal`](https://github.com/kbfngg/uefn/commit/f4891d40ca1776dd0dcc578e3be3ec91fea61318)
+</details>
+
+<details>
+<summary>v29 - v24</summary>
+
+<ul>
+<details>
+<summary>v29</summary>
+  
 - `29.30` - `29.40`: [`public`](https://github.com/kbfngg/uefn/commit/2d96ee7c82828be7253edae7627fcd76c28d0fdc) | [`internal`](https://github.com/kbfngg/uefn/commit/3890b2027bebb0cba99f4e0b1d7eeed6a2b3f75d)
 - `29.20` - `29.30`: [`public`](https://github.com/kbfngg/uefn/commit/8526a3cee491e0c0ab15670ebc75cade0e5ad464) | [`internal`](https://github.com/kbfngg/uefn/commit/191bc36dcd5498f993462be7def84a2369bfd242)
 - `29.10` - `29.20`: [`public`](https://github.com/kbfngg/uefn/commit/8d47a5e9c8923c22d3ed914f09503d158d18e598) | [`internal`](https://github.com/kbfngg/uefn/commit/1fcf65ca2d13ad238bf1b4cf64fb6e36e735ece4)
 - `29.01` - `29.10`: [`public`](https://github.com/kbfngg/uefn/commit/61ab54f9556cbeea90802a097938f32b663d3dd2) | [`internal`](https://github.com/kbfngg/uefn/commit/626eb5daf7db662feb87176539a0ebc0824dae4c)
 - `29.00` - `29.01`: [`public`](https://github.com/kbfngg/uefn/commit/80cd71126239c000e6325e5eced21175b4b8df78) | [`internal`](https://github.com/kbfngg/uefn/commit/248cffda15774ed207584af553fea0668bcf0266)
 - `28.30` - `29.00`: [`public`](https://github.com/kbfngg/uefn/commit/7343a0745a0945f1df31fb37827c232700268bfd) | [`internal`](https://github.com/kbfngg/uefn/commit/ef49d747b1b30fe882b0bbad824b1763fc296108)
+</details>
+
+<details>
+<summary>v28</summary>
+
 - `28.20` - `28.30`: [`public`](https://github.com/kbfngg/uefn/commit/1d333115b880fd3d30ea32d20aa5a61e5be23b2c)
 - `28.10` - `28.20`: [`public`](https://github.com/kbfngg/uefn/commit/f18b44df4bfe519d45af9d36d26f6a6b111315bd)
 - `28.01` - `28.10`: [`public`](https://github.com/kbfngg/uefn/commit/4a76a49ac04a4974d3487cb50846bc769b6e52a0)
 - `28.00` - `28.01`: [`public`](https://github.com/kbfngg/uefn/commit/24e391418adb22d6a5f1829b9ae332d885ab9712) (nothing new)
 - `27.11` - `28.00`: [`public`](https://github.com/kbfngg/uefn/commit/3b49dbd5815ac41130ec4645791c4090440e84cd)
+</details>
+<details>
+<summary>v27</summary>
+  
 - `27.00` - `27.10`: [`public`](https://github.com/kbfngg/uefn/commit/24041496b294c725eb352c354650f128651daeea)
 - `26.30` - `27.00`: [`public`](https://github.com/kbfngg/uefn/commit/1b60f95aba058478383f21c6c4eea1bc8db06aca)
+</details>
+<details>
+<summary>v26</summary>
+  
 - `26.20` - `26.30`: [`public`](https://github.com/kbfngg/uefn/commit/ab7258e9743f5b85115e7fcd6ab4e899ecd6d364)
 - `26.10` - `26.20`: [`public`](https://github.com/kbfngg/uefn/commit/2a7eb40ceb255a882217f0508f01d0f7e4ef9331)
 - `26.00` - `26.10`: [`public`](https://github.com/kbfngg/uefn/commit/12df6e86ef674e2a30619087b27902e5474bf85b)
 - `25.30` - `26.00`: [`public`](https://github.com/kbfngg/uefn/commit/367bf7cf21bdc8be9f004557b08ffbf2bcea5cb2)
+</details>
+<details>
+<summary>v25</summary>
+  
 - `25.20` - `25.30`: [`public`](https://github.com/kbfngg/uefn/commit/7bd3adbb944c5ea4bba64ba5db999bd54c527232)
 - `25.11` - `25.20`: [`public`](https://github.com/kbfngg/uefn/commit/21149abc4212b0f9c31108f26afd7a0a2bdef294)
 - `25.10` - `25.11`: [`public`](https://github.com/kbfngg/uefn/commit/ac118b2dafd6ad406c2295d46b1136000930ab46)
 - `25.00` - `25.10`: [`public`](https://github.com/kbfngg/uefn/commit/b7bd7d76d5f5cc430172954146e033a28cf54747)
 - `24.40` - `25.00`: [`public`](https://github.com/kbfngg/uefn/commit/796cf13ba35fcf7ecd126f140f48f7e62503290f)
+</details>
+<details>
+<summary>v24</summary>
+  
 - `24.30` - `24.40`: [`public`](https://github.com/kbfngg/uefn/commit/79dd3c4bf1ea1ccb6b860cf0941586cf1b53bbb0)
 - `24.20` - `24.30`: [`public`](https://github.com/kbfngg/uefn/commit/c93a6918a36d61e4e03b306555e4ebe268773823)
 - `24.10` - `24.20`: [`public`](https://github.com/kbfngg/uefn/commit/453d84fc6432a1180a3f28546cc3fc23a8625895)
 - `24.01` - `24.10`: [`public`](https://github.com/kbfngg/uefn/commit/38b55ef332109f55d9cc50c463f267c167a4a311)
 
+</details>
+</ul> <!-- old modules indentation -->
+
+</details> <!-- old modules details end -->
+</ul> <!-- main indentation -->
 </details>
 
 <details>
