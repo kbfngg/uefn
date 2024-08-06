@@ -2,7 +2,7 @@
 
 A basic repository to accumulate a knowledgebase around UEFN and to track public API diffs.
 
-## Latest Verse - `30.30`
+## Latest Verse - `30.40`
 
 ### Modules
 
@@ -33,6 +33,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>Verse APIs</summary>
 
+- [`30.40`](https://github.com/kbfngg/uefn/tree/game_v30.40/modules)
 - [`30.30`](https://github.com/kbfngg/uefn/tree/game_v30.30/modules)
 - [`30.20`](https://github.com/kbfngg/uefn/tree/game_v30.20/modules)
 - [`30.10`](https://github.com/kbfngg/uefn/tree/game_v30.10/modules)
@@ -77,6 +78,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details open>
 <summary>v30</summary>
 
+- `30.30` - `30.40`: [`public`](https://github.com/kbfngg/uefn/commit/d7d8eb23cdaf7387fa78a27b492cbd898f17b2d9) | [`internal`](https://github.com/kbfngg/uefn/commit/916aa5eaf8511a1a8b5f51c470d9f0649e8f4664)
 - `30.20` - `30.30`: [`public`](https://github.com/kbfngg/uefn/commit/5245dfd16c00098f86406fad0e5976a26868e103) | [`internal`](https://github.com/kbfngg/uefn/commit/285b2405af377566c2e33dff769d61052cf2e191)
 - `30.10` - `30.20`: [`public`](https://github.com/kbfngg/uefn/commit/b4ef0c1aa1c771dfb223a56a0d8abc02ccfc9569) | [`internal`](https://github.com/kbfngg/uefn/commit/beb9e8f283d38db8f4a3656587211c9b5849ad05)
 - `30.00` - `30.10`: [`public`](https://github.com/kbfngg/uefn/commit/4e855c0712723c0494dce9062aefcd5c93c96d59) | [`internal`](https://github.com/kbfngg/uefn/commit/91846acd56e87bab95344197c0c136178817f455)
@@ -148,6 +150,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>Verse Snapshots Diffs</summary>
 
+- [`30.30` - `30.40`]() (tbd)
 - [`30.20` - `30.30`](https://github.com/kbfngg/uefn/commit/7dfff75090e04deb55df292f004659107395dc81)
 - [`30.10` - `30.20`](https://github.com/kbfngg/uefn/commit/11c5fffda6b77da3be550dd36440fdeb0a0ebfc7)
 - [`30.00` - `30.10`](https://github.com/kbfngg/uefn/commit/bb50da7d43a13ce69f51657d3f5eee78cf1240d1)
@@ -185,6 +188,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>Regular</summary>
 
+- [`30.30` - `30.40`](https://github.com/kbfngg/uefn/commit/21c13bf55ed6cc8699352b13a82b3050a5ce45aa)
 - [`30.20` - `30.30`](https://github.com/kbfngg/uefn/commit/d9ae48f959be5d67b81313e23ae685acbf960a79)
 - [`30.10` - `30.20`](https://github.com/kbfngg/uefn/commit/30d5ab288e82fa5b840fcdad7a6d9a78bbb79fab)
 - [`30.00` - `30.10`](https://github.com/kbfngg/uefn/commit/0ef398d86a633205eb645aa6341ca9c4331db98e)
@@ -221,6 +225,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>DelMar</summary>
 
+- [`30.30` - `30.40`](https://github.com/kbfngg/uefn/commit/23534f0e61000b8aab3cf8a8d76311819616a5a4)
 - [`30.20` - `30.30`](https://github.com/kbfngg/uefn/commit/7f501aca6c34e6e572a82ad007fdaefa501063f8)
 - [`30.10` - `30.20`](https://github.com/kbfngg/uefn/commit/f7edb4bb482a476a17156f0c5c95fe2881417fb6)
 - [`30.00` - `30.10`](https://github.com/kbfngg/uefn/commit/74a92c566dfbe29ffa58c3b52e8df4606eed3df5)
@@ -235,6 +240,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>LimeGFS</summary>
 
+- [`30.30` - `30.40`](https://github.com/kbfngg/uefn/commit/4ba93ed5a26e8c81e08496677b19b2a2c73b7fd7)
 - [`30.20` - `30.30`](https://github.com/kbfngg/uefn/commit/202d5764f115652f1ad3f6987dfa84d7da3867e5)
 - [`30.10` - `30.20`](https://github.com/kbfngg/uefn/commit/d8f85e935cb84e08d8e70e6c442a7c51f88f285b)
 - [`30.00` - `30.10`](https://github.com/kbfngg/uefn/commit/2bff71c992a80e4177719fe97169e07711de58fa)
@@ -249,6 +255,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>PartnerLimeGFS</summary>
 
+- [`30.30` - `30.40`](https://github.com/kbfngg/uefn/commit/6a0db6875619d952e1ecac18b39368ae5bd2c9ea)
 - [`30.20` - `30.30`](https://github.com/kbfngg/uefn/commit/f3ab8ab1a7340ff911d9cc05ada07071feb67f31)
 - [`30.10` - `30.20`](https://github.com/kbfngg/uefn/commit/5308728cbacc4d9b97ce922de21edd499b52dd97)
 - [`30.00` - `30.10`](https://github.com/kbfngg/uefn/commit/1c034c11959f2f6ada3c3116283195fd0323387d)
@@ -263,7 +270,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>BeanstalkGFS</summary>
 
-- (soon)
+- [`30.30` - `30.40`](https://github.com/kbfngg/uefn/commit/34a7ab5b16cafa83fefa13f31fabf322388abb1b)
   
 </details>
 
