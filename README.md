@@ -16,10 +16,10 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 - Valkyrie Sentry Manifests
   - [Regular](https://github.com/kbfngg/uefn/blob/main/manifests/ValkyrieSentryManifest/ValkyrieSentryManifest.json)
-  - [LimeGFS](https://github.com/kbfngg/uefn/blob/main/manifests/ValkyrieSentryManifest/ValkyrieSentryManifest-LimeGFS.json)
-  - [PartnerLimeGFS](https://github.com/kbfngg/uefn/blob/main/manifests/ValkyrieSentryManifest/ValkyrieSentryManifest-PartnerLimeGFS.json)
-  - [DelMarGFS](https://github.com/kbfngg/uefn/blob/main/manifests/ValkyrieSentryManifest/ValkyrieSentryManifest-DelMarGFS.json)
-  - [BeanstalkGFS](https://github.com/kbfngg/uefn/blob/main/manifests/ValkyrieSentryManifest/ValkyrieSentryManifest-BeanstalkGFS.json)
+  - [DelMarGFS (Rocket Racing)](https://github.com/kbfngg/uefn/blob/main/manifests/ValkyrieSentryManifest/ValkyrieSentryManifest-DelMarGFS.json)
+  - [LimeGFS (LEGO)](https://github.com/kbfngg/uefn/blob/main/manifests/ValkyrieSentryManifest/ValkyrieSentryManifest-LimeGFS.json)
+  - [PartnerLimeGFS (LEGO Group)](https://github.com/kbfngg/uefn/blob/main/manifests/ValkyrieSentryManifest/ValkyrieSentryManifest-PartnerLimeGFS.json)
+  - [BeanstalkGFS (Fall Guys)](https://github.com/kbfngg/uefn/blob/main/manifests/ValkyrieSentryManifest/ValkyrieSentryManifest-BeanstalkGFS.json)
 
 ******
 
