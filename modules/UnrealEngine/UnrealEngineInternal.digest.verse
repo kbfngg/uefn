@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-30.30-CL-34891016
+# Generated from build: ++Fortnite+Release-30.40-CL-35235494
 #################################################
 
 AINavigation<public> := module:
@@ -2300,6 +2300,46 @@ Temporary<public> := module:
 
             @editable
             Z<native><public>:float = external {}
+
+    using {/UnrealEngine.com/Temporary/Diagnostics}
+    # Module import path: /UnrealEngine.com/Temporary/Testing
+    Testing<public> := module:
+        # test_reporter is a test result aggregator that writes test results to a log stream and can compile and print a summary of test results.
+        test_reporter<native><epic_internal> := class:
+            # Sets the default log level of the displayed message. See log_level enum for more info on log levels. Defaults to log_level.Normal.
+            DefaultLevel<native><epic_internal>:log_level = external {}
+
+            # Logs `Message` to the `test_reporter` log stream. This allows users to add context for results to the summary.
+            Log<native><epic_internal>(Message:string, ?Level:log_level = external {}):void
+
+            # The name of this `test_reporter`. Used when displaying results summary.
+            Name<native><epic_internal>:string = external {}
+
+            # Prints a summary of test results to the log stream and resets the test results.
+            PrintSummary<native><epic_internal>(?Level:log_level = external {}):void
+
+            # Report a test result of `Failed`. `Category` and `SubCategory` are used to calculate test result stats as part of printing the summary.
+            ReportTestFailed<native><epic_internal>(Message:string, ?Category:string = external {}, ?SubCategory:string = external {}):void
+
+            # Report a test result of `Passed`. `Category` and `SubCategory` are used to calculate test result stats as part of printing the summary.
+            ReportTestPassed<native><epic_internal>(Message:string, ?Category:string = external {}, ?SubCategory:string = external {}):void
+
+            # Report a test result of `Result`. `Category` and `SubCategory` are used to calculate test result stats as part of printing the summary.
+            ReportTestResult<native><epic_internal>(Message:string, Result:test_result, ?Category:string = external {}, ?SubCategory:string = external {}):void
+
+            # Report a test result of `Skipped`. `Category` and `SubCategory` are used to calculate test result stats as part of printing the summary.
+            ReportTestSkipped<native><epic_internal>(Message:string, ?Category:string = external {}, ?SubCategory:string = external {}):void
+
+            # Resets test results.
+            Reset<native><epic_internal>():void
+
+        # test result outcomes
+        test_result<native><epic_internal> := enum:
+            Failed
+
+            Passed
+
+            Skipped
 
     using {/Verse.org/Assets}
     using {/Verse.org/Colors}

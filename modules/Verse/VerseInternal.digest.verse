@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-30.30-CL-34891016
+# Generated from build: ++Fortnite+Release-30.40-CL-35235494
 #################################################
 
 using {/Verse.org/ParameterCollections}
@@ -23,11 +23,11 @@ Assets<public> := module:
     animation_sequence<native><public> := class<computes><final><epic_internal>(asset):
 
     asset<native><epic_internal> := class<computes><epic_internal>:
-        Async_Load<native><epic_internal>():?sticky_event(void)
+        Async_Load<native><epic_internal>():sticky_event(void)
 
         GetAssetType<native><epic_internal>()<transacts><decides>:type
 
-        GetAsyncLoadEvent<native><epic_internal>():?sticky_event(void)
+        GetAsyncLoadEvent<native><epic_internal>()<decides>:sticky_event(void)
 
         SyncLoad<native><epic_internal>():logic
 
