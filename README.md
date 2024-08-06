@@ -223,7 +223,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 </details>
 
 <details>
-<summary>DelMar</summary>
+<summary>DelMar (Rocket Racing)</summary>
 
 - [`30.30` - `30.40`](https://github.com/kbfngg/uefn/commit/23534f0e61000b8aab3cf8a8d76311819616a5a4)
 - [`30.20` - `30.30`](https://github.com/kbfngg/uefn/commit/7f501aca6c34e6e572a82ad007fdaefa501063f8)
@@ -238,7 +238,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 </details>
 
 <details>
-<summary>LimeGFS</summary>
+<summary>LimeGFS (LEGO)</summary>
 
 - [`30.30` - `30.40`](https://github.com/kbfngg/uefn/commit/4ba93ed5a26e8c81e08496677b19b2a2c73b7fd7)
 - [`30.20` - `30.30`](https://github.com/kbfngg/uefn/commit/202d5764f115652f1ad3f6987dfa84d7da3867e5)
@@ -253,7 +253,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 </details>
 
 <details>
-<summary>PartnerLimeGFS</summary>
+<summary>PartnerLimeGFS (LEGO Group)</summary>
 
 - [`30.30` - `30.40`](https://github.com/kbfngg/uefn/commit/6a0db6875619d952e1ecac18b39368ae5bd2c9ea)
 - [`30.20` - `30.30`](https://github.com/kbfngg/uefn/commit/f3ab8ab1a7340ff911d9cc05ada07071feb67f31)
@@ -268,7 +268,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 </details>
 
 <details>
-<summary>BeanstalkGFS</summary>
+<summary>BeanstalkGFS (Fall Guys)</summary>
 
 - [`30.30` - `30.40`](https://github.com/kbfngg/uefn/commit/34a7ab5b16cafa83fefa13f31fabf322388abb1b)
   
