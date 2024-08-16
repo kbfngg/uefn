@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-30.40-CL-35235494
+# Generated from build: ++Fortnite+Release-31.00-CL-35447195
 #################################################
 
 using {/UnrealEngine.com/Temporary/SpatialMath}
@@ -154,6 +154,32 @@ Temporary<public> := module:
         # Returns the simulation entity parent for this entity.  * The simulation entity is the rootmost entity in an experience.  * Fails if this entity is not currently in the scene.
         (InEntity:entity).GetSimulationEntity<native><public>()<transacts><decides>:entity
 
+        # Module import path: /UnrealEngine.com/Temporary/SceneGraph/NamedCollisionChannels
+        NamedCollisionChannels<public> := module:
+            @experimental
+            Camera<public>:collision_channel = external {}
+
+            @experimental
+            Destructible<public>:collision_channel = external {}
+
+            @experimental
+            Pawn<public>:collision_channel = external {}
+
+            @experimental
+            PhysicsBody<public>:collision_channel = external {}
+
+            @experimental
+            Vehicle<public>:collision_channel = external {}
+
+            @experimental
+            Visibility<public>:collision_channel = external {}
+
+            @experimental
+            WorldDynamic<public>:collision_channel = external {}
+
+            @experimental
+            WorldStatic<public>:collision_channel = external {}
+
         using {/UnrealEngine.com/Temporary/SpatialMath}
         using {/Verse.org/Simulation/Tags}
         @experimental
@@ -164,6 +190,20 @@ Temporary<public> := module:
 
             # Extent of the box.
             Extent<native><public>:vector3 = external {}
+
+        @experimental
+        collision_channel<native><public> := struct<concrete><computes><epic_internal>:
+
+        @experimental
+        collision_channel_response<native><public> := enum:
+            Block
+
+            Ignore
+
+            Overlap
+
+        @experimental
+        collision_channel_responses<native><public> := class<concrete><epic_internal>:
 
         @experimental
         # Used to make an entity collide with other scene objects, including preventing players and NPCs from passing through the entity.Overlap queries can only find entities with enabled `collision_components`.Dependencies:  * `transform_component` on the entity positions the `collision_component`.  * `mesh_component` on the entity provides the collision shape for the `collision_component`.
@@ -192,11 +232,40 @@ Temporary<public> := module:
             OnUninitializing<native><override>():void
 
         @experimental
+        collision_profile<native><public> := class<concrete><epic_internal>:
+            GetChannel<native><public>():collision_channel
+
+            GetName<native><public>():string
+
+            GetResponses<native><public>():collision_channel_responses
+
+            SetChannel<native><public>(Channel:collision_channel):void
+
+            SetName<native><public>(Name:string):void
+
+            SetResponses<native><public>(Responses:collision_channel_responses):void
+
+        @experimental
+        collision_query_params<native><public> := struct<epic_internal>:
+            # True to have the query return Blocking hits
+            DetectBlocking<native><public>:logic = external {}
+
+            # True to have the query return Overlapping hits
+            DetectOverlapping<native><public>:logic = external {}
+
+            # A set of components to ignore in the query
+            IgnoredComponents<native><public>:[]collision_component = external {}
+
+        @experimental
         # Base class for authoring logic and data in the SceneGraph. Using components youcan author re-usable building blocks of logic and data which can then be added toentities in the scene.Components are a very low level building block which can be used in many ways.For example:  * Exposing engine level concepts like mesh or sound  * Adding gameplay capabilities like damage or interaction  * Storing an inventory for a character in the gameAs components are generic there is no specific way that they must be used.It is up to the needs of your experience if you use one big game componentor if you break up logic into many small components.Currently UEFN will not allow you to add more than one component of a givensubclass of component (for example, only one type of light_component). This restrictionwill be relaxed in the future where components will be able to decide if theywish to allow only one instance or many instances of the same component to existtogether on one entity.==============================================================================Component Lifetime  Components move through a series of lifetime functions as they are added  to entities, added to the scene, and begin running in the simulation. Components  should override these methods to perform setup and run their simulation.  As a component shuts down it will then move through shutdown version of these  functions, giving users the opportunity to clean up any retained state on the  component before it is disposed.  Lifetime Methods:    OnInitialized       OnAddedToScene         OnBeginSimulation -> OnSimulate<suspends>         OnEndSimulation       OnRemovingFromScene    OnUninitializing==============================================================================
         component<native><public> := class<abstract><unique>(disposable):
             @experimental
             # Disposes of the component and all its resources.  * Disposed components are removed from the scene and cannot be added back.  * Flows through `OnEndSimulation`-> `OnRemovingFromScene`-> `OnUninitializing`.
             Dispose<native><override><final>():void
+
+            @experimental
+            # The parent entity of this component.  * Components must have a parent entity pointer provided when being constructed.  * Components cannot be moved between parents.  * The parent pointer remains valid even after the component has been disposed.
+            Entity<native><public>:entity
 
             @experimental
             # Determines if the component has been disposed from the `Dispose` method. Disposed components cannot be added back to the scene.
@@ -241,10 +310,6 @@ Temporary<public> := module:
             @experimental
             # Called when the component is about to be removed from the parent entity.  * Components are removed from their parent entity when they are disposed.  * `OnUninitializing` is only called on components that have already had `OnInitialized` called.
             OnUninitializing<native><native_callable><protected>():void
-
-            @experimental
-            # The parent entity of this component.  * Components must have a parent entity pointer provided when being constructed.  * Components cannot be moved between parents.  * The parent pointer remains valid even after the component has been disposed.
-            var<private> Entity<public>:entity
 
             @experimental
             # Set callbacks to `TickEvents.PrePhysics` and `TickEvents.PostPhysics` to receive per-frame updatesbefore and after physics is updated on your object.
@@ -313,17 +378,19 @@ Temporary<public> := module:
             Subscribe<native><override>(Callback:type {__(:float):void})<transacts>:cancelable
 
         @experimental
+        # A range with a minimum and maximum value. For a value to fall inside of this range, the min value must be less than or equal to the max value.
+        float_range<native><public> := struct<concrete>:
+            @editable
+            Maximum<native><public>:float = external {}
+
+            Minimum<native><public>:float = external {}
+
+        @experimental
         # Base class for light components in the SceneGraph.Dependencies:  * `transform_component` on the entity positions the light.Examples of components implementing `light_component`:  * `directional_light_component`  * `point_light_component`  * `rect_light_component`  * `spot_light_component`
         light_component<native><public> := class<abstract><epic_internal>(component):
-            # Returns the color of the light.
-            GetColor<native><public>()<transacts>:color
-
             OnInitialized<native><override>():void
 
             OnUninitializing<native><override>():void
-
-            # Sets the color of the light. Note that this can change the light’s effective intensity.
-            SetColor<native><public>(InColor:color)<transacts>:void
 
             @experimental
             # If the light affects global illumination, when ray-traced global illumination is enabled.
@@ -351,7 +418,7 @@ Temporary<public> := module:
 
         @experimental
         # Used to render a `mesh` at the location of this entity. A mesh is a set of polygons that can be used to represent shapesin the world such as:  * foliage and terrain decorations  * movers (for example, doors and lifts)  * procedurally created buildingsDependencies:  * `transform_component` on the entity positions the mesh.
-        mesh_component<native><public> := class<final>(component, enableable):
+        mesh_component<native><public> := class(component, enableable):
             @experimental
             # Disables rendering of this mesh.
             Disable<native><override>():void
@@ -378,6 +445,14 @@ Temporary<public> := module:
             @experimental
             # The `mesh` to be rendered by this `mesh_component`.
             var Mesh<native><public>:mesh = external {}
+
+        @experimental
+        overlap_hit<native><public> := struct<epic_internal>:
+            Component<native><public>:?component = external {}
+
+        @experimental
+        overlap_hit_container<native><public> := struct<epic_internal>:
+            Hits<native><public>:[]overlap_hit
 
         @experimental
         # Constrains the transform of this entity so it is always offset relatively from its parent entity.Any changes made to the parent entity's `transform_component` will automatically cause this entity to change too.Dependencies:  * `transform_component` on the entity provides the world transform to be constrained.
@@ -492,15 +567,32 @@ Temporary<public> := module:
 
         @experimental
         # Used to render a string at the location of this entity.Dependencies:  * `transform_component` on the entity positions the `text_display_component`.
-        text_display_component<native><public> := class<final>(component):
+        text_display_component<native><public> := class<final>(component, enableable):
+            # Disable this object.
+            Disable<native><override>():void
+
+            # Enable this object.
+            Enable<native><override>():void
+
+            # Succeeds if the component is enabled, fails if it is disabled.
+            IsEnabled<native><override>()<transacts><decides>:void
+
             OnAddedToScene<native><override>():void
+
+            OnBeginSimulation<native><override>():void
+
+            OnEndSimulation<native><override>():void
 
             OnInitialized<native><override>():void
 
             OnRemovingFromScene<native><override>():void
 
             @editable
+            # The color with which to display the text.
+            var Color<native><public>:color = external {}
+
             @experimental
+            @editable
             # Text to be displayed on the entity.
             var Text<native><public>:string = external {}
 
@@ -512,6 +604,33 @@ Temporary<public> := module:
 
             # Subscribe callbacks to `PrePhysics` to run your code before the physics system has updated your object this frame.
             PrePhysics<native><public>:execution_subscribable = external {}
+
+        @experimental
+        trace_hit<native><public> := struct<epic_internal>:
+            # The component that we was hit by the traced component
+            HitComponent<native><public>:?component = external {}
+
+            # The face normal at the ContactLocation. For a face contact this is the same as ContactNormal, but for edge and vertex contacts this will be the most opposing face sharing that edge or vertex
+            HitFaceNormal<native><public>:vector3 = external {}
+
+            # The normal at which the TracedComponent touched the HitComponent
+            HitNormal<native><public>:vector3 = external {}
+
+            # The point at which the TracedComponent touched the HitComponent
+            HitPosition<native><public>:vector3 = external {}
+
+            # The collision_channel_response based on the trace and HitComponent collision_channel and collision_responses
+            HitResponse<native><public>:collision_channel_response = external {}
+
+            # The distance traveled by the traced object when it hit the HitComponent
+            TraceHitDistance<native><public>:float = external {}
+
+            # The position of the traced object when it hit the HitComponent
+            TraceHitPosition<native><public>:vector3 = external {}
+
+        @experimental
+        trace_hit_container<native><public> := struct<epic_internal>:
+            Hits<native><public>:[]trace_hit
 
         @experimental
         # Stores the world transform for an entity, which is used to position the entity.  * If you wish for an entity to update its transform when its parent entity transform changes then    you must also add a `parent_constraint_component` to the entity.
@@ -536,6 +655,9 @@ Temporary<public> := module:
         @experimental
         # Base class for all three-dimensional volumes.
         volume3<native><public> := class<epic_internal>(shape3):
+
+    # Stably sort `Array` using `Less` where `Less` succeeding indicates `Left` should precede `Right`
+    SortBy<native><public>(Array:[]t, Less:type {__(:t, :t)<computes><decides>:void} where t:type)<computes>:[]t
 
     using {/Verse.org/Native}
     # Module import path: /UnrealEngine.com/Temporary/SpatialMath
@@ -600,7 +722,7 @@ Temporary<public> := module:
         (Rotation:rotation).Invert<native><public>()<transacts>:rotation
 
         # Returns `Rotation` if it does not contain `NaN`, `Inf` or `-Inf`.
-        (Rotation:rotation).IsFinite<native><public>()<computes><decides>:rotation
+        (Rotation:rotation).IsFinite<native><public>()<converges><decides>:rotation
 
         # Makes a `vector3` by applying `Rotation` to `Vector`.
         (Rotation:rotation).RotateVector<native><public>(Vector:vector3)<transacts>:vector3
@@ -715,14 +837,14 @@ Temporary<public> := module:
         MakeComponentWiseDeltaRotation<native><public>(RotationA:rotation, RotationB:rotation)<transacts>:rotation
 
         # Makes a `rotation` from `Axis` and `AngleRadians` using a left-handed sign convention (e.g. a positive rotation around +Z takes +X to +Y). If `Axis.IsAlmostZero[]`, make the identity rotation.
-        MakeRotation<native><public>(Axis:vector3, AngleRadians:float)<computes><reads>:rotation
+        MakeRotation<native><public>(Axis:vector3, AngleRadians:float)<converges><reads>:rotation
 
         # Makes a `rotation` by applying `YawRightDegrees`, `PitchUpDegrees`, and `RollClockwiseDegrees`, in that order:
         #  * first a *yaw* about the Z axis with a positive angle indicating a clockwise rotation when viewed from above,
         #  * then a *pitch* about the new Y axis with a positive angle indicating 'nose up',
         #  * followed by a *roll* about the new X axis axis with a positive angle indicating a clockwise rotation when viewed along +X.
         # Note that these conventions differ from `MakeRotation` but match `ApplyYaw`, `ApplyPitch`, and `ApplyRoll`.
-        MakeRotationFromYawPitchRollDegrees<native><public>(YawRightDegrees:float, PitchUpDegrees:float, RollClockwiseDegrees:float)<computes><reads>:rotation
+        MakeRotationFromYawPitchRollDegrees<native><public>(YawRightDegrees:float, PitchUpDegrees:float, RollClockwiseDegrees:float)<converges><reads>:rotation
 
         # Makes the smallest angular `rotation` from `InitialRotation` to `FinalRotation` such that:
         # `InitialRotation.RotateBy(MakeShortestRotationBetween(InitialRotation, FinalRotation)) = FinalRotation` and

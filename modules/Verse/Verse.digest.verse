@@ -2,16 +2,16 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-30.40-CL-35235494
+# Generated from build: ++Fortnite+Release-31.00-CL-35447195
 #################################################
 
 # Module import path: /Verse.org/Assets
 Assets<public> := module:
-    animation_sequence<native><public> := class<computes><final><epic_internal>:
+    animation_sequence<native><public> := class<computes><concrete><final><epic_internal>:
 
     material<native><public> := interface<epic_internal>:
 
-    mesh<native><public> := class<computes><concrete><final><epic_internal>:
+    mesh<native><public> := class<computes><concrete><epic_internal>:
 
     particle_system<native><public> := class<computes><concrete><final><epic_internal>:
 
@@ -390,10 +390,10 @@ Colors<public> := module:
     operator'-'<native><public>(c0:color, c1:color)<converges>:color
 
     # Makes an ACES 2065-1 `color` from each component of `c` divided by `factor`.
-    operator'/'<native><public>(c:color, factor:float)<computes><decides>:color
+    operator'/'<native><public>(c:color, factor:float)<converges><decides>:color
 
     # Makes an ACES 2065-1 `color` from each component of `c` divided by `factor`.
-    operator'/'<native><public>(c:color, factor:int)<computes><decides>:color
+    operator'/'<native><public>(c:color, factor:int)<converges><decides>:color
 
 # Module import path: /Verse.org/Concurrency
 Concurrency<public> := module:
@@ -419,10 +419,10 @@ using {/Verse.org/Concurrency}
 # Module import path: /Verse.org/Random
 Random<public> := module:
     # Returns a random `float` between `Low` and `High`, inclusive.
-    GetRandomFloat<native><public>(Low:float, High:float)<varies>:float
+    GetRandomFloat<native><public>(Low:float, High:float)<transacts>:float
 
     # Returns a random `int` between `Low` and `High`, inclusive.
-    GetRandomInt<native><public>(Low:int, High:int)<varies>:int
+    GetRandomInt<native><public>(Low:int, High:int)<transacts>:int
 
     # Makes an `array` with the same elements as `Input` shuffled in a random order.
     Shuffle<public>(Input:[]t where t:type)<transacts>:[]t = external {}
@@ -430,7 +430,7 @@ Random<public> := module:
 Simulation<public> := module:
     # Returns the `session` corresponding to the current round.  The result can be used with `weak_map` to implement global variables.
     # Note: may be changed in a future release to return a single instance per game. Round-local behavior should not be relied upon.
-    GetSession<native><public>()<varies>:session
+    GetSession<native><public>()<computes><reads>:session
 
     # Get the seconds that have elapsed since the world began simulating
     GetSimulationElapsedTime<native><public>()<transacts>:float
@@ -485,8 +485,10 @@ Simulation<public> := module:
     @attribscope_data
     @customattribhandler
     editable<public> := class(attribute):
+        # The categories displayed in the editor.
         Categories<public>:[]message = external {}
 
+        # The tooltip displayed in the editor.
         ToolTip<public>:message = external {}
 
     @attribscope_class
@@ -494,6 +496,7 @@ Simulation<public> := module:
     @attribscope_data
     @customattribhandler
     editable_container<public> := class<final>(editable):
+        # If true, allows reordering of the container elements in the editor.
         AllowReordering<public>:logic = external {}
 
     @attribscope_class
@@ -501,34 +504,46 @@ Simulation<public> := module:
     @attribscope_data
     @customattribhandler
     editable_number<public>(t:type) := class<final>(editable):
+        # The maximum value the editor allows.
         MaxValue<public>:?t = external {}
 
+        # The minimum value the editor allows.
         MinValue<public>:?t = external {}
+
+        # Snap the spinbox to the nearest delta.
+        SpinBoxDelta<public>:?t = external {}
 
     @attribscope_class
     @attribscope_struct
     @attribscope_data
     @customattribhandler
     editable_slider<public>(t:type) := class<final>(editable):
+        # The maximum value of the editor slider.
         MaxValue<public>:?t = external {}
 
+        # The minimum value of the editor slider.
         MinValue<public>:?t = external {}
 
+        # Used to change how sensitive the field value is when moving the slider via mouse cursor.
         MouseLinearDeltaSensitivity<public>:float = external {}
 
         MouseShiftMovePixelPerDelta<public>:float = external {}
 
+        # The amount the slider moves for each step.
         SliderDelta<public>:?t = external {}
 
+        # Used to scale a slider exponentially. Common values are found within the range of 1-20.
         SliderExponent<public>:?t = external {}
 
     @attribscope_class
     @attribscope_struct
     @attribscope_data
     @customattribhandler
-    editable_text_box<public> := class<final>(attribute):
+    editable_text_box<public> := class<final>(editable):
+        # The maximum length of the text.
         MaxLength<public>:int = external {}
 
+        # True if the editor text box should support multiple lines.
         MultiLine<public>:logic = external {}
 
     @attribscope_class
@@ -536,14 +551,19 @@ Simulation<public> := module:
     @attribscope_data
     @customattribhandler
     editable_vector_number<public>(t:type) := class<final>(editable):
+        # The maximum value allowed for each vector element.
         MaxComponentValue<public>:?t = external {}
 
+        # The minimum value allowed for each vector element.
         MinComponentValue<public>:?t = external {}
 
+        # Show the button that allows normalizing the vector.
         ShowNormalize<public>:logic = external {}
 
+        # Show the button that allows locking the vector aspect ratio.
         ShowPreserveRatio<public>:logic = external {}
 
+        # Snap the spinbox to the nearest delta.
         SpinBoxDelta<public>:?t = external {}
 
     @attribscope_class
@@ -551,26 +571,33 @@ Simulation<public> := module:
     @attribscope_data
     @customattribhandler
     editable_vector_slider<public>(t:type) := class<final>(editable):
+        # The maximum value allowed for each vector element.
         MaxComponentValue<public>:?t = external {}
 
+        # The minimum value allowed for each vector element.
         MinComponentValue<public>:?t = external {}
 
+        # Used to change how sensitive the field value is when moving the slider via mouse cursor.
         MouseLinearDeltaSensitivity<public>:float = external {}
 
         MouseShiftMovePixelPerDelta<public>:float = external {}
 
+        # Show the button that allows normalizing the vector.
         ShowNormalize<public>:logic = external {}
 
+        # Show the button that allows locking the vector aspect ratio.
         ShowPreserveRatio<public>:logic = external {}
 
+        # The amount the slider moves for each step.
         SliderDelta<public>:?t = external {}
 
+        # Used to scale a slider exponentially. Common values are found within the range of 1-20.
         SliderExponent<public>:?t = external {}
 
     localizable_agent<native><epic_internal> := class(localizable_value):
 
     player<native><public> := class<unique><persistent><module_scoped_var_weak_map_key><epic_internal>(agent):
-        IsActive<native><public>()<varies><decides>:void
+        IsActive<native><public>()<computes><decides><reads>:void
 
     # Type for which there is a single instance per round.  Use `GetSession` to get the current round's `session` instance. May be used with `weak_map` to implement global variables.
     # Note: may be changed in a future release to a single instance per game. Round-local behavior should not be relied upon.
@@ -687,6 +714,9 @@ Verse<public> := module:
     # Returns the largest `int` that is less than or equal to `Val`.
     # Fails if `not IsFinite(Val)`.
     Floor<native><public>(Val:float)<computes><decides><reads>:int
+
+    # Returns the number of seconds since January 1, 1970 UTC, ignoring leap seconds. I.e, this function implements Unix time. This function always returns the same value within the same transaction.
+    GetSecondsSinceEpoch<native><public>()<computes><reads>:float
 
     # Returns the `int` that equals `Val` without the fractional part.
     # Fails if `not IsFinite(val)`.
