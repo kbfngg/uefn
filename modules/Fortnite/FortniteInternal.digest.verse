@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-30.40-CL-35235494
+# Generated from build: ++Fortnite+Release-31.00-CL-35447195
 #################################################
 
 AI<public> := module:
@@ -20,7 +20,7 @@ AI<public> := module:
 
     @experimental
     # Returns the `entity` for `InNPCBehavior`.
-    (InNPCBehavior:npc_behavior).GetEntity<native><epic_internal>()<transacts>:entity
+    (InNPCBehavior:npc_behavior).GetEntity<native><public>()<computes><decides><reads>:entity
 
     using {/Fortnite.com/AI/CompanionAI/PingCommand}
     using {/Fortnite.com/Characters}
@@ -96,11 +96,11 @@ AI<public> := module:
 
             @experimental
             # Run the NPC default behavior
-            RunDefaultBehavior<native><epic_internal>()<suspends>:action_result
+            RunDefaultBehavior<native><epic_internal>()<suspends>:ai_action_result
 
         @experimental
         @hide_in_editor
-        ping_component<native><epic_internal> := class<epic_internal>(ai_component):
+        ping_component<native><epic_internal> := class<epic_internal>(fort_ai_component):
             @experimental
             AreNPCCommandsEnabled<native><epic_internal>()<transacts>:logic
 
@@ -152,8 +152,8 @@ AI<public> := module:
             Type<native><public>:command_type
 
     @experimental
-    # Create a `navigation_target` from a `target_info`.
-    MakeNavigationTarget<native><epic_internal>(TargetInfo:target_info):navigation_target
+    # Generate a navigation_target from an entity
+    MakeNavigationTarget<native><public>(Entity:entity)<decides>:navigation_target
 
     # Generate a navigation_target from any position
     MakeNavigationTarget<native><public>(Position:vector3):navigation_target
@@ -161,22 +161,24 @@ AI<public> := module:
     # Generate a navigation_target from an agent
     MakeNavigationTarget<native><public>(Target:agent):navigation_target
 
-    # Result of an action that cannot fail
-    action_result<native><epic_internal> := enum:
+    @experimental
+    # Create a `navigation_target` from a `target_info`.
+    MakeNavigationTarget<native><public>(TargetInfo:target_info):navigation_target
+
+    @experimental
+    # Result of an AI action
+    ai_action_result<native><public> := enum:
         # The action has been canceled before completion
         Canceled
 
         # The action was not allowed to start
         Disallowed
 
+        # The action has failed during its execution
+        Failure
+
         # The action has been successfully executed
         Success
-
-    @experimental
-    ai_actions_component<native><epic_internal> := class<abstract>(ai_component):
-
-    @experimental
-    ai_component<native><epic_internal> := class<abstract>(component):
 
     @experimental
     ai_target_component<native><epic_internal> := class<final>(component):
@@ -196,20 +198,6 @@ AI<public> := module:
         # Specifies if damage perception is enabled.
         SenseEnabled<native><public>:logic = external {}
 
-    # Result of an action that can fail
-    fallible_action_result<native><epic_internal> := enum:
-        # The action has been canceled before completion
-        Canceled
-
-        # The action was not allowed to start
-        Disallowed
-
-        # The action has failed during its execution
-        Failure
-
-        # The action has been successfully executed
-        Success
-
     focus_interface<native><public> := interface<epic_internal>:
         # Look At specified Agent. Will never complete unless interrupted.
         MaintainFocus<public>(Agent:agent)<suspends>:void
@@ -218,52 +206,58 @@ AI<public> := module:
         MaintainFocus<public>(Location:vector3)<suspends>:void
 
     @experimental
+    fort_ai_actions_component<native><epic_internal> := class<abstract>(fort_ai_component):
+
+    @experimental
+    fort_ai_component<native><epic_internal> := class<abstract>(component):
+
+    @experimental
     @hide_in_editor
-    # Fortnite NPC AI Management
-    fort_guard_actions_component<native><epic_internal> := class(npc_actions_component):
+    # Fortnite Guards AI actions management
+    fort_guard_actions_component<native><public> := class<epic_internal>(fort_npc_actions_component):
         @experimental
         # Attack the navigation obstacle
-        Attack<native><epic_internal>(Target:fort_obstacle_info)<suspends>:action_result
+        Attack<native><epic_internal>(Target:fort_obstacle_info)<suspends>:ai_action_result
 
         @experimental
         # Attack the target
-        Attack<native><epic_internal>(Target:target_info)<suspends>:action_result
+        Attack<native><public>(Target:target_info)<suspends>:ai_action_result
 
         @experimental
         # Change stance to crouch
-        Crouch<native><epic_internal>()<suspends>:fallible_action_result
+        Crouch<native><epic_internal>()<suspends>:ai_action_result
 
         @experimental
         # Move in range to attack the current target
-        MoveInRangeToAttack<native><epic_internal>()<suspends>:action_result
+        MoveInRangeToAttack<native><public>()<suspends>:ai_action_result
 
         @experimental
         # Play an emote
-        PlayEmote<native><epic_internal>(Emote:emote)<suspends>:play_emote_result
+        PlayEmote<native><epic_internal>(Emote:emote)<suspends>:ai_action_result
 
         @experimental
         # Play a random emote from the character emotes bank
-        PlayRandomEmote<native><epic_internal>()<suspends>:play_emote_result
+        PlayRandomEmote<native><public>()<suspends>:ai_action_result
 
         @experimental
         # Revive the specified target
-        Revive<native><epic_internal>(Target:agent)<suspends>:fallible_action_result
+        Revive<native><public>(Target:agent)<suspends>:ai_action_result
 
         @experimental
-        # Roam around the current position. Use the leash to specify the radius, else will roam anywhere.
-        RoamAround<native><epic_internal>()<suspends>:navigation_result
+        # Roam around the current position. Use the fort_leashable_component to specify the radius, else will roam anywhere.
+        RoamAround<native><public>(?MovementType:movement_type = external {})<suspends>:navigation_result
 
         @experimental
         # Go back to standing
-        StandUp<native><epic_internal>():action_result
+        StandUp<native><epic_internal>():ai_action_result
 
         @experimental
         # Change movement speed to sprint and switch to tactical sprint when energy is full.
-        TacticalSprint<native><epic_internal>()<suspends>:action_result
+        TacticalSprint<native><epic_internal>()<suspends>:ai_action_result
 
     @experimental
     # The different alert levels of a guard.
-    fort_guard_alert_level<native><epic_internal> := enum:
+    fort_guard_alert_level<native><public> := enum:
         # The guard has identified a hostile target.
         Alerted
 
@@ -278,7 +272,8 @@ AI<public> := module:
 
     @experimental
     @hide_in_editor
-    fort_guard_perception_component<native><epic_internal> := class<epic_internal>(npc_perception_component):
+    # Fortnite guard perception management
+    fort_guard_perception_component<native><public> := class<epic_internal>(fort_npc_perception_component):
         @experimental
         # Event when the alert level of the guard has changed.
         AlertLevelChangedEvent<native><public>:listenable(fort_guard_alert_level) = external {}
@@ -289,19 +284,19 @@ AI<public> := module:
 
         @experimental
         # Get the current alert level of the guard.
-        GetAlertLevel<native><public>()<transacts>:fort_guard_alert_level
+        GetAlertLevel<native><public>()<computes><reads>:fort_guard_alert_level
 
         @experimental
         # Get the current alert level of a target for the guard.
-        GetAlertLevel<native><public>(Target:entity)<transacts><decides>:fort_guard_alert_level
+        GetAlertLevel<native><public>(Target:entity)<computes><decides><reads>:fort_guard_alert_level
 
         @experimental
         # Get information about the current target.
-        GetCurrentTargetInfo<native><public>()<transacts><decides>:target_info
+        GetCurrentTargetInfo<native><public>()<computes><decides><reads>:target_info
 
         @experimental
         # Get information about the potential current obstacle
-        GetObstacleInfo<native><epic_internal>()<transacts><decides>:fort_obstacle_info
+        GetObstacleInfo<native><epic_internal>()<computes><decides><reads>:fort_obstacle_info
 
         @experimental
         # Event when a new best obstacle is detected
@@ -323,7 +318,8 @@ AI<public> := module:
 
     @experimental
     @hide_in_editor
-    fort_leashable_component<native><epic_internal> := class<epic_internal>(ai_component, fort_leashable):
+    # Fortnite NPC leash management
+    fort_leashable_component<native><public> := class<epic_internal>(fort_ai_component, fort_leashable):
         @experimental
         # Removes the current leash.
         ClearLeash<native><override>():void
@@ -341,6 +337,96 @@ AI<public> := module:
         SetLeashPosition<native><override>(Location:vector3, InnerRadius:float, OuterRadius:float):void
 
     @experimental
+    @hide_in_editor
+    # Fortnite NPC AI actions management
+    fort_npc_actions_component<native><public> := class<epic_internal>(fort_ai_actions_component, navigatable, focus_interface):
+        @experimental
+        # Fires the currently equipped weapon.
+        FireCurrentWeapon<native><epic_internal>()<suspends>:void
+
+        @experimental
+        # Return the current destination of the character
+        GetCurrentDestination<native><override>()<transacts><decides>:vector3
+
+        @experimental
+        # Add spare ammo for the currently equipped weapon.
+        GiveAmmoForCurrentWeapon<native><epic_internal>(AmmoQuantity:int)<suspends>:void
+
+        @experimental
+        # Look At specified Agent. Will never complete unless interrupted.
+        MaintainFocus<native><override>(Agent:agent)<suspends>:void
+
+        @experimental
+        # Look At specified location. Will never complete unless interrupted.
+        MaintainFocus<native><override>(Location:vector3)<suspends>:void
+
+        @experimental
+        # Navigate toward the specified target
+        NavigateTo<native><override>(Target:navigation_target, ?MovementType:movement_type = external {}, ?ReachRadius:float = external {}, ?AllowPartialPath:logic = external {})<suspends>:navigation_result
+
+        @experimental
+        # Try to reload the currently equipped weapon.
+        ReloadCurrentWeapon<native><epic_internal>()<suspends>:logic
+
+        @experimental
+        # Apply a multiplier on the movement speed (Multiplier is clamped between 0.5 and 2)
+        SetMovementSpeedMultiplier<native><override>(Multiplier:float):void
+
+        @experimental
+        # Stop navigation
+        StopNavigation<native><override>():void
+
+        @experimental
+        # Wait for a specific duration
+        Wait<native><override>(?Duration:float = external {})<suspends>:void
+
+    @experimental
+    # NPC Component
+    fort_npc_component<native><epic_internal> := class(fort_game_component):
+        OnEndSimulation<override><final>():void = external {}
+
+        OnRoundBegin<override><final>()<suspends>:void = external {}
+
+        OnRoundEnd<override><final>():void = external {}
+
+    @experimental
+    @hide_in_editor
+    # Fortnite NPC perception management
+    fort_npc_perception_component<native><public> := class<epic_internal>(fort_ai_component):
+        @experimental
+        # Get the last known position of a target.
+        GetLastKnownPosition<native><public>(Target:entity)<computes><decides><reads>:vector3
+
+        @experimental
+        # Event when a target is added.
+        TargetAddedEvent<native><public>:listenable(target_info) = external {}
+
+        @experimental
+        # Event when a target is heard. Hearing sense must be active.
+        TargetHeardEvent<native><public>:listenable(target_info) = external {}
+
+        @experimental
+        # Event when the info about a target has been updated.
+        TargetInfoUpdatedEvent<native><public>:listenable(target_info) = external {}
+
+        @experimental
+        # Event when a target was removed.
+        TargetRemovedEvent<native><public>:listenable(entity) = external {}
+
+        @experimental
+        # Event when a target is seen. Sight sense must be active.
+        TargetSeenEvent<native><public>:listenable(target_info) = external {}
+
+        @experimental
+        # Event when a target is touched. Touch sense must be active.
+        TargetTouchedEvent<native><public>:listenable(target_info) = external {}
+
+        @experimental
+        # Information about all detected targets.
+        var<private> DetectedTargets<native><public>:[]target_info
+
+    @experimental
+    # Information about a perceived obstacle.
     fort_obstacle_info<native><epic_internal> := struct<epic_internal>:
         @experimental
         Location<native><public>:vector3
@@ -441,38 +527,6 @@ AI<public> := module:
 
     navigation_target<native><public> := class<epic_internal>:
 
-    @experimental
-    @hide_in_editor
-    # Fortnite NPC AI Management
-    npc_actions_component<native><epic_internal> := class<epic_internal>(ai_actions_component, navigatable, focus_interface):
-        @experimental
-        # Return the current destination of the character
-        GetCurrentDestination<native><override>()<transacts><decides>:vector3
-
-        @experimental
-        # Look At specified Agent. Will never complete unless interrupted.
-        MaintainFocus<native><override>(Agent:agent)<suspends>:void
-
-        @experimental
-        # Look At specified location. Will never complete unless interrupted.
-        MaintainFocus<native><override>(Location:vector3)<suspends>:void
-
-        @experimental
-        # Navigate toward the specified target
-        NavigateTo<native><override>(Target:navigation_target, ?MovementType:movement_type = external {}, ?ReachRadius:float = external {}, ?AllowPartialPath:logic = external {})<suspends>:navigation_result
-
-        @experimental
-        # Apply a multiplier on the movement speed (Multiplier is clamped between 0.5 and 2)
-        SetMovementSpeedMultiplier<native><override>(Multiplier:float):void
-
-        @experimental
-        # Stop navigation
-        StopNavigation<native><override>():void
-
-        @experimental
-        # Wait for a specific duration
-        Wait<native><override>(?Duration:float = external {})<suspends>:void
-
     # Inherit from this to create a custom NPC behavior.
     # The npc_behavior can be defined for a character in a CharacterDefinition asset, or in a npc_spawner_device.
     npc_behavior<native><public> := class<abstract>:
@@ -491,61 +545,6 @@ AI<public> := module:
 
         @editable_non_concrete
         var NPCBehavior<native><public>:npc_behavior
-
-    @experimental
-    # NPC Component
-    npc_component<native><epic_internal> := class(fort_game_component):
-        OnEndSimulation<override><final>():void = external {}
-
-        OnRoundBegin<override><final>()<suspends>:void = external {}
-
-        OnRoundEnd<override><final>():void = external {}
-
-    @experimental
-    @hide_in_editor
-    npc_perception_component<native><epic_internal> := class<epic_internal>(ai_component):
-        @experimental
-        # Get the last known position of a target.
-        GetLastKnownPosition<native><public>(Target:entity)<transacts><decides>:vector3
-
-        @experimental
-        # Event when a target is added.
-        TargetAddedEvent<native><public>:listenable(target_info) = external {}
-
-        @experimental
-        # Event when a target is heard. Hearing sense must be active.
-        TargetHeardEvent<native><public>:listenable(target_info) = external {}
-
-        @experimental
-        # Event when the info about a target has been updated.
-        TargetInfoUpdatedEvent<native><public>:listenable(target_info) = external {}
-
-        @experimental
-        # Event when a target was removed.
-        TargetRemovedEvent<native><public>:listenable(entity) = external {}
-
-        @experimental
-        # Event when a target is seen. Sight sense must be active.
-        TargetSeenEvent<native><public>:listenable(target_info) = external {}
-
-        @experimental
-        # Event when a target is touched. Touch sense must be active.
-        TargetTouchedEvent<native><public>:listenable(target_info) = external {}
-
-        @experimental
-        # Information about all detected targets.
-        var<private> DetectedTargets<native><public>:[]target_info
-
-    # Result of a play emote action.
-    play_emote_result<native><epic_internal> := enum:
-        # The character was not able to play the emote.
-        Error
-
-        # The emote has started but was interrupted before completion.
-        Interrupted
-
-        # The emote has been played successfully.
-        Success
 
     @experimental
     # Perception settings for sight.
@@ -595,7 +594,7 @@ AI<public> := module:
 
     @experimental
     # Information about a perceived target.
-    target_info<native><epic_internal> := struct<epic_internal>:
+    target_info<native><public> := struct<epic_internal>:
         @experimental
         # Attitude toward this target.
         Attitude<native><public>:team_attitude
@@ -645,14 +644,10 @@ Animation<public> := module:
 
         @experimental
         @hide_in_editor
-        npc_play_animation_component<native><epic_internal> := class<epic_internal>(ai_actions_component, play_animation_controller):
-            CanPlayAnimation<native><epic_internal>(AnimationSequence:animation_sequence)<transacts><decides>:void
-
+        fort_npc_play_animation_component<native><public> := class<epic_internal>(fort_ai_actions_component, play_animation_controller):
             Play<override>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {}):play_animation_instance = external {}
 
             PlayAndAwait<override>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {})<suspends>:play_animation_result = external {}
-
-            PlayAnimationInternal<native><epic_internal>(AnimationSequence:animation_sequence, PlayAnimationInstance:play_animation_instance, EndsOnBlendOut:logic, PlayRate:float, StartPositionSeconds:float, BlendInTime:float, BlendOutTime:float)<suspends>:play_animation_result
 
         # An interface for playing an animation on an object.
         play_animation_controller<native><public> := interface<epic_internal>:
@@ -727,11 +722,6 @@ Assets<public> := module:
     emote<native><epic_internal> := class<computes><concrete><final>(asset):
 
     npc_character_definition<native><epic_internal> := class<computes><concrete><final>(asset):
-
-AutomatedTests<public> := module:
-    using {/Fortnite.com/Devices}
-    test_monitor_device<epic_internal> := class(creative_device):
-        OnBegin<override>()<suspends>:void = external {}
 
 # Module import path: /Fortnite.com/Building
 Building<public> := module:
@@ -1284,6 +1274,8 @@ Devices<public> := module:
             # Enables this device.
             Enable<public>():void = external {}
 
+        song_sync_device<public> := class<concrete><final>(patchwork_device):
+
         # Output Patchwork audio for players to hear.
         speaker_device<public> := class<concrete><final>(patchwork_device):
 
@@ -1360,6 +1352,9 @@ Devices<public> := module:
 
         # Commands patroller to follow the *Next Patrol Path Group* instead of the default *Patrol Path Group*.
         GoToNextPatrolGroup<public>(Patroller:agent):void = external {}
+
+        # Commands patroller to follow the *Next Patrol Path* in the *Patrol Path Group*.
+        GoToNextPatrolPath<epic_internal>(Patroller:agent):void = external {}
 
         # Signaled when a guard cannot reach the next `ai_patrol_path_device`.
         NextNodeUnreachableEvent<public>:listenable(agent) = external {}
@@ -1471,9 +1466,9 @@ Devices<public> := module:
         # Removes all previously registered `agent`s as valid targets to play audio from when activated.
         UnregisterAll<public>():void = external {}
 
-    using {/Verse.org/Simulation}
+    using {/Fortnite.com/Game}
     # Used to create a customizable turret that can search for nearby targets.
-    automated_turret_device<public> := class<concrete><final>(creative_device_base):
+    automated_turret_device<public> := class<concrete><final>(creative_device_base, healthful, healable):
         # Triggers when someone enters the activation radius while nobody else is there.
         # Sends the activating `agent`. If the activator is a non-agent then `false` is returned.
         ActivatedEvent<public>:listenable(?agent) = external {}
@@ -1481,7 +1476,7 @@ Devices<public> := module:
         # Clears the turret's current target and returns the turret to searching for targets.
         #  * If the current target is still in range, it'll likely be the best target, and will be reacquired.
         #  * Combine with disabled targeting for best results.
-        ClearTarget<epic_internal>():void = external {}
+        ClearTarget<public>():void = external {}
 
         # Triggers when the turret is damaged.
         # Sends the triggering `agent`. If the activator is a non-agent then `false` is returned.
@@ -1497,15 +1492,29 @@ Devices<public> := module:
         # Enables the turret to rotate, target, and track.
         Enable<public>():void = external {}
 
+        GetHealth<override>()<transacts>:float = external {}
+
+        GetMaxHealth<override>()<transacts>:float = external {}
+
         # Returns the `agent` currently targeted by the device.
-        GetTarget<epic_internal>():?agent = external {}
+        GetTarget<public>():?agent = external {}
+
+        Heal<override>(Amount:float):void = external {}
+
+        Heal<override>(Args:healing_args):void = external {}
+
+        HealedEvent<override>():listenable(healing_result) = external {}
 
         # Sets the range in meters at which the turret will activate to `Range`.
         # This is clamped between `2.0` and `100.0` meters.
-        SetActivationRange<epic_internal>(Range:float):void = external {}
+        SetActivationRange<public>(Range:float):void = external {}
 
         # Sets the amount of damage the turret will do per shot to targets to `Damage`.
-        SetDamage<epic_internal>(Damage:float):void = external {}
+        SetDamage<public>(Damage:float):void = external {}
+
+        SetHealth<override>(Health:float)<transacts>:void = external {}
+
+        SetMaxHealth<override>(MaxHealth:float)<transacts>:void = external {}
 
         # Set the supplied `Agent` as the turret's target.
         #  * The target will only change if `Agent` is within the activation radius, has direct line-of-sight to the turret,
@@ -1514,7 +1523,7 @@ Devices<public> := module:
 
         # Sets the range in meters at which the turret will target to `Range`.
         # This is clamped between `2.0` and `100.0` meters. Setting it lower than 2m will disable Targeting.
-        SetTargetRange<epic_internal>(Range:float):void = external {}
+        SetTargetRange<public>(Range:float):void = external {}
 
         # Set the turret to the team with the chosen index number.
         #  * `TeamIndex` is clamped to valid team values, with a minimum of `1`.
@@ -1815,10 +1824,10 @@ Devices<public> := module:
         FirstAgentEntersEvent<public>:listenable(agent) = external {}
 
         # Returns the *Capture Height* (in meters) of the capture area.
-        GetHeight<public>()<varies>:float = external {}
+        GetHeight<public>()<computes><reads>:float = external {}
 
         # Returns the *Capture Radius* (in meters) of the capture area.
-        GetRadius<public>()<varies>:float = external {}
+        GetRadius<public>()<computes><reads>:float = external {}
 
         # Gives control of this device to the capturing `agent`'s team.
         GiveControl<public>(Agent:agent):void = external {}
@@ -1924,6 +1933,16 @@ Devices<public> := module:
 
     # Allows players to change their outfit in game!
     changing_booth_device<public> := class<concrete><final>(creative_device_base):
+
+    # Sends an Event for every signal it receives. A simple relay to connect multiple devices together.
+    # It can also broadcast an event to the playspace and listen for any other channel devices broadcasting
+    # to the playspace.
+    channel_device<public> := class<concrete><final>(creative_device_base):
+        # Signaled when either `Transmit` is called.
+        ReceivedTransmitEvent<public>:listenable(?agent) = external {}
+
+        # Calls `ReceivedTransmitEvent`, optionally with `Agent` as the instigator.
+        Transmit<public>(Agent:?agent):void = external {}
 
     # Used to configure a single interactive mannequin, that can visualize characters, clothing, and perform emotes.
     character_device<public> := class<concrete>(creative_device_base):
@@ -2077,7 +2096,7 @@ Devices<public> := module:
     class_selector_ui_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when an `agent` changes a class.
         # Sends the `agent` that selected a class and the `int` class that the player has changed to.
-        ClassChangedEvent<epic_internal>:listenable(tuple(agent, int)) = external {}
+        ClassChangedEvent<public>:listenable(tuple(agent, int)) = external {}
 
         # Signaled when an `agent` selects a class.
         # Sends the `agent` that selected a class.
@@ -2601,28 +2620,28 @@ Devices<public> := module:
         Invoke<native><epic_internal>(InAgent:agent):void
 
     device_function_get_agent<native><epic_internal> := class(device_function_get_base):
-        Invoke<native><epic_internal>()<varies>:?agent
+        Invoke<native><epic_internal>()<computes><reads>:?agent
 
     device_function_get_base<native><epic_internal> := class<abstract>:
         FunctionName<native><epic_internal>:string
 
     device_function_get_color<native><epic_internal> := class(device_function_get_base):
-        Invoke<native><epic_internal>()<varies>:color
+        Invoke<native><epic_internal>()<computes><reads>:color
 
     device_function_get_float<native><epic_internal> := class(device_function_get_base):
-        Invoke<native><epic_internal>()<varies>:float
+        Invoke<native><epic_internal>()<computes><reads>:float
 
     device_function_get_int<native><epic_internal> := class(device_function_get_base):
-        Invoke<native><epic_internal>()<varies>:int
+        Invoke<native><epic_internal>()<computes><reads>:int
 
     device_function_get_logic<native><epic_internal> := class(device_function_get_base):
-        Invoke<native><epic_internal>()<varies>:logic
+        Invoke<native><epic_internal>()<computes><reads>:logic
 
     device_function_get_string<native><epic_internal> := class(device_function_get_base):
-        Invoke<native><epic_internal>()<varies>:string
+        Invoke<native><epic_internal>()<computes><reads>:string
 
     device_function_get_vector3<native><epic_internal> := class(device_function_get_base):
-        Invoke<native><epic_internal>()<varies>:vector3
+        Invoke<native><epic_internal>()<computes><reads>:vector3
 
     device_function_set_agent<native><epic_internal> := class(device_function_set_base):
         Invoke<native><epic_internal>(InAgent:?agent):void
@@ -2654,7 +2673,7 @@ Devices<public> := module:
         ParameterTypes<native><epic_internal>:[string]subtype(function_parameter_base)
 
     device_function_set_params_by_name_const<native><epic_internal> := class(device_function_set_params_by_name):
-        InvokeConst<native><epic_internal>(NamedParameters:[string]function_parameter_base)<varies>:?function_parameter_base
+        InvokeConst<native><epic_internal>(NamedParameters:[string]function_parameter_base)<computes><reads>:?function_parameter_base
 
     device_function_set_params_by_type<native><epic_internal> := class(device_function_set_multi_parameter_base):
         Invoke<native><epic_internal>(TypeExclusiveParameters:[]function_parameter_base)<transacts>:?function_parameter_base
@@ -2662,13 +2681,35 @@ Devices<public> := module:
         ParameterTypes<native><epic_internal>:[]subtype(function_parameter_base)
 
     device_function_set_params_by_type_const<native><epic_internal> := class(device_function_set_params_by_type):
-        InvokeConst<native><epic_internal>(TypeExclusiveParameters:[]function_parameter_base)<varies>:?function_parameter_base
+        InvokeConst<native><epic_internal>(TypeExclusiveParameters:[]function_parameter_base)<computes><reads>:?function_parameter_base
 
     device_function_set_string<native><epic_internal> := class(device_function_set_base):
         Invoke<native><epic_internal>(Value:string):void
 
     device_function_set_vector3<native><epic_internal> := class(device_function_set_base):
         Invoke<native><epic_internal>(Value:vector3):void
+
+    # Class that implements the common logic for a healthful, damageable, healable device.
+    device_health<native><epic_internal> := class<epic_internal>(healthful, damageable, healable):
+        Damage<override><native>(Amount:float):void
+
+        Damage<override><native>(Args:damage_args):void
+
+        DamagedEvent<override>():listenable(damage_result) = external {}
+
+        GetHealth<override><native>()<transacts>:float
+
+        GetMaxHealth<override><native>()<transacts>:float
+
+        Heal<override><native>(Amount:float):void
+
+        Heal<override><native>(Args:healing_args):void
+
+        HealedEvent<override>():listenable(healing_result) = external {}
+
+        SetHealth<override><native>(Health:float)<transacts>:void
+
+        SetMaxHealth<override><native>(MaxHealth:float)<transacts>:void
 
     # Used to customize (or prevent) the 'down but not out' player state between 'healthy' and 'removed from game'.
     down_but_not_out_device<public> := class<concrete><final>(creative_device_base):
@@ -3066,6 +3107,33 @@ Devices<public> := module:
         # Sends the `agent` guard who is unaware.
         UnawareEvent<public>:listenable(agent) = external {}
 
+    using {/Verse.org/Simulation}
+    # Use to create a cactus with healing fruits that can be burst to heal nearby players.
+    healing_cactus_device<public> := class<concrete><final>(creative_device_base):
+        # Burst the plant if the device is enabled, passing in the triggering `agent`.
+        # If there is no triggering `agent`, players will only be healed if `Heal Targets` is set to `Everyone`.
+        Burst<public>():void = external {}
+
+        # Burst the plant if the device is enabled, passing in the triggering `agent`.
+        # If there is no triggering `agent`, players will only be healed if `Heal Targets` is set to `Everyone`.
+        Burst<public>(Agent:agent):void = external {}
+
+        # Triggers when the plant bursts, passing in the triggering `agent`.
+        BurstEvent<public>:listenable(?agent) = external {}
+
+        # Disables the device to prevent interaction and growth.
+        Disable<public>():void = external {}
+
+        # Enables the device to allow interaction and let it grow.
+        Enable<public>():void = external {}
+
+        # Grows the plant if the device is enabled. If `Infinite Regrowths` is `false`, this is limited by `Maximum Regrowths`.
+        # If someone is too close, the plant won't grow until they move away.
+        Grow<public>():void = external {}
+
+        # Triggers when the plant grows.
+        GrowEvent<public>:listenable(tuple()) = external {}
+
     # Used to regenerate an `agent`'s health and/or shields.
     health_powerup_device<public> := class<concrete><final>(powerup_device):
         # Returns the current *Magnitude* for the powerup.
@@ -3110,6 +3178,11 @@ Devices<public> := module:
 
         # Hides the HUD message.
         Hide<public>():void = external {}
+
+        @available {MinUploadedAtFNVersion := 3100}
+        # Hides the currently set HUD *Message* on `Agent`s screen.
+        # Use this when the device is setup to target specific `agent`s.
+        Hide<public>(Agent:agent):void = external {}
 
         # Sets the time (in seconds) the HUD message will be displayed. `0.0` will display the HUD message persistently.
         SetDisplayTime<public>(Time:float):void = external {}
@@ -3187,22 +3260,28 @@ Devices<public> := module:
         # Enables this device.
         Enable<public>():void = external {}
 
-        # Returns the current Item Index that this device will grant when activated
-        GetItemIndex<epic_internal>()<transacts>:int = external {}
+        # Returns the current Item Index that this device will grant when activated.
+        GetItemIndex<public>()<transacts>:int = external {}
 
         # Grants an item to `Agent`.
         GrantItem<public>(Agent:agent):void = external {}
 
-        # Grants an item without requiring an agent reference.
-        #  This only works when *Receiving Players* is set to *All* or *Team Index*
-        GrantItemTemp<epic_internal>():void = external {}
-
+        @available {MinUploadedAtFNVersion := 3100}
         # Grants an item at a specific `ItemIndex` to an `Agent`.
-        GrantItemTemp<epic_internal>(Agent:agent, ItemIndex:int):void = external {}
+        #  `Index` should be between `0` and the available item count - 1.
+        #  If Value is out of bounds, which item is granted is determined by *Cycle Behavior*.
+        GrantItemIndex<public>(Agent:agent, ItemIndex:int):void = external {}
 
+        @available {MinUploadedAtFNVersion := 3100}
         # Grants an item at a specific `ItemIndex` to all players.
-        #  Only functions when *Receiving Players* is set to *All* or *Team Index*
-        GrantItemTemp<epic_internal>(ItemIndex:int):void = external {}
+        #  Only functions when *Receiving Players* is set to *All* or *Team Index*.
+        #  `Index` should be between `0` and the available item count - 1.
+        #  If Value is out of bounds, which item is granted is determined by *Cycle Behavior*.
+        GrantItemIndex<public>(ItemIndex:int):void = external {}
+
+        # Grants an item without requiring an agent reference.
+        #  This only works when *Receiving Players* is set to *All* or *Team Index*.
+        GrantItemToAll<public>():void = external {}
 
         # Signaled when an item is granted to an `agent`.
         # Sends the `agent` that was granted the item.
@@ -3543,9 +3622,15 @@ Devices<public> := module:
         SpawnedEvent<public>:listenable(agent) = external {}
 
     # Provides a collection of destructible devices that you can select from to use as objectives in your game.
-    objective_device<public> := class<concrete><final>(creative_device_base):
+    objective_device<public> := class<concrete><final>(creative_device_base, healthful, damageable, healable):
         # Activates an objective pulse at `Agent`'s location pointing toward this device.
         ActivateObjectivePulse<public>(Agent:agent):void = external {}
+
+        Damage<override>(Amount:float):void = external {}
+
+        Damage<override>(Args:damage_args):void = external {}
+
+        DamagedEvent<override>():listenable(damage_result) = external {}
 
         # Deactivates the objective pulse at `Agent`'s location.
         DeactivateObjectivePulse<public>(Agent:agent):void = external {}
@@ -3557,11 +3642,25 @@ Devices<public> := module:
         # Sends the `agent` that destroyed this device.
         DestroyedEvent<public>:listenable(agent) = external {}
 
+        GetHealth<override>()<transacts>:float = external {}
+
+        GetMaxHealth<override>()<transacts>:float = external {}
+
+        Heal<override>(Amount:float):void = external {}
+
+        Heal<override>(Args:healing_args):void = external {}
+
+        HealedEvent<override>():listenable(healing_result) = external {}
+
         # Hides this device from the world.
         Hide<public>():void = external {}
 
+        SetHealth<override>(Health:float)<transacts>:void = external {}
+
         # Sets the device either invulnerable or damageable
-        SetInvulnerable<epic_internal>(Invulnerable:logic):void = external {}
+        SetInvulnerable<public>(Invulnerable:logic):void = external {}
+
+        SetMaxHealth<override>(MaxHealth:float)<transacts>:void = external {}
 
         # Shows this device in the world.
         Show<public>():void = external {}
@@ -3989,7 +4088,7 @@ Devices<public> := module:
         HasEffect<public>(Agent:agent)<transacts><decides>:void = external {}
 
         # Succeeds if the powerup is currently spawned.
-        IsSpawned<epic_internal>()<transacts><decides>:void = external {}
+        IsSpawned<public>()<transacts><decides>:void = external {}
 
         # Signaled when the powerup is picked up by an `agent`.
         # Sends the `agent` that picked up the powerup.
@@ -5656,7 +5755,7 @@ Devices<public> := module:
     vehicle_spawner_ufo_device<public> := class<concrete><final>(vehicle_spawner_device):
 
     # Specialized `vehicle_spawner_device` that allows a valet SUV to be configured and spawned.
-    vehicle_spawner_valet_SUV_device<epic_internal> := class<concrete><final>(vehicle_spawner_device):
+    vehicle_spawner_valet_suv_device<public> := class<concrete><final>(vehicle_spawner_device):
 
     # Specialized `vehicle_spawner_device` that allows a war bus to be configured and spawned.
     vehicle_spawner_war_bus_device<public> := class<concrete><final>(vehicle_spawner_device):
@@ -6051,13 +6150,41 @@ using {/Verse.org/Simulation}
 using {/Verse.org/VerseEngine/Component}
 # Module import path: /Fortnite.com/Game
 Game<public> := module:
+    @experimental
+    # Activate a camera behavior component for a player, setting it as the active view target
+    (InCameraBehavior:camera_behavior_component).ActivateForPlayer<native><epic_internal>(InPlayer:player)<transacts><decides>:void
+
+    @experimental
+    (InCameraBehavior:camera_behavior_component).ActivateForPlayerAtIndex<native><epic_internal>(InPlayerIndex:int)<transacts><decides>:void
+
+    @experimental
+    # Deactivate a camera behavior component for a player, restoring the player's view target to the default
+    (InCameraBehavior:camera_behavior_component).DeactivateForPlayer<native><epic_internal>(InPlayer:player)<transacts><decides>:void
+
+    @experimental
+    (InCameraBehavior:camera_behavior_component).DeactivateForPlayerAtIndex<native><epic_internal>(InPlayerIndex:int)<transacts><decides>:void
+
+    @experimental
+    # Activate a camera component for a player, setting it as the active view target
+    (InCameraBehavior:camera_component).ActivateForPlayer<native><epic_internal>(InPlayer:player)<transacts><decides>:void
+
+    @experimental
+    (InCameraBehavior:camera_component).ActivateForPlayerAtIndex<native><epic_internal>(InPlayerIndex:int)<transacts><decides>:void
+
+    @experimental
+    # Deactivate a camera component for a player, restoring the player's view target to the default
+    (InCameraBehavior:camera_component).DeactivateForPlayer<native><epic_internal>(InPlayer:player)<transacts><decides>:void
+
+    @experimental
+    (InCameraBehavior:camera_component).DeactivateForPlayerAtIndex<native><epic_internal>(InPlayerIndex:int)<transacts><decides>:void
+
     # Module import path: /Fortnite.com/Game/Abilities
     Abilities<public> := module:
         # Module import path: /Fortnite.com/Game/Abilities/AbilityComponent
         AbilityComponent<public> := module:
-            GetAbilityComponentForCharacter<native><public>(__dupe___unnamed_parameter_172:fort_character)<transacts><decides>:vk_fort_ability_component
+            GetAbilityComponentForCharacter<native><public>(__dupe___unnamed_parameter_183:fort_character)<transacts><decides>:vk_fort_ability_component
 
-            GetAbilityComponentForPlayer<native><epic_internal>(__dupe___unnamed_parameter_171:player_component)<transacts><decides>:vk_fort_ability_component
+            GetAbilityComponentForPlayer<native><epic_internal>(__dupe___unnamed_parameter_182:player_component)<transacts><decides>:vk_fort_ability_component
 
         activate_ability_result<native><public> := enum:
             # Ability was activated successfully
@@ -6121,6 +6248,12 @@ Game<public> := module:
 
         health_attribute<public> := class<final>(gameplay_attribute):
             AttributePathString<override>:string = external {}
+
+    @experimental
+    GetPlayerCameraView<native><epic_internal>(Player:player)<transacts><decides>:fort_player_camera_view
+
+    @experimental
+    GetPlayerCameraViewByIndex<native><epic_internal>(PlayerIndex:int)<transacts><decides>:fort_player_camera_view
 
     HandleTeleportToResult<epic_internal>(Result:teleport_to_result, TargetTragsform:transform)<transacts><decides>:void = external {}
 
@@ -6381,7 +6514,7 @@ Game<public> := module:
 
     # Module import path: /Fortnite.com/Game/VerseFortniteHacks
     VerseFortniteHacks<epic_internal> := module:
-        GetPawnCollisionEntityID<native><public>(__dupe___unnamed_parameter_171:player_component):int
+        GetPawnCollisionEntityID<native><public>(__dupe___unnamed_parameter_182:player_component):int
 
         getAllComponentsOfType<native><epic_internal>(contextObject:vk_component, Type:subtype(vk_component)):[]vk_component
 
@@ -6479,6 +6612,10 @@ Game<public> := module:
         OnRoundEnd<native_callable><protected>():void = external {}
 
     fort_item_definition<native><public> := class<computes>(asset):
+
+    @experimental
+    # Component used to associate a camera behavior component with a player
+    fort_player_camera_view<native><epic_internal> := class<epic_internal>(player_camera_view):
 
     fort_playspace_component<native><epic_internal> := class(playspace_component):
         _WaitForPlayerEliminated<native><public>()<suspends>:player_eliminated_result
@@ -6668,9 +6805,49 @@ Game<public> := module:
         # An unknown error occurred. If this happens frequently, contact Epic support.
         UnknownError
 
-using {/UnrealEngine.com/EpicGamesRestricted/Network}
-# Module import path: /Fortnite.com/Itemization
+using {/Fortnite.com/Game/Player}
+using {/UnrealEngine.com/Playspace}
 Itemization<public> := module:
+    @experimental
+    (Inventory:inventory_component).GetKeyForParameterCollection<native><public>()<transacts><decides>:int
+
+    @experimental
+    (InventoryCollection:inventory_collection_component).GetKeyForParameterCollection<native><public>()<transacts><decides>:int
+
+    @experimental
+    (Item:item).GetKeyForParameterCollection<native><public>()<transacts><decides>:int
+
+    InventoryCollectionParameterCollection<epic_internal> := class(parameterized_parameter_collection):
+        UE5Class<override>:parameter_collection_UE5_definition = external {}
+
+        ___ParameterCollection_On_CollectionKey_Changed<epic_internal>():void = external {}
+
+        ___ParameterCollection_On_CollectionName_Changed<epic_internal>():void = external {}
+
+    InventoryCollectionParameterCollection_asset<epic_internal>:parameter_collection_UE5_definition = external {}
+
+    InventoryItemParameterCollection<public> := class<public>(parameterized_parameter_collection):
+        UE5Class<override>:parameter_collection_UE5_definition = external {}
+
+        ___ParameterCollection_On_Amount_Changed<epic_internal>():void = external {}
+
+        ___ParameterCollection_On_IsActive_Changed<epic_internal>():void = external {}
+
+        ___ParameterCollection_On_ItemKey_Changed<epic_internal>():void = external {}
+
+        ___ParameterCollection_On_ItemName_Changed<epic_internal>():void = external {}
+
+    InventoryItemParameterCollection_asset<epic_internal>:parameter_collection_UE5_definition = external {}
+
+    InventoryParameterCollection<public> := class<public>(parameterized_parameter_collection):
+        UE5Class<override>:parameter_collection_UE5_definition = external {}
+
+        ___ParameterCollection_On_InventoryKey_Changed<epic_internal>():void = external {}
+
+        ___ParameterCollection_On_InventoryName_Changed<epic_internal>():void = external {}
+
+    InventoryParameterCollection_asset<epic_internal>:parameter_collection_UE5_definition = external {}
+
     @experimental
     active_item_limit_behavior<native><public> := enum<persistable>:
         Block
@@ -6715,7 +6892,7 @@ Itemization<public> := module:
         ShowSlotBindings<native><public>:logic = external {}
 
         @editable
-        SlotBindingList<native><epic_internal>:[]tuple(string, int) = external {}
+        SlotBindingList<native><epic_internal>:[]tuple(enhanced_input_action, int) = external {}
 
         UnequipItem<native><public>(Item:item)<transacts><decides>:void
 
@@ -6778,6 +6955,8 @@ Itemization<public> := module:
     inventory_collection_component<native><public> := class<epic_internal>(component):
         AddInventory<native><public>(InventoryClass:subtype(inventory_component))<transacts><decides>:inventory_component
 
+        GetItemList<epic_internal>():[]item = external {}
+
         InventoryAddedEvent<native><public>:listenable(add_inventory_result) = external {}
 
         InventoryRemovedEvent<native><public>:listenable(remove_inventory_result) = external {}
@@ -6798,6 +6977,24 @@ Itemization<public> := module:
         var<private> InventoryList<native><public>:[]inventory_component = external {}
 
     @experimental
+    inventory_collection_view_model_component<native><public> := class<final>(component):
+        GetParameterCollection<native_callable><epic_internal>():InventoryCollectionParameterCollection = external {}
+
+        HandleInventoryAdded<protected>(AddInventoryResult:add_inventory_result):void = external {}
+
+        HandleInventoryRemoved<protected>(RemoveInventoryResult:remove_inventory_result):void = external {}
+
+        HandleItemSlotsChanged<protected>(ChangeItemsSlotResult:change_items_slot_result):void = external {}
+
+        HandleItemsAdded<protected>(AddItemsResult:add_items_result):void = external {}
+
+        HandleItemsRemoved<protected>(RemoveItemsResult:remove_items_result):void = external {}
+
+        InitializeViewModel<native_callable><public>(Collection:inventory_collection_component):void = external {}
+
+        ParameterCollection<epic_internal>:InventoryCollectionParameterCollection = external {}
+
+    @experimental
     inventory_component<native><public> := class(component):
         CanAcceptItem<native><public>(Item:item)<decides>:void
 
@@ -6805,13 +7002,11 @@ Itemization<public> := module:
 
         DuplicateItem<native><public>(Item:item, ?Amount:int = external {})<transacts><decides>:inventory_add_result
 
-        @editable
-        @replicated("")
-        InventoryDescription<native><public>:string = external {}
+        GetItemList<native><public>():[]item
 
         @editable
         @replicated("")
-        InventoryName<native><public>:string = external {}
+        InventoryDescription<native><public>:string = external {}
 
         IsAllowedOnClient<override>():logic = external {}
 
@@ -6824,15 +7019,7 @@ Itemization<public> := module:
 
         ItemsRemovedEvent<native><public>:listenable(remove_items_result) = external {}
 
-        @editable
-        @replicated("")
-        PickupPriority<native><public>:int = external {}
-
         RemoveItem<native><public>(Item:item, ?Amount:int = external {})<transacts><decides>:int
-
-        @editable
-        @replicated("")
-        RequireUniqueItemClassPerStack<native><public>:logic = external {}
 
         TakeItem<native><public>(Item:item)<transacts><decides>:int
 
@@ -6846,18 +7033,39 @@ Itemization<public> := module:
         @replicated("")
         var InventoryMaxStackSizeOverride<native><public>:int = external {}
 
+        @editable
+        @replicated("")
+        var InventoryName<native><public>:string = external {}
+
         @replicated("")
         var InventoryType<native><public>:inventory_creation_type = external {}
 
         @editable
         @replicated("")
+        var PickupPriority<native><public>:int = external {}
+
+        @editable
+        @replicated("")
         var TotalSlots<native><protected>:int = external {}
 
+    using {/UnrealEngine.com/EpicGamesRestricted/Network}
+    using {/Verse.org/Colors}
+    using {/Verse.org/Simulation/Tags}
+    using {/Verse.org/Simulation}
     @experimental
     inventory_creation_type<native><public> := enum<persistable>:
         Runtime
 
         SetupData
+
+    @experimental
+    inventory_item_entry_view_model<public> := class<final>(inventory_item_entry_view_model_base):
+        InitializeViewModel<public>(Item:item):void = external {}
+
+        ParameterCollection<public>:InventoryItemParameterCollection = external {}
+
+    @import_as("/Script/ItemizationCoreUI.UVerseInventoryItemEntryViewModelBase")
+    inventory_item_entry_view_model_base<native><epic_internal> := class<abstract>:
 
     @experimental
     inventory_setup_data<native><public> := class<concrete>:
@@ -6871,6 +7079,15 @@ Itemization<public> := module:
         AddedInventoryMap<native><public>:[]tuple(inventory_component, []item)
 
         InventoryCollection<native><public>:inventory_collection_component
+
+    @experimental
+    inventory_view_model<epic_internal> := class<final>(inventory_view_model_base):
+        InitializeViewModel<public>(InInventory:inventory_component):void = external {}
+
+        ParameterCollection<public>:InventoryParameterCollection = external {}
+
+    @import_as("/Script/ItemizationCoreUI.UVerseInventoryViewModelBase")
+    inventory_view_model_base<native><epic_internal> := class<abstract>:
 
     @experimental
     item<native><public> := class(entity):
@@ -6890,7 +7107,7 @@ Itemization<public> := module:
         ShouldBeUnique<native><public>()<decides>:void
 
     @experimental
-    item_rarity<native><public> := class<computes><unique><concrete>:
+    item_rarity<native><public> := class<unique><concrete>:
         @editable
         RarityColor<native><public>:color = external {}
 
@@ -6948,6 +7165,8 @@ Itemization<public> := module:
 
     @experimental
     item_state_component<native><final><public> := class(item_component):
+        GetItemName<native><epic_internal>():string
+
         IsAllowedOnClient<override>():logic = external {}
 
         ItemChangedAmountEvent<native><public>:listenable(item_amount_change) = external {}
@@ -6963,7 +7182,7 @@ Itemization<public> := module:
         var<private> State<native><public>:item_state = external {}
 
     @experimental
-    item_type<native><public> := class<concrete><computes><unique>:
+    item_type<native><public> := class<concrete><unique>:
         @editable
         ItemTypeDescription<native><public>:string = external {}
 
@@ -6986,6 +7205,12 @@ Itemization<public> := module:
     item_type_tag<native><public> := class(tag):
 
     item_type_wood_tag<native><public> := class(item_type_tag):
+
+    using {/UnrealEngine.com/Temporary/Diagnostics}
+    using {/UnrealEngine.com/Temporary/SceneGraph}
+    using {/Verse.org/Assets}
+    using {/Verse.org/Native}
+    itemization_log<epic_internal> := class(log_channel):
 
     @experimental
     remove_inventory_result<native><public> := struct<epic_internal>:
@@ -7153,88 +7378,6 @@ Teams<public> := module:
 
     @experimental
     team_tag<native><epic_internal> := class<concrete>(tag):
-
-TestDevices<public> := module:
-    device_event_agent_handler_mock<public> := class(test_device_event_handler_mock):
-        Subscribe<public>(Event:listenable(agent)):void = external {}
-
-        var ArgAgent<public>:?agent = external {}
-
-    device_event_agent_int_handler_mock<public> := class(test_device_event_handler_mock):
-        Subscribe<public>(Event:listenable(tuple(agent, int))):void = external {}
-
-        var ArgAgent<public>:?agent = external {}
-
-        var ArgInt<public>:int = external {}
-
-    device_event_ai_interaction_handler_mock<public> := class(test_device_event_handler_mock):
-        Subscribe<public>(Event:listenable(device_ai_interaction_result)):void = external {}
-
-        var ArgSource<public>:?agent = external {}
-
-        var ArgTarget<public>:?agent = external {}
-
-    device_event_optional_agent_handler_mock<public> := class(test_device_event_handler_mock):
-        Subscribe<public>(Event:listenable(?agent)):void = external {}
-
-        var ArgAgent<public>:?agent = external {}
-
-    device_event_optional_agent_int_handler_mock<public> := class(test_device_event_handler_mock):
-        Subscribe<public>(Event:listenable(tuple(?agent, int))):void = external {}
-
-        var ArgAgent<public>:?agent = external {}
-
-        var ArgInt<public>:int = external {}
-
-    device_event_void_handler_mock<public> := class(test_device_event_handler_mock):
-        Subscribe<public>(Event:listenable(tuple())):void = external {}
-
-    using {/Fortnite.com/Devices}
-    using {/Verse.org/Simulation}
-    using {/Verse.org/TestFramework}
-    test_device<epic_internal> := class(creative_device):
-        AfterAll<public>()<suspends>:void = external {}
-
-        AfterEach<public>()<suspends>:void = external {}
-
-        BeforeAll<public>()<suspends>:void = external {}
-
-        BeforeEach<public>()<suspends>:void = external {}
-
-        OnBegin<override>():void = external {}
-
-        RegisterTests<public>():void = external {}
-
-        SuiteName<public>:string = external {}
-
-        TestCases<public>():[]test_case = external {}
-
-        var TestRunner<public>:test_runner = external {}
-
-    test_device_event_handler_mock<public> := class<concrete>:
-        Await<public>()<suspends>:void = external {}
-
-        Cancel<public>():void = external {}
-
-        GetCallCount<public>():int = external {}
-
-        ResetCallCount<public>():void = external {}
-
-    test_runner_device<epic_internal> := class(creative_device):
-        OnBegin<override>()<suspends>:void = external {}
-
-        TestRunner<public>:test_runner = external {}
-
-        var Status<public>:test_runner_status = external {}
-
-    test_runner_status<public> := enum:
-        Complete
-
-        Pending
-
-        Running
-
-        Setup
 
 using {/Fortnite.com/Devices}
 using {/Fortnite.com/Playspaces}
@@ -7540,13 +7683,12 @@ UI<public> := module:
 
 using {/Fortnite.com/AI}
 using {/Fortnite.com/Assets}
-using {/Fortnite.com/Game/Player}
 using {/Fortnite.com/Game}
 using {/Fortnite.com/Teams}
 using {/Fortnite.com/Vehicles}
 using {/UnrealEngine.com/Abilities}
-using {/UnrealEngine.com/Playspace}
 using {/UnrealEngine.com/Temporary/Diagnostics}
+using {/UnrealEngine.com/Temporary/SceneGraph/VerseCamera}
 using {/UnrealEngine.com/Temporary/SceneGraph}
 using {/Verse.org/Simulation/Tags}
 # Module import path: /Fortnite.com/Vehicles
@@ -7659,9 +7801,9 @@ VerseFortniteGameScript<public> := module:
 
         OnPlayerEliminated<protected>(ElimResult:player_eliminated_result):void = external {}
 
-        OnPlayerJoined<protected>(__dupe___unnamed_parameter_214:player_component):void = external {}
+        OnPlayerJoined<protected>(__dupe___unnamed_parameter_228:player_component):void = external {}
 
-        OnPlayerLeft<protected>(__dupe___unnamed_parameter_215:player_component):void = external {}
+        OnPlayerLeft<protected>(__dupe___unnamed_parameter_229:player_component):void = external {}
 
         OnPostCreate<override>():void = external {}
 
@@ -7809,4 +7951,237 @@ VerseFortniteGameScript<public> := module:
         SetScale<public>(NewScale:vector3):void = external {}
 
         SetTransform<public>(NewTransform:transform):void = external {}
+
+VerseInternalTesting<public> := module:
+    # Module import path: /Fortnite.com/VerseInternalTesting/NexusFramework
+    NexusFramework<public> := module:
+        example_nexus_device<epic_internal> := class(nexus_test_device):
+            OnBegin<override>()<suspends>:void = external {}
+
+            OnEnd<override>():void = external {}
+
+        nexus_test_device<epic_internal> := class(creative_device):
+            AddFail<epic_internal>(TestName:string, ContextString:string):void = external {}
+
+            AddPass<epic_internal>(TestName:string, ContextString:string):void = external {}
+
+            AddResults<epic_internal>(TestName:string, Passed:logic, ContextString:string):void = external {}
+
+            OnBegin<override>()<suspends>:void = external {}
+
+            OnEnd<override>():void = external {}
+
+            @editable
+            var TestRunner<public>:nexus_test_runner = external {}
+
+        nexus_test_runner<epic_internal> := class(creative_device):
+            OnEnd<override>():void = external {}
+
+    using {/Fortnite.com/Characters}
+    using {/Fortnite.com/Devices}
+    using {/UnrealEngine.com/Temporary/Diagnostics}
+    using {/UnrealEngine.com/Temporary/SpatialMath}
+    using {/Verse.org/Simulation}
+    # Module import path: /Fortnite.com/VerseInternalTesting/VerseFramework
+    VerseFramework<public> := module:
+        device_event_agent_handler_mock<public> := class(test_device_event_handler_mock):
+            Subscribe<public>(Event:listenable(agent)):void = external {}
+
+            var ArgAgent<public>:?agent = external {}
+
+        device_event_agent_int_handler_mock<public> := class(test_device_event_handler_mock):
+            Subscribe<public>(Event:listenable(tuple(agent, int))):void = external {}
+
+            var ArgAgent<public>:?agent = external {}
+
+            var ArgInt<public>:int = external {}
+
+        device_event_ai_interaction_handler_mock<public> := class(test_device_event_handler_mock):
+            Subscribe<public>(Event:listenable(device_ai_interaction_result)):void = external {}
+
+            var ArgSource<public>:?agent = external {}
+
+            var ArgTarget<public>:?agent = external {}
+
+        device_event_optional_agent_handler_mock<public> := class(test_device_event_handler_mock):
+            Subscribe<public>(Event:listenable(?agent)):void = external {}
+
+            var ArgAgent<public>:?agent = external {}
+
+        device_event_optional_agent_int_handler_mock<public> := class(test_device_event_handler_mock):
+            Subscribe<public>(Event:listenable(tuple(?agent, int))):void = external {}
+
+            var ArgAgent<public>:?agent = external {}
+
+            var ArgInt<public>:int = external {}
+
+        device_event_void_handler_mock<public> := class(test_device_event_handler_mock):
+            Subscribe<public>(Event:listenable(tuple())):void = external {}
+
+        test_case<public> := struct:
+            Category<public>:[]string
+
+            Func<public>:type {__()<suspends>:void}
+
+            Name<public>:string
+
+            TimeoutOverride<public>:?float = external {}
+
+        test_device<epic_internal> := class(creative_device):
+            AfterAll<public>()<suspends>:void = external {}
+
+            AfterEach<public>()<suspends>:void = external {}
+
+            BeforeAll<public>()<suspends>:void = external {}
+
+            BeforeEach<public>()<suspends>:void = external {}
+
+            OnBegin<override>():void = external {}
+
+            RegisterTests<public>():void = external {}
+
+            SuiteName<public>:string = external {}
+
+            TestCases<public>():[]test_case = external {}
+
+            var TestRunner<public>:test_runner = external {}
+
+        test_device_event_handler_mock<public> := class<concrete>:
+            Await<public>()<suspends>:void = external {}
+
+            Cancel<public>()<transacts>:void = external {}
+
+            GetCallCount<public>():int = external {}
+
+            ResetCallCount<public>():void = external {}
+
+        test_runner<epic_internal> := class<reads><allocates>:
+            AddExcludeFilter<public>(Filter:string)<transacts>:void = external {}
+
+            AddIncludeFilter<public>(Filter:string)<transacts>:void = external {}
+
+            CheckArrayContains<public>(ActualArray:[]string, Expected:string, Message:string):void = external {}
+
+            CheckArrayDoesNotContain<public>(ActualArray:[]string, Expected:string, Message:string):void = external {}
+
+            CheckEqual<public>(Actual:creative_object, Expected:transform, Message:string, ?Tolerance:float = external {}, ?Timeout:float = external {})<suspends>:void = external {}
+
+            CheckEqual<public>(ActualFortCharacter:fort_character, ExpectedTranslation:vector3, Message:string, ?Tolerance:float = external {}, ?Timeout:float = external {}, ?CompareX:logic = external {}, ?CompareY:logic = external {}, ?CompareZ:logic = external {})<suspends>:void = external {}
+
+            CheckEqual<public>(Expected:agent, Actual:agent, Message:string):void = external {}
+
+            CheckEqual<public>(Expected:float, Actual:float, Message:string):void = external {}
+
+            CheckEqual<public>(Expected:int, Actual:int, Message:string):void = external {}
+
+            CheckEqual<public>(Expected:string, Actual:string, Message:string):void = external {}
+
+            CheckEqual<public>(Expected:transform, Actual:transform, Message:string, ?Tolerance:float = external {}):void = external {}
+
+            CheckEqualFloatArray<public>(Expected:[]float, Actual:[]float, Message:string):void = external {}
+
+            CheckEqualIntArray<public>(Expected:[]int, Actual:[]int, Message:string):void = external {}
+
+            CheckFailure<public>(TestFuncEval:?any, FuncName:string)<decides>:void = external {}
+
+            CheckNotEqual<public>(Actual:creative_object, Expected:transform, Message:string, ?Tolerance:float = external {}, ?Timeout:float = external {})<suspends>:void = external {}
+
+            CheckNotEqual<public>(Expected:agent, Actual:agent, Message:string):void = external {}
+
+            CheckNotEqual<public>(Expected:float, Actual:float, Message:string):void = external {}
+
+            CheckNotEqual<public>(Expected:int, Actual:int, Message:string):void = external {}
+
+            CheckNotEqual<public>(Expected:string, Actual:string, Message:string):void = external {}
+
+            CheckNotEqual<public>(Expected:transform, Actual:transform, Message:string, ?Tolerance:float = external {}):void = external {}
+
+            CheckNotTrue<public>(Actual:logic, Message:string):void = external {}
+
+            CheckTrue<public>(Actual:logic, Message:string):void = external {}
+
+            ClearLastTestResult<public>():void = external {}
+
+            ClearLogOutput<public>():void = external {}
+
+            ClearTests<public>()<transacts>:void = external {}
+
+            DefaultSetupFunctionTimeoutInSeconds<public>:float = external {}
+
+            DefaultTestTimeoutInSeconds<public>:float = external {}
+
+            GetDisplayTime<public>(DurationInSec:float):string = external {}
+
+            IsTestCaseIncluded<public>(TestCase:test_case)<transacts><decides>:void = external {}
+
+            Log<public>(Level:log_level, Message:string)<transacts>:void = external {}
+
+            PrintLogOutput<public>()<transacts>:void = external {}
+
+            RaiseFunctionFailure<public>(FuncName:string)<transacts>:void = external {}
+
+            RecordFlakinessTestResult<public>(TestName:string, Succeeded:logic)<transacts>:void = external {}
+
+            RegisterTests<public>(TestSuite:test_suite)<transacts>:void = external {}
+
+            Require<public>(OptionalAgent:?agent, Message:string)<transacts><decides>:agent = external {}
+
+            ResetExcludeFilters<public>()<transacts>:void = external {}
+
+            ResetIncludeFilters<public>()<transacts>:void = external {}
+
+            Run<public>()<suspends>:void = external {}
+
+            RunTestSuites<public>()<suspends>:void = external {}
+
+            var EnableDebugOutput<public>:logic = external {}
+
+            var EnableFlakinessEvaluation<public>:logic = external {}
+
+            var EnableLogOutput<public>:logic = external {}
+
+            var EnableTimeTracking<public>:logic = external {}
+
+            var EnableVerboseOutput<public>:logic = external {}
+
+            var FlakinessRunCount<public>:int = external {}
+
+            var LastTestErrors<public>:[]string = external {}
+
+            var LogOutput<public>:[]string = external {}
+
+            var SetupFunctionTimeoutInSeconds<public>:float = external {}
+
+            var TargetTestSuite<public>:string = external {}
+
+            var TestTimeoutInSeconds<public>:float = external {}
+
+        test_runner_device<epic_internal> := class(creative_device):
+            OnBegin<override>()<suspends>:void = external {}
+
+            TestRunner<public>:test_runner = external {}
+
+            var Status<public>:test_runner_status = external {}
+
+        test_runner_status<public> := enum:
+            Complete
+
+            Pending
+
+            Running
+
+            Setup
+
+        test_suite<public> := struct:
+            AfterAllFunc<public>:type {__()<suspends>:void}
+
+            AfterEachFunc<public>:type {__()<suspends>:void}
+
+            BeforeAllFunc<public>:type {__()<suspends>:void}
+
+            BeforeEachFunc<public>:type {__()<suspends>:void}
+
+            Cases<public>:[]test_case
+
+            Name<public>:string
 

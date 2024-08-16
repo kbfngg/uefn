@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-30.40-CL-35235494
+# Generated from build: ++Fortnite+Release-31.00-CL-35447195
 #################################################
 
 AINavigation<public> := module:
@@ -632,6 +632,9 @@ Temporary<public> := module:
 
     SceneGraph<public> := module:
         @experimental
+        (Entity:entity).GetPhysicsScene<epic_internal>()<transacts><decides>:physics_scene_component = external {}
+
+        @experimental
         # Finds all components attached to entities below and including `InEntity` of type `ComponentType`.When querying from the simulation entity, the simulation entity itself is not included in the results.The order of the returned components is unspecified and subject to change.
         (InEntity:entity).FindComponents<native><public>(ComponentType:subtype(component))<transacts>:[]ComponentType
 
@@ -691,34 +694,96 @@ Temporary<public> := module:
         # Returns the simulation entity parent for this entity.  * The simulation entity is the rootmost entity in an experience.  * Fails if this entity is not currently in the scene.
         (InEntity:entity).GetSimulationEntity<native><public>()<transacts><decides>:entity
 
+        using {/Verse.org/Assets}
+        using {/Verse.org/Simulation}
+        # Module import path: /UnrealEngine.com/Temporary/SceneGraph/FNECon
+        FNECon<public> := module:
+            @experimental
+            # Used to handle general conversation.
+            conversation_component<native><epic_internal> := class<epic_internal>(component, enableable):
+                # Event that sends the participating agent when a conversation has ended.
+                ConversationEndedEvent<native><public>:listenable(agent) = external {}
+
+                # Event that sends the participating agent when a conversation has started.
+                ConversationStartedEvent<native><public>:listenable(agent) = external {}
+
+                # Disables this component.
+                Disable<native><override>():void
+
+                # Enables this component.
+                Enable<native><override>():void
+
+                # Ends all conversations associated with this component.
+                EndAllConversations<native><public>():void
+
+                # Ends a conversation with the input agent.
+                EndConversation<native><public>(Agent:agent):void
+
+                # Gets the speaker's name.
+                GetSpeakerName<native_callable><public>():message = external {}
+
+                # Determines if this component is allowed on client.
+                IsAllowedOnClient<override>():logic = external {}
+
+                # Succeeds if the component is enabled. Fails if it’s disabled.
+                IsEnabled<native><override>()<transacts><decides>:void
+
+                # Sets the name of the speaker that is displayed during conversations.
+                SetSpeakerName<native><public>(InSpeakerName:message):void
+
+                # Starts a conversation with the input agent.
+                StartConversation<native><public>(Agent:agent):void
+
+                @editable
+                # The conversation database used when a conversation is started.
+                var ConversationDatabase<native><public>:conversation_database = external {}
+
+                @editable
+                # Determines the range at which a player will be able to see the speech bubble (in meters). If set to less than 2m, the player will not see an indicator speech bubble.
+                var IndicatorBubbleRange<native><public>:float = external {}
+
+                @editable
+                # The max number of participants allowed to interact with this component simultaneously.
+                var MaximumParticipatingAgents<native><public>:int = external {}
+
+            # Data type used for conversations.
+            conversation_database<native><epic_internal> := class<computes><concrete><epic_internal>(asset):
+
+        @experimental
+        GetPhysicsSceneForEntity<native><epic_internal>(Entity:entity)<transacts><decides>:physics_scene_component
+
+        # Module import path: /UnrealEngine.com/Temporary/SceneGraph/NamedCollisionChannels
+        NamedCollisionChannels<public> := module:
+            @experimental
+            Camera<public>:collision_channel = external {}
+
+            @experimental
+            Destructible<public>:collision_channel = external {}
+
+            @experimental
+            Pawn<public>:collision_channel = external {}
+
+            @experimental
+            PhysicsBody<public>:collision_channel = external {}
+
+            @experimental
+            Vehicle<public>:collision_channel = external {}
+
+            @experimental
+            Visibility<public>:collision_channel = external {}
+
+            @experimental
+            WorldDynamic<public>:collision_channel = external {}
+
+            @experimental
+            WorldStatic<public>:collision_channel = external {}
+
         using {/UnrealEngine.com/EpicGamesRestricted/Network}
         using {/UnrealEngine.com/Temporary/SpatialMath}
-        using {/Verse.org/Assets}
         using {/Verse.org/Native}
         using {/Verse.org/Simulation/Tags}
-        using {/Verse.org/Simulation}
         # Module import path: /UnrealEngine.com/Temporary/SceneGraph/VerseCamera
         VerseCamera<public> := module:
-            @experimental
-            # Activate a camera behavior component for a player, setting it as the active view target
-            (InCameraBehavior:camera_behavior_component).ActivateForPlayer<native><epic_internal>(InPlayer:player)<transacts><decides>:void
-
-            @experimental
-            (InCameraBehavior:camera_behavior_component).ActivateForPlayerAtIndex<native><epic_internal>(InPlayerIndex:int)<transacts><decides>:void
-
-            @experimental
-            # Deactivate a camera behavior component for a player, restoring the player's view target to the default
-            (InCameraBehavior:camera_behavior_component).DeactivateForPlayer<native><epic_internal>(InPlayer:player)<transacts><decides>:void
-
-            @experimental
-            (InCameraBehavior:camera_behavior_component).DeactivateForPlayerAtIndex<native><epic_internal>(InPlayerIndex:int)<transacts><decides>:void
-
-            @experimental
-            GetPlayerCameraView<native><epic_internal>(Player:player)<transacts><decides>:player_camera_view
-
-            @experimental
-            GetPlayerCameraViewByIndex<native><epic_internal>(PlayerIndex:int)<transacts><decides>:player_camera_view
-
             @experimental
             # Component that owns higher level camera behavior.
             # Owns a CameraDirector, which is responsible for selecting the best camera mode every update.
@@ -727,15 +792,9 @@ Temporary<public> := module:
                 # Internal epic method to know if this component is allowed on client
                 IsAllowedOnClient<override>():logic = external {}
 
-                @replicated("")
                 @experimental
                 # Reponsible for deciding which camera modes should be active on each layer
                 var CameraDirector<public>:camera_director = external {}
-
-                @replicated("")
-                @experimental
-                # The evaluation context sets an initial transform for the camera, before camera mode logic is applied. This evaluation context is used as the default if a camera mode does not provide its own
-                var DefaultEvaluationContext<public>:camera_evaluation_context = external {}
 
             @experimental
             # Represents the physical body, lens of the camera and other cinematographic qualities, such as sensor size, aspect ratio lock/constraint, focal length, focus distance, post-process settings, etc.
@@ -747,95 +806,61 @@ Temporary<public> := module:
             # Base class for Camera Directors defined in Verse
             camera_director<native><epic_internal> := class(camera_director_base):
                 @experimental
-                # Add a camera mode to the list for consideration
-                AddCameraMode<native_callable><public>(CameraMode:camera_mode):void = external {}
+                # Add a camera component to the list for consideration
+                AddCameraMode<native><public>(CameraModeContext:camera_mode_context):void
 
                 @experimental
                 # Determine which camera mode should be active
-                DetermineActiveCameraModes<native_callable><public>():[]camera_mode = external {}
+                DetermineActiveCameraModes<native_callable><public>():[]camera_mode_context = external {}
 
                 @experimental
-                # Remove a camera mode from the list for consideration
-                RemoveCameraMode<native_callable><public>(CameraMode:camera_mode):void = external {}
+                # Remove a camera component from the list for consideration
+                RemoveCameraMode<native><public>(CameraModeContext:camera_mode_context):void
 
             @import_as("/Script/VerseCamera.UVerseCameraDirectorBase")
             @experimental
             camera_director_base<native><epic_internal> := class:
 
             @experimental
-            # Default camera director implementation  - Simply returns the highest priority camera mode every update
-            camera_director_default<native><epic_internal> := class<final>(camera_director):
-                @experimental
-                # Add a camera mode to the list for consideration
-                AddCameraMode<native><override>(CameraMode:camera_mode):void
-
-                @experimental
+            # Camera director that returns the camera mode with the highest priority every update
+            camera_director_priority_list<native><epic_internal> := class<final>(camera_director):
                 # Determine which camera mode should be active
-                DetermineActiveCameraModes<native><override>():[]camera_mode
-
-                @experimental
-                # Remove a camera mode from the list for consideration
-                RemoveCameraMode<native><override>(CameraMode:camera_mode):void
-
-            @experimental
-            # Base class for Verse camera evaluation contexts
-            camera_evaluation_context<native><epic_internal> := class(camera_evaluation_context_base):
-                @experimental
-                # Update the evaluation context. Override this to modify the initial camera transform and other initial camera parameters before any camera modes are run
-                Update<native_callable><public>(InputParameters:camera_evaluation_context_input_parameters, OutputParameters:camera_evaluation_context_output_parameters)<transacts><decides>:void = external {}
-
-            @import_as("/Script/VerseCamera.UVerseCameraEvaluationContext")
-            @experimental
-            camera_evaluation_context_base<native><epic_internal> := class<abstract>:
-
-            @experimental
-            # Input params to a camera evaluation context update
-            camera_evaluation_context_input_parameters<native><epic_internal> := class<final>:
-                @experimental
-                # Entity that owns the camera behavior component
-                var CameraBehaviorEntity<native><epic_internal>:entity = external {}
-
-                @experimental
-                # Time elapsed since last update
-                var DeltaTime<native><public>:float = external {}
-
-            @experimental
-            # Output params to a camera evaluation context update
-            camera_evaluation_context_output_parameters<native><epic_internal> := class<final>(camera_output_parameters):
-                @experimental
-                # If written to, will set the target distance
-                var TargetDistance<native><epic_internal>:?float = external {}
+                DetermineActiveCameraModes<native><override>():[]camera_mode_context
 
             @experimental
             # A camera mode builds up a camera transform piece by piece by executing a camera rig asset
-            camera_mode<native><epic_internal> := class<concrete><unique><final>:
+            camera_mode<native><epic_internal> := class<concrete>:
+                @editable
+                @display_name("CameraRigAsset")
+                @replicated("")
+                @experimental
+                CameraRigAsset<native><public>:camera_rig_asset = external {}
+
                 @experimental
                 GetCameraModeTag<native><public>()<transacts><decides>:verse_camera_mode_tag
 
                 @replicated("")
+                @editable
                 @experimental
-                # Camera evaluation context. Used to override default camera transform, and set target entity
-                var CameraEvaluationContext<public>:camera_evaluation_context = external {}
+                # Root camera operation - This is mutually exclusive with CameraRigAsset and is intended to allow you to build up your camera mode entirely in Verse without referencing any external assets
+                RootCameraOperation<native><epic_internal>:?camera_operation = external {}
 
-                @replicated("")
-                @experimental
-                # Camera rig asset that defines the behavior of the camera mode
-                var CameraRigAsset<public>:camera_rig_asset = external {}
-
-                @replicated("")
                 @experimental
                 # Priority level that can be used by camera directors to determine the best camera mode
                 var Priority<public>:float = external {}
 
-                @replicated("")
-                @editable
-                @experimental
-                # Root camera operation - This is mutually exclusive with CameraRigAsset, but allows you to build up a camera mode completely in Verse
-                var RootCameraOperation<native><epic_internal>:?camera_operation = external {}
-
             @import_as("/Script/VerseCamera.UVerseCameraMode")
             @experimental
             camera_mode_base<native><epic_internal> := class<abstract>:
+
+            @experimental
+            # A camera mode, camera component pair used to give all the context required to execute a camera mode
+            camera_mode_context<native><epic_internal> := struct:
+                # Camera component this camera mode should run on
+                CameraComponent<native><public>:camera_component
+
+                # Camera mode this camera mode context refers to
+                CameraMode<native><public>:camera_mode
 
             @experimental
             # A camera operation is a primitive operation that is used to build up a camera transform piece by piece
@@ -882,6 +907,14 @@ Temporary<public> := module:
                 GetCameraParameterValue<native><epic_internal>(Parameter:camera_parameter_vector3)<transacts><decides>:vector3
 
                 @experimental
+                # Camera behavior component that this camera_mode is running in
+                var CameraBehaviorComponent<native><public>:?camera_behavior_component = external {}
+
+                @experimental
+                # camera_component that this camera_mode is running in
+                var CameraComponent<native><public>:?camera_component = external {}
+
+                @experimental
                 # Camera location from the initial evaluator execution, or previous operation if an operation modified it before this one
                 var CameraLocation<native><public>:vector3 = external {}
 
@@ -892,10 +925,6 @@ Temporary<public> := module:
                 @experimental
                 # Delta time since last update
                 var DeltaTime<native><public>:float = external {}
-
-                @experimental
-                # Camera evaluation context that the owning camera mode is running in
-                var EvaluationContext<native><public>:?camera_evaluation_context = external {}
 
             @experimental
             # Output params to a camera operation
@@ -1010,34 +1039,8 @@ Temporary<public> := module:
                 Variable<native><public>:camera_variable_vector3 = external {}
 
             @experimental
-            # Camera evaluation context for scene graph entities.
-            # Allows users of camera modes to supply a context object that provides more information about the context in whichthe camera mode is being used (for example, initial camera position)
-            entity_camera_evaluation_context<native><epic_internal> := class<final>(camera_evaluation_context):
-                @experimental
-                Update<native><override>(InputParameters:camera_evaluation_context_input_parameters, OutputParameters:camera_evaluation_context_output_parameters)<transacts><decides>:void
-
-                @replicated("")
-                @experimental
-                # For cameras that are fixed in the world. This entity is used as a reference point for the initial world transform of the fixed camera.
-                # Leave this unset for cameras that should follow another entity around
-                var FixedWorldCameraEntity<native><public>:?entity = external {}
-
-                @replicated("")
-                @experimental
-                # Entity the camera is targeting. Used to provide an initial look-at rotation for the camera
-                var TargetEntity<native><public>:?entity = external {}
-
-            @experimental
             # Component used to associate a camera behavior component with a player
             player_camera_view<native><epic_internal> := class(player_camera_view_base):
-                @experimental
-                ClearActiveCameraBehavior<native><public>()<transacts><decides>:void
-
-                @experimental
-                GetActiveCameraBehavior<native><public>()<transacts><decides>:camera_behavior_component
-
-                @experimental
-                SetActiveCameraBehavior<native><public>(CameraBehaviorIn:camera_behavior_component)<transacts><decides>:void
 
             @import_as("/Script/VerseCamera.UVersePlayerCameraViewComponent")
             @experimental
@@ -1087,12 +1090,21 @@ Temporary<public> := module:
             SetFieldOfView<public>(InFieldOfView:float):void = external {}
 
         @experimental
-        collision_channel_response<native><epic_internal> := enum:
+        collision_channel<native><public> := struct<concrete><computes><epic_internal>:
+
+        @experimental
+        collision_channel_response<native><public> := enum:
             Block
 
             Ignore
 
             Overlap
+
+        @experimental
+        collision_channel_responses<native><public> := class<concrete><epic_internal>:
+            GetChannelResponse<native><epic_internal>(Channel:collision_channel):collision_channel_response
+
+            SetChannelResponse<native><epic_internal>(Channel:collision_channel, Response:collision_channel_response):void
 
         @experimental
         # Used to make an entity collide with other scene objects, including preventing players and NPCs from passing through the entity.Overlap queries can only find entities with enabled `collision_components`.Dependencies:  * `transform_component` on the entity positions the `collision_component`.  * `mesh_component` on the entity provides the collision shape for the `collision_component`.
@@ -1108,6 +1120,8 @@ Temporary<public> := module:
 
             # Event signaled when something stops overlapping with the component.
             EndOverlapEvent<native><epic_internal>:listenable(overlap_result) = external {}
+
+            GetCollisionProfile<native><epic_internal>():?collision_profile
 
             # Event signaled when the component experiences a blocking hit.
             HitEvent<native><epic_internal>:listenable(hit_result) = external {}
@@ -1132,6 +1146,8 @@ Temporary<public> := module:
 
             OnUninitializing<native><override>():void
 
+            SetCollisionProfile<native><epic_internal>(Profile:collision_profile):void
+
             VisibilityChannelResponseOverride<native><epic_internal>:?collision_channel_response = external {}
 
             var CollisionOverride<epic_internal>:collision_override = external {}
@@ -1144,11 +1160,42 @@ Temporary<public> := module:
         collision_override<native><epic_internal> := class<epic_internal>:
 
         @experimental
+        collision_profile<native><public> := class<concrete><epic_internal>:
+            GetChannel<native><public>():collision_channel
+
+            GetName<native><public>():string
+
+            GetResponses<native><public>():collision_channel_responses
+
+            SetChannel<native><public>(Channel:collision_channel):void
+
+            SetName<native><public>(Name:string):void
+
+            SetResponses<native><public>(Responses:collision_channel_responses):void
+
+        @experimental
+        collision_query_params<native><public> := struct<epic_internal>:
+            # True to have the query return Blocking hits
+            DetectBlocking<native><public>:logic = external {}
+
+            # True to have the query return Overlapping hits
+            DetectOverlapping<native><public>:logic = external {}
+
+            # A set of components to ignore in the query
+            IgnoredComponents<native><public>:[]collision_component = external {}
+
+        @experimental
         # Base class for authoring logic and data in the SceneGraph. Using components youcan author re-usable building blocks of logic and data which can then be added toentities in the scene.Components are a very low level building block which can be used in many ways.For example:  * Exposing engine level concepts like mesh or sound  * Adding gameplay capabilities like damage or interaction  * Storing an inventory for a character in the gameAs components are generic there is no specific way that they must be used.It is up to the needs of your experience if you use one big game componentor if you break up logic into many small components.Currently UEFN will not allow you to add more than one component of a givensubclass of component (for example, only one type of light_component). This restrictionwill be relaxed in the future where components will be able to decide if theywish to allow only one instance or many instances of the same component to existtogether on one entity.==============================================================================Component Lifetime  Components move through a series of lifetime functions as they are added  to entities, added to the scene, and begin running in the simulation. Components  should override these methods to perform setup and run their simulation.  As a component shuts down it will then move through shutdown version of these  functions, giving users the opportunity to clean up any retained state on the  component before it is disposed.  Lifetime Methods:    OnInitialized       OnAddedToScene         OnBeginSimulation -> OnSimulate<suspends>         OnEndSimulation       OnRemovingFromScene    OnUninitializing==============================================================================
         component<native><public> := class<abstract><unique>(disposable):
             @experimental
             # Disposes of the component and all its resources.  * Disposed components are removed from the scene and cannot be added back.  * Flows through `OnEndSimulation`-> `OnRemovingFromScene`-> `OnUninitializing`.
             Dispose<native><override><final>():void
+
+            @experimental
+            @allow_self_reference
+            @experimental_always_overridden
+            # The parent entity of this component.  * Components must have a parent entity pointer provided when being constructed.  * Components cannot be moved between parents.  * The parent pointer remains valid even after the component has been disposed.
+            Entity<native><public>:entity
 
             IsAllowedOnClient<native_callable><epic_internal>():logic = external {}
 
@@ -1195,10 +1242,6 @@ Temporary<public> := module:
             @experimental
             # Called when the component is about to be removed from the parent entity.  * Components are removed from their parent entity when they are disposed.  * `OnUninitializing` is only called on components that have already had `OnInitialized` called.
             OnUninitializing<native><native_callable><protected>():void
-
-            @experimental
-            # The parent entity of this component.  * Components must have a parent entity pointer provided when being constructed.  * Components cannot be moved between parents.  * The parent pointer remains valid even after the component has been disposed.
-            var<private> Entity<public>:entity
 
             @experimental
             # Set callbacks to `TickEvents.PrePhysics` and `TickEvents.PostPhysics` to receive per-frame updatesbefore and after physics is updated on your object.
@@ -1298,6 +1341,14 @@ Temporary<public> := module:
 
             @experimental
             RunBefore<native><epic_internal>(__dupe___unnamed_parameter_47:execution_subscription):void
+
+        @experimental
+        # A range with a minimum and maximum value. For a value to fall inside of this range, the min value must be less than or equal to the max value.
+        float_range<native><public> := struct<concrete>:
+            @editable
+            Maximum<native><public>:float = external {}
+
+            Minimum<native><public>:float = external {}
 
         @experimental
         hit_result<native><epic_internal> := struct:
@@ -1478,21 +1529,19 @@ Temporary<public> := module:
             # The number of seconds after a successful interaction, before being able to initiate a subsequent interaction for anyone. This is only used if duration is greater than 0.0. An agent’s actualized cooldown is the greater of the remaining SharedCooldownDuration and the agent’s remaining PerAgentCooldownDuration. Modifying this at runtime does not affect the in-progress cooldown.
             var SharedCooldownDuration<native><public>:float = external {}
 
+        @hide_in_editor
+        @experimental
+        level_entity<native><epic_internal> := class<concrete><unique><transacts>(entity):
+
         @experimental
         # Base class for light components in the SceneGraph.Dependencies:  * `transform_component` on the entity positions the light.Examples of components implementing `light_component`:  * `directional_light_component`  * `point_light_component`  * `rect_light_component`  * `spot_light_component`
         light_component<native><public> := class<abstract><epic_internal>(component):
-            # Returns the color of the light.
-            GetColor<native><public>()<transacts>:color
-
             # Internal epic method to know if this component is allowed on client
             IsAllowedOnClient<override>():logic = external {}
 
             OnInitialized<native><override>():void
 
             OnUninitializing<native><override>():void
-
-            # Sets the color of the light. Note that this can change the light’s effective intensity.
-            SetColor<native><public>(InColor:color)<transacts>:void
 
             @experimental
             # If the light affects global illumination, when ray-traced global illumination is enabled.
@@ -1542,7 +1591,7 @@ Temporary<public> := module:
 
         @experimental
         # Used to render a `mesh` at the location of this entity. A mesh is a set of polygons that can be used to represent shapesin the world such as:  * foliage and terrain decorations  * movers (for example, doors and lifts)  * procedurally created buildingsDependencies:  * `transform_component` on the entity positions the mesh.
-        mesh_component<native><public> := class<final>(component, enableable):
+        mesh_component<native><public> := class(component, enableable):
             @experimental
             # Disables rendering of this mesh.
             Disable<native><override>():void
@@ -1587,6 +1636,14 @@ Temporary<public> := module:
             NextValue<native><override>()<transacts><decides>:entity
 
         @experimental
+        overlap_hit<native><public> := struct<epic_internal>:
+            Component<native><public>:?component = external {}
+
+        @experimental
+        overlap_hit_container<native><public> := struct<epic_internal>:
+            Hits<native><public>:[]overlap_hit
+
+        @experimental
         overlap_result<native><epic_internal> := struct<epic_internal>:
             OtherComponent<native><public>:?component
 
@@ -1619,6 +1676,10 @@ Temporary<public> := module:
             # Retrieve the transform of the attachment
             GetAttachedTransform<native><epic_internal>()<decides>:transform
 
+            @experimental
+            # Returns the relative transform of the entity to its parent.
+            GetRelativeTransform<native><epic_internal>()<transacts>:transform
+
             # Internal epic method to know if this component is allowed on client
             IsAllowedOnClient<override>():logic = external {}
 
@@ -1627,7 +1688,7 @@ Temporary<public> := module:
             OnUninitializing<native><override>():void
 
             @experimental
-            # Set relative transform
+            # Sets the relative transform of the entity to its parent.
             SetRelativeTransform<native><epic_internal>(Transform:transform)<transacts><decides>:void
 
             @experimental
@@ -1731,9 +1792,34 @@ Temporary<public> := module:
             # The component is being uninitialized, called when it is about to be removed from an entity
             OnUninitializing<native><override>():void
 
-            @editable
-            @experimental
-            VisibilityChannelResponseOverride<native><epic_internal>:?collision_channel_response = external {}
+        @experimental
+        physics_scene_component<native><epic_internal> := class<final>(component):
+            OnAddedToScene<native><override>():void
+
+            OnBeginSimulation<native><override>():void
+
+            OnEndSimulation<native><override>():void
+
+            OnInitialized<native><override>():void
+
+            OnRemovingFromScene<native><override>():void
+
+            OnUninitializing<native><override>():void
+
+            # Find everything that overlaps a collision_component
+            OverlapCollision<native><epic_internal>(Component:collision_component, Position:vector3, Rotation:rotation):overlap_hit_container
+
+            # Find everything that overlaps a convex shape
+            OverlapShape<native><epic_internal>(Shape:convex_volume3, Position:vector3, Rotation:rotation, TraceChannel:collision_channel, QueryParams:collision_query_params):overlap_hit_container
+
+            # Trace a collision_component through the scene and return all hits
+            TraceCollision<native><epic_internal>(Component:collision_component, StartPosition:vector3, EndPosition:vector3, Rotation:rotation):trace_hit_container
+
+            # Trace a line through the scene and return all hits
+            TraceLine<native><epic_internal>(StartPosition:vector3, EndPosition:vector3, TraceChannel:collision_channel, QueryParams:collision_query_params):trace_hit_container
+
+            # Trace a shape through the scene and return all hits
+            TraceShape<native><epic_internal>(Shape:convex_volume3, StartPosition:vector3, EndPosition:vector3, TraceChannel:collision_channel, QueryParams:collision_query_params):trace_hit_container
 
         @experimental
         # A `point_light_component` emits light equally in all directions from a single point in space.
@@ -1742,6 +1828,18 @@ Temporary<public> := module:
         @hide_in_editor
         @experimental
         point_light_component_base<native><epic_internal> := class<epic_internal>(light_component):
+            GetAttenuationRadius<native><protected>(__dupe___unnamed_parameter_130:accessor)<transacts>:float
+
+            GetSourceLength<native><protected>(__dupe___unnamed_parameter_134:accessor)<transacts>:float
+
+            GetSourceRadius<native><protected>(__dupe___unnamed_parameter_132:accessor)<transacts>:float
+
+            SetAttenuationRadius<native><protected>(__dupe___unnamed_parameter_131:accessor, InAttenuationRadius:float)<transacts>:void
+
+            SetSourceLength<native><protected>(__dupe___unnamed_parameter_135:accessor, InSourceLength:float)<transacts>:void
+
+            SetSourceRadius<native><protected>(__dupe___unnamed_parameter_133:accessor, InSourceRadius:float)<transacts>:void
+
             @experimental
             # The bounds of the light’s visible influence. This clamping of the light's influence is not physically correct but very important for performance, larger lights cost more.This clamping of the light's influence is not physically correct but very important for performance. Larger lights cost more. Clamped between 8.0 and 16384.0.
             var AttenuationRadius<public>:float = external {}
@@ -1779,6 +1877,10 @@ Temporary<public> := module:
 
         @experimental
         replication_component<native><epic_internal> := class(component):
+            @editable
+            # Internal only flag to make this entity always relevant for replication to clients
+            AlwaysRelevant<native><epic_internal>:logic = external {}
+
             # Internal epic method to know if this component is allowed on client
             IsAllowedOnClient<override>():logic = external {}
 
@@ -1873,11 +1975,24 @@ Temporary<public> := module:
 
         @experimental
         # Used to render a string at the location of this entity.Dependencies:  * `transform_component` on the entity positions the `text_display_component`.
-        text_display_component<native><public> := class<final>(component):
+        text_display_component<native><public> := class<final>(component, enableable):
+            # Disable this object.
+            Disable<native><override>():void
+
+            # Enable this object.
+            Enable<native><override>():void
+
             # Internal epic method to know if this component is allowed on client
             IsAllowedOnClient<override>():logic = external {}
 
+            # Succeeds if the component is enabled, fails if it is disabled.
+            IsEnabled<native><override>()<transacts><decides>:void
+
             OnAddedToScene<native><override>():void
+
+            OnBeginSimulation<native><override>():void
+
+            OnEndSimulation<native><override>():void
 
             OnInitialized<native><override>():void
 
@@ -1885,7 +2000,22 @@ Temporary<public> := module:
 
             @editable
             @replicated("RepNotify")
+            # The color with which to display the text.
+            var Color<native><public>:color = external {}
+
+            @editable
+            @replicated("RepNotify")
+            # The time in seconds for the text to fully fade in.
+            var FadeInTime<native><epic_internal>:float = external {}
+
+            @editable
+            @replicated("RepNotify")
+            # The time in seconds for the text to fully fade out.
+            var FadeOutTime<native><epic_internal>:float = external {}
+
             @experimental
+            @editable
+            @replicated("RepNotify")
             # Text to be displayed on the entity.
             var Text<native><public>:string = external {}
 
@@ -1905,6 +2035,33 @@ Temporary<public> := module:
             PrePhysics<native><public>:execution_subscribable = external {}
 
             StartPhysics<native><epic_internal>:execution_subscribable = external {}
+
+        @experimental
+        trace_hit<native><public> := struct<epic_internal>:
+            # The component that we was hit by the traced component
+            HitComponent<native><public>:?component = external {}
+
+            # The face normal at the ContactLocation. For a face contact this is the same as ContactNormal, but for edge and vertex contacts this will be the most opposing face sharing that edge or vertex
+            HitFaceNormal<native><public>:vector3 = external {}
+
+            # The normal at which the TracedComponent touched the HitComponent
+            HitNormal<native><public>:vector3 = external {}
+
+            # The point at which the TracedComponent touched the HitComponent
+            HitPosition<native><public>:vector3 = external {}
+
+            # The collision_channel_response based on the trace and HitComponent collision_channel and collision_responses
+            HitResponse<native><public>:collision_channel_response = external {}
+
+            # The distance traveled by the traced object when it hit the HitComponent
+            TraceHitDistance<native><public>:float = external {}
+
+            # The position of the traced object when it hit the HitComponent
+            TraceHitPosition<native><public>:vector3 = external {}
+
+        @experimental
+        trace_hit_container<native><public> := struct<epic_internal>:
+            Hits<native><public>:[]trace_hit
 
         @experimental
         # Stores the world transform for an entity, which is used to position the entity.  * If you wish for an entity to update its transform when its parent entity transform changes then    you must also add a `parent_constraint_component` to the entity.
@@ -1940,6 +2097,9 @@ Temporary<public> := module:
         @experimental
         volume_collision_override<native><epic_internal> := class<concrete><final><epic_internal>(collision_override):
             CollisionVolume<native><public>:convex_volume3 = external {}
+
+    # Stably sort `Array` using `Less` where `Less` succeeding indicates `Left` should precede `Right`
+    SortBy<native><public>(Array:[]t, Less:type {__(:t, :t)<computes><decides>:void} where t:type)<computes>:[]t
 
     using {/Verse.org/Native}
     # Module import path: /UnrealEngine.com/Temporary/SpatialMath
@@ -2004,7 +2164,7 @@ Temporary<public> := module:
         (Rotation:rotation).Invert<native><public>()<transacts>:rotation
 
         # Returns `Rotation` if it does not contain `NaN`, `Inf` or `-Inf`.
-        (Rotation:rotation).IsFinite<native><public>()<computes><decides>:rotation
+        (Rotation:rotation).IsFinite<native><public>()<converges><decides>:rotation
 
         # Makes a `vector3` by applying `Rotation` to `Vector`.
         (Rotation:rotation).RotateVector<native><public>(Vector:vector3)<transacts>:vector3
@@ -2119,14 +2279,14 @@ Temporary<public> := module:
         MakeComponentWiseDeltaRotation<native><public>(RotationA:rotation, RotationB:rotation)<transacts>:rotation
 
         # Makes a `rotation` from `Axis` and `AngleRadians` using a left-handed sign convention (e.g. a positive rotation around +Z takes +X to +Y). If `Axis.IsAlmostZero[]`, make the identity rotation.
-        MakeRotation<native><public>(Axis:vector3, AngleRadians:float)<computes><reads>:rotation
+        MakeRotation<native><public>(Axis:vector3, AngleRadians:float)<converges><reads>:rotation
 
         # Makes a `rotation` by applying `YawRightDegrees`, `PitchUpDegrees`, and `RollClockwiseDegrees`, in that order:
         #  * first a *yaw* about the Z axis with a positive angle indicating a clockwise rotation when viewed from above,
         #  * then a *pitch* about the new Y axis with a positive angle indicating 'nose up',
         #  * followed by a *roll* about the new X axis axis with a positive angle indicating a clockwise rotation when viewed along +X.
         # Note that these conventions differ from `MakeRotation` but match `ApplyYaw`, `ApplyPitch`, and `ApplyRoll`.
-        MakeRotationFromYawPitchRollDegrees<native><public>(YawRightDegrees:float, PitchUpDegrees:float, RollClockwiseDegrees:float)<computes><reads>:rotation
+        MakeRotationFromYawPitchRollDegrees<native><public>(YawRightDegrees:float, PitchUpDegrees:float, RollClockwiseDegrees:float)<converges><reads>:rotation
 
         # Makes the smallest angular `rotation` from `InitialRotation` to `FinalRotation` such that:
         # `InitialRotation.RotateBy(MakeShortestRotationBetween(InitialRotation, FinalRotation)) = FinalRotation` and
@@ -2308,6 +2468,9 @@ Temporary<public> := module:
         test_reporter<native><epic_internal> := class:
             # Sets the default log level of the displayed message. See log_level enum for more info on log levels. Defaults to log_level.Normal.
             DefaultLevel<native><epic_internal>:log_level = external {}
+
+            # Returns a string of the test results summary.
+            GetSummaryStrings<native><epic_internal>(?Level:log_level = external {}):[]string
 
             # Logs `Message` to the `test_reporter` log stream. This allows users to add context for results to the summary.
             Log<native><epic_internal>(Message:string, ?Level:log_level = external {}):void
@@ -3042,9 +3205,9 @@ VGameplayRst<public> := module:
             WaitForTransitionComplete<native><public>()<suspends>:void
 
         script_component<native><public> := class<abstract><unique>(vk_component):
-            AddToCreateComponentList<native><public>(__dupe___unnamed_parameter_106:[]subtype(vk_component)):void
+            AddToCreateComponentList<native><public>(__dupe___unnamed_parameter_108:[]subtype(vk_component)):void
 
-            AddToRequiredComponentList<native><public>(__dupe___unnamed_parameter_107:[]subtype(vk_component)):void
+            AddToRequiredComponentList<native><public>(__dupe___unnamed_parameter_109:[]subtype(vk_component)):void
 
             GetAllComponentsOfType<native><public>(componentType:type)<transacts>:[]vk_component
 
@@ -3220,15 +3383,6 @@ VGameplayRst<public> := module:
 
             SimulationOnly
 
-        default_animation_mode_type<native><public> := enum:
-            UseAnimationAsset
-
-            UseAnimationBlueprint
-
-            UseAnimationInstance
-
-            UseCustomMode
-
         default_mesh_type<native><public> := enum:
             Cone
 
@@ -3256,33 +3410,6 @@ VGameplayRst<public> := module:
             SetMesh<native><epic_internal>(Mesh:mesh)<transacts>:void
 
             SetVisibility<native><public>(NewVisibility:logic)<transacts>:void
-
-        skeletal_mesh_component<native><public> := class(vk_component):
-            BeginAnimation<native><public>(Looping:logic):void
-
-            EndAnimation<native><public>():void
-
-            GetAnimationPlayRate_FIXME<native><public>():float
-
-            GetAnimationPosition_FIXME<native><public>():float
-
-            IsPlayingAnimation<native><public>():logic
-
-            SetAnimation<native><epic_internal>(InAnimation:animation):void
-
-            SetAnimationBlueprint<native><epic_internal>(InAnimationBlueprint:animation_blueprint):void
-
-            SetAnimationInstance<native><epic_internal>(InAnimationInstance:animation_instance):void
-
-            SetAnimationMode<native><public>(AnimMode:default_animation_mode_type):void
-
-            SetAnimationPlayRate_FIXME<native><public>(Rate:float):void
-
-            SetAnimationPosition_FIXME<native><public>(InPos:float, FireNotifies:logic):void
-
-            SetMaterial<native><epic_internal>(Material:material):void
-
-            SetSkeletalMesh<native><epic_internal>(Mesh:skeletal_mesh):void
 
     # Module import path: /UnrealEngine.com/VGameplayRst/LevelStreaming
     LevelStreaming<public> := module:
