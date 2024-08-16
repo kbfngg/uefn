@@ -66,6 +66,6 @@ Game<public> := module:
 
         # Module import path: /Fortnite.com/Game/Abilities/AbilityComponent
         AbilityComponent<public> := module:
-            GetAbilityComponentForPlayer<native><epic_internal>(__dupe___unnamed_parameter_172:player_component)<transacts><decides>:vk_fort_ability_component
+            GetAbilityComponentForPlayer<native><epic_internal>(__dupe___unnamed_parameter_171:player_component)<transacts><decides>:vk_fort_ability_component
 
-            GetAbilityComponentForCharacter<native><public>(__dupe___unnamed_parameter_173:fort_character)<transacts><decides>:vk_fort_ability_component
+            GetAbilityComponentForCharacter<native><public>(__dupe___unnamed_parameter_172:fort_character)<transacts><decides>:vk_fort_ability_component

@@ -1,4 +1,3 @@
-using {/Verse.org/VerseEngine}
 using {/Fortnite.com/Assets}
 using {/Fortnite.com/AI}
 using {/Verse.org/Assets}
@@ -441,6 +440,16 @@ Game<public> := module:
 
 # Module import path: /Fortnite.com/FortPlayerUtilities
 FortPlayerUtilities<public> := module:
+    # The possible dynamic resolution rendering modes
+    preferred_rendering_mode<native><epic_internal> := enum:
+        # Maximize the framerate
+        MaximizeFramerate
+        # Maximize the dynamic resolution by setting a lower target framerate
+        MaximizeResolution
+
+    # Sets the dynamic resolution behavior based on the preferred rendering mode.
+    SetPreferredRenderingModeHint<native><epic_internal>(Players:[]player, InPreferredRenderingMode:preferred_rendering_mode):void
+
     # Sends `InPlayer` back to the main game lobby.
     (InPlayer:player).SendToLobby<native><public>()<transacts>:void
 
@@ -705,6 +714,9 @@ Assets<public> := module:
     emote<native><epic_internal> := class<computes><concrete><final>(asset):
 
 
+    npc_character_definition<native><epic_internal> := class<computes><concrete><final>(asset):
+
+
 # Module import path: /Fortnite.com/Animation
 Animation<public> := module:
     # Module import path: /Fortnite.com/Animation/PlayAnimation
@@ -922,55 +934,23 @@ AI<public> := module:
     fort_guard_perception_component<native><epic_internal> := class<epic_internal>(npc_perception_component):
         @experimental
         # Get information about the current target.
-        GetCurrentTargetInfo<native><epic_internal>()<transacts><decides>:target_info
+        GetCurrentTargetInfo<native><public>()<transacts><decides>:target_info
 
         @experimental
         # Get the current alert level of the guard.
-        GetAlertLevel<native><epic_internal>()<transacts>:fort_guard_alert_level
+        GetAlertLevel<native><public>()<transacts>:fort_guard_alert_level
 
         @experimental
         # Get the current alert level of a target for the guard.
-        GetAlertLevel<native><epic_internal>(TargetInfo:target_info)<transacts>:fort_guard_alert_level
+        GetAlertLevel<native><public>(Target:entity)<transacts><decides>:fort_guard_alert_level
 
         @experimental
         # Event when the alert level of the guard has changed.
-        AlertLevelChangedEvent<epic_internal>():listenable(fort_guard_alert_level) = external {}
+        AlertLevelChangedEvent<native><public>:listenable(fort_guard_alert_level) = external {}
 
         @experimental
         # Event when the current target has changed.
-        CurrentTargetChangedEvent<epic_internal>():listenable(target_info) = external {}
-
-        @experimental
-        # Get the current sight settings of the guard for an alert level.
-        GetSightSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level)<transacts>:sight_perception_settings
-
-        @experimental
-        # Set the current sight settings of the guard for an alert level.
-        SetSightSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level, SightSettings:sight_perception_settings):void
-
-        @experimental
-        # Get the current hearing settings of the guard for an alert level.
-        GetHearingSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level)<transacts>:hearing_perception_settings
-
-        @experimental
-        # Set the current hearing settings of the guard for an alert level.
-        SetHearingSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level, HearingSettings:hearing_perception_settings):void
-
-        @experimental
-        # Get the current touch settings of the guard for an alert level.
-        GetTouchSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level)<transacts>:touch_perception_settings
-
-        @experimental
-        # Set the current touch settings of the guard for an alert level
-        SetTouchSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level, TouchSettings:touch_perception_settings):void
-
-        @experimental
-        # Get the current damage settings of the guard for an alert level.
-        GetDamageSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level)<transacts>:damage_perception_settings
-
-        @experimental
-        # Set the current damage settings of the guard for an alert level.
-        SetDamageSettings<native><epic_internal>(GuardAlertLevel:fort_guard_alert_level, DamageSettings:damage_perception_settings):void
+        CurrentTargetChangedEvent<native><public>:listenable(target_info) = external {}
 
         @experimental
         # Get information about the potential current obstacle
@@ -978,13 +958,7 @@ AI<public> := module:
 
         @experimental
         # Event when a new best obstacle is detected
-        ObstacleChangedEvent<epic_internal>():listenable(fort_obstacle_info) = external {}
-
-        CurrentTargetChangedEventInternal<native><epic_internal>:subscribable_event(target_info) = external {}
-
-        AlertLevelChangedEventInternal<native><epic_internal>:subscribable_event(fort_guard_alert_level) = external {}
-
-        ObstacleChangedEventInternal<native><epic_internal>:subscribable_event(fort_obstacle_info) = external {}
+        ObstacleChangedEvent<native><epic_internal>:listenable(fort_obstacle_info) = external {}
 
     navigation_target<native><public> := class<epic_internal>:
 
@@ -1087,94 +1061,60 @@ AI<public> := module:
     # Returns the `npc_behavior` for `InAgent`.
     (InAgent:agent).GetNPCBehavior<native><public>()<transacts><decides>:npc_behavior
 
-    @hide_in_editor
     @experimental
-    npc_behavior_component<native><epic_internal> := class<epic_internal>(ai_component):
-        @experimental
-        NPCBehavior<native><public>:npc_behavior
+    npc_behavior_component<native><epic_internal> := class(fort_game_component):
+        OnRoundEnd<override><final>():void = external {}
+
+        @editable_non_concrete
+        var NPCBehavior<native><public>:npc_behavior
 
     @experimental
     # Returns the `entity` for `InNPCBehavior`.
     (InNPCBehavior:npc_behavior).GetEntity<native><epic_internal>()<transacts>:entity
 
     @experimental
+    # NPC Component
+    npc_component<native><epic_internal> := class(fort_game_component):
+        OnRoundBegin<override><final>()<suspends>:void = external {}
+
+        OnRoundEnd<override><final>():void = external {}
+
+        OnEndSimulation<override><final>():void = external {}
+
+    @experimental
     @hide_in_editor
     npc_perception_component<native><epic_internal> := class<epic_internal>(ai_component):
         @experimental
-        # Get information about all detected targets.
-        GetDetectedTargets<native><epic_internal>()<transacts>:[]target_info
+        # Information about all detected targets.
+        var<private> DetectedTargets<native><public>:[]target_info
 
         @experimental
-        # Get information about a specific agent.
-        GetDetectedTarget<native><epic_internal>(Agent:agent)<transacts><decides>:target_info
+        # Get the last known position of a target.
+        GetLastKnownPosition<native><public>(Target:entity)<transacts><decides>:vector3
 
         @experimental
         # Event when a target is added.
-        TargetAddedEvent<epic_internal>():listenable(target_info) = external {}
+        TargetAddedEvent<native><public>:listenable(target_info) = external {}
 
         @experimental
         # Event when the info about a target has been updated.
-        TargetInfoUpdatedEvent<epic_internal>():listenable(target_info) = external {}
+        TargetInfoUpdatedEvent<native><public>:listenable(target_info) = external {}
 
         @experimental
         # Event when a target was removed.
-        TargetRemovedEvent<epic_internal>():listenable(entity) = external {}
+        TargetRemovedEvent<native><public>:listenable(entity) = external {}
 
         @experimental
         # Event when a target is seen. Sight sense must be active.
-        TargetSeenEvent<epic_internal>():listenable(target_info) = external {}
+        TargetSeenEvent<native><public>:listenable(target_info) = external {}
 
         @experimental
         # Event when a target is heard. Hearing sense must be active.
-        TargetHeardEvent<epic_internal>():listenable(target_info) = external {}
+        TargetHeardEvent<native><public>:listenable(target_info) = external {}
 
         @experimental
         # Event when a target is touched. Touch sense must be active.
-        TargetTouchedEvent<epic_internal>():listenable(target_info) = external {}
-
-        @experimental
-        # Get the current sight settings.
-        GetSightSettings<native><epic_internal>()<transacts>:sight_perception_settings
-
-        @experimental
-        # Set the current sight settings.
-        SetSightSettings<native><epic_internal>(SightSettings:sight_perception_settings):void
-
-        @experimental
-        # Get the current hearing settings.
-        GetHearingSettings<native><epic_internal>()<transacts>:hearing_perception_settings
-
-        @experimental
-        # Set the current hearing settings.
-        SetHearingSettings<native><epic_internal>(HearingSettings:hearing_perception_settings):void
-
-        @experimental
-        # Get the current touch perception settings.
-        GetTouchSettings<native><epic_internal>()<transacts>:touch_perception_settings
-
-        @experimental
-        # Set the current touch perception settings.
-        SetTouchSettings<native><epic_internal>(TouchSettings:touch_perception_settings):void
-
-        @experimental
-        # Get the current damage perception settings.
-        GetDamageSettings<native><epic_internal>()<transacts>:damage_perception_settings
-
-        @experimental
-        # Set the current damage perception settings.
-        SetDamageSettings<native><epic_internal>(DamageSettings:damage_perception_settings):void
-
-        TargetAddedEventInternal<native><epic_internal>:subscribable_event(target_info) = external {}
-
-        TargetInfoUpdatedEventInternal<native><epic_internal>:subscribable_event(target_info) = external {}
-
-        TargetRemovedEventInternal<native><epic_internal>:subscribable_event(entity) = external {}
-
-        TargetSeenEventInternal<native><epic_internal>:subscribable_event(target_info) = external {}
-
-        TargetHeardEventInternal<native><epic_internal>:subscribable_event(target_info) = external {}
-
-        TargetTouchedEventInternal<native><epic_internal>:subscribable_event(target_info) = external {}
+        TargetTouchedEvent<native><public>:listenable(target_info) = external {}
 
     @experimental
     # The different alert levels of a guard.
@@ -1203,10 +1143,6 @@ AI<public> := module:
         # Attitude toward this target.
         Attitude<native><public>:team_attitude
 
-        LastKnownPosition<native><public>:vector3 = external {}
-
-        AlertLevel<native><public>:fort_guard_alert_level = external {}
-
     @experimental
     fort_obstacle_status<native><epic_internal> := enum:
         incoming_obstacle
@@ -1223,10 +1159,6 @@ AI<public> := module:
 
         @experimental
         Obstacle<native><public>:entity
-
-    @experimental
-    # Get the last known position of the target.
-    (InTarget:target_info).GetLastKnownPosition<native><epic_internal>()<transacts>:vector3
 
     @experimental
     # Create a `navigation_target` from a `target_info`.

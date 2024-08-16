@@ -262,7 +262,7 @@ Game<public> := module:
 
         setAutoRespawnEnabled<native><epic_internal>(contextObject:vk_component, Enabled:logic):void
 
-        GetPawnCollisionEntityID<native><public>(__dupe___unnamed_parameter_172:player_component):int
+        GetPawnCollisionEntityID<native><public>(__dupe___unnamed_parameter_171:player_component):int
 
     PlayerSettingState<native><public> := enum:
         PlayerDefault

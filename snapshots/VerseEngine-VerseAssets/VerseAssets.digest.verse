@@ -9,9 +9,9 @@ Assets<public> := module:
     asset<native><epic_internal> := class<computes><epic_internal>:
         SyncLoad<native><epic_internal>():logic
 
-        Async_Load<native><epic_internal>():?sticky_event(void)
+        Async_Load<native><epic_internal>():sticky_event(void)
 
-        GetAsyncLoadEvent<native><epic_internal>():?sticky_event(void)
+        GetAsyncLoadEvent<native><epic_internal>()<decides>:sticky_event(void)
 
         GetAssetType<native><epic_internal>()<transacts><decides>:type
 

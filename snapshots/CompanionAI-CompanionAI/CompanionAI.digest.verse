@@ -38,6 +38,7 @@ CompanionAI<public> := module:
     (Character:fort_character).GetNPCLeashRadius<native><epic_internal>()<transacts>:tuple(float, float)
 
     @experimental
+    @hide_in_editor
     ping_component<native><epic_internal> := class<epic_internal>(ai_component):
         @experimental
         AreNPCCommandsEnabled<native><epic_internal>()<transacts>:logic
