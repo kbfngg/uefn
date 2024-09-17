@@ -304,7 +304,7 @@
 		"860A4F4F4E87FB68CE1397B7BAA859A7":
 		{
 			"FriendlyName": "AtomFramework",
-			"Version": 13
+			"Version": 14
 		},
 		"8652A554966A466C9FD71C6DD61B1ADB":
 		{
@@ -469,7 +469,7 @@
 		"C1270312AB730B1E0B1EC74571C70F73":
 		{
 			"FriendlyName": "CustomizableObjectVer",
-			"Version": 58
+			"Version": 59
 		},
 		"C1270312AB730B1E0B1EC790917A7105":
 		{
@@ -1569,13 +1569,16 @@
 			"/Script/MetaHumanSequencer.MetaHumanAudioTrack",
 			"/Script/MetaHumanSequencer.MetaHumanMovieSceneMediaTrack",
 			"/Script/MetaHumanUEFNRuntime.MetaHumanComponent",
+			"/Script/ModelViewViewModel.MVVMPanelWidgetViewExtension",
 			"/Script/ModelViewViewModel.MVVMSlateBrushConversionLibrary",
 			"/Script/ModelViewViewModel.MVVMViewClass",
 			"/Script/ModelViewViewModel.MVVMViewModelBase",
 			"/Script/ModelViewViewModel.MVVMViewModelContextResolver",
+			"/Script/ModelViewViewModel.MVVMViewPanelWidgetClassExtension",
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintView",
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewConversionFunction",
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewEvent",
+			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewExtension_PanelWidget",
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewSettings",
 			"/Script/ModelViewViewModelBlueprint.MVVMWidgetBlueprintExtension_View",
 			"/Script/MovieScene.MovieScene",
@@ -6423,6 +6426,7 @@
 			"/Game/Athena/Artemis/Environments/Landscape/LayerInfo/Sand_LayerInfo.Sand_LayerInfo",
 			"/Game/Athena/Artemis/Environments/Landscape/LayerInfo/Snow_LayerInfo.Snow_LayerInfo",
 			"/Game/Athena/Artemis/Environments/Landscape/LayerInfo/Swamp_LayerInfo.Swamp_LayerInfo",
+			"/Game/Athena/AthenaSearchSpeed.AthenaSearchSpeed",
 			"/Game/Athena/BuildingActors/Props/Building/ActorBlueprints/Containers/Athena_Prop_WildWest_SimpleBed_03_DataAsset.Athena_Prop_WildWest_SimpleBed_03_DataAsset",
 			"/Game/Athena/BuildingActors/TextureData/PropOverrides/Athena_Prop_Military_Crate_TextureOverride.Athena_Prop_Military_Crate_TextureOverride",
 			"/Game/Athena/Cosmetics/Sprays/M_SprayDecal_Master.M_SprayDecal_Master",
@@ -29724,11 +29728,11 @@
 			"/Game/Environments/Asteria/Sets/Quarry/Quarry_Scaffolding_A/Blueprints/Asteria_Quarry_ScaffoldingStairBalcony_A.Asteria_Quarry_ScaffoldingStairBalcony_A_C",
 			"/Game/Environments/Asteria/Sets/Quarry/Quarry_Scaffolding_A/Blueprints/Asteria_Quarry_ScaffoldingStairF_A.Asteria_Quarry_ScaffoldingStairF_A_C",
 			"/Game/Environments/Asteria/Sets/Quarry/Quarry_Scaffolding_A/Blueprints/Asteria_Quarry_ScaffoldingWall_B.Asteria_Quarry_ScaffoldingWall_B_C",
-			"/Game/Environments/Asteria/Sets/SlurpRoom/Blueprints/Asteria_SlurpRoom_Doorway_A.Asteria_SlurpRoom_Doorway_A_C",
+			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_SlurpRoom_Doorway_A.Asteria_SlurpRoom_Doorway_A_C",
 			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_SlurpRoom_StringLights_A.Asteria_SlurpRoom_StringLights_A_C",
 			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_SlurpRoom_StringLights_B.Asteria_SlurpRoom_StringLights_B_C",
 			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_SlurpRoom_Wall_A.Asteria_SlurpRoom_Wall_A_C",
-			"/Game/Environments/Asteria/Sets/SlurpRoom/Blueprints/Asteria_SlurpRoom_Window_A.Asteria_SlurpRoom_Window_A_C",
+			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_SlurpRoom_Window_A.Asteria_SlurpRoom_Window_A_C",
 			"/Game/Environments/Asteria/Sets/SlurpRoom/Blueprints/Asteria_SlurpRoom_Window_B.Asteria_SlurpRoom_Window_B_C",
 			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_StringLights_02.Asteria_StringLights_02_C",
 			"/Game/Environments/Asteria/Sets/TattooShop/BluePrints/Asteria_TattooShop_Wall_A.Asteria_TattooShop_Wall_A_C",
@@ -30411,6 +30415,7 @@
 			"/Game/Missions/Primary/OB_FarmsteadFort/Props/Onboarding_Sign.Onboarding_Sign_C",
 			"/Game/Missions/Primary/Outpost/Props/GrenadeTarget.GrenadeTarget_C",
 			"/Game/Movies/Season5/Blueprints/Athena_Prop_RiskyScreen.Athena_Prop_RiskyScreen_C",
+			"/Game/NeverCook/EditorUtilities/Environment/ActorSwapUtility/EUC_ArtRefresh.EUC_ArtRefresh_C",
 			"/Game/Packages/Fortress_Transylvania/Test_Assets/Blueprints/ArtificialLights/BP_TRV_ALight_HangingLamp.BP_TRV_ALight_HangingLamp_C",
 			"/Game/Packages/Fortress_Transylvania/Test_Assets/Blueprints/ArtificialLights/BP_TRV_ALight_Torch_02_CP.BP_TRV_ALight_Torch_02_CP_C",
 			"/Game/Packages/Fortress_Transylvania/Test_Assets/Blueprints/ArtificialLights/Transylvania_LightMaster.Transylvania_LightMaster_C",
