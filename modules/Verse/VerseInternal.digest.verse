@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-31.10-CL-35935822
+# Generated from build: ++Fortnite+Release-31.20-CL-36253989
 #################################################
 
 using {/Verse.org/ParameterCollections}
