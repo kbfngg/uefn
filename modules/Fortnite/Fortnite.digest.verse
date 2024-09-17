@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-31.10-CL-35935822
+# Generated from build: ++Fortnite+Release-31.20-CL-36253989
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -469,6 +469,12 @@ Characters<public> := module:
         # Controls if `fort_character` can still turn while in stasis.
         AllowTurning<native><public>:logic = external {}
 
+using {/Fortnite.com/Game}
+using {/UnrealEngine.com/Temporary/SceneGraph}
+using {/Verse.org/Assets}
+using {/Verse.org/Simulation/Tags}
+using {/Verse.org/Simulation}
+# Module import path: /Fortnite.com/Devices
 Devices<public> := module:
     @experimental
     # Returns the simulation entity at the root of the experience this `creative_device` is operating within.  * The simulation entity is the rootmost entity in an experience.  * Fails if this `creative_device` is not operating in a context with a valid SimulationEntity.
@@ -1040,12 +1046,6 @@ Devices<public> := module:
 
         # Signaled when the heal effect stops for an `agent`.
         HealStopEvent<public>:listenable(agent) = external {}
-
-    using {/UnrealEngine.com/Temporary/SceneGraph}
-    @experimental
-    bridge_component<native><public> := class<final>(component):
-        @experimental
-        AsCreativeDevice<public>(Type:subtype(creative_device_base))<suspends>:?Type = external {}
 
     # Used to create a button which can trigger other devices when an agent interacts with it.
     button_device<public> := class<concrete><final>(creative_device_base):
@@ -1983,6 +1983,10 @@ Devices<public> := module:
 
         # Removes the camera from all `Agent`s camera stacks and pops from being the active camera replacing it with the next one in the stack.
         RemoveFromAll<public>():void = external {}
+
+    @experimental
+    # Used to update the camera's viewpoint from the perspective of the player character.
+    gameplay_camera_first_person_device<public> := class<concrete><final>(gameplay_camera_device):
 
     # Used to update the camera’s current viewpoint and rotation based on a fixed angle.
     gameplay_camera_fixed_angle_device<public> := class<concrete><final>(gameplay_camera_device):
@@ -3553,27 +3557,42 @@ Devices<public> := module:
     using {/Fortnite.com/Vehicles}
     # A one stop automated refueling and repairing station for your vehicles.
     service_station_device<public> := class<concrete><final>(creative_device_base, healthful, damageable, enableable):
+        # Damage the `damageable` object anonymously by `Amount`. Setting `Amount` to less than 0 will cause no damage.
+        # Use `Damage(:damage_args):void` when damage is being applied from a known instigator and source.
         Damage<override>(Amount:float):void = external {}
 
+        # Damage the `damageable` object by `Args.Amount`. Setting `Amount` to less than 0 will cause no damage.
         Damage<override>(Args:damage_args):void = external {}
 
+        # Signaled when damage is applied to the `damageable` object.
         DamagedEvent<override>():listenable(damage_result) = external {}
 
+        # Disable this object.
         Disable<override>():void = external {}
 
+        # Enable this object.
         Enable<override>():void = external {}
 
+        # Returns the health state of the object. This value will between 0.0 and `GetMaxHealth`
         GetHealth<override>()<transacts>:float = external {}
 
+        # Returns the maximum health of the object. This value will be between 1.0 and Inf.
         GetMaxHealth<override>()<transacts>:float = external {}
 
         # Check if any vehicle is inside the service station.
         IsAnyVehicleInside<public>()<transacts><decides>:void = external {}
 
+        # Succeeds if the object is enabled, fails if it's disabled.
         IsEnabled<override>()<transacts><decides>:void = external {}
 
+        # Sets the health state of the object to `Health`.
+        #  * Health state will be clamped between 1.0 and `GetMaxHealth`.
+        #  * Health state cannot be directly set to 0.0. To eliminate `healthful` objects use the `damageable.Damage` functions instead.
         SetHealth<override>(Health:float)<transacts>:void = external {}
 
+        # Sets the maximum health state of the object.
+        #  * MaxHealth will be clamped between 1.0 and Inf.
+        #  * Current health state will be scaled up or down based on the scale difference between the old and new MaxHealth state.
         SetMaxHealth<override>(MaxHealth:float)<transacts>:void = external {}
 
         # Fires when a vehicle enters the service station, returns the vehicle that entered.
@@ -5278,12 +5297,7 @@ UI<public> := module:
         SetText<native><public>(InText:message):void
 
 using {/Fortnite.com/Characters}
-using {/Fortnite.com/Game}
 using {/Fortnite.com/Teams}
-using {/UnrealEngine.com/Temporary/SceneGraph}
-using {/Verse.org/Assets}
-using {/Verse.org/Simulation/Tags}
-using {/Verse.org/Simulation}
 # Module import path: /Fortnite.com/Vehicles
 Vehicles<public> := module:
     # Returns the `fort_vehicle` for `InCharacter`.
