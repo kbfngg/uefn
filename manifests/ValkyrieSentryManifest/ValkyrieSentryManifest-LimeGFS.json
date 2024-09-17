@@ -304,7 +304,7 @@
 		"860A4F4F4E87FB68CE1397B7BAA859A7":
 		{
 			"FriendlyName": "AtomFramework",
-			"Version": 13
+			"Version": 14
 		},
 		"8652A554966A466C9FD71C6DD61B1ADB":
 		{
@@ -469,7 +469,7 @@
 		"C1270312AB730B1E0B1EC74571C70F73":
 		{
 			"FriendlyName": "CustomizableObjectVer",
-			"Version": 58
+			"Version": 59
 		},
 		"C1270312AB730B1E0B1EC790917A7105":
 		{
@@ -1568,13 +1568,16 @@
 			"/Script/MetaHumanSequencer.MetaHumanAudioTrack",
 			"/Script/MetaHumanSequencer.MetaHumanMovieSceneMediaTrack",
 			"/Script/MetaHumanUEFNRuntime.MetaHumanComponent",
+			"/Script/ModelViewViewModel.MVVMPanelWidgetViewExtension",
 			"/Script/ModelViewViewModel.MVVMSlateBrushConversionLibrary",
 			"/Script/ModelViewViewModel.MVVMViewClass",
 			"/Script/ModelViewViewModel.MVVMViewModelBase",
 			"/Script/ModelViewViewModel.MVVMViewModelContextResolver",
+			"/Script/ModelViewViewModel.MVVMViewPanelWidgetClassExtension",
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintView",
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewConversionFunction",
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewEvent",
+			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewExtension_PanelWidget",
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewSettings",
 			"/Script/ModelViewViewModelBlueprint.MVVMWidgetBlueprintExtension_View",
 			"/Script/MovieScene.MovieScene",
