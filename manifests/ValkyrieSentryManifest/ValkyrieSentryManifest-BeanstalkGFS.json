@@ -304,7 +304,7 @@
 		"860A4F4F4E87FB68CE1397B7BAA859A7":
 		{
 			"FriendlyName": "AtomFramework",
-			"Version": 13
+			"Version": 14
 		},
 		"8652A554966A466C9FD71C6DD61B1ADB":
 		{
@@ -469,7 +469,7 @@
 		"C1270312AB730B1E0B1EC74571C70F73":
 		{
 			"FriendlyName": "CustomizableObjectVer",
-			"Version": 58
+			"Version": 59
 		},
 		"C1270312AB730B1E0B1EC790917A7105":
 		{
@@ -1546,13 +1546,16 @@
 			"/Script/MetaHumanSequencer.MetaHumanAudioTrack",
 			"/Script/MetaHumanSequencer.MetaHumanMovieSceneMediaTrack",
 			"/Script/MetaHumanUEFNRuntime.MetaHumanComponent",
+			"/Script/ModelViewViewModel.MVVMPanelWidgetViewExtension",
 			"/Script/ModelViewViewModel.MVVMSlateBrushConversionLibrary",
 			"/Script/ModelViewViewModel.MVVMViewClass",
 			"/Script/ModelViewViewModel.MVVMViewModelBase",
 			"/Script/ModelViewViewModel.MVVMViewModelContextResolver",
+			"/Script/ModelViewViewModel.MVVMViewPanelWidgetClassExtension",
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintView",
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewConversionFunction",
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewEvent",
+			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewExtension_PanelWidget",
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewSettings",
 			"/Script/ModelViewViewModelBlueprint.MVVMWidgetBlueprintExtension_View",
 			"/Script/MovieScene.MovieScene",
@@ -3985,6 +3988,7 @@
 			"/CRD_Crashpad/SetupAssets/PID_CP_Devices_CrashpadV2.PID_CP_Devices_CrashpadV2",
 			"/CRD_CreatorProfile/SetupAssets/PID_CP_Devices_CreatorProfile.PID_CP_Devices_CreatorProfile",
 			"/CRD_CrowdVolume/SetupAssets/PID_CP_Devices_CrowdVolume.PID_CP_Devices_CrowdVolume",
+			"/CRD_CustomControls/SetupAssets/PID_CP_Devices_ControlSideScroller.PID_CP_Devices_ControlSideScroller",
 			"/CRD_DirectionalLauncher/SetupAssets/PID_CP_Device_DLauncherInvasion.PID_CP_Device_DLauncherInvasion",
 			"/CRD_DirectionalLauncher/SetupAssets/PID_CP_Device_DLauncherPrimal.PID_CP_Device_DLauncherPrimal",
 			"/CRD_DirectionalLauncher/SetupAssets/PID_CP_Device_DLauncherStandard.PID_CP_Device_DLauncherStandard",
@@ -5714,6 +5718,7 @@
 			"/Game/Athena/Artemis/Environments/Landscape/LayerInfo/Sand_LayerInfo.Sand_LayerInfo",
 			"/Game/Athena/Artemis/Environments/Landscape/LayerInfo/Snow_LayerInfo.Snow_LayerInfo",
 			"/Game/Athena/Artemis/Environments/Landscape/LayerInfo/Swamp_LayerInfo.Swamp_LayerInfo",
+			"/Game/Athena/AthenaSearchSpeed.AthenaSearchSpeed",
 			"/Game/Athena/BuildingActors/Props/Building/ActorBlueprints/Containers/Athena_Prop_WildWest_SimpleBed_03_DataAsset.Athena_Prop_WildWest_SimpleBed_03_DataAsset",
 			"/Game/Athena/BuildingActors/TextureData/PropOverrides/Athena_Prop_Military_Crate_TextureOverride.Athena_Prop_Military_Crate_TextureOverride",
 			"/Game/Athena/Cosmetics/Sprays/M_SprayDecal_Master.M_SprayDecal_Master",
@@ -14759,6 +14764,8 @@
 			"/CRD_CreatorProfile/CreatorProfile_WidgetComponent.CreatorProfile_WidgetComponent_C",
 			"/CRD_CreatorProfile/Device_CreatorProfile.Device_CreatorProfile_C",
 			"/CRD_CrowdVolume/BP_CrowdVolume_Device.BP_CrowdVolume_Device_C",
+			"/CRD_CustomControls/Device_CustomControls_Parent.Device_CustomControls_Parent_C",
+			"/CRD_CustomControls/Device_CustomControls_Sidescroller.Device_CustomControls_Sidescroller_C",
 			"/CRD_DirectionalLauncher/Device_DirectionalLauncher_Generic.Device_DirectionalLauncher_Generic_C",
 			"/CRD_DirectionalLauncher/Device_DirectionalLauncher_LowGravity.Device_DirectionalLauncher_LowGravity_C",
 			"/CRD_DirectionalLauncher/Device_DirectionalLauncher_UFO.Device_DirectionalLauncher_UFO_C",
