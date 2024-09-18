@@ -1,13 +1,15 @@
 using {/UnrealEngine.com/Temporary/SpatialMath}
-using {/Verse.org/Simulation}
 using {/Verse.org/Assets}
 using {/Verse.org/Native}
+using {/Verse.org/Simulation}
 @experimental
 # Base class for authoring logic and data in the SceneGraph. Using components youcan author re-usable building blocks of logic and data which can then be added toentities in the scene.Components are a very low level building block which can be used in many ways.For example:  * Exposing engine level concepts like mesh or sound  * Adding gameplay capabilities like damage or interaction  * Storing an inventory for a character in the gameAs components are generic there is no specific way that they must be used.It is up to the needs of your experience if you use one big game componentor if you break up logic into many small components.Currently UEFN will not allow you to add more than one component of a givensubclass of component (for example, only one type of light_component). This restrictionwill be relaxed in the future where components will be able to decide if theywish to allow only one instance or many instances of the same component to existtogether on one entity.==============================================================================Component Lifetime  Components move through a series of lifetime functions as they are added  to entities, added to the scene, and begin running in the simulation. Components  should override these methods to perform setup and run their simulation.  As a component shuts down it will then move through shutdown version of these  functions, giving users the opportunity to clean up any retained state on the  component before it is disposed.  Lifetime Methods:    OnInitialized       OnAddedToScene         OnBeginSimulation -> OnSimulate<suspends>         OnEndSimulation       OnRemovingFromScene    OnUninitializing==============================================================================
 component<native><public> := class<abstract><unique>(disposable):
     @experimental
+    @allow_self_reference
+    @experimental_always_overridden
     # The parent entity of this component.  * Components must have a parent entity pointer provided when being constructed.  * Components cannot be moved between parents.  * The parent pointer remains valid even after the component has been disposed.
-    var<private> Entity<public>:entity
+    Entity<native><public>:entity
 
     @experimental
     # Called when the component is added to an entity using `entity.AddEntities`.  * Components can check for dependent sibling components at this stage through `entity.GetComponents`.  * Components can add additional components at this stage using `entity.AddComponents`
@@ -110,6 +112,10 @@ entity_prefab<native><public> := class<computes><epic_internal>(asset):
 
 @experimental
 replication_component<native><epic_internal> := class(component):
+    @editable
+    # Internal only flag to make this entity always relevant for replication to clients
+    AlwaysRelevant<native><epic_internal>:logic = external {}
+
     # The component is being initialized, called when it is added to an entity
     OnAddedToScene<native><override>():void
 

@@ -38,10 +38,10 @@ Colors<public> := module:
     operator'*'<native><public>(factor:int, c:color)<converges>:color
 
     # Makes an ACES 2065-1 `color` from each component of `c` divided by `factor`.
-    operator'/'<native><public>(c:color, factor:float)<computes><decides>:color
+    operator'/'<native><public>(c:color, factor:float)<converges><decides>:color
 
     # Makes an ACES 2065-1 `color` from each component of `c` divided by `factor`.
-    operator'/'<native><public>(c:color, factor:int)<computes><decides>:color
+    operator'/'<native><public>(c:color, factor:int)<converges><decides>:color
 
     # Makes an ACES 2065-1 `color` from sRGB components `Red`, `Green`, and `Blue`.
     # Normal sRGB component values are between `0.0` and `1.0`, but this can handle larger values.

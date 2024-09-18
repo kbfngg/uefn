@@ -7,6 +7,17 @@ Native<public> := module:
 
     validate_asset_path<epic_internal>(Modifiers:string)<computes>:validate_asset_path_attribute
 
+    @attribscope_class
+    @attribscope_data
+    @attribscope_enum
+    @attribscope_enumerator
+    @attribscope_function
+    @attribscope_interface
+    @attribscope_module
+    @attribscope_struct
+    available<epic_internal> := class<final>(attribute):
+        MinUploadedAtFNVersion<public>:int = external {}
+
     @attribscope_module
     @attribscope_class
     @attribscope_struct
@@ -56,4 +67,4 @@ Concurrency<public> := module:
 
         Await<native><override>()<suspends>:t
 
-        Cancel<native><epic_internal>():void
+        Cancel<native><epic_internal>()<suspends>:void

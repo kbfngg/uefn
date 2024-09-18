@@ -289,39 +289,6 @@ VGameplayRst<public> := module:
             SimulationOnly
             QueryAndSimulation
 
-        skeletal_mesh_component<native><public> := class(vk_component):
-            SetSkeletalMesh<native><epic_internal>(Mesh:skeletal_mesh):void
-
-            SetAnimationMode<native><public>(AnimMode:default_animation_mode_type):void
-
-            SetAnimationInstance<native><epic_internal>(InAnimationInstance:animation_instance):void
-
-            SetAnimationBlueprint<native><epic_internal>(InAnimationBlueprint:animation_blueprint):void
-
-            SetAnimation<native><epic_internal>(InAnimation:animation):void
-
-            BeginAnimation<native><public>(Looping:logic):void
-
-            EndAnimation<native><public>():void
-
-            IsPlayingAnimation<native><public>():logic
-
-            SetMaterial<native><epic_internal>(Material:material):void
-
-            SetAnimationPosition_FIXME<native><public>(InPos:float, FireNotifies:logic):void
-
-            GetAnimationPosition_FIXME<native><public>():float
-
-            SetAnimationPlayRate_FIXME<native><public>(Rate:float):void
-
-            GetAnimationPlayRate_FIXME<native><public>():float
-
-        default_animation_mode_type<native><public> := enum:
-            UseAnimationBlueprint
-            UseAnimationInstance
-            UseAnimationAsset
-            UseCustomMode
-
     # Module import path: /UnrealEngine.com/VGameplayRst/GameObjects
     GameObjects<public> := module:
         model_interface<public> := interface(positionable, rotatable, scalable):
@@ -489,9 +456,9 @@ VGameplayRst<public> := module:
         script_component<native><public> := class<abstract><unique>(vk_component):
             var AllowMultiple<native><public>:logic = external {}
 
-            AddToCreateComponentList<native><public>(__dupe___unnamed_parameter_106:[]subtype(vk_component)):void
+            AddToCreateComponentList<native><public>(__dupe___unnamed_parameter_108:[]subtype(vk_component)):void
 
-            AddToRequiredComponentList<native><public>(__dupe___unnamed_parameter_107:[]subtype(vk_component)):void
+            AddToRequiredComponentList<native><public>(__dupe___unnamed_parameter_109:[]subtype(vk_component)):void
 
             SetTickEnabled<native><public>(InIsEnabled:logic):void
 

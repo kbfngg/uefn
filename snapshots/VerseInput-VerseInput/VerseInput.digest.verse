@@ -25,9 +25,6 @@ ControlInput<public> := module:
     launch_action<native><epic_internal> := class(action):
         Velocity<native><epic_internal>:vector3
 
-    play_animation_action<native><epic_internal> := class(action):
-        Animation<native><epic_internal>:animation
-
     play_sound_action<native><epic_internal> := class(action):
         Sound<native><epic_internal>:sound
 

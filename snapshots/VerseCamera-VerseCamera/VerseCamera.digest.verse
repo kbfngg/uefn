@@ -1,9 +1,9 @@
 using {/UnrealEngine.com/Temporary/SpatialMath}
+using {/UnrealEngine.com/EpicGamesRestricted/Network}
+using {/Verse.org/Simulation}
 using {/Verse.org/Assets}
 using {/Verse.org/Simulation/Tags}
 using {/Verse.org/Native}
-using {/Verse.org/Simulation}
-using {/UnrealEngine.com/EpicGamesRestricted/Network}
 # Module import path: /UnrealEngine.com/Temporary/SceneGraph/VerseCamera
 VerseCamera<public> := module:
     @experimental
@@ -11,38 +11,27 @@ VerseCamera<public> := module:
     # Owns a CameraDirector, which is responsible for selecting the best camera mode every update.
     # Owns a default EvaluationContext, which is responsible for setting the default camera transform, before camera logic is applied
     camera_behavior_component<native><epic_internal> := class(component):
-        @replicated("")
         @experimental
         # Reponsible for deciding which camera modes should be active on each layer
         var CameraDirector<public>:camera_director = external {}
 
-        @replicated("")
-        @experimental
-        # The evaluation context sets an initial transform for the camera, before camera mode logic is applied. This evaluation context is used as the default if a camera mode does not provide its own
-        var DefaultEvaluationContext<public>:camera_evaluation_context = external {}
-
         # Internal epic method to know if this component is allowed on client
         IsAllowedOnClient<override>():logic = external {}
-
-    @experimental
-    # Activate a camera behavior component for a player, setting it as the active view target
-    (InCameraBehavior:camera_behavior_component).ActivateForPlayer<native><epic_internal>(InPlayer:player)<transacts><decides>:void
-
-    @experimental
-    # Deactivate a camera behavior component for a player, restoring the player's view target to the default
-    (InCameraBehavior:camera_behavior_component).DeactivateForPlayer<native><epic_internal>(InPlayer:player)<transacts><decides>:void
-
-    @experimental
-    (InCameraBehavior:camera_behavior_component).ActivateForPlayerAtIndex<native><epic_internal>(InPlayerIndex:int)<transacts><decides>:void
-
-    @experimental
-    (InCameraBehavior:camera_behavior_component).DeactivateForPlayerAtIndex<native><epic_internal>(InPlayerIndex:int)<transacts><decides>:void
 
     @experimental
     # Represents the physical body, lens of the camera and other cinematographic qualities, such as sensor size, aspect ratio lock/constraint, focal length, focus distance, post-process settings, etc.
     camera_component<native><epic_internal> := class(basic_camera_component):
         # Internal epic method to know if this component is allowed on client
         IsAllowedOnClient<override>():logic = external {}
+
+    @experimental
+    # A camera mode, camera component pair used to give all the context required to execute a camera mode
+    camera_mode_context<native><epic_internal> := struct:
+        # Camera mode this camera mode context refers to
+        CameraMode<native><public>:camera_mode
+
+        # Camera component this camera mode should run on
+        CameraComponent<native><public>:camera_component
 
     @import_as("/Script/VerseCamera.UVerseCameraDirectorBase")
     @experimental
@@ -54,78 +43,21 @@ VerseCamera<public> := module:
     camera_director<native><epic_internal> := class(camera_director_base):
         @experimental
         # Determine which camera mode should be active
-        DetermineActiveCameraModes<native_callable><public>():[]camera_mode = external {}
+        DetermineActiveCameraModes<native_callable><public>():[]camera_mode_context = external {}
 
         @experimental
-        # Add a camera mode to the list for consideration
-        AddCameraMode<native_callable><public>(CameraMode:camera_mode):void = external {}
+        # Add a camera component to the list for consideration
+        AddCameraMode<native><public>(CameraModeContext:camera_mode_context):void
 
         @experimental
-        # Remove a camera mode from the list for consideration
-        RemoveCameraMode<native_callable><public>(CameraMode:camera_mode):void = external {}
+        # Remove a camera component from the list for consideration
+        RemoveCameraMode<native><public>(CameraModeContext:camera_mode_context):void
 
     @experimental
-    # Default camera director implementation  - Simply returns the highest priority camera mode every update
-    camera_director_default<native><epic_internal> := class<final>(camera_director):
-        @experimental
+    # Camera director that returns the camera mode with the highest priority every update
+    camera_director_priority_list<native><epic_internal> := class<final>(camera_director):
         # Determine which camera mode should be active
-        DetermineActiveCameraModes<native><override>():[]camera_mode
-
-        @experimental
-        # Add a camera mode to the list for consideration
-        AddCameraMode<native><override>(CameraMode:camera_mode):void
-
-        @experimental
-        # Remove a camera mode from the list for consideration
-        RemoveCameraMode<native><override>(CameraMode:camera_mode):void
-
-    @experimental
-    # Input params to a camera evaluation context update
-    camera_evaluation_context_input_parameters<native><epic_internal> := class<final>:
-        @experimental
-        # Entity that owns the camera behavior component
-        var CameraBehaviorEntity<native><epic_internal>:entity = external {}
-
-        @experimental
-        # Time elapsed since last update
-        var DeltaTime<native><public>:float = external {}
-
-    @experimental
-    # Output params to a camera evaluation context update
-    camera_evaluation_context_output_parameters<native><epic_internal> := class<final>(camera_output_parameters):
-        @experimental
-        # If written to, will set the target distance
-        var TargetDistance<native><epic_internal>:?float = external {}
-
-    @import_as("/Script/VerseCamera.UVerseCameraEvaluationContext")
-    @experimental
-    camera_evaluation_context_base<native><epic_internal> := class<abstract>:
-
-
-    @experimental
-    # Base class for Verse camera evaluation contexts
-    camera_evaluation_context<native><epic_internal> := class(camera_evaluation_context_base):
-        @experimental
-        # Update the evaluation context. Override this to modify the initial camera transform and other initial camera parameters before any camera modes are run
-        Update<native_callable><public>(InputParameters:camera_evaluation_context_input_parameters, OutputParameters:camera_evaluation_context_output_parameters)<transacts><decides>:void = external {}
-
-    @experimental
-    # Camera evaluation context for scene graph entities.
-    # Allows users of camera modes to supply a context object that provides more information about the context in whichthe camera mode is being used (for example, initial camera position)
-    entity_camera_evaluation_context<native><epic_internal> := class<final>(camera_evaluation_context):
-        @experimental
-        Update<native><override>(InputParameters:camera_evaluation_context_input_parameters, OutputParameters:camera_evaluation_context_output_parameters)<transacts><decides>:void
-
-        @replicated("")
-        @experimental
-        # For cameras that are fixed in the world. This entity is used as a reference point for the initial world transform of the fixed camera.
-        # Leave this unset for cameras that should follow another entity around
-        var FixedWorldCameraEntity<native><public>:?entity = external {}
-
-        @replicated("")
-        @experimental
-        # Entity the camera is targeting. Used to provide an initial look-at rotation for the camera
-        var TargetEntity<native><public>:?entity = external {}
+        DetermineActiveCameraModes<native><override>():[]camera_mode_context
 
     @experimental
     verse_camera_mode_tag<native><epic_internal> := class(tag):
@@ -138,30 +70,25 @@ VerseCamera<public> := module:
 
     @experimental
     # A camera mode builds up a camera transform piece by piece by executing a camera rig asset
-    camera_mode<native><epic_internal> := class<concrete><unique><final>:
+    camera_mode<native><epic_internal> := class<concrete>:
         @experimental
         GetCameraModeTag<native><public>()<transacts><decides>:verse_camera_mode_tag
 
+        @editable
+        @display_name("CameraRigAsset")
         @replicated("")
         @experimental
-        # Camera rig asset that defines the behavior of the camera mode
-        var CameraRigAsset<public>:camera_rig_asset = external {}
+        CameraRigAsset<native><public>:camera_rig_asset = external {}
 
         @replicated("")
         @editable
         @experimental
-        # Root camera operation - This is mutually exclusive with CameraRigAsset, but allows you to build up a camera mode completely in Verse
-        var RootCameraOperation<native><epic_internal>:?camera_operation = external {}
+        # Root camera operation - This is mutually exclusive with CameraRigAsset and is intended to allow you to build up your camera mode entirely in Verse without referencing any external assets
+        RootCameraOperation<native><epic_internal>:?camera_operation = external {}
 
-        @replicated("")
         @experimental
         # Priority level that can be used by camera directors to determine the best camera mode
         var Priority<public>:float = external {}
-
-        @replicated("")
-        @experimental
-        # Camera evaluation context. Used to override default camera transform, and set target entity
-        var CameraEvaluationContext<public>:camera_evaluation_context = external {}
 
     @experimental
     # Camera operation initialization parameters
@@ -172,8 +99,12 @@ VerseCamera<public> := module:
     # Input params to a camera operation
     camera_operation_input_parameters<native><epic_internal> := class<final>:
         @experimental
-        # Camera evaluation context that the owning camera mode is running in
-        var EvaluationContext<native><public>:?camera_evaluation_context = external {}
+        # Camera behavior component that this camera_mode is running in
+        var CameraBehaviorComponent<native><public>:?camera_behavior_component = external {}
+
+        @experimental
+        # camera_component that this camera_mode is running in
+        var CameraComponent<native><public>:?camera_component = external {}
 
         @experimental
         # Camera location from the initial evaluator execution, or previous operation if an operation modified it before this one
@@ -338,12 +269,6 @@ VerseCamera<public> := module:
 
         Reset_Internal<native><epic_internal>():void
 
-    @experimental
-    GetPlayerCameraView<native><epic_internal>(Player:player)<transacts><decides>:player_camera_view
-
-    @experimental
-    GetPlayerCameraViewByIndex<native><epic_internal>(PlayerIndex:int)<transacts><decides>:player_camera_view
-
     @import_as("/Script/VerseCamera.UVersePlayerCameraViewComponent")
     @experimental
     player_camera_view_base<native><epic_internal> := class<abstract>:
@@ -352,11 +277,3 @@ VerseCamera<public> := module:
     @experimental
     # Component used to associate a camera behavior component with a player
     player_camera_view<native><epic_internal> := class(player_camera_view_base):
-        @experimental
-        SetActiveCameraBehavior<native><public>(CameraBehaviorIn:camera_behavior_component)<transacts><decides>:void
-
-        @experimental
-        ClearActiveCameraBehavior<native><public>()<transacts><decides>:void
-
-        @experimental
-        GetActiveCameraBehavior<native><public>()<transacts><decides>:camera_behavior_component

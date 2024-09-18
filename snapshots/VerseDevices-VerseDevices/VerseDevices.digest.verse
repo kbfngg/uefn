@@ -529,25 +529,25 @@ Devices<public> := module:
         FunctionName<native><epic_internal>:string
 
     device_function_get_int<native><epic_internal> := class(device_function_get_base):
-        Invoke<native><epic_internal>()<varies>:int
+        Invoke<native><epic_internal>()<computes><reads>:int
 
     device_function_get_float<native><epic_internal> := class(device_function_get_base):
-        Invoke<native><epic_internal>()<varies>:float
+        Invoke<native><epic_internal>()<computes><reads>:float
 
     device_function_get_logic<native><epic_internal> := class(device_function_get_base):
-        Invoke<native><epic_internal>()<varies>:logic
+        Invoke<native><epic_internal>()<computes><reads>:logic
 
     device_function_get_string<native><epic_internal> := class(device_function_get_base):
-        Invoke<native><epic_internal>()<varies>:string
+        Invoke<native><epic_internal>()<computes><reads>:string
 
     device_function_get_color<native><epic_internal> := class(device_function_get_base):
-        Invoke<native><epic_internal>()<varies>:color
+        Invoke<native><epic_internal>()<computes><reads>:color
 
     device_function_get_agent<native><epic_internal> := class(device_function_get_base):
-        Invoke<native><epic_internal>()<varies>:?agent
+        Invoke<native><epic_internal>()<computes><reads>:?agent
 
     device_function_get_vector3<native><epic_internal> := class(device_function_get_base):
-        Invoke<native><epic_internal>()<varies>:vector3
+        Invoke<native><epic_internal>()<computes><reads>:vector3
 
     device_function_set_multi_parameter_base<native><epic_internal> := class<abstract>(device_function_set_base):
         ReturnType<native><epic_internal>:?subtype(function_parameter_base) = external {}
@@ -558,7 +558,7 @@ Devices<public> := module:
         ParameterTypes<native><epic_internal>:[string]subtype(function_parameter_base)
 
     device_function_set_params_by_name_const<native><epic_internal> := class(device_function_set_params_by_name):
-        InvokeConst<native><epic_internal>(NamedParameters:[string]function_parameter_base)<varies>:?function_parameter_base
+        InvokeConst<native><epic_internal>(NamedParameters:[string]function_parameter_base)<computes><reads>:?function_parameter_base
 
     device_function_set_params_by_type<native><epic_internal> := class(device_function_set_multi_parameter_base):
         Invoke<native><epic_internal>(TypeExclusiveParameters:[]function_parameter_base)<transacts>:?function_parameter_base
@@ -566,7 +566,29 @@ Devices<public> := module:
         ParameterTypes<native><epic_internal>:[]subtype(function_parameter_base)
 
     device_function_set_params_by_type_const<native><epic_internal> := class(device_function_set_params_by_type):
-        InvokeConst<native><epic_internal>(TypeExclusiveParameters:[]function_parameter_base)<varies>:?function_parameter_base
+        InvokeConst<native><epic_internal>(TypeExclusiveParameters:[]function_parameter_base)<computes><reads>:?function_parameter_base
+
+    # Class that implements the common logic for a healthful, damageable, healable device.
+    device_health<native><epic_internal> := class<epic_internal>(healthful, damageable, healable):
+        GetHealth<override><native>()<transacts>:float
+
+        SetHealth<override><native>(Health:float)<transacts>:void
+
+        GetMaxHealth<override><native>()<transacts>:float
+
+        SetMaxHealth<override><native>(MaxHealth:float)<transacts>:void
+
+        Damage<override><native>(Amount:float):void
+
+        Damage<override><native>(Args:damage_args):void
+
+        DamagedEvent<override>():listenable(damage_result) = external {}
+
+        Heal<override><native>(Amount:float):void
+
+        Heal<override><native>(Args:healing_args):void
+
+        HealedEvent<override>():listenable(healing_result) = external {}
 
     move_to_debug_log<epic_internal> := class(log_channel):
 

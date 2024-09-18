@@ -1,3 +1,5 @@
+using {/Fortnite.com/Game}
+using {/Verse.org/Native}
 using {/Verse.org/Simulation}
 using {/UnrealEngine.com/Temporary/SpatialMath}
 # Used in conjunction with `advanced_storm_controller_device` to customize individual storm phases.
@@ -235,13 +237,13 @@ capture_area_device<public> := class<concrete><final>(creative_device_base):
     SetHeight<public>(Height:float):void = external {}
 
     # Returns the *Capture Height* (in meters) of the capture area.
-    GetHeight<public>()<varies>:float = external {}
+    GetHeight<public>()<computes><reads>:float = external {}
 
     # Sets the *Capture Radius* (in meters) of the capture area.
     SetRadius<public>(Radius:float):void = external {}
 
     # Returns the *Capture Radius* (in meters) of the capture area.
-    GetRadius<public>()<varies>:float = external {}
+    GetRadius<public>()<computes><reads>:float = external {}
 
 # Spawns and tracks a single item as a game objective (e.g. flag).
 capture_item_spawner_device<public> := class<concrete><final>(creative_device_base):
@@ -266,6 +268,16 @@ capture_item_spawner_device<public> := class<concrete><final>(creative_device_ba
 
     # Disables this device.
     Disable<public>():void = external {}
+
+# Sends an Event for every signal it receives. A simple relay to connect multiple devices together.
+# It can also broadcast an event to the playspace and listen for any other channel devices broadcasting
+# to the playspace.
+channel_device<public> := class<concrete><final>(creative_device_base):
+    # Signaled when either `Transmit` is called.
+    ReceivedTransmitEvent<public>:listenable(?agent) = external {}
+
+    # Calls `ReceivedTransmitEvent`, optionally with `Agent` as the instigator.
+    Transmit<public>(Agent:?agent):void = external {}
 
 # Used together with `class_designer_device` to control how/when created classes can be accessed by `agent`s.
 class_and_team_selector_device<public> := class<concrete><final>(creative_device_base):
@@ -513,6 +525,11 @@ hud_message_device<public> := class<concrete><final>(creative_device_base):
     # Hides the HUD message.
     Hide<public>():void = external {}
 
+    @available {MinUploadedAtFNVersion := 3100}
+    # Hides the currently set HUD *Message* on `Agent`s screen.
+    # Use this when the device is setup to target specific `agent`s.
+    Hide<public>(Agent:agent):void = external {}
+
     # Displays a Custom message to a specific *Agent* that you define.Setting *DisplayTime* to `0.0` will display the HUD message persistently.If not defined, or less than `0.0` the message will show for the time set on the device.
     Show<public>(Agent:agent, Message:message, ?DisplayTime:float = external {}):void = external {}
 
@@ -559,18 +576,24 @@ item_granter_device<public> := class<concrete><final>(creative_device_base):
     GrantItem<public>(Agent:agent):void = external {}
 
     # Grants an item without requiring an agent reference.
-    #  This only works when *Receiving Players* is set to *All* or *Team Index*
-    GrantItemTemp<epic_internal>():void = external {}
+    #  This only works when *Receiving Players* is set to *All* or *Team Index*.
+    GrantItemToAll<public>():void = external {}
 
+    @available {MinUploadedAtFNVersion := 3100}
     # Grants an item at a specific `ItemIndex` to an `Agent`.
-    GrantItemTemp<epic_internal>(Agent:agent, ItemIndex:int):void = external {}
+    #  `Index` should be between `0` and the available item count - 1.
+    #  If Value is out of bounds, which item is granted is determined by *Cycle Behavior*.
+    GrantItemIndex<public>(Agent:agent, ItemIndex:int):void = external {}
 
+    @available {MinUploadedAtFNVersion := 3100}
     # Grants an item at a specific `ItemIndex` to all players.
-    #  Only functions when *Receiving Players* is set to *All* or *Team Index*
-    GrantItemTemp<epic_internal>(ItemIndex:int):void = external {}
+    #  Only functions when *Receiving Players* is set to *All* or *Team Index*.
+    #  `Index` should be between `0` and the available item count - 1.
+    #  If Value is out of bounds, which item is granted is determined by *Cycle Behavior*.
+    GrantItemIndex<public>(ItemIndex:int):void = external {}
 
-    # Returns the current Item Index that this device will grant when activated
-    GetItemIndex<epic_internal>()<transacts>:int = external {}
+    # Returns the current Item Index that this device will grant when activated.
+    GetItemIndex<public>()<transacts>:int = external {}
 
     # Restocks this device back to its starting inventory count.
     RestockItems<public>():void = external {}
@@ -658,7 +681,27 @@ movement_modulator_device<public> := class<concrete><final>(creative_device_base
     Activate<public>(Agent:agent):void = external {}
 
 # Provides a collection of destructible devices that you can select from to use as objectives in your game.
-objective_device<public> := class<concrete><final>(creative_device_base):
+objective_device<public> := class<concrete><final>(creative_device_base, healthful, damageable, healable):
+    GetHealth<override>()<transacts>:float = external {}
+
+    SetHealth<override>(Health:float)<transacts>:void = external {}
+
+    GetMaxHealth<override>()<transacts>:float = external {}
+
+    SetMaxHealth<override>(MaxHealth:float)<transacts>:void = external {}
+
+    Damage<override>(Amount:float):void = external {}
+
+    Damage<override>(Args:damage_args):void = external {}
+
+    DamagedEvent<override>():listenable(damage_result) = external {}
+
+    Heal<override>(Amount:float):void = external {}
+
+    Heal<override>(Args:healing_args):void = external {}
+
+    HealedEvent<override>():listenable(healing_result) = external {}
+
     # Signaled when this device has been destroyed by an `agent`.
     # Sends the `agent` that destroyed this device.
     DestroyedEvent<public>:listenable(agent) = external {}
@@ -679,7 +722,7 @@ objective_device<public> := class<concrete><final>(creative_device_base):
     Destroy<public>(Agent:agent):void = external {}
 
     # Sets the device either invulnerable or damageable
-    SetInvulnerable<epic_internal>(Invulnerable:logic):void = external {}
+    SetInvulnerable<public>(Invulnerable:logic):void = external {}
 
 # Specialized `trigger_base_device` that will fire output events based on line of sight between `agent`s and the device.
 perception_trigger_device<public> := class<concrete><final>(trigger_base_device):
@@ -757,7 +800,7 @@ powerup_device<public> := class<abstract><epic_internal>(creative_device_base):
     HasEffect<public>(Agent:agent)<transacts><decides>:void = external {}
 
     # Succeeds if the powerup is currently spawned.
-    IsSpawned<epic_internal>()<transacts><decides>:void = external {}
+    IsSpawned<public>()<transacts><decides>:void = external {}
 
     # Grants this powerup to `Agent`.
     Pickup<public>(Agent:agent):void = external {}

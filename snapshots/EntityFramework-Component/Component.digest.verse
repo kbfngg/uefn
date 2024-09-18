@@ -82,12 +82,6 @@ light_component<native><public> := class<abstract><epic_internal>(component):
     # The color of the light. Note that this can change the light’s effective intensity.
     var Color<epic_internal>:color = external {}
 
-    # Returns the color of the light.
-    GetColor<native><public>()<transacts>:color
-
-    # Sets the color of the light. Note that this can change the light’s effective intensity.
-    SetColor<native><public>(InColor:color)<transacts>:void
-
 @experimental
 local_hud_component<epic_internal> := class(component):
     IsAllowedOnClient<override>():logic = external {}
@@ -108,7 +102,7 @@ local_hud_component<epic_internal> := class(component):
 
 @experimental
 # Used to render a `mesh` at the location of this entity. A mesh is a set of polygons that can be used to represent shapesin the world such as:  * foliage and terrain decorations  * movers (for example, doors and lifts)  * procedurally created buildingsDependencies:  * `transform_component` on the entity positions the mesh.
-mesh_component<native><public> := class<final>(component, enableable):
+mesh_component<native><public> := class(component, enableable):
     OnInitialized<native><override>():void
 
     OnAddedToScene<native><override>():void
@@ -149,6 +143,14 @@ parent_constraint_component<native><public> := class(component):
     OnUninitializing<native><override>():void
 
     @experimental
+    # Sets the relative transform of the entity to its parent.
+    SetRelativeTransform<native><epic_internal>(Transform:transform)<transacts><decides>:void
+
+    @experimental
+    # Returns the relative transform of the entity to its parent.
+    GetRelativeTransform<native><epic_internal>()<transacts>:transform
+
+    @experimental
     # Attaches the owner entity to the specified entity. This method will compute relative transform from the current world transform of both entity
     AttachTo<native><epic_internal>(InParentEntity:entity)<transacts><decides>:void
 
@@ -159,10 +161,6 @@ parent_constraint_component<native><public> := class(component):
     @experimental
     # Detaches the owner entity if it was attached to an other entity
     DetachFrom<native><epic_internal>()<transacts><decides>:void
-
-    @experimental
-    # Set relative transform
-    SetRelativeTransform<native><epic_internal>(Transform:transform)<transacts><decides>:void
 
     @experimental
     # Set relative transform from a global transform
@@ -244,12 +242,6 @@ particle_system_component<native><public> := class<final>(component, enableable)
     SetBeamWidth<native><epic_internal>(InBeamWidth:float):void
 
 @experimental
-collision_channel_response<native><epic_internal> := enum:
-    Ignore
-    Overlap
-    Block
-
-@experimental
 hit_result<native><epic_internal> := struct:
     @experimental
     ThisEntity<native><public>:?entity
@@ -302,10 +294,6 @@ physics_component<native><epic_internal> := class<final>(component, enableable):
     # Event signaled when the component experiences a blocking hit
     HitEvent<native><public>:listenable(hit_result) = external {}
 
-    @editable
-    @experimental
-    VisibilityChannelResponseOverride<native><epic_internal>:?collision_channel_response = external {}
-
 @hide_in_editor
 @experimental
 point_light_component_base<native><epic_internal> := class<epic_internal>(light_component):
@@ -320,6 +308,18 @@ point_light_component_base<native><epic_internal> := class<epic_internal>(light_
     @experimental
     # The length of the light shape. Note that light shapes which intersect shadow casting geometry can cause shadowing artifacts.
     var SourceLength<public>:float = external {}
+
+    GetAttenuationRadius<native><protected>(__dupe___unnamed_parameter_130:accessor)<transacts>:float
+
+    SetAttenuationRadius<native><protected>(__dupe___unnamed_parameter_131:accessor, InAttenuationRadius:float)<transacts>:void
+
+    GetSourceRadius<native><protected>(__dupe___unnamed_parameter_132:accessor)<transacts>:float
+
+    SetSourceRadius<native><protected>(__dupe___unnamed_parameter_133:accessor, InSourceRadius:float)<transacts>:void
+
+    GetSourceLength<native><protected>(__dupe___unnamed_parameter_134:accessor)<transacts>:float
+
+    SetSourceLength<native><protected>(__dupe___unnamed_parameter_135:accessor, InSourceLength:float)<transacts>:void
 
 @experimental
 # A `point_light_component` emits light equally in all directions from a single point in space.
@@ -386,19 +386,55 @@ spot_light_component<native><public> := class<final>(point_light_component_base)
     var OuterConeAngle<public>:float = external {}
 
 @experimental
+# A range with a minimum and maximum value. For a value to fall inside of this range, the min value must be less than or equal to the max value.
+float_range<native><public> := struct<concrete>:
+    Minimum<native><public>:float = external {}
+
+    @editable
+    Maximum<native><public>:float = external {}
+
+@experimental
 # Used to render a string at the location of this entity.Dependencies:  * `transform_component` on the entity positions the `text_display_component`.
-text_display_component<native><public> := class<final>(component):
+text_display_component<native><public> := class<final>(component, enableable):
     OnInitialized<native><override>():void
 
     OnAddedToScene<native><override>():void
 
     OnRemovingFromScene<native><override>():void
 
+    OnBeginSimulation<native><override>():void
+
+    OnEndSimulation<native><override>():void
+
+    # Enable this object.
+    Enable<native><override>():void
+
+    # Disable this object.
+    Disable<native><override>():void
+
+    # Succeeds if the component is enabled, fails if it is disabled.
+    IsEnabled<native><override>()<transacts><decides>:void
+
     # Internal epic method to know if this component is allowed on client
     IsAllowedOnClient<override>():logic = external {}
 
+    @experimental
     @editable
     @replicated("RepNotify")
-    @experimental
     # Text to be displayed on the entity.
     var Text<native><public>:string = external {}
+
+    @editable
+    @replicated("RepNotify")
+    # The color with which to display the text.
+    var Color<native><public>:color = external {}
+
+    @editable
+    @replicated("RepNotify")
+    # The time in seconds for the text to fully fade in.
+    var FadeInTime<native><epic_internal>:float = external {}
+
+    @editable
+    @replicated("RepNotify")
+    # The time in seconds for the text to fully fade out.
+    var FadeOutTime<native><epic_internal>:float = external {}

@@ -20,7 +20,7 @@ CompanionAI<public> := module:
     follower_actions_component<native><epic_internal> := class(fort_guard_actions_component):
         @experimental
         # Run the NPC default behavior
-        RunDefaultBehavior<native><epic_internal>()<suspends>:action_result
+        RunDefaultBehavior<native><epic_internal>()<suspends>:ai_action_result
 
         @experimental
         IsFollowingBehaviorEnabled<native><epic_internal>()<transacts>:logic
@@ -39,7 +39,7 @@ CompanionAI<public> := module:
 
     @experimental
     @hide_in_editor
-    ping_component<native><epic_internal> := class<epic_internal>(ai_component):
+    ping_component<native><epic_internal> := class<epic_internal>(fort_ai_component):
         @experimental
         AreNPCCommandsEnabled<native><epic_internal>()<transacts>:logic
 

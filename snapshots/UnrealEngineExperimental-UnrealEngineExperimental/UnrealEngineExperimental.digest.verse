@@ -38,6 +38,9 @@ Testing<public> := module:
         # Prints a summary of test results to the log stream and resets the test results.
         PrintSummary<native><epic_internal>(?Level:log_level = external {}):void
 
+        # Returns a string of the test results summary.
+        GetSummaryStrings<native><epic_internal>(?Level:log_level = external {}):[]string
+
 # Module import path: /UnrealEngine.com/Temporary/Diagnostics
 Diagnostics<public> := module:
     # Enumerated presets for policies describing a desired draw duration.

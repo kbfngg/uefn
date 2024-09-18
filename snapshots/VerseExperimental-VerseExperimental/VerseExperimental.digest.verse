@@ -51,9 +51,6 @@ VerseExperimental<public> := module:
     # Returns the current UTC date_time.
     UtcNow<native><public>():date_time
 
-    # Returns the number of seconds since January 1, 1970 UTC, as of the current transaction.
-    GetSecondsSinceEpoch<native><epic_internal>()<varies>:float
-
     date_parts<native><public> := struct<internal>:
 
 

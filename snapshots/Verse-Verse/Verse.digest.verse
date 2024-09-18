@@ -54,6 +54,9 @@ Verse<public> := module:
         # Prevents any current or future work from completing.
         Cancel<public>()<transacts>:void
 
+    accessor<epic_internal> := enum:
+        Dummy
+
     # Implemented by classes whose instances have limited lifetimes.
     disposable<native><public> := interface:
         # Cleans up this object.
@@ -110,6 +113,9 @@ Verse<public> := module:
 
     # Makes a `string` representation of `Val`.
     ToString<native><public>(Val:float)<computes><reads>:string
+
+    # Returns the number of seconds since January 1, 1970 UTC, ignoring leap seconds. I.e, this function implements Unix time. This function always returns the same value within the same transaction.
+    GetSecondsSinceEpoch<native><public>()<computes><reads>:float
 
     # Makes a printable `string` representation of `Val`.
     ToString<native><public>(Val:int)<computes>:string
@@ -324,10 +330,10 @@ Verse<public> := module:
 # Module import path: /Verse.org/Random
 Random<public> := module:
     # Returns a random `float` between `Low` and `High`, inclusive.
-    GetRandomFloat<native><public>(Low:float, High:float)<varies>:float
+    GetRandomFloat<native><public>(Low:float, High:float)<transacts>:float
 
     # Returns a random `int` between `Low` and `High`, inclusive.
-    GetRandomInt<native><public>(Low:int, High:int)<varies>:int
+    GetRandomInt<native><public>(Low:int, High:int)<transacts>:int
 
     # Makes an `array` with the same elements as `Input` shuffled in a random order.
     Shuffle<public>(Input:[]t where t:type)<transacts>:[]t = external {}

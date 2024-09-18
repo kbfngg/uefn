@@ -8,14 +8,14 @@ SpatialMath<public> := module:
 
 
     # Makes a `rotation` from `Axis` and `AngleRadians` using a left-handed sign convention (e.g. a positive rotation around +Z takes +X to +Y). If `Axis.IsAlmostZero[]`, make the identity rotation.
-    MakeRotation<native><public>(Axis:vector3, AngleRadians:float)<computes><reads>:rotation
+    MakeRotation<native><public>(Axis:vector3, AngleRadians:float)<converges><reads>:rotation
 
     # Makes a `rotation` by applying `YawRightDegrees`, `PitchUpDegrees`, and `RollClockwiseDegrees`, in that order:
     #  * first a *yaw* about the Z axis with a positive angle indicating a clockwise rotation when viewed from above,
     #  * then a *pitch* about the new Y axis with a positive angle indicating 'nose up',
     #  * followed by a *roll* about the new X axis axis with a positive angle indicating a clockwise rotation when viewed along +X.
     # Note that these conventions differ from `MakeRotation` but match `ApplyYaw`, `ApplyPitch`, and `ApplyRoll`.
-    MakeRotationFromYawPitchRollDegrees<native><public>(YawRightDegrees:float, PitchUpDegrees:float, RollClockwiseDegrees:float)<computes><reads>:rotation
+    MakeRotationFromYawPitchRollDegrees<native><public>(YawRightDegrees:float, PitchUpDegrees:float, RollClockwiseDegrees:float)<converges><reads>:rotation
 
     # Makes the identity `rotation`.
     IdentityRotation<native><public>()<converges>:rotation
@@ -99,7 +99,7 @@ SpatialMath<public> := module:
     (Rotation:rotation).Invert<native><public>()<transacts>:rotation
 
     # Returns `Rotation` if it does not contain `NaN`, `Inf` or `-Inf`.
-    (Rotation:rotation).IsFinite<native><public>()<computes><decides>:rotation
+    (Rotation:rotation).IsFinite<native><public>()<converges><decides>:rotation
 
     # Makes a unit `vector3` pointing in the local space *forward* direction in world space coordinates.
     # This is equivalent to: `RotateVector(Rotation, vector3{X:=1.0, Y:=0.0, Z:=0.0})`.
@@ -359,3 +359,6 @@ SpatialMath<public> := module:
 
     # Succeeds when each component of `V1` and `V2` are within `AbsoluteTolerance` of each other.
     IsAlmostEqual<public>(V1:vector3, V2:vector3, AbsoluteTolerance:float)<computes><decides>:void = external {}
+
+# Stably sort `Array` using `Less` where `Less` succeeding indicates `Left` should precede `Right`
+SortBy<native><public>(Array:[]t, Less:type {__(:t, :t)<computes><decides>:void} where t:type)<computes>:[]t
