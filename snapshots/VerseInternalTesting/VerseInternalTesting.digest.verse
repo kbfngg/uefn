@@ -218,6 +218,10 @@ NexusFramework<public> := module:
 
         AddFail<epic_internal>(TestName:string, ContextString:string):void = external {}
 
+        AddCheck<epic_internal>(IsPassed:logic, TestName:string, ContextString:string):void = external {}
+
+        AddSkip<epic_internal>(IsPassed:logic, TestName:string, ContextString:string):void = external {}
+
         OnBegin<override>()<suspends>:void = external {}
 
         OnEnd<override>():void = external {}

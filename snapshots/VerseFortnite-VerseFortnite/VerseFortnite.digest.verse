@@ -31,6 +31,12 @@ Vehicles<public> := module:
         # Returns an array with all the passengers of the vehicle.
         GetPassengers<public>():[]fort_character
 
+        # Returns the fuel state of the vehicle. If the vehicle uses fuel, this value will be between 0.0 and `GetFuelCapacity`. Otherwise, this value will be -1.0.
+        GetFuelRemaining<public>()<transacts>:float
+
+        # Returns the maximum fuel capacity of the vehicle. If the vehicle uses fuel, this value will be between 1.0 and Inf. Otherwise, this value will be -1.0.
+        GetFuelCapacity<public>()<transacts>:float
+
         @experimental
         GetEntity<epic_internal>()<transacts><decides>:entity
 
@@ -54,6 +60,14 @@ Vehicles<public> := module:
 
         @experimental
         GetPassengers<override>():[]fort_character = external {}
+
+        @experimental
+        # Returns the fuel state of the vehicle. If the vehicle uses fuel, this value will be between 0.0 and `GetFuelCapacity`. Otherwise, this value will be -1.0.
+        GetFuelRemaining<override>()<transacts>:float = external {}
+
+        @experimental
+        # Returns the maximum fuel capacity of the vehicle. If the vehicle uses fuel, this value will be between 1.0 and Inf. Otherwise, this value will be -1.0.
+        GetFuelCapacity<override>()<transacts>:float = external {}
 
         @experimental
         Damage<override>(Amount:float):void = external {}
@@ -1148,7 +1162,7 @@ AI<public> := module:
         OnRoundEnd<override><final>():void = external {}
 
         @editable_non_concrete
-        var NPCBehavior<native><public>:npc_behavior
+        var NPCBehavior<public>:npc_behavior
 
     @experimental
     # Returns the `entity` for `InNPCBehavior`.

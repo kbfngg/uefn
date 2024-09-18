@@ -45,7 +45,7 @@ Assets<public> := module:
         GetAsset<override>():material_asset = external {}
 
     parameterized_material<native><epic_internal> := class<epic_internal>(material, parameter_collection):
-        Material<native><epic_internal>:material
+        Material<native><epic_internal>:(/Verse.org/Assets:)material
 
         GetMaterialInterface<native><override>():ue_material_interface
 

@@ -6,7 +6,7 @@ level_save_record<native><epic_internal> := class<epic_internal>:
 
 
 @experimental
-bridge_component<native><epic_internal> := class(component):
+bridge_component<native><public> := class<final>(component):
     # Internal epic method to know if this component is allowed on client
     IsAllowedOnClient<override>():logic = external {}
 
