@@ -254,7 +254,7 @@
 		"70371DB9DD6C4D2EA51DF7BD2C462558":
 		{
 			"FriendlyName": "FortWeaponItemDefinitionVersion",
-			"Version": 2
+			"Version": 3
 		},
 		"717F9EE7E9B0493A88B391321B388107":
 		{
@@ -469,7 +469,7 @@
 		"C1270312AB730B1E0B1EC74571C70F73":
 		{
 			"FriendlyName": "CustomizableObjectVer",
-			"Version": 59
+			"Version": 62
 		},
 		"C1270312AB730B1E0B1EC790917A7105":
 		{
@@ -564,7 +564,7 @@
 		"EF0A537D90DA4CD2BCA16D6AE21E3589":
 		{
 			"FriendlyName": "FortItemDefinitionVersion",
-			"Version": 19
+			"Version": 21
 		},
 		"F2AED0AC9AFE416F8664AA7FFA26D6FC":
 		{
@@ -632,9 +632,11 @@
 			"/CreativeCoreDevices/HUDMessage/MVVM_UEFN_HUDMessage.MVVM_UEFN_HUDMessage_C",
 			"/Game/Creative/Devices/Quests/MVVM_UEFN_Tracker.MVVM_UEFN_Tracker_C",
 			"/Game/Creative/PostProcess/PP_70sPrint.PP_70sPrint_C",
+			"/Game/Creative/PostProcess/PP_80sCartoon.PP_80sCartoon_C",
 			"/Game/Creative/PostProcess/PP_ActionLines.PP_ActionLines_C",
 			"/Game/Creative/PostProcess/PP_CCTV.PP_CCTV_C",
 			"/Game/Creative/PostProcess/PP_Comic.PP_Comic_C",
+			"/Game/Creative/PostProcess/PP_ComicNoir.PP_ComicNoir_C",
 			"/Game/Creative/PostProcess/PP_Crazy.PP_Crazy_C",
 			"/Game/Creative/PostProcess/PP_Dark.PP_Dark_C",
 			"/Game/Creative/PostProcess/PP_Desolate.PP_Desolate_C",
@@ -1195,6 +1197,7 @@
 			"/Script/Engine.World",
 			"/Script/Engine.WorldDataLayers",
 			"/Script/Engine.WorldPartition",
+			"/Script/Engine.WorldPartitionDestructibleHLODMeshComponent",
 			"/Script/Engine.WorldPartitionEditorSpatialHash",
 			"/Script/Engine.WorldPartitionHLOD",
 			"/Script/Engine.WorldPartitionHLODSourceActorsFromCell",
@@ -1359,6 +1362,8 @@
 			"/Script/FortniteGame.PlayStopPauseInterface",
 			"/Script/FortniteGame.WaterVolume_Athena",
 			"/Script/FortniteUI.FortCTAButton",
+			"/Script/FortniteUI.HUDPlayerInfoListViewmodel",
+			"/Script/FortniteUI.HUDPlayerInfoViewmodel",
 			"/Script/GameplayAbilities.AbilitySystemComponent",
 			"/Script/GameplayCameras.CompositeCameraShakePattern",
 			"/Script/GameplayCameras.ConstantCameraShakePattern",
@@ -1876,7 +1881,8 @@
 			"/Script/WorldPartitionHLODUtilities.HLODBuilderInstancingSettings",
 			"/Script/WorldPartitionHLODUtilities.HLODBuilderMeshApproximateSettings",
 			"/Script/WorldPartitionHLODUtilities.HLODBuilderMeshMergeSettings",
-			"/Script/WorldPartitionHLODUtilities.HLODBuilderMeshSimplifySettings"
+			"/Script/WorldPartitionHLODUtilities.HLODBuilderMeshSimplifySettings",
+			"/Script/WorldPartitionHLODUtilities.WorldPartitionHLODModifierMeshDestruction"
 		],
 		"VKCreateUGCEarlyAccess": [],
 		"VKCreateUGCEpicDeveloper": [
@@ -13171,6 +13177,7 @@
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_WildlifeSpawn.CharacterModifier_WildlifeSpawn_C",
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_WildlifeVerseBehavior.CharacterModifier_WildlifeVerseBehavior_C",
 			"/CRD_Analytic/BP_Creative_Analytic_Manager.BP_Creative_Analytic_Manager_C",
+			"/CRD_Ascender/Device_Ascender.Device_Ascender_C",
 			"/CRD_Bouncer/BouncerComponent.BouncerComponent_C",
 			"/CRD_CreatorProfile/CreatorProfile_WidgetComponent.CreatorProfile_WidgetComponent_C",
 			"/CRD_DelMarActiveTrackVolume/DelMarActiveTrackVolume_BP.DelMarActiveTrackVolume_BP_C",
@@ -20858,6 +20865,7 @@
 			"/Game/Creative/BuildingActors/Props/CP_BirthdayCake2021_NoDestroy.CP_BirthdayCake2021_NoDestroy_C",
 			"/Game/Creative/BuildingActors/Props/CP_BirthdayCake2022_NoDestroy.CP_BirthdayCake2022_NoDestroy_C",
 			"/Game/Creative/BuildingActors/Props/CP_BirthdayCake2023_NoDestroy.CP_BirthdayCake2023_NoDestroy_C",
+			"/Game/Creative/BuildingActors/Props/CP_BirthdayCake2024_NoDestroy.CP_BirthdayCake2024_NoDestroy_C",
 			"/Game/Creative/BuildingActors/Props/CP_BirthdayCake_NoDestroy.CP_BirthdayCake_NoDestroy_C",
 			"/Game/Creative/BuildingActors/Props/CP_BP_Audio_Helios_BoomBox_A.CP_BP_Audio_Helios_BoomBox_A_C",
 			"/Game/Creative/BuildingActors/Props/CP_BP_Commerce_HangingLight_B.CP_BP_Commerce_HangingLight_B_C",
@@ -22453,9 +22461,11 @@
 			"/Game/Creative/Misc/Razor/CP_Razor_Vein_03.CP_Razor_Vein_03_C",
 			"/Game/Creative/PostProcess/PostProcessEffectActor.PostProcessEffectActor_C",
 			"/Game/Creative/PostProcess/PP_70sPrint.PP_70sPrint_C",
+			"/Game/Creative/PostProcess/PP_80sCartoon.PP_80sCartoon_C",
 			"/Game/Creative/PostProcess/PP_ActionLines.PP_ActionLines_C",
 			"/Game/Creative/PostProcess/PP_CCTV.PP_CCTV_C",
 			"/Game/Creative/PostProcess/PP_Comic.PP_Comic_C",
+			"/Game/Creative/PostProcess/PP_ComicNoir.PP_ComicNoir_C",
 			"/Game/Creative/PostProcess/PP_Crazy.PP_Crazy_C",
 			"/Game/Creative/PostProcess/PP_Dark.PP_Dark_C",
 			"/Game/Creative/PostProcess/PP_Desolate.PP_Desolate_C",
