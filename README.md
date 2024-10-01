@@ -87,7 +87,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details open>
 <summary>v31</summary>
 
-- `31.20` - `31.30`: [`public`]() | [`internal`]()
+- `31.20` - `31.30`: [`public`](https://github.com/kbfngg/uefn/commit/c7d02e8e5e610dda8f8bf90b8aa4b04b00121981) | [`internal`]()
 - `31.10` - `31.20`: [`public`](https://github.com/kbfngg/uefn/commit/c9bbb89a4eb9f3c372664de706061635997f08af) | [`internal`](https://github.com/kbfngg/uefn/commit/f941e8376853a021d39149f54465917db8646160)
 - `31.00` - `31.10`: [`public`](https://github.com/kbfngg/uefn/commit/6166a1813f18d4aa9b86057d870141b4905fb55e) | [`internal`](https://github.com/kbfngg/uefn/commit/e87f003ad92982b3e7579950f5030045b04361dd)
 - `30.40` - `31.00`: [`public`](https://github.com/kbfngg/uefn/commit/2a45450342107e65226944eeea32f96766e28806) | [`internal`](https://github.com/kbfngg/uefn/commit/307ddd7a9d4ed64f421635fa286422fb254b924f)
