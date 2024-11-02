@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-31.41-CL-37324991
+# Generated from build: ++Fortnite+Release-32.00-CL-37505882
 #################################################
 
 # Module import path: /Verse.org/Assets
@@ -59,7 +59,7 @@ Colors<public> := module:
     # Module import path: /Verse.org/Colors/NamedColors
     # Color presets from CSS Color Module 3 Extended color keywords.
     NamedColors<public> := module:
-        (NamedColors:)Tan<public>:color = external {}
+        (/Verse.org/Colors/NamedColors:)Tan<public>:color = external {}
 
         AliceBlue<public>:color = external {}
 
@@ -409,11 +409,11 @@ Concurrency<public> := module:
 
 # Module import path: /Verse.org/Native
 Native<public> := module:
-    import_as<epic_internal>(importName:string)<computes>:import_as_attribute
+    import_as<constructor><epic_internal>(ImportName:string)<computes>:import_as_attribute = external {}
 
     @attribscope_class
     @attribscope_struct
-    import_as_attribute<epic_internal> := class(attribute):
+    import_as_attribute<epic_internal> := class<computes><internal>(attribute):
 
 using {/Verse.org/Concurrency}
 # Module import path: /Verse.org/Random
@@ -470,13 +470,13 @@ Simulation<public> := module:
         # A queryable collection of gameplay tags.
         tag_view<native><public> := interface<epic_internal>:
             # Determine if TagToCheck is present in this container, also checking against parent tags {"A.1"}.Has("A") will return True, {"A"}.Has("A.1") will return False If TagToCheck is not Valid it will always return False.
-            Has<public>(TagToCheck:tag)<transacts><decides>:void
+            Has<public>(TagToCheck:tag)<computes><decides><reads>:void
 
             # Checks if this container contains ALL of the tags in the specified container, also checks against parent tags {"A.1","B.1"}.HasAll({"A","B"}) will return True, {"A","B"}.HasAll({"A.1","B.1"}) will return False If InTags is empty/invalid it will always return True, because there were no failed checks.
-            HasAll<public>(InTags:[]tag)<transacts><decides>:void
+            HasAll<public>(InTags:[]tag)<computes><decides><reads>:void
 
             # Checks if this container contains ANY of the tags in the specified container, also checks against parent tags {"A.1"}.HasAny({"A","B"}) will return True, {"A"}.HasAny({"A.1","B"}) will return False If InTags is empty/invalid it will always return False.
-            HasAny<public>(InTags:[]tag)<transacts><decides>:void
+            HasAny<public>(InTags:[]tag)<computes><decides><reads>:void
 
     agent<native><public> := class<unique><epic_internal>:
 
@@ -484,7 +484,7 @@ Simulation<public> := module:
     @attribscope_struct
     @attribscope_data
     @customattribhandler
-    editable<public> := class(attribute):
+    editable<public> := class<computes>(attribute):
         # The categories displayed in the editor.
         Categories<public>:[]message = external {}
 
@@ -495,7 +495,7 @@ Simulation<public> := module:
     @attribscope_struct
     @attribscope_data
     @customattribhandler
-    editable_container<public> := class<final>(editable):
+    editable_container<public> := class<final><computes>(editable):
         # If true, allows reordering of the container elements in the editor.
         AllowReordering<public>:logic = external {}
 
@@ -503,7 +503,7 @@ Simulation<public> := module:
     @attribscope_struct
     @attribscope_data
     @customattribhandler
-    editable_number<public>(t:type) := class<final>(editable):
+    editable_number<public>(t:type) := class<final><computes>(editable):
         # The maximum value the editor allows.
         MaxValue<public>:?t = external {}
 
@@ -517,7 +517,7 @@ Simulation<public> := module:
     @attribscope_struct
     @attribscope_data
     @customattribhandler
-    editable_slider<public>(t:type) := class<final>(editable):
+    editable_slider<public>(t:type) := class<final><computes>(editable):
         # The maximum value of the editor slider.
         MaxValue<public>:?t = external {}
 
@@ -539,7 +539,7 @@ Simulation<public> := module:
     @attribscope_struct
     @attribscope_data
     @customattribhandler
-    editable_text_box<public> := class<final>(editable):
+    editable_text_box<public> := class<final><computes>(editable):
         # The maximum length of the text.
         MaxLength<public>:int = external {}
 
@@ -550,7 +550,7 @@ Simulation<public> := module:
     @attribscope_struct
     @attribscope_data
     @customattribhandler
-    editable_vector_number<public>(t:type) := class<final>(editable):
+    editable_vector_number<public>(t:type) := class<final><computes>(editable):
         # The maximum value allowed for each vector element.
         MaxComponentValue<public>:?t = external {}
 
@@ -570,7 +570,7 @@ Simulation<public> := module:
     @attribscope_struct
     @attribscope_data
     @customattribhandler
-    editable_vector_slider<public>(t:type) := class<final>(editable):
+    editable_vector_slider<public>(t:type) := class<final><computes>(editable):
         # The maximum value allowed for each vector element.
         MaxComponentValue<public>:?t = external {}
 
@@ -597,6 +597,7 @@ Simulation<public> := module:
     localizable_agent<native><epic_internal> := class(localizable_value):
 
     player<native><public> := class<unique><persistent><module_scoped_var_weak_map_key><epic_internal>(agent):
+        # Succeeds when this `player` may be used as a module-scoped `var` `weak_map` key. This coincides with the corresponding player having joined the game and not yet left. Using a `player` as a module-scope `var` `weak_map` key when this method fails results in a runtime error.
         IsActive<native><public>()<computes><decides><reads>:void
 
     # Type for which there is a single instance per round.  Use `GetSession` to get the current round's `session` instance. May be used with `weak_map` to implement global variables.
@@ -906,7 +907,7 @@ Verse<public> := module:
     # Can be used with `awaitable`, `subscribable`, or both (see: `listenable`).
     signalable<public>(payload:type) := interface:
         # Concurrently resumes the tasks waiting for this event in `awaitable.Await` and synchronously invokes any callbacks added to this event by `subscribable.Subscribe`.
-        Signal<public>(Val:payload):void
+        Signal<native_callable><public>(Val:payload):void
 
     # A parameterless interface implemented by events that can be subscribed to.
     subscribable<public>() := subscribable(tuple())

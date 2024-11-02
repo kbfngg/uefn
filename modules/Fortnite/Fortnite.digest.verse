@@ -2,9 +2,11 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-31.41-CL-37324991
+# Generated from build: ++Fortnite+Release-32.00-CL-37505882
 #################################################
 
+using {/Fortnite.com/Characters}
+using {/Fortnite.com/Teams}
 # Module import path: /Fortnite.com/AI
 AI<public> := module:
     # Returns the `npc_behavior` for `InAgent`.
@@ -455,7 +457,7 @@ Characters<public> := module:
         #  - 1: `true` if the character is sprinting. `false` if the character stopped sprinting.
         SprintedEvent<public>():listenable(tuple(fort_character, logic))
 
-        # Teleports this `fort_character` to the provided `Position` and applies the yaw of `Rotation`. Will fail if the `Position` specified is e.g. outside of the playspace or specifies a place where the character cannot fit.
+        # Teleports this `fort_character` to the provided `Position` and applies the yaw and pitch of `Rotation`. Will fail if the `Position` specified is e.g. outside of the playspace or specifies a place where the character cannot fit.
         TeleportTo<public>(Position:vector3, Rotation:rotation)<transacts><decides>:void
 
     # Parameters for `fort_character.PutInStasis` function.
@@ -472,6 +474,7 @@ Characters<public> := module:
 using {/Fortnite.com/Game}
 using {/UnrealEngine.com/Temporary/SceneGraph}
 using {/Verse.org/Assets}
+using {/Verse.org/Native}
 using {/Verse.org/Simulation/Tags}
 using {/Verse.org/Simulation}
 # Module import path: /Fortnite.com/Devices
@@ -489,6 +492,19 @@ Devices<public> := module:
 
     # Returns a queryable `tag_view` which can be used to query the tags on `CreativeObject`.
     (CreativeObject:creative_object_interface).GetTags<native><public>():tag_view
+
+    @available {MinUploadedAtFNVersion := 2930}
+    # Generates a `creative_object_interface` for every creative object that has been marked with the specified `Tag`.
+    (InCreativeDevice:creative_device).FindCreativeObjectsWithTag<public>(Tag:tag)<transacts>:generator(creative_object_interface) = external {}
+
+    @available {MinUploadedAtFNVersion := 2930}
+    # Generates a `creative_object_interface` for every creative object that has been marked with the specified `Tag`.
+    (InCreativeDevice:creative_device_base).FindCreativeObjectsWithTag<public>(Tag:tag)<transacts>:generator(creative_object_interface) = external {}
+
+    @experimental
+    @available {MinUploadedAtFNVersion := 2930}
+    # Generates a `creative_object_interface` for every creative object that has been marked with the specified `Tag`.
+    (InEntity:entity).FindCreativeObjectsWithTag<native><public>(Tag:tag)<transacts>:generator(creative_object_interface)
 
     # Module import path: /Fortnite.com/Devices/CreativeAnimation
     CreativeAnimation<public> := module:
@@ -629,9 +645,13 @@ Devices<public> := module:
     # A default asset to be used when creating an editor-specified `creative_prop_asset` variable.
     DefaultCreativePropAsset<public>:creative_prop_asset = external {}
 
+    @deprecated
+    # Deprecated, use `FindCreativeObjectsWithTag` instead.
     # Returns an array containing all creative objects which have been marked with the specified `Tag`.
     GetCreativeObjectsWithTag<native><public>(Tag:tag)<transacts>:[]creative_object_interface
 
+    @deprecated
+    # Deprecated, use `FindCreativeObjectsWithTag` instead.
     # Returns an array containing creative objects which have tag(s) matching the specified `SearchCriteria`.
     GetCreativeObjectsWithTags<native><public>(SearchCriteria:tag_search_criteria)<transacts>:[]creative_object_interface
 
@@ -718,6 +738,7 @@ Devices<public> := module:
         TestAwardEvent<public>:listenable(agent) = external {}
 
     using {/UnrealEngine.com/Temporary/SpatialMath}
+    using {/Verse.org/Native}
     # Used in conjunction with `advanced_storm_controller_device` to customize individual storm phases.
     advanced_storm_beacon_device<public> := class<concrete><final>(creative_device_base):
         # Moves the `advanced_storm_beacon_device` to the specified `Position` and `Rotation` over the specified time, in seconds.
@@ -866,6 +887,7 @@ Devices<public> := module:
         UnregisterAll<public>():void = external {}
 
     using {/Fortnite.com/Game}
+    using {/Verse.org/Simulation}
     # Used to create a customizable turret that can search for nearby targets.
     automated_turret_device<public> := class<concrete><final>(creative_device_base, healthful, healable):
         # Triggers when someone enters the activation radius while nobody else is there.
@@ -1539,6 +1561,61 @@ Devices<public> := module:
         # Toggles the conditional button state. `Agent` is used as the instigator of the action.
         Toggle<public>(Agent:agent):void = external {}
 
+    # Used to set and trigger conversations made via the Conversation Graph. The conversation triggered is assigned to the device.
+    conversation_device<public> := class<concrete><final>(creative_device_base, enableable):
+        # Check if an `agent` can initiate a conversation.
+        CanInitiateConversation<public>(Agent:agent)<transacts><decides>:void = external {}
+
+        # Disables this device.
+        # A disabled conversation device will not listen for inputs and trigger conversations.
+        Disable<override>():void = external {}
+
+        # Enables this device.
+        # An enabled conversation device will listen for inputs and trigger conversations.
+        Enable<override>():void = external {}
+
+        # Ends the assigned conversation with the `agent`.
+        EndConversation<public>(Agent:agent):void = external {}
+
+        # Ends all active conversations with this device.
+        EndConversationForAll<public>():void = external {}
+
+        # Returns the count of currently-active conversations with this device.
+        GetActiveConversationsCount<public>()<transacts>:int = external {}
+
+        # Begins the assigned conversation with the `agent`.
+        # The conversation will not start if the device or the `agent` are otherwise incapable of having a conversation.
+        InitiateConversation<public>(Agent:agent):void = external {}
+
+        # Check if an `agent` is in an active conversation.
+        IsAgentInConversation<public>(Agent:agent)<transacts><decides>:void = external {}
+
+        # Check if the device is enabled.
+        IsEnabled<override>()<transacts><decides>:void = external {}
+
+        # Signaled when a choice node tied to this event is selected by an `agent`.
+        # Sends the `agent` that triggered the event, and `EventNumber` is the number specified in the Conversation Event node.
+        OnConversationEvent<public>:listenable(tuple(agent, int)) = external {}
+
+        # Sets the number of conversations allowed at once with the device.
+        # This will not make any conversations exit if there are more current conversations than allowed after this call.
+        var AllowedConversationCount<public>:int = external {}
+
+        # The range that the Indicator Bubble will be seen at. Clamps to range[0, 25].
+        var IndicatorBubbleRange<public>:float = external {}
+
+        # Whether the device will show conversation text in worldspace when using the Radial UI type.
+        var ShowConversationTextInWorldSpace<public>:logic = external {}
+
+        # whether the device will show the Indicator Bubble when nearby.
+        var ShowIndicatorBubble<public>:logic = external {}
+
+        # Whether the device will show the Speaker when nearby.
+        var ShowNameWhenNearby<public>:logic = external {}
+
+        # The Speaker Name of the device.
+        var SpeakerName<public>:message = external {}
+
     # Used to place a crash pad that can bounce players and protect them from fall damage.
     crash_pad_device<public> := class<concrete><final>(creative_device_base):
         # Disables this device.
@@ -2143,7 +2220,6 @@ Devices<public> := module:
         # Sends the `agent` guard who is unaware.
         UnawareEvent<public>:listenable(agent) = external {}
 
-    using {/Verse.org/Simulation}
     # Use to create a cactus with healing fruits that can be burst to heal nearby players.
     healing_cactus_device<public> := class<concrete><final>(creative_device_base):
         # Burst the plant if the device is enabled, passing in the triggering `agent`.
@@ -2212,6 +2288,7 @@ Devices<public> := module:
         # Hides the HUD message.
         Hide<public>():void = external {}
 
+        @available {MinUploadedAtFNVersion := 3100}
         # Hides the currently set HUD *Message* on `Agent`s screen.
         # Use this when the device is setup to target specific `agent`s.
         Hide<public>(Agent:agent):void = external {}
@@ -2298,11 +2375,13 @@ Devices<public> := module:
         # Grants an item to `Agent`.
         GrantItem<public>(Agent:agent):void = external {}
 
+        @available {MinUploadedAtFNVersion := 3100}
         # Grants an item at a specific `ItemIndex` to an `Agent`.
         #  `Index` should be between `0` and the available item count - 1.
         #  If Value is out of bounds, which item is granted is determined by *Cycle Behavior*.
         GrantItemIndex<public>(Agent:agent, ItemIndex:int):void = external {}
 
+        @available {MinUploadedAtFNVersion := 3100}
         # Grants an item at a specific `ItemIndex` to all players.
         #  Only functions when *Receiving Players* is set to *All* or *Team Index*.
         #  `Index` should be between `0` and the available item count - 1.
@@ -5041,16 +5120,16 @@ Playspaces<public> := module:
     #
     # To access the `fort_playspace` for a `creative_device` use `creative_device.GetPlayspace`.
     fort_playspace<native><public> := interface<epic_internal>:
-        # Get all `player`s that are in the current `fort_playspace`.
+        # Get all human `player`s that are in the current `fort_playspace`.
         GetPlayers<public>()<transacts>:[]player
 
         # Get the `fort_team_collection` for the current `fort_playspace`.
         GetTeamCollection<public>()<transacts>:fort_team_collection
 
-        # Signaled when a `player` joins the `fort_playspace`. Returns a subscribable with a payload of the`player` that entered the `fort_playspace`.
+        # Signaled when a human `player` joins the `fort_playspace`. Returns a subscribable with a payload of the`player` that entered the `fort_playspace`.
         PlayerAddedEvent<public>():listenable(player)
 
-        # Signaled when a `player` leaves the `fort_playspace`. Returns a subscribable with a payload of the`player` that left the `fort_playspace`.
+        # Signaled when a human `player` leaves the `fort_playspace`. Returns a subscribable with a payload of the`player` that left the `fort_playspace`.
         PlayerRemovedEvent<public>():listenable(player)
 
 # Module import path: /Fortnite.com/Teams
@@ -5296,8 +5375,6 @@ UI<public> := module:
         # Sets the text displayed in the widget.
         SetText<native><public>(InText:message):void
 
-using {/Fortnite.com/Characters}
-using {/Fortnite.com/Teams}
 # Module import path: /Fortnite.com/Vehicles
 Vehicles<public> := module:
     # Returns the `fort_vehicle` for `InCharacter`.
@@ -5313,7 +5390,7 @@ Vehicles<public> := module:
         GetFuelRemaining<public>()<transacts>:float
 
         # Returns an array with all the passengers of the vehicle.
-        GetPassengers<public>():[]fort_character
+        GetPassengers<public>()<transacts>:[]fort_character
 
         # Succeeds if this `fort_vehicle` is standing in air.
         IsInAir<public>()<transacts><decides>:void
