@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-32.00-CL-37505882
+# Generated from build: ++Fortnite+Release-32.10-CL-37958378
 #################################################
 
 using {/Fortnite.com/Characters}
@@ -4854,7 +4854,7 @@ Devices<public> := module:
         DismountedEvent<public>:listenable(device_ai_interaction_result) = external {}
 
         # Signaled when wildlife is eliminated.
-        # `Source` is the `agent` that eliminated the wildlife. If the wildlife was eliminated by a non-agent then `Source` is 'false'.
+        # `Source` is the `agent` that eliminated the wildlife. If the wildlife was eliminated by a non-agent, or because the oldest wildlife was eliminated as Spawn function was called after spawn count was exceeded, then `Source` is 'false'.
         # `Target` is the wildlife that was eliminated.
         EliminatedEvent<public>:listenable(device_ai_interaction_result) = external {}
 
@@ -4894,7 +4894,7 @@ Devices<public> := module:
         #  Sends the wildlife that ate something.
         SomethingIsEatenEvent<public>:listenable(agent) = external {}
 
-        # Spawns wildlife from this device.
+        # Spawns wildlife from this device. If spawn count is exceeded the oldest wildlife will be eliminated.
         Spawn<public>():void = external {}
 
         # Signaled when this device spawns wildlife.
