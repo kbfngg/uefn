@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-32.00-CL-37505882
+# Generated from build: ++Fortnite+Release-32.10-CL-37958378
 #################################################
 
 AINavigation<public> := module:
@@ -68,157 +68,6 @@ Assets<public> := module:
     spawn_particle_system_subscription<native><epic_internal> := class(cancelable):
         Cancel<native><override>()<transacts>:void
 
-Engine<public> := module:
-    using {/UnrealEngine.com/Temporary/Curves}
-    using {/UnrealEngine.com/Temporary/SpatialMath}
-    using {/Verse.org/Assets}
-    using {/Verse.org/Simulation}
-    using {/Verse.org/VerseEngine/Component}
-    # Module import path: /UnrealEngine.com/Engine/VerseMovement
-    VerseMovement<public> := module:
-        GetPlayerMoveComponent<native><epic_internal>(Player:player_component)<transacts><decides>:movement_component
-
-        # Module import path: /UnrealEngine.com/Engine/VerseMovement/VerseMovementUtil
-        VerseMovementUtil<public> := module:
-            CarConfig<public>:move_config = external {}
-
-        move_config<native><public> := struct<computes>:
-            Entries<native><public>:[]move_config_entry = external {}
-
-        move_config_asset<native><public> := class(asset):
-
-        move_config_entry<native><public> := struct<computes>:
-            Name<native><public>:string = external {}
-
-            Responses<native><public>:[]move_response = external {}
-
-            Triggers<native><public>:[]move_trigger = external {}
-
-        move_input_trigger_params<native><public> := struct<computes>:
-            AccumulateAxisInput<native><public>:logic = external {}
-
-            AxisToMagnitudeCurve<native><public>:?editable_curve = external {}
-
-            ClampAxis<native><public>:vector2 = external {}
-
-            IsAxis<native><public>:logic = external {}
-
-            Name<native><public>:string = external {}
-
-        move_physics_trigger_params<native><public> := struct<computes>:
-            SpeedInDirection<native><public>:vector3 = external {}
-
-        move_response<native><public> := struct<computes>:
-            ClampFrame<native><public>:move_response_frame = external {}
-
-            ClampVector<native><public>:vector3 = external {}
-
-            Effect<native><public>:move_response_effect = external {}
-
-            Frame<native><public>:move_response_frame = external {}
-
-            Magnitude<native><public>:float = external {}
-
-            MagnitudeCurve<native><public>:?editable_curve = external {}
-
-            Modifier<native><public>:move_response_modifier = external {}
-
-            Type<native><public>:move_response_type = external {}
-
-            Vector<native><public>:vector3 = external {}
-
-        move_response_effect<native><public> := enum:
-            Force
-
-            Transform
-
-            VelocityChange
-
-            move_response_effect_MAX
-
-        move_response_frame<native><public> := enum:
-            Absolute
-
-            move_response_frame_Camera
-
-            move_response_frame_MAX
-
-            move_response_frame_Object
-
-        move_response_modifier<native><public> := enum:
-            OverrideTransform
-
-            OverrideVelocity
-
-            TargetTransform
-
-            TargetVelocity
-
-            move_response_modifier_Add
-
-            move_response_modifier_MAX
-
-        move_response_type<native><public> := enum:
-            Angular
-
-            Linear
-
-            move_response_type_MAX
-
-        move_trace_trigger_params<native><public> := struct<computes>:
-            Direction<native><public>:vector3 = external {}
-
-            Frame<native><public>:move_response_frame = external {}
-
-            HitDistanceToMagnitudeCurve<native><public>:?editable_curve = external {}
-
-            ProportionalToHitDistance<native><public>:logic = external {}
-
-            TraceLength<native><public>:float = external {}
-
-        move_trigger<native><public> := struct<computes>:
-            InputParams<native><public>:move_input_trigger_params = external {}
-
-            PhysicsParams<native><public>:move_physics_trigger_params = external {}
-
-            TraceParams<native><public>:move_trace_trigger_params = external {}
-
-            Type<native><public>:move_trigger_type = external {}
-
-        move_trigger_type<native><public> := enum:
-            Constant
-
-            Constraint
-
-            Input
-
-            Physics
-
-            Trace
-
-            move_trigger_type_MAX
-
-        movement_component<native><epic_internal> := class<unique>(vk_component):
-            AddAngularImpulse<native><public>(Impulse:vector3):void
-
-            AddImpulse<native><public>(Impulse:vector3):void
-
-            DisableInput<native><public>(ThePlayer:player_component):void
-
-            EnableInput<native><public>(ThePlayer:player_component):void
-
-            SetConfig<native><public>(Config:move_config):void
-
-            SetConfig<native><public>(Config:move_config_asset):void
-
-            SetEnabled<native><public>(Enabled:logic):void
-
-            SetPosition<native><public>(Position:vector3):void
-
-            SetRotation<native><public>(Rotation:rotation):void
-
-            SetVelocity<native><public>(Velocity:vector3):void
-
 # Module import path: /UnrealEngine.com/EntityTestSuite
 EntityTestSuite<public> := module:
     @hide_in_editor
@@ -264,213 +113,6 @@ EntityTestSuite<public> := module:
     test_component<native><epic_internal> := class(component):
         IsAllowedOnClient<override>():logic = external {}
 
-using {/Verse.org/VerseEngine/Component}
-# Module import path: /UnrealEngine.com/EpicGames
-EpicGames<public> := module:
-    # Module import path: /UnrealEngine.com/EpicGames/Input
-    Input<public> := module:
-        # Represents a type of event that can occur involving a verse_key
-        input_event<native><public> := enum:
-            Pressed
-
-            Released
-
-        # Enumerated list of available input 'key' bindings
-        verse_key<native><public> := enum:
-            E
-
-            Eight
-
-            Five
-
-            Four
-
-            Gamepad_DPad_Down
-
-            Gamepad_DPad_Left
-
-            Gamepad_DPad_Right
-
-            Gamepad_DPad_Up
-
-            Gamepad_FaceButton_Bottom
-
-            Gamepad_FaceButton_Left
-
-            Gamepad_FaceButton_Right
-
-            Gamepad_FaceButton_Top
-
-            Gamepad_LeftShoulder
-
-            Gamepad_LeftTrigger
-
-            Gamepad_LeftTriggerAxis
-
-            Gamepad_LeftX
-
-            Gamepad_LeftY
-
-            Gamepad_RightShoulder
-
-            Gamepad_RightTrigger
-
-            Gamepad_RightTriggerAxis
-
-            Gamepad_RightX
-
-            Gamepad_RightY
-
-            I
-
-            J
-
-            K
-
-            Keyboard_Add
-
-            Keyboard_Decimal
-
-            Keyboard_Divide
-
-            Keyboard_Down
-
-            Keyboard_Enter
-
-            Keyboard_Left
-
-            Keyboard_LeftAlt
-
-            Keyboard_LeftControl
-
-            Keyboard_LeftShift
-
-            Keyboard_Multiply
-
-            Keyboard_Right
-
-            Keyboard_RightAlt
-
-            Keyboard_RightControl
-
-            Keyboard_RightShift
-
-            Keyboard_SpaceBar
-
-            Keyboard_Subtract
-
-            Keyboard_Up
-
-            L
-
-            Mouse_LeftButton
-
-            Mouse_MiddleButton
-
-            Mouse_RightButton
-
-            Mouse_ScrollDown
-
-            Mouse_ScrollUp
-
-            Mouse_ThumbButton
-
-            Mouse_ThumbButton2
-
-            Mouse_WheelAxis
-
-            Mouse_X
-
-            Mouse_Y
-
-            Nine
-
-            NumPad_Eight
-
-            NumPad_Five
-
-            NumPad_Four
-
-            NumPad_Nine
-
-            NumPad_One
-
-            NumPad_Seven
-
-            NumPad_Six
-
-            NumPad_Three
-
-            NumPad_Two
-
-            NumPad_Zero
-
-            One
-
-            Seven
-
-            Six
-
-            TAB
-
-            Three
-
-            Two
-
-            Z
-
-            Zero
-
-        # Represents a type of event that can occur involving a verse_key
-        verse_ue_input_component<native><public> := class<final>(vk_component):
-            # Requests that the input vk_component adds a callback bound to whenever the action specified by ActionName occurs, in the manner specified by InputEvent e.g. press/release
-            AddActionBinding<native><public>(ActionName:string, InputEvent:input_event, Callback:type {__():void}):void
-
-            # Requests that the input vk_component register an action mapping to the provided keys, with a description string provided for debugging/tracking
-            AddActionMapping<native><public>(ActionName:string, Description:string, Keys:[]verse_key):void
-
-            # Utility wrapper which both binds the specified Actionname to the keys + input event specified, and also registers an associated callback
-            AddActionMappingAndBinding<public>(ActionName:string, Description:string, Keys:[]verse_key, InputEvent:input_event, Callback:type {__():void}):void = external {}
-
-            # Requests that the input vk_component adds a callback bound to whenever the Axis specified by AxisName changes value. The callback will be provided the current Axis value
-            AddAxisBinding<native><public>(AxisName:string, Callback:?type {__(:float):void}):void
-
-            # Requests that the input vk_component register an axis mapping to the provided keys, with a description string provided for debugging/tracking
-            AddAxisMapping<native><public>(ActionName:string, Description:string, Keys:[]verse_key, Scale:?float):void
-
-            # Utility wrapper which both binds the specified Actionname to the Axis specified, and also registers an associated callback
-            AddAxisMappingAndBinding<public>(AxisName:string, Description:string, Keys:[]verse_key, Scale:?float, Callback:?type {__(:float):void}):void = external {}
-
-            # Clears all previously registered action mappings for the provided input vk_component
-            ClearActionMappings<native><public>():void
-
-            # Clears all previously registered axis mappings for the provided input vk_component
-            ClearAxisMappings<native><public>():void
-
-            # Clears all input bindings for the provided input vk_component. This is the equivalent of clearing all action + axis mappings, and all bindings
-            ClearInputBindings<native><public>():void
-
-            # Utility wrapper which Clears action mappings, axis mappings, and input bindings
-            ClearInputMappingsAndBindings<public>():void = external {}
-
-            # Returns the current value associated with the specified AxisName. 0.0f if not currently being manipulated
-            GetAxisValue<native><public>(AxisName:string):float
-
-            # Removes a previously added action mapping and associated callback binding. Requires the Action name the action was added with
-            RemoveActionBinding<native><public>(ActionName:string, InputEvent:input_event):void
-
-            # Removes a previously added action mapping. Requires the Action name the action was added with
-            RemoveActionMapping<native><public>(ActionName:string):void
-
-            # Utility wrapper which both removes the specified Actionname and associated callback
-            RemoveActionMappingAndBinding<public>(ActionName:string, InputEvent:input_event):void = external {}
-
-            # Removes a previously added axis mapping. Requires the Action name the action was added with
-            RemoveAxisBinding<native><public>(AxisName:string):void
-
-            # Async function which continues execution when the associated ActionName occurs, and in the manner specified by InputEvent e.g. press/release
-            WaitForAction<native><public>(InputComponent:verse_ue_input_component, ActionName:string, InputEvent:input_event)<suspends>:void
-
 # Module import path: /UnrealEngine.com/EpicGamesRestricted
 EpicGamesRestricted<public> := module:
     # Module import path: /UnrealEngine.com/EpicGamesRestricted/Network
@@ -480,6 +122,29 @@ EpicGamesRestricted<public> := module:
         @attribscope_data
         @customattribhandler
         replicated_attribute<epic_internal> := class<computes><internal>(attribute):
+
+JSON<public> := module:
+    # Parse a JSON string returning a value with its contents
+    Parse<native><public>(JSONString:string)<transacts><decides>:value
+
+    value<native><public> := class:
+        # Retrieve an array value or fail if value is not a json array
+        AsArray<native><public>()<transacts><decides>:[]value
+
+        # Retrieve a float value or fail if value is not a json number
+        AsFloat<native><public>()<transacts><decides>:float
+
+        # Retrieve an integer value or fail if value is not a json number
+        AsInt<native><public>()<transacts><decides>:int
+
+        # Retrieve an object value or fail if value is not null
+        AsNull<native><public>()<transacts><decides>:void
+
+        # Retrieve an object value or fail if value is not a json object
+        AsObject<native><public>()<transacts><decides>:[string]value
+
+        # Retrieve an object value or fail if value is not a string
+        AsString<native><public>()<transacts><decides>:string
 
 # Module import path: /UnrealEngine.com/Playspace
 Playspace<public> := module:
@@ -1517,11 +1182,11 @@ Temporary<public> := module:
 
             @experimental
             # Get the remaining shared cooldown duration in seconds, affecting all agents.
-            GetRemainingDuration<native><epic_internal>(__dupe___unnamed_parameter_82:accessor)<transacts>:float
+            GetRemainingDuration<native><epic_internal>(__dupe___unnamed_parameter_74:accessor)<transacts>:float
 
             @experimental
             # Set the remaining shared cooldown duration in seconds, affecting all agents.
-            SetRemainingDuration<native><epic_internal>(__dupe___unnamed_parameter_81:accessor, InRemainingDuration:float)<transacts>:void
+            SetRemainingDuration<native><epic_internal>(__dupe___unnamed_parameter_73:accessor, InRemainingDuration:float)<transacts>:void
 
             @experimental
             # Event which fires when the shared cooldown triggers.
@@ -1545,11 +1210,11 @@ Temporary<public> := module:
 
             @experimental
             # Get the remaining shared cooldown duration in seconds, affecting all agents.
-            GetRemainingDurationForAgent<native><epic_internal>(__dupe___unnamed_parameter_84:accessor, Agent:agent)<transacts>:float
+            GetRemainingDurationForAgent<native><epic_internal>(__dupe___unnamed_parameter_76:accessor, Agent:agent)<transacts>:float
 
             @experimental
             # Set the remaining shared cooldown duration in seconds, affecting all agents.
-            SetRemainingDurationForAgent<native><epic_internal>(__dupe___unnamed_parameter_83:accessor, Agent:agent, InRemainingDuration:float)<transacts>:void
+            SetRemainingDurationForAgent<native><epic_internal>(__dupe___unnamed_parameter_75:accessor, Agent:agent, InRemainingDuration:float)<transacts>:void
 
             @experimental
             # Event which fires when the per agent cooldown triggers. Sends the agent which was previously affected by the cooldown.
@@ -1594,11 +1259,11 @@ Temporary<public> := module:
 
             @experimental
             # Get the maximum number of successful interactions possible.
-            GetMaxSuccessfulInteractions<native><epic_internal>(__dupe___unnamed_parameter_86:accessor)<transacts>:?int
+            GetMaxSuccessfulInteractions<native><epic_internal>(__dupe___unnamed_parameter_78:accessor)<transacts>:?int
 
             @experimental
             # Update the maximum number of successful interactions possible, a value of false is unlimited.If the current number of tracked interactions is greater than the value specified here, all current interactions will be canceled.
-            SetMaxSuccessfulInteractions<native><epic_internal>(__dupe___unnamed_parameter_85:accessor, InMaxSuccessfulInteractions:?int)<transacts>:void
+            SetMaxSuccessfulInteractions<native><epic_internal>(__dupe___unnamed_parameter_77:accessor, InMaxSuccessfulInteractions:?int)<transacts>:void
 
             @experimental
             # The number of times the component can be successfully interacted with. A value of false is unlimited.When SuccessfulInteractionCount reaches MaxSuccessfulInteractions all active interactions are canceled, and the component cannot be interacted with.
@@ -1915,17 +1580,17 @@ Temporary<public> := module:
         @hide_in_editor
         @experimental
         point_light_component_base<native><epic_internal> := class<epic_internal>(light_component):
-            GetAttenuationRadius<native><protected>(__dupe___unnamed_parameter_85:accessor)<transacts>:float
+            GetAttenuationRadius<native><protected>(__dupe___unnamed_parameter_77:accessor)<transacts>:float
 
-            GetSourceLength<native><protected>(__dupe___unnamed_parameter_89:accessor)<transacts>:float
+            GetSourceLength<native><protected>(__dupe___unnamed_parameter_81:accessor)<transacts>:float
 
-            GetSourceRadius<native><protected>(__dupe___unnamed_parameter_87:accessor)<transacts>:float
+            GetSourceRadius<native><protected>(__dupe___unnamed_parameter_79:accessor)<transacts>:float
 
-            SetAttenuationRadius<native><protected>(__dupe___unnamed_parameter_86:accessor, InAttenuationRadius:float)<transacts>:void
+            SetAttenuationRadius<native><protected>(__dupe___unnamed_parameter_78:accessor, InAttenuationRadius:float)<transacts>:void
 
-            SetSourceLength<native><protected>(__dupe___unnamed_parameter_90:accessor, InSourceLength:float)<transacts>:void
+            SetSourceLength<native><protected>(__dupe___unnamed_parameter_82:accessor, InSourceLength:float)<transacts>:void
 
-            SetSourceRadius<native><protected>(__dupe___unnamed_parameter_88:accessor, InSourceRadius:float)<transacts>:void
+            SetSourceRadius<native><protected>(__dupe___unnamed_parameter_80:accessor, InSourceRadius:float)<transacts>:void
 
             @experimental
             # The bounds of the light’s visible influence. This clamping of the light's influence is not physically correct but very important for performance, larger lights cost more.This clamping of the light's influence is not physically correct but very important for performance. Larger lights cost more. Clamped between 8.0 and 16384.0.
@@ -3076,459 +2741,6 @@ Tests<public> := module:
         nexus_utils<native><epic_internal> := class:
             HelloWorld<native><public>():void
 
-    using {/UnrealEngine.com/Temporary/SpatialMath}
-    # Module import path: /UnrealEngine.com/Tests/VersePrototypeGameplay
-    VersePrototypeGameplay<public> := module:
-        # Build a path from the StartLocation to the EndLocation using GridSize, GridOccupany, and navigation cost hueristics. Pop from the returned object_stack like so: "{if (Node:= i_nav_grid_node_2d[ReturnedPath.Pop[]]) #Use Node.GetLocation() }"
-        BuildPathUsingAStar<public>(Args:build_path_astar_args)<transacts><decides>:[]vector2i = external {}
-
-        # Build a path from the StartLocation to the EndLocation using GridSize and GridOccupany.
-        BuildPathUsingAStarSimple<public>(GridOccupancy:i_grid_occupancy, GridSize:vector2i, StartLocation:vector2i, EndLocation:vector2i)<transacts><decides>:[]vector2i = external {}
-
-        SimpleDistanceNavCost<public>(NodePosition:vector2i, NeighborPosition:vector2i)<transacts>:float = external {}
-
-        SimpleManhattanDistance2D<public>(NodePosition:vector2i, NavTargetPosition:vector2i)<transacts>:float = external {}
-
-        build_path_astar_args<public> := struct:
-            ActualNavigationCost<public>:navigation_cost_delegate
-
-            EndLocation<public>:vector2i
-
-            EstimatedNavigationCost<public>:navigation_cost_delegate
-
-            GridOccupancy<public>:i_grid_occupancy
-
-            GridSize<public>:vector2i
-
-            StartLocation<public>:vector2i
-
-        # Interface used for determining if a specific grid cell is considered occupied.
-        i_grid_occupancy<public> := interface:
-            # Fails if the grid location is not occupied.
-            IsOccupied<public>(Location:vector2i)<transacts><decides>:void
-
-        # This method is used for calculating the cost from the specified node to the target position. See SimpleManhattanDistance2D for an example.
-        navigation_cost_delegate<public> := type {__(:vector2i, :vector2i)<transacts>:float}
-
-        simple_grid_occupancy<public> := class(i_grid_occupancy):
-            Init<public>(InGridSize:int):void = external {}
-
-            IsOccupied<override>(Location:vector2i)<transacts><decides>:void = external {}
-
-            SetOccupancy<public>(X:int, Y:int, Occupied:logic):void = external {}
-
-            var GridSize<public>:int
-
-            var OccupancyGrid<public>:[][]logic
-
-using {/UnrealEngine.com/VGameplayRst/Transform}
-using {/Verse.org/Colors}
-using {/Verse.org/Restricted}
-using {/Verse.org/VerseEngine/Entity}
-using {/Verse.org/VerseExperimental}
-# Module import path: /UnrealEngine.com/VGameplayRst
-VGameplayRst<public> := module:
-    # Module import path: /UnrealEngine.com/VGameplayRst/Audio
-    Audio<public> := module:
-        audio_component<native><public> := class<final>(vk_component):
-            BeginSound<native><public>():void
-
-            EndSound<native><public>():void
-
-            SetSound<native><epic_internal>(Sound:sound)<transacts>:void
-
-    # Module import path: /UnrealEngine.com/VGameplayRst/Components
-    Components<public> := module:
-        activation_state<native><public> := enum:
-            Active
-
-            Inactive
-
-        dynamic_activation_component<native><public> := class<final>(vk_component):
-            BeginTransition<native><public>(SecondsToChange:float, TargetState:activation_state):void
-
-            LinkComponent<native><public>(ComponentToLink:vk_component):void
-
-            Reset<native><public>():void
-
-            UnlinkComponent<native><public>(ComponentToUnlink:vk_component):void
-
-            WaitForTransitionBegin<native><public>()<suspends>:void
-
-            WaitForTransitionComplete<native><public>()<suspends>:void
-
-        script_component<native><public> := class<abstract><unique>(vk_component):
-            AddToCreateComponentList<native><public>(__dupe___unnamed_parameter_58:[]subtype(vk_component)):void
-
-            AddToRequiredComponentList<native><public>(__dupe___unnamed_parameter_59:[]subtype(vk_component)):void
-
-            GetAllComponentsOfType<native><public>(componentType:type)<transacts>:[]vk_component
-
-            GetComponentOfType<native><public>(componentType:type)<transacts>:?vk_component
-
-            GetFullname<native><public>():string
-
-            GetName<native><public>():string
-
-            IsEnabled<native><public>():logic
-
-            IsOwner<native><public>(Entity:vk_entity):logic
-
-            OnBegin<native_callable><public>():void = external {}
-
-            OnCreate<native_callable><public>():void = external {}
-
-            OnEnabledChanged<native_callable><public>(Enabled:logic):void = external {}
-
-            OnEnd<native_callable><public>():void = external {}
-
-            OnPostCreate<native_callable><public>():void = external {}
-
-            OnTick<native_callable><public>(DeltaTime:float):void = external {}
-
-            SetEnabled<native><public>(Enabled:logic):void
-
-            SetTickEnabled<native><public>(InIsEnabled:logic):void
-
-            var AllowMultiple<native><public>:logic = external {}
-
-    # Module import path: /UnrealEngine.com/VGameplayRst/Datastore
-    Datastore<public> := module:
-        # Module import path: /UnrealEngine.com/VGameplayRst/Datastore/DatastoreComponent
-        DatastoreComponent<epic_internal> := module:
-            ClearAllDatastoreValues<native><public>(Player:player_component):void
-
-            SetDatastoreValue<native><public>(Player:player_component, Key:string, Value:string):void
-
-            SetDatastoreValueInt<native><public>(Player:player_component, Key:string, Value:int):void
-
-        datastore_component<native><public> := class<final>(vk_component):
-
-    # Module import path: /UnrealEngine.com/VGameplayRst/EntityUtil
-    EntityUtil<public> := module:
-        # Creates a vk_component of the specified type on the vk_entity indicated by EntityID. Returns the spawned vk_component object
-        CreateAndAddComponent<native><public>(EntityID:int, ComponentType:subtype(vk_component))<transacts>:vk_component
-
-        # Attempts to find a sub vk_component of the specified type from the nominated vk_component. Returns it if found, otherwise fails
-        GetComponentOfTypeFromComponent<native><public>(Component:vk_component, Type:type)<transacts><decides>:vk_component
-
-        # Attempts to find a sub vk_component of the specified type from the nominated vk_component for the specified vk_entity. Returns it if found, otherwise fails
-        GetComponentOfTypeFromComponentForEntity<native><public>(Component:vk_component, EntityID:int, Type:type)<transacts><decides>:vk_component
-
-        # Spawn an empty vk_entity with the specified transform. Returns the EntityID
-        SpawnEmptyEntity<native><public>(InTransform:transform, Name:string):int
-
-        # Spawn an empty vk_entity with the specified transform. Returns the vk_entity.
-        SpawnEntity<native><public>(InTransform:transform, Name:string):?vk_entity
-
-        # Spawn an empty vk_entity with the specified position. Returns the vk_entity
-        SpawnEntity<native><public>(Position:vector3, Name:string):?vk_entity
-
-        # Spawn an empty vk_entity with the specified position, rotation, and scale. Returns the vk_entity
-        SpawnEntity<native><public>(Position:vector3, Rotation:vector3, Scale:vector3, Name:string):?vk_entity
-
-        # Spawn an vk_entity from the specified assetPath with a transform. Returns the EntityID
-        SpawnEntityFromAsset<native><public>(AssetPath:string, InTransform:transform, Name:string):int
-
-    # Module import path: /UnrealEngine.com/VGameplayRst/GameObjects
-    GameObjects<public> := module:
-        CreateWorldAnchor<public>(Entity:vk_entity):?world_anchor = external {}
-
-        CreateWorldAnchor<public>(TagToFind:tag):?world_anchor = external {}
-
-        CreateWorldAnchor<public>(WorldPosition:vector3):?world_anchor = external {}
-
-        CreateWorldAnchor<public>(WorldPosition:vector3, DebugName:string):?world_anchor = external {}
-
-        world_anchor<public> := class<internal>(mutable_positionable):
-            Destroy<public>():void = external {}
-
-            GetComponent<public>()<transacts>:vk_component = external {}
-
-            GetPosition<override>()<transacts>:vector3 = external {}
-
-            SetPosition<override>(Position:vector3)<transacts>:void = external {}
-
-    # Module import path: /UnrealEngine.com/VGameplayRst/LevelStreaming
-    LevelStreaming<public> := module:
-        level_streaming_component<native><public> := class<final>(vk_component):
-            RequestLoadLevel<native><epic_internal>(Level:level, Timeout:time_span, MessageToKickedPlayers:string):?sticky_event(void)
-
-            RequestUnloadLevel<native><public>(Timeout:time_span, MessageToKickedPlayers:string):?sticky_event(void)
-
-    # Module import path: /UnrealEngine.com/VGameplayRst/Lights
-    Lights<public> := module:
-        vk_point_light_component<native><public> := class<final>(vk_component):
-            GetAttenuationRadius<native><public>():float
-
-            GetColor<native><epic_internal>():color
-
-            GetIntensity<native><public>():float
-
-            GetSourceLength<native><public>():float
-
-            GetSourceRadius<native><public>():float
-
-            SetAttenuationRadius<native><public>(NewRadius:float):void
-
-            SetColor<native><epic_internal>(NewColor:color):void
-
-            SetIntensity<native><public>(NewIntensity:float):void
-
-            SetSourceLength<native><public>(NewLength:float):void
-
-            SetSourceRadius<native><public>(NewRadius:float):void
-
-        vk_spot_light_component<native><public> := class<final>(vk_component):
-            GetAttenuationRadius<native><public>():float
-
-            GetColor<native><epic_internal>():color
-
-            GetInnerConeAngle<native><public>():float
-
-            GetIntensity<native><public>():float
-
-            GetOuterConeAngle<native><public>():float
-
-            GetSourceLength<native><public>():float
-
-            GetSourceRadius<native><public>():float
-
-            SetAttenuationRadius<native><public>(NewRadius:float):void
-
-            SetColor<native><epic_internal>(NewColor:color):void
-
-            SetInnerConeAngle<native><public>(NewInnerConeAngle:float):void
-
-            SetIntensity<native><public>(NewIntensity:float):void
-
-            SetOuterConeAngle<native><public>(NewOuterConeAngle:float):void
-
-            SetSourceLength<native><public>(NewLength:float):void
-
-            SetSourceRadius<native><public>(NewRadius:float):void
-
-    # Module import path: /UnrealEngine.com/VGameplayRst/Messaging
-    Messaging<public> := module:
-        debug_command_component<native><public> := class(vk_component):
-            _WaitForCommand<native><public>(CommandId:string)<suspends>:string
-
-    # Module import path: /UnrealEngine.com/VGameplayRst/Physics
-    Physics<public> := module:
-        collision_shape_mode<native><public> := enum:
-            CollisionBox
-
-            CollisionCapsule
-
-            CollisionMesh
-
-            CollisionSphere
-
-        dof_movement_mode<native><public> := enum:
-            CustomPlane
-
-            Default
-
-            NoConstraints
-
-            SixDOF
-
-            XYPlane
-
-            XZPlane
-
-            YZPlane
-
-        hit_result_legacy<native><public> := struct:
-            # The location at which the hit occured on OtherEntityID
-            HitLocation<native><public>:vector3
-
-            # The surface normal at the location at which the hit occured on OtherEntityID
-            HitNormal<native><public>:vector3
-
-            # The vk_collision_component belonging to the entity hit
-            OtherComponent<native><public>:vk_collision_component
-
-            # The ID belonging to the entity hit
-            OtherEntityID<native><public>:int
-
-        physics_trace<native><public> := class:
-            InitPhysicsTrace<native><public>(ContextObject:vk_component, TraceCategory:physics_trace_category, TraceType:physics_trace_type, TraceShape:physics_trace_shape, TraceChannel:physics_trace_channel, Start:vector3, End:vector3, IgnoreCallingEntity:logic, TraceExtent:vector3, TraceRadius:float, ProfileName:string):void
-
-            WaitPhysicsTrace<native><public>()<suspends>:[]hit_result_legacy
-
-        physics_trace_category<native><public> := enum:
-            Channel
-
-            Object
-
-            Profile
-
-        physics_trace_channel<native><public> := enum:
-            Camera
-
-            Destructible
-
-            GameTraceChannel1
-
-            GameTraceChannel2
-
-            GameTraceChannel3
-
-            GameTraceChannel4
-
-            GameTraceChannel5
-
-            GameTraceChannel6
-
-            Pawn
-
-            PhysicsBody
-
-            Vehicle
-
-            Visibility
-
-            WorldDynamic
-
-            WorldStatic
-
-        physics_trace_shape<native><public> := enum:
-            Box
-
-            Line
-
-            ShapeSphere
-
-        physics_trace_type<native><public> := enum:
-            Multi
-
-            Single
-
-            Test
-
-        vk_collision_component<native><public> := class<final>(vk_component):
-            GetCollisionProfileName<native><public>()<transacts>:string
-
-            GetCollisionShapeMode<native><public>()<transacts>:collision_shape_mode
-
-            GetEnabled<native><public>():logic
-
-            GetGravityEnabled<native><public>():logic
-
-            GetMovable<native><public>()<transacts>:logic
-
-            GetSendHitEventsOnCollide<native><public>()<transacts>:logic
-
-            GetSendOverlapEvents<native><public>()<transacts>:logic
-
-            GetUseContinuousCollisionDetection<native><public>():logic
-
-            SetBoxCollisionShapeMode<native><public>(BoxExtent:vector3)<transacts>:void
-
-            SetCapsuleCollisionShapeMode<native><public>(Height:float, Radius:float)<transacts>:void
-
-            SetCollisionProfileName<native><public>(CollisionProfile:string)<transacts>:void
-
-            SetCustomDegreeOfFreedomConstrain<native><public>(CustomMovementPlaneNormal:vector3):void
-
-            SetDegreeOfFreedomContraint<native><public>(MovementMode:dof_movement_mode):void
-
-            SetEnabled<native><public>(InIsEnabled:logic):void
-
-            SetGravityEnabled<native><public>(EnableGravity:logic):void
-
-            SetMeshCollisionShapeMode<native><epic_internal>(Mesh:mesh)<transacts>:void
-
-            # Looks at the mesh_component for the mesh.
-            SetMeshCollisionShapeMode<native><public>()<transacts>:void
-
-            SetMovable<native><public>(IsMovable:logic)<transacts>:void
-
-            SetSendHitEventsOnCollide<native><public>(EnableHitEvents:logic)<transacts>:void
-
-            SetSendOverlapEvents<native><public>(EnableOverlapEvents:logic)<transacts>:void
-
-            SetSphereCollisionShapeMode<native><public>(Radius:float)<transacts>:void
-
-            SetUseContinuousCollisionDetection<native><public>(UseCCD:logic):void
-
-            WaitBeginOverlap<native><public>()<suspends>:vk_overlap_result
-
-            WaitEndOverlap<native><public>()<suspends>:vk_overlap_result
-
-            WaitHit<native><public>()<suspends>:hit_result_legacy
-
-        vk_overlap_result<native><public> := class:
-            FromSweep<native><public>:logic
-
-            OtherComponent<native><public>:vk_collision_component
-
-            OtherEntityID<native><public>:int
-
-            SweepHitLocation<native><public>:vector3
-
-            SweepHitNormal<native><public>:vector3
-
-    # Module import path: /UnrealEngine.com/VGameplayRst/Transform
-    Transform<public> := module:
-        mutable_positionable<native><public> := interface(positionable):
-            SetPosition<public>(v:vector3)<transacts>:void
-
-        mutable_rotatable<native><public> := interface(rotatable):
-            ApplyAdditionalRotation<public>(r:rotation):void
-
-            SetForwardVectorFromXY<public>(x:vector3, y:vector3):void
-
-            SetRotation<public>(r:rotation)<transacts>:void
-
-        mutable_scalable<native><public> := interface(scalable):
-            SetScale<public>(v:vector3)<transacts>:void
-
-        position_component<native><public> := class<final>(vk_component, mutable_positionable):
-            AddToPosition<native><public>(v:vector3):void
-
-            GetPosition<override><native>()<transacts>:vector3
-
-            SetPosition<override><native>(v:vector3)<transacts>:void
-
-        positionable<native><public> := interface:
-            GetPosition<public>()<transacts>:vector3
-
-        rotatable<native><public> := interface:
-            ForwardVector<public>()<transacts>:vector3
-
-            RightVector<public>()<transacts>:vector3
-
-            Rotation<public>()<transacts>:rotation
-
-            UpVector<public>()<transacts>:vector3
-
-        rotation_component<native><public> := class<final>(vk_component, mutable_rotatable):
-            ApplyAdditionalRotation<override><native>(r:rotation):void
-
-            ForwardVector<override>()<transacts>:vector3 = external {}
-
-            RightVector<override>()<transacts>:vector3 = external {}
-
-            Rotation<override><native>()<transacts>:rotation
-
-            SetForwardVectorFromXY<override><native>(x:vector3, y:vector3):void
-
-            SetRotation<override><native>(r:rotation)<transacts>:void
-
-            UpVector<override>()<transacts>:vector3 = external {}
-
-        scalable<native><public> := interface:
-            GetScale<public>()<transacts>:vector3
-
-        scale_component<native><public> := class<final>(vk_component, mutable_scalable):
-            AddToScale<native><public>(v:vector3):void
-
-            GetScale<override><native>()<transacts>:vector3
-
-            SetScale<override><native>(v:vector3)<transacts>:void
-
 using {/UnrealEngine.com/Temporary/SceneGraph}
 using {/Verse.org/Simulation/Tags}
 using {/Verse.org/Simulation}
@@ -3592,6 +2804,19 @@ VerseQueryTestSuite<public> := module:
     @experimental
     verse_query_unused_test_component<native><epic_internal> := class(component):
         IsAllowedOnClient<override>():logic = external {}
+
+WebAPI<public> := module:
+    MakeClient<constructor><native><public>(ClientId:client_id)<converges>:client
+
+    body_response<native><public> := class<internal>(response):
+        GetBody<native><public>()<computes>:string
+
+    client<native><public> := class<final><computes><internal>:
+        Get<native><public>(Path:string)<suspends>:response
+
+    client_id<native><public> := class<abstract><computes>:
+
+    response<native><public> := class<internal>:
 
 WorldPartition<public> := module:
     using {/Verse.org/Assets}

@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-32.00-CL-37505882
+# Generated from build: ++Fortnite+Release-32.10-CL-37958378
 #################################################
 
 AI<public> := module:
@@ -654,6 +654,7 @@ AI<public> := module:
 
 using {/Fortnite.com/AI}
 using {/Fortnite.com/Assets}
+using {/Fortnite.com/Characters}
 using {/Fortnite.com/Game}
 using {/Fortnite.com/Teams}
 using {/Fortnite.com/Vehicles}
@@ -661,6 +662,7 @@ using {/UnrealEngine.com/Abilities}
 using {/UnrealEngine.com/Temporary/Diagnostics}
 using {/UnrealEngine.com/Temporary/SceneGraph/VerseCamera}
 using {/UnrealEngine.com/Temporary/SceneGraph}
+using {/Verse.org/Assets}
 using {/Verse.org/Simulation/Tags}
 # Module import path: /Fortnite.com/Animation
 Animation<public> := module:
@@ -1524,7 +1526,6 @@ Devices<public> := module:
         UnregisterAll<public>():void = external {}
 
     using {/Fortnite.com/Game}
-    using {/Verse.org/Simulation}
     # Used to create a customizable turret that can search for nearby targets.
     automated_turret_device<public> := class<concrete><final>(creative_device_base, healthful, healable):
         # Triggers when someone enters the activation radius while nobody else is there.
@@ -2150,6 +2151,7 @@ Devices<public> := module:
     # Used together with `class_selector_device` to create class based gameplay. Defines custom class attributes and inventory loadouts.
     class_designer_device<public> := class<concrete><final>(creative_device_base):
 
+    using {/Verse.org/Simulation}
     # Used to allow players to select their *Class* from a *Class Selector UI*.
     class_selector_ui_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when an `agent` changes a class.
@@ -6237,7 +6239,7 @@ Devices<public> := module:
         EliminateTamed<epic_internal>(Agent:agent):void = external {}
 
         # Signaled when wildlife is eliminated.
-        # `Source` is the `agent` that eliminated the wildlife. If the wildlife was eliminated by a non-agent then `Source` is 'false'.
+        # `Source` is the `agent` that eliminated the wildlife. If the wildlife was eliminated by a non-agent, or because the oldest wildlife was eliminated as Spawn function was called after spawn count was exceeded, then `Source` is 'false'.
         # `Target` is the wildlife that was eliminated.
         EliminatedEvent<public>:listenable(device_ai_interaction_result) = external {}
 
@@ -6277,7 +6279,7 @@ Devices<public> := module:
         #  Sends the wildlife that ate something.
         SomethingIsEatenEvent<public>:listenable(agent) = external {}
 
-        # Spawns wildlife from this device.
+        # Spawns wildlife from this device. If spawn count is exceeded the oldest wildlife will be eliminated.
         Spawn<public>():void = external {}
 
         # Signaled when this device spawns wildlife.
@@ -6428,9 +6430,6 @@ FortPlayerUtilities<public> := module:
         # Maximize the dynamic resolution by setting a lower target framerate
         MaximizeResolution
 
-using {/Fortnite.com/Characters}
-using {/Verse.org/Assets}
-using {/Verse.org/VerseEngine/Component}
 # Module import path: /Fortnite.com/Game
 Game<public> := module:
     @experimental
@@ -6460,77 +6459,6 @@ Game<public> := module:
 
     @experimental
     (InCameraBehavior:camera_component).DeactivateForPlayerAtIndex<native><epic_internal>(InPlayerIndex:int)<transacts><decides>:void
-
-    # Module import path: /Fortnite.com/Game/Abilities
-    Abilities<public> := module:
-        # Module import path: /Fortnite.com/Game/Abilities/AbilityComponent
-        AbilityComponent<public> := module:
-            GetAbilityComponentForCharacter<native><public>(__dupe___unnamed_parameter_86:fort_character)<transacts><decides>:vk_fort_ability_component
-
-            GetAbilityComponentForPlayer<native><epic_internal>(__dupe___unnamed_parameter_85:player_component)<transacts><decides>:vk_fort_ability_component
-
-        activate_ability_result<native><public> := enum:
-            # Ability was activated successfully
-            Activated
-
-            # Ability was activated and then was cancelled
-            Canceled
-
-            # Ability was activated and then ended naturally
-            Completed
-
-            # Ability failed to activate
-            Failed
-
-            # Ability asset was invalid
-            Invalid
-
-            # Ability could not be activated because it was not added
-            NotOwned
-
-        add_ability_result<native><public> := enum:
-            # Ability was successfully added
-            Added
-
-            # Ability was already added
-            AlreadyOwned
-
-            # Ability asset was invalid
-            Invalid
-
-        gameplay_ability_asset<native><public> := class<computes><final>(asset):
-
-        gameplay_effect_asset<native><public> := class<computes><final>(asset):
-
-        remove_ability_result<native><public> := enum:
-            # Ability asset was invalid
-            Invalid
-
-            # Ability could not be removed because it was not added
-            NotOwned
-
-            # Ability was successfully removed
-            Removed
-
-        vk_fort_ability_component<native><public> := class<final>(vk_component):
-            ActivateAbility<native><public>(AbilityAsset:gameplay_ability_asset, ?Target:?agent = external {})<suspends>:activate_ability_result
-
-            AddAbility<native><public>(AbilityAsset:gameplay_ability_asset):add_ability_result
-
-            ApplyGameplayEffect<native><public>(EffectAsset:gameplay_effect_asset, Magnitude:float):void
-
-            RemoveAbility<native><public>(AbilityAsset:gameplay_ability_asset):remove_ability_result
-
-    # Module import path: /Fortnite.com/Game/Attributes
-    Attributes<public> := module:
-        gameplay_attribute<native><public> := class<abstract><epic_internal>(gameplay_attribute_base):
-            AttributePathString<native><epic_internal>:string
-
-        @import_as("/Script/VerseFortniteGameplayAbilities.UVerseGameplayAttribute")
-        gameplay_attribute_base<native><epic_internal> := class<abstract>:
-
-        health_attribute<public> := class<final>(gameplay_attribute):
-            AttributePathString<override>:string = external {}
 
     @experimental
     GetPlayerCameraView<native><epic_internal>(Player:player)<transacts><decides>:fort_player_camera_view
