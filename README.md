@@ -86,7 +86,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 
 <ul>
 <details open>
-<summary>v32 - v30</summary>
+<summary>v30 - v32</summary>
 
 <ul>
 <details open>
@@ -122,7 +122,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 </details>
 
 <details>
-<summary>v29 - v24</summary>
+<summary>v24 - v29</summary>
 
 <ul>
 <details>
