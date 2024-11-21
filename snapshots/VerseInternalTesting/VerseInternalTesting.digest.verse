@@ -1,8 +1,39 @@
 using {/Fortnite.com/Characters}
 using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/UnrealEngine.com/Temporary/Diagnostics}
+using {/UnrealEngine.com/Temporary/Testing}
+using {/Fortnite.com/Vehicles}
+using {/Fortnite.com/Game}
 using {/Verse.org/Simulation}
 using {/Fortnite.com/Devices}
+# Module import path: /Fortnite.com/VerseInternalTesting/NexusFramework
+NexusFramework<public> := module:
+    nexus_test_runner<epic_internal> := class(creative_device):
+        OnEnd<override>():void = external {}
+
+    nexus_test_device<epic_internal> := class(creative_device):
+        @editable
+        var TestRunner<public>:nexus_test_runner = external {}
+
+        AddResults<epic_internal>(TestName:string, Passed:logic, ContextString:string):void = external {}
+
+        AddPass<epic_internal>(TestName:string, ContextString:string):void = external {}
+
+        AddFail<epic_internal>(TestName:string, ContextString:string):void = external {}
+
+        AddCheck<epic_internal>(IsPassed:logic, TestName:string, ContextString:string):void = external {}
+
+        AddSkip<epic_internal>(IsPassed:logic, TestName:string, ContextString:string):void = external {}
+
+        OnBegin<override>()<suspends>:void = external {}
+
+        OnEnd<override>():void = external {}
+
+    example_nexus_device<epic_internal> := class(nexus_test_device):
+        OnBegin<override>()<suspends>:void = external {}
+
+        OnEnd<override>():void = external {}
+
 # Module import path: /Fortnite.com/VerseInternalTesting/VerseFramework
 VerseFramework<public> := module:
     test_device<epic_internal> := class(creative_device):
@@ -36,6 +67,15 @@ VerseFramework<public> := module:
     device_event_void_handler_mock<public> := class(test_device_event_handler_mock):
         Subscribe<public>(Event:listenable(tuple())):void = external {}
 
+    device_event_damage_result_handler_mock<public> := class(test_device_event_handler_mock):
+        var ArgSource<public>:?game_action_causer = external {}
+
+        var ArgInstigator<public>:?game_action_instigator = external {}
+
+        var ArgAmount<public>:float = external {}
+
+        Subscribe<public>(Event:listenable(damage_result)):void = external {}
+
     device_event_agent_handler_mock<public> := class(test_device_event_handler_mock):
         var ArgAgent<public>:?agent = external {}
 
@@ -67,6 +107,11 @@ VerseFramework<public> := module:
 
         Subscribe<public>(Event:listenable(device_ai_interaction_result)):void = external {}
 
+    device_event_fort_vehicle_handler_mock<public> := class(test_device_event_handler_mock):
+        var ArgVehicle<public>:?fort_vehicle = external {}
+
+        Subscribe<public>(Event:listenable(fort_vehicle)):void = external {}
+
     test_case<public> := struct:
         Name<public>:string
 
@@ -89,7 +134,11 @@ VerseFramework<public> := module:
 
         AfterEachFunc<public>:type {__()<suspends>:void}
 
-    test_runner<epic_internal> := class<reads><allocates>:
+    test_runner<epic_internal> := class:
+        var TestReporter<public>:test_reporter = external {}
+
+        var CurrentTestSuite<public>:string = external {}
+
         var TargetTestSuite<public>:string = external {}
 
         var EnableFlakinessEvaluation<public>:logic = external {}
@@ -197,36 +246,14 @@ VerseFramework<public> := module:
         Complete
 
     test_runner_device<epic_internal> := class(creative_device):
+        @editable
+        TestReportName<public>:string = external {}
+
+        @editable
+        TestReportVerbosity<public>:log_level = external {}
+
         TestRunner<public>:test_runner = external {}
 
         var Status<public>:test_runner_status = external {}
 
         OnBegin<override>()<suspends>:void = external {}
-
-# Module import path: /Fortnite.com/VerseInternalTesting/NexusFramework
-NexusFramework<public> := module:
-    nexus_test_runner<epic_internal> := class(creative_device):
-        OnEnd<override>():void = external {}
-
-    nexus_test_device<epic_internal> := class(creative_device):
-        @editable
-        var TestRunner<public>:nexus_test_runner = external {}
-
-        AddResults<epic_internal>(TestName:string, Passed:logic, ContextString:string):void = external {}
-
-        AddPass<epic_internal>(TestName:string, ContextString:string):void = external {}
-
-        AddFail<epic_internal>(TestName:string, ContextString:string):void = external {}
-
-        AddCheck<epic_internal>(IsPassed:logic, TestName:string, ContextString:string):void = external {}
-
-        AddSkip<epic_internal>(IsPassed:logic, TestName:string, ContextString:string):void = external {}
-
-        OnBegin<override>()<suspends>:void = external {}
-
-        OnEnd<override>():void = external {}
-
-    example_nexus_device<epic_internal> := class(nexus_test_device):
-        OnBegin<override>()<suspends>:void = external {}
-
-        OnEnd<override>():void = external {}
