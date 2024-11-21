@@ -6,7 +6,7 @@ wildlife_spawner_device<public> := class<concrete><final>(creative_device_base):
     SpawnedEvent<public>:listenable(agent) = external {}
 
     # Signaled when wildlife is eliminated.
-    # `Source` is the `agent` that eliminated the wildlife. If the wildlife was eliminated by a non-agent then `Source` is 'false'.
+    # `Source` is the `agent` that eliminated the wildlife. If the wildlife was eliminated by a non-agent, or because the oldest wildlife was eliminated as Spawn function was called after spawn count was exceeded, then `Source` is 'false'.
     # `Target` is the wildlife that was eliminated.
     EliminatedEvent<public>:listenable(device_ai_interaction_result) = external {}
 
@@ -57,7 +57,7 @@ wildlife_spawner_device<public> := class<concrete><final>(creative_device_base):
     # Resets the count on the *Total Spawn Count* option.
     Reset<public>():void = external {}
 
-    # Spawns wildlife from this device.
+    # Spawns wildlife from this device. If spawn count is exceeded the oldest wildlife will be eliminated.
     Spawn<public>():void = external {}
 
     # Despawns wildlife. `Agent` is marked as the one who eliminated the wildlife.
