@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-32.10-CL-37958378
+# Generated from build: ++Fortnite+Release-32.11-CL-38202817
 #################################################
 
 AI<public> := module:
@@ -1526,6 +1526,7 @@ Devices<public> := module:
         UnregisterAll<public>():void = external {}
 
     using {/Fortnite.com/Game}
+    using {/Verse.org/Simulation}
     # Used to create a customizable turret that can search for nearby targets.
     automated_turret_device<public> := class<concrete><final>(creative_device_base, healthful, healable):
         # Triggers when someone enters the activation radius while nobody else is there.
@@ -2151,7 +2152,6 @@ Devices<public> := module:
     # Used together with `class_selector_device` to create class based gameplay. Defines custom class attributes and inventory loadouts.
     class_designer_device<public> := class<concrete><final>(creative_device_base):
 
-    using {/Verse.org/Simulation}
     # Used to allow players to select their *Class* from a *Class Selector UI*.
     class_selector_ui_device<public> := class<concrete><final>(creative_device_base):
         # Signaled when an `agent` changes a class.
