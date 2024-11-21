@@ -188,6 +188,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>Verse Snapshots Diffs</summary>
 
+- `32.00` - `32.11` (nothing new)
 - [`32.00` - `32.10`](https://github.com/kbfngg/uefn/commit/2781854d6f8604cebd580f5e561ea633ca78943c)
 - [`31.41` - `32.00`](https://github.com/kbfngg/uefn/commit/b19014697428c45ffdb39edefeaaf0dce6a690fc)
 - `31.40` - `31.41` (nothing new)
