@@ -94,7 +94,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details open>
 <summary>v33</summary>
 
-- `32.11` - `33.00`: [`public`]() | [`internal`]() (tbd)
+- `32.11` - `33.00`: [`public`](https://github.com/kbfngg/uefn/commit/17d459ec7915ba66a926216ebc4454145c89cd73) | [`internal`]() (tbd)
 
 </details>
 
