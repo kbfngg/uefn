@@ -244,7 +244,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>Regular</summary>
 
-- [`32.11` - `33.00`]() (tbd)
+- [`32.11` - `33.00`](https://github.com/kbfngg/uefn/commit/a2ace884feb2440f97d41e3f12db5f4bae34bd75)
 - [`32.10` - `32.11`](https://github.com/kbfngg/uefn/commit/222dae073c63aa5e7efaa253746f4163dcc5df97)
 - [`32.00` - `32.10`](https://github.com/kbfngg/uefn/commit/6611a42ca5292f0f65b20df7944f69a2755d5a90)
 - [`31.41` - `32.00`](https://github.com/kbfngg/uefn/commit/723ea9574e9ed4e2c884548d2241de7a0047f0ab)
@@ -291,7 +291,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>DelMar (Rocket Racing)</summary>
 
-- [`32.11` - `33.00`]() (tbd)
+- [`32.11` - `33.00`](https://github.com/kbfngg/uefn/commit/b49ce745e2dd205b8bea9ea32e251ac8888a739c)
 - [`32.10` - `32.11`](https://github.com/kbfngg/uefn/commit/28eaf820419c705e42a1e70bce3c3d99141af351)
 - [`32.00` - `32.10`](https://github.com/kbfngg/uefn/commit/cc5a3db4941d1e7af9fb92f5e1eb571bf5574ba7)
 - [`31.41` - `32.00`](https://github.com/kbfngg/uefn/commit/027a7e6788eb3babb148b9442a1079965de8b92f)
@@ -316,7 +316,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>LimeGFS (LEGO)</summary>
 
-- [`32.11` - `33.00`]() (tbd)
+- [`32.11` - `33.00`](https://github.com/kbfngg/uefn/commit/9ab6d3eb3639d74116187361885c67beecb75b64)
 - `32.10` - `32.11` (nothing new)
 - [`32.00` - `32.10`](https://github.com/kbfngg/uefn/commit/074ffa2d29cc9dd145e4353c9d604b4e3975cf1f)
 - [`31.41` - `32.00`](https://github.com/kbfngg/uefn/commit/3720552146e8ec8a3d29a4595b3750e05de79550)
@@ -341,7 +341,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>PartnerLimeGFS (LEGO Group)</summary>
 
-- [`32.11` - `33.00`]() (tbd)
+- [`32.11` - `33.00`](https://github.com/kbfngg/uefn/commit/71b23cbdb72559f82424abf25aa15459f3abd7f4)
 - [`32.10` - `32.11`](https://github.com/kbfngg/uefn/commit/61004ee6f99a1a1495a1d934be9bda33937d8282)
 - [`32.00` - `32.10`](https://github.com/kbfngg/uefn/commit/5a1c7c3f8786ea8c861c0e4fb1c0467df106111a)
 - [`31.41` - `32.00`](https://github.com/kbfngg/uefn/commit/6e4633e8a2bb38c1ca265c06225567762f9a2720)
@@ -366,7 +366,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>BeanstalkGFS (Fall Guys)</summary>
 
-- [`32.11` - `33.00`]() (tbd)
+- [`32.11` - `33.00`](https://github.com/kbfngg/uefn/commit/b48939f63eb864637621aa2737ac47f9ee8cf176)
 - [`32.10` - `32.11`](https://github.com/kbfngg/uefn/commit/e472298155e9524f6147fc6fc526f51c0eb86f80)
 - [`32.00` - `32.10`](https://github.com/kbfngg/uefn/commit/b812e8856ef8809ea1a1f000312b9c69b1b87ba5)
 - [`31.41` - `32.00`](https://github.com/kbfngg/uefn/commit/7f6731aa76f05bceccca9eb5054518a7a3060bc0)
@@ -383,7 +383,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>MeltedIronGFS (TMNT)</summary>
 
-- [`32.11` - `33.00`]() (tbd)
+- [`32.11` - `33.00`](https://github.com/kbfngg/uefn/commit/fc8cbde257c373a7ee2f5701d813ae06cf92ad85)
 - [`32.10` - `32.11`](https://github.com/kbfngg/uefn/commit/e8384a6758ac3350fd7f8807263379144f854a40)
 - [`32.00` - `32.10`](https://github.com/kbfngg/uefn/commit/494b124db8c7cf8e1569780496e2a464eb4068e4)
 - [`31.41` - `32.00`](https://github.com/kbfngg/uefn/commit/e6a56c94e0cd56422e77ef678945cfea47de61b9)
@@ -395,7 +395,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>FN1 (Reload)</summary>
 
-- [`32.11` - `33.00`]() (tbd)
+- [`32.11` - `33.00`](https://github.com/kbfngg/uefn/commit/25c26d5abe1c48cc6e35ae8b18854e9dde19c41d)
 - [`32.10` - `32.11`](https://github.com/kbfngg/uefn/commit/5bba18a52bfd1451ba93a60bcdc80f1c09a400cb)
 - [`32.00` - `32.10`](https://github.com/kbfngg/uefn/commit/ff6b204114d3952a182cb2d2d64f8d86fcfe78c3)
 - [`31.41` - `32.00`](https://github.com/kbfngg/uefn/commit/6362cfa8c79a95974ef9a2ff2876e425be31aeaf)
