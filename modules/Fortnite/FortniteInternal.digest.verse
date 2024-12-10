@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-33.00-CL-38324112
+# Generated from build: ++Fortnite+Release-33.10-CL-38630093
 #################################################
 
 AI<public> := module:
@@ -1031,6 +1031,9 @@ Characters<public> := module:
         # Signaled when this `fort_character` jumps. Returns a listenable with a payload of this `fort_character`.
         JumpedEvent<public>():listenable(fort_character)
 
+        # Epic internal - Signaled when this `fort_character` possesses a pawn.
+        PossessedEvent<epic_internal>():listenable(fort_character)
+
         # Puts this `fort_character` into stasis, preventing certain types of movement specified by `Args`.
         PutInStasis<public>(Args:stasis_args)<transacts>:void
 
@@ -1158,6 +1161,8 @@ Characters<public> := module:
         IsVulnerable<override>()<transacts><decides>:void = external {}
 
         JumpedEvent<override>():listenable(fort_character) = external {}
+
+        PossessedEvent<override>():listenable(fort_character) = external {}
 
         @experimental
         PutInStasis<override>(Args:stasis_args)<transacts>:void = external {}
@@ -1667,53 +1672,6 @@ Devices<public> := module:
 
         # Starts or resumes reverse playback of the animation.
         PlayReverse<public>():void = external {}
-
-    # Used to dynamically assemble or disassemble one or more building actors. Only available in LEGO islands.
-    assembly_device<public> := class<concrete><final>(creative_device_base, enableable):
-        # Initiates the assembly process.
-        Assemble<public>():void = external {}
-
-        # Initiates the assembly process.
-        Assemble<public>(Agent:agent):void = external {}
-
-        # Signaled when the device finishes assembling, at the same time as other 'finished' effects are started.
-        AssemblyFinishedEvent<public>:listenable(?agent) = external {}
-
-        # Disable this object.
-        Disable<override>():void = external {}
-
-        # Initiates the disassembly process.
-        Disassemble<public>():void = external {}
-
-        # Initiates the disassembly process.
-        Disassemble<public>(Agent:agent):void = external {}
-
-        # Signaled when the device finishes disassembling.
-        DisassemblyFinishedEvent<public>:listenable(?agent) = external {}
-
-        # Enable this object.
-        Enable<override>():void = external {}
-
-        # Succeeds if the object is enabled, fails if it’s disabled.
-        IsEnabled<override>()<transacts><decides>:void = external {}
-
-        # Succeeds if the device is paused, fails if it is not.
-        IsPaused<public>()<transacts><decides>:void = external {}
-
-        # Pause the assembly or disassembly process.
-        Pause<public>():void = external {}
-
-        # Pause the assembly or disassembly process.
-        Pause<public>(Agent:agent):void = external {}
-
-        # Resets affected building actors to the state they were in at the start of the round.
-        Reset<public>():void = external {}
-
-        # Resets affected building actors to the state they were in at the start of the round.
-        Reset<public>(Agent:agent):void = external {}
-
-        # The amount of progress the device has made towards fully assembling (1.0) or fully disassembling (0.0).
-        var<private> Progress<public>:float = external {}
 
     # Evaluates attributes for `agent` when signaled from other devices. Acts as branching logic, checking whether the `agent` associated with the signal passes all of the tests setup in this device, then sends a signal on either `PassEvent` or `FailEvent`.
     attribute_evaluator_device<public> := class<concrete><final>(trigger_base_device):
@@ -2921,17 +2879,6 @@ Devices<public> := module:
         # Enables this device.
         Enable<public>():void = external {}
 
-    del_mar_checkpoint_device<epic_internal> := class<concrete><final>(creative_device_base):
-
-    # Used to created an EMP Hazard that slows vehicles.
-    del_mar_emp_hazard_device<epic_internal> := class<concrete><final>(creative_device_base):
-        # Signaled when a vehicle triggers the EMP Hazard.Sends the `agent` that controls the vehicle.
-        EMPHazardTriggeredEvent<public>:listenable(agent) = external {}
-
-    del_mar_player_start_device<epic_internal> := class<concrete><final>(creative_device_base):
-
-    del_mar_speed_pad_device<epic_internal> := class<concrete><final>(creative_device_base):
-
     # Payload of `device_event_ai_interaction`.
     device_ai_interaction_result<native><public> := struct<epic_internal>:
         # Optional agent that triggered the interaction
@@ -3225,6 +3172,13 @@ Devices<public> := module:
         # Ends the round/game. Uses `Agent`'s team to determine if the round/game ends when *Activating Team* is enabled.
         Activate<public>(Agent:agent):void = external {}
 
+        # Ends the round/game. Determines who wins based on the *Winning Team* option.
+        # If *Winning Team* is set to *Activating Team* and *Activating Team* is set to a value other than *Any*, it will declare that team as the winner.
+        # If *Activating Team* is set to *Any* it will work the same as if *Winning Team* was set to *Winning Team*.
+        ActivateNoAgent<epic_internal>():void = external {}
+
+        ActivateNoAgentFunction<epic_internal>:device_function_set_params_by_type = external {}
+
         # Disables this device.
         Disable<public>():void = external {}
 
@@ -3373,7 +3327,6 @@ Devices<public> := module:
         # Removes the camera from all `Agent`s camera stacks and pops from being the active camera replacing it with the next one in the stack.
         RemoveFromAll<public>():void = external {}
 
-    @experimental
     # Used to update the camera's viewpoint from the perspective of the player character.
     gameplay_camera_first_person_device<public> := class<concrete><final>(gameplay_camera_device):
 
@@ -6961,15 +6914,11 @@ FN1Native<public> := module:
     # Module import path: /Fortnite.com/FN1Native/FortStorm
     FortStorm<public> := module:
         fort_storm<native><epic_internal> := class<epic_internal>(fort_storm_base):
-            DestroyStorm<native><epic_internal>()<transacts>:void
-
-            GetSafeZone<native><epic_internal>()<transacts>:tuple(vector3, float)
+            GetPhaseIndex<native><epic_internal>()<transacts><decides>:int
 
             InitialRadius<native><public>:float
 
             Initialize<native><epic_internal>()<transacts>:void
-
-            IsInSafeZone<native><epic_internal>(TestLocation:vector3)<transacts><decides>:void
 
             PauseStorm<native><epic_internal>()<transacts>:void
 
@@ -7022,6 +6971,8 @@ FN1Native<public> := module:
 
             PlayerPawnRespawnedEvent<native><public>:listenable(agent) = external {}
 
+            StartMatch<native><public>():logic
+
             TeamWonEvent<native><public>:listenable(team) = external {}
 
             WaitingForPlayersCountdownStartedEvent<native><public>:listenable(float) = external {}
@@ -7032,6 +6983,8 @@ FN1Native<public> := module:
         fort_gamemode_base<native><epic_internal> := class<abstract>:
 
         fort_reload_gamemode<native><epic_internal> := class<epic_internal>(fort_br_gamemode):
+            AllowRespawns<native><public>(bInAllowRespawns:logic):void
+
             AreRespawnsActive<native><public>()<transacts>:logic
 
             ConsumedRemainingTeamLivesEvent<native><public>:listenable(tuple(agent, int)) = external {}
@@ -7054,9 +7007,176 @@ FN1Native<public> := module:
 
             RespawnsEnabledEvent<native><public>:listenable(tuple()) = external {}
 
+            SetAllowRespawnsOutsideStormPhase<native><public>(bInAllowRespawnsOutsideStormPhase:logic):void
+
+            SpawnTestPlayers<native><public>(InSquadCount:int, InPlayersPerSquad:int):logic
+
             TeamLivesChangedEvent<native><public>:listenable(tuple(agent, team, int, int)) = external {}
 
             TimeUntilTeamLivesRechargeChangedEvent<native><public>:listenable(tuple(agent, team, float, float)) = external {}
+
+using {/Fortnite.com/Devices}
+using {/Fortnite.com/Playspaces}
+using {/UnrealEngine.com/Temporary/SpatialMath}
+using {/UnrealEngine.com/Temporary/UI}
+using {/Verse.org/Colors}
+using {/Verse.org/Native}
+FeralCorgi<public> := module:
+    # Module import path: /Fortnite.com/FeralCorgi/AnalyticsBridge
+    AnalyticsBridge<epic_internal> := module:
+        SendELOAnalyticForPlayer<native><epic_internal>(Player:player, MatchPoints:float, TeamPoints:float, IndividualPoints:float):void
+
+    # Module import path: /Fortnite.com/FeralCorgi/BackfillControlBridge
+    BackfillControlBridge<epic_internal> := module:
+        EmptyFunction<native><epic_internal>():void
+
+    # Module import path: /Fortnite.com/FeralCorgi/CommonBridge
+    CommonBridge<epic_internal> := module:
+        AgentRespawnCleanup<native><epic_internal>(Agent:agent, RespawnPosition:vector3):void
+
+        GetVersePlayerId<native><epic_internal>(Player:player)<transacts>:int
+
+        SendTestEvent<native><epic_internal>(EventName:string, TargetAgents:[]agent, Params:[string]float)<transacts><decides>:void
+
+    # Module import path: /Fortnite.com/FeralCorgi/PlayerLoadingStatusBridge
+    PlayerLoadingStatusBridge<epic_internal> := module:
+        AwaitPlayersLoading<native><epic_internal>(Playspace:fort_playspace)<suspends>:void
+
+        GetNumPlayersLoading<native><epic_internal>(Playspace:fort_playspace)<computes><reads>:int
+
+        GetPlayersLoading<native><epic_internal>(Playspace:fort_playspace)<computes><reads>:[]player
+
+        IsPlayerLoading<native><epic_internal>(Playspace:fort_playspace, Player:player)<transacts><decides>:void
+
+    # Module import path: /Fortnite.com/FeralCorgi/ReservationHoldingBridge
+    ReservationHoldingBridge<epic_internal> := module:
+        EnableLeavingPlayerReservationHolding<native><epic_internal>(Playspace:fort_playspace, HoldingTime:float):void
+
+        FreeHeldReservation<native><epic_internal>(Playspace:fort_playspace, Player:player):logic
+
+        RestoreSessionReservationHoldingSettings<native><epic_internal>(Playspace:fort_playspace):void
+
+    # Module import path: /Fortnite.com/FeralCorgi/SessionAttributesBridge
+    SessionAttributesBridge<epic_internal> := module:
+        ApplyMatchEarlyLeaveBanhammerToPlayer<native><epic_internal>(Player:player, Details:string):logic
+
+        EndMatch<native><epic_internal>(Playspace:fort_playspace)<transacts><decides>:void
+
+        GetUpdatedRankForPlayers<native><epic_internal>(Playspace:fort_playspace, Players:[]player)<suspends>:[]ranked_track_progress
+
+        IsPlaytest<native><epic_internal>(Playspace:fort_playspace)<transacts><decides>:void
+
+        IsPrivateMatch<native><epic_internal>(Playspace:fort_playspace)<transacts><decides>:void
+
+        IsRankedMatch<native><epic_internal>(Playspace:fort_playspace)<transacts><decides>:void
+
+        IsUsingCustomMatchKeys<native><epic_internal>(Playspace:fort_playspace)<transacts><decides>:void
+
+    using {/Fortnite.com/Playspaces}
+    using {/UnrealEngine.com/Temporary/SpatialMath}
+    using {/Verse.org/Assets}
+    using {/Verse.org/Colors}
+    using {/Verse.org/Native}
+    using {/Verse.org/Simulation}
+    # Base class for creating analytic events from Verse. This would be the only public api, feral_analytics* would not be made public.
+    analytics_event_base<native><epic_internal> := class<persistent>:
+        GetEventName<native><epic_internal>():string
+
+        Send<native><epic_internal>():void
+
+        Send<native><epic_internal>(Agent:agent):void
+
+    apparatus_bridge<native><epic_internal> := class:
+        DisableDisabling<native><epic_internal>(Agent:agent):void
+
+        DisablePlanting<native><epic_internal>(Agent:agent):void
+
+        EnableDisabling<native><epic_internal>(Agent:agent):void
+
+        EnablePlanting<native><epic_internal>(Agent:agent):void
+
+        NativeStateChangedEvent<public>():listenable([]char) = external {}
+
+        NativeStateChangedEventWithAgent<public>():listenable(tuple(string, ?agent)) = external {}
+
+        ResetApparatus<native><epic_internal>():void
+
+        SetApparatusTimerRemaining<native><epic_internal>(Time:int):void
+
+        Setup<native><public>():void
+
+    cheat_bridge<native><epic_internal> := class<concrete>(cheat_bridge_base):
+        NativeCheatEvent<public>():listenable(tuple(player, string, float)) = external {}
+
+    @import_as("/Script/FeralCorgiGameplayRuntime.UCheatBridge")
+    cheat_bridge_base<native><epic_internal> := class<abstract><epic_internal>:
+
+    # Base class to inherit from to pass to feral_analytics_attributes_request.AppendToAttributes to inject attributes in an analytics event
+    feral_analytics_attributes_base<native><epic_internal> := class<persistent>:
+
+    # System to allow verse to listen for native analytic events to allow injection of custom data
+    feral_analytics_attributes_request<native><epic_internal> := class<persistent>:
+        AppendToAttributes<native><public>(FieldPrefix:string, Object:feral_analytics_attributes_base):void
+
+        AppendToAttributesTags<native><public>(AddTags:[]string):void
+
+        OnRequestAttributes<public>():listenable(tuple([string]agent)) = external {}
+
+    # Feral base class for creating analytic events to allow proper name and allow use of Tags to inject native data
+    feral_analytics_event_base<native><epic_internal> := class<persistent>(analytics_event_base):
+        GetAgentId<native><epic_internal>(Agent:agent):string
+
+        Send<native><override>():void
+
+        Send<native><override>(Agent:agent):void
+
+        SendWithTags<native><epic_internal>(AddTags:[]string):void
+
+        SendWithTags<native><epic_internal>(Agent:agent, AddTags:[]string):void
+
+    game_state_component_bridge<native><epic_internal> := class<concrete>:
+        OnReceivedEvent<public>():listenable(tuple(string, []agent, [string]float)) = external {}
+
+        SendEvent<native><epic_internal>(EventName:string, TargetAgents:[]agent, Params:[string]float)<transacts><decides>:void
+
+    player_display_info<native><epic_internal> := struct:
+        CurrentXP<native>:int
+
+        Image<native>:texture
+
+        LargeImage<native>:texture
+
+        SmallImage<native>:texture
+
+        SquadColor<native>:color
+
+    player_display_info_manager<native><epic_internal> := class:
+        GetDisplayInfo<native><epic_internal>(InPlayer:player)<computes><reads>:player_display_info
+
+    ranked_track_progress<native><epic_internal> := struct<concrete>:
+        AccountId<native><public>:string = external {}
+
+        CurrentHabanero<native><public>:int = external {}
+
+        CurrentPlayerPosition<native><public>:int = external {}
+
+        GameId<native><public>:string = external {}
+
+        HabaneroLastUpdatedTime<native><public>:int = external {}
+
+        HabaneroType<native><public>:string = external {}
+
+        HighestHabanero<native><public>:int = external {}
+
+        LastQueriedTime<native><public>:float = external {}
+
+        ProgressTowardsNextHabanero<native><public>:float = external {}
+
+        TrackGUID<native><public>:string = external {}
+
+        bProgressIsStale<native><public>:logic = external {}
+
+        bSkippedRequestDueToTTL<native><public>:logic = external {}
 
 # Module import path: /Fortnite.com/FortPlayerUtilities
 FortPlayerUtilities<public> := module:
@@ -7068,6 +7188,8 @@ FortPlayerUtilities<public> := module:
 
     # Respawns the character for `InAgent` at the provided `RespawnPosition` and applies the yaw of `RespawnRotation`.
     (InAgent:agent).Respawn<native><public>(RespawnPosition:vector3, RespawnRotation:rotation)<transacts>:void
+
+    (InAgent:agent).RestartPlayer<native><epic_internal>(RespawnPosition:vector3, RespawnRotation:rotation, SpawnOnGround:logic)<transacts>:void
 
     # Sets `InAgent` to spectate the `agent` that eliminated them.
     # Fails if the eliminating `player` has also been eliminated.
@@ -7947,18 +8069,15 @@ Playspaces<public> := module:
         # Signaled when a participant `agent` leaves the `fort_playspace`. Returns a subscribable with a payload of the`agent` that left the `fort_playspace`.
         ParticipantRemovedEvent<public>():listenable(agent)
 
+        # Signaled when a human `player` abandons the `fort_playspace` via exit match button. Will not fire if the playerleft via a crash, match end, or getting kicked. Returns a subscribable with a payload of the`player` that leftthe `fort_playspace`.
+        PlayerAbandonedEvent<epic_internal>():listenable(player)
+
         # Signaled when a human `player` joins the `fort_playspace`. Returns a subscribable with a payload of the`player` that entered the `fort_playspace`.
         PlayerAddedEvent<public>():listenable(player)
 
         # Signaled when a human `player` leaves the `fort_playspace`. Returns a subscribable with a payload of the`player` that left the `fort_playspace`.
         PlayerRemovedEvent<public>():listenable(player)
 
-using {/Fortnite.com/Devices}
-using {/Fortnite.com/Playspaces}
-using {/UnrealEngine.com/Temporary/SpatialMath}
-using {/UnrealEngine.com/Temporary/UI}
-using {/Verse.org/Colors}
-using {/Verse.org/Native}
 using {/Verse.org/Simulation/Tags}
 using {/Verse.org/Simulation}
 # Module import path: /Fortnite.com/QuestUtilities
