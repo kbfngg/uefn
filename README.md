@@ -95,7 +95,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details open>
 <summary>v33</summary>
 
-- `33.00` - `33.10`: [`public`]() | [`internal`]() tbd
+- `33.00` - `33.10`: [`public`](https://github.com/kbfngg/uefn/commit/3c97ffd6947c3bcde8d439f919bc6dd1ff6a2bc8) | [`internal`](https://github.com/kbfngg/uefn/commit/65012b4a917e2d98e38b9e4c98a1c0b39214aab9)
 - `32.11` - `33.00`: [`public`](https://github.com/kbfngg/uefn/commit/17d459ec7915ba66a926216ebc4454145c89cd73) | [`internal`](https://github.com/kbfngg/uefn/commit/2c1d770f48cd11a1bf4c86d6d1bb9bc4e0316bd2)
 
 </details>
@@ -247,7 +247,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>Regular</summary>
 
-- [`33.00` - `33.10`]() (tbd)
+- [`33.00` - `33.10`](https://github.com/kbfngg/uefn/commit/fab1168dfe22f052726b68c20c3b2fe9be4938ac)
 - [`32.11` - `33.00`](https://github.com/kbfngg/uefn/commit/a2ace884feb2440f97d41e3f12db5f4bae34bd75)
 - [`32.10` - `32.11`](https://github.com/kbfngg/uefn/commit/222dae073c63aa5e7efaa253746f4163dcc5df97)
 - [`32.00` - `32.10`](https://github.com/kbfngg/uefn/commit/6611a42ca5292f0f65b20df7944f69a2755d5a90)
@@ -295,7 +295,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>DelMar (Rocket Racing)</summary>
 
-- [`33.00` - `33.10`]() (tbd)
+- [`33.00` - `33.10`](https://github.com/kbfngg/uefn/commit/73da44c5c2a1bc9f1293c6aa66d277ca24d4d809)
 - [`32.11` - `33.00`](https://github.com/kbfngg/uefn/commit/b49ce745e2dd205b8bea9ea32e251ac8888a739c)
 - [`32.10` - `32.11`](https://github.com/kbfngg/uefn/commit/28eaf820419c705e42a1e70bce3c3d99141af351)
 - [`32.00` - `32.10`](https://github.com/kbfngg/uefn/commit/cc5a3db4941d1e7af9fb92f5e1eb571bf5574ba7)
@@ -321,7 +321,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>LimeGFS (LEGO)</summary>
 
-- [`33.00` - `33.10`]() (tbd)
+- [`33.00` - `33.10`](https://github.com/kbfngg/uefn/commit/3ea1e08ac4f9f15aae8435c5c8712afc3decdff4)
 - [`32.11` - `33.00`](https://github.com/kbfngg/uefn/commit/9ab6d3eb3639d74116187361885c67beecb75b64)
 - `32.10` - `32.11` (nothing new)
 - [`32.00` - `32.10`](https://github.com/kbfngg/uefn/commit/074ffa2d29cc9dd145e4353c9d604b4e3975cf1f)
@@ -347,7 +347,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>PartnerLimeGFS (LEGO Group)</summary>
 
-- [`33.00` - `33.10`]() (tbd)
+- [`33.00` - `33.10`](https://github.com/kbfngg/uefn/commit/62b5ea85f822bd5b1f1fa70559255f5058c1f333)
 - [`32.11` - `33.00`](https://github.com/kbfngg/uefn/commit/71b23cbdb72559f82424abf25aa15459f3abd7f4)
 - [`32.10` - `32.11`](https://github.com/kbfngg/uefn/commit/61004ee6f99a1a1495a1d934be9bda33937d8282)
 - [`32.00` - `32.10`](https://github.com/kbfngg/uefn/commit/5a1c7c3f8786ea8c861c0e4fb1c0467df106111a)
@@ -373,7 +373,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>BeanstalkGFS (Fall Guys)</summary>
 
-- [`33.00` - `33.10`]() (tbd)
+- [`33.00` - `33.10`](https://github.com/kbfngg/uefn/commit/f1988800ce0d0a78fde290f9cde808518d501ad6)
 - [`32.11` - `33.00`](https://github.com/kbfngg/uefn/commit/b48939f63eb864637621aa2737ac47f9ee8cf176)
 - [`32.10` - `32.11`](https://github.com/kbfngg/uefn/commit/e472298155e9524f6147fc6fc526f51c0eb86f80)
 - [`32.00` - `32.10`](https://github.com/kbfngg/uefn/commit/b812e8856ef8809ea1a1f000312b9c69b1b87ba5)
@@ -391,7 +391,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>MeltedIronGFS (TMNT)</summary>
 
-- [`33.00` - `33.10`]() (tbd)
+- [`33.00` - `33.10`](https://github.com/kbfngg/uefn/commit/a67d2a75ac4bbd2a8d03229244146a5ef19eb429)
 - [`32.11` - `33.00`](https://github.com/kbfngg/uefn/commit/fc8cbde257c373a7ee2f5701d813ae06cf92ad85)
 - [`32.10` - `32.11`](https://github.com/kbfngg/uefn/commit/e8384a6758ac3350fd7f8807263379144f854a40)
 - [`32.00` - `32.10`](https://github.com/kbfngg/uefn/commit/494b124db8c7cf8e1569780496e2a464eb4068e4)
@@ -404,7 +404,7 @@ A basic repository to accumulate a knowledgebase around UEFN and to track public
 <details>
 <summary>FN1 (Reload)</summary>
 
-- [`33.00` - `33.10`]() (tbd)
+- [`33.00` - `33.10`](https://github.com/kbfngg/uefn/commit/cb0540acf121e97f1a2304594497d308cc370626)
 - [`32.11` - `33.00`](https://github.com/kbfngg/uefn/commit/25c26d5abe1c48cc6e35ae8b18854e9dde19c41d)
 - [`32.10` - `32.11`](https://github.com/kbfngg/uefn/commit/5bba18a52bfd1451ba93a60bcdc80f1c09a400cb)
 - [`32.00` - `32.10`](https://github.com/kbfngg/uefn/commit/ff6b204114d3952a182cb2d2d64f8d86fcfe78c3)
