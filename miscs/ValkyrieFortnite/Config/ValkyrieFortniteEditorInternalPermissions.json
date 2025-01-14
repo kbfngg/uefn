@@ -48,6 +48,16 @@
 			},
 			{
 				"$type": "ValkyrieEditorAssetClassRules",
+				"ClassName": "/Script/Engine.PoseAsset",
+				"Visible": true,
+				"Edit": true,
+				"Create": true,
+				"Import": false,
+				"Export": false,
+				"SubClasses": false
+			},
+			{
+				"$type": "ValkyrieEditorAssetClassRules",
 				"ClassName": "/Script/Engine.UserDefinedEnum",
 				"Visible": true,
 				"Edit": true,
@@ -1055,6 +1065,13 @@
 					"BlendSamples_RemoveSamples",
 					"BlendSamples_Samples",
 					"BlendSamples"
+				]
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Engine.PoseAsset",
+				"AllowList": [
+					"SourceAnimation"
 				]
 			}
 		]
