@@ -41,6 +41,10 @@
 			"/Script/Engine.FloatSpringState",
 			"/Script/Engine.QuaternionSpringState",
 			"/Script/Engine.VectorSpringState",
+			"/Script/Engine.IntegerAnimationAttribute",
+			"/Script/Engine.StringAnimationAttribute",
+			"/Script/Engine.TransformAnimationAttribute",
+			"/Script/Engine.FloatAnimationAttribute",
 			"/Script/CoreUObject.Box",
 			"/Script/CoreUObject.Box2D",
 			"/Script/CoreUObject.BoxSphereBounds",
@@ -295,6 +299,7 @@
 		"AllowedAssetTypes": {
 			"/Script/AudioModulation.SoundControlBus":			{ "Rules": ["View","Create"] },
 			"/Script/AudioModulation.SoundControlBusMix":		{ "Rules": ["View","Create"] },
+			"/Script/AudioModulation.SoundModulationParameter":		{ "Rules": ["View"], "Subclasses": "All" },
 			"/Script/ControlRig.ControlRigBlueprintGeneratedClass": { "Rules": ["View","Create"] },
 			"/Script/ControlRig.ControlRigPoseAsset":			{ "Rules": ["View","Create"] },
 			"/Script/ControlRig.ControlRigShapeLibrary":		{ "Rules": ["View","Create"] },
@@ -327,7 +332,7 @@
 			"/Script/Engine.SoundWave":							{ "Rules": ["View","Create","Import","Public"] },
 			"/Script/Engine.StaticMesh":						{ "Rules": ["View","Create","Import","Export","Public"] },
 			"/Script/Engine.SubsurfaceProfile":					{ "Rules": ["View","Create","Import","Export"] },
-			"/Script/Engine.Texture2D":							{ "Rules": ["View","Create","Import","Export"] },
+			"/Script/Engine.Texture2D":							{ "Rules": ["View","Create","Import","Export","Public"] },
 			"/Script/Engine.TextureCube":						{ "Rules": ["View","Create","Import","Export"] },
 			"/Script/Engine.VolumeTexture":						{ "Rules": ["View","Create","Import","Export"] },
 			"/Script/Engine.World":								{ "Rules": ["View","Create","Import"] },
@@ -347,6 +352,7 @@
 			"/Script/Solaris.VerseClass":						{ "Rules": ["View"] },
 			"/Script/UMG.WidgetBlueprintGeneratedClass":		{ "Rules": ["View","Create"] },
 			"/Script/UMGEditor.WidgetBlueprint":				{ "Rules": ["View","Create"] }
+	
 		},
 		"_comment_AllowedClasses1": "List of all classes and structs exposed to UEFN, which means they are allowed to be referenced directly by user-created assets and actors.",
 		"_comment_AllowedClasses2": "Classes marked with Visible: true will appear in class pickers such as for Blueprint parent classes, UClass* FProperties, etc.",
@@ -373,6 +379,8 @@
 			"/CRD_WildlifeSpawner/CreatureTypes/WildlifeSpawner_CreatureTypeDefinition.WildlifeSpawner_CreatureTypeDefinition_C":{  },
 			"/CreativeCoreDevices/Device_ItemSpawner_Parent_V2.Device_ItemSpawner_Parent_V2_C":							{  },
 			"/CreativeCoreDevices/Device_Trigger_Parent_V2.Device_Trigger_Parent_V2_C":									{  },
+			"/CreativeCoreDevices/HUDMessage/MVVM_UEFN_HUDMessage.MVVM_UEFN_HUDMessage_C":								{ "Visible": true },
+			"/CreativeCoreDevices/Beacon/UEFN_BeaconBadge_ViewModel.UEFN_BeaconBadge_ViewModel_C":						{ "Visible": true },
 			"/FortUILibrary/Systems/ModularButton/WBP_UIKit_ButtonCTA_Base.WBP_UIKit_ButtonCTA_Base_C":					{  },
 			"/FortWater/Blueprints/WaterBrushManager.WaterBrushManager_C":												{  },
 			"/Game/Athena/BuildingActors/ConsumableBGAs/CBGA_Parent.CBGA_Parent_C":										{  },
@@ -617,6 +625,7 @@
 			"/Script/Engine.ActorFolder":										{  },
 			"/Script/Engine.ActorTextureStreamingBuildDataComponent":			{  },
 			"/Script/Engine.AmbientSound":										{  },
+			"/Script/Engine.AnimCurveMetaData":									{  },
 			"/Script/Engine.AnimDataModel":										{  },
 			"/Script/Engine.AnimSequence":										{ "Visible": true },
 			"/Script/Engine.ArrowComponent":									{ "Visible": true },
@@ -669,6 +678,9 @@
 			"/Script/Engine.MaterialExpressionSparseVolumeTextureSample":		{ "Deny": true,		"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionStrataBSDF":						{ "Deny": true,		"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionStrataUtilityBase":				{ "Deny": true,		"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionPathTracingBufferTexture":		{ "Deny": true,		"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSparseVolumeTextureBase":			{ "Deny": true,		"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSparseVolumeTextureObject":		{ "Deny": true,		"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialFunctionEditorOnlyData":					{  },
 			"/Script/Engine.MaterialInstanceDynamic":							{  },
 			"/Script/Engine.MaterialInstanceEditorOnlyData":					{  },
@@ -732,6 +744,7 @@
 			"/Script/Engine.WorldPartition":									{ "Visible": true },
 			"/Script/Engine.WorldPartitionEditorSpatialHash":					{  },
 			"/Script/Engine.WorldPartitionHLOD":								{  },
+			"/Script/Engine.WorldPartitionHLODSourceActorsFromCell":			{  },
 			"/Script/Engine.WorldPartitionMiniMap":								{  },
 			"/Script/Engine.WorldPartitionRuntimeSpatialHash":					{  },
 			"/Script/EntityActor.SimObject":									{ "Visible": true },
@@ -838,6 +851,7 @@
 			"/Script/FortniteGame.FortSpectateClickableMapIcon":				{  },
 			"/Script/FortniteGame.FortSplineAudioComponent":					{  },
 			"/Script/FortniteGame.FortSplineWaterAudioComponent":				{  },
+			"/Script/FortniteGame.FortSpotLightComponent":						{  },
 			"/Script/FortniteGame.FortStaticMeshActor":							{ "Visible": true },
 			"/Script/FortniteGame.FortStaticMeshUserData":						{  },
 			"/Script/FortniteGame.FortUndergroundVolume":						{ "Visible": true },
@@ -883,7 +897,6 @@
 			"/Script/InterchangeFactoryNodes.InterchangeAnimationTrackSetFactoryNode":{  },
 			"/Script/InterchangeFactoryNodes.InterchangeBaseLightFactoryNode":	{  },
 			"/Script/InterchangeFactoryNodes.InterchangeBaseMaterialFactoryNode":{  },
-			"/Script/InterchangeFactoryNodes.InterchangeCineCameraFactoryNode":	{  },
 			"/Script/InterchangeFactoryNodes.InterchangeDirectionalLightFactoryNode":{  },
 			"/Script/InterchangeFactoryNodes.InterchangeLightFactoryNode":		{  },
 			"/Script/InterchangeFactoryNodes.InterchangeMaterialExpressionFactoryNode":{  },
@@ -893,6 +906,7 @@
 			"/Script/InterchangeFactoryNodes.InterchangeMaterialInstanceFactoryNode":{  },
 			"/Script/InterchangeFactoryNodes.InterchangeMeshActorFactoryNode":	{  },
 			"/Script/InterchangeFactoryNodes.InterchangeMeshFactoryNode":		{  },
+			"/Script/InterchangeFactoryNodes.InterchangePhysicalCameraFactoryNode":{  },
 			"/Script/InterchangeFactoryNodes.InterchangePhysicsAssetFactoryNode":{  },
 			"/Script/InterchangeFactoryNodes.InterchangePointLightFactoryNode":	{  },
 			"/Script/InterchangeFactoryNodes.InterchangeRectLightFactoryNode":	{  },
@@ -939,6 +953,8 @@
 			"/Script/ModelViewViewModel.MVVMViewClass":							{  },
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintView":			{  },
 			"/Script/ModelViewViewModelBlueprint.MVVMWidgetBlueprintExtension_View":{  },
+			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewConversionFunction":{  },
+			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewSettings":{  },
 			"/Script/MovieScene.MovieScene":									{  },
 			"/Script/MovieScene.MovieSceneBoolSection":							{  },
 			"/Script/MovieScene.MovieSceneBuiltInEasingFunction":				{  },
@@ -946,6 +962,7 @@
 			"/Script/MovieScene.MovieSceneMetaData":							{  },
 			"/Script/MovieScene.MovieSceneNodeGroup":							{  },
 			"/Script/MovieScene.MovieSceneNodeGroupCollection":					{  },
+			"/Script/MovieScene.MovieSceneSectionChannelOverrideRegistry":		{  },
 			"/Script/MovieScene.MovieSceneSubSection":							{  },
 			"/Script/MovieScene.MovieSceneSubTrack":							{ "Visible": true },
 			"/Script/MovieSceneTracks.MovieScene3DAttachSection":				{  },
@@ -979,6 +996,7 @@
 			"/Script/MovieSceneTracks.MovieSceneComponentMaterialTrack":		{ "Visible": true },
 			"/Script/MovieSceneTracks.MovieSceneDataLayerSection":				{  },
 			"/Script/MovieSceneTracks.MovieSceneDataLayerTrack":				{ "Visible": true },
+			"/Script/MovieSceneTracks.MovieSceneDoublePerlinNoiseChannelContainer":{  },
 			"/Script/MovieSceneTracks.MovieSceneDoubleSection":					{  },
 			"/Script/MovieSceneTracks.MovieSceneDoubleTrack":					{ "Visible": true },
 			"/Script/MovieSceneTracks.MovieSceneDoubleVectorSection":			{  },
@@ -988,6 +1006,7 @@
 			"/Script/MovieSceneTracks.MovieSceneEulerTransformTrack":			{ "Visible": true },
 			"/Script/MovieSceneTracks.MovieSceneFadeSection":					{  },
 			"/Script/MovieSceneTracks.MovieSceneFadeTrack":						{ "Visible": true },
+			"/Script/MovieSceneTracks.MovieSceneFloatPerlinNoiseChannelContainer":{  },
 			"/Script/MovieSceneTracks.MovieSceneFloatSection":					{  },
 			"/Script/MovieSceneTracks.MovieSceneFloatTrack":					{ "Visible": true },
 			"/Script/MovieSceneTracks.MovieSceneFloatVectorSection":			{  },
@@ -1194,6 +1213,7 @@
 			"/Script/UnrealEd.SceneThumbnailInfoWithPrimitive":					{  },
 			"/Script/UnrealEd.WorldThumbnailInfo":								{  },
 			"/Script/VerseAIBase.AIBehaviorScriptComponent":					{  },
+			"/Script/VerseFortnite.AIBehaviorScript":							{ "Visible": true },
 			"/Script/VerseGameplayTags.VerseTagMarkupComponent":				{ "Visible": true },
 			"/Script/VolumetricRegion.VolumetricRegionNativeComponent":			{  },
 			"/Script/Water.BuoyancyManager":									{  },
@@ -1326,7 +1346,7 @@
 				"DenyList": [ "FortCreateHotfix", "FortHostUI" ]
 			},
 			"ContentBrowser.AssetContextMenu.FortItemDefinition": {
-				"DenyList": [ "ItemDef_FindInPlaylists" ]
+				"DenyList": [ "ItemDef_FindInPlaylists", "GameplayTags_Edit" ]
 			},
 			"ContentBrowser.AssetContextMenu.FortPlaysetItemDefinition": {
 				"DenyList": [ "AssetAction_CheckoutPlaysetRelatedFiles", "AssetAction_GenerateAllPlaysetsInTheGame", "AssetAction_GeneratePlayset", "AssetAction_SaveAllPlaysets", "AssetAction_SavePlaysets", "AssetAction_ValidateAllPlaysets", "AssetAction_ValidatePlaysets" ]
@@ -1488,7 +1508,7 @@
 				"DenyList": [ "ChangeSettings" ]
 			},
 			"UnrealEd.ViewportToolbar.View": {
-				"AllowList": [ "LitMode", "UnlitMode", "WireframeMode", "DetailLightingMode", "LightingOnlyMode", "ReflectionOverrideMode", "CollisionPawn", "CollisionVisibility", "VisualizeNaniteViewMode", "VisualizeLumenViewMode", "VisualizeVirtualShadowMapViewMode" ]
+				"AllowList": [ "LitMode", "UnlitMode", "WireframeMode", "DetailLightingMode", "LightingOnlyMode", "ReflectionOverrideMode", "CollisionPawn", "CollisionVisibility", "VisualizeBufferViewMode", "VisualizeNaniteViewMode", "VisualizeLumenViewMode", "VisualizeVirtualShadowMapViewMode" ]
 			}
 		},
 		"AllowedTabs": {
@@ -1778,7 +1798,7 @@
 			},
 			{
 				"Type": "/Script/Engine.StaticMeshComponent",
-				"AllowList": [ "StaticMesh", "bForceNaniteForMasked", "ParentSocket" ]
+				"AllowList": [ "StaticMesh", "bForceNaniteForMasked", "ParentSocket", "bEvaluateWorldPositionOffset", "WorldPositionOffsetDisableDistance" ]
 			},
 			{
 				"Type": "/Script/Engine.InstancedStaticMeshComponent",
@@ -2240,7 +2260,7 @@
 			},
 			{
 				"Type": "/Script/Water.WaterBodyComponent",
-				"AllowList": [ "bAffectsLandscape", "TargetWaveMaskDepth", "MaxWaveHeightOffset", "CurveSettings", "WaterHeightmapSettings" ]
+				"AllowList": [ "bAffectsLandscape", "TargetWaveMaskDepth", "MaxWaveHeightOffset", "CurveSettings", "WaterHeightmapSettings", "LayerWeightmapSettings" ]
 			},
 			{
 				"Type": "/Script/Water.WaterBodyOceanComponent",
@@ -2259,6 +2279,10 @@
 			{
 				"Type": "/Script/Water.WaterZone",
 				"AllowList": [ "ZoneExtent", "RenderTargetResolution" ]
+			},
+			{
+				"Type": "/Script/Landscape.LandscapeBlueprintBrushBase",
+				"AllowList": [ "AffectHeightmap", "AffectWeightmap" ]
 			},
 			{
 				"Type": "/Script/VerseGameplayTags.VerseTagMarkupComponent",
@@ -2306,9 +2330,11 @@
 				"AllowList": [ "DataLayerType", "DebugColor" ]
 			},
 			{
+				"Type": "/Script/WorldPartitionHLODUtilities.HLODBuilderMeshMergeSettings",
 				"AllowList": [ "MeshMergeSettings" ]
 			},
 			{
+				"Type": "/Script/Engine.DecalComponent",
 				"AllowList": [ "DecalMaterial", "SortOrder", "FadeScreenSize", "FadeStartDelay", "FadeDuration", "FadeInDuration", "FadeInStartDelay", "bDestroyOwnerAfterFade", "DecalSize" ]
 			},
 			{
@@ -2360,51 +2386,66 @@
 	"PropertyEditorStructPermissionList": {
 		"=": [
 			{
+				"Type": "/Script/PhysicsCore.BodyInstanceCore",
 				"AllowList": [ "bEnableGravity" ]
 			},
 			{
+				"Type": "/Script/Engine.BodyInstance",
 				"AllowList": [ "bNotifyRigidBodyCollision","Collision","bUseCCD","DOFMode","CustomDOFPlaneNormal" ]
 			},
 			{
+				"Type": "/Script/DataDrivenGameplayEventRouter.GameplayEventDescriptor",
 				"DenyList": [ "NetPolicy" ]
 			},
 			{
+				"Type": "/Script/CinematicCamera.CameraLookatTrackingSettings",
 				"AllowList": [ "bEnableLookAtTracking", "bDrawDebugLookAtTrackingPosition", "LookAtTrackingInterpSpeed", "ActorToTrack", "RelativeOffset", "bAllowRoll" ]
 			},
 			{
+				"Type": "/Script/CinematicCamera.CameraFilmbackSettings",
 				"AllowList": [ "SensorWidth", "SensorHeight", "SensorAspectRatio" ]
 			},
 			{
+				"Type": "/Script/CinematicCamera.NamedFilmbackPreset",
 				"AllowList": [ "Name", "FilmbackSettings" ]
 			},
 			{
+				"Type": "/Script/CinematicCamera.CameraLensSettings",
 				"AllowList": [ "MinFocalLength", "MaxFocalLength", "MinFStop", "MaxFStop", "MinimumFocusDistance", "DiaphragmBladeCount" ]
 			},
 			{
+				"Type": "/Script/CinematicCamera.NamedLensPreset",
 				"AllowList": [ "Name", "LensSettings" ]
 			},
 			{
+				"Type": "/Script/CinematicCamera.CameraFocusSettings",
 				"AllowList": [ "FocusMethod", "ManualFocusDistance", "TrackingFocusSettings", "bDrawDebugFocusPlane", "DebugFocusPlaneColor", "bSmoothFocusChanges", "FocusSmoothingInterpSpeed", "FocusOffset" ]
 			},
 			{
+				"Type": "/Script/ControlRig.ControlRigComponentMappedElement",
 				"AllowList": [ "ComponentReference", "TransformIndex", "TransformName", "ElementType", "ElementName", "Direction", "Offset", "Weight" ]
 			},
 			{
+				"Type": "/Script/Engine.MeshMergingSettings",
 				"AllowList": [ "MaterialSettings" ]
 			},
 			{
+				"Type": "/Script/Engine.MaterialProxySettings",
 				"AllowList": [ "bNormalMap", "bTangentMap", "bMetallicMap", "bRoughnessMap", "bSpecularMap", "bEmissiveMap" ]
 			},
 			{
+				"Type": "/Script/Engine.PostProcessSettings",
 				"AllowList": ["BloomIntensity", "BloomThreshold", "SceneFringeIntensity", "ChromaticAberrationStartOffset", "LensFlareIntensity", "VignetteIntensity", "ColorSaturation", "ColorContrast", "ColorGamma", "WeightedBlendables", "FilmGrainIntensity", "FilmGrainTexelSize", "TemperatureType", "WhiteTemp", "WhiteTint", "AutoExposureMethod", "AutoExposureBias", "AutoExposureApplyPhysicalCameraExposure", "AutoExposureBiasCurve", "AutoExposureMeterMask", "AutoExposureMinBrightness", "AutoExposureMaxBrightness", "AutoExposureSpeedUp", "AutoExposureSpeedDown", "SceneColorTint",
 					"LumenSkylightLeaking","LumenFullSkylightLeakingDistance", "LumenDiffuseColorBoost", "AutoExposureMethod","AutoExposureBias","AutoExposureApplyPhysicalCameraExposure","AutoExposureBiasCurve","AutoExposureMeterMask","AutoExposureMinBrightness","AutoExposureMaxBrightness","AutoExposureSpeedUp","AutoExposureSpeedDown","AutoExposureLowPercent","AutoExposureHighPercent","HistogramLogMin","HistogramLogMax","LocalExposureHighlightContrastScale","LocalExposureShadowContrastScale","LocalExposureDetailStrength","LocalExposureBlurredLuminanceBlend","LocalExposureBlurredLuminanceKernelSizePercent","LocalExposureMiddleGreyBias",
 					"CameraShutterSpeed", "CameraISO", "DepthOfFieldFstop", "DepthOfFieldMinFstop", "DepthOfFieldBladeCount", "MotionBlurAmount", "MotionBlurMax", "MotionBlurTargetFPS", "MotionBlurPerObjectSize", "Lens", "Color Grading", "Global Illumination", "Rendering Features", "Film Grain" 
 				]
 			},
 			{
+				"Type": "/Script/Engine.SpatialHashRuntimeGrid",
 				"DenyList": [ "GridName", "Origin", "bBlockOnSlowStreaming", "Priority", "DebugColor", "bClientOnlyVisible", "HLODLayer" ]
 			},
 			{
+				"Type": "/Script/Engine.SoundModulationDefaultRoutingSettings",
 				"AllowList": [ "VolumeRouting", "VolumeModulationDestination" ]
 			},
 			{
@@ -2543,6 +2584,12 @@
 					"UnderwaterPostProcessMaterial", "WaterInfoMaterial", "LayerWeightmapSettings", "ShapeDilation", "CollisionHeightOffset", "WaterStaticMeshMaterial",
 					"WaterMeshOverride", "bAlwaysGenerateWaterMeshTiles", "OverlapMaterialPriority", "WaterBodyIslands", "WaterBodyExclusionVolumes",
 					"WaterZoneOverride", "WaterNavAreaClass" ],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/Water.WaterBodyCustomComponent",
+				"AllowList": [ "MeshComp" ],
 				"DenyList": [],
 				"bAllowListAllSubclassProperties": true
 			},
