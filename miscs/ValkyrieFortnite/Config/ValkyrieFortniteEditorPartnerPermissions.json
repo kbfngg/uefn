@@ -1,6 +1,17 @@
 {
 	"ValkyrieEditorSettings": {
-		"bShowConsole": true
+		"bShowConsole": true,
+		"AllowedClasses": {
+			"/Script/FortniteGame.BuildingActor": { "Visible": true },
+			"/Script/FortniteGame.BuildingActorClassData": {},
+			"/Script/FortniteGame.BuildingEditModeMetadata": { "Visible": true }
+		},
+		"AllowedAssetTypes": {
+			"/Script/FortniteGame.BuildingEditModeMetadata": {
+				"Rules": [ "View" ],
+				"Subclasses": "All"
+			}
+		}
 	},
 	"ValkyrieProjectSettings": {
 		"bLocalizationEnabled": true,
@@ -14,6 +25,14 @@
 				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/ValkyrieEditor.ValkyrieProjectSettingsEditorViewModel",
 				"AllowList": [ "Title", "Description", "VersePath", "Kind", "DocsUrl", "UGCLocDescriptor" ]
+			},
+			{
+				"Type": "/Script/FortniteGame.BuildingActor",
+				"AllowList": [ "bPreventScaling", "bPlacementRequiresNoOverlaps", "bHasGeometryCollectionComponent", "SnapGridSize", "VertSnapGridSize", "SnapOffset", "CentroidOffset", "BaseLocToPivotOffset" ]
+			},
+			{
+				"Type": "/Script/FortniteGame.BuildingSMActor",
+				"AllowList": [ "EditModePatternData" ]
 			}
 		]
 	},

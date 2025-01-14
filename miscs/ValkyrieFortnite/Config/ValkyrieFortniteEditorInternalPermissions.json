@@ -759,7 +759,6 @@
 			"/Script/Engine.PoseAsset":					{ "Rules": ["View","Create"] },
 			"/Script/Engine.UserDefinedEnum":			{ "Rules": ["View","Create"], "Subclasses": "All"},
 			"/Script/Engine.UserDefinedStruct":			{ "Rules": ["View","Create"], "Subclasses": "All"},
-			"/Script/Entity.EntityPrefab":				{ "Rules": ["View","Create"] },
 			"/Script/HarmonixMidi.MidiFile":			{ "Rules": ["View","Import"] }
 		},
 		"AllowedClasses": {
@@ -953,17 +952,13 @@
 			"/Script/Engine.KismetMathLibrary":							{ "Visible": true },
 			"/Script/Engine.KismetSystemLibrary":						{ "Visible": true },
 			"/Script/Engine.PoseLink": {},
-			"/Script/Entity.EntityPrefab":								{ "Visible": true },
-			"/Script/EntityLevel.EntityLevel":							{ },
+			"/Script/FabricEngineSequencer.FabricAudioSyncSection":		{ },
+			"/Script/FabricEngineSequencer.FabricAudioSyncTrack":		{ "Visible": true },
 			"/Script/FortniteGame.BaseUEFNAnimInstance":				{ "Visible": true },
 			"/Script/FortniteGame.UEFNCustomAgentAnimInstance":			{ "Visible": true },
 			"/Script/HarmonixMidi.MidiFile":							{  },
 			"/Script/UnrealEd.EdGraphNode_Comment":						{ "Visible": true },
-			"/Script/ValkyrieCommon.ValkyrieContentWorkerDebugManager": { "Visible": true },
-			"/Script/VerseQuery.EntityQueryManager":					{ },
-			"/Script/VerseQuery.EntityTypeQueryContainer":				{ },
-			"/Script/VerseQuery.GlobalEntityQueryManagerComponent":		{ },
-			"/Script/VerseQuery.TaggedObjectQueryContainer":			{ }
+			"/Script/ValkyrieCommon.ValkyrieContentWorkerDebugManager": { "Visible": true }
 		},
 		"AllowedMenus": {
 			"SkeletonTree.BlendProfilesMenu": {
@@ -977,20 +972,12 @@
 			},
 			"LevelEditor.ActorContextMenu": {
 				"AllowList": {
-					"+": [ "AddEntityMenu", "SaveAsPrefab", "GroupEntities", "EditPrefab", "BrowseToPrefab", "PushPrefabOverrides" ]
+					"+": []
 				}
 			},
 			"LevelEditor.LevelEditorToolBar.AddQuickMenu": {
 				"AllowList": {
 					"+": [
-						"Entities"
-					]
-				}
-			},
-			"LevelEditor.LevelEditorToolBar.AddQuickMenu.Entities": {
-				"AllowList": {
-					"+": [
-						"entity"
 					]
 				}
 			},
@@ -1006,12 +993,10 @@
 		"AllowedPlacementToolEntries": {
 			"AllowedCategories": {
 				"+": [
-					"Entities"
 				]
 			},
 			"AllowedClasses": {
 				"+": [
-					"entity"
 				]
 			}
 		},
