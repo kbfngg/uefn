@@ -28,7 +28,18 @@
 				"/Script/AnimGraphRuntime.SkeletalControlReference",
 				"/Script/Engine.AnimUpdateContext",
 				"/Script/Engine.AnimExecutionContext",
-				"/Script/Engine.AnimNodeReference"
+				"/Script/Engine.AnimNodeReference",
+				"/FNE_UI/Systems/_Data/Blocks/S_FNEUI_Block_Image_RoundedBoxAndOutline.S_FNEUI_Block_Image_RoundedBoxAndOutline",
+				"/FNE_UI/Systems/_Data/Common/S_FNEUI_Widget_Settings_Basic.S_FNEUI_Widget_Settings_Basic",
+				"/FNE_UI/Systems/_Data/States/S_FNEUI_States_Base.S_FNEUI_States_Base",
+				"/FNE_UI/Systems/_Data/States/S_FNEUI_States_Settings.S_FNEUI_States_Settings",
+				"/FNE_UI/Systems/_Data/States/S_FNEUI_States_TransitionDurations.S_FNEUI_States_TransitionDurations",
+				"/FNE_UI/Systems/_Data/States/S_FNEUI_States_TransitionDurations_Override.S_FNEUI_States_TransitionDurations_Override",
+				"/FNE_UI/Systems/_Data/States/S_FNEUI_StatesAndTransitions.S_FNEUI_StatesAndTransitions",
+				"/FNE_UI/Systems/_Data/States/S_FNEUI_StatesAndTransitions_OverrideTransitionOnly.S_FNEUI_StatesAndTransitions_OverrideTransitionOnly",
+				"/FNE_UI/Systems/_Data/StylableButton/S_FNEUI_StylableButton_ImageLayers_Settings.S_FNEUI_StylableButton_ImageLayers_Settings",
+				"/FNE_UI/Systems/_Data/StylableButton/S_FNEUI_StylableButton_ImageLayers_Settings_Advanced.S_FNEUI_StylableButton_ImageLayers_Settings_Advanced",
+				"/FNE_UI/Systems/_Data/StylableButton/S_FNEUI_StylableButton_Text_Settings.S_FNEUI_StylableButton_Text_Settings"
 			]
 		},
 		"AllowedFunctions": {
@@ -741,6 +752,13 @@
 				"/Script/Engine.KismetMathLibrary:Wrap",
 				"/Script/Engine.KismetMathLibrary:Xor_Int64Int64",
 				"/Script/Engine.KismetMathLibrary:Xor_IntInt",
+				"/Script/FortniteUI.HUDEquippedItemViewModel:GetItemName",
+				"/Script/FortniteUI.HUDEquippedItemViewModel:HasInfiniteAmmo",
+				"/Script/FortniteUI.HUDEquippedItemViewModel:HasInfiniteAmmoSurplus",
+				"/Script/FortniteUI.HUDEquippedItemViewModel:ShowRecharge",
+				"/Script/FortniteUI.HUDEquippedItemViewModel:IsMagazineType",
+				"/Script/FortniteUI.HUDEquippedItemViewModel:GetAmmoCountText",
+				"/Script/FortniteUI.HUDEquippedItemViewModel:GetAmmoSurplusText",
 				"/Engine/EditorBlueprintResources/StandardMacros.StandardMacros:IsValid"
 			]
 		}
@@ -760,7 +778,9 @@
 	"ValkyrieUMGSettings": {
 		"AllowedPaletteWidgets": {
 			"+": [
-				"/Script/CommonUIMVVMExtensions.ActionWidget"
+				"/Script/CommonUIMVVMExtensions.ActionWidget",
+				"/FNE_UI/UILibrary/Buttons/UEFN_Button_Stylable.UEFN_Button_Stylable_C",
+				"/Game/Valkyrie/UMG/UEFN_InputModeWidgetSwitcher.UEFN_InputModeWidgetSwitcher_C"
 			]
 		}
 	},
@@ -796,6 +816,7 @@
 			"/Script/VerseAssetsEditor.ParameterCollectionBlueprint":	{ "Rules": ["View","Create"] }
 		},
 		"AllowedClasses": {
+			"/Game/Valkyrie/UMG/UEFN_InputModeWidgetSwitcher.UEFN_InputModeWidgetSwitcher_C":	{ "Visible": true },
 			"/Script/AmbientAudio.AmbientAudioComponent": 				{ "Visible": true },
 			"/Script/AmbientAudio.AmbientAudioDataAsset": 				{ "Visible": true },
 			"/Script/AnimGraph.AnimBlueprintExtension_Attributes":		{  },
@@ -1009,6 +1030,7 @@
 			"/Script/FortniteGame.UEFNCustomAgentAnimInstance":			{ "Visible": true },
 			"/Script/FortniteGame.FortAmbientAudioVolume":				{ "Visible": true },
 			"/Script/FortniteGame.FortGameUserSettings":				{ "Visible": true },
+			"/Script/FortniteUI.HUDEquippedItemViewModel":				{ "Visible": true },
 			"/Script/GameplayCameras.AttachToPlayerPawnCameraNode":		{  },
 			"/Script/GameplayCameras.OcclusionMaterialCameraNode":		{  },
 			"/Script/GameplayCameras.ArrayCameraNode":					{  },
@@ -1025,9 +1047,16 @@
 			"/Script/VerseAssets.ParameterCollection":					{ "Visible": true },
 			"/Script/VerseAssetsEditor.ParameterCollectionBlueprint":	{ "Visible": true },
 			"/Script/Engine.InheritableComponentHandler":				{  },
-			"/Script/MovieScene.MovieSceneBindingOverrides":			{  }
+			"/Script/MovieScene.MovieSceneBindingOverrides":			{  },
+			"/FNE_UI/UILibrary/Buttons/UEFN_Button_Stylable.UEFN_Button_Stylable_C": { "Visible": true },
+			"/FNE_UI/Systems/Buttons/WBP_FNE_StylableButton_Base.WBP_FNE_StylableButton_Base_C": { }
 		},
 		"AllowedMenus": {
+			"LevelEditor.MainMenu.Tools": {
+				"AllowList": {
+					"+": ["TestAutomation"]
+				}
+			},
 			"AssetEditor.ParameterCollectionEditor.MainMenu": {
 				"AllowList": [ "File", "Edit", "Asset", "Window", "Help" ]
 			},
@@ -1053,16 +1082,40 @@
 					]
 				}
 			},
+			"LevelEditor.LevelViewportToolbar.Show": {
+				"AllowList": {
+					"=": []
+				}
+			},
+			"LevelEditor.LevelViewportToolbar.Show.SFG_Visualize": {
+				"DenyList": {
+					"+":[
+						"VisualizeLightingOnProbes",
+						"VisualizeHDR",
+						"VisualizeSkyLightIlluminance"
+					]
+				}
+			},
+			"LevelEditor.MainMenu.Build": {
+				"AllowList": {
+					"+": [ "ValkyrieGeneratePersistentLinkToDisplacedMeshForCurrentLevel" ]
+				}
+			},
 			"SpatialProfiler.SettingsToolBar.SettingsMenu": {
 				"AllowList": {
 					"=": []
 				},
 				"DenyList" : {
 					"=": []
+					}
 				}
-			}
 		},
 		"AllowedTabs": {
+			"Global": {
+				"AllowList": {
+					"+": [ "SessionFrontend" ]
+				}
+			},
 			"ParameterCollectionEditor": {
 				"AllowList": [
 					"VariableEdition",
@@ -1128,6 +1181,10 @@
 					"AnalysisProperties",
 					"Function"
 				]
+			},
+			{
+				"Type": "/FNE_UI/UILibrary/Buttons/UEFN_Button_Stylable.UEFN_Button_Stylable_C",
+				"AllowList": [ "MinWidth", "MinHeight", "bSelectable", "bShouldSelectUponReceivingFocus", "bInteractableWhenSelected", "ClickMethod", "TouchMethod", "PressMethod", "InputPriority", "Text", "SecondaryText", "IconColorAndOpacity", "Size", "TintByMaterialStateColors", "bForceBlackAndWhiteIcon", "bForceTransparentBlack", "bForceTransparentPureBlackOnly", "IconPlacement", "IconVerticalAlignment", "bIconOverText", "IconPadding", "IconTranslation", "IconScale", "IconShear", "IconAngle", "IconPivot", "Icon", "IconMaterial", "IconBaseStates", "IconTransitionOverrides", "TextsBlockHorizontalAlignment", "TextsBlockVerticalAlignment", "SingleTextPadding", "DoubleTextPadding", "DoubleTextSecondaryPadding", "TextBaseStates", "SecondaryTextBaseStates", "TextTransitionOverrides", "SecondaryTextTransitionOverrides", "TextSettings", "SecondaryTextSettings", "IconAndTextBlock", "ButtonDefaultSetting", "ButtonStates", "OnButtonBaseClicked", "OnButtonBaseHovered", "OnButtonBaseUnhovered", "ImageLayer1", "ImageLayer2", "ImageLayer3", "ImageLayer4", "ImageLayer5", "AllImageTransitionOverrides" ]
 			},
 			{
 				"Type": "/Script/Persona.LinearAnalysisProperties",
@@ -1257,19 +1314,30 @@
 			},
 			{
 				"Type": "/Script/FortniteGame.BuildingStaticGeo",
-				"AllowList": [ "TextureData" ]
+				"AllowList": [ "TextureData", "DisplacedMesh" ]
+			},
+			{
+				"Type": "/Script/FortniteGame.BuildingSMActor",
+				"AllowList": [ "DisplacedMesh" ]
 			}
 		],
 		"-": [
 			{
 				"Type": "/Script/FortniteGame.BuildingTextureData",
 				"DenyList": [ "Displacement", "Magnitude", "Center" ]
+			},
+			{
+				"Type": "/Script/FeralCorgiGameplayRuntime.FortUserOptionComponent_TickRate",
+				"DenyList": [ "DesiredTickRate" ]
 			}
-			
 		]
 	},
 	"PropertyEditorStructPermissionList": {
 		"+": [
+			{
+				"Type": "/Script/Engine.BodyInstance",
+				"AllowList": [ "WalkableSlopeOverride", "bOverrideWalkableSlopeOnInstance" ]
+			}
 		]
 	}
 }
