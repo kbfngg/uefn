@@ -951,13 +951,13 @@
 			"/Script/Engine.KismetArrayLibrary":						{ "Visible": true },
 			"/Script/Engine.KismetMathLibrary":							{ "Visible": true },
 			"/Script/Engine.KismetSystemLibrary":						{ "Visible": true },
-			"/Script/Engine.PoseLink":									{  },
+			"/Script/Engine.PoseLink": {},
 			"/Script/Entity.CoreEntityPrefabBlueprint":					{ "Visible": true },
 			"/Script/EntityLevel.CoreEntityLevel":						{ },
 			"/Script/FortniteGame.BaseUEFNAnimInstance":				{ "Visible": true },
 			"/Script/FortniteGame.UEFNCustomAgentAnimInstance":			{ "Visible": true },
 			"/Script/UnrealEd.EdGraphNode_Comment":						{ "Visible": true },
-			"/Script/ValkyrieCommon.ValkyrieContentWorkerDebugManager":	{ "Visible": true },
+			"/Script/ValkyrieCommon.ValkyrieContentWorkerDebugManager": { "Visible": true },
 			"/Script/VerseQuery.EntityQueryManager":					{ },
 			"/Script/VerseQuery.EntityTypeQueryContainer":				{ },
 			"/Script/VerseQuery.GlobalEntityQueryManagerComponent":		{ },
@@ -983,6 +983,20 @@
 			"LevelEditor.ActorContextMenu": {
 				"AllowList": {
 					"+": [ "AddEntityMenu", "SaveAsPrefab", "GroupEntities", "EditPrefab", "BrowseToPrefab", "PushPrefabOverrides" ]
+				}
+			},
+			"LevelEditor.LevelEditorToolBar.AddQuickMenu": {
+				"AllowList": {
+					"+": [
+						"Entities"
+					]
+				}
+			},
+			"LevelEditor.LevelEditorToolBar.AddQuickMenu.Entities": {
+				"AllowList": {
+					"+": [
+						"entity"
+					]
 				}
 			}
 		},
@@ -1010,12 +1024,7 @@
 			},
 			"AllowedClasses": {
 				"+": [
-					"CoreEntity",
-					"CubeEntity",
-					"SphereEntity",
-					"CylinderEntity",
-					"ConeEntity",
-					"PlaneEntity"
+					"entity"
 				]
 			}
 		}
