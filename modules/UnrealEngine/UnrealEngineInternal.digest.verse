@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-33.10-CL-38630093
+# Generated from build: ++Fortnite+Release-33.11-CL-38773622
 #################################################
 
 AINavigation<public> := module:
