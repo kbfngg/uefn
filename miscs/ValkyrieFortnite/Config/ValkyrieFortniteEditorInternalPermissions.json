@@ -1135,6 +1135,10 @@
 				"bAllowListAllSubclassProperties": true
 			},
 			{
+				"Type": "/Script/Engine.SoundWave",
+				"AllowList": [ "NumChannels", "SampleRate", "ImportedSampleRate", "Duration", "TotalSamples", "ModulationSettings", "LoadingBehavior", "bMature", "bManualWordWrap", "bSingleLine", "SubtitlePriority", "Subtitles", "Comment" ]
+			},
+			{
 				"Type": "/Script/FortniteGame.BaseUEFNAnimInstance",
 				"bAllowListAllProperties": true
 			},
