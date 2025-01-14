@@ -14,12 +14,15 @@
 	"_comment_ValkyrieProjectSettings": "General settings to apply to user-created projects",
 	"ValkyrieProjectSettings": {
 		"bPublishingEnabled": true,
-		"bLocalizationEnabled": false,
+		"bLocalizationEnabled": true,
+		"bAutoLocalizationEnabled": true,
+		"bManualLocalizationEnabled": false,
 		"bProjectExternalContentAllowed": true,
 		"bAddProjectExternalContentAllowed": false,
 		"bMultiPluginProjectAllowed": false,
 		"bMultiProjectAllowed": false,
 		"bModuleIdNamedPlugins": false,
+		"bVersePathContentBrowserEnabled": false,
 		"bWorkspaceAllowed": false,
 		"bProjectRenameAllowed": false,
 		"bProjectKindExposed": false,
@@ -262,7 +265,11 @@
 		"AllowedMVVMConversionClass": [
 			"/Script/CRD_ModalDialogUI.CreativeModalDialogAllowedConversionFunction",
 			"/Script/ModelViewViewModel.MVVMSlateBrushConversionLibrary",
-			"/Script/VerseFortniteUI.VerseFortniteUIAllowedConversionLibrary"
+			"/Script/VerseFortniteUI.VerseFortniteUIAllowedConversionLibrary",
+			"/Script/ModelViewViewModelEditor.MVVMK2Node_LoadSoftTexture",
+			"/Script/ModelViewViewModelEditor.MVVMK2Node_LoadSoftMaterial",
+			"/Script/ModelViewViewModelEditor.MVVMK2Node_MakeBrushFromSoftTexture",
+			"/Script/ModelViewViewModelEditor.MVVMK2Node_MakeBrushFromSoftMaterial",
 		],
 		"DeniedMVVMConversionClass": []
 	},
@@ -458,7 +465,18 @@
 			"/Script/Engine.VolumeTexture":						{ "Rules": ["View","Create","Import","Export"] },
 			"/Script/Engine.World":								{ "Rules": ["View","Create","Import"] },
 			"/Script/Foliage.FoliageType_InstancedStaticMesh":	{ "Rules": ["View","Create"], "Subclasses": "All" },
-			"/Script/FortniteGame.BuildingTextureData":			{ "Rules": [ "View", "Public" ] },                 
+			"/Script/FortniteGame.BuildingTextureData":			{ "Rules": [ "View", "Public" ] },
+			"/Script/CommonConversationRuntime.ConversationDatabase":			{ "Rules": ["View","Create","Public"] },
+			"/Script/CommonConversationGraph.ConversationGraph": 				{ "Rules": ["View","Public"] },
+			"/Script/CommonConversationGraph.ConversationGraphNode_EntryPoint": { "Rules": ["View","Public"] },
+			"/Script/CommonConversationGraph.ConversationGraphNode_Knot": 		{ "Rules": ["View","Public"] },
+			"/Script/FortniteGame.VkConversationNode_DefaultEntryPoint": 		{ "Rules": ["View","Public"] },
+			"/Script/FortniteGame.VkConversationNode_Event":					{ "Rules": ["View","Public"] },
+			"/Script/FortniteGame.VkConversationNode_Random":					{ "Rules": ["View","Public"] },
+			"/Script/FortniteGame.VkConversationNode_Speech":					{ "Rules": ["View","Public"] },
+			"/Script/FortniteGame.VkConversationNode_Choice":					{ "Rules": ["View","Public"] },
+			"/Script/FortniteGame.VkConversationNode_Repeat":					{ "Rules": ["View","Public"] },
+			"/Script/FortniteGame.VkConversationNode_Restart":					{ "Rules": ["View","Public"] },
 			"/Script/FortniteGame.FortGameFeatureData":			{ "Rules": ["View"] },
 			"/Script/FortniteGame.FortItemDefinition":			{ "Rules": ["View"], "Subclasses": "All" },
 			"/Script/FortniteGame.FortItemComponentData_LevelLimits":		{ "Rules": ["View","Create"] },
@@ -469,19 +487,19 @@
 			"/Script/HarmonixMidi.MidiFile":					{ "Rules": ["View","Import"] },
 			"/Script/ImgMedia.ImgMediaSource":					{ "Rules": ["View","Create"] },
 			"/Script/ItemizationCoreRuntime.ItemComponentData_Icon":		{ "Rules": ["View","Create"] },
+			"/Script/ItemizationCoreRuntime.ItemComponentData_Traits":		{ "Rules": ["View","Create"] },
 			"/Script/ItemizationCoreRuntime.ItemComponentData_MaxStackSize":{ "Rules": ["View","Create"] },
 			"/Script/ItemizationCoreRuntime.ItemComponentData_StackSize":	{ "Rules": [ "View" ] },
-			"/Script/ItemizationCoreRuntime.ItemComponentData_Traits":		{ "Rules": ["View","Create"] },
 			"/Script/Landscape.LandscapeLayerInfoObject":		{ "Rules": ["View","Create"] },
 			"/Script/Landscape.LandscapeGrassType":				{ "Rules": ["View","Create"] },
 			"/Script/LevelSequence.LevelSequence":				{ "Rules": ["View","Create","Import","Export"], "Subclasses": "NativeOnly" },
-			"/Script/Niagara.NiagaraEffectType":				{ "Rules": ["View"] },
+			"/Script/Niagara.NiagaraEffectType":				{ "Rules": ["View", "Create"] },
 			"/Script/Niagara.NiagaraEmitter":					{ "Rules": ["View","Create"] },
 			"/Script/Niagara.NiagaraScript":					{ "Rules": ["View","Create"] },
 			"/Script/Niagara.NiagaraSystem":					{ "Rules": ["View","Create","Public"] },
 			"/Script/Niagara.NiagaraAssetTagDefinitions":			{ "Rules": ["View"] },
 			"/Script/PhysicsCore.PhysicalMaterial":				{ "Rules": ["View"] },
-			"/Script/Solaris.VerseClass":						{ "Rules": ["View"] },
+			"/Script/CoreUObject.VerseClass":						{ "Rules": ["View"] },
 			"/Script/TakesCore.TakePreset":				{ "Rules": ["View","Create"] },
 			"/Script/UMG.WidgetBlueprintGeneratedClass":		{ "Rules": ["View","Create"] },
 			"/Script/UMGEditor.WidgetBlueprint":				{ "Rules": ["View","Create"] }
@@ -512,6 +530,7 @@
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_WildlifeBehavior.CharacterModifier_WildlifeBehavior_C":			{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_WildlifeSpawn.CharacterModifier_WildlifeSpawn_C":					{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_WildlifeVerseBehavior.CharacterModifier_WildlifeVerseBehavior_C":	{ "Visible": true },
+			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Sequencer.CharacterModifier_Sequencer_C":							{ "Visible": true },
 			"/CRD_Analytic/BP_Creative_Analytic_Manager.BP_Creative_Analytic_Manager_C":								{  },
 			"/CRD_Ascender/Device_Ascender.Device_Ascender_C":															{  },
 			"/CRD_Bouncer/BouncerComponent.BouncerComponent_C":															{  },
@@ -534,6 +553,7 @@
 			"/CRD_PlayerRef/Creative_PlayerRef_StatWidgetComp_V2.Creative_PlayerRef_StatWidgetComp_V2_C":				{  },
 			"/CRD_PropManipulationDevice/CreativeResourceNodeComponent_V2.CreativeResourceNodeComponent_V2_C":			{  },
 			"/CRD_PropManipulationDevice/PropManipulationGameplayVolume.PropManipulationGameplayVolume_C":				{  },
+            "/CRD_SkilledInteractionDevice/UI/UEFN_SkilledInteraction_ViewModel.UEFN_SkilledInteraction_ViewModel_C":	{ "Visible": true },
 			"/CRD_VehicleSpawners/Device_VehicleSpawnerParent_V2.Device_VehicleSpawnerParent_V2_C":						{  },
 			"/CRD_Volume/VolumeDeviceFNE_Volume.VolumeDeviceFNE_Volume_C":												{  },
 			"/CRD_Volume/VolumeDeviceGameplayVolume.VolumeDeviceGameplayVolume_C": 										{  },
@@ -928,6 +948,7 @@
 			"/Script/Engine.ExponentialHeightFog":								{ "Visible": true },
 			"/Script/Engine.ExponentialHeightFogComponent":						{ "Visible": true },
 			"/Script/Engine.FloatAnimationAttribute":							{  },
+			"/Script/Engine.GeneratedBlueprintBinding":							{  },
 			"/Script/Engine.HLODBuilderSettings":								{  },
 			"/Script/Engine.HLODLayer":											{  },
 			"/Script/Engine.HLODInstancedStaticMeshComponent":					{  },
@@ -1347,6 +1368,18 @@
 			"/Script/FortniteGame.BuildingStairs":								{ "Visible": true },
 			"/Script/FortniteGame.BuildingStairsActorClassData":				{  },
 			"/Script/FortniteGame.BuildingTextureData":							{ "Visible": true },
+			"/Script/CommonConversationRuntime.ConversationDatabase":			{ "Visible": true },
+			"/Script/CommonConversationGraph.ConversationGraph": 				{ "Visible": true },
+			"/Script/CommonConversationGraph.ConversationGraphNode_EntryPoint": { "Visible": true },
+			"/Script/CommonConversationGraph.ConversationGraphNode_Knot": 		{ "Visible": true },
+			"/Script/CommonConversationGraph.ConversationGraphNode_Task":		{ "Visible": true },
+			"/Script/FortniteGame.VkConversationNode_DefaultEntryPoint": 		{ "Visible": true },
+			"/Script/FortniteGame.VkConversationNode_Event":					{ "Visible": true },
+			"/Script/FortniteGame.VkConversationNode_Random":					{ "Visible": true },
+			"/Script/FortniteGame.VkConversationNode_Speech":					{ "Visible": true },
+			"/Script/FortniteGame.VkConversationNode_Choice":					{ "Visible": true },
+			"/Script/FortniteGame.VkConversationNode_Repeat":					{ "Visible": true },
+			"/Script/FortniteGame.VkConversationNode_Restart":					{ "Visible": true },
 			"/Script/FortniteGame.BuildingTimeOfDayLightsActorClassData":		{  },
 			"/Script/FortniteGame.BuildingWall":								{ "Visible": true },
 			"/Script/FortniteGame.BuildingWallActorClassData":					{  },
@@ -1406,6 +1439,7 @@
 			"/Script/FortniteGame.FortMinigameProgressComponent":				{  },
 			"/Script/FortniteGame.FortMutatorListComponent":					{  },
 			"/Script/FortniteGame.FortPhysicsObjectComponent":					{  },
+			"/Script/FortniteGame.FortPlayerMannequin":							{  },
 			"/Script/FortniteGame.FortPlayerStart":								{  },
 			"/Script/FortniteGame.FortPlayerStartCreative":						{  },
 			"/Script/FortniteGame.FortPlaysetItemDefinition":					{  },
@@ -1447,6 +1481,8 @@
 			"/Script/FortniteGame.PlayStopPauseInterface":						{ "Visible": true },
 			"/Script/FortniteGame.UserOptionDefinitionContainer":				{  },
 			"/Script/FortniteGame.WaterVolume_Athena":							{  },
+			"/Script/FortNPCCharacterMovieSceneBindings.FortNPCCharacterMovieSceneReplaceableBinding":					{ "Visible": true },
+			"/Script/FortNPCCharacterMovieSceneBindings.FortNPCCharacterMovieSceneSpawnableBinding":					{ "Visible": true },
 			"/Script/FortniteUI.FortCTAButton":									{  },
 			"/Script/GameplayAbilities.AbilitySystemComponent":					{  },
 			"/Script/GameplayTags.GameplayTag":									{  },
@@ -1509,9 +1545,9 @@
 			"/Script/InterchangePipelines.InterchangeGenericMeshPipeline":		{  },
 			"/Script/InterchangePipelines.InterchangeGenericTexturePipeline":	{  },
 			"/Script/ItemizationCoreRuntime.ItemComponentData_Icon":			{ "Visible": true },
+			"/Script/ItemizationCoreRuntime.ItemComponentData_Traits":			{ "Visible": true },
 			"/Script/ItemizationCoreRuntime.ItemComponentData_MaxStackSize":	{ "Visible": true },
 			"/Script/ItemizationCoreRuntime.ItemComponentData_StackSize":		{ "Visible": true },
-			"/Script/ItemizationCoreRuntime.ItemComponentData_Traits":			{ "Visible": true },
 			"/Script/Landscape.ControlPointMeshActor":							{  },
 			"/Script/Landscape.ControlPointMeshComponent":						{  },
 			"/Script/Landscape.Landscape":										{  },
@@ -1545,14 +1581,15 @@
 			"/Script/MannequinRuntime.MannequinAnalyticsComponent":				{  },
 			"/Script/MediaAssets.MediaSoundComponent":							{  },
 			"/Script/MediaAssets.MediaTexture":     							{  },
-			"/Script/ModelViewViewModel.MVVMSlateBrushConversionLibrary":		{  },
 			"/Script/ModelViewViewModel.MVVMPanelWidgetViewExtension":			{ "Visible": true },
+			"/Script/ModelViewViewModel.MVVMSlateBrushConversionLibrary":		{  },
 			"/Script/ModelViewViewModel.MVVMViewClass":							{  },
 			"/Script/ModelViewViewModel.MVVMViewModelBase":						{ "Visible": false },
 			"/Script/ModelViewViewModel.MVVMViewModelContextResolver":			{ "Visible": false },
 			"/Script/ModelViewViewModel.MVVMViewPanelWidgetClassExtension":		{ "Visible": false },
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintView":			{  },
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewEvent":{  },
+			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewCondition":{  },
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewExtension_PanelWidget":	{ "Visible": false },
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewConversionFunction":{  },
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewSettings":{  },
@@ -1567,8 +1604,14 @@
 			"/Script/MovieScene.MovieSceneNodeGroup":							{  },
 			"/Script/MovieScene.MovieSceneNodeGroupCollection":					{  },
 			"/Script/MovieScene.MovieSceneSectionChannelOverrideRegistry":		{  },
+			"/Script/MovieScene.MovieSceneSpawnTrack":					 		{ "Visible": true },
+			"/Script/MovieScene.MovieSceneSpawnSection":					 	{ "Visible": true },
 			"/Script/MovieScene.MovieSceneSubSection":							{  },
 			"/Script/MovieScene.MovieSceneSubTrack":							{ "Visible": true },
+			"/Script/MovieScene.MovieSceneTimeWarpTrack":						{ "Visible": true },
+			"/Script/MovieScene.MovieSceneTimeWarpSection":						{ "Visible": true },
+			"/Script/MovieScene.MovieScenePlayRateCurve":						{ "Visible": true },
+			"/Script/MovieScene.MovieSceneTimeWarpCurve":						{ "Visible": true },
 			"/Script/MovieSceneGameplayEventTrack.MovieSceneGameplayEventTrack": { "Visible": true },
 			"/Script/MovieSceneGameplayEventTrack.MovieSceneGameplayEventSection": { "Visible": true },
 			"/Script/MovieSceneGameplayEventTrack.MovieSceneGameplayEvent": { "Visible": true },
@@ -1745,6 +1788,7 @@
 			"/Script/NiagaraEditor.NiagaraHierarchySimStage":					{  },
 			"/Script/NiagaraEditor.NiagaraHierarchySimStageProperties":			{  },
 			"/Script/NiagaraEditor.NiagaraHierarchyUserParameter":				{  },
+			"/Script/NiagaraEditor.NiagaraHierarchyScriptParameter":			{  },			
 			"/Script/NiagaraEditor.NiagaraMessageData":							{  },
 			"/Script/NiagaraEditor.NiagaraMessageDataText":						{  },
 			"/Script/NiagaraEditor.NiagaraNodeAssignment":						{ "Visible": true },
@@ -1963,6 +2007,15 @@
 			"AssetEditor.BlueprintEditor.ToolBar.GraphName": {
 				"AllowList": [ "Compile", "SaveAsset", "FindInContentBrowser", "EditGlobalOptions", "EditClassDefaults" ]
 			},
+			"AssetEditor.Conversation Editor.ToolBar.GraphViewMode": {
+				"DenyList": [ "Conversation" ]
+			},
+			"AssetEditor.ParameterCollectionEditor.MainMenu": {
+				"AllowList": [ "File", "Edit", "Asset", "Window", "Help" ]
+			},
+			"AssetEditor.ParameterCollectionEditor.MainMenu.File": {
+				"AllowList": [ "SaveAsset", "SaveAll"]
+			},
 			"AssetEditor.MaterialInstanceEditor.ToolBar": {
 				"AllowList": [ "SaveAsset", "FindInContentBrowser", "Apply", "Hierarchy", "TogglePlatformStats" ]
 			},
@@ -2019,7 +2072,7 @@
 				"DenyList": [ "IKRetargetAnimSubmenu", "RetargetAnimSubmenu" ]
 			},
 			"ContentBrowser.AssetContextMenu.AssetActionsSubMenu": {
-				"DenyList": [ "FortCreateHotfix", "FortHostUI" ]
+				"DenyList": [ "FortCreateHotfix", "FortHostUI", "AssetExtraction_ExtractAssets", "AssetExtraction_ExtractAssetsWizard" ]
 			},
 			"ContentBrowser.AssetContextMenu.FortItemDefinition": {
 				"DenyList": [ "ItemDef_FindInPlaylists", "GameplayTags_Edit" ]
@@ -2043,7 +2096,7 @@
 				"DenyList": [ "ShowCppClasses", "ShowDevelopersContent", "ShowEngineFolder", "ShowPluginFolder", "OrganizeFolders", "PathViewFilters" ]
 			},
 			"ContentBrowser.FolderContextMenu": {
-				"DenyList": [ "ValidateAssetsPath", "ViewSizeMap", "ViewAssetAudit", "ViewShaderCookStatistics", "Plugin" ]
+				"DenyList": [ "ValidateAssetsPath", "ViewSizeMap", "ViewAssetAudit", "ViewShaderCookStatistics", "Plugin", "AssetExtraction_ExtractFolder", "AssetExtraction_ExtractFolderWizard" ]
 			},
 			"DaySequence.ViewportToolbar": {
 				"AllowList": [ "DaySequencePreviewTime" ]
@@ -2157,7 +2210,7 @@
 				"AllowList": [ "File", "Edit", "Window", "Tools", "Verse", "Build", "Select", "Help", "Utility" ]
 			},
 			"LevelEditor.MainMenu.Build": {
-				"AllowList": [ "BuildHLODs", "BuildMinimap", "BuildAllLandscape", "ValkyrieExportProjectLocalization" ]
+				"AllowList": [ "BuildHLODs", "BuildMinimap", "BuildAllLandscape", "ValkyrieExportProjectLocalization", "ValkyrieRunProjectAutoLocalization" ]
 			},
 			"LevelEditor.MainMenu.Edit": {
 				"AllowList": [ "Undo", "Redo", "UndoHistory", "Cut", "Copy", "Paste", "Duplicate", "Delete", "EditorPreferencesMenu" ]
@@ -2609,6 +2662,7 @@
 			"MIron_Visuals",
 			"MeltedIron_Arcade_Template",
 			"PrefabExample",
+			"ScarySpace",
 			"UEFNDesignASpeedwayRace",
 			"VKT_Animation101",
 			"VKT_LavaCave",
@@ -2854,7 +2908,7 @@
 			},
 			{
 				"Type": "/FortUILibrary/UGC/Widgets/Buttons/CTA/WBP_UEFN_ButtonCTA_Base.WBP_UEFN_ButtonCTA_Base_C",
-				"AllowList": [ "MinWidth", "MinHeight", "bSelectable", "bShouldSelectUponReceivingFocus", "bInteractableWhenSelected", "ClickMethod", "TouchMethod", "PressMethod", "InputPriority", "Text", "TextSecondary", "BackgroundMaterial", "BorderMaterial", "IsBorderAdditive", "ClickEvent", "OnButtonBaseClicked" ]
+				"AllowList": [ "MinWidth", "MinHeight", "bSelectable", "bShouldSelectUponReceivingFocus", "bInteractableWhenSelected", "ClickMethod", "TouchMethod", "PressMethod", "InputPriority", "Text", "TextSecondary", "BackgroundMaterial", "BorderMaterial", "IsBorderAdditive", "ClickEvent", "OnButtonBaseClicked", "OnButtonBaseHovered", "OnButtonBaseUnhovered"]
 			},
 			{
 				"Type": "/Script/UMG.Image",
@@ -2923,6 +2977,10 @@
 			{
 				"Type": "/Script/FortniteGame.BuildingTextureData",
 				"DenyList": [ "Displacement", "Magnitude", "Center" ]
+			},
+			{
+				"Type": "/Script/CommonConversationRuntime.ConversationDatabase",
+				"DenyList": [ "Speakers" ]
 			},
 			{
 				"Type": "/Script/FortniteGame.BuildingActor",
@@ -3155,6 +3213,10 @@
 				"AllowList": [ "TemplateOverrideClass" ]
 			},
 			{
+				"Type": "/CRD_Conversation_Device/Device_Conversation.Device_Conversation_C",
+				"AllowList": [ "CustomWidget", "Conversation", "ConversationMaxedIcon" ]
+			},
+			{
 				"Type": "/Script/FortniteGame.FortGameplayMessageComponentBase",
 				"AllowList": [ "ChannelIds" ]
 			},
@@ -3346,7 +3408,7 @@
 			},
 			{
 				"Type": "/Script/ValkyrieEditor.ValkyrieProjectSettingsEditorViewModel",
-				"AllowList": [ "Title", "Description", "DocsUrl", "VersePath", "VerseVersion", "UGCLocDescriptor", "bIsUsingNewInventorySystem", "ExperimentalAccessWarning", "bIsUsingSceneGraphSystem", "bIsUsingExperimentalContent" ]
+				"AllowList": [ "Title", "Description", "DocsUrl", "VersePath", "VerseVersion", "UGCLocDescriptor", "AutoLocalizationSettings", "ExperimentalAccessWarning", "bIsUsingSceneGraphSystem" , "bIsUsingExperimentalContent"]
 			},
 			{
 				"Type": "/Script/Engine.CameraShakeBase",
@@ -3517,6 +3579,11 @@
 			{
 				"Type": "/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_WildlifeVerseBehavior.CharacterModifier_WildlifeVerseBehavior_C",
 				"AllowList": [ "NPCBehaviorScript"]
+			},
+			{
+				"Type": "/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Sequencer.CharacterModifier_Sequencer_C",
+				"bAllowListAllProperties": false,
+				"bAllowListAllSubclassProperties": false
 			},
 			{
 				"Type": "/Script/DelMarTrackRuntime.DelMarTrack",
@@ -3703,7 +3770,7 @@
 				"Type": "/Script/Engine.PrimitiveComponent",
 				"AllowList": ["bHasCustomNavigableGeometry", "BoundsScale", "bVisibleInReflectionCaptures", "OnComponentBeginOverlap", "OnComponentEndOverlap", "OnComponentHit", "OnComponentPhysicsStateChanged", "bSelectable", "bWantsEditorEffects",
 					"bAllowCullDistanceVolume", "bNeverDistanceCull", "bCastHiddenShadow", "bCastFarShadow", "VirtualTextureRenderPassType", "RuntimeVirtualTextures", "bIsActorTextureStreamingBuiltData", "bIsValidTextureStreamingBuiltData", "AlwaysLoadOnClient", "AlwaysLoadOnServer",
-					"bHasPerInstanceHitProxies", "ExcludeFromHLODLevels", "CustomPrimitiveData", "bCastContactShadow", "bRenderCustomDepth", "CustomDepthStencilValue", "CustomDepthStencilWriteMask", "bFillCollisionUnderneathForNavmesh", "bHasNoStreamableTextures"],
+					"bHasPerInstanceHitProxies", "ExcludeFromHLODLevels", "CustomPrimitiveData", "bCastContactShadow", "bRenderCustomDepth", "CustomDepthStencilValue", "CustomDepthStencilWriteMask", "bFillCollisionUnderneathForNavmesh", "bHasNoStreamableTextures", "bCastShadowAsTwoSided", "bRayTracingFarField"],
 				"bAllowListAllSubclassProperties": true
 			},
 			{
@@ -3836,7 +3903,7 @@
 			},
 			{
 				"Type": "/Script/DaySequence.DaySequenceModifierComponent",
-				"AllowList": [ "Bias", "DayNightCycleTime", "DayNightCycle", "BlendAmount", "BlendMode", "bIgnoreBias", "bUseVolume", "UserDaySequence" ],
+				"AllowList": [ "Bias", "DayNightCycleTime", "DayNightCycle", "BlendAmount", "Mode", "bIgnoreBias", "BlendPolicy", "UserDaySequence" ],
 				"DenyList": []
 			},
 			{
@@ -4326,7 +4393,7 @@
 			},
 			{
 				"Type": "/Script/Engine.BodyInstance",
-				"AllowList": ["ObjectType", "CollisionEnabled", "CollisionProfileName", "CollisionResponses","PhysMaterialOverride", "MassInKgOverride", "AngularDamping", "InertiaTensorScale", "LinearDamping", "bUseCCD", "MassScale", "COMNudge"],
+				"AllowList": ["ObjectType", "CollisionEnabled", "CollisionProfileName", "CollisionResponses","PhysMaterialOverride", "MassInKgOverride", "AngularDamping", "InertiaTensorScale", "LinearDamping", "bUseCCD", "MassScale", "COMNudge", "WalkableSlopeBehavior", "WalkableSlopeAngle"],
 				"DenyList": []
 			}
 		]

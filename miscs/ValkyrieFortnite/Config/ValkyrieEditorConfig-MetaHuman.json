@@ -2,9 +2,9 @@
 	"ValkyrieEditorSettings": {
 		"AllowedAssetTypes": {
 			"/Script/MetaHumanConfig.MetaHumanConfig":									{ "Rules": ["View","Create"] },
-			"/Script/MetaHumanCore.MetaHumanCameraCalibration":							{ "Rules": ["View","Create"] },
-			"/Script/MetaHumanCaptureData.MeshCaptureData":								{ "Rules": ["View","Create"] },
-			"/Script/MetaHumanCaptureData.FootageCaptureData":							{ "Rules": ["View","Create"] },
+			"/Script/CaptureDataCore.CameraCalibration":								{ "Rules": ["View","Create"] },
+			"/Script/CaptureDataCore.MeshCaptureData":									{ "Rules": ["View","Create"] },
+			"/Script/CaptureDataCore.FootageCaptureData":								{ "Rules": ["View","Create"] },
 			"/Script/MetaHumanCaptureSource.MetaHumanCaptureSource":					{ "Rules": ["View","Create"] },
 			"/Script/MetaHumanIdentity.MetaHumanIdentity":								{ "Rules": ["View","Create"] },
 			"/Script/MetaHumanPerformance.MetaHumanPerformance":						{ "Rules": ["View","Create"] },
@@ -16,8 +16,8 @@
 			"/Script/MetaHumanPerformance.MetaHumanPerformanceMovieSceneAudioTrack":    { "Rules": ["View","Create"] }
 		},
 		"AllowedClasses": {
-			"/Script/MetaHumanRuntime.MetaHumanCustomizableBodyPart": {},
-			"/Script/MetaHumanRuntime.MetaHumanComponentBase": {},
+			"/Script/MetaHumanSDKRuntime.MetaHumanCustomizableBodyPart": {},
+			"/Script/MetaHumanSDKRuntime.MetaHumanComponentBase": {},
 			"/Script/MetaHumanUEFNRuntime.MetaHumanComponent": { "Visible": true },
 			"/MetaHumanUEFN/AnimBPs/MetaHuman_ControlRigRigidBody_Template.MetaHuman_ControlRigRigidBody_Template_C": {},
 			"/MetaHumanUEFN/AnimBPs/MetaHuman_ControlRig_Template.MetaHuman_ControlRig_Template_C": {},
@@ -43,9 +43,9 @@
 			"/MetaHumanUEFN/Male/Tall/OverWeight/Body/m_tal_ovw_animbp.m_tal_ovw_animbp_C": {},
 			"/MetaHumanUEFN/Male/Tall/UnderWeight/Body/m_tal_unw_animbp.m_tal_unw_animbp_C": {},
 			"/Script/MetaHumanConfig.MetaHumanConfig":							{  },
-			"/Script/MetaHumanCore.MetaHumanCameraCalibration":					{  },
-			"/Script/MetaHumanCaptureData.MeshCaptureData": 					{  },
-			"/Script/MetaHumanCaptureData.FootageCaptureData": 					{  },
+			"/Script/CaptureDataCore.CameraCalibration":						{  },
+			"/Script/CaptureDataCore.MeshCaptureData": 							{  },
+			"/Script/CaptureDataCore.FootageCaptureData": 						{  },
 			"/Script/MetaHumanCaptureSource.MetaHumanCaptureSource": 			{  },
 			"/Script/MetaHumanIdentity.MetaHumanIdentity": 						{  },
 			"/Script/MetaHumanPerformance.MetaHumanPerformance": 				{  },
@@ -67,6 +67,11 @@
 					"=": [ "ExportLevelSequence" ]
 				}
 			},
+			"AssetEditor.MetaHumanPerformanceEditor.MainMenu.Performance": {
+				"DenyList": {
+					"=": [ "ExportLevelSequence" ]
+				}
+			},
 			"ContentBrowser.AddNewContextMenu": {
 				"AllowList": {
 					"+": [ "OpenMetaHumanImportTab" ]
@@ -75,6 +80,16 @@
 			"ContentBrowser.FolderContextMenu.NewAsset": {
 				"AllowList": {
 					"+": [ "OpenMetaHumanImportTab" ]
+				}
+			},
+			"ContentBrowser.AssetContextMenu.SoundWave.SoundWave_ProcessMetaHumanPerformanceSubMenu": {
+				"DenyList": {
+					"+": [ "SoundWave_ProcessMetaHumanPerformanceToLS" ]
+				}
+			},
+			"ContentBrowser.AssetContextMenu.MetaHumanPerformance.MetaHumanPerformance_ExportSubMenu": {
+				"DenyList": {
+					"+": [ "MetaHumanPerformance_ExportLS" ]
 				}
 			}
 		},
@@ -102,7 +117,7 @@
 				"bAllowListAllSubclassProperties": true
 			},
 			{
-				"Type": "/Script/MetaHumanRuntime.MetaHumanComponentBase",
+				"Type": "/Script/MetaHumanSDKRuntime.MetaHumanComponentBase",
 				"bAllowListAllProperties": true,
 				"bAllowListAllSubclassProperties": true
 			},

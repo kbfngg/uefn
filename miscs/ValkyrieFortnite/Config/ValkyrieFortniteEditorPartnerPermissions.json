@@ -25,6 +25,8 @@
 	},
 	"ValkyrieProjectSettings": {
 		"bLocalizationEnabled": true,
+		"bAutoLocalizationEnabled": true,
+		"bManualLocalizationEnabled": true,
 		"bAddProjectExternalContentAllowed": true,
 		"bMultiPluginProjectAllowed": true,
 		"bProjectKindExposed": true
