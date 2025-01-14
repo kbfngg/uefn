@@ -245,6 +245,12 @@ capture_area_device<public> := class<concrete><final>(creative_device_base):
     # Returns the *Capture Radius* (in meters) of the capture area.
     GetRadius<public>()<computes><reads>:float = external {}
 
+    # Returns an array of agents that are currently occupying the Capture Area.
+    GetAgentsInVolume<epic_internal>()<computes><reads>:[]agent = external {}
+
+    # Is true when `Agent` is in the Capture Area.
+    IsInArea<epic_internal>(Agent:agent)<transacts><decides>:void = external {}
+
 # Spawns and tracks a single item as a game objective (e.g. flag).
 capture_item_spawner_device<public> := class<concrete><final>(creative_device_base):
     # Signaled when spawned item is captured.
@@ -309,7 +315,11 @@ class_and_team_selector_device<public> := class<concrete><final>(creative_device
 
 # Used together with `class_selector_device` to create class based gameplay. Defines custom class attributes and inventory loadouts.
 class_designer_device<public> := class<concrete><final>(creative_device_base):
+    # Returns an array of agents that are currently of *Class* defined by this device.
+    GetClassMembers<epic_internal>()<computes><reads>:[]agent = external {}
 
+    # Is true if `Agent` is on *Class* defined by this device.
+    IsOfClass<epic_internal>(Agent:agent)<transacts><decides>:void = external {}
 
 # Used to place a collectible item into the world.
 collectible_object_device<public> := class<concrete><final>(creative_device_base):
@@ -554,6 +564,10 @@ item_granter_device<public> := class<concrete><final>(creative_device_base):
     # Sends the `agent` that was granted the item.
     ItemGrantedEvent<public>:listenable(agent) = external {}
 
+    # Signaled when an item is granted to an `agent`.
+    # Sends the `agent` that was granted the item, as well as the number of items granted.
+    ItemGrantedWithCountEvent<epic_internal>:listenable(tuple(agent, int)) = external {}
+
     # Enables this device.
     Enable<public>():void = external {}
 
@@ -595,6 +609,21 @@ item_granter_device<public> := class<concrete><final>(creative_device_base):
     # Returns the current Item Index that this device will grant when activated.
     GetItemIndex<public>()<transacts>:int = external {}
 
+    # Sets the number of items this item granter will award for all items in the Item Granter. `Number` must be greater than 0.
+    SetItemCount<epic_internal>(Count:int):void = external {}
+
+    # Returns the number of items this item granter will award for all items in the Item Granter.
+    GetItemCount<epic_internal>()<transacts>:int = external {}
+
+    # Returns the number of items this item granter will award for at the specified index in the Item Granter. This will return 0 if the index is invalid.
+    GetItemCountAtIndex<epic_internal>(Index:int)<transacts>:int = external {}
+
+    # Sets the number of items this item granter will award for the item at `Index`.
+    # `Number` must be greater than 0.
+    # If *Cycle Behavior* is *Stop*, `ItemIndex` is clamped to the number of items in the Item Granter.
+    #  If *Cycle Behavior* is *Wrap*, `ItemIndex` is modulo'd to the number of items in the Item Granter.
+    SetItemCountAtIndex<epic_internal>(ItemIndex:int, Count:int):void = external {}
+
     # Restocks this device back to its starting inventory count.
     RestockItems<public>():void = external {}
 
@@ -602,6 +631,10 @@ item_granter_device<public> := class<concrete><final>(creative_device_base):
     #  * `Index` should be between `0` and the available item count - 1.
     #  * Calling `SetNextItem` with an invalid index will do nothing.
     SetNextItem<public>(Index:int):void = external {}
+
+    GetItemDisplayNameAtIndex<epic_internal>(Index:int)<transacts>:string = external {}
+
+    GetItemInventoryCountAtIndex<epic_internal>(Agent:agent, Index:int)<transacts>:int = external {}
 
 # Used to configuration and spawn items that players can pick up and use.
 item_spawner_device<public> := class<concrete><final>(base_item_spawner_device):
@@ -741,6 +774,18 @@ perception_trigger_device<public> := class<concrete><final>(trigger_base_device)
     # Signaled when this device loses direct line of sight to an `agent`.
     # Sends the `agent` this device has lost sight of.
     DeviceLosesSightOfAgentEvent<public>:listenable(agent) = external {}
+
+    # Returns an array of agents that are currently of the class defined by this device.
+    GetPerceivedAgents<epic_internal>()<computes><reads>:[]agent = external {}
+
+    # Succeeds when `Agent` is registered to this checkpoint.
+    IsPerceived<epic_internal>(Agent:agent)<transacts><decides>:void = external {}
+
+    # Returns an array of agents that are currently of the class defined by this device.
+    GetLookingAtDeviceAgents<epic_internal>()<computes><reads>:[]agent = external {}
+
+    # Succeeds when `Agent` is registered to this checkpoint.
+    IsLookingAtDevice<epic_internal>(Agent:agent)<transacts><decides>:void = external {}
 
 # A triggered bumper that can knock players back, damage them, and award points.
 pinball_bumper_device<public> := class<concrete><final>(creative_device_base):
@@ -1220,6 +1265,9 @@ team_settings_and_inventory_device<public> := class<concrete><final>(creative_de
     # Is true if `Agent` is on *Team*.
     IsOnTeam<public>(Agent:agent)<transacts><decides>:void = external {}
 
+    # Returns an array of agents that are currently of the team defined by this device.
+    GetTeamMembers<epic_internal>()<computes><reads>:[]agent = external {}
+
 # Customizable rift that allows `agent`s to move instantly between locations. You can use this to move players around your island, or create multi-island experiences with teleporters that take players from one island to another.
 teleporter_device<public> := class<concrete><final>(creative_device_base):
     # Signaled when an `agent` enters this device.
@@ -1568,11 +1616,14 @@ tracker_device<public> := class<concrete><final>(creative_device_base):
     # `GetTitleText` has a 32 character limit.
     GetTitleText<epic_internal>()<transacts>:string = external {}
 
-    # Is true if `Agent` currently has the quest active.
+    # Is true if `Agent` currently has the tracker active.
     IsActive<public>(Agent:agent)<transacts><decides>:void = external {}
 
     # Is true if `Agent` has reached the *TargetValue* for the tracker.
     HasReachedTarget<public>(Agent:agent)<transacts><decides>:void = external {}
+
+    # Returns an array of agents that currently have this tracker active.
+    GetActiveAgents<epic_internal>()<computes><reads>:[]agent = external {}
 
 # A trap device that destroys the tile it's placed on when activated.
 trick_tile_device<public> := class<concrete><final>(creative_device_base):

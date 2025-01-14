@@ -1,4 +1,5 @@
 using {/Fortnite.com/Characters}
+using {/Verse.org/Colors}
 using {/UnrealEngine.com/Temporary/SpatialMath}
 using {/UnrealEngine.com/Temporary/Diagnostics}
 using {/UnrealEngine.com/Temporary/Testing}
@@ -112,6 +113,15 @@ VerseFramework<public> := module:
 
         Subscribe<public>(Event:listenable(fort_vehicle)):void = external {}
 
+    device_event_healing_result_handler_mock<public> := class(test_device_event_handler_mock):
+        var ArgSource<public>:?game_action_causer = external {}
+
+        var ArgInstigator<public>:?game_action_instigator = external {}
+
+        var ArgAmount<public>:float = external {}
+
+        Subscribe<public>(Event:listenable(healing_result)):void = external {}
+
     test_case<public> := struct:
         Name<public>:string
 
@@ -193,11 +203,21 @@ VerseFramework<public> := module:
 
         CheckEqual<public>(Expected:int, Actual:int, Message:string):void = external {}
 
+        CheckEqual<public>(Expected:vector3, Actual:vector3, Message:string, ?Tolerance:float = external {}):void = external {}
+
+        CheckEqual<public>(Expected:vector2, Actual:vector2, Message:string, ?Tolerance:float = external {}):void = external {}
+
+        CheckEqual<public>(Expected:vector2i, Actual:vector2i, Message:string):void = external {}
+
+        CheckEqual<public>(Expected:color, Actual:color, Message:string, ?Tolerance:float = external {}):void = external {}
+
+        CheckEqual<public>(Expected:rotation, Actual:rotation, Message:string, ?Tolerance:float = external {}):void = external {}
+
         CheckEqualIntArray<public>(Expected:[]int, Actual:[]int, Message:string):void = external {}
 
         CheckEqualFloatArray<public>(Expected:[]float, Actual:[]float, Message:string):void = external {}
 
-        CheckEqual<public>(Expected:float, Actual:float, Message:string):void = external {}
+        CheckEqual<public>(Expected:float, Actual:float, Message:string, ?Tolerance:float = external {}):void = external {}
 
         CheckEqual<public>(Expected:transform, Actual:transform, Message:string, ?Tolerance:float = external {}):void = external {}
 

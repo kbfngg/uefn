@@ -71,3 +71,6 @@ player_counter_device<public> := class<concrete><final>(creative_device_base):
 
     # Is true if `Agent` is currently counted by this device.
     IsCounted<public>(Agent:agent)<transacts><decides>:void = external {}
+
+    # Returns an array of agents that are currently counted by the device.
+    GetCountedAgents<epic_internal>()<computes><reads>:[]agent = external {}
