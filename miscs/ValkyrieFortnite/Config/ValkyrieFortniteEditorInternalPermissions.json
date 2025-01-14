@@ -48,6 +48,36 @@
 			},
 			{
 				"$type": "ValkyrieEditorAssetClassRules",
+				"ClassName": "/Script/Engine.AnalysisProperties",
+				"Visible": true,
+				"Edit": true,
+				"Create": true,
+				"Import": false,
+				"Export": false,
+				"SubClasses": false
+			},
+			{
+				"$type": "ValkyrieEditorAssetClassRules",
+				"ClassName": "/Script/Persona.LinearAnalysisProperties",
+				"Visible": true,
+				"Edit": true,
+				"Create": true,
+				"Import": false,
+				"Export": false,
+				"SubClasses": false
+			},
+			{
+				"$type": "ValkyrieEditorAssetClassRules",
+				"ClassName": "/Script/Persona.EulerAnalysisProperties",
+				"Visible": true,
+				"Edit": true,
+				"Create": true,
+				"Import": false,
+				"Export": false,
+				"SubClasses": false
+			},
+			{
+				"$type": "ValkyrieEditorAssetClassRules",
 				"ClassName": "/Script/Engine.PoseAsset",
 				"Visible": true,
 				"Edit": true,
@@ -1056,6 +1086,46 @@
 		"+": [
 			{
 				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Engine.AnalysisProperties",
+				"AllowList": [
+					"AnalysisProperties",
+					"Function"
+				]
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Persona.LinearAnalysisProperties",
+				"AllowList": [
+					"AnalysisProperties",
+					"Function",
+					"FunctionAxis",
+					"BoneSocket",
+					"Space",
+					"SpaceBoneSocket",
+					"StartTimeFraction",
+					"EndTimeFraction"
+				]
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Persona.EulerAnalysisProperties",
+				"AllowList": [
+					"AnalysisProperties",
+					"Function",
+					"FunctionAxis",
+					"BoneSocket",
+					"BoneFacingAxis",
+					"BoneRightAxis",
+					"Space",
+					"SpaceBoneSocket",
+					"CharacterFacingAxis",
+					"CharacterUpAxis",
+					"StartTimeFraction",
+					"EndTimeFraction"
+				]
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Engine.BlendSpace",
 				"AllowList": [
 					"bInterpolateUsingGrid",
@@ -1074,7 +1144,10 @@
 					"Horizontal Axis",
 					"BlendSamples_RemoveSamples",
 					"BlendSamples_Samples",
-					"BlendSamples"
+					"BlendSamples",
+					"Analysis",
+					"AnalysisProperties",
+					"AnalysisPropertiesCombo"
 				]
 			},
 			{
@@ -1839,6 +1912,25 @@
 			"/Script/Engine.AnimUpdateContext",
 			"/Script/Engine.AnimExecutionContext",
 			"/Script/Engine.AnimNodeReference"
+		]
+	},
+	"MenuRules": {
+		"+": [
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "SkeletonTree.NewMenu",
+				"AllowList": [ "AddSocket", "VirtualBones", "CreateTimeBlendProfile", "CreateWeightBlendProfile", "CreateBlendMask" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "SkeletonTree.FilterMenu",
+				"AllowList": [ "ShowRetargeting", "FilteringFlattensHierarchy", "HideParentsWhenFiltering", "ShowDebugVisualization", "ShowAllBones", "ShowMeshBones", "ShowLODBones", "ShowWeightedBones", "HideBones", "ShowActiveSockets", "ShowMeshSockets", "ShowSkeletonSockets", "ShowAllSockets", "HideSockets", "BlendProfiles" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "SkeletonTree.BlendProfilesMenu",
+				"AllowList": [ "CreateTimeBlendProfile", "CreateWeightBlendProfile", "CreateBlendMask" ]
+			}
 		]
 	}
 }
