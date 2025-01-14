@@ -8,6 +8,7 @@
 		"bLocalizationEnabled": false,
 		"bProjectExternalContentAllowed": true,
 		"bAddProjectExternalContentAllowed": false,
+		"bRemapLocalContentToReferencedContentAllowed": false,
 		"bMultiPluginProjectAllowed": false,
 		"bProjectKindExposed": false,
 		"DefaultProjectReferencedContent": []
@@ -115,7 +116,29 @@
 			"/Script/ControlRig.RegionScaleFactors",
 			"/Script/ControlRig.SphericalPoseReaderDebugSettings",
 			"/Script/ControlRig.RigUnit_RotationConstraint_AdvancedSettings",
-			"/Script/ControlRigSpline.ControlRigSpline"
+			"/Script/ControlRigSpline.ControlRigSpline",
+			"/Script/IKRig.IKRigInputSkeleton",
+			"/Script/IKRig.IKRigSkeleton",
+			"/Script/IKRig.AnimNode_IKRig",
+			"/Script/IKRig.AnimNode_RetargetPoseFromMesh",
+			"/Script/IKRig.RetargetProfile",
+			"/Script/IKRig.TargetChainSpeedPlantSettings",
+			"/Script/IKRig.TargetChainFKSettings",
+			"/Script/IKRig.TargetChainIKSettings",
+			"/Script/IKRig.TargetChainSettings",
+			"/Script/IKRig.TargetRootSettings",
+			"/Script/IKRig.RetargetGlobalSettings",
+			"/Script/IKRig.IKRetargetPose",
+			"/Script/IKRig.CurveRemapPair",
+			"/Script/IKRig.PinBoneData",
+			"/Script/IKRig.IKRigGoal",
+			"/Script/IKRig.IKRigGoalContainer",
+			"/Script/IKRig.BoneChain",
+			"/Script/IKRig.RetargetDefinition",
+			"/Script/IKRig.GoalBone",
+			"/Script/IKRig.LimbSolverSettings",
+			"/Script/IKRig.LimbLink",
+			"/Script/IKRig.LimbSolver"
 		],
 		"AllowedPinCategories": [
 			"bool",
@@ -547,7 +570,10 @@
 			"/Game/Valkyrie/UMG/UEFN_Button_Regular.UEFN_Button_Regular_C":		{ "Visible": true },
 			"/Game/Valkyrie/UMG/UEFN_Slider.UEFN_Slider_C":						{ "Visible": true },
 			"/Game/Valkyrie/UMG/UEFN_TextBlock.UEFN_TextBlock_C":				{ "Visible": true },
-			"/Script/AIModule.AISenseConfig_Sight":								{  },
+			"/Script/AIModule.AISenseConfig_Damage":							{ "Visible": true },
+			"/Script/AIModule.AISenseConfig_Hearing":							{ "Visible": true },
+			"/Script/AIModule.AISenseConfig_Sight":								{ "Visible": true },
+			"/Script/AIModule.AISenseConfig_Touch":								{ "Visible": true },
 			"/Script/AlembicLibrary.AbcAssetImportData": 						{  },
 			"/Script/AnimationBudgetAllocator.SkeletalMeshComponentBudgeted":	{  },
 			"/Script/AnimationCore.CCDIKChainLink":								{  },
@@ -641,6 +667,31 @@
 			"/Script/ControlRigDeveloper.ControlRigGraph":						{  },
 			"/Script/ControlRigDeveloper.ControlRigGraphNode":					{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/ControlRigSpline.ControlRigSpline":						{  },
+			"/Script/IKRig.IKRigSolver":										{  },
+			"/Script/IKRig.IKRig_BodyMoverEffector":							{  },
+			"/Script/IKRig.IKRig_BodyMover":									{  },
+			"/Script/IKRig.IKRig_LimbEffector":									{  },
+			"/Script/IKRig.IKRig_LimbSolver":									{  },
+			"/Script/IKRig.IKRig_PoleSolverEffector":							{  },
+			"/Script/IKRig.IKRig_PoleSolver":									{  },
+			"/Script/IKRig.IKRig_SetTransformEffector":							{  },
+			"/Script/IKRig.IKRig_SetTransform":									{  },
+			"/Script/IKRig.IKRig_FBIKEffector":									{  },
+			"/Script/IKRig.IKRig_FBIKBoneSettings":								{  },
+			"/Script/IKRig.IKRigFBIKSolver":									{  },
+			"/Script/IKRig.RetargetOpBase":										{  },
+			"/Script/IKRig.RetargetOpStack":									{  },
+			"/Script/IKRig.CurveRemapOp":										{  },
+			"/Script/IKRig.PinBoneOp":											{  },
+			"/Script/IKRig.RootMotionGeneratorOp":								{  },
+			"/Script/IKRig.IKRigEffectorGoal":									{  },
+			"/Script/IKRig.IKRigDefinition":									{  },
+			"/Script/IKRig.IKRigProcessor":										{  },
+			"/Script/IKRig.IKRetargetProcessor":								{  },
+			"/Script/IKRig.RetargetChainSettings":								{  },
+			"/Script/IKRig.RetargetRootSettings":								{  },
+			"/Script/IKRig.IKRetargetGlobalSettings":							{  },
+			"/Script/IKRig.IKRetargeter":										{  },
 			"/Script/CoreUObject.LinearColor":									{  },
 			"/Script/CoreUObject.Matrix":										{  },
 			"/Script/CoreUObject.MetaData":										{  },
@@ -806,7 +857,7 @@
 			"/Script/FabricRuntime.FabricSequencerSustainComponent":			{  },
 			"/Script/FabricRuntime.FabricStepSequencerComponent":				{  },
 			"/Script/FabricRuntime.FabricStepSequencerGridComponent":			{  },
-			"/Script/FabricRuntime.FabricSteppedPreviewFXComponent": 			{  },	
+			"/Script/FabricRuntime.FabricSteppedPreviewFXComponent": 			{  },
 			"/Script/FabricRuntime.FabricTimelinePreviewComponent":				{  },
 			"/Script/FabricUI.FabricWidgetComponent":							{  },
 			"/Script/FieldSystemEngine.FieldSystemComponent":					{  },
@@ -2141,6 +2192,22 @@
 				"AllowList": [ "Value", "MinValue", "MaxValue", "StepSize" ]
 			},
 			{
+				"Type": "/Script/AIModule.AISenseConfig_Sight",
+				"AllowList": [ "SightRadius", "LoseSightRadius", "PeripheralVisionAngleDegrees", "DetectionByAffiliation", "MaxAge" ]
+			},
+			{
+				"Type": "/Script/AIModule.AISenseConfig_Hearing",
+				"AllowList": [ "HearingRange", "DetectionByAffiliation", "MaxAge" ]
+			},
+			{
+				"Type": "/Script/AIModule.AISenseConfig_Touch",
+				"AllowList": [ "DetectionByAffiliation", "MaxAge" ]
+			},
+			{
+				"Type": "/Script/AIModule.AISenseConfig_Damage",
+				"AllowList": [ "MaxAge" ]
+			},
+			{
 				"Type": "/Script/FortniteGame.FortGameFeatureData",
 				"AllowList": [ "Experience", "ExperienceData" ]
 			},
@@ -2700,7 +2767,7 @@
 			},
 			{
 				"Type": "/Script/Engine.LightComponent",
-				"AllowList": ["MaxDistanceFadeRange", "MaxDrawDistance"],
+				"AllowList": ["MaxDistanceFadeRange", "MaxDrawDistance", "SpecularScale"],
 				"bAllowListAllSubclassProperties": true
 			},
 			{
