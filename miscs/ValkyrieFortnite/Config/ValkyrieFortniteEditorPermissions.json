@@ -9,6 +9,7 @@
 		"bProjectExternalContentAllowed": true,
 		"bAddProjectExternalContentAllowed": false,
 		"bMultiPluginProjectAllowed": false,
+		"bMultiProjectAllowed" : false,
 		"bProjectKindExposed": false,
 		"DefaultProjectReferencedContent": []
 	},
@@ -596,7 +597,8 @@
 			"/Game/Playgrounds/Items/EQ/Blueprints/B_EQ_Landscape_Parent.B_EQ_Landscape_Parent_C":						{  },
 			"/Game/TimeOfDay/TODM/BR/s11/TODM_Creative.TODM_Creative_C":												{  },
 			"/Game/TimeOfDay/TODM_Sequence/Blueprint/UEFN_Ch4_DaySequence.UEFN_Ch4_DaySequence_C":						{ "Visible": true },
-			"/Game/TimeOfDay/DaySequence/DaySequenceActors/BR_Ch5/DSA_BR_Ch5S1.DSA_BR_Ch5S1_C":							{ "Visible": true },
+			"/Game/TimeOfDay/DaySequence/DaySequenceActors/BR_Ch5/DSA_BR_Ch5S1.DSA_BR_Ch5S1_C":							{  },
+			"/Game/TimeOfDay/DaySequence/DaySequenceActors/BR_Ch5/DSA_UEFN_Ch5S1.DSA_UEFN_Ch5S1_C":						{ "Visible": true },
 			"/Game/Valkyrie/UMG/UEFN_Button_Loud.UEFN_Button_Loud_C":			{ "Visible": true },
 			"/Game/Valkyrie/UMG/UEFN_Button_Quiet.UEFN_Button_Quiet_C":			{ "Visible": true },
 			"/Game/Valkyrie/UMG/UEFN_Button_Regular.UEFN_Button_Regular_C":		{ "Visible": true },
@@ -816,6 +818,7 @@
 			"/Script/Engine.MaterialEditorOnlyData":							{  },
 			"/Script/Engine.MaterialBillboardComponent":						{  },
 			"/Script/Engine.MaterialExpression":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionBounds":							{ "Deny": true,		"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionCustom":							{ "Deny": true,		"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionNeuralNetworkInput":				{ "Deny": true,		"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionNeuralNetworkOutput":				{ "Deny": true,		"Subclasses": "NativeOnly" },
@@ -833,6 +836,7 @@
 			"/Script/JunoProceduralLandscape.MaterialExpressionGetTileMin_Juno":					{ "Deny": true,		"Subclasses": "NativeOnly" },
 			"/Script/JunoProceduralLandscape.MaterialExpressionGetUV_Juno":							{ "Deny": true,		"Subclasses": "NativeOnly" },
 			"/Script/JunoProceduralLandscape.MaterialExpressionIsPreviousTileLocation_Juno":		{ "Deny": true,		"Subclasses": "NativeOnly" },
+			"/Script/JunoProceduralLandscape.MaterialExpressionJunoLandscapeCustomMaterialGetUVOffset":		{ "Deny": true,		"Subclasses": "NativeOnly" },
 			"/Script/JunoProceduralLandscape.MaterialExpressionJunoLandscapeCustomMaterialSampleParentMIP":	{ "Deny": true,		"Subclasses": "NativeOnly" },
 			"/Script/JunoProceduralLandscape.MaterialExpressionJunoLandscapeCustomOutput":			{ "Deny": true,		"Subclasses": "NativeOnly" },
 			"/Script/JunoProceduralLandscape.MaterialExpressionJunoLandscapeCustomOutputProxy":		{ "Deny": true,		"Subclasses": "NativeOnly" },
@@ -2732,7 +2736,7 @@
 			},
 			{
 				"Type": "/Script/Engine.SoundCue",
-				"AllowList": [ "SoundCueGraph" ]
+				"AllowList": [ "SoundCueGraph", "VirtualizationMode" ]
 			},
 			{
 				"Type": "/Script/Niagara.NiagaraDataInterfaceAudioPlayer",
@@ -3069,7 +3073,7 @@
 			},
 			{
 				"Type": "/Script/Engine.MovementComponent",
-				"AllowList": [ "bAutoRegisterUpdatedComponent", "bAutoUpdateTickRegistration", "bComponentShouldUpdatePhysicsVolume", "bTickBeforeOwner" ],
+				"AllowList": [ "bAutoRegisterUpdatedComponent", "bAutoUpdateTickRegistration", "bAutoRegisterPhysicsVolumeUpdates", "bComponentShouldUpdatePhysicsVolume", "bTickBeforeOwner" ],
 				"DenyList": [ ],
 				"bAllowListAllSubclassProperties": true
 			},
