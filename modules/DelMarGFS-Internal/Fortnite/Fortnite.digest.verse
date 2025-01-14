@@ -2,10 +2,16 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-33.11-CL-38773622
+# Generated from build: ++Fortnite+Release-33.20-CL-39082670
 #################################################
 
 AI<public> := module:
+    @experimental
+    (Agent:agent).AddInjectedBehavior<native><epic_internal>(BehaviorTreeInjection:behavior_tree_injection)<transacts>:void
+
+    @experimental
+    (Agent:agent).RemoveInjectedBehavior<native><epic_internal>(BehaviorTreeInjection:behavior_tree_injection)<transacts>:void
+
     # Returns the `npc_behavior` for `InAgent`.
     (InAgent:agent).GetNPCBehavior<native><public>()<transacts><decides>:npc_behavior
 
@@ -143,8 +149,12 @@ AI<public> := module:
             @experimental
             IsAttackCommandEnabled<native><epic_internal>()<transacts>:logic
 
+            OnInitialized<native><override>():void
+
             @experimental
             OnNPCCommand<native><epic_internal>()<suspends>:?ping_info
+
+            OnUninitializing<native><override>():void
 
             @experimental
             UnconvertedEvent<epic_internal>():subscribable(tuple()) = external {}
@@ -200,8 +210,19 @@ AI<public> := module:
 
     @experimental
     ai_target_component<native><epic_internal> := class<final><final_super>(component):
-        # Internal epic method to know if this component is allowed on client
-        IsAllowedOnClient<override>():logic = external {}
+        OnAddedToScene<native><override>():void
+
+        OnInitialized<native><override>():void
+
+        OnRemovingFromScene<native><override>():void
+
+    @experimental
+    behavior_tree_injection<native><epic_internal> := class:
+        @editable
+        Action<native><epic_internal>:injected_action
+
+        @editable
+        Condition<native><epic_internal>:injected_condition
 
     focus_interface<native><public> := interface<epic_internal>:
         # Look At specified Agent. Will never complete unless interrupted.
@@ -287,6 +308,8 @@ AI<public> := module:
         @experimental
         # Move in range to attack the current target
         MoveInRangeToAttack<native><override>()<suspends>:ai_action_result
+
+        OnInitialized<native><override>():void
 
         @experimental
         # Play an emote
@@ -378,6 +401,10 @@ AI<public> := module:
         # Event when a new best obstacle is detected
         ObstacleChangedEvent<native><epic_internal>:listenable(fort_obstacle_info) = external {}
 
+        OnInitialized<native><override>():void
+
+        OnUninitializing<native><override>():void
+
     @experimental
     # Perception settings for hearing.
     fort_hearing_perception_settings<native><epic_internal> := class<final><concrete>:
@@ -432,6 +459,10 @@ AI<public> := module:
         @experimental
         # Removes the current leash.
         ClearLeash<native><override>():void
+
+        OnInitialized<native><override>():void
+
+        OnUninitializing<native><override>():void
 
         @experimental
         # Set the agent to be the new center of the leash.
@@ -488,6 +519,10 @@ AI<public> := module:
         # Navigate toward the specified target
         NavigateTo<native><override>(Target:navigation_target, ?MovementType:movement_type = external {}, ?ReachRadius:float = external {}, ?AllowPartialPath:logic = external {})<suspends>:navigation_result
 
+        OnInitialized<native><override>():void
+
+        OnUninitializing<native><override>():void
+
         @experimental
         # Try to reload the currently equipped weapon.
         ReloadCurrentWeapon<native><override>()<suspends>:logic
@@ -530,6 +565,10 @@ AI<public> := module:
         @experimental
         # Get the last known position of a target.
         GetLastKnownPosition<native><public>(Target:entity)<computes><decides><reads>:vector3
+
+        OnInitialized<native><override>():void
+
+        OnUninitializing<native><override>():void
 
         @experimental
         # Event when a target is added.
@@ -672,10 +711,11 @@ AI<public> := module:
     @hide_in_editor
     # Fortnite Wildlife AI actions management
     fort_wildlife_actions_component<native><epic_internal> := class<epic_internal>(fort_npc_actions_component):
+        OnInitialized<native><override>():void
 
     @experimental
     # Inherit from this to implement an action for an AI. The action will be started when the associated decision allow it and is the highest priority.
-    injected_action<native><epic_internal> := class<abstract>(injected_action_native_base):
+    injected_action<native><epic_internal> := class<abstract>(injected_behavior_script_base):
         GetAgent<native><epic_internal>()<transacts><decides>:agent
 
         # Called when the action is relevant and allowed by its decision. Returns if the action was a success or a failure.
@@ -684,12 +724,18 @@ AI<public> := module:
         # Called when the action end with the result of OnBegin or ai_action_result.Canceled if interrupted.
         OnEnd<native_callable><epic_internal>(ActionResult:ai_action_result):void = external {}
 
-    @import_as("/Script/VerseFortnite.UInjectedActionScript")
-    injected_action_native_base<native><epic_internal> := class<abstract>:
+    @import_as("/Script/VerseFortnite.UInjectedBehaviorScriptBase")
+    injected_behavior_script_base<native><epic_internal> := class<abstract>:
 
     @experimental
     # Inherit from this to implement a condition in an injected behavior to decide if an action can be injected.
-    injected_condition<native><epic_internal> := class<abstract>(injected_condition_native_base):
+    injected_condition<native><epic_internal> := class<abstract>(injected_behavior_script_base):
+        # Triggered when the associated action end with its result.
+        ActionEndedEvent<native><epic_internal>:listenable(ai_action_result) = external {}
+
+        # Triggered when the associated action is started.
+        ActionStartedEvent<native><epic_internal>:listenable(tuple()) = external {}
+
         # Call this when the condition is met to run the associated action.
         AllowAction<native><epic_internal>():void
 
@@ -704,24 +750,11 @@ AI<public> := module:
         # Return if the associated action is currently in progress.
         IsActionInProgress<native><epic_internal>()<computes><decides><reads>:void
 
-        # Triggered when the associated action end with its result.
-        OnActionEnded<epic_internal>():listenable(ai_action_result) = external {}
-
-        OnActionEndedInternal<native><epic_internal>:subscribable_event(ai_action_result) = external {}
-
-        # Triggered when the associated action is started.
-        OnActionStarted<epic_internal>():listenable(tuple()) = external {}
-
-        OnActionStartedInternal<native><epic_internal>:subscribable_event(tuple()) = external {}
-
         # Called when the behavior is relevant. The coroutine should loop and call Allow/DenyAction to set if the  action can be executed. Action like moving or shooting shouldn't be done in this function. Condition start denied and are considered denied once execution finished.
         OnBegin<native_callable><epic_internal>()<suspends>:void
 
         # Called after OnBegin when the behavior is no longer relevant. Ex: Behavior injected in threatened and the NPC is no longer threatened.
         OnEnd<native_callable><epic_internal>():void = external {}
-
-    @import_as("/Script/VerseFortnite.UInjectedConditionScript")
-    injected_condition_native_base<native><epic_internal> := class<abstract>:
 
     movement_style<native><epic_internal> := enum:
         Running
@@ -786,6 +819,12 @@ AI<public> := module:
 
     @experimental
     npc_behavior_component<native><epic_internal> := class<final_super>(component):
+        OnBeginSimulation<native><override>():void
+
+        OnEndSimulation<native><override>():void
+
+        OnInitialized<native><override>():void
+
         SetNPCBehavior<native><public>(NewNPCBehavior:npc_behavior)<transacts>:void
 
         @editable
@@ -802,7 +841,6 @@ using {/UnrealEngine.com/Temporary/Diagnostics}
 using {/UnrealEngine.com/Temporary/SceneGraph/VerseCamera}
 using {/UnrealEngine.com/Temporary/SceneGraph}
 using {/Verse.org/Assets}
-using {/Verse.org/VerseEngine}
 # Module import path: /Fortnite.com/Animation
 Animation<public> := module:
     # Module import path: /Fortnite.com/Animation/PlayAnimation
@@ -813,6 +851,10 @@ Animation<public> := module:
         @experimental
         @hide_in_editor
         fort_npc_play_animation_component<native><public> := class<final_super><epic_internal>(component, play_animation_controller):
+            OnInitialized<native><override>():void
+
+            OnUninitializing<native><override>():void
+
             Play<override>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {}):play_animation_instance = external {}
 
             PlayAndAwait<override>(AnimationSequence:animation_sequence, ?PlayRate:float = external {}, ?StartPositionSeconds:float = external {}, ?BlendInTime:float = external {}, ?BlendOutTime:float = external {})<suspends>:play_animation_result = external {}
@@ -942,8 +984,6 @@ Building<public> := module:
     building_component<native><epic_internal> := class<final><final_super>(component):
         @experimental
         Damage<native><public>(Amount:float):void
-
-        IsAllowedOnClient<override>():logic = external {}
 
         @experimental
         IsPlayerBuilt<native><public>()<decides>:void
@@ -1129,9 +1169,6 @@ Characters<public> := module:
 
         @experimental
         IsActive<override>()<transacts><decides>:void = external {}
-
-        # Internal epic method to know if this component is allowed on client
-        IsAllowedOnClient<override>():logic = external {}
 
         @experimental
         IsCrouching<override>()<transacts><decides>:void = external {}
@@ -1934,8 +1971,11 @@ Devices<public> := module:
         @experimental
         AsCreativeDevice<public>(Type:subtype(creative_device_base))<suspends>:?Type = external {}
 
-        # Internal epic method to know if this component is allowed on client
-        IsAllowedOnClient<override>():logic = external {}
+        OnAddedToSceneInternal<native><override>():void
+
+        OnInitializedInternal<native><override>():void
+
+        OnUninitializingInternal<native><override>():void
 
     # Used to create a button which can trigger other devices when an agent interacts with it.
     button_device<public> := class<concrete><final>(creative_device_base):
@@ -3125,6 +3165,43 @@ Devices<public> := module:
         # Signaled when an `agent` is the victim of a shake down.
         # Sends the `agent` that is the victim.
         ShakenDownEvent<public>:listenable(agent) = external {}
+
+    # Use to create a sprite that players can trade in a weapon for a random legendary weapon or a custom item list.
+    earth_sprite_device<public> := class<concrete><final>(creative_device_base, enableable):
+        # Disable the device.
+        Disable<override>():void = external {}
+
+        # Disable the device’s ability to grant items. Can still interact and consume weapons.
+        DisableItemGranting<public>():void = external {}
+
+        # Prevents the `agent` from trading.
+        DisableTradingForPlayer<public>(Agent:agent):void = external {}
+
+        # Enable the device, and resets all trade counts the Sprite is tracking.
+        Enable<override>():void = external {}
+
+        # Enable the device’s ability to grant items.
+        EnableItemGranting<public>():void = external {}
+
+        # Allows a `agent` to trade, and will reset the `agent`'s trade count for this Sprite.
+        EnableTradingForPlayer<public>(Agent:agent):void = external {}
+
+        # Triggers when the grant timer has completed.
+        # Sends the triggering `agent`.
+        GrantTimerCompletedEvent<public>:listenable(?agent) = external {}
+
+        # Makes the Earth Sprite invisible.
+        Hide<public>():void = external {}
+
+        # Succeeds if the device is enabled, fails if it's disabled.
+        IsEnabled<override>()<transacts><decides>:void = external {}
+
+        # Makes the Earth Sprite visible.
+        Show<public>():void = external {}
+
+        # Triggers when a player gives the Earth Sprite a weapon.
+        # Sends the triggering `agent`.
+        WeaponConsumedEvent<public>:listenable(agent) = external {}
 
     # Base class for types of volumes with special gameplay properties.
     effect_volume_device<public> := class<abstract><epic_internal>(creative_device_base):
@@ -6912,6 +6989,8 @@ FN1Native<public> := module:
 
             StartsEnabled<native><public>:logic = external {}
 
+            VolumeSource<native><public>:creative_device
+
         @import_as("/Script/FN1NativeRuntime.UVerseFortniteBattlebus")
         fort_battlebus_base<native><epic_internal> := class<abstract>:
 
@@ -6940,6 +7019,8 @@ FN1Native<public> := module:
             SetCurrentPhase<native><epic_internal>(InCurrentPhase:int)<transacts>:void
 
             StormVolumes<native><public>:[]fort_storm_volume
+
+            VolumeSource<native><public>:creative_device
 
         @import_as("/Script/FN1NativeRuntime.UVerseFortniteStorm")
         fort_storm_base<native><epic_internal> := class<abstract>:
@@ -6976,19 +7057,29 @@ FN1Native<public> := module:
     # Module import path: /Fortnite.com/FN1Native/GameMode
     GameMode<public> := module:
         fort_br_gamemode<native><epic_internal> := class<epic_internal>(fort_gamemode_base):
+            AircraftFinishedEvent<native><public>:listenable(tuple()) = external {}
+
             Initialize<native><public>():logic
 
             PlayerPawnEliminatedEvent<native><public>:listenable(agent) = external {}
 
             PlayerPawnRespawnedEvent<native><public>:listenable(agent) = external {}
 
+            StartAircraftPhase<native><public>():logic
+
             StartMatch<native><public>():logic
+
+            StartSafeZonesPhase<native><public>():logic
+
+            StartWarmupPhase<native><public>():logic
 
             TeamWonEvent<native><public>:listenable(team) = external {}
 
             WaitingForPlayersCountdownStartedEvent<native><public>:listenable(float) = external {}
 
             WaitingForPlayersFinishedEvent<native><public>:listenable(tuple()) = external {}
+
+            WarmupFinishedEvent<native><public>:listenable(tuple()) = external {}
 
         @import_as("/Script/FN1NativeRuntime.UVerseFortGameMode")
         fort_gamemode_base<native><epic_internal> := class<abstract>:
@@ -7352,6 +7443,9 @@ Game<public> := module:
 
     @experimental
     fort_ability_component<native><epic_internal> := class(ability_component):
+        OnBeginSimulation<native><override>():void
+
+        OnEndSimulation<native><override>():void
 
     @experimental
     fort_damageable_component<native><epic_internal> := class(damageable_component):
@@ -7361,6 +7455,14 @@ Game<public> := module:
         @editable
         @experimental
         MaxHealth<native><epic_internal>:float = external {}
+
+        OnBeginSimulation<native><override>():void
+
+        OnEndSimulation<native><override>():void
+
+        OnInitialized<native><override>():void
+
+        OnUninitializing<native><override>():void
 
         @experimental
         var Health<public>:float = external {}
@@ -7636,8 +7738,6 @@ Itemization<public> := module:
 
         InventoryRemovedEvent<native><public>:listenable(remove_inventory_result) = external {}
 
-        IsAllowedOnClient<override>():logic = external {}
-
         @editable
         ItemRequirement<native><public>:?item_requirement_base = external {}
 
@@ -7646,6 +7746,10 @@ Itemization<public> := module:
         ItemsRemovedEvent<native><public>:listenable(remove_items_result) = external {}
 
         ItemsSlotChangedEvent<native><public>:listenable(change_items_slot_result) = external {}
+
+        OnInitializedInternal<native><override>():void
+
+        OnUninitializingInternal<native><override>():void
 
         RemoveItems<native><final><public>(Item:[]entity)<transacts><decides>:remove_items_result
 
@@ -7772,8 +7876,6 @@ Itemization<public> := module:
 
         CanMerge<override><native_callable>(OtherComponent:?component)<decides>:void = external {}
 
-        IsAllowedOnClient<override>():logic = external {}
-
     @experimental
     item_attachment_definition<native><epic_internal> := class<unique><concrete>:
         @editable
@@ -7790,13 +7892,13 @@ Itemization<public> := module:
 
         GetItemShortDescription<native><epic_internal>():message
 
-        IsAllowedOnClient<override>():logic = external {}
-
         ItemChangedAmountEvent<native><public>:listenable(item_amount_change) = external {}
 
         ItemChangedSlotEvent<native><public>:listenable(item_slot_change) = external {}
 
         ItemChangedStateEvent<native><public>:listenable(item_state_change) = external {}
+
+        OnInitializedInternal<native><override>():void
 
         OnItemStateChanged<native><public>()<transacts><decides>:void
 
@@ -7813,9 +7915,9 @@ Itemization<public> := module:
     item_component_base<native><public> := class<abstract><final_super><epic_internal>(component):
         CanMerge<native_callable><public>(OtherComponent:?component)<decides>:void = external {}
 
-        IsAllowedOnClient<override>():logic = external {}
-
         Merge<native_callable><public>(OtherComponent:component)<transacts>:void = external {}
+
+        OnInitializedInternal<native><override>():void
 
         ShouldBeUnique<native><public>()<decides>:void
 
@@ -8208,7 +8310,19 @@ Teams<public> := module:
         # Get the team object for the team this entity is on - Fails if team is not registered. team_pvp_01_tag, team_pvp_02_tag and team_monster_tag are registered already by default
         GetTeam<native><public>()<transacts><decides>:team
 
+        OnAddedToScene<native><override>():void
+
+        OnBeginSimulation<native><override>():void
+
+        OnEndSimulation<native><override>():void
+
+        OnInitialized<native><override>():void
+
+        OnRemovingFromScene<native><override>():void
+
         OnSimulate<override>()<suspends>:void = external {}
+
+        OnUninitializing<native><override>():void
 
         @experimental
         # Tag that uniquely identifies the team this entity is on
@@ -8708,9 +8822,6 @@ Vehicles<public> := module:
 
         @experimental
         GetTransform<override>()<transacts>:transform = external {}
-
-        # Internal epic method to know if this component is allowed on client
-        IsAllowedOnClient<override>():logic = external {}
 
         @experimental
         IsInAir<override>()<transacts><decides>:void = external {}

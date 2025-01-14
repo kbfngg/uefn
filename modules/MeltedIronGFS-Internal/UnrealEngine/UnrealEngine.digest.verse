@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-33.11-CL-38773622
+# Generated from build: ++Fortnite+Release-33.20-CL-39082670
 #################################################
 
 AINavigation<public> := module:
@@ -101,6 +101,10 @@ AINavigation<public> := module:
         # Finds and returns the path between this entity's location and the target location.
         FindPath<native><public>(Destination:vector3, ?Query:navigation_query = external {})<suspends>:navigation_path
 
+        OnAddedToScene<native><override>():void
+
+        OnRemovingFromScene<native><override>():void
+
 Abilities<public> := module:
     using {/UnrealEngine.com/Temporary/SceneGraph}
     ability<native><public> := class:
@@ -185,40 +189,36 @@ EntityTestSuite<public> := module:
     @hide_in_editor
     @experimental
     lambda_test_component<native><epic_internal> := class<final_super>(component):
-        IsAllowedOnClient<override>():logic = external {}
+        OnAddedToSceneInternal<native><override>():void
 
-        OnAddedToScene<native><override>():void
+        OnBeginSimulationInternal<native><override>():void
 
-        OnBeginSimulation<native><override>():void
+        OnEndSimulationInternal<native><override>():void
 
-        OnEndSimulation<native><override>():void
+        OnInitializedInternal<native><override>():void
 
-        OnInitialized<native><override>():void
-
-        OnRemovingFromScene<native><override>():void
+        OnRemovingFromSceneInternal<native><override>():void
 
         OnSimulate<override>()<suspends>:void = external {}
 
-        OnUninitializing<native><override>():void
+        OnUninitializingInternal<native><override>():void
 
     @hide_in_editor
     @experimental
     lambda_test_component_2<native><epic_internal> := class<final_super>(component):
-        IsAllowedOnClient<override>():logic = external {}
+        OnAddedToSceneInternal<native><override>():void
 
-        OnAddedToScene<native><override>():void
+        OnBeginSimulationInternal<native><override>():void
 
-        OnBeginSimulation<native><override>():void
+        OnEndSimulationInternal<native><override>():void
 
-        OnEndSimulation<native><override>():void
+        OnInitializedInternal<native><override>():void
 
-        OnInitialized<native><override>():void
-
-        OnRemovingFromScene<native><override>():void
+        OnRemovingFromSceneInternal<native><override>():void
 
         OnSimulate<override>()<suspends>:void = external {}
 
-        OnUninitializing<native><override>():void
+        OnUninitializingInternal<native><override>():void
 
     @hide_in_editor
     @experimental
@@ -227,12 +227,10 @@ EntityTestSuite<public> := module:
     @hide_in_editor
     @experimental
     test_component<native><epic_internal> := class<final_super>(component):
-        IsAllowedOnClient<override>():logic = external {}
 
     @hide_in_editor
     @experimental
     test_replication_component<native><epic_internal> := class<final_super>(component):
-        IsAllowedOnClient<override>():logic = external {}
 
     @hide_in_editor
     @experimental
@@ -276,7 +274,6 @@ Playspace<public> := module:
     @hide_in_editor
     @experimental
     playspace_association_component<native><epic_internal> := class<final_super><epic_internal>(component):
-        IsAllowedOnClient<override>():logic = external {}
 
 Temporary<public> := module:
     using {/UnrealEngine.com/Temporary/Diagnostics}
@@ -575,11 +572,18 @@ Temporary<public> := module:
                 # Gets the speaker's name.
                 GetSpeakerName<native_callable><public>():message = external {}
 
-                # Determines if this component is allowed on client.
-                IsAllowedOnClient<override>():logic = external {}
-
                 # Succeeds if the component is enabled. Fails if it’s disabled.
                 IsEnabled<native><override>()<transacts><decides>:void
+
+                OnBeginSimulationInternal<native><override>():void
+
+                OnEndSimulationInternal<native><override>():void
+
+                OnInitializedInternal<native><override>():void
+
+                OnRemovingFromSceneInternal<native><override>():void
+
+                OnUninitializingInternal<native><override>():void
 
                 # Sets the name of the speaker that is displayed during conversations.
                 SetSpeakerName<native><public>(InSpeakerName:message):void
@@ -606,8 +610,10 @@ Temporary<public> := module:
         GetPhysicsSceneForEntity<native><epic_internal>(Entity:entity)<transacts><decides>:physics_scene_component
 
         # Module import path: /UnrealEngine.com/Temporary/SceneGraph/KeyframedMovement
+        # Animate Scene Graph entities with keyframes.
         KeyframedMovement<public> := module:
             @experimental
+            # Cubic bezier easing function. See CubicBezierEasingFunctions for some basic easing values.
             cubic_bezier_easing_function<native><public> := class<concrete><computes><epic_internal>(easing_function):
                 Evaluate<native><override>(Input:float):float
 
@@ -620,6 +626,7 @@ Temporary<public> := module:
                 Y1<native><public>:float = external {}
 
             @experimental
+            # Cubic Bezier function sent to clients to reconstruct the animation curves.
             cubic_bezier_easing_function_native<native><epic_internal> := struct<concrete>:
                 X0<native><public>:float = external {}
 
@@ -630,6 +637,7 @@ Temporary<public> := module:
                 Y1<native><public>:float = external {}
 
             @experimental
+            # `Ease` animations start slowly, speed up, then end slowly. The speed of the animation is slightly slower at the end than the start.
             ease_cubic_bezier_easing_function<native><public> := class<final><concrete><computes>(cubic_bezier_easing_function):
                 X0<override>:float = external {}
 
@@ -640,6 +648,7 @@ Temporary<public> := module:
                 Y1<override>:float = external {}
 
             @experimental
+            # `EaseIn` animations start slow, then speed up towards the end.
             ease_in_cubic_bezier_easing_function<native><public> := class<final><concrete><computes>(cubic_bezier_easing_function):
                 X0<override>:float = external {}
 
@@ -650,6 +659,7 @@ Temporary<public> := module:
                 Y1<override>:float = external {}
 
             @experimental
+            # `EaseInOut` animations are similar to `Ease` but the start and end animation speed is symmetric.
             ease_in_out_cubic_bezier_easing_function<native><public> := class<final><concrete><computes>(cubic_bezier_easing_function):
                 X0<override>:float = external {}
 
@@ -660,6 +670,7 @@ Temporary<public> := module:
                 Y1<override>:float = external {}
 
             @experimental
+            # `EaseOut` animations start fast, then slow down towards the end.
             ease_out_cubic_bezier_easing_function<native><public> := class<final><concrete><computes>(cubic_bezier_easing_function):
                 X0<override>:float = external {}
 
@@ -670,10 +681,12 @@ Temporary<public> := module:
                 Y1<override>:float = external {}
 
             @experimental
+            # Base class for an animation easing function.
             easing_function<native><public> := class<abstract><computes><epic_internal>:
                 Evaluate<native><public>(Input:float):float
 
             @experimental
+            # Contains all the information needed for the client to reconstruct the entire animation command.
             keyframed_movement_command_data<native><epic_internal> := struct<concrete>:
                 BlendOutDuration<native>:float = external {}
 
@@ -692,65 +705,86 @@ Temporary<public> := module:
                 StartTimeForPlay<native>:float = external {}
 
             @experimental
+            # Provides teleportation and simple keyframe-based animation for an entity. Animations play back in the Pre-Physics tick phase. When animating an entity with a parent_constraint, animation will be relative to the parent entity.
             keyframed_movement_component<native><public> := class<final><final_super>(component):
                 @experimental
                 GetDuration<native><public>()<computes><decides><reads>:float
 
                 @experimental
+                # Get the event that fires when the animations ends, failing if the animation is of infinite duration
                 GetOnFinishedEvent<public>()<computes><decides><reads>:listenable(tuple()) = external {}
 
                 @experimental
+                # Get the event that fires when the animation is Paused.
                 GetOnPausedEvent<public>():listenable(tuple()) = external {}
 
                 @experimental
+                # Get the event that fires when the animation begins or resumes Playing.
                 GetOnPlayedEvent<public>():listenable(tuple()) = external {}
 
                 @experimental
+                # Get the event that fires when the animation is Stopped.
                 GetOnStoppedEvent<public>():listenable(tuple()) = external {}
 
                 @experimental
+                # Is there a valid set of playable keyframes?
                 HasValidAnimation<native><public>()<computes><decides><reads>:void
 
-                IsAllowedOnClient<override>():logic = external {}
-
                 @experimental
+                # Is the animation paused?
                 IsPaused<native><public>()<computes><decides><reads>:void
 
                 @experimental
+                # Is the animation currently playing?
                 IsPlaying<native><public>()<computes><decides><reads>:void
 
                 @experimental
+                # Signaled when any keyframe is reached. (Keyframe:int, IsReversed:logic).
                 KeyframeReachedEvent<native><public>:listenable(tuple(int, logic)) = external {}
 
                 @experimental
+                # Signaled when the entire animation is complete. This will only fire for `OneShot` animations.
                 MovementCompleteEvent<native><public>:listenable(tuple()) = external {}
+
+                OnEndSimulationInternal<native><override>():void
+
+                OnInitializedInternal<native><override>():void
 
                 OnRep__PendingCommand<native><epic_internal>():void
 
                 @experimental
+                # Pause movement. Subsequently calling Play() will resume from the point in the animation when it was paused.
                 Pause<native><public>():void
 
                 @experimental
+                # Begin or resume playback.
                 Play<native><public>():void
 
                 @experimental
+                # Stop any ongoing animation, sets the animation path and rebases it relative to the actor's current transform. Does not start playing until you call Play().
                 SetKeyframes<native><public>(RelativeKeyframes:[]keyframed_movement_delta, PlaybackMode:keyframed_movement_playback_mode):void
 
                 @experimental
+                # Stop and reset transform to the initial state. Subsequently calling Play() will begin the animation anew.
                 Stop<native><public>(?BlendOutTime:float = external {}):void
 
                 @replicated("RepNotify")
                 var _PendingCommand<native><epic_internal>:keyframed_movement_command_data = external {}
 
             @experimental
+            # Represents a change in pose and scale over a duration.
             keyframed_movement_delta<native><public> := class<final><concrete>:
+                # Duration of this keyframe in seconds.
                 Duration<native><public>:float = external {}
 
+                # Easing function to use for playback.
                 Easing<native><public>:easing_function = external {}
 
+                # Represents a change in the transform relative to the previous keyframe or initial animation position.
                 Transform<native><public>:transform = external {}
 
             @experimental
+            # Keyframe delta sent to clients to reconstruct the animation frames.
             keyframed_movement_delta_native<native><epic_internal> := struct<concrete>:
                 Duration<native><public>:float = external {}
 
@@ -759,14 +793,17 @@ Temporary<public> := module:
                 Transform<native><public>:transform = external {}
 
             @experimental
+            # Play Command sent to clients to reconstruct the playback command
             keyframed_movement_net_command<native><epic_internal> := enum:
                 HaltAt
 
                 PlayFrom
 
             @experimental
+            # Controls how the animation plays back.
             keyframed_movement_playback_mode<native><public> := class<abstract><computes><epic_internal>:
 
+            # Control how the animation plays back.
             keyframed_movement_playback_mode_native<native><epic_internal> := enum:
                 Loop
 
@@ -775,6 +812,7 @@ Temporary<public> := module:
                 PingPong
 
             @experimental
+            # `Linear` animations move at a constant speed.
             linear_easing_function<native><public> := class<final><concrete><computes>(cubic_bezier_easing_function):
                 X0<override>:float = external {}
 
@@ -785,12 +823,15 @@ Temporary<public> := module:
                 Y1<override>:float = external {}
 
             @experimental
+            # Play once and repeat indefinitely.
             loop_keyframed_movement_playback_mode<native><public> := class<final><concrete><computes>(keyframed_movement_playback_mode):
 
             @experimental
+            # Play once and stop.
             oneshot_keyframed_movement_playback_mode<native><public> := class<final><concrete><computes>(keyframed_movement_playback_mode):
 
             @experimental
+            # Play continuously reversing direction at each end.
             pingpong_keyframed_movement_playback_mode<native><public> := class<final><concrete><computes>(keyframed_movement_playback_mode):
 
         @experimental
@@ -811,8 +852,11 @@ Temporary<public> := module:
                 # Get camera parameters for a specific player
                 GetCameraParametersForPlayer<native><epic_internal>(Player:player)<transacts><decides>:[]parameterized_parameter_collection
 
-                # Internal epic method to know if this component is allowed on client
-                IsAllowedOnClient<override>():logic = external {}
+                OnAddedToSceneInternal<native><override>():void
+
+                OnBeginSimulationInternal<native><override>():void
+
+                OnEndSimulationInternal<native><override>():void
 
                 @experimental
                 # Responsible for deciding which camera modes should be active on each layer
@@ -826,8 +870,6 @@ Temporary<public> := module:
             @experimental
             # Represents the physical body, lens of the camera and other cinematographic qualities, such as sensor size, aspect ratio lock/constraint, focal length, focus distance, post-process settings, etc.
             camera_component<native><epic_internal> := class(basic_camera_component):
-                # Internal epic method to know if this component is allowed on client
-                IsAllowedOnClient<override>():logic = external {}
 
             @experimental
             # Base class for Camera Directors defined in Verse
@@ -1162,20 +1204,13 @@ Temporary<public> := module:
             @experimental
             GetFieldOfView<public>():float = external {}
 
-            # Internal epic method to know if this component is allowed on client
-            IsAllowedOnClient<override>():logic = external {}
+            OnAddedToSceneInternal<native><override>():void
 
-            # Notification called then the component owner entity was added to a world
-            OnAddedToScene<native><override>():void
+            OnInitializedInternal<native><override>():void
 
-            # The component is being initialized, called when it is added to an entity
-            OnInitialized<native><override>():void
+            OnRemovingFromSceneInternal<native><override>():void
 
-            # Notification called when the component owner entity is about to be removed from world
-            OnRemovingFromScene<native><override>():void
-
-            # The component is being uninitialized, called when it is about to be removed from an entity
-            OnUninitializing<native><override>():void
+            OnUninitializingInternal<native><override>():void
 
             @experimental
             # Set the field of view of the camera in degrees
@@ -1184,7 +1219,7 @@ Temporary<public> := module:
         using {/Verse.org/Simulation}
         @experimental
         # An interactable component with a composable feature set.
-        basic_interactable_component<native><public> := class(interactable_component):
+        basic_interactable_component<native><epic_internal> := class(interactable_component):
             @experimental
             # Attempt to cancel an interaction. Fails if the supplied agent is not currently interacting with the component.
             Cancel<native><public>(Agent:agent)<transacts><decides>:void
@@ -1208,6 +1243,8 @@ Temporary<public> := module:
             # An interaction with a duration does not succeed until the duration has elapsed, and success is not guaranteed as it can be canceled while the duration is active.
             InteractableDuration<native><public>:?interactable_duration = external {}
 
+            OnInitializedInternal<native><override>():void
+
             @experimental
             # Attempt to succeed at an interaction. Success will also happen automatically after InteractDuration has elapsed after starting an interaction. Fails if the supplied agent is not currently interacting with the component.
             Succeed<native><public>(Agent:agent)<transacts><decides>:void
@@ -1225,6 +1262,8 @@ Temporary<public> := module:
         # A `capsule_light_component` emits light in all directions into the scene from a capsule shaped source with a specified radius and length. A radius and length of 0 makes it a point light. You can use these
         # to simulate any kind of light sources that emit in all directions and need an elongated source shape, such as a long light bulb.
         capsule_light_component<native><public> := class<final>(light_component):
+            OnAddedToSceneInternal<native><override>():void
+
             # The bounds of the light's visible influence. This clamping of the light's influence is not physically correct but very important for performance,
             # larger lights cost more. The light falloff is based on Inverse Square law. Towards the tail end of the AttenuationRadius,
             # there is an additional smoothing factor to fade out the light contribution to 0 to avoid a hard cutoff.
@@ -1233,10 +1272,10 @@ Temporary<public> := module:
             # Set the visible light intensity emitted in SI unit Candela./nSpecified before ColorFilter (which multiplies each color component after the intensity calculation and can change the effective intensity of the light).
             var Intensity<public>:float = external {}
 
-            # Length of the source capsule shape in meters along the local Z axis. Note that light shapes which intersect shadow casting geometry can cause shadowing artifacts.
+            # Length of the source capsule shape in centimeters along the local Z axis. Note that light shapes which intersect shadow casting geometry can cause shadowing artifacts.
             var SourceLength<public>:float = external {}
 
-            # Radius of the source capsule shape in meters around the local Z axis. Note that light shapes which intersect shadow casting geometry can cause shadowing artifacts.
+            # Radius of the source capsule shape in centimeters around the local Z axis. Note that light shapes which intersect shadow casting geometry can cause shadowing artifacts.
             var SourceRadius<public>:float = external {}
 
         @experimental
@@ -1308,25 +1347,20 @@ Temporary<public> := module:
             # Event signaled when the component experiences a blocking hit.
             HitEvent<native><epic_internal>:listenable(hit_result) = external {}
 
-            # Internal epic method to know if this component is allowed on client
-            IsAllowedOnClient<override>():logic = external {}
-
             # Succeeds if the component is enabled, fails if it's disabled.
             IsEnabled<native><override>()<transacts><decides>:void
 
-            OnAddedToScene<native><override>():void
+            OnAddedToSceneInternal<native><override>():void
 
-            # Sets up collision simulation for the entity.
-            OnBeginSimulation<native><override>():void
+            OnBeginSimulationInternal<native><override>():void
 
-            # Tears down collision simulation for the entity.
-            OnEndSimulation<native><override>():void
+            OnEndSimulationInternal<native><override>():void
 
-            OnInitialized<native><override>():void
+            OnInitializedInternal<native><override>():void
 
-            OnRemovingFromScene<native><override>():void
+            OnRemovingFromSceneInternal<native><override>():void
 
-            OnUninitializing<native><override>():void
+            OnUninitializingInternal<native><override>():void
 
             SetCollisionProfile<native><epic_internal>(Profile:collision_profile):void
 
@@ -1457,11 +1491,21 @@ Temporary<public> := module:
         # It is up to the needs of your experience if you use one big game component
         # or if you break up logic into many small components.
         #
-        # Currently UEFN will not allow you to add more than one component of a given
-        # subclass of component (for example, only one type of light_component). This restriction
-        # will be relaxed in the future where components will be able to decide if they
-        # wish to allow only one instance or many instances of the same component to exist
-        # together on one entity.
+        # Classes deriving from component must also specify `<final_super>` to be added
+        # to entities. This ensures the class will always derive directly from `component`.
+        # Further subclassing of the initial derived component is allowed and does not require
+        # specifying `<final_super>` on the derived classes.
+        #
+        # Only one instance of a component from each subclass group can be added to an entity
+        # at a time. For example, given this group of components, only one light_component can
+        # exist on a single entity. To create multiple lights you should use multiple entities.
+        #
+        #   light_component             := class<final_super>(component){}
+        #   capsule_light_component     := class<final>(light_component){}
+        #   directional_light_component := class<final>(light_component){}
+        #   spot_light_component        := class<final>(light_component){}
+        #   sphere_light_component      := class<final>(light_component){}
+        #   rect_light_component        := class<final>(light_component){}
         #
         # ==============================================================================
         # Component Lifetime
@@ -1493,8 +1537,6 @@ Temporary<public> := module:
 
             GetDiagnostic<override><native>()<computes><reads>:diagnostic
 
-            IsAllowedOnClient<native_callable><epic_internal>():logic = external {}
-
             @experimental
             # Succeeds if the component is currently in the scene.
             #   * After `OnAddedToScene` is called this call succeeds.
@@ -1519,11 +1561,15 @@ Temporary<public> := module:
             #   * `OnInitialized` is guaranteed to run before `OnAddedToScene`.
             OnAddedToScene<native><native_callable><protected>():void
 
+            OnAddedToSceneInternal<native><native_callable><epic_internal>():void
+
             @experimental
             # Called when the component begins simulating within the scene.
             #   * Use this to set up TickEvent callbacks or other setup that must be guaranteed to complete immediately.
             #   * `OnAddedToScene` is guaranteed to run before `OnBeginSimulation`.
             OnBeginSimulation<native><native_callable><protected>():void
+
+            OnBeginSimulationInternal<native><native_callable><epic_internal>():void
 
             @experimental
             # Called when the component ends simulation within the scene.
@@ -1533,11 +1579,15 @@ Temporary<public> := module:
             #   * `OnEndSimulation` is only called on components that have already had `OnBeginSimulation` called.
             OnEndSimulation<native><native_callable><protected>():void
 
+            OnEndSimulationInternal<native><native_callable><epic_internal>():void
+
             @experimental
             # Called when the component is added to an entity using `entity.AddEntities`.
             #   * Components can check for dependent sibling components at this stage through `entity.GetComponents`.
             #   * Components can add additional components at this stage using `entity.AddComponents`
-            OnInitialized<native><native_callable><protected>():void
+            OnInitialized<native><native_callable><epic_internal>():void
+
+            OnInitializedInternal<native><native_callable><epic_internal>():void
 
             @experimental
             # Respond to an event being propagated through the scene graph. Returns if the event is consumed, in which case the event will not be passed to the next entity, depending on how the event is being sent through the hierarchy.
@@ -1549,6 +1599,8 @@ Temporary<public> := module:
             #   * `OnRemovingFromScene` is only called on components that have already had `OnAddedToScene` called.
             OnRemovingFromScene<native><native_callable><protected>():void
 
+            OnRemovingFromSceneInternal<native><native_callable><epic_internal>():void
+
             @experimental
             # Called when the component begins simulating within the scene.
             #   * Use this to add asynchronous/suspends update logic for a component.
@@ -1559,7 +1611,9 @@ Temporary<public> := module:
             @experimental
             # Called when the component is about to be removed from the parent entity.
             #   * `OnUninitializing` is only called on components that have already had `OnInitialized` called.
-            OnUninitializing<native><native_callable><protected>():void
+            OnUninitializing<native><native_callable><epic_internal>():void
+
+            OnUninitializingInternal<native><native_callable><epic_internal>():void
 
             @experimental
             # Removes the component from the entity.
@@ -1593,6 +1647,8 @@ Temporary<public> := module:
         @experimental
         # A `directional_light_component` simulates light that is being emitted from a source that is infinitely far away. This means that all shadows cast by this light will be parallel, making this the ideal choice for simulating sunlight.
         directional_light_component<native><public> := class<final>(light_component):
+            OnAddedToSceneInternal<native><override>():void
+
             # Intensity of the light hitting the surface. In Lux (Lumen per square meter).
             var Illuminance<public>:float = external {}
 
@@ -1705,7 +1761,9 @@ Temporary<public> := module:
         @hide_in_editor
         @experimental
         entity_query_manager_component<native><epic_internal> := class<final_super><epic_internal>(component):
-            IsAllowedOnClient<override>():logic = external {}
+            OnAddedToSceneInternal<native><override>():void
+
+            OnRemovingFromSceneInternal<native><override>():void
 
         @experimental
         # Used to subscribe a callback or await an event based callback '
@@ -1787,11 +1845,16 @@ Temporary<public> := module:
             # Returns an appropriate message to display to players to communicate the current state of the interactable.
             InteractMessage<native><native_callable><public>(Agent:agent)<computes><decides><reads>:message
 
-            # Internal epic method to know if this component is allowed on client
-            IsAllowedOnClient<override>():logic = external {}
-
             # Succeeds if the component is enabled, fails if it’s disabled.
             IsEnabled<native><override>()<transacts><decides>:void
+
+            OnBeginSimulationInternal<native><override>():void
+
+            OnEndSimulationInternal<native><override>():void
+
+            OnInitializedInternal<native><override>():void
+
+            OnUninitializingInternal<native><override>():void
 
             # Attempt to start an interaction. Fails if the agent does not pass the CanInteract function.
             Start<native><public>(Agent:agent)<transacts><decides>:void
@@ -1804,7 +1867,7 @@ Temporary<public> := module:
 
         @experimental
         # Used to set a cooldown when interacted.
-        interactable_cooldown<native><public> := class<concrete>:
+        interactable_cooldown<native><epic_internal> := class<concrete>:
             @experimental
             # Event which fires when the shared cooldown expires.
             ExpiredEvent<native><public>:listenable(tuple()) = external {}
@@ -1834,7 +1897,7 @@ Temporary<public> := module:
 
         @experimental
         # Used to set a cooldown per agent when interacted.
-        interactable_cooldown_per_agent<native><public> := class<concrete>:
+        interactable_cooldown_per_agent<native><epic_internal> := class<concrete>:
             @experimental
             # Event which fires when the per agent cooldown expires. Sends the agent which was previously affected by the cooldown.
             ExpiredEvent<native><public>:listenable(tuple()) = external {}
@@ -1864,7 +1927,7 @@ Temporary<public> := module:
 
         @experimental
         # Used to set an interaction duration.
-        interactable_duration<native><public> := class<concrete>:
+        interactable_duration<native><epic_internal> := class<concrete>:
             @experimental
             # Returns an agent’s remaining duration, in seconds, for interaction. Fails if the agent is not interacting with this component.Returns the same value when called multiple times within a transaction.
             GetRemainingInteractDurationForAgent<final><native><public>(Agent:agent)<computes><decides><reads>:float
@@ -1887,7 +1950,7 @@ Temporary<public> := module:
 
         @experimental
         # Used to set a limit of times to interact.
-        interactable_success_limit<native><public> := class<concrete>:
+        interactable_success_limit<native><epic_internal> := class<concrete>:
             @experimental
             # Resets the counter for the times this component has had a successful interaction.
             ClearSuccessfulInteractionCount<native><public>()<transacts>:void
@@ -1933,15 +1996,16 @@ Temporary<public> := module:
             # Enables rendering of this light.
             Enable<native><override>():void
 
-            # Internal epic method to know if this component is allowed on client
-            IsAllowedOnClient<override>():logic = external {}
-
             # Succeeds if the component is enabled, fails if it's disabled.
             IsEnabled<native><override>()<transacts><decides>:void
 
-            OnInitialized<native><override>():void
+            OnAddedToSceneInternal<native><override>():void
 
-            OnUninitializing<native><override>():void
+            OnInitializedInternal<native><override>():void
+
+            OnRemovingFromSceneInternal<native><override>():void
+
+            OnUninitializingInternal<native><override>():void
 
             # Whether the light should cast any shadows.
             var CastShadows<public>:logic = external {}
@@ -1958,14 +2022,11 @@ Temporary<public> := module:
         @experimental
         @hide_in_editor
         massentity_component<native><epic_internal> := class<final_super><epic_internal>(component):
-            # Internal epic method to know if this component is allowed on client
-            IsAllowedOnClient<override>():logic = external {}
+            OnAddedToSceneInternal<native><override>():void
 
-            # Notification called then the component owner entity was added to the scene
-            OnAddedToScene<native><override>():void
+            OnRemovingFromSceneInternal<native><override>():void
 
-            # Notification called when the component owner entity is about to be removed from the scene
-            OnRemovingFromScene<native><override>():void
+            OnUninitializingInternal<native><override>():void
 
         @experimental
         # Used to render a `mesh` at the location of this entity. A mesh is a set of polygons that can be used to represent shapes in the world such as:
@@ -1992,25 +2053,29 @@ Temporary<public> := module:
             # Triggered at the beginning of each tick when another entity is no longer overlapping this entity
             EntityExitedEvent<native><public>:listenable(entity) = external {}
 
-            # Internal epic method to know if this component is allowed on client
-            IsAllowedOnClient<override>():logic = external {}
-
             @experimental
             # Succeeds if the component is enabled, fails if it's disabled.
             IsEnabled<native><override>()<transacts><decides>:void
 
             @experimental
             @replicated("RepNotify")
+            @editable
             # The `mesh` to be rendered by this `mesh_component`.
             Mesh<native><epic_internal>:mesh = external {}
 
-            OnAddedToScene<native><override>():void
+            OnAddedToSceneInternal<native><override>():void
 
-            OnInitialized<native><override>():void
+            OnBeginSimulationInternal<native><override>():void
+
+            OnEndSimulationInternal<native><override>():void
+
+            OnInitializedInternal<native><override>():void
 
             OnPropertyChangedFromVerse<native><override>(PropertyName:string)<transacts>:void
 
-            OnRemovingFromScene<native><override>():void
+            OnRemovingFromSceneInternal<native><override>():void
+
+            OnUninitializingInternal<native><override>():void
 
             @experimental
             # Sets the `material` to be applied to the `mesh`.
@@ -2096,38 +2161,34 @@ Temporary<public> := module:
         #
         # Dependencies:
         #   * `transform_component` on the entity positions the `particle_system`.
-        particle_system_component<native><public> := class<final_super>(component, enableable, property_changed_interface):
+        particle_system_component<native><public> := class<final_super><epic_internal>(component, enableable, property_changed_interface):
             # Disables the simulation and rendering of this `particle_system`.
             Disable<override><native>():void
 
             # Enables the simulation and rendering of this `particle_system`.
             Enable<override><native>():void
 
-            # Internal epic method to know if this component is allowed on client
-            IsAllowedOnClient<override>():logic = external {}
-
             # Succeeds if the component is enabled, fails if it’s disabled.
             IsEnabled<override><native>()<transacts><decides>:void
 
-            OnAddedToScene<native><override>():void
+            OnAddedToSceneInternal<native><override>():void
 
-            OnInitialized<native><override>():void
+            OnBeginSimulationInternal<native><override>():void
+
+            OnInitializedInternal<native><override>():void
 
             OnPropertyChangedFromVerse<native><override>(PropertyName:string)<transacts>:void
 
-            OnRemovingFromScene<native><override>():void
+            OnRemovingFromSceneInternal<native><override>():void
 
-            OnUninitializing<native><override>():void
+            OnUninitializingInternal<native><override>():void
 
-            @experimental
-            # The `particle_system` to be created by this component.
-            ParticleSystem<native><public>:particle_system = external {}
+            @editable
+            ParticleSystem<native><epic_internal>:particle_system = external {}
 
-            @experimental
-            Play<native><epic_internal>():void
+            Play<native><public>():void
 
-            @experimental
-            Stop<native><epic_internal>():void
+            Stop<native><public>():void
 
             @editable
             # Controls if the `particle_system_component` should play the simulation automatically when added to the scene, or when enabled from a disabled state.
@@ -2152,24 +2213,17 @@ Temporary<public> := module:
             # Event signaled when the component experiences a blocking hit
             HitEvent<native><public>:listenable(hit_result) = external {}
 
-            # Internal epic method to know if this component is allowed on client
-            IsAllowedOnClient<override>():logic = external {}
-
             @experimental
             # Succeeds if the component is enabled, fails if it’s disabled.
             IsEnabled<native><override>()<transacts><decides>:void
 
-            # Notification called then the component owner entity was added to a world
-            OnAddedToScene<native><override>():void
+            OnAddedToSceneInternal<native><override>():void
 
-            # The component is being initialized, called when it is added to an entity
-            OnInitialized<native><override>():void
+            OnInitializedInternal<native><override>():void
 
-            # Notification called when the component owner entity is about to be removed from world
-            OnRemovingFromScene<native><override>():void
+            OnRemovingFromSceneInternal<native><override>():void
 
-            # The component is being uninitialized, called when it is about to be removed from an entity
-            OnUninitializing<native><override>():void
+            OnUninitializingInternal<native><override>():void
 
         @experimental
         physics_scene_component<native><epic_internal> := class<final><final_super><epic_internal>(component):
@@ -2185,27 +2239,22 @@ Temporary<public> := module:
             @available {MinUploadedAtFNVersion := 2930}
             FindShapeSweepHits<native><public>(QueryShape:collision_volume, QueryTransform:transform, QueryTraceVector:vector3)<transacts>:generator(sweep_hit)
 
-            # Internal epic method to know if this component is allowed to run verse on non-server builds (i.e., Editor or client)
-            IsAllowedOnClient<override>():logic = external {}
+            OnAddedToSceneInternal<native><override>():void
 
-            OnAddedToScene<native><override>():void
+            OnInitializedInternal<native><override>():void
 
-            OnBeginSimulation<native><override>():void
+            OnRemovingFromSceneInternal<native><override>():void
 
-            OnEndSimulation<native><override>():void
-
-            OnInitialized<native><override>():void
-
-            OnRemovingFromScene<native><override>():void
-
-            OnUninitializing<native><override>():void
+            OnUninitializingInternal<native><override>():void
 
         @experimental
         # A `rect_light_component` emits light into the scene from a rectangular plane with a specified width and height. You can use these
         # to simulate any kind of light sources that have rectangular areas, such as televisions or monitor screens, overhead lighting
         # fixtures, or wall sconces.
         rect_light_component<native><public> := class<final>(light_component):
-            # The bounds of the light's visible influence, in meters. This clamping of the light's influence is not physically correct but very important for performance,
+            OnAddedToSceneInternal<native><override>():void
+
+            # The bounds of the light's visible influence, in centimeters. This clamping of the light's influence is not physically correct but very important for performance,
             # larger lights cost more. The light falloff is based on Inverse Square law. Towards the tail end of the AttenuationRadius,
             # there is an additional smoothing factor to fade out the light contribution to 0 to avoid a hard cutoff.
             var AttenuationRadius<public>:?float = external {}
@@ -2213,16 +2262,16 @@ Temporary<public> := module:
             # The angle of the barn door in degrees attached to the light source rect. Clamped between 0.0 and 90.0 degrees.
             var BarnDoorAngleDegrees<public>:float = external {}
 
-            # The length of the barn door attached to the light source rect, in meters.
+            # The length of the barn door attached to the light source rect, in centimeters.
             var BarnDoorLength<public>:float = external {}
 
             # Set the visible light intensity emitted in SI unit Candela./nSpecified before ColorFilter (which multiplies each color component after the intensity calculation and can change the effective intensity of the light).
             var Intensity<public>:float = external {}
 
-            # The height of the light source rect, in meters. Note that light source's shapes which intersect shadow casting geometry can cause shadowing artifacts.
+            # The height of the light source rect, in centimeters. Note that light source's shapes which intersect shadow casting geometry can cause shadowing artifacts.
             var SourceHeight<public>:float = external {}
 
-            # The width of the light source rect, in meters. Note that light source shapes which intersect shadow casting geometry can cause shadowing artifacts.
+            # The width of the light source rect, in centimeters. Note that light source shapes which intersect shadow casting geometry can cause shadowing artifacts.
             var SourceWidth<public>:float = external {}
 
         @experimental
@@ -2231,14 +2280,9 @@ Temporary<public> := module:
             # Internal only flag to make this entity always relevant for replication to clients
             AlwaysRelevant<native><epic_internal>:logic = external {}
 
-            # Internal epic method to know if this component is allowed on client
-            IsAllowedOnClient<override>():logic = external {}
+            OnAddedToSceneInternal<native><override>():void
 
-            # The component is being initialized, called when it is added to an entity
-            OnAddedToScene<native><override>():void
-
-            # The component is being uninitialized, called when it is about to be removed from an entity
-            OnRemovingFromScene<native><override>():void
+            OnRemovingFromSceneInternal<native><override>():void
 
         @experimental
         rigid_body_component<native><epic_internal> := class<final><final_super><epic_internal>(component):
@@ -2250,7 +2294,17 @@ Temporary<public> := module:
 
             EntityExitedEvent<native><public>:listenable(entity) = external {}
 
-            IsAllowedOnClient<override>():logic = external {}
+            OnAddedToSceneInternal<native><override>():void
+
+            OnBeginSimulationInternal<native><override>():void
+
+            OnEndSimulationInternal<native><override>():void
+
+            OnInitializedInternal<native><override>():void
+
+            OnRemovingFromSceneInternal<native><override>():void
+
+            OnUninitializingInternal<native><override>():void
 
             @experimental
             # Enable/disable collision on this mesh. If enabled, meshes may collide in the physics simulation.
@@ -2305,19 +2359,20 @@ Temporary<public> := module:
             # The path to the sound asset
             InternalMetaSoundAssetPath<native><epic_internal>:metasound = external {}
 
-            # Internal epic method to know if this component is allowed on client
-            IsAllowedOnClient<override>():logic = external {}
-
             # Succeeds if the sound component is enabled, fails if it is disabled.
             IsEnabled<override><native>()<transacts><decides>:void
 
-            # The component is being initialized, called when it is added to an entity
-            OnInitialized<native><override>():void
+            OnAddedToSceneInternal<native><override>():void
+
+            OnBeginSimulationInternal<native><override>():void
+
+            OnInitializedInternal<native><override>():void
 
             OnPropertyChangedFromVerse<native><override>(PropertyName:string)<transacts>:void
 
-            # The component is being uninitialized, called when it is about to be removed from an entity
-            OnUninitializing<native><override>():void
+            OnRemovingFromSceneInternal<native><override>():void
+
+            OnUninitializingInternal<native><override>():void
 
             # Play the sound asset
             Play<native><public>():void
@@ -2346,7 +2401,9 @@ Temporary<public> := module:
         # A `sphere_light_component` emits light in all directions into the scene from a spherical source shape with a specified radius. A radius of 0 makes it a point light. You can use these
         # to simulate any kind of light sources that emit in all directions, such as a light bulb.
         sphere_light_component<native><public> := class<final>(light_component):
-            # The bounds of the light's visible influence, in meters. This clamping of the light's influence is not physically correct but very important for performance,
+            OnAddedToSceneInternal<native><override>():void
+
+            # The bounds of the light's visible influence, in centimeters. This clamping of the light's influence is not physically correct but very important for performance,
             # larger lights cost more. The light falloff is based on Inverse Square law. Towards the tail end of the AttenuationRadius,
             # there is an additional smoothing factor to fade out the light contribution to 0 to avoid a hard cutoff.
             var AttenuationRadius<public>:?float = external {}
@@ -2354,7 +2411,7 @@ Temporary<public> := module:
             # Set the visible light intensity emitted in SI unit Candela./nSpecified before ColorFilter (which multiplies each color component after the intensity calculation and can change the effective intensity of the light).
             var Intensity<public>:float = external {}
 
-            # Radius of the source shape, in meters. Note that light shapes which intersect shadow casting geometry can cause shadowing artifacts.
+            # Radius of the source shape, in centimeters. Note that light shapes which intersect shadow casting geometry can cause shadowing artifacts.
             var SourceRadius<public>:float = external {}
 
         @experimental
@@ -2363,7 +2420,9 @@ Temporary<public> := module:
         # extents of the `OuterConeAngleDegrees` a falloff takes place, creating a penumbra, or softening around the `spot_light_component`'s disc of
         # illumination. The Radius of the light defines the length of the cones. More simply, this will work like a flash light or stage can light.
         spot_light_component<native><public> := class<final>(light_component):
-            # The bounds of the light's visible influence, in meters. This clamping of the light's influence is not physically correct but very important for performance,
+            OnAddedToSceneInternal<native><override>():void
+
+            # The bounds of the light's visible influence, in centimeters. This clamping of the light's influence is not physically correct but very important for performance,
             # larger lights cost more. The light falloff is based on Inverse Square law. Towards the tail end of the AttenuationRadius,
             # there is an additional smoothing factor to fade out the light contribution to 0 to avoid a hard cutoff.
             var AttenuationRadius<public>:?float = external {}
@@ -2377,7 +2436,7 @@ Temporary<public> := module:
             # The light's outer cone shaped angle in degrees. Clamped between 1.0 and 80.0.
             var OuterConeAngleDegrees<public>:float = external {}
 
-            # Radius of the source shape, in meters. Note that light shapes which intersect shadow casting geometry can cause shadowing artifacts.
+            # Radius of the source shape, in centimeters. Note that light shapes which intersect shadow casting geometry can cause shadowing artifacts.
             var SourceRadius<public>:float = external {}
 
         @experimental
@@ -2429,11 +2488,9 @@ Temporary<public> := module:
             # Checks if this container contains ANY of the tags in the specified container, also checks against parent tags {"A.1"}.HasAny({"A","B"}) will return True, {"A"}.HasAny({"A.1","B"}) will return False If InTags is empty/invalid it will always return False.
             HasAny<native><override>(InTags:[]tag)<computes><decides><reads>:void
 
-            IsAllowedOnClient<override>():logic = external {}
+            OnAddedToSceneInternal<native><override>():void
 
-            OnAddedToScene<native><override>():void
-
-            OnRemovingFromScene<native><override>():void
+            OnRemovingFromSceneInternal<native><override>():void
 
             # Removes a tag from this component. Returns `true` if the tag was present before being removed.
             RemoveTag<native><public>(TagToRemove:tag)<transacts>:logic
@@ -2450,21 +2507,14 @@ Temporary<public> := module:
             # Enable this object.
             Enable<native><override>():void
 
-            # Internal epic method to know if this component is allowed on client
-            IsAllowedOnClient<override>():logic = external {}
-
             # Succeeds if the component is enabled, fails if it is disabled.
             IsEnabled<native><override>()<transacts><decides>:void
 
-            OnAddedToScene<native><override>():void
+            OnAddedToSceneInternal<native><override>():void
 
-            OnBeginSimulation<native><override>():void
+            OnInitializedInternal<native><override>():void
 
-            OnEndSimulation<native><override>():void
-
-            OnInitialized<native><override>():void
-
-            OnRemovingFromScene<native><override>():void
+            OnRemovingFromSceneInternal<native><override>():void
 
             @editable
             @replicated("RepNotify")
@@ -2509,17 +2559,14 @@ Temporary<public> := module:
             # Returns the global transform of the entity.
             GetGlobalTransform<native><public>()<transacts>:transform
 
-            # Internal epic method to know if this component is allowed on client
-            IsAllowedOnClient<override>():logic = external {}
+            OnInitializedInternal<native><override>():void
 
-            OnInitialized<native><override>():void
-
-            OnUninitializing<native><override>():void
+            OnUninitializingInternal<native><override>():void
 
             # Sets the global transform of the entity.
             SetGlobalTransform<native><public>(NewGlobalTransform:transform)<transacts>:void
 
-            # Sets the global transform of the entity.
+            # Sets the local transform of the entity.
             SetLocalTransform<native><public>(NewLocalTransform:transform)<transacts>:void
 
             @editable
@@ -3096,8 +3143,6 @@ Temporary<public> := module:
             @experimental
             Hide<public>(Player:player):void = external {}
 
-            IsAllowedOnClient<override>():logic = external {}
-
             OnBeginSimulation<override>():void = external {}
 
             OnEndSimulation<override>():void = external {}
@@ -3515,7 +3560,6 @@ VerseQueryTestSuite<public> := module:
     @hide_in_editor
     @experimental
     verse_query_other_test_component<native><epic_internal> := class<final_super>(component):
-        IsAllowedOnClient<override>():logic = external {}
 
     @hide_in_editor
     verse_query_tag_animal<native><epic_internal> := class(tag):
@@ -3541,7 +3585,6 @@ VerseQueryTestSuite<public> := module:
     @hide_in_editor
     @experimental
     verse_query_test_component<native><epic_internal> := class<final_super>(component):
-        IsAllowedOnClient<override>():logic = external {}
 
     @hide_in_editor
     @experimental
@@ -3550,7 +3593,6 @@ VerseQueryTestSuite<public> := module:
     @hide_in_editor
     @experimental
     verse_query_unused_test_component<native><epic_internal> := class<final_super>(component):
-        IsAllowedOnClient<override>():logic = external {}
 
 WebAPI<public> := module:
     MakeClient<constructor><native><public>(ClientId:client_id)<converges>:client
@@ -3561,6 +3603,17 @@ WebAPI<public> := module:
     client<native><public> := class<final><computes><internal>:
         Get<native><public>(Path:string)<suspends>:response
 
+    # Usage:
+    #     Licensed users create a derived version of `client_id` in their module.
+    #     The Verse class path for your derived `client_id` is then used as the
+    #     configuration key in your backend service to map to your endpoint.
+    #
+    #     WARNING: do not make your derived `client_id` class public. This object
+    #     type is your private key to your backend.
+    #
+    # Example:
+    #     my_client_id<internal> := class<final><computes>(client_id)
+    #     MyClient<internal> := MakeClient(my_client_id)
     client_id<native><public> := class<abstract><computes>:
 
     response<native><public> := class<internal>:

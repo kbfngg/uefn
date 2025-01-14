@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-33.11-CL-38773622
+# Generated from build: ++Fortnite+Release-33.20-CL-39082670
 #################################################
 
 using {/Verse.org/Restricted}
@@ -1369,7 +1369,7 @@ Verse<public> := module:
     # Implemented by classes that allow users to cancel an operation. For example, calling `subscribable.Subscribe` with a callback returns a `cancelable` object. Calling `Cancel` on the return object unsubscribes the callback.
     cancelable<native><public> := interface:
         # Prevents any current or future work from completing.
-        Cancel<public>()<transacts>:void
+        Cancel<native_callable><public>()<transacts>:void
 
     # Provides a hook for class-specific ToDiagnostic behavior; ToDiagnostic will call this interface when provided a class that implements it.
     diagnosable<native><epic_internal> := interface:

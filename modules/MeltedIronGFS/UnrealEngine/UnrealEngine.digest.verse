@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-33.11-CL-38773622
+# Generated from build: ++Fortnite+Release-33.20-CL-39082670
 #################################################
 
 using {/UnrealEngine.com/Temporary/SpatialMath}
@@ -263,8 +263,10 @@ Temporary<public> := module:
         (InEntity:entity).SetOrigin<native><public>(NewOrigin:origin)<transacts><decides>:void
 
         # Module import path: /UnrealEngine.com/Temporary/SceneGraph/KeyframedMovement
+        # Animate Scene Graph entities with keyframes.
         KeyframedMovement<public> := module:
             @experimental
+            # Cubic bezier easing function. See CubicBezierEasingFunctions for some basic easing values.
             cubic_bezier_easing_function<native><public> := class<concrete><computes><epic_internal>(easing_function):
                 Evaluate<native><override>(Input:float):float
 
@@ -277,6 +279,7 @@ Temporary<public> := module:
                 Y1<native><public>:float = external {}
 
             @experimental
+            # `Ease` animations start slowly, speed up, then end slowly. The speed of the animation is slightly slower at the end than the start.
             ease_cubic_bezier_easing_function<native><public> := class<final><concrete><computes>(cubic_bezier_easing_function):
                 X0<override>:float = external {}
 
@@ -287,6 +290,7 @@ Temporary<public> := module:
                 Y1<override>:float = external {}
 
             @experimental
+            # `EaseIn` animations start slow, then speed up towards the end.
             ease_in_cubic_bezier_easing_function<native><public> := class<final><concrete><computes>(cubic_bezier_easing_function):
                 X0<override>:float = external {}
 
@@ -297,6 +301,7 @@ Temporary<public> := module:
                 Y1<override>:float = external {}
 
             @experimental
+            # `EaseInOut` animations are similar to `Ease` but the start and end animation speed is symmetric.
             ease_in_out_cubic_bezier_easing_function<native><public> := class<final><concrete><computes>(cubic_bezier_easing_function):
                 X0<override>:float = external {}
 
@@ -307,6 +312,7 @@ Temporary<public> := module:
                 Y1<override>:float = external {}
 
             @experimental
+            # `EaseOut` animations start fast, then slow down towards the end.
             ease_out_cubic_bezier_easing_function<native><public> := class<final><concrete><computes>(cubic_bezier_easing_function):
                 X0<override>:float = external {}
 
@@ -317,65 +323,86 @@ Temporary<public> := module:
                 Y1<override>:float = external {}
 
             @experimental
+            # Base class for an animation easing function.
             easing_function<native><public> := class<abstract><computes><epic_internal>:
                 Evaluate<native><public>(Input:float):float
 
             @experimental
+            # Provides teleportation and simple keyframe-based animation for an entity. Animations play back in the Pre-Physics tick phase. When animating an entity with a parent_constraint, animation will be relative to the parent entity.
             keyframed_movement_component<native><public> := class<final><final_super>(component):
                 @experimental
                 GetDuration<native><public>()<computes><decides><reads>:float
 
                 @experimental
+                # Get the event that fires when the animations ends, failing if the animation is of infinite duration
                 GetOnFinishedEvent<public>()<computes><decides><reads>:listenable(tuple()) = external {}
 
                 @experimental
+                # Get the event that fires when the animation is Paused.
                 GetOnPausedEvent<public>():listenable(tuple()) = external {}
 
                 @experimental
+                # Get the event that fires when the animation begins or resumes Playing.
                 GetOnPlayedEvent<public>():listenable(tuple()) = external {}
 
                 @experimental
+                # Get the event that fires when the animation is Stopped.
                 GetOnStoppedEvent<public>():listenable(tuple()) = external {}
 
                 @experimental
+                # Is there a valid set of playable keyframes?
                 HasValidAnimation<native><public>()<computes><decides><reads>:void
 
                 @experimental
+                # Is the animation paused?
                 IsPaused<native><public>()<computes><decides><reads>:void
 
                 @experimental
+                # Is the animation currently playing?
                 IsPlaying<native><public>()<computes><decides><reads>:void
 
                 @experimental
+                # Signaled when any keyframe is reached. (Keyframe:int, IsReversed:logic).
                 KeyframeReachedEvent<native><public>:listenable(tuple(int, logic)) = external {}
 
                 @experimental
+                # Signaled when the entire animation is complete. This will only fire for `OneShot` animations.
                 MovementCompleteEvent<native><public>:listenable(tuple()) = external {}
 
                 @experimental
+                # Pause movement. Subsequently calling Play() will resume from the point in the animation when it was paused.
                 Pause<native><public>():void
 
                 @experimental
+                # Begin or resume playback.
                 Play<native><public>():void
 
                 @experimental
+                # Stop any ongoing animation, sets the animation path and rebases it relative to the actor's current transform. Does not start playing until you call Play().
                 SetKeyframes<native><public>(RelativeKeyframes:[]keyframed_movement_delta, PlaybackMode:keyframed_movement_playback_mode):void
 
                 @experimental
+                # Stop and reset transform to the initial state. Subsequently calling Play() will begin the animation anew.
                 Stop<native><public>(?BlendOutTime:float = external {}):void
 
             @experimental
+            # Represents a change in pose and scale over a duration.
             keyframed_movement_delta<native><public> := class<final><concrete>:
+                # Duration of this keyframe in seconds.
                 Duration<native><public>:float = external {}
 
+                # Easing function to use for playback.
                 Easing<native><public>:easing_function = external {}
 
+                # Represents a change in the transform relative to the previous keyframe or initial animation position.
                 Transform<native><public>:transform = external {}
 
             @experimental
+            # Controls how the animation plays back.
             keyframed_movement_playback_mode<native><public> := class<abstract><computes><epic_internal>:
 
             @experimental
+            # `Linear` animations move at a constant speed.
             linear_easing_function<native><public> := class<final><concrete><computes>(cubic_bezier_easing_function):
                 X0<override>:float = external {}
 
@@ -386,12 +413,15 @@ Temporary<public> := module:
                 Y1<override>:float = external {}
 
             @experimental
+            # Play once and repeat indefinitely.
             loop_keyframed_movement_playback_mode<native><public> := class<final><concrete><computes>(keyframed_movement_playback_mode):
 
             @experimental
+            # Play once and stop.
             oneshot_keyframed_movement_playback_mode<native><public> := class<final><concrete><computes>(keyframed_movement_playback_mode):
 
             @experimental
+            # Play continuously reversing direction at each end.
             pingpong_keyframed_movement_playback_mode<native><public> := class<final><concrete><computes>(keyframed_movement_playback_mode):
 
         @experimental
@@ -399,9 +429,7 @@ Temporary<public> := module:
         MakeCollisionProfile<native><public>(ChannelType:subtype(collision_channel), ChannelToInteraction:collision_channel_to_interaction)<converges>:collision_profile
 
         using {/UnrealEngine.com/Temporary/SpatialMath}
-        using {/Verse.org/Assets}
         using {/Verse.org/Colors}
-        using {/Verse.org/Simulation}
         @experimental
         # A `capsule_light_component` emits light in all directions into the scene from a capsule shaped source with a specified radius and length. A radius and length of 0 makes it a point light. You can use these
         # to simulate any kind of light sources that emit in all directions and need an elongated source shape, such as a long light bulb.
@@ -414,10 +442,10 @@ Temporary<public> := module:
             # Set the visible light intensity emitted in SI unit Candela./nSpecified before ColorFilter (which multiplies each color component after the intensity calculation and can change the effective intensity of the light).
             var Intensity<public>:float = external {}
 
-            # Length of the source capsule shape in meters along the local Z axis. Note that light shapes which intersect shadow casting geometry can cause shadowing artifacts.
+            # Length of the source capsule shape in centimeters along the local Z axis. Note that light shapes which intersect shadow casting geometry can cause shadowing artifacts.
             var SourceLength<public>:float = external {}
 
-            # Radius of the source capsule shape in meters around the local Z axis. Note that light shapes which intersect shadow casting geometry can cause shadowing artifacts.
+            # Radius of the source capsule shape in centimeters around the local Z axis. Note that light shapes which intersect shadow casting geometry can cause shadowing artifacts.
             var SourceRadius<public>:float = external {}
 
         @experimental
@@ -577,11 +605,21 @@ Temporary<public> := module:
         # It is up to the needs of your experience if you use one big game component
         # or if you break up logic into many small components.
         #
-        # Currently UEFN will not allow you to add more than one component of a given
-        # subclass of component (for example, only one type of light_component). This restriction
-        # will be relaxed in the future where components will be able to decide if they
-        # wish to allow only one instance or many instances of the same component to exist
-        # together on one entity.
+        # Classes deriving from component must also specify `<final_super>` to be added
+        # to entities. This ensures the class will always derive directly from `component`.
+        # Further subclassing of the initial derived component is allowed and does not require
+        # specifying `<final_super>` on the derived classes.
+        #
+        # Only one instance of a component from each subclass group can be added to an entity
+        # at a time. For example, given this group of components, only one light_component can
+        # exist on a single entity. To create multiple lights you should use multiple entities.
+        #
+        #   light_component             := class<final_super>(component){}
+        #   capsule_light_component     := class<final>(light_component){}
+        #   directional_light_component := class<final>(light_component){}
+        #   spot_light_component        := class<final>(light_component){}
+        #   sphere_light_component      := class<final>(light_component){}
+        #   rect_light_component        := class<final>(light_component){}
         #
         # ==============================================================================
         # Component Lifetime
@@ -648,12 +686,6 @@ Temporary<public> := module:
             OnEndSimulation<native><native_callable><protected>():void
 
             @experimental
-            # Called when the component is added to an entity using `entity.AddEntities`.
-            #   * Components can check for dependent sibling components at this stage through `entity.GetComponents`.
-            #   * Components can add additional components at this stage using `entity.AddComponents`
-            OnInitialized<native><native_callable><protected>():void
-
-            @experimental
             # Respond to an event being propagated through the scene graph. Returns if the event is consumed, in which case the event will not be passed to the next entity, depending on how the event is being sent through the hierarchy.
             OnReceive<native><native_callable><public>(SceneEvent:scene_event):logic
 
@@ -669,11 +701,6 @@ Temporary<public> := module:
             #   * `OnBeginSimulation` is guaranteed to run before `OnSimulate`.
             #   * `OnSimulate` will be cancelled before `OnEndSimulation`
             OnSimulate<native_callable><protected>()<suspends>:void = external {}
-
-            @experimental
-            # Called when the component is about to be removed from the parent entity.
-            #   * `OnUninitializing` is only called on components that have already had `OnInitialized` called.
-            OnUninitializing<native><native_callable><protected>():void
 
             @experimental
             # Removes the component from the entity.
@@ -818,6 +845,39 @@ Temporary<public> := module:
 
             Minimum<native><public>:float = external {}
 
+        using {/Verse.org/Simulation}
+        @experimental
+        # Used to handle general interaction.
+        interactable_component<native><public> := class<final_super>(component, enableable):
+            # Returns whether the specified agent can interact.
+            CanInteract<native><native_callable><public>(Agent:agent)<computes><decides><reads>:void
+
+            # Event fires when an interaction has ended before completing successfully. Sends the formerly interacting agent.  This event is called on all interacting agents when Disable() is called on the component.
+            CanceledEvent<native><public>:listenable(agent) = external {}
+
+            # Disable interaction with the component. Disabled components do not provide interaction prompts.
+            Disable<native><override>():void
+
+            # Enable interaction with the component.
+            Enable<native><override>():void
+
+            InteractFinishedEvent<native><public>:listenable(agent) = external {}
+
+            # Returns an appropriate message to display to players to communicate the current state of the interactable.
+            InteractMessage<native><native_callable><public>(Agent:agent)<computes><decides><reads>:message
+
+            # Succeeds if the component is enabled, fails if it’s disabled.
+            IsEnabled<native><override>()<transacts><decides>:void
+
+            # Attempt to start an interaction. Fails if the agent does not pass the CanInteract function.
+            Start<native><public>(Agent:agent)<transacts><decides>:void
+
+            # Event fires when an a successful interaction starts. Sends the interacting agent. InteractDuration at or below 0 makes this event identical to InteractSucceededEvent.
+            StartedEvent<native><public>:listenable(agent) = external {}
+
+            # Event fires when an interaction has completed successfully. Sends the formerly interacting agent. InteractDuration at or below 0 makes this event identical to InteractStartedEvent.
+            SucceededEvent<native><public>:listenable(agent) = external {}
+
         @experimental
         # Base class for light components in the SceneGraph.
         #
@@ -839,10 +899,6 @@ Temporary<public> := module:
 
             # Succeeds if the component is enabled, fails if it's disabled.
             IsEnabled<native><override>()<transacts><decides>:void
-
-            OnInitialized<native><override>():void
-
-            OnUninitializing<native><override>():void
 
             # Whether the light should cast any shadows.
             var CastShadows<public>:logic = external {}
@@ -885,12 +941,6 @@ Temporary<public> := module:
             # Succeeds if the component is enabled, fails if it's disabled.
             IsEnabled<native><override>()<transacts><decides>:void
 
-            OnAddedToScene<native><override>():void
-
-            OnInitialized<native><override>():void
-
-            OnRemovingFromScene<native><override>():void
-
             @experimental
             # Enable/disable collision on this mesh. If enabled, meshes may collide in the physics simulation.
             var Collideable<public>:logic = external {}
@@ -930,7 +980,7 @@ Temporary<public> := module:
         #
         # Dependencies:
         #   * `transform_component` on the entity positions the `particle_system`.
-        particle_system_component<native><public> := class<final_super>(component, enableable):
+        particle_system_component<native><public> := class<final_super><epic_internal>(component, enableable):
             # Disables the simulation and rendering of this `particle_system`.
             Disable<override><native>():void
 
@@ -940,17 +990,9 @@ Temporary<public> := module:
             # Succeeds if the component is enabled, fails if it’s disabled.
             IsEnabled<override><native>()<transacts><decides>:void
 
-            OnAddedToScene<native><override>():void
+            Play<native><public>():void
 
-            OnInitialized<native><override>():void
-
-            OnRemovingFromScene<native><override>():void
-
-            OnUninitializing<native><override>():void
-
-            @experimental
-            # The `particle_system` to be created by this component.
-            ParticleSystem<native><public>:particle_system = external {}
+            Stop<native><public>():void
 
             @editable
             # Controls if the `particle_system_component` should play the simulation automatically when added to the scene, or when enabled from a disabled state.
@@ -965,7 +1007,7 @@ Temporary<public> := module:
         # to simulate any kind of light sources that have rectangular areas, such as televisions or monitor screens, overhead lighting
         # fixtures, or wall sconces.
         rect_light_component<native><public> := class<final>(light_component):
-            # The bounds of the light's visible influence, in meters. This clamping of the light's influence is not physically correct but very important for performance,
+            # The bounds of the light's visible influence, in centimeters. This clamping of the light's influence is not physically correct but very important for performance,
             # larger lights cost more. The light falloff is based on Inverse Square law. Towards the tail end of the AttenuationRadius,
             # there is an additional smoothing factor to fade out the light contribution to 0 to avoid a hard cutoff.
             var AttenuationRadius<public>:?float = external {}
@@ -973,16 +1015,16 @@ Temporary<public> := module:
             # The angle of the barn door in degrees attached to the light source rect. Clamped between 0.0 and 90.0 degrees.
             var BarnDoorAngleDegrees<public>:float = external {}
 
-            # The length of the barn door attached to the light source rect, in meters.
+            # The length of the barn door attached to the light source rect, in centimeters.
             var BarnDoorLength<public>:float = external {}
 
             # Set the visible light intensity emitted in SI unit Candela./nSpecified before ColorFilter (which multiplies each color component after the intensity calculation and can change the effective intensity of the light).
             var Intensity<public>:float = external {}
 
-            # The height of the light source rect, in meters. Note that light source's shapes which intersect shadow casting geometry can cause shadowing artifacts.
+            # The height of the light source rect, in centimeters. Note that light source's shapes which intersect shadow casting geometry can cause shadowing artifacts.
             var SourceHeight<public>:float = external {}
 
-            # The width of the light source rect, in meters. Note that light source shapes which intersect shadow casting geometry can cause shadowing artifacts.
+            # The width of the light source rect, in centimeters. Note that light source shapes which intersect shadow casting geometry can cause shadowing artifacts.
             var SourceWidth<public>:float = external {}
 
         @experimental
@@ -1000,12 +1042,6 @@ Temporary<public> := module:
             # Succeeds if the sound component is enabled, fails if it is disabled.
             IsEnabled<override><native>()<transacts><decides>:void
 
-            # The component is being initialized, called when it is added to an entity
-            OnInitialized<native><override>():void
-
-            # The component is being uninitialized, called when it is about to be removed from an entity
-            OnUninitializing<native><override>():void
-
             # Play the sound asset
             Play<native><public>():void
 
@@ -1022,7 +1058,7 @@ Temporary<public> := module:
         # A `sphere_light_component` emits light in all directions into the scene from a spherical source shape with a specified radius. A radius of 0 makes it a point light. You can use these
         # to simulate any kind of light sources that emit in all directions, such as a light bulb.
         sphere_light_component<native><public> := class<final>(light_component):
-            # The bounds of the light's visible influence, in meters. This clamping of the light's influence is not physically correct but very important for performance,
+            # The bounds of the light's visible influence, in centimeters. This clamping of the light's influence is not physically correct but very important for performance,
             # larger lights cost more. The light falloff is based on Inverse Square law. Towards the tail end of the AttenuationRadius,
             # there is an additional smoothing factor to fade out the light contribution to 0 to avoid a hard cutoff.
             var AttenuationRadius<public>:?float = external {}
@@ -1030,7 +1066,7 @@ Temporary<public> := module:
             # Set the visible light intensity emitted in SI unit Candela./nSpecified before ColorFilter (which multiplies each color component after the intensity calculation and can change the effective intensity of the light).
             var Intensity<public>:float = external {}
 
-            # Radius of the source shape, in meters. Note that light shapes which intersect shadow casting geometry can cause shadowing artifacts.
+            # Radius of the source shape, in centimeters. Note that light shapes which intersect shadow casting geometry can cause shadowing artifacts.
             var SourceRadius<public>:float = external {}
 
         @experimental
@@ -1039,7 +1075,7 @@ Temporary<public> := module:
         # extents of the `OuterConeAngleDegrees` a falloff takes place, creating a penumbra, or softening around the `spot_light_component`'s disc of
         # illumination. The Radius of the light defines the length of the cones. More simply, this will work like a flash light or stage can light.
         spot_light_component<native><public> := class<final>(light_component):
-            # The bounds of the light's visible influence, in meters. This clamping of the light's influence is not physically correct but very important for performance,
+            # The bounds of the light's visible influence, in centimeters. This clamping of the light's influence is not physically correct but very important for performance,
             # larger lights cost more. The light falloff is based on Inverse Square law. Towards the tail end of the AttenuationRadius,
             # there is an additional smoothing factor to fade out the light contribution to 0 to avoid a hard cutoff.
             var AttenuationRadius<public>:?float = external {}
@@ -1053,7 +1089,7 @@ Temporary<public> := module:
             # The light's outer cone shaped angle in degrees. Clamped between 1.0 and 80.0.
             var OuterConeAngleDegrees<public>:float = external {}
 
-            # Radius of the source shape, in meters. Note that light shapes which intersect shadow casting geometry can cause shadowing artifacts.
+            # Radius of the source shape, in centimeters. Note that light shapes which intersect shadow casting geometry can cause shadowing artifacts.
             var SourceRadius<public>:float = external {}
 
         @experimental
@@ -1107,10 +1143,6 @@ Temporary<public> := module:
             # Checks if this container contains ANY of the tags in the specified container, also checks against parent tags {"A.1"}.HasAny({"A","B"}) will return True, {"A"}.HasAny({"A.1","B"}) will return False If InTags is empty/invalid it will always return False.
             HasAny<native><override>(InTags:[]tag)<computes><decides><reads>:void
 
-            OnAddedToScene<native><override>():void
-
-            OnRemovingFromScene<native><override>():void
-
             # Removes a tag from this component. Returns `true` if the tag was present before being removed.
             RemoveTag<native><public>(TagToRemove:tag)<transacts>:logic
 
@@ -1129,14 +1161,10 @@ Temporary<public> := module:
             # Returns the global transform of the entity.
             GetGlobalTransform<native><public>()<transacts>:transform
 
-            OnInitialized<native><override>():void
-
-            OnUninitializing<native><override>():void
-
             # Sets the global transform of the entity.
             SetGlobalTransform<native><public>(NewGlobalTransform:transform)<transacts>:void
 
-            # Sets the global transform of the entity.
+            # Sets the local transform of the entity.
             SetLocalTransform<native><public>(NewLocalTransform:transform)<transacts>:void
 
             @editable
@@ -1916,6 +1944,17 @@ WebAPI<public> := module:
     client<native><public> := class<final><computes><internal>:
         Get<native><public>(Path:string)<suspends>:response
 
+    # Usage:
+    #     Licensed users create a derived version of `client_id` in their module.
+    #     The Verse class path for your derived `client_id` is then used as the
+    #     configuration key in your backend service to map to your endpoint.
+    #
+    #     WARNING: do not make your derived `client_id` class public. This object
+    #     type is your private key to your backend.
+    #
+    # Example:
+    #     my_client_id<internal> := class<final><computes>(client_id)
+    #     MyClient<internal> := MakeClient(my_client_id)
     client_id<native><public> := class<abstract><computes>:
 
     response<native><public> := class<internal>:
