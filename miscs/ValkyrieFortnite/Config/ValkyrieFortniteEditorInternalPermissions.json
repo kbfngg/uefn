@@ -975,13 +975,6 @@
 			"SkeletonTree.NewMenu": {
 				"AllowList": [ "AddSocket", "VirtualBones", "CreateTimeBlendProfile", "CreateWeightBlendProfile", "CreateBlendMask" ]
 			},
-			"LevelEditor.MainMenu.Tools": {
-				"AllowList": {
-					"+": [
-						"SpatialMetricsViewer"
-					]
-				}
-			},
 			"LevelEditor.ActorContextMenu": {
 				"AllowList": {
 					"+": [ "AddEntityMenu", "SaveAsPrefab", "GroupEntities", "EditPrefab", "BrowseToPrefab", "PushPrefabOverrides" ]
@@ -1000,21 +993,13 @@
 						"entity"
 					]
 				}
-			}
-		},
-		"AllowedTabs": {
-			"Global": {
-				"AllowList": {
-					"+": [
-						"SpatialMetricsViewer",
-					]
-				}
 			},
-			"LevelEditor": {
+			"SpatialProfiler.SettingsToolBar.SettingsMenu": {
 				"AllowList": {
-					"+": [
-						"SpatialMetricsViewer",
-					]
+					"=": []
+				},
+				"DenyList" : {
+					"=": []
 				}
 			}
 		},

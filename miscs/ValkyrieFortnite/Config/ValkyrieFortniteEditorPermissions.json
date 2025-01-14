@@ -464,6 +464,7 @@
 		"_comment_AllowedClasses2": "Classes marked with Visible: true will appear in class pickers such as for Blueprint parent classes, UClass* FProperties, etc.",
 		"_comment_AllowedClasses3": "Note: All Blueprints must be listed in FortExposedAssetLists. BPs should only be listed here if they are subclassable (Visible:true), but must still go in a FortExposedAssetList.",
 		"AllowedClasses": {
+			"/CowCatcherMod/Mods/CowCatcher/BGA_Barricade_CowCatcher.BGA_Barricade_CowCatcher_C":						{  },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Awareness.CharacterModifier_Awareness_C": 							{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_CosmeticSpawn.CharacterModifier_CosmeticSpawn_C": 					{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_DefaultBehavior.CharacterModifier_DefaultBehavior_C": 				{ "Visible": true },
@@ -702,7 +703,7 @@
 			"/Script/AudioEditor.SoundCueGraph":								{  },
 			"/Script/AudioEditor.SoundCueGraphNode":							{  },
 			"/Script/AudioEditor.SoundCueGraphNode_Root":						{  },
-			"/Script/AudioMetadata.AudioAssetUserData":							{ "Visible": true },
+			"/Script/AudioGameplay.AudioAssetUserData":							{ "Visible": true },
 			"/Script/CRDLevelInstanceRuntime.LevelInstanceItemListComponent":	{  },
 			"/Script/CRD_AudioPlayerRuntime.CreativeAudioComponent":			{  },
 			"/Script/CRD_AudioMixerRuntime.CreativeAudioMixerDevice":			{  },
@@ -1332,7 +1333,7 @@
 			"/Script/FortniteGame.FortCreativeSplineModificationComponent":		{  },
 			"/Script/FortniteGame.FortCreativeVolumeLinkComponent":				{  },
 			"/Script/FortniteGame.FortDaySequenceActor":						{  },
-			"/Script/FortniteGame.FortDependantReplicationHelperComponent":		{  },
+			"/Script/FortniteGame.FortInstigatorDependentReplicationHelper":		{  },
 			"/Script/FortniteGame.FortEventResponderComponent":					{  },
 			"/Script/FortniteGame.FortFXCustomizationComponent":				{  },
 			"/Script/FortniteGame.FortGameFeatureData":							{ "Visible": true },
@@ -1465,6 +1466,8 @@
 			"/Script/Landscape.ControlPointMeshComponent":						{  },
 			"/Script/Landscape.Landscape":										{  },
 			"/Script/Landscape.LandscapeComponent":								{  },
+			"/Script/Landscape.LandscapeEditLayer":								{ "Visible": true },
+			"/Script/Landscape.LandscapeEditLayerSplines":						{ "Visible": true },
 			"/Script/Landscape.LandscapeGizmoActiveActor":						{  },
 			"/Script/Landscape.LandscapeGizmoRenderComponent":					{  },
 			"/Script/Landscape.LandscapeGrassType":								{  },
@@ -1472,6 +1475,7 @@
 			"/Script/Landscape.LandscapeLayerInfoObject":						{  },
 			"/Script/Landscape.LandscapeMaterialInstanceConstant":				{  },
 			"/Script/Landscape.LandscapeMeshCollisionComponent":				{  },
+			"/Script/Landscape.LandscapeMeshProxyComponent":					{  },
 			"/Script/Landscape.LandscapeNaniteComponent":						{  },
 			"/Script/Landscape.LandscapeSplineActor":							{  },
 			"/Script/Landscape.LandscapeSplineControlPoint":					{  },
@@ -1485,6 +1489,7 @@
 			"/Script/LiveLinkComponents.LiveLinkComponentController":			{ "Visible": true },
 			"/Script/LiveLinkMovieScene.MovieSceneLiveLinkSection":				{  },
 			"/Script/LiveLinkMovieScene.MovieSceneLiveLinkTrack":				{ "Visible": true },
+			"/Script/LiveLinkSequencer.TakeRecorderLiveLinkSource":             {  },
 			"/Script/LocalizableMessage.LocalizableMessage":					{  },
 			"/Script/LocalizableMessage.LocalizableMessageParameterEntry":		{  },
 			"/Script/MannequinRuntime.MannequinAnalyticsComponent":				{  },
@@ -1747,8 +1752,19 @@
 			"/Script/SoundLibrary.SoundLibraryComponent":						{  },
 			"/Script/TakeMovieScene.MovieSceneTakeSection":						{  },
 			"/Script/TakeMovieScene.MovieSceneTakeTrack":						{ "Visible": true },
+			"/Script/TakesCore.ActorRecorderPropertyMap":                       {  },
 			"/Script/TakesCore.TakeMetaData":									{  },
 			"/Script/TakesCore.TakePreset":										{ "Visible": true },
+			"/Script/TakesCore.TakeRecorderSources":                            {  },
+			"/Script/TakeRecorderSources.TakeRecorderActorSource":              {  },
+			"/Script/TakeRecorderSources.TakeRecorderCameraCutSource":          {  },
+			"/Script/TakeRecorderSources.TakeRecorderLevelSequenceSource":      {  },
+			"/Script/TakeRecorderSources.TakeRecorderLevelVisibilitySource":    {  },
+			"/Script/TakeRecorderSources.TakeRecorderMicrophoneAudioSource":    {  },
+			"/Script/TakeRecorderSources.TakeRecorderNearbySpawnedActorSource": {  },
+			"/Script/TakeRecorderSources.TakeRecorderPlayerSource":             {  },
+			"/Script/TakeRecorderSources.TakeRecorderWorldSource":              {  },
+			"/Script/TakeTrackRecorders.MovieSceneAnimationTrackRecorderSettings": {  },
 			"/Script/UMG.CanvasPanel":											{ "Visible": true },
 			"/Script/UMG.CanvasPanelSlot":										{  },
 			"/Script/UMG.GridPanel":											{ "Visible": true },
@@ -1816,7 +1832,10 @@
 			"/Script/WorldPartitionHLODUtilities.HLODBuilderMeshMergeSettings":	{  },
 			"/Script/RigLogicModule.DNAAsset":									{  },
 			"/Script/Engine.LODSyncComponent":									{ "Visible": true },
-			"/Wind/Gameplay/WindFields/Parent/WindSpline_Parent.WindSpline_Parent_C":{  }
+			"/Wind/Gameplay/WindFields/Parent/WindSpline_Parent.WindSpline_Parent_C":{  },
+			"/Script/Engine.FloatSpringState":									{  },
+			"/Script/Engine.QuaternionSpringState":								{  },
+			"/Script/Engine.VectorSpringState":									{  }
 		},
 		"AllowedMenus": {
 			"AssetEditor.IKRetargetEditor.MainMenu.CreateMenu": {
@@ -1995,7 +2014,9 @@
 					"CopyActorFilePathtoClipboard",
 					"SaveActor",
 					"Teleport",
-					"ScriptedActorActions"
+					"ScriptedActorActions",
+					"AddAnchoredNote",
+					"AddCameraNote"
 				]
 			},
 			"LevelEditor.ActorContextMenu.AddActor": {
@@ -2056,7 +2077,7 @@
 				"AllowList": [ "ToggleRealTime", "DisableRealtimeOverride", "DisableRealtimeOverrideSeparator", "ToggleStats", "ToggleFPS", "ToggleViewportToolbar", "FOVAngle", "FarViewPlane", "ScreenPercentage", "ToggleCinematicPreview", "ToggleGameView", "ToggleImmersive", "Bookmark", "Configs" ]
 			},
 			"LevelEditor.LevelViewportToolbar.Show": {
-				"AllowList": [ "UseDefaultShowFlags", "Common_AntiAliasing", "Common_Atmosphere", "Common_BSP", "Common_Collision", "Common_Decals", "Common_Fog", "Common_Grid", "Common_Landscape", "Common_MediaPlanes", "Common_Navigation", "Common_Particles", "Common_SkeletalMeshes", "Common_StaticMeshes", "Common_Translucency", "ShowHLODsMenu", "ShowRevisionControlMenu" ]
+				"AllowList": [ "UseDefaultShowFlags", "Common_AntiAliasing", "Common_Atmosphere", "Common_BSP", "Common_Collision", "Common_Decals", "Common_Fog", "Common_Grid", "Common_Landscape", "Common_MediaPlanes", "Common_Navigation", "Common_Particles", "Common_SkeletalMeshes", "Common_StaticMeshes", "Common_Translucency", "ShowHLODsMenu", "ShowRevisionControlMenu", "ShowCoopNotes" ]
 			},
 			"LevelEditor.MainMenu": {
 				"AllowList": [ "File", "Edit", "Window", "Tools", "Verse", "Build", "Select", "Help", "Utility" ]
@@ -2077,7 +2098,7 @@
 				"AllowList": [ "SelectAll", "SelectNone", "InvertSelection", "SelectAllActorsOfSameClass", "FocusViewportToSelection", "SelectImmediateChildren", "SelectAllDescendants", "SelectRelevantLights", "SelectAllLights", "SelectStationaryLightsExceedingOverlap", "SelectStaticMeshesOfSameClass", "SelectStaticMeshesAllClasses", "SelectSkeletalMeshesOfSameClass", "SelectSkeletalMeshesAllClasses", "SelectAllWithSameMaterial" ]
 			},
 			"LevelEditor.MainMenu.Tools": {
-				"AllowList": [ "ViewChangelists", "SubmitContent", "SyncContent", "ConnectToSourceControl", "ChangeSourceControlSettings", "ValkyrieProjectSize", "LiveLinkHub"]
+				"AllowList": [ "ViewChangelists", "SubmitContent", "SyncContent", "ConnectToSourceControl", "ChangeSourceControlSettings", "ValkyrieProjectSize", "LiveLinkHub", "SpatialMetricsViewer" ]
 			},
 			"LevelEditor.MainMenu.Verse": {
 				"AllowList": [ "VisualVerseTab", "VerseLog", "OpenVSCode", "BuildVerse" ]
@@ -2135,7 +2156,10 @@
 				"DenyList": [ "ChangeSettings" ]
 			},
 			"UnrealEd.ViewportToolbar.View": {
-				"AllowList": [ "LitMode", "UnlitMode", "WireframeMode", "DetailLightingMode", "LightingOnlyMode", "ReflectionOverrideMode", "CollisionPawn", "CollisionVisibility", "VisualizeBufferViewMode", "VisualizeNaniteViewMode", "VisualizeLumenViewMode", "VisualizeVirtualShadowMapViewMode", "ActorColoration" ]
+				"AllowList": [ "LitMode", "UnlitMode", "WireframeMode", "DetailLightingMode", "LightingOnlyMode", "ReflectionOverrideMode", "CollisionPawn", "CollisionVisibility", "VisualizeBufferViewMode", "VisualizeNaniteViewMode", "VisualizeLumenViewMode", "VisualizeVirtualShadowMapViewMode" ]
+			},
+			"SpatialProfiler.SettingsToolBar.SettingsMenu": {
+				"AllowList": [ "ShowStats" ]
 			}
 		},
 		"AllowedTabs": {
@@ -2189,12 +2213,14 @@
 					"ContentBrowserTab2",
 					"ContentBrowserTab3",
 					"ContentBrowserTab4",
+					"CoopNotesSidePanelTab",
 					"EditorSettings",
 					"LevelEditor",
 					"MessageLog",
 					"OutputLog",
 					"ReferenceViewer",
 					"SourceControlChangelists",
+					"SpatialMetricsViewer",
 					"StyleEditor",
 					"StandaloneToolkit",
 					"StartPage",
@@ -2214,6 +2240,7 @@
 					"ContentBrowserTab2",
 					"ContentBrowserTab3",
 					"ContentBrowserTab4",
+					"CoopNotesSidePanelTab",
 					"LevelEditorSceneOutliner",
 					"LevelEditorSceneOutliner2",
 					"LevelEditorSceneOutliner3",
@@ -2238,6 +2265,7 @@
 					"TakesBrowser",
 					"SequencerGraphEditor",
 					"SizeMap",
+					"SpatialMetricsViewer",
 					"VerticalModeToolbar",
 					"TopLeftModeTab",
 					"BottomLeftTabID",
@@ -2526,11 +2554,11 @@
 			},
 			{
 				"Type": "/Script/Landscape.Landscape",
-				"AllowList": [ "PivotOffset", "Layers", "ActorGuid", "Tags", "DefaultPhysMaterial", "LandscapeMaterial", "LandscapeHoleMaterial", "LandscapeComponentResolution", "LandscapeComponentCount", "LandscapeComponentSubsections", "LandscapeResolution", "LandscapeCount", "TotalLandscapeComponentCount", "LandscapeOverallResolution", "CastShadow" ]
+				"AllowList": [ "PivotOffset", "Layers", "ActorGuid", "Tags", "DefaultPhysMaterial", "LandscapeMaterial", "LandscapeHoleMaterial", "LandscapeComponentResolution", "LandscapeComponentCount", "LandscapeComponentSubsections", "LandscapeResolution", "LandscapeCount", "TotalLandscapeComponentCount", "LandscapeOverallResolution", "CastShadow", "HLODTextureSizePolicy", "HLODTextureSize", "HLODMeshSourceLODPolicy", "HLODMeshSourceLOD", "bAreNewLandscapeActorsSpatiallyLoaded" ]
 			},
 			{
 				"Type": "/Script/Landscape.LandscapeStreamingProxy",
-				"AllowList": [ "PivotOffset", "Layers", "ActorGuid", "Tags", "DefaultPhysMaterial", "LandscapeMaterial", "LandscapeHoleMaterial", "LandscapeComponentResolution", "LandscapeComponentCount", "LandscapeComponentSubsections", "LandscapeResolution", "LandscapeCount", "TotalLandscapeComponentCount", "LandscapeOverallResolution", "CastShadow" ]
+				"AllowList": [ "PivotOffset", "Layers", "ActorGuid", "Tags", "DefaultPhysMaterial", "LandscapeMaterial", "LandscapeHoleMaterial", "LandscapeComponentResolution", "LandscapeComponentCount", "LandscapeComponentSubsections", "LandscapeResolution", "LandscapeCount", "TotalLandscapeComponentCount", "LandscapeOverallResolution", "CastShadow", "HLODTextureSizePolicy", "HLODTextureSize", "HLODMeshSourceLODPolicy", "HLODMeshSourceLOD" ]
 			},
 			{
 				"Type": "/Script/Engine.PrimitiveComponent",
@@ -2586,11 +2614,15 @@
 			},
 			{
 				"Type": "/Script/Engine.SkeletalMesh",
-				"AllowList": [ "MaterialSlots", "MaterialList", "Material", "Mesh", "Transform", "Miscellaneous", "File Path", "Skeleton", "PositiveBoundsExtension", "NegativeBoundsExtension", "MeshReductionSettings", "PercentTriangles", "MeshBuildSettings", "BoneInfluenceLimit", "SelectLOD", "ScreenSize", "MinLOD", "QualityLevelMinLOD", "LODForCollision", "SkeletalMeshSectionListNameLOD_0", "SkeletalMeshSectionListNameLOD_1", "SkeletalMeshSectionListNameLOD_2", "SkeletalMeshSectionListNameLOD_3", "SkeletalMeshSectionListNameLOD_4", "SkeletalMeshSectionListNameLOD_5", "SkeletalMeshSectionListNameLOD_6", "SkeletalMeshSectionListNameLOD_7", "SkeletalMeshOptimizationSettings", "LODGroup", "LODImport", "QualityLevelMinLOD", "AutoComputeLOD", "NumberOfLODs", "ApplyChanges", "LODButtons", "DefaultAnimatingRig", "PhysicsAsset", "LODSettings", "LodSettingsAsset" ]
+				"AllowList": [ "MaterialSlots", "MaterialList", "Material", "Mesh", "Transform", "Miscellaneous", "File Path", "Skeleton", "PositiveBoundsExtension", "NegativeBoundsExtension", "MeshReductionSettings", "PercentTriangles", "MeshBuildSettings", "BoneInfluenceLimit", "SelectLOD", "ScreenSize", "MinLOD", "QualityLevelMinLOD", "LODForCollision", "SkeletalMeshSectionListNameLOD_0", "SkeletalMeshSectionListNameLOD_1", "SkeletalMeshSectionListNameLOD_2", "SkeletalMeshSectionListNameLOD_3", "SkeletalMeshSectionListNameLOD_4", "SkeletalMeshSectionListNameLOD_5", "SkeletalMeshSectionListNameLOD_6", "SkeletalMeshSectionListNameLOD_7", "SkeletalMeshOptimizationSettings", "LODGroup", "LODImport", "QualityLevelMinLOD", "AutoComputeLOD", "NumberOfLODs", "ApplyChanges", "LODButtons", "DefaultAnimatingRig", "PhysicsAsset", "LODSettings", "LodSettingsAsset", "LOD Info" ]
 			},
 			{
 				"Type": "/Script/Engine.SkeletalMeshLODSettings",
 				"DenyList": [ "DisableBelowMinLodStripping", "bOverrideLODStreamingSettings", "bSupportLODStreaming", "MaxNumStreamedLODs", "MaxNumOptionalLODs" ]
+			},
+			{
+				"Type": "/Script/Engine.SkeletalMeshLODInfo",
+				"AllowList": [ "ScreenSize", "LODHysteresis", "BonesToPrioritize", "SectionsToPrioritize", "WeightOfPrioritization", "MorphTargetPositionErrorTolerance", "BonesToRemove" ]
 			},
 			{
 				"Type": "/Script/Engine.SkeletalMeshLODGroupSettings",
@@ -3042,7 +3074,7 @@
 			},
 			{
 				"Type": "/Script/ValkyrieEditor.ValkyrieEditorConfig",
-				"AllowList": [ "DefaultProjectName", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "bAssignProjectVersePathAutomatically", "bModalProjectBrowser", "ReferencedContentCacheSizeGB", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "bEnableIterativeValidation", "bLoadAssetsForValidation", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "EnabledPermissions", "EffectivePermissions", "EntitledPermissions" ]
+				"AllowList": [ "DefaultProjectName", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "bAssignProjectVersePathAutomatically", "bModuleIdNamedPlugins", "bModalProjectBrowser", "ReferencedContentCacheSizeGB", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "bEnableIterativeValidation", "bLoadAssetsForValidation", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "EnabledPermissions", "EffectivePermissions", "EntitledPermissions" ]
 			},
 			{
 				"Type": "/Script/CinematicCamera.CineCameraActor",
@@ -3257,11 +3289,6 @@
 				"DenyList": [ "SelectedAI" ]
 			},
 			{
-				"Type": "/LimeAISpawnerGuard/SpawnDefinitions/Types/CharacterType_LimeGuard.CharacterType_LimeGuard_C",
-				"AllowList": [ "DisplayName" ],
-				"DenyList": [ "SelectedAI" ]
-			},
-			{
 				"Type": "/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Awareness.CharacterModifier_Awareness_C",
 				"bAllowListAllProperties": true,
 				"bAllowListAllSubclassProperties": true
@@ -3356,60 +3383,6 @@
 			{
 				"Type": "/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_WildlifeVerseBehavior.CharacterModifier_WildlifeVerseBehavior_C",
 				"AllowList": [ "NPCBehaviorScript"]
-			},
-						{
-				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimeAwareness.CharacterModifier_LimeAwareness_C",
-				"bAllowListAllProperties": true,
-				"bAllowListAllSubclassProperties": true
-			},
-			{
-				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimeEffects.CharacterModifier_LimeEffects_C",
-				"bAllowListAllProperties": false,
-				"bAllowListAllSubclassProperties": false,
-				"AllowList": [ "SpawnEffect", "DeathEffect" ]
-			},
-			{
-				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimeHealth.CharacterModifier_LimeHealth_C",
-				"bAllowListAllProperties": true,
-				"bAllowListAllSubclassProperties": true
-			},
-			{
-				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimeMovement.CharacterModifier_LimeMovement_C",
-				"bAllowListAllProperties": true,
-				"bAllowListAllSubclassProperties": true
-			},
-			{
-				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimeGuardBehavior.CharacterModifier_LimeGuardBehavior_C",
-				"DenyList": [ "bKeepDefaultBehavior", "bCanUseDiving", "bCanUseGliding", "bCanUseZiplines", "bCanReviveTeammates" ],
-				"bAllowListAllProperties": true
-			},
-			{
-				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimeGuardVerseBehavior.CharacterModifier_LimeGuardVerseBehavior_C",
-				"DenyList": [ "bKeepDefaultBehavior", "bCanUseDiving", "bCanUseGliding", "bCanUseZiplines", "bCanReviveTeammates" ],
-				"bAllowListAllProperties": true
-			},
-			{
-				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimeGuardInventory.CharacterModifier_LimeGuardInventory_C",
-				"DenyList": [ "SupportedItemTags" ],
-				"bAllowListAllProperties": true
-			},
-			{
-				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimePatrolPath.CharacterModifier_LimePatrolPath_C",
-				"AllowList": [ "PatrolPathGroup", "ChangePatrolPathTarget", "ChangePatrolPathTimer" ]
-			},
-			{
-				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimeGuardPerception.CharacterModifier_LimeGuardPerception_C",
-				"AllowList": [ "bOverrideSightSettings", "SightPerceptionSettings", "bOverrideHearingSettings", "HearingPerceptionSettings"]
-			},
-			{
-				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimeTeam.CharacterModifier_LimeTeam_C",
-				"bAllowListAllProperties": true,
-				"bAllowListAllSubclassProperties": true
-			},
-			{
-				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimeUI.CharacterModifier_LimeUI_C",
-				"bAllowListAllProperties": true,
-				"bAllowListAllSubclassProperties": true
 			},
 			{
 				"Type": "/Script/DelMarTrackRuntime.DelMarTrack",
