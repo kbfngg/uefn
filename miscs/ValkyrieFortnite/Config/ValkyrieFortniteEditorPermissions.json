@@ -1,4 +1,7 @@
 {
+	"_comment_READMEFIRST": "*** Please turn off 'Automatic Formatting' and 'Format on Paste' for JSON files (Text Editor > JSON > Advanced) to avoid your IDE reformatting the file ***",
+	"_comment_READMESECOND": "*** Don't forget to diff the file (with all whitespace diffs turned on) in Perforce before submitting ***",
+
 	"bEnableAccessToLegacyContent": false,
 	"bEnableAccessToUnreleasedContent": false,
 
@@ -68,6 +71,7 @@
 			"/Script/CoreUObject.Vector",
 			"/Script/CoreUObject.Vector2D",
 			"/Script/CoreUObject.Vector4",
+			"/Script/RigVM.RigVMInstructionSetExecuteState",
 			"/Script/ControlRig.RigElementKey",
 			"/Script/ControlRig.RigElementKeyCollection",
 			"/Script/ControlRig.RigControlLimitEnabled",
@@ -172,6 +176,8 @@
 			"FAnimTimelineTrack_Curve",
 			"FAnimTimelineTrack_FloatCurve",
 			"FAnimTimelineTrack_FloatCurveWithDisplayName",
+			"FAnimTimelineTrack_Notifies",
+			"FAnimTimelineTrack_NotifiesPanel",
 			"FAnimTimelineTrack_CompositeRoot",
 			"FAnimTimelineTrack_CompositePanel"
 		],
@@ -179,9 +185,9 @@
 	},
 	"_comment_ValkyrieAudioSettings": "Properties related to Audio including SoundWaves, SoundCues, Metasounds, etc.",
 	"ValkyrieAudioSettings": {
-		"MaxSoundWaveImportLengthSeconds": 300,
+		"MaxSoundWaveImportLengthSeconds": 900,
 		"bEnableLoadingBehaviorForceInline": false
-		
+
 	},
 	"_comment_ValkyrieUMGSettings": "Properties related to UMG, including the UMG editor and MVVM framework",
 	"ValkyrieUMGSettings": {
@@ -216,7 +222,7 @@
 		],
 		"AllowedMVVMConversionClass": [
 			"/Script/CRD_ModalDialogUI.CreativeModalDialogAllowedConversionFunction",
-			"/Script/VerseFortniteUI.VerseFortniteUIAllowedConversionLibrary"
+			"/Script/VerseFortniteUI.VerseFortniteUIAllowedConversionLibrary",
 		]
 	},
 	"_comment_ValkyrieEditorUtilitySettings": "Properties related to EditorUtility, affecting top level Utilities menu (TODO) & scripted actions. Widgets must also be added to LevelEditor tab allowlist.",
@@ -410,6 +416,7 @@
 			"/Script/Niagara.NiagaraSystem":					{ "Rules": ["View","Create","Public"] },
 			"/Script/PhysicsCore.PhysicalMaterial":				{ "Rules": ["View"] },
 			"/Script/Solaris.VerseClass":						{ "Rules": ["View"] },
+			"/Script/TakesCore.TakePreset":				{ "Rules": ["View","Create"] },
 			"/Script/UMG.WidgetBlueprintGeneratedClass":		{ "Rules": ["View","Create"] },
 			"/Script/UMGEditor.WidgetBlueprint":				{ "Rules": ["View","Create"] }
 		},
@@ -532,10 +539,38 @@
 			"/Game/Creative/Devices/LockDevice/BP_InteractVisualizationComponent.BP_InteractVisualizationComponent_C":	{  },
 			"/Game/Creative/Devices/LockDevice/BP_KeyLockComponent.BP_KeyLockComponent_C":								{  },
 			"/Game/Creative/Devices/MapMarker/CreativeMapMarkerComponent.CreativeMapMarkerComponent_C":					{  },
-			"/Game/Creative/Devices/Quests/MVVM_UEFN_Tracker.MVVM_UEFN_Tracker_C":										{  },
+			"/Game/Creative/Devices/Quests/MVVM_UEFN_Tracker.MVVM_UEFN_Tracker_C":										{ "Visible": true },
 			"/Game/Creative/Devices/Team_Selector/Components/Creative_TeamSelection_Component.Creative_TeamSelection_Component_C":{  },
 			"/Game/Creative/Devices/VolumeMutator/GE_Creative_MutatorSpeedMinZero.GE_Creative_MutatorSpeedMinZero_C":	{  },
-			"/Game/Creative/Items/Atmospheric_Particles/CP_P_Atmospheric_Parent.CP_P_Atmospheric_Parent_C":				{  },
+			"/Game/Creative/Items/Atmospheric_Particles/CP_P_Atmospheric_Parent.CP_P_Atmospheric_Parent_C": {},
+			"/Game/Creative/PostProcess/PP_70sPrint.PP_70sPrint_C":														{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_ActionLines.PP_ActionLines_C":												{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_CCTV.PP_CCTV_C":																{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_Comic.PP_Comic_C":															{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_Crazy.PP_Crazy_C":															{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_Dark.PP_Dark_C":																{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_Desolate.PP_Desolate_C":														{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_FilmNoir.PP_FilmNoir_C":														{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_FilmWarm.PP_FilmWarm_C":														{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_Halftone.PP_Halftone_C":														{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_HappyPlace.PP_HappyPlace_C":													{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_Heatwave.PP_Heatwave_C":														{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_HorrorMovie.PP_HorrorMovie_C":												{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_LowExposure.PP_LowExposure_C":												{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_NeoComic.PP_NeoComic_C":														{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_NeonParty.PP_NeonParty_C":													{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_NightVision.PP_NightVision_C":												{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_Oak.PP_Oak_C":																{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_OldCartoon.PP_OldCartoon_C":													{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_Pixelizer.PP_Pixelizer_C":													{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_RadialBlur.PP_RadialBlur_C":													{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_Red.PP_Red_C":																{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_Retro.PP_Retro_C":															{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_Sepia.PP_Sepia_C":															{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_SimpleBlurSharpen.PP_SimpleBlurSharpen_C":									{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_Spooky.PP_Spooky_C":															{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_VHS_Filter.PP_VHS_Filter_C":													{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_VignetteMaskedColored.PP_VignetteMaskedColored_C":							{ "Visible": true },
 			"/Game/Creative/Sets/GrayBox/Blueprints/Balconies/GrayBox_Balcony_D.GrayBox_Balcony_D_C":					{ "Visible": true },
 			"/Game/Creative/Sets/GrayBox/Blueprints/Balconies/GrayBox_Balcony_D_Rail.GrayBox_Balcony_D_Rail_C":			{ "Visible": true },
 			"/Game/Creative/Sets/GrayBox/Blueprints/Balconies/GrayBox_Balcony_L.GrayBox_Balcony_L_C":					{ "Visible": true },
@@ -776,6 +811,7 @@
 			"/Script/Engine.AnimCurveMetaData":									{  },
 			"/Script/Engine.AnimDataModel":										{  },
 			"/Script/Engine.AnimSequence":										{ "Visible": true },
+			"/Script/Engine.AnimSyncMarker":									{ "Visible": true },
 			"/Script/Engine.ArrowComponent":									{ "Visible": true },
 			"/Script/Engine.AssetImportData":									{  },
 			"/Script/Engine.AudioBus":																					{  },
@@ -824,39 +860,282 @@
 			"/Script/Engine.LocationVolume":									{  },
 			"/Script/Engine.MaterialEditorOnlyData":							{  },
 			"/Script/Engine.MaterialBillboardComponent":						{  },
-			"/Script/Engine.MaterialExpression":								{ "Visible": true,	"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionBounds":							{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionCustom":							{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionNeuralNetworkInput":				{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionNeuralNetworkOutput":				{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionMaterialAttributeLayers":			{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionPathTracingQualitySwitch":		{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionPathTracingRayTypeSwitch":		{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionSparseVolumeTextureSample":		{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionSubstrateBSDF":					{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionSubstrateUtilityBase":			{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionPathTracingBufferTexture":		{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionSparseVolumeTextureBase":			{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionSparseVolumeTextureObject":		{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/JunoProceduralLandscape.MaterialExpressionGetGlobalKey_Juno":					{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/JunoProceduralLandscape.MaterialExpressionGetGlobalKeyScaled_Juno":			{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/JunoProceduralLandscape.MaterialExpressionGetTileMin_Juno":					{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/JunoProceduralLandscape.MaterialExpressionGetUV_Juno":							{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/JunoProceduralLandscape.MaterialExpressionIsPreviousTileLocation_Juno":		{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/JunoProceduralLandscape.MaterialExpressionJunoLandscapeCustomMaterialGetUVOffset":		{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/JunoProceduralLandscape.MaterialExpressionJunoLandscapeCustomMaterialSampleParentMIP":	{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/JunoProceduralLandscape.MaterialExpressionJunoLandscapeCustomOutput":			{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/JunoProceduralLandscape.MaterialExpressionJunoLandscapeCustomOutputProxy":		{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/JunoProceduralLandscape.MaterialExpressionJunoLandscapeDynamicHeightSample":	{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/JunoProceduralLandscape.MaterialExpressionJunoLandscapeDynamicLayerSample":	{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/JunoProceduralLandscape.MaterialExpressionLandscapeOutputPass":				{ "Deny": true,		"Subclasses": "NativeOnly" },
-			"/Script/JunoProceduralLandscape.MaterialExpressionLandscapeOutputPassPreInit":			{ "Deny": true,		"Subclasses": "NativeOnly" },
+			"/Script/Paper2D.MaterialExpressionSpriteTextureSampler":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionAbs":												{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionActorPositionWS":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionAdd":												{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionAntialiasedTextureMask":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionAppendVector":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionArccosine":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionArccosineFast":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionArcsine":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionArcsineFast":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionArctangent":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionArctangent2":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionArctangent2Fast":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionArctangentFast":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionAtmosphericFogColor":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionAtmosphericLightColor":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionAtmosphericLightVector":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionLess":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionBlackBody":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionBlendMaterialAttributes":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionBreakMaterialAttributes":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionBumpOffset":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionCameraPositionWS":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionCameraVectorWS":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionCeil":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionClamp":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionCloudSampleAttribute":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionCollectionParameter":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionComment":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionComponentMask":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionComposite":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionConstant":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionConstant2Vector":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionConstant3Vector":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionConstant4Vector":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionConstantBiasScale":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionCosine":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionCrossProduct":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionAbsorptionMediumMaterialOutput":					{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionBentNormalCustomOutput":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionClearCoatNormalCustomOutput":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSubsurfaceMediumMaterialOutput":					{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionRuntimeVirtualTextureOutput":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDataDrivenShaderPlatformInfoSwitch":				{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDBufferTexture":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDDX":												{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDDY":												{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDecalColor":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDecalDerivative":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDecalLifetimeOpacity":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDecalMipmapLevel":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDeltaTime":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDepthFade":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDepthOfFieldFunction":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDeriveNormalZ":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDesaturation":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDistance":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDistanceCullFade":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDistanceFieldApproxAO":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDistanceFieldGradient":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDistanceFieldsRenderingSwitch":					{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDistanceToNearestSurface":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDivide":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDotProduct":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionDynamicParameter":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionExecBegin":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionExecEnd":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionExponential":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionExponential2":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionEyeAdaptation":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionEyeAdaptationInverse":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionFeatureLevelSwitch":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionFloor":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionFmod":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionFontSample":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionForLoop":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionFrac":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionFresnel":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionFunctionInput":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionFunctionOutput":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionConstantDouble":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionGetLocal":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionGetMaterialAttributes":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionGIReplace":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionHairAttributes":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionHairColor":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionHsvToRgb":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionIf":												{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionIfThenElse":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionInverseLinearInterpolate":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionIsOrthographic":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionLength":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionLightmapUVs":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionLightmassReplace":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionLightVector":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionLinearInterpolate":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionLogarithm":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionLogarithm10":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionLogarithm2":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionMakeMaterialAttributes":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionMapARPassthroughCameraUV":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionMaterialFunctionCall":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionMaterialProxyReplace":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionMax":												{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionMin":												{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionMultiply":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionNaniteReplace":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionNoise":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionNormalize":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionObjectBounds":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionObjectLocalBounds":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionObjectOrientation":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionObjectPositionWS":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionObjectRadius":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionOneMinus":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionPanner":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionParameter":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionParticleColor":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionParticleDirection":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionParticleMacroUV":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionParticleMotionBlurFade":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionParticlePositionWS":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionParticleRadius":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionParticleRandom":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionParticleRelativeTime":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionParticleSize":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionParticleSpeed":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionParticleSpriteRotation":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionParticleSubUV":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionParticleSubUVProperties":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionPerInstanceCustomData":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionPerInstanceCustomData3Vector":					{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionPerInstanceFadeAmount":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionPerInstanceRandom":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionPinBase":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionPixelDepth":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionPixelNormalWS":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionPower":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionPrecomputedAOMask":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionPreSkinnedLocalBounds":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionPreSkinnedNormal":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionPreSkinnedPosition":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionPreviousFrameSwitch":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionQualitySwitch":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionRayTracingQualitySwitch":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionReflectionCapturePassSwitch":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionReflectionVectorWS":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionRequiredSamplersSwitch":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionRerouteBase":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionRgbToHsv":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionRotateAboutAxis":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionRotator":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionRound":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionRuntimeVirtualTextureReplace":					{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionRuntimeVirtualTextureSample":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSamplePhysicsVectorField":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSamplePhysicsScalarField":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSamplePhysicsIntegerField":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSaturate":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSceneColor":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSceneDepth":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSceneDepthWithoutWater":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSceneTexelSize":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSceneTexture":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionScreenPosition":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSetLocal":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSetMaterialAttributes":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionShaderStageSwitch":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionShadingModel":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionShadingPathSwitch":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionShadowReplace":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSign":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSine":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSingleLayerWaterMaterialOutput":					{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSkyAtmosphereLightDirection":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSkyAtmosphereLightIlluminance":					{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSkyAtmosphereLightIlluminanceOnGround":			{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSkyAtmosphereLightDiskLuminance":					{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSkyAtmosphereAerialPerspective":					{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSkyAtmosphereDistantLightScatteredLuminance":		{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSkyAtmosphereViewLuminance":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSkyLightEnvMapSample":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSmoothStep":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSobol":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSpeedTree":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSphereMask":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSphericalParticleOpacity":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSquareRoot":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSRGBColorToWorkingColorSpace":					{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionStaticBool":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionStaticSwitch":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionStep":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSubtract":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionSwitch":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTangent":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTangentOutput":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTemporalSobol":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTextureCoordinate":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTextureObject":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTextureObjectParameter":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTextureProperty":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTextureSample":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTextureSampleParameter":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTextureSampleParameter2D":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTextureSampleParameter2DArray":					{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTextureSampleParameterCube":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTextureSampleParameterCubeArray":					{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTextureSampleParameterSubUV":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTextureSampleParameterVolume":					{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionThinTranslucentMaterialOutput":					{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTime":											{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTransform":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTransformPosition":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTruncate":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTruncateLWC":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionTwoSidedSign":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionVectorNoise":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionVertexColor":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionVertexInterpolator":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionVertexNormalWS":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionVertexTangentWS":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionViewProperty":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionViewSize":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionVirtualTextureFeatureSwitch":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionVolumetricAdvancedMaterialInput":					{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionVolumetricCloudEmptySpaceSkippingInput":			{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionVolumetricAdvancedMaterialOutput":				{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionVolumetricCloudEmptySpaceSkippingOutput":			{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionWhileLoop":										{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.MaterialExpressionWorldPosition":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXAppend3Vector":				{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXAppend4Vector":				{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXBurn":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXDifference":					{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXDisjointOver":				{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXDodge":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXFractal3D":					{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXIn":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXLuminance":					{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXMask":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXMatte":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXMinus":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXOut":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXOver":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXOverlay":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXPlace2D":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXPlus":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXPremult":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXRamp4":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXRampLeftRight":				{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXRampTopBottom":				{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXRemap":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXRotate2D":					{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXScreen":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXSplitLeftRight":				{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXSplitTopBottom":				{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXUnpremult":					{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXSwizzle":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/InterchangeImport.MaterialExpressionMaterialXTextureSampleParameterBlur":	{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Landscape.MaterialExpressionLandscapeGrassOutput":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Landscape.MaterialExpressionLandscapeLayerBlend":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Landscape.MaterialExpressionLandscapeLayerCoords":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Landscape.MaterialExpressionLandscapeLayerSample":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Landscape.MaterialExpressionLandscapeLayerSwitch":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Landscape.MaterialExpressionLandscapeLayerWeight":							{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Landscape.MaterialExpressionLandscapePhysicalMaterialOutput":				{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Landscape.MaterialExpressionLandscapeVisibilityMask":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/RenderTrace.MaterialExpressionPhysicalMaterialOutput":						{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/VirtualHeightfieldMesh.MaterialExpressionHeightfieldMinMaxTexture":		{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialFunctionEditorOnlyData":					{  },
 			"/Script/Engine.MaterialInstanceDynamic":							{  },
 			"/Script/Engine.MaterialInstanceEditorOnlyData":					{  },
 			"/Script/Engine.Model":												{  },
 			"/Script/Engine.MorphTarget":										{  },
 			"/Script/Engine.ParticleSystemComponent":							{  },
+			"/Script/Engine.PhysicsConstraintTemplate":							{  },
 			"/Script/Engine.PointLight":										{ "Visible": true },
 			"/Script/Engine.PointLightComponent":								{ "Visible": true },
 			"/Script/Engine.PointerToUberGraphFrame":							{  },
@@ -878,6 +1157,7 @@
 			"/Script/Engine.SkeletalMeshEditorData":							{  },
 			"/Script/Engine.SkeletalMeshLODSettings":							{ "Visible": true },
 			"/Script/Engine.SkeletalMeshSocket":								{  },
+			"/Script/Engine.SkeletalMeshDescriptionBulkData":					{  },
 			"/Script/Engine.SkyAtmosphere":										{ "Visible": true },
 			"/Script/Engine.SkyAtmosphereComponent":							{ "Visible": true },
 			"/Script/Engine.SkyLight":											{ "Visible": true },
@@ -1073,6 +1353,8 @@
 			"/Script/GameplayTags.GameplayTag":									{  },
 			"/Script/GeometryCacheTracks.MovieSceneGeometryCacheSection":		{  },
 			"/Script/GeometryCacheTracks.MovieSceneGeometryCacheTrack":			{ "Visible": true },
+			"/Script/GeometryCollectionEngine.GeometryCollectionISMPoolActor": {  },
+			"/Script/GeometryCollectionEngine.GeometryCollectionISMPoolComponent": {  },
 			"/Script/GeometryCollectionTracks.MovieSceneGeometryCollectionSection":{  },
 			"/Script/GeometryCollectionTracks.MovieSceneGeometryCollectionTrack":{ "Visible": true },
 			"/Script/GeometryFramework.DynamicMesh":							{  },
@@ -1119,24 +1401,6 @@
 			"/Script/InterchangePipelines.InterchangeGenericMaterialPipeline":	{  },
 			"/Script/InterchangePipelines.InterchangeGenericMeshPipeline":		{  },
 			"/Script/InterchangePipelines.InterchangeGenericTexturePipeline":	{  },
-			"/Script/ItemizationCoreRuntime.InventoryCollection":				{  },
-			"/Script/ItemizationCoreRuntime.InventoryDefinition":				{  },
-			"/Script/ItemizationCoreRuntime.InventorySetupData":				{  },
-			"/Script/ItemizationCoreRuntime.ItemAbilityCooldown":				{  },
-			"/Script/ItemizationCoreRuntime.ItemAbilityConfigurationAsset":		{  },
-			"/Script/ItemizationCoreRuntime.ItemAbilityCost":					{  },
-			"/Script/ItemizationCoreRuntime.ItemAttachmentDefinition":			{  },
-			"/Script/ItemizationCoreRuntime.ItemComponentBase":					{  },
-			"/Script/ItemizationCoreRuntime.ItemDefinition":					{  },
-			"/Script/ItemizationCoreRuntime.ItemInputAction":					{  },
-			"/Script/ItemizationCoreRuntime.ItemInputMappingContext":			{  },
-			"/Script/ItemizationCoreRuntime.ItemOwnerPoseAsset":				{  },
-			"/Script/ItemizationCoreRuntime.ItemRarity":						{  },
-			"/Script/ItemizationCoreRuntime.ItemRequirements":					{  },
-			"/Script/ItemizationCoreRuntime.ItemType":							{  },
-			"/Script/ItemizationCoreUI.InventoryCollectionViewModel":			{  },
-			"/Script/ItemizationCoreUI.InventoryItemEntryViewModel":			{  },
-			"/Script/ItemizationCoreUI.InventoryViewModel":						{  },
 			"/Script/Landscape.ControlPointMeshActor":							{  },
 			"/Script/Landscape.ControlPointMeshComponent":						{  },
 			"/Script/Landscape.Landscape":										{  },
@@ -1397,6 +1661,7 @@
 			"/Script/RigVM.RigVMExecuteContext":								{  },
 			"/Script/RigVM.RigVMMemoryStorage":									{  },
 			"/Script/RigVM.RigVMUnknownType":									{  },
+			"/Script/RigVM.RigVMInstructionSetExecuteState":					{  },
 			"/Script/RigVMDeveloper.RigVMFunctionLibrary":						{  },
 			"/Script/RigVMDeveloper.RigVMGraph":								{  },
 			"/Script/RigVMDeveloper.RigVMInjectionInfo":						{  },
@@ -1544,6 +1809,9 @@
 			"AssetEditor.MaterialInstanceEditor.ToolBar": {
 				"AllowList": [ "SaveAsset", "FindInContentBrowser", "Apply", "Hierarchy", "TogglePlatformStats" ]
 			},
+			"AssetEditor.MetaHumanPerformanceEditor.ToolBar": {
+				"DenyList": [ "ExportLevelSequence" ]
+			},
 			"AssetEditor.PhysicsAssetEditor.MainMenu.Edit": {
 				"AllowList": [ "Undo", "Redo", "UndoHistory", "ShowSelected", "HideSelected", "ToggleShowOnlySelected", "ShowAll", "HideAll", "DeselectAll", "ToggleShowSelected", "SelectAllBodies", "SelectKinematicBodies", "ToggleSelectionType", "SelectShapesQueryOnly", "SelectShapesQueryAndProbe", "SelectShapesProbeOnly", "EditorPreferencesMenu", "ProjectSettingsMenu" ],
 				"AllowExtenders": true
@@ -1553,7 +1821,7 @@
 				"AllowExtenders": true
 			},
 			"AssetEditor.SkeletalMeshEditor.ToolBar": {
-				"AllowList": [ "SaveAsset", "FindInContentBrowser", "ImportMesh", "PreviewMesh", "CreateAsset", "MakeStaticMesh", "PreviewAnimation", "ReimportMesh" ],
+				"AllowList": [ "SaveAsset", "FindInContentBrowser", "ImportMesh", "PreviewMesh", "CreateAsset", "MakeStaticMesh", "PreviewAnimation", "ReimportMesh", "ToggleEditingToolsMode" ],
 				"AllowExtenders": true
 			},
 			"AssetEditor.SkeletonEditor.ToolBar": {
@@ -1618,7 +1886,7 @@
 				"DenyList": [ "ShowCppClasses", "ShowDevelopersContent", "ShowEngineFolder", "ShowPluginFolder", "OrganizeFolders", "PathViewFilters" ]
 			},
 			"ContentBrowser.FolderContextMenu": {
-				"DenyList": [ "ValidateAssetsPath", "ViewSizeMap", "ViewAssetAudit", "ViewShaderCookStatistics" ]
+				"DenyList": [ "ValidateAssetsPath", "ViewSizeMap", "ViewAssetAudit", "ViewShaderCookStatistics", "Plugin" ]
 			},
 			"DaySequence.ViewportToolbar": {
 				"AllowList": [ "DaySequencePreviewTime" ]
@@ -1648,7 +1916,7 @@
 				"DenyList": [ "RectLight", "PlayerStart", "Trigger", "RuntimeVirtualTextureVolume", "CameraActor" ]
 			},
 			"LevelEditor.LevelEditorToolBar.AddQuickMenu": {
-				"AllowList": [ "Basic", "Lights", "Shapes", "Cinematic", "Volumes", "Visual", "OpenPlaceActors" ]
+				"AllowList": [ "Basic", "Lights", "Shapes", "Cinematic", "Volumes", "Visual", "OpenPlaceActors"]
 			},
 			"LevelEditor.LevelEditorToolBar.AddQuickMenu.Basic": {
 				"AllowList": [ "Actor", "PointLight" ]
@@ -1684,7 +1952,7 @@
 				"AllowList": [ "ToggleRealTime", "DisableRealtimeOverride", "DisableRealtimeOverrideSeparator", "ToggleStats", "ToggleFPS", "ToggleViewportToolbar", "FOVAngle", "FarViewPlane", "ScreenPercentage", "ToggleCinematicPreview", "ToggleGameView", "ToggleImmersive", "Bookmark", "Configs" ]
 			},
 			"LevelEditor.LevelViewportToolbar.Show": {
-				"AllowList": [ "UseDefaultShowFlags", "Common_AntiAliasing", "Common_Atmosphere", "Common_BSP", "Common_Collision", "Common_Decals", "Common_Fog", "Common_Grid", "Common_Landscape", "Common_MediaPlanes", "Common_Navigation", "Common_Particles", "Common_SkeletalMeshes", "Common_StaticMeshes", "Common_Translucency" ]
+				"AllowList": [ "UseDefaultShowFlags", "Common_AntiAliasing", "Common_Atmosphere", "Common_BSP", "Common_Collision", "Common_Decals", "Common_Fog", "Common_Grid", "Common_Landscape", "Common_MediaPlanes", "Common_Navigation", "Common_Particles", "Common_SkeletalMeshes", "Common_StaticMeshes", "Common_Translucency", "ShowHLODsMenu" ]
 			},
 			"LevelEditor.MainMenu": {
 				"AllowList": [ "File", "Edit", "Window", "Tools", "Verse", "Build", "Select", "Help", "Utility" ]
@@ -1705,13 +1973,13 @@
 				"AllowList": [ "SelectAll", "SelectNone", "InvertSelection", "SelectAllActorsOfSameClass", "FocusViewportToSelection", "SelectImmediateChildren", "SelectAllDescendants", "SelectRelevantLights", "SelectAllLights", "SelectStationaryLightsExceedingOverlap", "SelectStaticMeshesOfSameClass", "SelectStaticMeshesAllClasses", "SelectSkeletalMeshesOfSameClass", "SelectSkeletalMeshesAllClasses", "SelectAllWithSameMaterial" ]
 			},
 			"LevelEditor.MainMenu.Tools": {
-				"AllowList": [ "ViewChangelists", "SubmitContent", "SyncContent", "ConnectToSourceControl", "ChangeSourceControlSettings", "ValkyrieProjectSize" ]
+				"AllowList": [ "ViewChangelists", "SubmitContent", "SyncContent", "ConnectToSourceControl", "ChangeSourceControlSettings", "ValkyrieProjectSize"]
 			},
 			"LevelEditor.MainMenu.Verse": {
 				"AllowList": [ "VisualVerseTab", "VerseLog", "OpenVSCode", "BuildVerse" ]
 			},
 			"LevelEditor.MainMenu.Window": {
-				"AllowList": [ "LoadLayout", "OverrideLayout", "RemoveLayout", "FullscreenSeparator", "ToggleFullscreen", "EnableMenuEditing", "OpenEmporiumTab", "ToggleValkyrieMode", "ToggleValkyrieRestrictiveMode" ]
+				"AllowList": [ "LoadLayout", "OverrideLayout", "RemoveLayout", "FullscreenSeparator", "ToggleFullscreen", "EnableMenuEditing", "OpenFabTab", "ToggleValkyrieMode", "ToggleValkyrieRestrictiveMode" ]
 			},
 			"LevelEditor.StatusBar.ToolBar": {
 				"AllowList": [ "SourceControl", "ActivityTrackerStatus" ]
@@ -1746,6 +2014,10 @@
 				"AllowList": [ "MeshRenderingMode_Solid", "MeshRenderingMode_Solid", "MeshRenderingMode_None" ],
 				"AllowExtenders": true
 			},
+			"Persona.AnimNotifyTrackContextMenu": {
+				"AllowList": [ "AnimNotifyContextMenuFrameWidget", "AnimNotifyContextMenuTimeWidget", "AddSyncMarker", "CopyNotifies", "PasteNotifies", "DeleteNotify", "PasteAtOriginalTime", "PasteMultipleRelative"],
+				"AllowExtenders": false
+			},
 			"Sequencer.MainToolBar": {
 				"AllowList": [ "Save", "FindInContentBrowser", "CreateCamera", "Actions", "ViewOptions", "PlaybackOptions", "KeyGroup", "AutoChange", "ToggleAutoKeyEnabled", "AllowEditsMode", "ToggleIsSnapEnabled", "SnapOptions", "PlayRate", "ToggleShowCurveEditor" ]
 			},
@@ -1759,7 +2031,7 @@
 				"DenyList": [ "ChangeSettings" ]
 			},
 			"UnrealEd.ViewportToolbar.View": {
-				"AllowList": [ "LitMode", "UnlitMode", "WireframeMode", "DetailLightingMode", "LightingOnlyMode", "ReflectionOverrideMode", "CollisionPawn", "CollisionVisibility", "VisualizeBufferViewMode", "VisualizeNaniteViewMode", "VisualizeLumenViewMode", "VisualizeVirtualShadowMapViewMode" ]
+				"AllowList": [ "LitMode", "UnlitMode", "WireframeMode", "DetailLightingMode", "LightingOnlyMode", "ReflectionOverrideMode", "CollisionPawn", "CollisionVisibility", "VisualizeBufferViewMode", "VisualizeNaniteViewMode", "VisualizeLumenViewMode", "VisualizeVirtualShadowMapViewMode", "ActorColoration" ]
 			}
 		},
 		"AllowedTabs": {
@@ -1826,7 +2098,8 @@
 					"UndoHistory",
 					"ValkyrieProjectSettingsEditor",
 					"ValkyrieProjectSize",
-					"VerseExplorerTab"
+					"VerseExplorerTab",
+					"NiagaraDebugger"
 				]
 			},
 			"LevelEditor": {
@@ -1837,6 +2110,9 @@
 					"ContentBrowserTab4",
 					"FabTab",
 					"LevelEditorSceneOutliner",
+					"LevelEditorSceneOutliner2",
+					"LevelEditorSceneOutliner3",
+					"LevelEditorSceneOutliner4",
 					"LevelEditorSelectionDetails",
 					"LevelEditorSelectionDetails2",
 					"LevelEditorSelectionDetails3",
@@ -1873,7 +2149,8 @@
 					"ControlRigDetailsTab",
 					"ControlRigSpacePicker",
 					"SkeinSourceControlConflictResolution",
-					"SkeinSourceControlSnapshotHistory"
+					"SkeinSourceControlSnapshotHistory",
+					"NiagaraDebugger"
 				]
 			},
 			"MaterialInstanceEditor": {
@@ -1925,7 +2202,8 @@
 					"AdvancedPreviewTab",
 					"PersonaSequenceRecorderSettings",
 					"MorphTargetsTab",
-					"AnimCurveMetadataEditorTab"
+					"AnimCurveMetadataEditorTab",
+					"ToolBox"
 				]
 			},
 			"WidgetBlueprintEditor": {
@@ -1945,16 +2223,35 @@
 				"AllowList": [
 					"AssetEditor",
 					"ContentBrowser",
+					"EditorViewport",
 					"EditorViewportClient",
 					"FortniteEditorCommands",
 					"GenericCommands",
+					"LandscapeEditor",
 					"LevelEditor",
 					"LevelEditorModes",
 					"LevelViewport",
 					"MainFrame",
+					"ModelingModeCommands",
+					"ModelingToolsEditMode",
+					"ModelingToolsManagerCommands",
+					"ModelingToolsSculptTool",
+					"ModelingToolsVertexSculptTool",
+					"ModelingToolsMeshGroupPaintTool",
+					"ModelingToolsMeshVertexPaintTool",
+					"ModelingToolsMeshAttributePaintTool",
+					"ModelingToolsTransformTool",
+					"ModelingToolsDrawPolygonTool",
+					"ModelingToolsMeshSelectionTool",
+					"ModelingToolsEditMeshMaterials",
+					"ModelingToolsMeshPlaneCutTool",
+					"ModelingToolsCubeGridTool",
+					"ModelingToolsEditMeshPolygonsTool",
+					"ModelingToolsDrawAndRevolveTool",
 					"SourceControl",
 					"SolarisEditorCommands",
-					"SystemWideCommands"
+					"SystemWideCommands",
+					"UVEditor"
 				]
 			},
 			"AssetEditor": {
@@ -2117,7 +2414,7 @@
 			},
 			{
 				"Type": "/Script/Engine.SkinnedMeshComponent",
-				"AllowList": [ "SkeletalMesh" ]
+				"AllowList": [ "SkeletalMesh"]
 			},
 			{
 				"Type": "/Script/Engine.SkeletalMeshComponent",
@@ -2165,7 +2462,7 @@
 			},
 			{
 				"Type": "/Script/Engine.SkeletalMeshLODGroupSettings",
-				"DenyList": [ "ScreenSize", "LODHysteresis", "BoneFilterActionOption", "BoneList", "BonesToPrioritize", "SectionsToPrioritize", "WeightOfPrioritization", "BakePose" ]
+				"DenyList": [ "LODHysteresis", "BoneFilterActionOption", "BoneList", "BonesToPrioritize", "SectionsToPrioritize", "WeightOfPrioritization", "BakePose" ]
 			},
 			{
 				"Type": "/Script/Engine.SkeletalMeshOptimizationSettings",
@@ -2208,7 +2505,7 @@
 			},
 			{
 				"Type": "/Script/Engine.SkyLightComponent",
-				"AllowList": [ 
+				"AllowList": [
 					"bRealTimeCapture", "SourceType", "Cubemap", "SourceCubemapAngle", "CubemapResolution", "SkyDistanceThreshold", "bLowerHemisphereIsBlack", "LowerHemisphereColor", "bCaptureEmissiveOnly",
 					"bUseAttachParentBound",
 					"DetailMode",
@@ -2217,7 +2514,7 @@
 			},
 			{
 				"Type": "/Script/Engine.SkyAtmosphereComponent",
-				"AllowList": [ 
+				"AllowList": [
 					"TransformMode", "BottomRadius", "GroundAlbedo",
 					"AtmosphereHeight", "MultiScatteringFactor", "TraceSampleCountScale",
 					"RayleighScatteringScale", "RayleighScattering", "RayleighExponentialDistribution",
@@ -2231,7 +2528,7 @@
 			},
 			{
 				"Type": "/Script/Engine.ExponentialHeightFogComponent",
-				"AllowList": [ 
+				"AllowList": [
 					"FogDensity", "FogHeightFalloff", "SecondFogData", "FogInscatteringLuminance", "SkyAtmosphereAmbientContributionColorScale", "FogMaxOpacity", "StartDistance", "FogCutoffDistance",
 					"InscatteringColorCubemap", "InscatteringColorCubemapAngle", "InscatteringTextureTint", "FullyDirectionalInscatteringColorDistance", "NonDirectionalInscatteringColorDistance",
 					"DirectionalInscatteringExponent", "DirectionalInscatteringStartDistance", "DirectionalInscatteringLuminance",
@@ -2381,7 +2678,7 @@
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct" ]
 			},
 			{
-				"Type": "/CreativeCoreDevices/Device_FuelPump_V2.Device_FuelPump_V2_C", 
+				"Type": "/CreativeCoreDevices/Device_FuelPump_V2.Device_FuelPump_V2_C",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct", "ExplosiveDamageTag", "DamageStateParticleSystems","KnockbackAmount" ]
 			},
 			{
@@ -2393,87 +2690,87 @@
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct", "FixedEntranceDirection", "MaxInteractAngle", "InteractBelowPropDistance","SetEntranceRotation","EnterAnimMontage" ]
 			},
 			{
-				"Type": "/CRD_CinematicSequence/Device_CinematicSequence.Device_CinematicSequence_C", 
+				"Type": "/CRD_CinematicSequence/Device_CinematicSequence.Device_CinematicSequence_C",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct", "ExplosiveDamageTag", "DamageStateParticleSystems","KnockbackAmount" ]
 			},
 			{
-				"Type": "/CRD_AnimatedMesh/Device_AnimatedMesh.Device_AnimatedMesh_C", 
+				"Type": "/CRD_AnimatedMesh/Device_AnimatedMesh.Device_AnimatedMesh_C",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct", "ExplosiveDamageTag", "DamageStateParticleSystems","KnockbackAmount" ]
 			},
 			{
-				"Type": "/CRD_MapDevice/Device_MapController.Device_MapController_C", 
+				"Type": "/CRD_MapDevice/Device_MapController.Device_MapController_C",
 				"AllowList": [ "CaptureMapImage" ]
 			},
 			{
-				"Type": "/CreativeCoreDevices/Creative_Powerup_V2.Creative_Powerup_V2_C", 
+				"Type": "/CreativeCoreDevices/Creative_Powerup_V2.Creative_Powerup_V2_C",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct"  ]
 			},
 			{
-				"Type": "/CreativeCoreDevices/Device_ColorChangingTiles_V2.Device_ColorChangingTiles_V2_C", 
+				"Type": "/CreativeCoreDevices/Device_ColorChangingTiles_V2.Device_ColorChangingTiles_V2_C",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct"  ]
 			},
 			{
-				"Type": "/CreativeCoreDevices/Device_AirVent_V2.Device_AirVent_V2_C", 
+				"Type": "/CreativeCoreDevices/Device_AirVent_V2.Device_AirVent_V2_C",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct"  ]
 			},
 			{
-				"Type": "/Script/FortniteGame.BuildingProp_SwitchDevice", 
+				"Type": "/Script/FortniteGame.BuildingProp_SwitchDevice",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct"  ]
 			},
 			{
-				"Type": "/Script/FortniteGame.BuildingProp_CaptureArea", 
+				"Type": "/Script/FortniteGame.BuildingProp_CaptureArea",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct"  ]
 			},
 			{
-				"Type": "/Script/FortniteGame.BuildingProp_CaptureItemSpawner", 
+				"Type": "/Script/FortniteGame.BuildingProp_CaptureItemSpawner",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct"  ]
 			},
 			{
-				"Type": "/Script/FortniteGame.BuildingProp_ClassSelector", 
+				"Type": "/Script/FortniteGame.BuildingProp_ClassSelector",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct"  ]
 			},
 			{
-				 "Type": "/Script/FortniteGame.FortCreativeItemProp", 
+				"Type": "/Script/FortniteGame.FortCreativeItemProp",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct"  ]
 			},
 			{
-				"Type": "/Script/FortniteGame.BuildingProp_LockDevice", 
+				"Type": "/Script/FortniteGame.BuildingProp_LockDevice",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct"  ]
 			},
 			{
-				"Type": "/Script/FortniteGame.FortCreativeLockDevice", 
+				"Type": "/Script/FortniteGame.FortCreativeLockDevice",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct"  ]
 			},
 			{
-				"Type": "/Script/FortniteGame.BuildingProp_CreatureManager", 
+				"Type": "/Script/FortniteGame.BuildingProp_CreatureManager",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct"  ]
 			},
 			{
-				"Type": "/Script/FortniteGame.BuildingProp_CreaturePlacer", 
+				"Type": "/Script/FortniteGame.BuildingProp_CreaturePlacer",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct", "CreativeRiftClass"   ]
 			},
 			{
-				"Type": "/Script/FortniteGame.BuildingProp_DeimosSpawner", 
+				"Type": "/Script/FortniteGame.BuildingProp_DeimosSpawner",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct", "CreativeRiftClass"  ]
 			},
 			{
-				"Type": "/Script/FortniteGame.FortCreativeExplosiveBarrelDevice", 
+				"Type": "/Script/FortniteGame.FortCreativeExplosiveBarrelDevice",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct"  ]
 			},
 			{
-				"Type": "/Script/FortniteGame.BuildingProp_DestructionObject", 
+				"Type": "/Script/FortniteGame.BuildingProp_DestructionObject",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct"  ]
 			},
 			{
-				"Type": "/Script/FortniteGame.FortCreativeRoundSettings", 
+				"Type": "/Script/FortniteGame.FortCreativeRoundSettings",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct"  ]
 			},
 			{
-				"Type": "/Script/FortniteGame.FortCreativeTimerObjective", 
+				"Type": "/Script/FortniteGame.FortCreativeTimerObjective",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct"  ]
 			},
 			{
-				"Type": "/Script/FortniteGame.BuildingProp_VendingMachine", 
+				"Type": "/Script/FortniteGame.BuildingProp_VendingMachine",
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct"  ]
 			},
 			{
@@ -2535,7 +2832,7 @@
 			{
 				"Type": "/CreativeCoreDevices/Device_ExperienceSettings_V2.Device_ExperienceSettings_V2_C",
 				"DenyList": [ "bCanBeDamaged" ]
-			},	
+			},
 			{
 				"Type": "/CRD_ModalDialog/Device_PopUpDialog_V2.Device_PopUpDialog_V2_C",
 				"AllowList": [ "TemplateOverrideClass" ]
@@ -2586,7 +2883,7 @@
 			},
 			{
 				"Type": "/Script/WorldPartitionEditor.WorldPartitionEditorSettings",
-				"AllowList": [ "bEnableLoadingInEditor" ]
+				"AllowList": [ "bEnableLoadingInEditor", "bShowHLODsInEditor", "bShowHLODsOverLoadedRegions", "HLODMinDrawDistance", "HLODMaxDrawDistance" ]
 			},
 			{
 				"Type": "/Script/UnrealEd.EditorPerProjectUserSettings",
@@ -2598,7 +2895,7 @@
 			},
 			{
 				"Type": "/Script/ValkyrieEditor.ValkyrieEditorConfig",
-				"AllowList": [ "DefaultProjectName", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "ReferencedContentCacheSizeGB", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "EnabledPermissions", "EffectivePermissions", "EntitledPermissions" ]
+				"AllowList": [ "DefaultProjectName", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "ReferencedContentCacheSizeGB", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "bEnableIterativeValidation", "bLoadAssetsForValidation", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "EnabledPermissions", "EffectivePermissions", "EntitledPermissions" ]
 			},
 			{
 				"Type": "/Script/CinematicCamera.CineCameraActor",
@@ -2898,6 +3195,26 @@
 			{
 				"Type": "/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_WildlifeVerseBehavior.CharacterModifier_WildlifeVerseBehavior_C",
 				"AllowList": [ "NPCBehaviorScript"]
+			},
+			{
+				"Type": "/Script/DelMarTrackRuntime.DelMarTrack",
+				"AllowList": [ "TrackType", "ShowSplinePointNumbers", "bForceValidOOBTube", "bForceValidTrack" ]
+			},
+			{
+				"Type": "/Script/DelMarTrackRuntime.DelMarTrackBase",
+				"AllowList": [ "TrackPalette_V2", "TrackSplinePointData", "RebuildTrack"]
+			},
+			{
+				"Type": "/Script/DelMarCore.DelMarCheckpoint",
+				"AllowList": [ "bIsFinishLine", "bIsStartingLine", "bIsTimeTrialSectionEnd", "NextCheckpoints", "bIsTeleportEnabled" ]
+			},
+			{
+				"Type": "/ContentHall/Blueprints/BP_DemoDisplay.BP_DemoDisplay_C",
+				"AllowList": [ "Width", "Depth", "Height", "Text Alignment", "Floor Text", "Spotlight", "Cast Shadows", "Cast Volumetric Shadow", "ShadowCover", "Colour", "Custom Colour", "Title Text", "Title Scale", "Title Colour", "Seperate Title Panel", "Description Text", "Description Scale", "Description Colour", "Number of lines between paragraphs", "Text Padding" ]
+			},
+			{
+				"Type": "/ContentHall/Blueprints/BP_DemoRoom.BP_DemoRoom_C",
+				"AllowList": [ "Rooms", "SpacerSize", "Draw End Wall", "Draw Start Wall", "Room Spacer Color", "Floor Color" ]
 			}
 		]
 	},
@@ -2956,7 +3273,7 @@
 				"AllowList": ["BloomIntensity", "BloomThreshold", "SceneFringeIntensity", "ChromaticAberrationStartOffset", "LensFlareIntensity", "VignetteIntensity", "ColorSaturation", "ColorContrast", "ColorGamma", "WeightedBlendables", "FilmGrainIntensity", "FilmGrainTexelSize", "TemperatureType", "WhiteTemp", "WhiteTint", "AutoExposureMethod", "AutoExposureBias", "AutoExposureApplyPhysicalCameraExposure", "AutoExposureBiasCurve", "AutoExposureMeterMask", "AutoExposureMinBrightness", "AutoExposureMaxBrightness", "AutoExposureSpeedUp", "AutoExposureSpeedDown", "SceneColorTint",
 					"LumenSkylightLeaking","LumenFullSkylightLeakingDistance", "LumenDiffuseColorBoost", "AutoExposureMethod","AutoExposureBias","AutoExposureApplyPhysicalCameraExposure","AutoExposureBiasCurve","AutoExposureMeterMask","AutoExposureMinBrightness","AutoExposureMaxBrightness","AutoExposureSpeedUp","AutoExposureSpeedDown","AutoExposureLowPercent","AutoExposureHighPercent","HistogramLogMin","HistogramLogMax","LocalExposureHighlightContrastScale","LocalExposureShadowContrastScale","LocalExposureDetailStrength","LocalExposureBlurredLuminanceBlend","LocalExposureBlurredLuminanceKernelSizePercent","LocalExposureMiddleGreyBias",
 					"CameraShutterSpeed", "CameraISO", "DepthOfFieldFstop", "DepthOfFieldMinFstop", "DepthOfFieldBladeCount", "MotionBlurAmount", "MotionBlurMax", "MotionBlurTargetFPS", "MotionBlurPerObjectSize", "Lens", "Color Grading", "Global Illumination", "Rendering Features", "Film Grain", "Highlights", "Midtones", "Shadows", "ColorSaturationHighlights", "ColorContrastHighlights", "ColorGammaHighlights", "ColorGainHighlights", "ColorOffsetHighlights", "ColorCorrectionHighlightsMin", "ColorCorrectionHighlightsMax", "ColorSaturationMidtones", "ColorContrastMidtones", "ColorGammaMidtones", "ColorGainMidtones", "ColorOffsetMidtones", "ColorSaturationShadows",
-					"ColorContrastShadows", "ColorGammaShadows", "ColorGainShadows", "ColorOffsetShadows", "ColorCorrectionShadowsMax", "LensFlareTint", "LensFlareBokehSize", "LensFlareThreshold", "LensFlareBokehShape", "BloomDirtMask", "BloomDirtMaskIntensity", "BloomDirtMaskTint" 
+					"ColorContrastShadows", "ColorGammaShadows", "ColorGainShadows", "ColorOffsetShadows", "ColorCorrectionShadowsMax", "LensFlareTint", "LensFlareBokehSize", "LensFlareThreshold", "LensFlareBokehShape", "BloomDirtMask", "BloomDirtMaskIntensity", "BloomDirtMaskTint"
 				]
 			},
 			{
@@ -2979,6 +3296,18 @@
 			{
 				"Type": "/Script/VerseFortnite.CharacterModifierInventoryItem",
 				"AllowList": [ "ItemDefinition", "ItemQuantity" ]
+			},
+			{
+				"Type": "/Script/HairStrandsCore.HairSimulationSetup",
+				"DenyList": [ "bResetSimulation", "bDebugSimulation"]
+			},
+			{
+				"Type": "/Script/HairStrandsCore.HairSolverSettings",
+				"DenyList": ["CustomSystem", "bForceVisible"]
+			},
+			{
+				"Type": "/Script/HairStrandsCore.HairCollisionConstraint",
+				"DenyList": ["GridDimension"]
 			}
 		]
 	},
@@ -3011,8 +3340,8 @@
 			{
 				"Type": "/Script/Engine.PrimitiveComponent",
 				"AllowList": ["bHasCustomNavigableGeometry", "BoundsScale", "bVisibleInReflectionCaptures", "OnComponentBeginOverlap", "OnComponentEndOverlap", "OnComponentHit", "OnComponentPhysicsStateChanged",
-							  "bAllowCullDistanceVolume", "bNeverDistanceCull", "bCastHiddenShadow", "bCastFarShadow", "VirtualTextureRenderPassType", "RuntimeVirtualTextures", "bIsValidTextureStreamingBuiltData",
-							  "bHasPerInstanceHitProxies", "ExcludeFromHLODLevels", "CustomPrimitiveData", "bCastContactShadow", "bRenderCustomDepth", "CustomDepthStencilValue", "CustomDepthStencilWriteMask", "bFillCollisionUnderneathForNavmesh"],
+					"bAllowCullDistanceVolume", "bNeverDistanceCull", "bCastHiddenShadow", "bCastFarShadow", "VirtualTextureRenderPassType", "RuntimeVirtualTextures", "bIsValidTextureStreamingBuiltData",
+					"bHasPerInstanceHitProxies", "ExcludeFromHLODLevels", "CustomPrimitiveData", "bCastContactShadow", "bRenderCustomDepth", "CustomDepthStencilValue", "CustomDepthStencilWriteMask", "bFillCollisionUnderneathForNavmesh"],
 				"bAllowListAllSubclassProperties": true
 			},
 			{
@@ -3023,7 +3352,7 @@
 			{
 				"Type": "/Script/Engine.StaticMeshComponent",
 				"AllowList": ["StaticMeshImportVersion", "ForcedLodModel", "StaticMeshDerivedDataKey", "MaterialStreamingRelativeBoxes", "bEvaluateWorldPositionOffsetInRayTracing", "StreamingTextureData", "OverriddenLightMapRes", "bUseAsOccluder",
-											"LightmassSettings", "bUseDefaultCollision"],
+					"LightmassSettings", "bUseDefaultCollision"],
 				"bAllowListAllSubclassProperties": true
 			},
 			{
@@ -3033,7 +3362,7 @@
 			},
 			{
 				"Type": "/Script/Engine.InstancedStaticMeshComponent",
-				"AllowList": ["InstancingRandomSeed", "InstanceStartCullDistance", "InstanceEndCullDistance", "InstanceReorderTable" ],
+				"AllowList": ["InstancingRandomSeed", "InstanceStartCullDistance", "InstanceEndCullDistance", "InstanceReorderTable"],
 				"bAllowListAllSubclassProperties": true
 			},
 			{
@@ -3159,7 +3488,7 @@
 				"AllowList": [ "OwningWaterZone", "UnderwaterPostProcessSettings", "PhysicalMaterial", "WaterHLODMaterial", "WaterLODMaterial",
 					"UnderwaterPostProcessMaterial", "WaterInfoMaterial", "LayerWeightmapSettings", "ShapeDilation", "CollisionHeightOffset", "WaterStaticMeshMaterial",
 					"WaterMeshOverride", "bAlwaysGenerateWaterMeshTiles", "OverlapMaterialPriority", "WaterBodyIslands", "WaterBodyExclusionVolumes",
-					"WaterZoneOverride", "WaterNavAreaClass", "WaterBodyIslands", "WaterBodyExclusionVolumes", "WaterZoneOverride", "FixedWaterDepth", "WaterNavAreaClass", 
+					"WaterZoneOverride", "WaterNavAreaClass", "WaterBodyIslands", "WaterBodyExclusionVolumes", "WaterZoneOverride", "FixedWaterDepth", "WaterNavAreaClass",
 					"UnderwaterPostProcessMaterial"  ],
 				"DenyList": [],
 				"bAllowListAllSubclassProperties": true
