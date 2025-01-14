@@ -23,7 +23,6 @@ gameplay_camera_device<public> := class<abstract><epic_internal>(creative_device
 gameplay_camera_fixed_point_device<public> := class<concrete><final>(gameplay_camera_device):
 
 
-@experimental
 # Used to update the camera's viewpoint from the perspective of the player character.
 gameplay_camera_first_person_device<public> := class<concrete><final>(gameplay_camera_device):
 
