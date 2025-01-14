@@ -247,6 +247,7 @@
 			"/Script/UMG.ScrollBox",
 			"/Script/UMG.SizeBox",
 			"/Script/UMG.UniformGridPanel",
+			"/Script/UMG.WidgetSwitcher",
 			"/Game/Valkyrie/UMG/UEFN_Button_Loud.UEFN_Button_Loud",
 			"/Game/Valkyrie/UMG/UEFN_Button_Quiet.UEFN_Button_Quiet",
 			"/Game/Valkyrie/UMG/UEFN_Button_Regular.UEFN_Button_Regular",
@@ -270,6 +271,7 @@
 			"/Script/ModelViewViewModelEditor.MVVMK2Node_LoadSoftMaterial",
 			"/Script/ModelViewViewModelEditor.MVVMK2Node_MakeBrushFromSoftTexture",
 			"/Script/ModelViewViewModelEditor.MVVMK2Node_MakeBrushFromSoftMaterial",
+			"/Script/ModelViewViewModelEditor.MVVMK2Node_SetSoftTextureParameter",
 		],
 		"DeniedMVVMConversionClass": []
 	},
@@ -379,6 +381,7 @@
 			"General": {
 				"Names": [
 					"Appearance",
+					"BuildingActorEditorSettings",
 					"InputBindings",
 					"Internationalization",
 					"LoadingSaving",
@@ -403,7 +406,8 @@
 				"Names": [
 					"CurveEditor",
 					"LevelSequenceEditor",
-					"VerseEditor"
+					"VerseEditor",
+					"PCGEditor"
 				]
 			}
 		},
@@ -494,6 +498,8 @@
 			"/Script/Landscape.LandscapeLayerInfoObject":		{ "Rules": ["View","Create"] },
 			"/Script/Landscape.LandscapeGrassType":				{ "Rules": ["View","Create"] },
 			"/Script/LevelSequence.LevelSequence":				{ "Rules": ["View","Create","Import","Export"], "Subclasses": "NativeOnly" },
+			"/Script/MetasoundEngine.MetaSoundSource":			{ "Rules": ["View", "Public"] },
+			"/Script/MetasoundEngine.MetaSoundPatch":			{ "Rules": ["View", "Public"] },
 			"/Script/Niagara.NiagaraEffectType":				{ "Rules": ["View", "Create"] },
 			"/Script/Niagara.NiagaraEmitter":					{ "Rules": ["View","Create"] },
 			"/Script/Niagara.NiagaraScript":					{ "Rules": ["View","Create"] },
@@ -555,6 +561,7 @@
 			"/CRD_PropManipulationDevice/CreativeResourceNodeComponent_V2.CreativeResourceNodeComponent_V2_C":			{  },
 			"/CRD_PropManipulationDevice/PropManipulationGameplayVolume.PropManipulationGameplayVolume_C":				{  },
             "/CRD_SkilledInteractionDevice/UI/UEFN_SkilledInteraction_ViewModel.UEFN_SkilledInteraction_ViewModel_C":	{ "Visible": true },
+			"/CRD_StatManager/UI/MVVM_UEFN_Stat.MVVM_UEFN_Stat_C":								                        { "Visible": true },
 			"/CRD_VehicleSpawners/Device_VehicleSpawnerParent_V2.Device_VehicleSpawnerParent_V2_C":						{  },
 			"/CRD_Volume/VolumeDeviceFNE_Volume.VolumeDeviceFNE_Volume_C":												{  },
 			"/CRD_Volume/VolumeDeviceGameplayVolume.VolumeDeviceGameplayVolume_C": 										{  },
@@ -568,6 +575,7 @@
 			"/CreativeCoreDevices/HUDMessage/MVVM_UEFN_HUDMessage.MVVM_UEFN_HUDMessage_C":								{ "Visible": true },
 			"/CreativeCoreDevices/Beacon/UEFN_BeaconBadge_ViewModel.UEFN_BeaconBadge_ViewModel_C":						{ "Visible": true },
 			"/CreativeCoreDevices/PowerUp/LastActiveCustomPlayerFXComponent.LastActiveCustomPlayerFXComponent_C":		{  },
+			"/CreativeCoreDevices/Timer/CreativeTimerViewModel.CreativeTimerViewModel_C": 								{ "Visible": true },
 			"/FMInWorldKnobs/Gameplay/Components/BP_FabricNoteLabelComponent.BP_FabricNoteLabelComponent_C":			{  },
 			"/FMInWorldKnobs/Gameplay/Components/BP_FabricPageInfoComponent.BP_FabricPageInfoComponent_C":				{  },
 			"/FMInWorldKnobs/Gameplay/Components/BP_FabricPipsComponent.BP_FabricPipsComponent_C":						{  },
@@ -1198,7 +1206,7 @@
 			"/Script/Engine.MaterialExpressionWhileLoop":										{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionWorldPosition":									{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Entity.EntityPrefab":														{ "Visible": true },
-			"/Script/EntityLevel.EntityLevel":													{ },
+			"/Script/EntityLevel.LevelEntity":													{ },
 			"/Script/InterchangeImport.MaterialExpressionMaterialXAppend3Vector":				{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/InterchangeImport.MaterialExpressionMaterialXAppend4Vector":				{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/InterchangeImport.MaterialExpressionMaterialXBurn":						{ "Visible": true,	"Subclasses": "NativeOnly" },
@@ -1570,6 +1578,8 @@
 			"/Script/Landscape.LandscapeSplineSegment":							{  },
 			"/Script/Landscape.LandscapeSplinesComponent":						{  },
 			"/Script/Landscape.LandscapeStreamingProxy":						{  },
+			"/Script/Landscape.LandscapeHeightmapTextureEdgeFixup":				{  },
+			"/Script/Landscape.LandscapeTextureMipEdgeOverrideFactory":				{  },
 			"/Script/LevelSequence.AnimSequenceLevelSequenceLink":				{  },
 			"/Script/LevelSequence.LevelSequenceAnimSequenceLink":				{  },
 			"/Script/LiveLink.LiveLinkComponent":								{ "Visible": true },
@@ -1582,6 +1592,19 @@
 			"/Script/MannequinRuntime.MannequinAnalyticsComponent":				{  },
 			"/Script/MediaAssets.MediaSoundComponent":							{  },
 			"/Script/MediaAssets.MediaTexture":     							{  },
+			"/Script/MetasoundEngine.MetaSoundSource":							{ "Visible": true },
+			"/Script/MetasoundEngine.MetaSoundPatch":							{ "Visible": true },
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultBool":	{ "Visible": true },
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultBoolArray":	{ "Visible": true },
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultInt":		{ "Visible": true },
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultIntArray":    { "Visible": true },
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultFloat":	{ "Visible": true },
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultFloatArray":	{ "Visible": true },
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultString":	{ "Visible": true },
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultStringArray":	{ "Visible": true },
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultObject":	{ "Visible": true },
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultObjectArray":	{ "Visible": true },
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultLiteral":	{ "Visible": true },			
 			"/Script/ModelViewViewModel.MVVMPanelWidgetViewExtension":			{ "Visible": true },
 			"/Script/ModelViewViewModel.MVVMSlateBrushConversionLibrary":		{  },
 			"/Script/ModelViewViewModel.MVVMViewClass":							{  },
@@ -1744,6 +1767,7 @@
 			"/Script/Niagara.NiagaraDataInterfaceVectorCurve":					{ "Visible": true },
 			"/Script/Niagara.NiagaraDataInterfaceVectorField":					{ "Visible": true },
 			"/Script/Niagara.NiagaraDataInterfaceVolumeTexture":				{ "Visible": true },
+			"/Script/Niagara.NiagaraDecalRendererProperties":					{ "Visible": true },
 			"/Script/Niagara.NiagaraEffectType":								{ "Visible": true },
 			"/Script/Niagara.NiagaraEmitter":									{ "Visible": true },
 			"/Script/Niagara.NiagaraFloat":										{  },
@@ -1895,6 +1919,8 @@
 			"/Script/UMG.WidgetAnimation":										{  },
 			"/Script/UMG.WidgetAnimationBinding":								{  },
 			"/Script/UMG.WidgetComponent":										{  },
+			"/Script/UMG.WidgetSwitcher":										{ "Visible": true },
+			"/Script/UMG.WidgetSwitcherSlot":									{  },
 			"/Script/UMG.WidgetTransform":										{  },
 			"/Script/UMG.WidgetTree":											{  },
 			"/Script/UnrealEd.CubeBuilder":										{  },
@@ -1943,7 +1969,7 @@
 			"/Script/Engine.QuaternionSpringState":								{  },
 			"/Script/VerseQuery.EntityQueryManager":							{  },
 			"/Script/VerseQuery.EntityTypeQueryContainer":						{  },
-			"/Script/VerseQuery.TaggedObjectQueryContainer":					{  }
+			"/Script/VerseQuery.TaggedObjectQueryContainer": {}
 		},
 		"AllowedMenus": {
 			"AssetEditor.IKRetargetEditor.MainMenu.CreateMenu": {
@@ -1959,7 +1985,7 @@
 				"AllowList": [ "Undo", "Redo", "UndoHistory" ]
 			},
 			"AssetEditor.AnimationBlueprintEditor.MainMenu.File": {
-				"AllowList": [ "SaveAsset", "SaveAll", "CompileBlueprint", "ReparentBlueprint" ]
+				"AllowList": [ "SaveAsset", "CompileBlueprint", "ReparentBlueprint" ]
 			},
 			"AssetEditor.AnimationBlueprintEditor.MainMenu.Help": {
 				"AllowList": [ "OpenDocumentation", "VisitEpicGamesDotCom", "CreditsUnrealEd", "AboutUnrealEd" ]
@@ -1993,7 +2019,7 @@
 				"AllowList": [ "Undo", "Redo", "UndoHistory" ]
 			},
 			"AssetEditor.BlueprintEditor.MainMenu.File": {
-				"AllowList": [ "SaveAsset", "SaveAll", "CompileBlueprint", "ReparentBlueprint" ]
+				"AllowList": [ "SaveAsset", "CompileBlueprint", "ReparentBlueprint" ]
 			},
 			"AssetEditor.BlueprintEditor.MainMenu.Help": {
 				"AllowList": [ "OpenDocumentation", "VisitEpicGamesDotCom", "CreditsUnrealEd", "AboutUnrealEd" ],
@@ -2016,7 +2042,7 @@
 				"AllowList": [ "File", "Edit", "Asset", "Window", "Help" ]
 			},
 			"AssetEditor.ParameterCollectionEditor.MainMenu.File": {
-				"AllowList": [ "SaveAsset", "SaveAll"]
+				"AllowList": [ "SaveAsset" ]
 			},
 			"AssetEditor.MaterialInstanceEditor.ToolBar": {
 				"AllowList": [ "SaveAsset", "FindInContentBrowser", "Apply", "Hierarchy", "TogglePlatformStats" ]
@@ -2047,7 +2073,7 @@
 				"AllowList": [ "Undo", "Redo", "UndoHistory" ]
 			},
 			"AssetEditor.WidgetBlueprintEditor.MainMenu.File": {
-				"AllowList": [ "SaveAsset", "SaveAll", "CompileBlueprint", "ReparentBlueprint" ],
+				"AllowList": [ "SaveAsset", "CompileBlueprint", "ReparentBlueprint" ],
 				"AllowExtenders": true
 			},
 			"AssetEditor.WidgetBlueprintEditor.MainMenu.Help": {
@@ -2221,7 +2247,7 @@
 				"AllowList": [ "Undo", "Redo", "UndoHistory", "Cut", "Copy", "Paste", "Duplicate", "Delete", "EditorPreferencesMenu" ]
 			},
 			"LevelEditor.MainMenu.File": {
-				"AllowList": [ "NewLevel", "OpenLevel", "RecentLevelsSubMenu", "RecentAssetsSubmenu", "Save", "SaveAs", "SaveAll", "Exit", "ChooseFilesToSave", "ValkyrieOpenProject", "ValkyrieIslandImport" ]
+				"AllowList": [ "NewLevel", "OpenLevel", "RecentLevelsSubMenu", "RecentAssetsSubmenu", "Save", "SaveAs", "Exit", "ValkyrieOpenProject", "ValkyrieIslandImport" ]
 			},
 			"LevelEditor.MainMenu.Help": {
 				"AllowList": [ "BrowseDocumentation", "BrowseViewportControls", "VisitEpicGamesDotCom", "CreditsUnrealEd", "AboutUnrealEd", "ValkyrieFeedback" ]
@@ -2248,7 +2274,7 @@
 				"AllowList": [ "Undo", "Redo", "UndoHistory" ]
 			},
 			"MainFrame.MainMenu.File": {
-				"AllowList": [ "SaveAsset", "SaveAssetAs", "ConnectToSourceControl", "RecentAssetsSubmenu", "RecentAssetEditorAssetsSubmenu" ]
+				"AllowList": [ "SaveAll", "ChooseFilesToSave", "SaveAsset", "SaveAssetAs", "ConnectToSourceControl", "RecentAssetsSubmenu", "RecentAssetEditorAssetsSubmenu" ]
 			},
 			"MainFrame.MainMenu.Help": {
 				"AllowList": [ "OpenDocumentation", "VisitEpicGamesDotCom", "CreditsUnrealEd", "AboutUnrealEd" ]
@@ -2486,6 +2512,7 @@
 					"Animations",
 					"WidgetAnimSequencer",
 					"WidgetDetails",
+					"SequencerGraphEditor",
 					"SlatePreview",
 					"SlateHierarchy",
 					"WidgetTemplates",
@@ -2673,6 +2700,7 @@
 			"UEFNDesignASpeedwayRace",
 			"VKT_Animation101",
 			"VKT_LavaCave",
+			"VKT_ProceduralBuilding",
 			"VKT_Talisman_Bridge",
 			"VKT_Talisman_Template",
 			"VKT_Triad_Infiltration",
@@ -2815,7 +2843,7 @@
 			},
 			{
 				"Type": "/Script/Engine.SplineComponent",
-				"AllowList": [ "DefaultUpVector", "bClosedLoop", "SplinePointDetails", "SelectSplinePoints", "NoneSelected", "InputKey", "Location", "Rotation", "Scale", "ArriveTangent", "LeaveTangent" ]
+				"AllowList": [ "DefaultUpVector", "bClosedLoop", "SplinePointDetails", "SelectSplinePoints", "NoneSelected", "InputKey", "Location", "Rotation", "Scale", "ArriveTangent", "LeaveTangent", "Type" ]
 			},
 			{
 				"Type": "/Script/Engine.LightComponent",
@@ -2908,7 +2936,7 @@
 			},
 			{
 				"Type": "/Script/UMG.Widget",
-				"AllowList": [ "Slot", "RenderTransform", "RenderTransformPivot", "FlowDirectionPreference", "bIsEnabled", "Clipping", "Visibility" ]
+				"AllowList": [ "Slot", "RenderTransform", "RenderTransformPivot", "FlowDirectionPreference", "bIsEnabled", "Clipping", "Visibility", "RenderOpacity" ]
 			},
 			{
 				"Type": "/Script/UMG.UserWidget",
@@ -2953,6 +2981,10 @@
 			{
 				"Type": "/Script/UMG.Slider",
 				"AllowList": [ "Value", "MinValue", "MaxValue", "StepSize" ]
+			},
+			{
+				"Type": "/Script/UMG.WidgetSwitcher",
+				"AllowList": [ "ActiveWidgetIndex" ]
 			},
 			{
 				"Type": "/Script/AIModule.AISenseConfig_Sight",
@@ -3273,6 +3305,10 @@
 				"AllowList": [ "bShowFrameRateAndMemory", "bThrottleCPUWhenNotForeground", "bMonitorEditorPerformance", "bEnableScalabilityWarningIndicator", "bEnableVSync" ]
 			},
 			{
+				"Type": "/Script/PCGEditor.PCGEditorSettings",
+				"AllowList": [ "bDisableCPUThrottlingDuringGraphExecution" ]
+			},
+			{
 				"Type": "/Script/WorldPartitionEditor.WorldPartitionEditorSettings",
 				"AllowList": [ "bEnableLoadingInEditor", "bShowHLODsInEditor", "bShowHLODsOverLoadedRegions", "HLODMinDrawDistance", "HLODMaxDrawDistance", "bEnableAdvancedHLODSettings" ]
 			},
@@ -3362,6 +3398,10 @@
 				"AllowList": [ "bAutoActivate" ]
 			},
 			{
+				"Type": "/Script/Water.WaterSplineComponent",
+				"AllowList": [ "WaterSplineMetadataDetails", "Depth", "RiverWidth", "Velocity", "AudioIntensity" ]
+			},
+			{
 				"Type": "/Script/Water.WaterZone",
 				"AllowList": [ "ZoneExtent", "RenderTargetResolution", "VelocityBlurRadius" ]
 			},
@@ -3416,7 +3456,7 @@
 			},
 			{
 				"Type": "/Script/ValkyrieEditor.ValkyrieProjectSettingsEditorViewModel",
-				"AllowList": [ "Title", "Description", "DocsUrl", "VersePath", "VerseVersion", "UGCLocDescriptor", "AutoLocalizationSettings", "ExperimentalAccessWarning", "bIsUsingSceneGraphSystem", "bIsUsingFirstPersonContent" ]
+				"AllowList": [ "Title", "Description", "DocsUrl", "VersePath", "VerseVersion", "UGCLocDescriptor", "AutoLocalizationSettings", "ExperimentalAccessWarning", "bIsUsingSceneGraphSystem", "bIsUsingExperimentalContent", "bIsUsingExperimentalPhysics" ]
 			},
 			{
 				"Type": "/Script/Engine.CameraShakeBase",
@@ -3744,7 +3784,7 @@
 			},
 			{
 				"Type": "/Script/HairStrandsCore.HairCollisionConstraint",
-				"DenyList": ["GridDimension"]
+				"DenyList": [ "GridDimension" ]
 			}
 		]
 	},
