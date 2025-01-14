@@ -148,6 +148,8 @@
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.DirectionalLightComponent", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.ExponentialHeightFog", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.ExponentialHeightFogComponent", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
+			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.HierarchicalInstancedStaticMeshComponent", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
+			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.InstancedStaticMeshComponent", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.LocalLightComponent", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.MaterialExpression", "Visible": "Allow", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.MaterialExpressionCustom", "Visible": "Forbid", "VisibleOnPin": "Forbid" },
@@ -164,7 +166,6 @@
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.SkyLightComponent", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.SkyAtmosphere", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.SkyAtmosphereComponent", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
-
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.SoundNodeConcatenator", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.SoundNodeDistanceCrossFade", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.SoundNodeDelay", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
@@ -176,7 +177,6 @@
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.SoundNodeOscillator", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.SoundNodeRandom", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.SoundNodeWavePlayer", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
-
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.SpotLight", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.SpotLightComponent", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.StaticMeshComponent", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
@@ -448,10 +448,19 @@
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/BlueprintGraph.K2Node_Event" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/BlueprintGraph.K2Node_FunctionEntry" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/CableComponent.CableComponent" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Constraints.TickableLookAtConstraint" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Constraints.TickableParentConstraint" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Constraints.TickableRotationConstraint" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Constraints.TickableScaleConstraint" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Constraints.TickableTranslationConstraint" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Constraints.TransformableComponentHandle" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Constraints.ConstraintsActor" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Constraints.ConstraintsManager" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/ControlRig.ControlRig" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/ControlRig.ControlRigValidator" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/ControlRig.MovieSceneControlRigParameterSection" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/ControlRig.RigHierarchy" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/ControlRig.TransformableControlHandle" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/ControlRigDeveloper.ControlRigGraph" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/ControlRigDeveloper.ControlRigGraphNode" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/CoreUObject.MetaData" },
@@ -591,6 +600,7 @@
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.FortPlayerStart" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.FortPlayerStartCreative" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.FortPlaysetItemDefinition" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.FortPlaysetPropItemDefinition" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.FortPlaysetRoot" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.FortPoiCollisionComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.FortPointLightComponent" },
@@ -614,6 +624,7 @@
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.FortWorldSettings" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.LevelSaveComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.LevelSaveRecord" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.LevelSaveRecordCollection" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.WaterVolume_Athena" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/GameplayAbilities.AbilitySystemComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/GeometryCacheTracks.MovieSceneGeometryCacheSection" },
@@ -622,7 +633,6 @@
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/HmxAudio.MediaMusicTimelineGenerator" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/HmxAudio.MidiNoteEventRouterComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/HmxAudio.MidiTextEventRouterComponet" },
-			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/HmxAudio.MusicClockComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/HmxAudio.MusicEmitterComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/HmxAudioGraphics.MusicTempometerComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/InterchangeCore.InterchangeBaseNode" },
@@ -701,6 +711,7 @@
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/MovieSceneTracks.MovieScene3DConstraintSection" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/MovieSceneTracks.MovieScene3DPathSection" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/MovieSceneTracks.MovieScene3DTransformSection" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/MovieSceneTracks.MovieScene3DTransformSectionConstraints" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/MovieSceneTracks.MovieSceneActorReferenceSection" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/MovieSceneTracks.MovieSceneAudioSection" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/MovieSceneTracks.MovieSceneByteSection" },
@@ -803,6 +814,7 @@
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/UnrealEd.SceneThumbnailInfo" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/UnrealEd.SceneThumbnailInfoWithPrimitive" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/UnrealEd.WorldThumbnailInfo" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/VerseAIBase.AIBehaviorScriptComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/VolumetricRegion.VolumetricRegionNativeComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Water.BuoyancyManager" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Water.GerstnerWaterWaveGeneratorSimple" },
@@ -980,7 +992,7 @@
 	"bLocalizationEnabled": false,
 	"bProjectExternalContentAllowed": true,
 	"bAddProjectExternalContentAllowed": false,
-	"DefaultProjectExternalContentIds": {
+	"DefaultProjectReferencedContent": {
 		"=": [
 		]
 	},
@@ -1034,7 +1046,9 @@
 			"FAnimTimelineTrack_Curves",
 			"FAnimTimelineTrack_Curve",
 			"FAnimTimelineTrack_FloatCurve",
-			"FAnimTimelineTrack_FloatCurveWithDisplayName"
+			"FAnimTimelineTrack_FloatCurveWithDisplayName",
+			"FAnimTimelineTrack_CompositeRoot",
+			"FAnimTimelineTrack_CompositePanel"
 		]
 	},
 	"AssetFolderAllowList": {
@@ -1184,6 +1198,11 @@
 			},
 			{
 				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Engine.InstancedStaticMeshComponent",
+				"AllowList": [ "PerInstanceSMData" ]
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Engine.TextRenderComponent",
 				"AllowList": [ "TextRenderColor", "HorizontalAlignment", "Text", "WorldSize", "VerticalAlignment" ]
 			},
@@ -1196,6 +1215,11 @@
 				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Engine.ActorComponent",
 				"AllowList": [ "bCanEverAffectNavigation" ]
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Engine.AudioComponent",
+				"DenyList": [ "bCanEverAffectNavigation" ]
 			},
 			{
 				"$type": "ValkyrieClassPropertyPermissionList",
@@ -1802,9 +1826,14 @@
 				"AllowList": [ "SoundToPlay" ]
 			},
 			{
-				"$type": "ValkyrieClassPropertyPermissionList", 
+				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/MovieSceneTracks.MovieSceneAudioSection",
 				"DenyList": [ "bSuppressSubtitles", "bOverrideAttenuation", "AttenuationSettings" ]
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/CorruptionItems/Gameplay/Items/ReinforcedTrap/Actors/B_Wall_Reinforced_Athena.B_Wall_Reinforced_Athena_C",
+				"DenyList": [ "DoorOffset", "SlidingDoorOffset", "AutomaticSlidingDoorBoxExtent", "AutomaticSlidingDoorBoxOffset", "SlamOpenDoorBoxExtent", "SlidingTranslation", "SlidingOpenTime", "DoorOpeningSound", "DoorSlammedOpenSound", "DoorClosingSound", "DoorAnimatingMaterial", "DoorMesh", "bCreateDoorLink", "DoubleDoorMesh", "DoorLinkOffset", "bSwingingDoor", "bSlidingDoor", "bAutomaticSlidingDoor", "bDoubleDoor" ]
 			}
 		]
 	},
@@ -1882,7 +1911,15 @@
 		"=": []
 	},
 	"HiddenPropertyClassPermissionList" : {
-		"=": []
+		"=": [
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Engine.AudioComponent",
+				"AllowList": [ "bOverrideAttenuation", "AttenuationOverrides", "Sound" ],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			}
+		]
 	},
 	"HiddenPropertyStructPermissionList" : {
 		"=": []
@@ -1940,6 +1977,8 @@
 			
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_PlayerSpawn/Materials/PlayerSpawnerTeamDisplay.PlayerSpawnerTeamDisplay", "Alias": "/FortniteVKCreateUGC/CRD_PlayerSpawn/Materials/PlayerSpawnerTeamDisplay" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/FortWater/Materials/WaterSurface/M_Water_Ocean_02_NewModel_Far.M_Water_Ocean_02_NewModel_Far", "Alias": "/FortniteVKCreateUGC/FortWater/Materials/WaterSurface/M_Water_Ocean_02_NewModel_Far" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Balance/Physics/Materials/PhysData_Cloth.PhysData_Cloth", "Alias": "/FortniteVKCreateUGC/Game/Balance/Physics/Materials/PhysData_Cloth" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Balance/Physics/Materials/PhysData_Foliage.PhysData_Foliage", "Alias": "/FortniteVKCreateUGC/Game/Balance/Physics/Materials/PhysData_Foliage" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Balance/Physics/Materials/PhysData_Generic.PhysData_Generic", "Alias": "/FortniteVKCreateUGC/Game/Balance/Physics/Materials/PhysData_Generic" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Balance/Physics/Materials/PhysData_Ice.PhysData_Ice", "Alias": "/FortniteVKCreateUGC/Game/Balance/Physics/Materials/PhysData_Ice" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Balance/Physics/Materials/PhysData_Metal.PhysData_Metal", "Alias": "/FortniteVKCreateUGC/Game/Balance/Physics/Materials/PhysData_Metal" },
@@ -1972,10 +2011,19 @@
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Environments/ApolloTrees/Materials/CP_MI_ColorTree_RedAlder2_02.CP_MI_ColorTree_RedAlder2_02", "Alias": "/FortniteVKCreateUGC/Game/Creative/Environments/ApolloTrees/Materials/CP_MI_ColorTree_RedAlder2_02" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Materials/MI_CP_LeafPile_ColorPicker_01.MI_CP_LeafPile_ColorPicker_01", "Alias": "/FortniteVKCreateUGC/Game/Creative/Materials/MI_CP_LeafPile_ColorPicker_01" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Materials/MI_CP_NightmareIvy_ColorPicker_01.MI_CP_NightmareIvy_ColorPicker_01", "Alias": "/FortniteVKCreateUGC/Game/Creative/Materials/MI_CP_NightmareIvy_ColorPicker_01" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Environments/Asteria/Rocks/Boulders/Blueprints/Rock_Boulder_Small_A_Disp.Rock_Boulder_Small_A_Disp_C", "Alias": "/FortniteVKCreateUGC/Game/Environments/Asteria/Rocks/Boulders/Blueprints/Rock_Boulder_Small_A_Disp" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/GrindRail/Blueprints/GrindRail_TipComponent.GrindRail_TipComponent_C", "Alias": "/FortniteVKCreateUGC/GrindRail/Blueprints/GrindRail_TipComponent" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/GrindRail/Materials/MI_Asteria_cyberRailing_Emissive_Master.MI_Asteria_cyberRailing_Emissive_Master", "Alias": "/FortniteVKCreateUGC/GrindRail/Materials/MI_Asteria_cyberRailing_Emissive_Master" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/GrindRail/Meshes/SM_GrindRail_A.SM_GrindRail_A", "Alias": "/FortniteVKCreateUGC/GrindRail/Meshes/SM_GrindRail_A" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/GrindRail/Meshes/SM_GrindRail_A_Big.SM_GrindRail_A_Big", "Alias": "/FortniteVKCreateUGC/GrindRail/Meshes/SM_GrindRail_A_Big" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Weapons/FORT_Rifles/Mesh/SK_M249.SK_M249", "Alias": "/FortniteVKCreateUGC/Game/Weapons/FORT_Rifles/Mesh/SK_M249" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Athena/Artemis/Environments/BuildingActors/Foliage/Materials/M_Artemis_StealthGrass_NoiseMap.M_Artemis_StealthGrass_NoiseMap", "Alias": "/FortniteVKCreateUGC/Game/Athena/Artemis/Environments/BuildingActors/Foliage/Materials/M_Artemis_StealthGrass_NoiseMap" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Environments/Artemis/Props/Commerce/Commerce_BottleShelves/Meshes/SM_Commerce_BottleShelfSet_A.SM_Commerce_BottleShelfSet_A", "Alias": "/FortniteVKCreateUGC/Game/Environments/Artemis/Props/Commerce/Commerce_BottleShelves/Meshes/SM_Commerce_BottleShelfSet_A" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Environments/Artemis/Props/Commerce/Commerce_BottleShelves/Meshes/SM_Commerce_BottleShelfSet_C.SM_Commerce_BottleShelfSet_C", "Alias": "/FortniteVKCreateUGC/Game/Environments/Artemis/Props/Commerce/Commerce_BottleShelves/Meshes/SM_Commerce_BottleShelfSet_C" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Environments/Artemis/Props/Kitchen/Kitchen_HangingKnives/Meshes/SM_Kitchen_HangingKnifeSet_D.SM_Kitchen_HangingKnifeSet_D", "Alias": "/FortniteVKCreateUGC/Game/Environments/Artemis/Props/Kitchen/Kitchen_HangingKnives/Meshes/SM_Kitchen_HangingKnifeSet_D" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Environments/Artemis/Props/Kitchen/Kitchen_HangingPans/Meshes/SM_Kitchen_HangingPanSet_C.SM_Kitchen_HangingPanSet_C", "Alias": "/FortniteVKCreateUGC/Game/Environments/Artemis/Props/Kitchen/Kitchen_HangingPans/Meshes/SM_Kitchen_HangingPanSet_C" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Environments/Asteria/Props/AmberForestTown/AmberForestTown_ForgeWeaponRack_A/Meshes/SM_AmberForestTown_ForgeWeaponRack_B.SM_AmberForestTown_ForgeWeaponRack_B", "Alias": "/FortniteVKCreateUGC/Game/Environments/Asteria/Props/AmberForestTown/AmberForestTown_ForgeWeaponRack_A/Meshes/SM_AmberForestTown_ForgeWeaponRack_B" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Environments/Asteria/Props/AmberForestTown/AmberForestTown_ForgeWeaponRack_A/Meshes/SM_AmberForestTown_ForgeWeaponRack_C.SM_AmberForestTown_ForgeWeaponRack_C", "Alias": "/FortniteVKCreateUGC/Game/Environments/Asteria/Props/AmberForestTown/AmberForestTown_ForgeWeaponRack_A/Meshes/SM_AmberForestTown_ForgeWeaponRack_C" },
 
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_AudioPlayer/M_AudioPlayer.M_AudioPlayer", "Alias": "/FortniteVKCreateUGC/CRD_AudioPlayer/M_AudioPlayer" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Devices/MusicDevice/Meshes/CP_Device_MusicDevice_Skin_01.CP_Device_MusicDevice_Skin_01", "Alias": "/FortniteVKCreateUGC/Game/Creative/Devices/MusicDevice/Meshes/CP_Device_MusicDevice_Skin_01" },
@@ -3265,25 +3313,27 @@
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Environments/Props/Street/Meshes/Prop_Hydrant_02.Prop_Hydrant_02", "Alias": "/FortniteVKCreateUGC/Game/Environments/Props/Street/Meshes/Prop_Hydrant_02" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Environments/Props/Street/Meshes/Prop_Hydrant_02_Broken.Prop_Hydrant_02_Broken", "Alias": "/FortniteVKCreateUGC/Game/Environments/Props/Street/Meshes/Prop_Hydrant_02_Broken" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Environments/Props/Street/Meshes/Prop_Newspaper_Box_01_Searched.Prop_Newspaper_Box_01_Searched", "Alias": "/FortniteVKCreateUGC/Game/Environments/Props/Street/Meshes/Prop_Newspaper_Box_01_Searched" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Environments/Sets/Neo/Architecture/Data_Assets/Neo_Delivery_Door.Neo_Delivery_Door", "Alias": "/FortniteVKCreateUGC/Game/Environments/Sets/Neo/Architecture/Data_Assets/Neo_Delivery_Door" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Environments/Sets/Oak/Props/Meshes/original/S_Oak_Crate_Ammo_02.S_Oak_Crate_Ammo_02", "Alias": "/FortniteVKCreateUGC/Game/Environments/Sets/Oak/Props/Meshes/original/S_Oak_Crate_Ammo_02" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Environments/World/Sidewalks/TextureData/TO_Sidewalk_PP.TO_Sidewalk_PP", "Alias": "/FortniteVKCreateUGC/Game/Environments/World/Sidewalks/TextureData/TO_Sidewalk_PP" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Gadgets/Assets/Ammo_Box_Mark_III/Meshes/Ammo_Box_Mark_III_Searched.Ammo_Box_Mark_III_Searched", "Alias": "/FortniteVKCreateUGC/Game/Gadgets/Assets/Ammo_Box_Mark_III/Meshes/Ammo_Box_Mark_III_Searched" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Gadgets/Assets/Fishing_Barrel_Mark_II/Meshes/Fishing_Barrel_Mark_II_Searched.Fishing_Barrel_Mark_II_Searched", "Alias": "/FortniteVKCreateUGC/Game/Gadgets/Assets/Fishing_Barrel_Mark_II/Meshes/Fishing_Barrel_Mark_II_Searched" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Gadgets/Assets/GlowTorch/M_Muzzle_Soft_Flare_Red_Inst.M_Muzzle_Soft_Flare_Red_Inst", "Alias": "/FortniteVKCreateUGC/Game/Gadgets/Assets/GlowTorch/M_Muzzle_Soft_Flare_Red_Inst" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Gadgets/Assets/GlowTorch/M_Muzzle_Soft_Flare_Yellow_Inst.M_Muzzle_Soft_Flare_Yellow_Inst", "Alias": "/FortniteVKCreateUGC/Game/Gadgets/Assets/GlowTorch/M_Muzzle_Soft_Flare_Yellow_Inst" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Gadgets/Assets/GlowTorch/M_Muzzle_Soft_Flare_Teal_Inst.M_Muzzle_Soft_Flare_Teal_Inst", "Alias": "/FortniteVKCreateUGC/Game/Gadgets/Assets/GlowTorch/M_Muzzle_Soft_Flare_Teal_Inst" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Gadgets/Assets/GlowTorch/M_Muzzle_Soft_Flare_Purple_Inst.M_Muzzle_Soft_Flare_Purple_Inst", "Alias": "/FortniteVKCreateUGC/Game/Gadgets/Assets/GlowTorch/M_Muzzle_Soft_Flare_Purple_Inst" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Gadgets/Assets/GlowTorch/M_Muzzle_Soft_Flare_Green_Inst.M_Muzzle_Soft_Flare_Green_Inst", "Alias": "/FortniteVKCreateUGC/Game/Gadgets/Assets/GlowTorch/M_Muzzle_Soft_Flare_Green_Inst" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Gadgets/Assets/GlowTorch/M_Muzzle_Soft_Flare_Blue_Inst.M_Muzzle_Soft_Flare_Blue_Inst", "Alias": "/FortniteVKCreateUGC/Game/Gadgets/Assets/GlowTorch/M_Muzzle_Soft_Flare_Blue_Inst" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Gadgets/Assets/GlowTorch/M_Muzzle_Soft_Flare_Orange_Inst.M_Muzzle_Soft_Flare_Orange_Inst", "Alias": "/FortniteVKCreateUGC/Game/Gadgets/Assets/GlowTorch/M_Muzzle_Soft_Flare_Orange_Inst" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Gadgets/Assets/GlowTorch/M_Muzzle_Soft_Flare_White_Inst.M_Muzzle_Soft_Flare_White_Inst", "Alias": "/FortniteVKCreateUGC/Game/Gadgets/Assets/GlowTorch/M_Muzzle_Soft_Flare_White_Inst" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Playgrounds/Items/Props/GlowStick_Light_Parent.GlowStick_Light_Parent_C", "Alias": "/FortniteVKCreateUGC/Game/Playgrounds/Items/Props/GlowStick_Light_Parent" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Gadgets/Assets/Produce_Box/Meshes/SM_Item_Produce_Box_Searched.SM_Item_Produce_Box_Searched", "Alias": "/FortniteVKCreateUGC/Game/Gadgets/Assets/Produce_Box/Meshes/SM_Item_Produce_Box_Searched" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Gadgets/Assets/Produce_Box_Mark_II/Meshes/Produce_Box_Mark_II_Searched.Produce_Box_Mark_II_Searched", "Alias": "/FortniteVKCreateUGC/Game/Gadgets/Assets/Produce_Box_Mark_II/Meshes/Produce_Box_Mark_II_Searched" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Gadgets/Assets/Treasure_Chest_2/Meshes/Treasure_Chest_2.Treasure_Chest_2", "Alias": "/FortniteVKCreateUGC/Game/Gadgets/Assets/Treasure_Chest_2/Meshes/Treasure_Chest_2" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Items/Traps/Blueprints/Device_Floor_CannonSpawner.Device_Floor_CannonSpawner_C", "Alias": "/FortniteVKCreateUGC/Game/Items/Traps/Blueprints/Device_Floor_CannonSpawner" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Items/Traps/Blueprints/Device_Floor_MechSpawners.Device_Floor_MechSpawners_C", "Alias": "/FortniteVKCreateUGC/Game/Items/Traps/Blueprints/Device_Floor_MechSpawners" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Items/Traps/Blueprints/Device_Floor_PlayerCheckpoint_V2.Device_Floor_PlayerCheckpoint_V2_C", "Alias": "/FortniteVKCreateUGC/Game/Items/Traps/Blueprints/Device_Floor_PlayerCheckpoint_V2" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Items/Traps/Blueprints/Device_Floor_VehicleSpawnerParent.Device_Floor_VehicleSpawnerParent_C", "Alias": "/FortniteVKCreateUGC/Game/Items/Traps/Blueprints/Device_Floor_VehicleSpawnerParent" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Missions/Primary/Outpost/Props/GrenadeTarget.GrenadeTarget_C", "Alias": "/FortniteVKCreateUGC/Game/Missions/Primary/Outpost/Props/GrenadeTarget" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/UI/InGame/HUD/POI/POI_actor.POI_Actor_C", "Alias": "/FortniteVKCreateUGC/Game/UI/InGame/HUD/POI/POI_actor" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Vehicles/FORT_Vehicles_01/TextureData/Trailer_2_Slaps.Trailer_2_Slaps", "Alias": "/FortniteVKCreateUGC/Game/Vehicles/FORT_Vehicles_01/TextureData/Trailer_2_Slaps" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/GrappleGloves/Environmental/GrappleGloveToolBox/B_Chest_Athena_GrappleGlove_Toolbox.B_Chest_Athena_GrappleGlove_Toolbox_C", "Alias": "/FortniteVKCreateUGC/GrappleGloves/Environmental/GrappleGloveToolBox/B_Chest_Athena_GrappleGlove_Toolbox" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/GrappleGloves/Environmental/GrappleGloveToolBox/Meshes/Grapple_Glove_Toolbox.Grapple_Glove_Toolbox", "Alias": "/FortniteVKCreateUGC/GrappleGloves/Environmental/GrappleGloveToolBox/Meshes/Grapple_Glove_Toolbox" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/GrappleGloves/Items/GrappleGloves/BGA_Weapon_GrappleGloves_AttachmentPoint.BGA_Weapon_GrappleGloves_AttachmentPoint_C", "Alias": "/FortniteVKCreateUGC/GrappleGloves/Items/GrappleGloves/BGA_Weapon_GrappleGloves_AttachmentPoint" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/GrappleParent/GrappleParent/BGA_GrappleParent_AttachmentPoint.BGA_GrappleParent_AttachmentPoint_C", "Alias": "/FortniteVKCreateUGC/GrappleParent/GrappleParent/BGA_GrappleParent_AttachmentPoint" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/PortAShackGameplay/Items/BuildingPieces/Apollo_Fortilla_Wall_01_PortAShack.Apollo_Fortilla_Wall_01_PortAShack_C", "Alias": "/FortniteVKCreateUGC/PortAShackGameplay/Items/BuildingPieces/Apollo_Fortilla_Wall_01_PortAShack" },
@@ -3294,16 +3344,10 @@
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_RockBoostPickup/Meshes/BoostPad_02_Mat.BoostPad_02_Mat", "Alias": "/FortniteVKCreateUGC/CRD_RockBoostPickup/Meshes/BoostPad_02_Mat" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_RockBoostPickup/Meshes/BoostPad_Small_02_SM.BoostPad_Small_02_SM", "Alias": "/FortniteVKCreateUGC/CRD_RockBoostPickup/Meshes/BoostPad_Small_02_SM" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_RockBoostPickup/Meshes/BoostPad_Small_SM.BoostPad_Small_SM", "Alias": "/FortniteVKCreateUGC/CRD_RockBoostPickup/Meshes/BoostPad_Small_SM" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Athena/Apollo/Environments/BuildingActors/MountainBase/Walls/MountainBase_Wall_01.MountainBase_Wall_01_C", "Alias": "/FortniteVKCreateUGC/Game/Athena/Apollo/Environments/BuildingActors/MountainBase/Walls/MountainBase_Wall_01" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Athena/BuildingActors/Props/Building/ActorBlueprints/Containers/Athena_Prop_Forest_Pile_01.Athena_Prop_Forest_Pile_01_C", "Alias": "/FortniteVKCreateUGC/Game/Athena/BuildingActors/Props/Building/ActorBlueprints/Containers/Athena_Prop_Forest_Pile_01" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Athena/Items/Cosmetics/Characters/CID_172_Athena_Commando_F_SharpDresser.CID_172_Athena_Commando_F_SharpDresser", "Alias": "/FortniteVKCreateUGC/Game/Athena/Items/Cosmetics/Characters/CID_172_Athena_Commando_F_SharpDresser" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Building/ActorBlueprints/Deco/VinderSign.VinderSign_C", "Alias": "/FortniteVKCreateUGC/Game/Building/ActorBlueprints/Deco/VinderSign" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Building/ActorBlueprints/Prop/Prop_WarningSign_02.Prop_WarningSign_02_C", "Alias": "/FortniteVKCreateUGC/Game/Building/ActorBlueprints/Prop/Prop_WarningSign_02" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Building/ActorBlueprints/Prop/Stage_DJ_Booth_SkiClub.Stage_DJ_Booth_SkiClub_C", "Alias": "/FortniteVKCreateUGC/Game/Building/ActorBlueprints/Prop/Stage_DJ_Booth_SkiClub" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Environments/Meshes/Glass/Materials/Glass_version_02/MI_CP_GlassGallery_Pink.MI_CP_GlassGallery_Pink", "Alias": "/FortniteVKCreateUGC/Game/Creative/Environments/Meshes/Glass/Materials/Glass_version_02/MI_CP_GlassGallery_Pink" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Environments/Props/Boxes/Meshes/Prop_Equipment_Crate_01_Searched.Prop_Equipment_Crate_01_Searched", "Alias": "/FortniteVKCreateUGC/Game/Environments/Props/Boxes/Meshes/Prop_Equipment_Crate_01_Searched" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Environments/Props/Boxes/Meshes/Prop_Equipment_Crate_02_Searched.Prop_Equipment_Crate_02_Searched", "Alias": "/FortniteVKCreateUGC/Game/Environments/Props/Boxes/Meshes/Prop_Equipment_Crate_02_Searched" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Gadgets/Assets/GlowTorch/M_Muzzle_Soft_Flare_White_Inst.M_Muzzle_Soft_Flare_White_Inst", "Alias": "/FortniteVKCreateUGC/Game/Gadgets/Assets/GlowTorch/M_Muzzle_Soft_Flare_White_Inst" }
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Environments/Props/Boxes/Meshes/Prop_Equipment_Crate_02_Searched.Prop_Equipment_Crate_02_Searched", "Alias": "/FortniteVKCreateUGC/Game/Environments/Props/Boxes/Meshes/Prop_Equipment_Crate_02_Searched" }
 		]
 	},
 	"AssetAliasFolders":  {
@@ -3433,12 +3477,42 @@
 		"=": [
 			{
 				"$type": "ValkyrieMenuRules",
-				"MenuName": "LevelEditor.LevelEditorToolBar.AssetsToolBar", 
-				"AllowList": [ "SaveAllLevels", "Create", "Content", "AddContent", "ValkyrieProjectMenu", "OpenVsCodeButton" ]
+				"MenuName": "MainFrame.MainMenu.File",
+				"AllowList": [ "SaveAsset", "SaveAssetAs", "ConnectToSourceControl" ]
 			},
 			{
 				"$type": "ValkyrieMenuRules",
-				"MenuName": "LevelEditor.LevelEditorToolBar.PlayToolBar", 
+				"MenuName": "MainFrame.MainMenu.Edit",
+				"AllowList": [ "Undo", "Redo", "UndoHistory" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "MainFrame.MainMenu.Asset",
+				"AllowList": [ "FindInContentBrowser", "ViewReferences", "Reimport", "Reimport_0", "Reimport_1", "Reimport_2", "Reimport_3" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "MainFrame.MainMenu.Window",
+				"AllowList": [ "LoadLayout", "OverrideLayout", "RemoveLayout", "FullscreenSeparator", "ToggleFullscreen" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "MainFrame.MainMenu.Tools",
+				"AllowList": [ "ViewChangelists", "SubmitContent", "SyncContent", "ConnectToSourceControl" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "MainFrame.MainMenu.Help",
+				"AllowList": [ "OpenDocumentation", "VisitEpicGamesDotCom", "CreditsUnrealEd", "AboutUnrealEd" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.LevelEditorToolBar.AssetsToolBar",
+				"AllowList": [ "SaveAllLevels", "Create", "Content", "AddContent", "OpenFabWindow", "OpenVsCodeButton", "ValkyrieProjectMenu", "ToggleFeatureLevelPreview", "ValkyriePlay", "LaunchCombo", "ValkyrieStartGame", "PlayCombo", "ValkyrieStopGame", "StopCombo", "UploadSpinner", "ValkyrieRefresh", "ValkyrieRefreshVerse", "ValkyrieOpenGameView" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.LevelEditorToolBar.PlayToolBar",
 				"AllowList": [ "ValkyriePlay" ]
 			},
 			{
@@ -3448,12 +3522,12 @@
 			},
 			{
 				"$type": "ValkyrieMenuRules",
-				"MenuName": "StatusBar.ToolBar.DDC", 
+				"MenuName": "StatusBar.ToolBar.DDC",
 				"DenyList": [ "ChangeSettings" ]
 			},
 			{
 				"$type": "ValkyrieMenuRules",
-				"MenuName": "LevelEditor.LevelViewportToolBar.Options", 
+				"MenuName": "LevelEditor.LevelViewportToolBar.Options",
 				"AllowList": [
 					"ToggleRealTime",
 					"DisableRealtimeOverride",
@@ -3473,7 +3547,7 @@
 			},
 			{
 				"$type": "ValkyrieMenuRules",
-				"MenuName": "UnrealEd.ViewportToolbar.View", 
+				"MenuName": "UnrealEd.ViewportToolbar.View",
 				"AllowList": [
 					"LitMode",
 					"UnlitMode",
@@ -3484,12 +3558,13 @@
 					"CollisionPawn",
 					"CollisionVisibility",
 					"VisualizeNaniteViewMode",
-					"VisualizeLumenViewMode"
+					"VisualizeLumenViewMode",
+					"VisualizeVirtualShadowMapViewMode"
 				]
 			},
 			{
 				"$type": "ValkyrieMenuRules",
-				"MenuName": "LevelEditor.LevelViewportToolbar.Show", 
+				"MenuName": "LevelEditor.LevelViewportToolbar.Show",
 				"AllowList": [ 
 					"UseDefaultShowFlags",
 					"Common_AntiAliasing",
@@ -3507,6 +3582,598 @@
 					"Common_StaticMeshes",
 					"Common_Translucency"
 				]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.MainMenu",
+				"AllowList": [
+					"File",
+					"Edit",
+					"Window",
+					"Tools",
+					"Verse",
+					"Build",
+					"Select",
+					"Help"
+				]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.MainMenu.File",
+				"AllowList": [ "NewLevel", "OpenLevel", "RecentLevelsSubMenu", "Save", "SaveAs", "SaveAll", "Exit", "ChooseFilesToSave", "ValkyrieOpenProject", "ValkyrieIslandImport" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.MainMenu.Edit",
+				"AllowList": [ "Undo", "Redo", "UndoHistory", "Cut", "Copy", "Paste", "Duplicate", "Delete", "EditorPreferencesMenu" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.MainMenu.Window",
+				"AllowList": [ "LoadLayout", "OverrideLayout", "RemoveLayout", "FullscreenSeparator", "ToggleFullscreen", "EnableMenuEditing", "OpenEmporiumTab", "ToggleValkyrieMode", "ToggleValkyrieRestrictiveMode" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.MainMenu.Tools",
+				"AllowList": [ "ViewChangelists", "SubmitContent", "SyncContent", "ConnectToSourceControl", "ChangeSourceControlSettings", "ValkyrieProjectSize" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.MainMenu.Verse",
+				"AllowList": [ "VisualVerseTab", "VerseLog", "OpenVSCode", "BuildVerse" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.MainMenu.Build",
+				"AllowList": [ "BuildHLODs", "BuildAllLandscape", "ValkyrieExportProjectLocalization" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.MainMenu.Select",
+				"AllowList": [ "SelectAll", "SelectNone", "InvertSelection", "SelectAllActorsOfSameClass", "FocusViewportToSelection", "SelectImmediateChildren", "SelectAllDescendants", "SelectRelevantLights", "SelectAllLights", "SelectStationaryLightsExceedingOverlap", "SelectStaticMeshesOfSameClass", "SelectStaticMeshesAllClasses", "SelectSkeletalMeshesOfSameClass", "SelectSkeletalMeshesAllClasses", "SelectAllWithSameMaterial" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.MainMenu.Help",
+				"AllowList": [ "BrowseDocumentation", "BrowseViewportControls", "VisitEpicGamesDotCom", "CreditsUnrealEd", "AboutUnrealEd", "ValkyrieFeedback" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.LevelEditorToolBar.AddQuickMenu",
+				"AllowList": [
+					"Basic",
+					"Lights",
+					"Shapes",
+					"Cinematic",
+					"Volumes",
+					"Visual",
+					"OpenPlaceActors"
+				]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.LevelEditorToolBar.AddQuickMenu.Basic",
+				"AllowList": [ "Actor", "PointLight" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.LevelEditorToolBar.AddQuickMenu.Lights",
+				"AllowList": [ "DirectionalLight", "PointLight", "SpotLight", "SkyLight", "RectLight" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.LevelEditorToolBar.AddQuickMenu.Shapes",
+				"AllowList": [ "Cone", "Cube", "Cylinder", "Plane", "Sphere" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.LevelEditorToolBar.AddQuickMenu.Cinematic",
+				"AllowList": [ "CameraShakeSourceActor", "CineCameraActor" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.LevelEditorToolBar.AddQuickMenu.Volumes",
+				"AllowList": [ "BlockingVolume", "FortUndergroundVolume", "FortWaterBodyExclusionVolume", "PostProcessVolume" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.LevelEditorToolBar.AddQuickMenu.Visual",
+				"AllowList": [ "PostProcessVolume", "SkyAtmosphere", "ExponentialHeightFog", "DecalActor" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.AnimationEditor.MainMenu.Asset",
+				"AllowList": [ "ExportAsset", "AddLoopingInterpolation", "RemoveBoneTracks" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.AnimationEditor.ToolBar",
+				"AllowList": [
+					"SaveAsset",
+					"FindInContentBrowser",
+					"PreviewMesh",
+					"CreateAsset",
+					"ReimportAnimation",
+					"ExportAsset",
+					"MakeStaticMesh",
+					"EditInSequencer"
+				]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.AnimationBlueprintEditor.MainMenu",
+				"AllowList": [ "File", "Edit", "Asset", "Window", "Help" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.AnimationBlueprintEditor.MainMenu.File",
+				"AllowList": [ "SaveAsset", "SaveAll", "CompileBlueprint", "ReparentBlueprint" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.AnimationBlueprintEditor.MainMenu.Edit",
+				"AllowList": [ "Undo", "Redo", "UndoHistory" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.AnimationBlueprintEditor.MainMenu.Asset",
+				"AllowList": [ "FindInContentBrowser" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.AnimationBlueprintEditor.MainMenu.Tools",
+				"AllowList": [ "PreviewMesh", "CreateAsset", "MakeStaticMesh" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.AnimationBlueprintEditor.MainMenu.Window",
+				"AllowList": [ "ResetLayout", "SaveLayout", "FullscreenSeparator", "ToggleFullscreen" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.AnimationBlueprintEditor.MainMenu.Help",
+				"AllowList": [ "OpenDocumentation", "VisitEpicGamesDotCom", "CreditsUnrealEd", "AboutUnrealEd" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.AnimationBlueprintEditor.ToolBar.DefaultsName",
+				"AllowList": [ "Compile", "SaveAsset", "FindInContentBrowser", "EditGlobalOptions", "EditClassDefaults", "FindInBlueprint", "ToggleHideUnrelatedNodes", "HideUnrelatedNodesOptions", "Diff" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.AnimationBlueprintEditor.ToolBar.GraphName",
+				"AllowList": [ "Compile", "SaveAsset", "FindInContentBrowser", "EditGlobalOptions", "EditClassDefaults", "FindInBlueprint", "ToggleHideUnrelatedNodes", "HideUnrelatedNodesOptions", "Diff" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.MaterialInstanceEditor.ToolBar",
+				"AllowList": [ "SaveAsset", "FindInContentBrowser", "Apply", "Hierarchy" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.SkeletonEditor.ToolBar",
+				"AllowList": [ "SaveAsset", "FindInContentBrowser", "ImportMesh", "PreviewMesh", "CreateAsset", "MakeStaticMesh", "PreviewAnimation" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "SkeletonTree.NewMenu",
+				"AllowList": [ "AddSocket", "VirtualBones" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "SkeletonTree.FilterMenu",
+				"AllowList": [ "ShowRetargeting", "FilteringFlattensHierarchy", "HideParentsWhenFiltering", "ShowDebugVisualization", "ShowAllBones", "ShowMeshBones", "ShowLODBones", "ShowWeightedBones", "HideBones", "ShowActiveSockets", "ShowMeshSockets", "ShowSkeletonSockets", "ShowAllSockets", "HideSockets" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.SkeletalMeshEditor.ToolBar",
+				"AllowList": [ "SaveAsset", "FindInContentBrowser", "ImportMesh", "PreviewMesh", "CreateAsset", "MakeStaticMesh", "PreviewAnimation", "ReimportMesh" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "DaySequence.ViewportToolbar",
+				"AllowList": [ "DaySequencePreviewTime" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "Sequencer.MainToolBar",
+				"AllowList": [ "Save", "FindInContentBrowser", "CreateCamera", "Actions", "ViewOptions", "PlaybackOptions", "KeyGroup", "AutoChange", "ToggleAutoKeyEnabled", "AllowEditsMode", "ToggleIsSnapEnabled", "SnapOptions", "PlayRate", "ToggleShowCurveEditor" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "ContentBrowser.FolderContextMenu",
+				"DenyList": [ "ValidateAssetsPath", "ViewSizeMap", "ViewAssetAudit", "ViewShaderCookStatistics" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "ContentBrowser.AssetViewOptions",
+				"DenyList": [ "ShowCppClasses", "ShowDevelopersContent", "ShowEngineFolder", "ShowPluginFolder", "OrganizeFolders", "PathViewFilters" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "ContentBrowser.AssetContextMenu",
+				"DenyList": [ "ManageCollections", "ViewAssetAudit", "ViewShaderCookStatistics", "ViewSizeMap", "OpenInTakeRecorder_Label", "RecordIntoTakeRecorder_Label" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "ContentBrowser.AssetContextMenu.FortItemDefinition",
+				"DenyList": [ "ItemDef_FindInPlaylists" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "ContentBrowser.AssetContextMenu.FortPlaysetItemDefinition",
+				"DenyList": [ "AssetAction_CheckoutPlaysetRelatedFiles", "AssetAction_GenerateAllPlaysetsInTheGame", "AssetAction_GeneratePlayset", "AssetAction_SaveAllPlaysets", "AssetAction_SavePlaysets", "AssetAction_ValidateAllPlaysets", "AssetAction_ValidatePlaysets" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "ContentBrowser.AssetContextMenu.FortPlaysetPropItemDefinition",
+				"DenyList": [ "AssetAction_GenerateAllPlaysetPropThumbnailsInTheGame", "AssetAction_GenerateAllPlaysetsInTheGame", "AssetAction_GeneratePlaysetPropThumbnails" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "ContentBrowser.AddNewContextMenu",
+				"DenyList": [ "GetContent", "GetMegascans" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "ContentBrowser.AssetContextMenu.SoundWave",
+				"DenyList": [ "SoundWave_CreateImpulseResponse", "SoundWave_CreateTimeSynthClip", "SoundWave_CreateTimeSynthClipSet", "TimeSynthSoundWaveAsset", "SoundWave_CreateMotoSynthSource", "SoundWave_CreateSoundCueTemplate", "SoundWave_CreateWaveformEditor", "SoundWave_CreateDialogue" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "ContentBrowser.AssetContextMenu.AssetActionsSubMenu",
+				"DenyList": [ "FortCreateHotfix", "FortHostUI" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "ContentBrowser.AssetContextMenu.AnimSequence",
+				"DenyList": [ "IKRetargetAnimSubmenu", "RetargetAnimSubmenu" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "ContentBrowser.AssetContextMenu.Skeleton",
+				"DenyList": [ "Skeleton_Retarget" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "ContentBrowser.AssetContextMenu.StaticMesh",
+				"DenyList": [ "StaticMesh_NaniteMenu" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "ContentBrowser.AssetContextMenu.World.AssetActionsSubMenu",
+				"DenyList": [ "Export" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.ActorContextMenu",
+				"AllowList": [ "FindInContentBrowser", "FocusViewportToSelection", "GoHere", "SnapCameraToObject", "SnapObjectToCamera", "SelectSubMenu", "EditSubMenu", "VisibilitySubMenu", "AddActor", "ReplaceActor", "ActorAttachToSubMenu", "DetachFromParent", "TransformSubMenu", "PivotSubMenu", "GroupMenu", "meshPerfEntry", "DeviceScriptsCopyReference", "OpenUVEditor", "CopyActorFilePathtoClipboard", "SaveActor" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.ActorContextMenu.LevelSubMenu",
+				"DenyList": [ "LevelInstanceSetCurrent", "CreatePackedLevelBlueprint", "UpdatePackedBlueprint" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.ActorContextMenu.AddActor",
+				"DenyList": [ "RectLight", "PlayerStart", "Trigger", "RuntimeVirtualTextureVolume" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.ActorContextMenu.ReplaceActor",
+				"DenyList": [ "RectLight", "PlayerStart", "Trigger", "RuntimeVirtualTextureVolume" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.LevelEditorSceneOutliner.ContextMenu.AddActor",
+				"DenyList": [ "RectLight", "PlayerStart", "Trigger", "RuntimeVirtualTextureVolume" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.LevelEditorSceneOutliner.ContextMenu.ReplaceActor",
+				"DenyList": [ "RectLight", "PlayerStart", "Trigger", "RuntimeVirtualTextureVolume" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.LevelEditorSceneOutliner.ContextMenu.LevelSubMenu",
+				"DenyList": [ "LevelInstanceSetCurrent", "CreatePackedLevelBlueprint", "UpdatePackedBlueprint" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.EmptySelectionContextMenu.AddActor",
+				"DenyList": [ "RectLight", "PlayerStart", "Trigger", "RuntimeVirtualTextureVolume" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.WidgetBlueprintEditor.ToolBar.DesignerName",
+				"AllowList": [ "Compile", "SaveAsset", "FindInContentBrowser", "EditGlobalOptions", "EditClassDefaults" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.WidgetBlueprintEditor.MainMenu",
+				"AllowList": [ "File", "Edit", "Asset", "Window", "Help" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.WidgetBlueprintEditor.MainMenu.File",
+				"bExtenders": true,
+				"AllowList": [ "SaveAsset", "SaveAll", "CompileBlueprint", "ReparentBlueprint" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.WidgetBlueprintEditor.MainMenu.Edit",
+				"AllowList": [ "Undo", "Redo", "UndoHistory" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.WidgetBlueprintEditor.MainMenu.Asset",
+				"AllowList": [ "FindInContentBrowser", "SetImageAsThumbnail", "ClearCustomThumbnail" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.WidgetBlueprintEditor.MainMenu.Window",
+				"bExtenders": true,
+				"AllowList": [ "ResetLayout", "SaveLayout", "FullscreenSeparator", "ToggleFullscreen" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.WidgetBlueprintEditor.MainMenu.Help",
+				"bExtenders": true,
+				"AllowList": [ "OpenDocumentation", "VisitEpicGamesDotCom", "CreditsUnrealEd", "AboutUnrealEd" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.BlueprintEditor.ToolBar.DefaultsName",
+				"AllowList": [ "Compile", "SaveAsset", "FindInContentBrowser", "EditGlobalOptions", "EditClassDefaults" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.BlueprintEditor.ToolBar.GraphName",
+				"AllowList": [ "Compile", "SaveAsset", "FindInContentBrowser", "EditGlobalOptions", "EditClassDefaults" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.LevelEditorToolBar.OpenBlueprint",
+				"AllowList": [ "CreateBlankBlueprintClass", "ConvertSelectionToBlueprint", "OpenBlueprintClass" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.LevelEditorToolBar.LevelToolbarQuickSettings",
+				"AllowList": [ "AllowTranslucentSelection", "AllowGroupSelection", "StrictBoxSelect", "TransparentBoxSelect", "ShowTransformWidget", "Scalability", "ToggleHideViewportUI", "FeatureLevelPreview" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.BlueprintEditor.MainMenu",
+				"AllowList": [ "File", "Edit", "Asset", "Window", "Help" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.BlueprintEditor.MainMenu.File",
+				"AllowList": [ "SaveAsset", "SaveAll", "CompileBlueprint", "ReparentBlueprint" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.BlueprintEditor.MainMenu.Edit",
+				"AllowList": [ "Undo", "Redo", "UndoHistory" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.BlueprintEditor.MainMenu.Asset",
+				"AllowList": [ "FindInContentBrowser" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.BlueprintEditor.MainMenu.Window",
+				"bExtenders": true,
+				"AllowList": [ "ResetLayout", "SaveLayout", "FullscreenSeparator", "ToggleFullscreen" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.BlueprintEditor.MainMenu.Help",
+				"bExtenders": true,
+				"AllowList": [ "OpenDocumentation", "VisitEpicGamesDotCom", "CreditsUnrealEd", "AboutUnrealEd" ]
+			}
+		]
+	},
+	"TabManagerRules": {
+		"=": [
+			{
+				"$type": "ValkyrieTabManagerRules",
+				"TabManagerName": "Global",
+				"AllowList": [
+					"ContentBrowserTab1",
+					"ContentBrowserTab2",
+					"ContentBrowserTab3",
+					"ContentBrowserTab4",
+					"EditorSettings",
+					"FabTab",
+					"LevelEditor",
+					"MessageLog",
+					"OutputLog",
+					"ReferenceViewer",
+					"SourceControlChangelists",
+					"StandaloneToolkit",
+					"StartPage",
+					"UndoHistory",
+					"ValkyrieProjectSettingsEditor",
+					"ValkyrieProjectSize",
+					"VerseExplorerTab"
+				]
+			},
+			{
+				"$type": "ValkyrieTabManagerRules",
+				"TabManagerName": "LevelEditor",
+				"AllowList": [
+					"ContentBrowserTab1",
+					"ContentBrowserTab2",
+					"ContentBrowserTab3",
+					"ContentBrowserTab4",
+					"FabTab",
+					"LevelEditorSceneOutliner",
+					"LevelEditorSelectionDetails",
+					"LevelEditorSelectionDetails2",
+					"LevelEditorSelectionDetails3",
+					"LevelEditorSelectionDetails4",
+					"LevelEditorStatsViewer",
+					"LevelEditorToolBar",
+					"LevelEditorViewport",
+					"LevelEditorViewport_Clone1",
+					"LevelEditorViewport_Clone2",
+					"LevelEditorViewport_Clone3",
+					"MessageLog",
+					"OutputLog",
+					"PlacementBrowser",
+					"ReferenceViewer",
+					"Sequencer",
+					"SequencerGraphEditor",
+					"SizeMap",
+					"VerticalModeToolbar",
+					"TopLeftModeTab",
+					"BottomLeftTabID",
+					"TopRightModeTab",
+					"BottomRightModeTab",
+					"ValkyrieProjectSize",
+					"VerseExplorerTab",
+					"WorldBrowserComposition",
+					"WorldBrowserDetails",
+					"WorldSettingsTab",
+					"PoseTab",
+					"MotionTrailTab",
+					"SnapperTab",
+					"ControlRigOutlinerTab",
+					"ControlRigDetailsTab",
+					"ControlRigSpacePicker"
+				]
+			},
+			{
+				"$type": "ValkyrieTabManagerRules",
+				"TabManagerName": "MaterialInstanceEditor",
+				"AllowList": [
+					"MaterialInstanceEditor_Preview",
+					"MaterialInstanceEditor_MaterialProperties",
+					"MaterialInstanceEditor_MaterialLayerProperties",
+					"MaterialInstanceEditor_PreviewSettings"
+				]
+			},
+			{
+				"$type": "ValkyrieTabManagerRules",
+				"TabManagerName": "AnimationEditor",
+				"AllowList": [
+					"AnimAssetPropertiesTab",
+					"DetailsTab",
+					"SkeletonTreeView",
+					"Viewport",
+					"Viewport1",
+					"Viewport2",
+					"Viewport3",
+					"AdvancedPreviewTab",
+					"PersonaSequenceRecorderSettings",
+					"SequenceBrowser",
+					"AnimCurveViewerTab"
+				]
+			},
+			{
+				"$type": "ValkyrieTabManagerRules",
+				"TabManagerName": "AnimationBlueprintEditor",
+				"AllowList": [
+					"MyBlueprint",
+					"GraphEditor",
+					"Inspector",
+					"CompilerResults",
+					"SkeletonTreeView",
+					"Viewport",
+					"Viewport1",
+					"Viewport2",
+					"Viewport3",
+					"AdvancedPreviewTab",
+					"PersonaSequenceRecorderSettings",
+					"SequenceBrowser",
+					"AnimCurveViewerTab",
+					"AnimBlueprintPreviewEditor",
+					"AnimBlueprintParentPlayerEditor",
+				]
+			},
+			{
+				"$type": "ValkyrieTabManagerRules",
+				"TabManagerName": "SkeletalMeshEditor",
+				"AllowList": [
+					"AnimAssetPropertiesTab",
+					"DetailsTab",
+					"SkeletonTreeView",
+					"Viewport",
+					"Viewport1",
+					"Viewport2",
+					"Viewport3",
+					"AdvancedPreviewTab",
+					"PersonaSequenceRecorderSettings",
+					"MorphTargetsTab"
+				]
+			},
+			{
+				"$type": "ValkyrieTabManagerRules",
+				"TabManagerName": "SkeletonEditor",
+				"AllowList": [
+					"AnimAssetPropertiesTab",
+					"DetailsTab",
+					"SkeletonTreeView",
+					"Viewport",
+					"Viewport1",
+					"Viewport2",
+					"Viewport3",
+					"AdvancedPreviewTab",
+					"PersonaSequenceRecorderSettings",
+					"SequenceBrowser",
+					"AnimCurveViewerTab"
+				]
+			},
+			{
+				"$type": "ValkyrieTabManagerRules",
+				"TabManagerName": "BlueprintEditor",
+				"AllowList": [
+					"CompilerResults",
+					"DefaultEditor",
+					"Inspector",
+					"SCSViewport",
+					"ConstructionScriptEditor"
+				]
+			},
+			{
+				"$type": "ValkyrieTabManagerRules",
+				"TabManagerName": "WidgetBlueprintEditor",
+				"AllowList": [
+					"WidgetDetails",
+					"SlatePreview",
+					"SlateHierarchy",
+					"WidgetTemplates",
+					"CompilerResults",
+					"MVVMTab",
+					"ViewModelPanel"
+				]
+			}
+		]
+	},
+	"InputCommandRules": {
+		"=": [
+			{
+				"$type": "ValkyrieInputCommandRules",
+				"BindingContext": "LevelEditor",
+				"DenyList": [ "RecompileGameCode" ]
+			},
+			{
+				"$type": "ValkyrieInputCommandRules",
+				"BindingContext": "LevelViewport",
+				"DenyList": [ "FindInLevelScriptBlueprint" ]
+			},
+			{
+				"$type": "ValkyrieInputCommandRules",
+				"BindingContext": "MainFrame",
+				"DenyList": [ "OpenWidgetReflector" ]
+			},
+			{
+				"$type": "ValkyrieInputCommandRules",
+				"BindingContext": "PlayWorld",
+				"DenyList": [ "Simulate", "RepeatLastPlay" ]
 			}
 		]
 	}
