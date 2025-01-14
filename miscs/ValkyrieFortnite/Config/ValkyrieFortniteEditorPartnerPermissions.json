@@ -1,5 +1,13 @@
 {
-	"$type": "ValkyrieFortniteEditorPermissionSettings",
+	"ValkyrieEditorSettings": {
+		"bShowConsole": true
+	},
+	"ValkyrieProjectSettings": {
+		"bLocalizationEnabled": true,
+		"bAddProjectExternalContentAllowed": true,
+		"bMultiPluginProjectAllowed": true,
+		"bProjectKindExposed": true
+	},
 	"PropertyEditorClassPermissionList": {
 		"+": [
 			{
@@ -12,9 +20,5 @@
 	"PropertyEditorStructPermissionList": {
 		"+": [
 		]
-	},
-	"bMultiPluginProjectAllowed": true,
-	"bProjectKindExposed": true,
-	"bLocalizationEnabled": true,
-	"bAddProjectExternalContentAllowed": true
+	}
 }
