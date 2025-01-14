@@ -13,7 +13,7 @@
 		"DefaultProjectReferencedContent": []
 	},
 	"_comment_ValkyrieBlueprintGraph": "Properties related to BP graphs, which may include data for Anim Graphs, Control Rig, etc.",
-	"ValkyrieBlueprintSettings": {
+	"ValkyrieBlueprintsSettings": {
 		"bEnableBlueprintGraph": false,
 		"AllowedFunctions": [
 		],
@@ -328,6 +328,7 @@
 			"/Script/Engine.SkeletalMesh":						{ "Rules": ["View","Create","Import","Export"] },
 			"/Script/Engine.SkeletalMeshLODSettings":			{ "Rules": ["View","Create"] },
 			"/Script/Engine.Skeleton":							{ "Rules": ["View","Create","Import","Export"] },
+			"/Script/Engine.SoundAttenuation":					{ "Rules": ["View","Create","Import","Public"] },
 			"/Script/Engine.SoundCue":							{ "Rules": ["View","Create","Import","Public"] },
 			"/Script/Engine.SoundWave":							{ "Rules": ["View","Create","Import","Public"] },
 			"/Script/Engine.StaticMesh":						{ "Rules": ["View","Create","Import","Export","Public"] },
@@ -521,6 +522,7 @@
 			"/Script/AudioEditor.SoundCueGraphNode_Root":						{  },
 			"/Script/CRDLevelInstanceRuntime.LevelInstanceItemListComponent":	{  },
 			"/Script/CRD_AudioPlayerRuntime.CreativeAudioComponent":			{  },
+			"/Script/CRD_AudioMixerRuntime.CreativeAudioMixerDevice":			{  },
 			"/Script/CRD_GameStreamRuntime.CreativeGameStreamDeviceComponent":	{  },
 			"/Script/CRD_ModalDialogRuntime.ModalDialogVariant":				{ "Visible": true },
 			"/Script/CRD_ModalDialogUI.CreativeModalDialogAllowedConversionFunction":{  },
@@ -631,6 +633,7 @@
 			"/Script/Engine.AnimSequence":										{ "Visible": true },
 			"/Script/Engine.ArrowComponent":									{ "Visible": true },
 			"/Script/Engine.AssetImportData":									{  },
+			"/Script/Engine.AudioBus":																					{  },
 			"/Script/Engine.AudioComponent":									{  },
 			"/Script/Engine.BillboardComponent":								{  },
 			"/Script/Engine.BlockingVolume":									{ "Visible": true },
@@ -671,6 +674,7 @@
 			"/Script/Engine.LocalLightComponent":								{ "Visible": true },
 			"/Script/Engine.LocationVolume":									{  },
 			"/Script/Engine.MaterialEditorOnlyData":							{  },
+			"/Script/Engine.MaterialBillboardComponent":						{  },
 			"/Script/Engine.MaterialExpression":								{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionCustom":							{ "Deny": true,		"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionMaterialAttributeLayers":			{ "Deny": true,		"Subclasses": "NativeOnly" },
@@ -724,6 +728,7 @@
 			"/Script/Engine.SoundNodeOscillator":								{ "Visible": true },
 			"/Script/Engine.SoundNodeRandom":									{ "Visible": true },
 			"/Script/Engine.SoundNodeWavePlayer":								{ "Visible": true },
+			"/Script/Engine.SoundSourceBus":																			{  },
 			"/Script/Engine.SpatialHashRuntimeGridInfo":						{  },
 			"/Script/Engine.SphereComponent":									{  },
 			"/Script/Engine.SplineComponent":									{  },
@@ -1053,6 +1058,7 @@
 			"/Script/Niagara.MovieSceneNiagaraSystemTrack":						{ "Visible": true },
 			"/Script/Niagara.MovieSceneNiagaraVectorParameterTrack":			{ "Visible": true },
 			"/Script/Niagara.NiagaraActor":										{ "Visible": true },
+			"/Script/Niagara.NiagaraBakerOutputSimCache":						{  },
 			"/Script/Niagara.NiagaraBakerOutputTexture2D":						{  },
 			"/Script/Niagara.NiagaraBakerOutputVolumeTexture":					{  },
 			"/Script/Niagara.NiagaraBakerSettings":								{  },
@@ -1065,9 +1071,11 @@
 			"/Script/Niagara.NiagaraDataInterfaceArrayFloat3":					{ "Visible": true },
 			"/Script/Niagara.NiagaraDataInterfaceArrayFloat4":					{ "Visible": true },
 			"/Script/Niagara.NiagaraDataInterfaceArrayInt32":					{ "Visible": true },
+			"/Script/Niagara.NiagaraDataInterfaceArrayMatrix":					{ "Visible": true },
 			"/Script/Niagara.NiagaraDataInterfaceArrayNiagaraID":				{ "Visible": true },
 			"/Script/Niagara.NiagaraDataInterfaceArrayPosition":				{ "Visible": true },
 			"/Script/Niagara.NiagaraDataInterfaceArrayQuat":					{ "Visible": true },
+			"/Script/Niagara.NiagaraDataInterfaceArrayUInt8":					{ "Visible": true },
 			"/Script/Niagara.NiagaraDataInterfaceAsyncGpuTrace":				{  },
 			"/Script/Niagara.NiagaraDataInterfaceAudioPlayer":					{ "Visible": true },
 			"/Script/Niagara.NiagaraDataInterfaceCamera":						{ "Visible": true },
@@ -1088,7 +1096,7 @@
 			"/Script/Niagara.NiagaraDataInterfaceVectorCurve":					{ "Visible": true },
 			"/Script/Niagara.NiagaraDataInterfaceVectorField":					{ "Visible": true },
 			"/Script/Niagara.NiagaraDataInterfaceVolumeTexture":				{ "Visible": true },
-			"/Script/Niagara.NiagaraEffectType":								{  },
+			"/Script/Niagara.NiagaraEffectType":								{ "Visible": true },
 			"/Script/Niagara.NiagaraEmitter":									{ "Visible": true },
 			"/Script/Niagara.NiagaraFloat":										{  },
 			"/Script/Niagara.NiagaraHalf":										{  },
@@ -1119,12 +1127,27 @@
 			"/Script/NiagaraEditor.NiagaraEditorParametersAdapter":				{  },
 			"/Script/NiagaraEditor.NiagaraEmitterEditorData":					{  },
 			"/Script/NiagaraEditor.NiagaraGraph":								{  },
+			"/Script/NiagaraEditor.NiagaraHierarchyAssignmentInput":			{  },
 			"/Script/NiagaraEditor.NiagaraHierarchyCategory":					{  },
+			"/Script/NiagaraEditor.NiagaraHierarchyDataRefreshContext":			{  },
+			"/Script/NiagaraEditor.NiagaraHierarchyEventHandler":				{  },
+			"/Script/NiagaraEditor.NiagaraHierarchyEventHandlerProperties":		{  },
+			"/Script/NiagaraEditor.NiagaraHierarchyIdentity":					{  },
 			"/Script/NiagaraEditor.NiagaraHierarchyItem":						{  },
 			"/Script/NiagaraEditor.NiagaraHierarchyItemBase":					{  },
+			"/Script/NiagaraEditor.NiagaraHierarchyMenuContext":				{  },
+			"/Script/NiagaraEditor.NiagaraHierarchyModule":						{  },
+			"/Script/NiagaraEditor.NiagaraHierarchyModuleInput":				{  },
+			"/Script/NiagaraEditor.NiagaraHierarchyObjectProperty":				{  },
+			"/Script/NiagaraEditor.NiagaraHierarchyRenderer":					{  },
 			"/Script/NiagaraEditor.NiagaraHierarchyRoot":						{  },
 			"/Script/NiagaraEditor.NiagaraHierarchySection":					{  },
+			"/Script/NiagaraEditor.NiagaraHierarchySimStage":					{  },
+			"/Script/NiagaraEditor.NiagaraHierarchySimStageProperties":			{  },
+			"/Script/NiagaraEditor.NiagaraHierarchySummaryDataRefreshContext":	{  },
 			"/Script/NiagaraEditor.NiagaraHierarchyUserParameter":				{  },
+			"/Script/NiagaraEditor.NiagaraHierarchyUserParameterRefreshContext":{  },
+			"/Script/NiagaraEditor.NiagaraHierarchyViewModelBase":				{  },
 			"/Script/NiagaraEditor.NiagaraMessageData":							{  },
 			"/Script/NiagaraEditor.NiagaraMessageDataText":						{  },
 			"/Script/NiagaraEditor.NiagaraNodeAssignment":						{ "Visible": true },
@@ -1754,7 +1777,7 @@
 			},
 			{
 				"Type": "/Script/Engine.AnimSequence",
-				"AllowList": [ "Interpolation", "RateScale", "AdditiveAnimType", "bLoop", "TargetFrameRate", "ResampledAnimationTrackData", "NumberOfSampledKeys", "NumberOfSampledFrames" ]
+				"AllowList": [ "Interpolation", "RateScale", "AdditiveAnimType", "bLoop", "TargetFrameRate", "ResampledAnimationTrackData", "NumberOfSampledKeys", "NumberOfSampledFrames", "RetargetSourceAsset" ]
 			},
 			{
 				"Type": "/Script/Engine.Actor",
@@ -2285,6 +2308,10 @@
 				"AllowList": [ "FortSplineWaterAudio" ]
 			},
 			{
+				"Type": "/Script/FortniteGame.FortSplineWaterAudioComponent",
+				"AllowList": [ "bAutoActivate" ]
+			},
+			{
 				"Type": "/Script/Water.WaterZone",
 				"AllowList": [ "ZoneExtent", "RenderTargetResolution" ]
 			},
@@ -2359,7 +2386,7 @@
 			},
 			{
 				"Type": "/Script/Engine.SoundWave",
-				"AllowList": [ "NumChannels", "SampleRate", "ImportedSampleRate", "Duration", "TotalSamples", "ModulationSettings" ]
+				"AllowList": [ "NumChannels", "SampleRate", "ImportedSampleRate", "Duration", "TotalSamples", "ModulationSettings", "LoadingBehavior" ]
 			},
 			{
 				"Type": "/Script/AudioModulation.SoundControlBus",
@@ -2368,6 +2395,10 @@
 			{
 				"Type": "/Script/AudioModulation.SoundControlBusMix",
 				"AllowList": [ "MixStages" ]
+			},
+			{
+				"Type": "/Script/Engine.SoundAttenuationSettings",
+				"AllowList": [ "bAttenuate", "DistanceAlgorithm", "AttenuationShapeExtents", "FalloffDistance", "bSpatialize" ]
 			},
 			{
 				"Type": "/Script/Engine.SoundCue",
@@ -2379,7 +2410,7 @@
 			},
 			{
 				"Type": "/Script/MovieSceneTracks.MovieSceneAudioSection",
-				"DenyList": [ "bSuppressSubtitles", "bOverrideAttenuation", "AttenuationSettings" ]
+				"DenyList": [ "bSuppressSubtitles" ]
 			},
 			{
 				"Type": "/CorruptionItems/Gameplay/Items/ReinforcedTrap/Actors/B_Wall_Reinforced_Athena.B_Wall_Reinforced_Athena_C",
@@ -2592,7 +2623,8 @@
 				"AllowList": [ "OwningWaterZone", "UnderwaterPostProcessSettings", "PhysicalMaterial", "WaterMaterial", "WaterHLODMaterial", "WaterLODMaterial",
 					"UnderwaterPostProcessMaterial", "WaterInfoMaterial", "LayerWeightmapSettings", "ShapeDilation", "CollisionHeightOffset", "WaterStaticMeshMaterial",
 					"WaterMeshOverride", "bAlwaysGenerateWaterMeshTiles", "OverlapMaterialPriority", "WaterBodyIslands", "WaterBodyExclusionVolumes",
-					"WaterZoneOverride", "WaterNavAreaClass" ],
+					"WaterZoneOverride", "WaterNavAreaClass", "WaterBodyIslands", "WaterBodyExclusionVolumes", "WaterZoneOverride", "FixedWaterDepth", "WaterNavAreaClass", 
+					"UnderwaterPostProcessMaterial"  ],
 				"DenyList": [],
 				"bAllowListAllSubclassProperties": true
 			},
@@ -2612,6 +2644,13 @@
 			{
 				"Type": "/Script/Water.WaterZone",
 				"AllowList": [ "WaterMesh", "CaptureZOffset", "bHalfPrecisionTexture", "TessellatedWaterMeshExtent", "OverlapPriority", "LocalTessellationExtent" ],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/Water.WaterBodyIsland",
+				"AllowList": [ "WaterCurveSettings", "WaterHeightmapSettings", "WaterWeightmapSettings", "SplineComp", "SelectSplinePoints", "SplinePointDetails", "NoneSelected", "InputKey", "Location", "Rotation",
+					"Scale", "ArriveTangent", "LeaveTangent", "Type" ],
 				"DenyList": [],
 				"bAllowListAllSubclassProperties": true
 			},

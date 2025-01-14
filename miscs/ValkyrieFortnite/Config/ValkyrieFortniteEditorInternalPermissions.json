@@ -2,7 +2,7 @@
 	"bEnableAccessToLegacyContent": true,
 	"bEnableAccessToUnreleasedContent": true,
 
-	"ValkyrieBlueprintSettings": {
+	"ValkyrieBlueprintsSettings": {
 		"bEnableBlueprintGraph": true,
 		"AllowedEnums": {
 			"+": [
@@ -947,7 +947,6 @@
 			"/Script/Engine.PoseLink":									{  },
 			"/Script/FortniteGame.BaseUEFNAnimInstance":				{ "Visible": true },
 			"/Script/FortniteGame.UEFNCustomAgentAnimInstance":			{ "Visible": true },
-			"/Script/LevelSequence.LevelSequenceActor":					{ "Visible": true },
 			"/Script/UnrealEd.EdGraphNode_Comment":						{ "Visible": true },
 			"/Script/ValkyrieCommon.ValkyrieContentWorkerDebugManager":	{ "Visible": true }
 		},
@@ -960,6 +959,29 @@
 			},
 			"SkeletonTree.NewMenu": {
 				"AllowList": [ "AddSocket", "VirtualBones", "CreateTimeBlendProfile", "CreateWeightBlendProfile", "CreateBlendMask" ]
+			},
+			"LevelEditor.MainMenu.Tools": {
+				"AllowList": {
+					"+": [
+						"SpatialMetricsViewer"
+					]
+				}
+			}
+		},
+		"AllowedTabs": {
+			"Global": {
+				"AllowList": {
+					"+": [
+						"SpatialMetricsViewer",
+					]
+				}
+			},
+			"LevelEditor": {
+				"AllowList": {
+					"+": [
+						"SpatialMetricsViewer",
+					]
+				}
 			}
 		}
 	},
