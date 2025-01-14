@@ -293,6 +293,7 @@
 	"_comment_ValkyrieEditorSettings": "Properties related to core editor functionality, restricting editor views/controls, allow lists for assets and classes, etc.",
 	"ValkyrieEditorSettings": {
 		"bShowConsole": false,
+		"bShowValidateProjectMenuEntry": true,
 		"ReadOnlyAssetsPermission" : "All",
 		"_comment_AllowedEditorModes": "The FName defining each editor mode that appears in the toolbar of the level editor",
 		"AllowedEditorModes": [
@@ -1733,6 +1734,7 @@
 			"/Script/Niagara.NiagaraDataInterfaceLandscape":					{ "Visible": true },
 			"/Script/Niagara.NiagaraDataInterfaceMeshRendererInfo":				{ "Visible": true },
 			"/Script/Niagara.NiagaraDataInterfaceParticleRead":					{ "Visible": true },
+			"/Script/Niagara.NiagaraDataInterfaceSocketReader":					{ "Visible": true },
 			"/Script/Niagara.NiagaraDataInterfaceSkeletalMesh":					{ "Visible": true },
 			"/Script/Niagara.NiagaraDataInterfaceSpriteRendererInfo":			{ "Visible": true },
 			"/Script/Niagara.NiagaraDataInterfaceStaticMesh":					{ "Visible": true },
@@ -2074,6 +2076,9 @@
 			"ContentBrowser.AssetContextMenu.AssetActionsSubMenu": {
 				"DenyList": [ "FortCreateHotfix", "FortHostUI", "AssetExtraction_ExtractAssets", "AssetExtraction_ExtractAssetsWizard" ]
 			},
+			"ContentBrowser.AssetContextMenu.AthenaCosmeticItemDefinition": {
+				"DenyList": [ "CosmeticCheatsSubMenu" ]
+			},
 			"ContentBrowser.AssetContextMenu.FortItemDefinition": {
 				"DenyList": [ "ItemDef_FindInPlaylists", "GameplayTags_Edit" ]
 			},
@@ -2096,7 +2101,7 @@
 				"DenyList": [ "ShowCppClasses", "ShowDevelopersContent", "ShowEngineFolder", "ShowPluginFolder", "OrganizeFolders", "PathViewFilters" ]
 			},
 			"ContentBrowser.FolderContextMenu": {
-				"DenyList": [ "ValidateAssetsPath", "ViewSizeMap", "ViewAssetAudit", "ViewShaderCookStatistics", "Plugin", "AssetExtraction_ExtractFolder", "AssetExtraction_ExtractFolderWizard" ]
+				"DenyList": [ "ValidateAssetsPath", "ViewSizeMap", "ViewAssetAudit", "ViewShaderCookStatistics", "Plugin", "AssetExtraction_ExtractFolder", "AssetExtraction_ExtractFolderPrimaryAssets", "AssetExtraction_ExtractFolderWizard" ]
 			},
 			"DaySequence.ViewportToolbar": {
 				"AllowList": [ "DaySequencePreviewTime" ]
@@ -2642,6 +2647,7 @@
 			"LogReferencedContentLoader",
 			"LogVerse",
 			"Cmd",
+			"LogPython",
 			"LogConsoleResponse",
 			"LogUGCLocalization",
 			"LogValkyrieSummary",
@@ -2656,6 +2662,7 @@
 			"CE_Materials",
 			"CE_Modeling",
 			"CE_UEFN",
+			"ConversationIsland",
 			"DaySequence_Starter",
 			"Deserted",
 			"Lighting_Starter",
@@ -2676,7 +2683,8 @@
 			"VKT_Verse_PropHunt",
 			"VKT_Verse_Standup",
 			"VKT_Village",
-			"VerseDeviceStarterGames"
+			"VerseDeviceStarterGames",
+			"VKT_Cane"
 		]
 	},
 	"PropertyEditorClassPermissionList": {
@@ -3408,7 +3416,7 @@
 			},
 			{
 				"Type": "/Script/ValkyrieEditor.ValkyrieProjectSettingsEditorViewModel",
-				"AllowList": [ "Title", "Description", "DocsUrl", "VersePath", "VerseVersion", "UGCLocDescriptor", "AutoLocalizationSettings", "ExperimentalAccessWarning", "bIsUsingSceneGraphSystem" , "bIsUsingExperimentalContent"]
+				"AllowList": [ "Title", "Description", "DocsUrl", "VersePath", "VerseVersion", "UGCLocDescriptor", "AutoLocalizationSettings", "ExperimentalAccessWarning", "bIsUsingSceneGraphSystem", "bIsUsingFirstPersonContent" ]
 			},
 			{
 				"Type": "/Script/Engine.CameraShakeBase",
