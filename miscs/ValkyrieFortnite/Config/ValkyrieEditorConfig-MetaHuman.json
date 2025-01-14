@@ -12,10 +12,13 @@
 			"/Script/MetaHumanFaceContourTracker.MetaHumanFaceContourTrackerAsset":		{ "Rules": ["View","Create"] },
 			"/Script/MetaHumanFaceFittingSolver.MetaHumanFaceFittingSolver":			{ "Rules": ["View","Create"] },
 			"/Script/MetaHumanSequencer.MetaHumanMovieSceneMediaTrack":					{ "Rules": ["View","Create"], "Subclasses": "All" },
-			"/Script/MetaHumanSequencer.MetaHumanAudioTrack":							{ "Rules": ["View","Create"], "Subclasses": "All" }
+			"/Script/MetaHumanSequencer.MetaHumanAudioTrack":							{ "Rules": ["View","Create"], "Subclasses": "All" },
+			"/Script/MetaHumanPerformance.MetaHumanPerformanceMovieSceneAudioTrack":    { "Rules": ["View","Create"] }
 		},
 		"AllowedClasses": {
-			"/Script/MetaHumanUEFNRuntime.MetaHumanComponent":					{ "Visible": true },
+			"/Script/MetaHumanRuntime.MetaHumanCustomizableBodyPart": {},
+			"/Script/MetaHumanRuntime.MetaHumanComponentBase": {},
+			"/Script/MetaHumanUEFNRuntime.MetaHumanComponent": { "Visible": true },
 			"/MetaHumanUEFN/AnimBPs/MetaHuman_ControlRigRigidBody_Template.MetaHuman_ControlRigRigidBody_Template_C": {},
 			"/MetaHumanUEFN/AnimBPs/MetaHuman_ControlRig_Template.MetaHuman_ControlRig_Template_C": {},
 			"/MetaHumanUEFN/AnimBPs/MetaHuman_RigidBody_Template.MetaHuman_RigidBody_Template_C": {},
@@ -50,7 +53,8 @@
 			"/Script/MetaHumanFaceContourTracker.MetaHumanFaceContourTrackerAsset": {  },
 			"/Script/MetaHumanFaceFittingSolver.MetaHumanFaceFittingSolver": 	{  },
 			"/Script/MetaHumanSequencer.MetaHumanMovieSceneMediaTrack": 		{ "Visible": true, "Subclasses": "All" },
-			"/Script/MetaHumanSequencer.MetaHumanAudioTrack": 					{ "Visible": true, "Subclasses": "All" }
+			"/Script/MetaHumanSequencer.MetaHumanAudioTrack": 					{ "Visible": true, "Subclasses": "All" },
+			"/Script/MetaHumanPerformance.MetaHumanPerformanceMovieSceneAudioTrack": { "Visible": true, "Subclasses": "All" }
 		},
 		"AllowedMenus": {
 			"LevelEditor.MainMenu.Window": {
@@ -93,10 +97,19 @@
 	"PropertyEditorClassPermissionList": {
 		"+": [
 			{
+				"Type": "/Script/MetaHumanUEFNRuntime.MetaHumanCustomizableBodyPart",
+				"bAllowListAllProperties": true,
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/MetaHumanRuntime.MetaHumanComponentBase",
+				"bAllowListAllProperties": true,
+				"bAllowListAllSubclassProperties": true
+			},
+			{
 				"Type": "/Script/MetaHumanUEFNRuntime.MetaHumanComponent",
 				"bAllowListAllProperties": true,
-				"bAllowListAllSubclassProperties": true,
-				"DenyList": [ "BodyType" ]
+				"bAllowListAllSubclassProperties": true
 			}
 		]
 	}
