@@ -5,7 +5,6 @@
 	"ValkyrieProjectSettings": {
 		"bLocalizationEnabled": true,
 		"bAddProjectExternalContentAllowed": true,
-		"bRemapLocalContentToReferencedContentAllowed": true,
 		"bMultiPluginProjectAllowed": true,
 		"bProjectKindExposed": true
 	},
