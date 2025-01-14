@@ -1079,6 +1079,12 @@
 				"ClassPath": "/Script/VGameplayRst.VerseTagMarkupComponent",
 				"Visible": "AllowExact",
 				"VisibleOnPin": "Forbid"
+			},
+			{
+				"$type": "ValkyrieClassRulesConfig",
+				"ClassPath": "/Script/ValkyrieCommon.ValkyrieContentWorkerDebugManager",
+				"Visible": "AllowExact",
+				"VisibleOnPin": "Forbid"
 			}
 		]
 	},
@@ -1178,7 +1184,12 @@
 				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Engine.SkeletalMeshComponent",
 				"AllowList": [ "SkeletalMesh", "AnimationData", "SkeletalMeshAsset", "AnimationMode", "AnimClass", "bDisablePostProcessBlueprint" ]
-			}
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/ValkyrieCommon.ValkyrieContentWorkerDebugManager",
+				"AllowList": [ "bCrashContentWorker", "bEmitErrorFromContentWorker" ]
+			},
 		]
 	},
 	"PropertyEditorStructPermissionList": {
