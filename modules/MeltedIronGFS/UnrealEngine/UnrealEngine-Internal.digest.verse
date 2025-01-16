@@ -5,35 +5,282 @@
 # Generated from build: ++Fortnite+Release-33.20-CL-39082670
 #################################################
 
+AINavigation<public> := module {
+  using { /UnrealEngine.com/Temporary/SceneGraph }
+  using { /UnrealEngine.com/Temporary/SpatialMath }
+  using { /Verse.org/Assets }
+  using { /Verse.org/Simulation }
+  navigation_area<native><epic_internal> := class<computes><epic_internal>(asset) {}
+
+  # Defines the costs associated with entering and traversing a specific navigation area
+  navigation_area_cost<native><epic_internal> := struct<concrete> {
+    @editable_number(float) { MinValue := option { 0.000000 } }
+    # Cost incurred when entering this navigation area.
+    EnteringCost<native><public>: float = external {}
+
+    @editable_non_concrete
+    # The navigation area these costs apply to.
+    NavigationArea<native><public>: subtype(navigation_area) = external {}
+
+    @editable_number(float) { MinValue := option { 1.000000 } }
+    # Cost that multiplies the distance traveled inside this navigation area.
+    TravelCostMultiplier<native><public>: float = external {}
+  }
+
+  # Base class for navigation filters to be applied to a navigation query
+  navigation_filter<native><epic_internal> := class<abstract> {}
+
+  # Navigation filter that will assign custom costs to each listed navigation areas
+  navigation_filter_area<native><epic_internal> := class<concrete>(navigation_filter) {
+    AreaCostOverrides<native><public>: []navigation_area_cost = external {}
+  }
+
+  # Result of a navigation request
+  navigation_find_path_result<native><epic_internal> := enum {
+    # The destination cannot be associated to the query's navigation_layer.
+    DestinationNonNavigable
+
+    # There is no path that connect the start and end location using the query parameters.
+    DestinationUnreachable
+
+    # The request contains invalid or missing data.
+    InvalidRequest
+
+    # Search limit was reached before a path could be found. The path leads to the closest location to the destination that the search had time to visit.
+    PartialReachedLimit
+
+    # The destination is unreachable. The path leads to the reachable location closest to the destination.
+    PartialUnreachable
+
+    # A valid navigation path was found.
+    PathFound
+
+    # The origin location cannot be associated to the query's navigation_layer.
+    StartLocationNonNavigable
+  }
+
+  # Navigation layers are various representations of the world that can be used by agents of different shapes and abilities
+  navigation_layer<native><epic_internal> := class<abstract> {}
+
+  # Use the most granular air field available
+  navigation_layer_air_auto<native><epic_internal> := class<concrete><final>(navigation_layer) {}
+
+  # Auto select a ground layer based on the user's collision component
+  navigation_layer_ground_auto<native><epic_internal> := class<concrete><final>(navigation_layer) {}
+
+  # Contains the resulting path and status from a find path query.
+  navigation_path<native><epic_internal> := class<final><epic_internal> {
+    # Returns the points that form the path. Fails if the path is invalid.
+    GetPathPoints<native><public>()<transacts><decides>: []navigation_path_point
+
+    # Whether this path completed successfully or encountered a problem.
+    Result<native><public>: navigation_find_path_result
+  }
+
+  # Describes the location and characteristics of a point along a navigation path.
+  navigation_path_point<native><epic_internal> := struct<concrete> {
+    @editable
+    # Position of the point in the world.
+    Location<native><public>: vector3 = external {}
+  }
+
+  # Defines the parameters of a navigation query such as finding a path or projecting a point.
+  navigation_query<native><epic_internal> := class<concrete><final>(asset) {
+    @editable
+    # If the destination is determined to be unreachable, should the query return a partial path.
+    AllowPartialPath<native><public>: logic = external {}
+
+    NavigationFilters<native><public>: []navigation_filter = external {}
+
+    @editable_number(float) { MinValue := option { 0.000000 } }
+    # Distance from the goal which will be considered close enough for the path to complete.
+    ReachRadius<native><public>: float = external {}
+  }
+
+  @experimental
+  # Component that describes the navigation preferences of this entity and offers helpers to find paths using those preferences.
+  navigation_user_component<native><epic_internal> := class<final><final_super>(component) {
+    @editable
+    # Default navigation query parameters for this entity.
+    DefaultNavigationQuery<native><public>: navigation_query = external {}
+
+    # Finds and returns the path between this entity's location and the target location.
+    FindPath<native><public>(Destination: vector3, ?Query: navigation_query = external {})<suspends>: navigation_path
+
+    OnAddedToScene<native><override>(): void
+
+    OnRemovingFromScene<native><override>(): void
+  }
+}
+
+Abilities<public> := module {
+  using { /UnrealEngine.com/Temporary/SceneGraph }
+  ability<native><public> := class {
+    Activate<native><protected>()<suspends>: void
+
+    GameplayAbilityPath<native><epic_internal>: ?string = external {}
+  }
+
+  @experimental
+  ability_component<native><public> := class<final_super>(component) {
+    ActivateAbility<native><epic_internal>(Ability: ability): void
+
+    ActivateAbility<native><public>(Ability: subtype(ability)): void
+
+    GiveAbility<native><epic_internal>(Ability: ability)<transacts><decides>: void
+
+    GiveAbility<native><public>(Ability: subtype(ability))<transacts><decides>: void
+  }
+
+  @attribscope_data
+  @customattribhandler
+  ability_link<epic_internal> := class<computes>(attribute) {
+    Name<epic_internal>: string = external {}
+  }
+}
+
 using { /UnrealEngine.com/Temporary/SpatialMath }
-using { /Verse.org/Assets }
 # Module import path: /UnrealEngine.com/Assets
 Assets<public> := module {
+  PlaySound<native><epic_internal>(Asset: sound, ?StartDelay: float = external {})<transacts>: cancelable
+
+  PlaySoundAtLocation<native><epic_internal>(
+    Asset: sound,
+    Position: vector3,
+    ?Rotation: rotation = external {},
+    ?StartDelay: float = external {}
+  )<transacts>: cancelable
+
   SpawnParticleSystem<native><public>(
     Asset: particle_system,
     Position: vector3,
     ?Rotation: rotation = external {},
     ?StartDelay: float = external {}
   )<transacts>: cancelable
+
+  play_sound_subscription<native><epic_internal> := class(cancelable) {
+    Cancel<native><override>()<transacts>: void
+  }
+
+  spawn_particle_system_subscription<native><epic_internal> := class(cancelable) {
+    Cancel<native><override>()<transacts>: void
+  }
 }
 
 using { /UnrealEngine.com/Temporary/SceneGraph }
+using { /Verse.org/Assets }
 # Module import path: /UnrealEngine.com/BasicShapes
 BasicShapes<public> := module {
   @experimental
-  cone<public> := class<final><public>(mesh_component) {}
+  cone<public> := class<final><public>(mesh_component) {
+    Mesh<override>: mesh = external {}
+  }
 
   @experimental
-  cube<public> := class<final><public>(mesh_component) {}
+  cube<public> := class<final><public>(mesh_component) {
+    Mesh<override>: mesh = external {}
+  }
 
   @experimental
-  cylinder<public> := class<final><public>(mesh_component) {}
+  cylinder<public> := class<final><public>(mesh_component) {
+    Mesh<override>: mesh = external {}
+  }
 
   @experimental
-  plane<public> := class<final><public>(mesh_component) {}
+  plane<public> := class<final><public>(mesh_component) {
+    Mesh<override>: mesh = external {}
+  }
 
   @experimental
-  sphere<public> := class<final><public>(mesh_component) {}
+  sphere<public> := class<final><public>(mesh_component) {
+    Mesh<override>: mesh = external {}
+  }
+}
+
+# Module import path: /UnrealEngine.com/ComponentTestSuite
+ComponentTestSuite<public> := module {
+  @experimental
+  @hide_in_editor
+  test_component_key_component_a<native><epic_internal> := class(test_component_key_component_base) {}
+
+  @experimental
+  @hide_in_editor
+  test_component_key_component_b<native><epic_internal> := class(test_component_key_component_base) {}
+
+  @experimental
+  @hide_in_editor
+  test_component_key_component_base<native><epic_internal> := class<final_super>(component) {}
+}
+
+# Module import path: /UnrealEngine.com/EntityTestSuite
+EntityTestSuite<public> := module {
+  @hide_in_editor
+  @experimental
+  derived_test_component<native><epic_internal> := class(test_component) {}
+
+  @hide_in_editor
+  @experimental
+  lambda_test_component<native><epic_internal> := class<final_super>(component) {
+    OnAddedToSceneInternal<native><override>(): void
+
+    OnBeginSimulationInternal<native><override>(): void
+
+    OnEndSimulationInternal<native><override>(): void
+
+    OnInitializedInternal<native><override>(): void
+
+    OnRemovingFromSceneInternal<native><override>(): void
+
+    OnSimulate<override>()<suspends>: void = external {}
+
+    OnUninitializingInternal<native><override>(): void
+  }
+
+  @hide_in_editor
+  @experimental
+  lambda_test_component_2<native><epic_internal> := class<final_super>(component) {
+    OnAddedToSceneInternal<native><override>(): void
+
+    OnBeginSimulationInternal<native><override>(): void
+
+    OnEndSimulationInternal<native><override>(): void
+
+    OnInitializedInternal<native><override>(): void
+
+    OnRemovingFromSceneInternal<native><override>(): void
+
+    OnSimulate<override>()<suspends>: void = external {}
+
+    OnUninitializingInternal<native><override>(): void
+  }
+
+  @hide_in_editor
+  @experimental
+  second_derived_test_component<native><epic_internal> := class(test_component) {}
+
+  @hide_in_editor
+  @experimental
+  test_component<native><epic_internal> := class<final_super>(component) {}
+
+  @hide_in_editor
+  @experimental
+  test_replication_component<native><epic_internal> := class<final_super>(component) {}
+
+  @hide_in_editor
+  @experimental
+  test_replication_object<native><epic_internal> := class {}
+}
+
+# Module import path: /UnrealEngine.com/EpicGamesRestricted
+EpicGamesRestricted<public> := module {
+  # Module import path: /UnrealEngine.com/EpicGamesRestricted/Network
+  Network<public> := module {
+    replicated<constructor><epic_internal>(ReplicationArgs: string)<computes>: replicated_attribute = external {}
+
+    @attribscope_data
+    @customattribhandler
+    replicated_attribute<epic_internal> := class<computes><internal>(attribute) {}
+  }
 }
 
 JSON<public> := module {
@@ -61,7 +308,15 @@ JSON<public> := module {
   }
 }
 
+# Module import path: /UnrealEngine.com/Playspace
+Playspace<public> := module {
+  @hide_in_editor
+  @experimental
+  playspace_association_component<native><epic_internal> := class<final_super><epic_internal>(component) {}
+}
+
 Temporary<public> := module {
+  using { /UnrealEngine.com/Temporary/Diagnostics }
   # Module import path: /UnrealEngine.com/Temporary/Curves
   Curves<public> := module {
     editable_curve<native><public> := class<final><concrete> {
@@ -194,6 +449,12 @@ Temporary<public> := module {
 
     # log class to send messages to the default log
     log<native><public> := class {
+      # Print message using the given log level
+      (/UnrealEngine.com/Temporary/Diagnostics/log:)Print<epic_internal>(
+        Message: message,
+        ?Level: log_level = external {}
+      )<computes><reads>: void = external {}
+
       # Print diagnostic using the given log level
       (/UnrealEngine.com/Temporary/Diagnostics/log:)Print<public>(
         Message: diagnostic,
@@ -287,6 +548,27 @@ Temporary<public> := module {
     (InEntity: entity).FindAncestorEntities<native><public>(entity_type: castable_subtype(entity))<transacts>: generator(entity_type)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
+    @deprecated
+    # Finds all ancestor entities to `InEntity` whose `collision_component` shape is inside `Shape`.
+    # The order of the returned components is unspecified and subject to change.
+    (InEntity: entity).FindAncestorEntitiesInside<native><epic_internal>(Shape: convex_volume3)<transacts>: generator(entity)
+
+    @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
+    @deprecated
+    # Finds all ancestor entities to `InEntity` whose `transform_component.Translation` is inside `Shape`.
+    # The order of the returned components is unspecified and subject to change.
+    (InEntity: entity).FindAncestorEntitiesOriginInside<native><epic_internal>(Shape: convex_volume3)<transacts>: generator(entity)
+
+    @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
+    @deprecated
+    # Finds all ancestor entities to `InEntity` whose `collision_component` shape overlaps with `Shape`.
+    # The order of the returned components is unspecified and subject to change.
+    (InEntity: entity).FindAncestorEntitiesOverlapping<native><epic_internal>(Shape: convex_volume3)<transacts>: generator(entity)
+
+    @experimental
     @available { MinUploadedAtFNVersion := 3200 }
     # Finds all ancestor entities to `InEntity` containing a component of type `component_type`.
     # The order of the returned entities is unspecified and subject to change.
@@ -311,6 +593,30 @@ Temporary<public> := module {
     # When querying from the simulation entity, the simulation entity itself is not included in the results.
     # The order of the returned entities is unspecified and subject to change.
     (InEntity: entity).FindDescendantEntities<native><public>(entity_type: castable_subtype(entity))<transacts>: generator(entity_type)
+
+    @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
+    @deprecated
+    # Finds all descendant entities including `InEntity` whose `collision_component` shape is inside `Shape`.
+    # When querying from the simulation entity, the simulation entity itself is not included in the results.
+    # The order of the returned entities is unspecified and subject to change.
+    (InEntity: entity).FindDescendantEntitiesInside<native><epic_internal>(Shape: convex_volume3)<transacts>: generator(entity)
+
+    @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
+    @deprecated
+    # Finds all descendant entities including `InEntity` whose `transform_component.Translation` is inside `Shape`.
+    # When querying from the simulation entity, the simulation entity itself is not included in the results.
+    # The order of the returned entities is unspecified and subject to change.
+    (InEntity: entity).FindDescendantEntitiesOriginInside<native><epic_internal>(Shape: convex_volume3)<transacts>: generator(entity)
+
+    @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
+    @deprecated
+    # Finds all descendant entities including `InEntity` whose `collision_component` shape overlaps with `Shape`.
+    # When querying from the simulation entity, the simulation entity itself is not included in the results.
+    # The order of the returned entities is unspecified and subject to change.
+    (InEntity: entity).FindDescendantEntitiesOverlapping<native><epic_internal>(Shape: convex_volume3)<transacts>: generator(entity)
 
     @experimental
     @available { MinUploadedAtFNVersion := 3200 }
@@ -360,6 +666,83 @@ Temporary<public> := module {
     # Sets the origin of this entity, in the case the entity does not have a transform_component it will create one and set its origin. This method fails if it recognized dependency recursion.
     (InEntity: entity).SetOrigin<native><public>(NewOrigin: origin)<transacts><decides>: void
 
+    @experimental
+    DefaultChannelToInteraction<epic_internal>(__dupe___unnamed_parameter_47: collision_channel)<computes>: collision_interaction = external {}
+
+    @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
+    EmptyOverlapHitsGenerator<native><epic_internal>()<transacts>: generator(overlap_hit)
+
+    @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
+    EmptySweepHitsGenerator<native><epic_internal>()<transacts>: generator(sweep_hit)
+
+    using { /Verse.org/Assets }
+    # Module import path: /UnrealEngine.com/Temporary/SceneGraph/FNECon
+    FNECon<public> := module {
+      @experimental
+      # Used to handle general conversation.
+      conversation_component<native><epic_internal> := class<final_super><epic_internal>(component, enableable) {
+        # Event that sends the participating agent when a conversation has ended.
+        ConversationEndedEvent<native><public>: listenable(agent) = external {}
+
+        # Event that sends the participating agent when a conversation has started.
+        ConversationStartedEvent<native><public>: listenable(agent) = external {}
+
+        # Disables this component.
+        Disable<native><override>(): void
+
+        # Enables this component.
+        Enable<native><override>(): void
+
+        # Ends all conversations associated with this component.
+        EndAllConversations<native><public>(): void
+
+        # Ends a conversation with the input agent.
+        EndConversation<native><public>(Agent: agent): void
+
+        # Gets the speaker's name.
+        GetSpeakerName<native_callable><public>(): message = external {}
+
+        # Succeeds if the component is enabled. Fails if it’s disabled.
+        IsEnabled<native><override>()<transacts><decides>: void
+
+        OnBeginSimulationInternal<native><override>(): void
+
+        OnEndSimulationInternal<native><override>(): void
+
+        OnInitializedInternal<native><override>(): void
+
+        OnRemovingFromSceneInternal<native><override>(): void
+
+        OnUninitializingInternal<native><override>(): void
+
+        # Sets the name of the speaker that is displayed during conversations.
+        SetSpeakerName<native><public>(InSpeakerName: message): void
+
+        # Starts a conversation with the input agent.
+        StartConversation<native><public>(Agent: agent): void
+
+        @editable
+        # The conversation database used when a conversation is started.
+        var ConversationDatabase<native><public>: conversation_database = external {}
+
+        @editable
+        # Determines the range at which a player will be able to see the speech bubble (in meters). If set to less than 2m, the player will not see an indicator speech bubble.
+        var IndicatorBubbleRange<native><public>: float = external {}
+
+        @editable
+        # The max number of participants allowed to interact with this component simultaneously.
+        var MaximumParticipatingAgents<native><public>: int = external {}
+      }
+
+      # Data type used for conversations.
+      conversation_database<native><epic_internal> := class<computes><concrete><epic_internal>(asset) {}
+    }
+
+    @experimental
+    GetPhysicsSceneForEntity<native><epic_internal>(Entity: entity)<transacts><decides>: physics_scene_component
+
     # Module import path: /UnrealEngine.com/Temporary/SceneGraph/KeyframedMovement
     # Animate Scene Graph entities with keyframes.
     KeyframedMovement<public> := module {
@@ -368,6 +751,18 @@ Temporary<public> := module {
       cubic_bezier_easing_function<native><public> := class<concrete><computes><epic_internal>(easing_function) {
         Evaluate<native><override>(Input: float): float
 
+        X0<native><public>: float = external {}
+
+        X1<native><public>: float = external {}
+
+        Y0<native><public>: float = external {}
+
+        Y1<native><public>: float = external {}
+      }
+
+      @experimental
+      # Cubic Bezier function sent to clients to reconstruct the animation curves.
+      cubic_bezier_easing_function_native<native><epic_internal> := struct<concrete> {
         X0<native><public>: float = external {}
 
         X1<native><public>: float = external {}
@@ -432,6 +827,26 @@ Temporary<public> := module {
       }
 
       @experimental
+      # Contains all the information needed for the client to reconstruct the entire animation command.
+      keyframed_movement_command_data<native><epic_internal> := struct<concrete> {
+        BlendOutDuration<native>: float = external {}
+
+        Command<native>: keyframed_movement_net_command = external {}
+
+        CommandServerTime<native>: float = external {}
+
+        HaltTransform<native>: transform = external {}
+
+        Keyframes<native>: []keyframed_movement_delta_native = external {}
+
+        PlaybackMode<native>: keyframed_movement_playback_mode_native = external {}
+
+        ServerStartTimeForBlendOut<native>: ?float = external {}
+
+        StartTimeForPlay<native>: float = external {}
+      }
+
+      @experimental
       # Provides teleportation and simple keyframe-based animation for an entity. Animations play back in the Pre-Physics tick phase. When animating an entity with a parent_constraint, animation will be relative to the parent entity.
       keyframed_movement_component<native><public> := class<final><final_super>(component) {
         @experimental
@@ -473,6 +888,12 @@ Temporary<public> := module {
         # Signaled when the entire animation is complete. This will only fire for `OneShot` animations.
         MovementCompleteEvent<native><public>: listenable(tuple()) = external {}
 
+        OnEndSimulationInternal<native><override>(): void
+
+        OnInitializedInternal<native><override>(): void
+
+        OnRep__PendingCommand<native><epic_internal>(): void
+
         @experimental
         # Pause movement. Subsequently calling Play() will resume from the point in the animation when it was paused.
         Pause<native><public>(): void
@@ -491,6 +912,9 @@ Temporary<public> := module {
         @experimental
         # Stop and reset transform to the initial state. Subsequently calling Play() will begin the animation anew.
         Stop<native><public>(?BlendOutTime: float = external {}): void
+
+        @replicated("RepNotify")
+        var _PendingCommand<native><epic_internal>: keyframed_movement_command_data = external {}
       }
 
       @experimental
@@ -507,8 +931,35 @@ Temporary<public> := module {
       }
 
       @experimental
+      # Keyframe delta sent to clients to reconstruct the animation frames.
+      keyframed_movement_delta_native<native><epic_internal> := struct<concrete> {
+        Duration<native><public>: float = external {}
+
+        Easing<native><public>: cubic_bezier_easing_function_native = external {}
+
+        Transform<native><public>: transform = external {}
+      }
+
+      @experimental
+      # Play Command sent to clients to reconstruct the playback command
+      keyframed_movement_net_command<native><epic_internal> := enum {
+        HaltAt
+
+        PlayFrom
+      }
+
+      @experimental
       # Controls how the animation plays back.
       keyframed_movement_playback_mode<native><public> := class<abstract><computes><epic_internal> {}
+
+      # Control how the animation plays back.
+      keyframed_movement_playback_mode_native<native><epic_internal> := enum {
+        Loop
+
+        OneShot
+
+        PingPong
+      }
 
       @experimental
       # `Linear` animations move at a constant speed.
@@ -542,12 +993,475 @@ Temporary<public> := module {
       ChannelToInteraction: collision_channel_to_interaction
     )<converges>: collision_profile
 
+    using { /UnrealEngine.com/EpicGamesRestricted/Network }
     using { /UnrealEngine.com/Temporary/SpatialMath }
+    using { /Verse.org/Native }
+    using { /Verse.org/Simulation/Tags }
+    # Module import path: /UnrealEngine.com/Temporary/SceneGraph/VerseCamera
+    VerseCamera<public> := module {
+      @experimental
+      # Component that owns higher level camera behavior.
+      # Owns a CameraDirector, which is responsible for selecting the best camera mode every update.
+      # Owns a default EvaluationContext, which is responsible for setting the default camera transform, before camera logic is applied
+      camera_behavior_component<native><epic_internal> := class<final_super>(component) {
+        # Get camera parameters for a specific player
+        GetCameraParametersForPlayer<native><epic_internal>(Player: player)<transacts><decides>: []parameterized_parameter_collection
+
+        OnAddedToSceneInternal<native><override>(): void
+
+        OnBeginSimulationInternal<native><override>(): void
+
+        OnEndSimulationInternal<native><override>(): void
+
+        @experimental
+        # Responsible for deciding which camera modes should be active on each layer
+        var CameraDirector<public>: camera_director = external {}
+
+        @replicated("")
+        @experimental
+        # Parameters that can be used as input to all camera modes being run by this camera behavior component
+        var<private> CameraParameters<native><epic_internal>: []parameterized_parameter_collection = external {}
+      }
+
+      @experimental
+      # Represents the physical body, lens of the camera and other cinematographic qualities, such as sensor size, aspect ratio lock/constraint, focal length, focus distance, post-process settings, etc.
+      camera_component<native><epic_internal> := class(basic_camera_component) {}
+
+      @experimental
+      # Base class for Camera Directors defined in Verse
+      camera_director<native><epic_internal> := class(camera_director_base) {
+        @experimental
+        # Add a camera component to the list for consideration
+        AddCameraMode<native><public>(CameraModeContext: camera_mode_context): void
+
+        @experimental
+        # Determine which camera mode should be active
+        DetermineActiveCameraModes<native_callable><public>(): []camera_mode_context = external {}
+
+        @experimental
+        # Remove a camera component from the list for consideration
+        RemoveCameraMode<native><public>(CameraModeContext: camera_mode_context): void
+      }
+
+      @import_as("/Script/VerseCamera.UVerseCameraDirectorBase")
+      @experimental
+      camera_director_base<native><epic_internal> := class {}
+
+      @experimental
+      # Camera director that returns the camera mode with the highest priority every update
+      camera_director_priority_list<native><epic_internal> := class<final>(camera_director) {
+        # Determine which camera mode should be active
+        DetermineActiveCameraModes<native><override>(): []camera_mode_context
+      }
+
+      @experimental
+      # A camera mode builds up a camera transform piece by piece by executing a camera rig asset
+      camera_mode<native><epic_internal> := class<concrete> {
+        @editable
+        @display_name("CameraRigAsset")
+        @replicated("")
+        @experimental
+        CameraRigAsset<native><epic_internal>: camera_rig_asset = external {}
+
+        @experimental
+        @editable
+        # Transitions to use when entering this camera mode. Controls how this camera mode blends when blending in.  Enter transitions on this camera mode will be favoured over the outgoing camera mode's exit transition, unless the exit transition has a higher priority.  The camera mode will use the first transition it finds in this array that succeeds.
+        EnterTransitions<native><public>: []camera_mode_transition = external {}
+
+        @experimental
+        @editable
+        # Transitions to use when exiting this camera mode. Controls how this camera mode blends when blending out  Enter transitions from the camera mode we're transitioning to will be favoured over the this camera mode's exit transition, unless the exit transition has a higher priority.  The camera mode will use the first transition it finds in this array that succeeds.
+        ExitTransitions<native><public>: []camera_mode_transition = external {}
+
+        @experimental
+        GetCameraModeTag<native><public>()<transacts><decides>: verse_camera_mode_tag
+
+        @replicated("")
+        @editable
+        @experimental
+        # Root camera operation - This is mutually exclusive with CameraRigAsset and is intended to allow you to build up your camera mode entirely in Verse without referencing any external assets
+        RootCameraOperation<native><epic_internal>: ?camera_operation = external {}
+
+        @experimental
+        # Priority level that can be used by camera directors to determine the best camera mode
+        var Priority<public>: float = external {}
+      }
+
+      @import_as("/Script/VerseCamera.UVerseCameraMode")
+      @experimental
+      camera_mode_base<native><epic_internal> := class<abstract> {}
+
+      @experimental
+      @hide_in_editor
+      # Configurable blend between two camera modes
+      camera_mode_blend<native><epic_internal> := class<concrete> {}
+
+      @experimental
+      # Linear blend between camera modes
+      camera_mode_blend_linear<native><epic_internal> := class<concrete>(camera_mode_blend_with_duration) {}
+
+      @experimental
+      # Instantly snap to target mode
+      camera_mode_blend_pop<native><epic_internal> := class<concrete>(camera_mode_blend) {}
+
+      @experimental
+      # Camera mode blend that uses the smootherstep function to blend between the two camera modes
+      camera_mode_blend_smootherstep<native><epic_internal> := class<concrete>(camera_mode_blend_with_duration) {}
+
+      @experimental
+      # Camera mode blend that uses the smoothstep function to blend between the two camera modes
+      camera_mode_blend_smoothstep<native><epic_internal> := class<concrete>(camera_mode_blend_with_duration) {}
+
+      @experimental
+      @hide_in_editor
+      # Base class for camera mode blends that have a duration
+      camera_mode_blend_with_duration<native><epic_internal> := class<concrete>(camera_mode_blend) {
+        @editable
+        # Sets the duration of the camera blend
+        Duration<native><public>: float = external {}
+      }
+
+      @experimental
+      # A camera mode, camera component pair used to give all the context required to execute a camera mode
+      camera_mode_context<native><epic_internal> := struct {
+        # Camera component this camera mode should run on
+        CameraComponent<native><public>: camera_component
+
+        # Camera mode this camera mode context refers to
+        CameraMode<native><public>: camera_mode
+      }
+
+      @experimental
+      # Controls how a camera mode transitions to another
+      camera_mode_transition<native><epic_internal> := class<concrete> {
+        @editable
+        # Blend settings for this transition
+        Blend<native><public>: camera_mode_blend = external {}
+
+        # Transition will be taken if this function succeeds
+        CanTransition<native_callable><public>(
+          SourceCameraMode: camera_mode,
+          DestinationCameraMode: camera_mode
+        )<transacts><decides>: void = external {}
+
+        @editable
+        # Priority of this transition. System will default to using enter transition from new camera mode. This priority can be set to force the exit transition of the outgoing camera mode to be chosen
+        Priority<native><public>: ?float = external {}
+      }
+
+      @experimental
+      # Transition that will only be chosen if the CameraModeTag of the source and destination camera modes match the specified tag query
+      camera_mode_transition_if_tags_match<native><epic_internal> := class<concrete>(camera_mode_transition) {
+        # Transition will be taken if this function succeeds
+        CanTransition<native><override>(
+          SourceCameraMode: camera_mode,
+          DestinationCameraMode: camera_mode
+        )<transacts><decides>: void
+
+        # Destination camera mode's tag must pass this search criteria
+        DestinationCameraModeTags<native><public>: tag_search_criteria = external {}
+
+        # Source camera mode's tag must pass this search criteria
+        SourceCameraModeTags<native><public>: tag_search_criteria = external {}
+      }
+
+      @experimental
+      # A camera operation is a primitive operation that is used to build up a camera transform piece by piece
+      camera_operation<native><epic_internal> := class<concrete><unique>(camera_operation_base) {
+        @experimental
+        # Called when the camera mode is initialized
+        Initialize<native_callable><public>(InitParams: camera_operation_initialization_parameters)<transacts><decides>: void = external {}
+
+        @experimental
+        # Called by the camera mode to build up the camera settings
+        Update<native_callable><public>(
+          InputParams: camera_operation_input_parameters,
+          OutputParams: camera_operation_output_parameters
+        ): void = external {}
+      }
+
+      @import_as("/Script/VerseCamera.UVerseCameraNode")
+      @experimental
+      camera_operation_base<native><epic_internal> := class<abstract> {}
+
+      @experimental
+      # Camera operation initialization parameters
+      camera_operation_initialization_parameters<native><epic_internal> := class<final> {}
+
+      @experimental
+      # Input params to a camera operation
+      camera_operation_input_parameters<native><epic_internal> := class<final> {
+        @experimental
+        GetCameraParameterValue<native><epic_internal>(Parameter: camera_parameter_float)<transacts><decides>: float
+
+        @experimental
+        GetCameraParameterValue<native><epic_internal>(Parameter: camera_parameter_integer)<transacts><decides>: int
+
+        @experimental
+        # Get the value of a camera parameter
+        GetCameraParameterValue<native><epic_internal>(Parameter: camera_parameter_logic)<transacts><decides>: void
+
+        @experimental
+        GetCameraParameterValue<native><epic_internal>(Parameter: camera_parameter_rotation)<transacts><decides>: rotation
+
+        @experimental
+        GetCameraParameterValue<native><epic_internal>(Parameter: camera_parameter_transform)<transacts><decides>: transform
+
+        @experimental
+        GetCameraParameterValue<native><epic_internal>(Parameter: camera_parameter_vector2)<transacts><decides>: vector2
+
+        @experimental
+        GetCameraParameterValue<native><epic_internal>(Parameter: camera_parameter_vector3)<transacts><decides>: vector3
+
+        @experimental
+        # Camera behavior component that this camera_mode is running in
+        var CameraBehaviorComponent<native><public>: ?camera_behavior_component = external {}
+
+        @experimental
+        # camera_component that this camera_mode is running in
+        var CameraComponent<native><public>: ?camera_component = external {}
+
+        @experimental
+        # Camera location from the initial evaluator execution, or previous operation if an operation modified it before this one
+        var CameraLocation<native><public>: vector3 = external {}
+
+        @experimental
+        # Camera rotation from the initial evaluator execution,  or previous operation if an operation modified it before this one
+        var CameraRotation<native><public>: rotation = external {}
+
+        @experimental
+        # Delta time since last update
+        var DeltaTime<native><public>: float = external {}
+      }
+
+      @experimental
+      # Output params to a camera operation
+      camera_operation_output_parameters<native><epic_internal> := class<final>(camera_output_parameters) {}
+
+      @experimental
+      camera_output_parameters<native><epic_internal> := class {
+        Reset_Internal<native><epic_internal>(): void
+
+        @experimental
+        SetCameraVariable<native><epic_internal>(CameraVariable: camera_variable_float, Value: float)<transacts><decides>: void
+
+        @experimental
+        SetCameraVariable<native><epic_internal>(CameraVariable: camera_variable_integer, Value: int)<transacts><decides>: void
+
+        @experimental
+        # Set a camera variable value
+        SetCameraVariable<native><epic_internal>(CameraVariable: camera_variable_logic, Value: logic)<transacts><decides>: void
+
+        @experimental
+        SetCameraVariable<native><epic_internal>(
+          CameraVariable: camera_variable_rotation,
+          Value: rotation
+        )<transacts><decides>: void
+
+        @experimental
+        SetCameraVariable<native><epic_internal>(
+          CameraVariable: camera_variable_transform,
+          Value: transform
+        )<transacts><decides>: void
+
+        @experimental
+        SetCameraVariable<native><epic_internal>(
+          CameraVariable: camera_variable_vector2,
+          Value: vector2
+        )<transacts><decides>: void
+
+        @experimental
+        SetCameraVariable<native><epic_internal>(
+          CameraVariable: camera_variable_vector3,
+          Value: vector3
+        )<transacts><decides>: void
+
+        @experimental
+        # If written to, will set the camera field of view
+        var CameraFieldOfViewDegrees<native><public>: ?float = external {}
+
+        @experimental
+        # If written to, will set the camera location
+        var CameraLocation<native><public>: ?vector3 = external {}
+
+        @experimental
+        # If written to, will set the camera rotation
+        var CameraRotation<native><public>: ?rotation = external {}
+      }
+
+      @experimental
+      camera_parameter_float<native><epic_internal> := class {
+        @editable
+        @experimental
+        Value<native><public>: float = external {}
+
+        @editable
+        @experimental
+        Variable<native><public>: camera_variable_float = external {}
+      }
+
+      @experimental
+      camera_parameter_integer<native><epic_internal> := class {
+        @editable
+        @experimental
+        Value<native><public>: int = external {}
+
+        @editable
+        @experimental
+        Variable<native><public>: camera_variable_integer = external {}
+      }
+
+      @experimental
+      camera_parameter_logic<native><epic_internal> := class {
+        @editable
+        @experimental
+        Value<native><public>: logic = external {}
+
+        @editable
+        @experimental
+        Variable<native><public>: camera_variable_logic = external {}
+      }
+
+      @experimental
+      camera_parameter_rotation<native><epic_internal> := class {
+        @editable
+        @experimental
+        Value<native><public>: rotation = external {}
+
+        @editable
+        @experimental
+        Variable<native><public>: camera_variable_rotation = external {}
+      }
+
+      @experimental
+      camera_parameter_transform<native><epic_internal> := class {
+        @editable
+        @experimental
+        Value<native><public>: transform = external {}
+
+        @editable
+        @experimental
+        Variable<native><public>: camera_variable_transform = external {}
+      }
+
+      @experimental
+      camera_parameter_vector2<native><epic_internal> := class {
+        @editable
+        @experimental
+        Value<native><public>: vector2 = external {}
+
+        @editable
+        @experimental
+        Variable<native><public>: camera_variable_vector2 = external {}
+      }
+
+      @experimental
+      camera_parameter_vector3<native><epic_internal> := class {
+        @editable
+        @experimental
+        Value<native><public>: vector3 = external {}
+
+        @editable
+        @experimental
+        Variable<native><public>: camera_variable_vector3 = external {}
+      }
+
+      @experimental
+      # Component used to associate a camera behavior component with a player
+      player_camera_view<native><epic_internal> := class(player_camera_view_base) {}
+
+      @import_as("/Script/VerseCamera.UVersePlayerCameraViewComponent")
+      @experimental
+      player_camera_view_base<native><epic_internal> := class<abstract> {}
+
+      @experimental
+      verse_camera_mode_tag<native><epic_internal> := class(tag) {}
+    }
+
+    @experimental
+    @deprecated
+    # Axis aligned box volume.
+    axis_aligned_box3<native><epic_internal> := class<final><concrete>(convex_volume3) {
+      # Center point of the box.
+      Center<native><public>: vector3 = external {}
+
+      # Extent of the box.
+      Extent<native><public>: vector3 = external {}
+    }
+
+    @import_as("/Script/Entity.UBaseEntity")
+    @experimental
+    base_entity<native><epic_internal> := class<abstract> {}
+
     using { /Verse.org/Colors }
+    @hide_in_editor
+    @experimental
+    basic_camera_component<native><epic_internal> := class<final_super>(component) {
+      @experimental
+      GetFieldOfView<public>(): float = external {}
+
+      OnAddedToSceneInternal<native><override>(): void
+
+      OnInitializedInternal<native><override>(): void
+
+      OnRemovingFromSceneInternal<native><override>(): void
+
+      OnUninitializingInternal<native><override>(): void
+
+      @experimental
+      # Set the field of view of the camera in degrees
+      SetFieldOfView<public>(InFieldOfView: float): void = external {}
+    }
+
+    using { /Verse.org/Simulation }
+    @experimental
+    # An interactable component with a composable feature set.
+    basic_interactable_component<native><epic_internal> := class(interactable_component) {
+      @experimental
+      # Attempt to cancel an interaction. Fails if the supplied agent is not currently interacting with the component.
+      Cancel<native><public>(Agent: agent)<transacts><decides>: void
+
+      @editable
+      @experimental
+      # Cooldowns begin elapsing on successful interactions. A cooldown which applies for all attempts to interact on this component.
+      Cooldown<native><public>: ?interactable_cooldown = external {}
+
+      @editable
+      @experimental
+      # Cooldowns begin elapsing on successful interactions. A cooldown which applies for future attempts to interact on this component by the agent which succeeded.
+      CooldownPerAgent<native><public>: ?interactable_cooldown_per_agent = external {}
+
+      @experimental
+      # Get the remaining cooldown of the interactable for the supplied agent. This returns the duration left in seconds of either the shared or per agent cooldown, whichever is greater. Returns the same value when called multiple times within a transaction.
+      GetRemainingCooldownDurationAffectingAgent<native><public>(Agent: agent): float
+
+      @editable
+      @experimental
+      # An interaction with a duration does not succeed until the duration has elapsed, and success is not guaranteed as it can be canceled while the duration is active.
+      InteractableDuration<native><public>: ?interactable_duration = external {}
+
+      OnInitializedInternal<native><override>(): void
+
+      @experimental
+      # Attempt to succeed at an interaction. Success will also happen automatically after InteractDuration has elapsed after starting an interaction. Fails if the supplied agent is not currently interacting with the component.
+      Succeed<native><public>(Agent: agent)<transacts><decides>: void
+
+      @editable
+      @experimental
+      # Success limits prevent new interactions once the component has been successfully interacted with a specified number of times.
+      SuccessLimit<native><public>: ?interactable_success_limit = external {}
+
+      @experimental
+      # The agents which are currently interacting with this interactable.
+      var<private> InteractingAgents<native><public>: []agent
+    }
+
     @experimental
     # A `capsule_light_component` emits light in all directions into the scene from a capsule shaped source with a specified radius and length. A radius and length of 0 makes it a point light. You can use these
     # to simulate any kind of light sources that emit in all directions and need an elongated source shape, such as a long light bulb.
     capsule_light_component<native><public> := class<final>(light_component) {
+      OnAddedToSceneInternal<native><override>(): void
+
       # The bounds of the light's visible influence. This clamping of the light's influence is not physically correct but very important for performance,
       # larger lights cost more. The light falloff is based on Inverse Square law. Towards the tail end of the AttenuationRadius,
       # there is an additional smoothing factor to fade out the light contribution to 0 to avoid a hard cutoff.
@@ -609,6 +1523,56 @@ Temporary<public> := module {
       visibility<native><public> := class(collision_channel) {}
     }
 
+    @deprecated
+    @experimental
+    # Used to make an entity collide with other scene objects, including preventing players and NPCs from passing through the entity.
+    # Overlap queries can only find entities with enabled `collision_components`.
+    #
+    # Dependencies:
+    #   * `transform_component` on the entity positions the `collision_component`.
+    #   * `mesh_component` on the entity provides the collision shape for the `collision_component`.
+    collision_component<native><epic_internal> := class<final><final_super>(component, enableable) {
+      # Event signaled when something starts overlapping with the component.
+      BeginOverlapEvent<native><epic_internal>: listenable(overlap_result) = external {}
+
+      # Disables the `collision_component`. Scene objects will pass through this entity if collision is disabled.
+      Disable<native><override>(): void
+
+      # Enables the `collision_component`. Scene objects will pass through this entity if collision is disabled.
+      Enable<native><override>(): void
+
+      # Event signaled when something stops overlapping with the component.
+      EndOverlapEvent<native><epic_internal>: listenable(overlap_result) = external {}
+
+      GetCollisionProfile<native><epic_internal>(): ?collision_profile
+
+      # Event signaled when the component experiences a blocking hit.
+      HitEvent<native><epic_internal>: listenable(hit_result) = external {}
+
+      # Succeeds if the component is enabled, fails if it's disabled.
+      IsEnabled<native><override>()<transacts><decides>: void
+
+      OnAddedToSceneInternal<native><override>(): void
+
+      OnBeginSimulationInternal<native><override>(): void
+
+      OnEndSimulationInternal<native><override>(): void
+
+      OnInitializedInternal<native><override>(): void
+
+      OnRemovingFromSceneInternal<native><override>(): void
+
+      OnUninitializingInternal<native><override>(): void
+
+      SetCollisionProfile<native><epic_internal>(Profile: collision_profile): void
+
+      var CollisionOverride<epic_internal>: collision_override = external {}
+
+      var SendHitEvents<native><epic_internal>: logic = external {}
+
+      var SendOverlapEvents<native><epic_internal>: logic = external {}
+    }
+
     @experimental
     # Base class for collision_volumes that consist of a single volume with a single collision_profile and collision_material for the whole volume. This covers most volume types used in queries and physics, except compound types like a mesh. A query will always return an element rather than a general volume. For example when colliding with a mesh, the element will be a collision_triangle, which is a collision_element and has a single material, rather than a collision_triangle_mesh, which is not an element and has a material palette.
     collision_element<native><public> := class<abstract>(collision_volume) {
@@ -629,6 +1593,10 @@ Temporary<public> := module {
       # The pair will be detected by Overlap and Sweep queries. The pair will not collide in the physics simulation.
       Overlap
     }
+
+    @deprecated
+    @experimental
+    collision_override<native><epic_internal> := class<epic_internal> {}
 
     @experimental
     # A collision point.
@@ -715,6 +1683,9 @@ Temporary<public> := module {
     }
 
     @experimental
+    collision_volume_internal<native><epic_internal> := class<concrete><epic_internal>(collision_element) {}
+
+    @experimental
     # Base class for authoring logic and data in the SceneGraph. Using components you
     # can author re-usable building blocks of logic and data which can then be added to
     # entities in the scene.
@@ -764,12 +1735,16 @@ Temporary<public> := module {
     #        OnRemovingFromScene
     #     OnUninitializing
     # ==============================================================================
-    component<native><public> := class<abstract><unique><castable><final_super_base> {
+    component<native><public> := class<abstract><unique><castable><final_super_base>(diagnosable) {
       @experimental
+      @allow_self_reference
+      @experimental_always_overridden
       # The parent entity of this component.
       #   * Components must have a parent entity pointer provided when being constructed.
       #   * Components cannot be moved between parents.
       Entity<native><public>: entity
+
+      GetDiagnostic<override><native>()<computes><reads>: diagnostic
 
       @experimental
       # Succeeds if the component is currently in the scene.
@@ -795,11 +1770,15 @@ Temporary<public> := module {
       #   * `OnInitialized` is guaranteed to run before `OnAddedToScene`.
       OnAddedToScene<native><native_callable><protected>(): void
 
+      OnAddedToSceneInternal<native><native_callable><epic_internal>(): void
+
       @experimental
       # Called when the component begins simulating within the scene.
       #   * Use this to set up TickEvent callbacks or other setup that must be guaranteed to complete immediately.
       #   * `OnAddedToScene` is guaranteed to run before `OnBeginSimulation`.
       OnBeginSimulation<native><native_callable><protected>(): void
+
+      OnBeginSimulationInternal<native><native_callable><epic_internal>(): void
 
       @experimental
       # Called when the component ends simulation within the scene.
@@ -808,6 +1787,16 @@ Temporary<public> := module {
       #   * `OnSimulate` task will be canceled before `OnEndSimulation` is called.
       #   * `OnEndSimulation` is only called on components that have already had `OnBeginSimulation` called.
       OnEndSimulation<native><native_callable><protected>(): void
+
+      OnEndSimulationInternal<native><native_callable><epic_internal>(): void
+
+      @experimental
+      # Called when the component is added to an entity using `entity.AddEntities`.
+      #   * Components can check for dependent sibling components at this stage through `entity.GetComponents`.
+      #   * Components can add additional components at this stage using `entity.AddComponents`
+      OnInitialized<native><native_callable><epic_internal>(): void
+
+      OnInitializedInternal<native><native_callable><epic_internal>(): void
 
       @experimental
       # Respond to an event being propagated through the scene graph. Returns if the event is consumed, in which case the event will not be passed to the next entity, depending on how the event is being sent through the hierarchy.
@@ -819,12 +1808,21 @@ Temporary<public> := module {
       #   * `OnRemovingFromScene` is only called on components that have already had `OnAddedToScene` called.
       OnRemovingFromScene<native><native_callable><protected>(): void
 
+      OnRemovingFromSceneInternal<native><native_callable><epic_internal>(): void
+
       @experimental
       # Called when the component begins simulating within the scene.
       #   * Use this to add asynchronous/suspends update logic for a component.
       #   * `OnBeginSimulation` is guaranteed to run before `OnSimulate`.
       #   * `OnSimulate` will be cancelled before `OnEndSimulation`
       OnSimulate<native_callable><protected>()<suspends>: void = external {}
+
+      @experimental
+      # Called when the component is about to be removed from the parent entity.
+      #   * `OnUninitializing` is only called on components that have already had `OnInitialized` called.
+      OnUninitializing<native><native_callable><epic_internal>(): void
+
+      OnUninitializingInternal<native><native_callable><epic_internal>(): void
 
       @experimental
       # Removes the component from the entity.
@@ -838,8 +1836,32 @@ Temporary<public> := module {
     }
 
     @experimental
+    component_query_iterator_interface<native><epic_internal> := interface<epic_internal> {
+      NextValue<native_callable><public>()<transacts><decides>: component
+    }
+
+    @experimental
+    @deprecated
+    # Base class for all convex volumes.
+    convex_volume3<native><epic_internal> := class<epic_internal>(volume3) {
+      # Determines if `Point` falls within the boundaries of this `convex_volume3`.
+      Contains<native><public>(Point: vector3)<computes><decides><reads>: void
+    }
+
+    @experimental
+    damageable_component<native><epic_internal> := class<final_super>(component) {
+      @experimental
+      Damage<native><public>(Amount: float): void
+
+      @experimental
+      DamagedEvent<native><final><public>: listenable(float) = external {}
+    }
+
+    @experimental
     # A `directional_light_component` simulates light that is being emitted from a source that is infinitely far away. This means that all shadows cast by this light will be parallel, making this the ideal choice for simulating sunlight.
     directional_light_component<native><public> := class<final>(light_component) {
+      OnAddedToSceneInternal<native><override>(): void
+
       # Intensity of the light hitting the surface. In Lux (Lumen per square meter).
       var Illuminance<public>: float = external {}
 
@@ -866,7 +1888,7 @@ Temporary<public> := module {
     #   that you do not add code directly to the entity class, and instead keep logic in components. Keeping logic and data in
     #   components allows you to restructure your prefabs throughout production of your experience, without needing to massively
     #   refactor your class structure.
-    entity<native><public> := class<concrete><unique><transacts><castable> {
+    entity<native><public> := class<concrete><unique><transacts><castable>(base_entity, diagnosable) {
       @experimental
       # Adds the provided components to the entity.
       #   * If a component is not allowed to be added to this entity it is skipped.
@@ -894,6 +1916,8 @@ Temporary<public> := module {
       @experimental
       # Returns the child components belonging to this entity which are accessible from the calling context.
       GetComponents<native><final><public>()<transacts>: []component
+
+      GetDiagnostic<override><native>()<computes><reads>: diagnostic
 
       @experimental
       # Returns the child entities belonging to this entity which are accessible from the calling context.
@@ -932,6 +1956,7 @@ Temporary<public> := module {
     # class to provide alternative origin to the 'transform_component' as an entity
     entity_origin<native><public> := class<epic_internal>(origin) {
       @editable
+      @replicated("")
       Entity<native><public>: entity
 
       GetTransform<override>()<transacts>: transform = external {}
@@ -939,7 +1964,25 @@ Temporary<public> := module {
 
     @experimental
     # Reference type to editor defined prefab. Only generated digest code should reference this type.
-    entity_prefab<native><public> := class<computes><epic_internal> {}
+    entity_prefab<native><public> := class<computes><epic_internal>(asset) {}
+
+    @experimental
+    entity_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface) {
+      NextValue<native><override>()<transacts><decides>: entity
+    }
+
+    @experimental
+    entity_query_iterator_interface<native><epic_internal> := interface<epic_internal> {
+      NextValue<native_callable><public>()<transacts><decides>: entity
+    }
+
+    @hide_in_editor
+    @experimental
+    entity_query_manager_component<native><epic_internal> := class<final_super><epic_internal>(component) {
+      OnAddedToSceneInternal<native><override>(): void
+
+      OnRemovingFromSceneInternal<native><override>(): void
+    }
 
     @experimental
     # Used to subscribe a callback or await an event based callback '
@@ -968,6 +2011,15 @@ Temporary<public> := module {
     }
 
     @experimental
+    execution_subscription<native><epic_internal> := class(cancelable) {
+      Cancel<native><override>()<transacts>: void
+
+      RunAfter<native><epic_internal>(__dupe___unnamed_parameter_28: execution_subscription): void
+
+      RunBefore<native><epic_internal>(__dupe___unnamed_parameter_29: execution_subscription): void
+    }
+
+    @experimental
     # A range with a minimum and maximum value. For a value to fall inside of this range, the min value must be less than or equal to the max value.
     float_range<native><public> := struct<concrete> {
       @editable
@@ -976,7 +2028,27 @@ Temporary<public> := module {
       Minimum<native><public>: float = external {}
     }
 
-    using { /Verse.org/Simulation }
+    @experimental
+    hit_result<native><epic_internal> := struct {
+      @experimental
+      HitLocation<native><public>: vector3
+
+      @experimental
+      HitNormal<native><public>: vector3
+
+      @experimental
+      OtherComponent<native><public>: ?component
+
+      @experimental
+      OtherEntity<native><public>: ?entity
+
+      @experimental
+      ThisComponent<native><public>: ?component
+
+      @experimental
+      ThisEntity<native><public>: ?entity
+    }
+
     @experimental
     # Used to handle general interaction.
     interactable_component<native><public> := class<final_super>(component, enableable) {
@@ -1000,6 +2072,14 @@ Temporary<public> := module {
       # Succeeds if the component is enabled, fails if it’s disabled.
       IsEnabled<native><override>()<transacts><decides>: void
 
+      OnBeginSimulationInternal<native><override>(): void
+
+      OnEndSimulationInternal<native><override>(): void
+
+      OnInitializedInternal<native><override>(): void
+
+      OnUninitializingInternal<native><override>(): void
+
       # Attempt to start an interaction. Fails if the agent does not pass the CanInteract function.
       Start<native><public>(Agent: agent)<transacts><decides>: void
 
@@ -1009,6 +2089,135 @@ Temporary<public> := module {
       # Event fires when an interaction has completed successfully. Sends the formerly interacting agent. InteractDuration at or below 0 makes this event identical to InteractStartedEvent.
       SucceededEvent<native><public>: listenable(agent) = external {}
     }
+
+    @experimental
+    # Used to set a cooldown when interacted.
+    interactable_cooldown<native><epic_internal> := class<concrete> {
+      @experimental
+      # Event which fires when the shared cooldown expires.
+      ExpiredEvent<native><public>: listenable(tuple()) = external {}
+
+      @experimental
+      # Get the remaining shared cooldown duration in seconds, affecting all agents.
+      GetRemainingDuration<native><epic_internal>(__dupe___unnamed_parameter_73: accessor)<transacts>: float
+
+      @experimental
+      # Set the remaining shared cooldown duration in seconds, affecting all agents.
+      SetRemainingDuration<native><epic_internal>(
+        __dupe___unnamed_parameter_72: accessor,
+        InRemainingDuration: float
+      )<transacts>: void
+
+      @experimental
+      # Event which fires when the shared cooldown triggers.
+      TriggeredEvent<native><public>: listenable(float) = external {}
+
+      @editable
+      @experimental
+      # The number of seconds after a successful interaction, before being able to initiate a subsequent interaction for anyone.
+      # This is only used if duration is greater than 0.0. Modifying this does not affect the RemainingDuration.
+      # When a cooldown starts on the component all other interactions are canceled.
+      var Duration<native><public>: float = external {}
+
+      @experimental
+      # The remaining cooldown, in seconds, before new interactions can be initiated on this component.
+      var<private> RemainingDuration<public>: float = external {}
+    }
+
+    @experimental
+    # Used to set a cooldown per agent when interacted.
+    interactable_cooldown_per_agent<native><epic_internal> := class<concrete> {
+      @experimental
+      # Event which fires when the per agent cooldown expires. Sends the agent which was previously affected by the cooldown.
+      ExpiredEvent<native><public>: listenable(tuple()) = external {}
+
+      @experimental
+      # Get the remaining shared cooldown duration in seconds, affecting all agents.
+      GetRemainingDurationForAgent<native><epic_internal>(
+        __dupe___unnamed_parameter_75: accessor,
+        Agent: agent
+      )<transacts>: float
+
+      @experimental
+      # Set the remaining shared cooldown duration in seconds, affecting all agents.
+      SetRemainingDurationForAgent<native><epic_internal>(
+        __dupe___unnamed_parameter_74: accessor,
+        Agent: agent,
+        InRemainingDuration: float
+      )<transacts>: void
+
+      @experimental
+      # Event which fires when the per agent cooldown triggers. Sends the agent which was previously affected by the cooldown.
+      TriggeredEvent<native><public>: listenable(float) = external {}
+
+      @editable
+      @experimental
+      # The duration in seconds after a successful interaction, before the interacting agent can initiate a subsequent interaction.
+      # This is only used if the duration is greater than 0.0. Modifying this does not affect any RemainingPerAgentCooldownDuration.
+      # This property gives other agents time to interact, when there is a limited number of Simultaneous Interactors.
+      var Duration<native><public>: float = external {}
+
+      @experimental
+      # The cooldown remaining, in seconds, before a particular agent is able to initiate an interaction on this component.
+      var<private> RemainingDuration<native><public>: [agent]float = external {}
+    }
+
+    @experimental
+    # Used to set an interaction duration.
+    interactable_duration<native><epic_internal> := class<concrete> {
+      @experimental
+      # Returns an agent’s remaining duration, in seconds, for interaction. Fails if the agent is not interacting with this component.Returns the same value when called multiple times within a transaction.
+      GetRemainingInteractDurationForAgent<final><native><public>(Agent: agent)<computes><decides><reads>: float
+
+      @experimental
+      # Sets an agent’s remaining duration, in seconds, for interaction. Fails if the agent is not interacting with this component.
+      SetRemainingInteractDurationForAgent<final><native><public>(Agent: agent, RemainingDuration: float)<transacts>: void
+
+      @editable
+      @experimental
+      # The number of seconds an agent must spend interacting with the object to successfully complete an interaction.
+      # 0.0 or less results in an immediate successful interaction.
+      var InteractDuration<native><public>: float = external {}
+
+      @editable
+      @experimental
+      # The max number of simultaneous interactors. A value of false is unlimited.  This value represents how many agents may have active interactions.
+      # If this changes to a value less than the current number of active interactions, those interactions are not canceled but new interactions will not start.
+      var MaxSimultaneousInteractors<native><public>: ?int = external {}
+    }
+
+    @experimental
+    # Used to set a limit of times to interact.
+    interactable_success_limit<native><epic_internal> := class<concrete> {
+      @experimental
+      # Resets the counter for the times this component has had a successful interaction.
+      ClearSuccessfulInteractionCount<native><public>()<transacts>: void
+
+      @experimental
+      # Get the maximum number of successful interactions possible.
+      GetMaxSuccessfulInteractions<native><epic_internal>(__dupe___unnamed_parameter_77: accessor)<transacts>: ?int
+
+      @experimental
+      # Update the maximum number of successful interactions possible, a value of false is unlimited.
+      # If the current number of tracked interactions is greater than the value specified here, all current interactions will be canceled.
+      SetMaxSuccessfulInteractions<native><epic_internal>(
+        __dupe___unnamed_parameter_76: accessor,
+        InMaxSuccessfulInteractions: ?int
+      )<transacts>: void
+
+      @experimental
+      # The number of times the component can be successfully interacted with. A value of false is unlimited.
+      # When SuccessfulInteractionCount reaches MaxSuccessfulInteractions all active interactions are canceled, and the component cannot be interacted with.
+      var MaxSuccessfulInteractions<public>: ?int = external {}
+
+      @experimental
+      # The number of times this component has had a successful interaction.
+      var SuccessfulInteractionCount<public>: int = external {}
+    }
+
+    @hide_in_editor
+    @experimental
+    level_entity<native><epic_internal> := class<concrete><unique><transacts>(entity) {}
 
     @experimental
     # Base class for light components in the SceneGraph.
@@ -1032,6 +2241,14 @@ Temporary<public> := module {
       # Succeeds if the component is enabled, fails if it's disabled.
       IsEnabled<native><override>()<transacts><decides>: void
 
+      OnAddedToSceneInternal<native><override>(): void
+
+      OnInitializedInternal<native><override>(): void
+
+      OnRemovingFromSceneInternal<native><override>(): void
+
+      OnUninitializingInternal<native><override>(): void
+
       # Whether the light should cast any shadows.
       var CastShadows<public>: logic = external {}
 
@@ -1046,6 +2263,16 @@ Temporary<public> := module {
     }
 
     @experimental
+    @hide_in_editor
+    massentity_component<native><epic_internal> := class<final_super><epic_internal>(component) {
+      OnAddedToSceneInternal<native><override>(): void
+
+      OnRemovingFromSceneInternal<native><override>(): void
+
+      OnUninitializingInternal<native><override>(): void
+    }
+
+    @experimental
     # Used to render a `mesh` at the location of this entity. A mesh is a set of polygons that can be used to represent shapes in the world such as:
     #   * foliage and terrain decorations
     #   * movers (for example, doors and lifts)
@@ -1053,7 +2280,7 @@ Temporary<public> := module {
     #
     # Dependencies:
     #   * `transform_component` on the entity positions the mesh.
-    mesh_component<native><public> := class<final_super><epic_internal>(component, enableable) {
+    mesh_component<native><public> := class<final_super><epic_internal>(component, enableable, property_changed_interface) {
       @experimental
       # Disables rendering of this mesh.
       Disable<native><override>(): void
@@ -1075,6 +2302,40 @@ Temporary<public> := module {
       IsEnabled<native><override>()<transacts><decides>: void
 
       @experimental
+      @replicated("RepNotify")
+      @editable
+      # The `mesh` to be rendered by this `mesh_component`.
+      Mesh<native><epic_internal>: mesh = external {}
+
+      OnAddedToSceneInternal<native><override>(): void
+
+      OnBeginSimulationInternal<native><override>(): void
+
+      OnEndSimulationInternal<native><override>(): void
+
+      OnInitializedInternal<native><override>(): void
+
+      OnPropertyChangedFromVerse<native><override>(PropertyName: string)<transacts>: void
+
+      OnRemovingFromSceneInternal<native><override>(): void
+
+      OnUninitializingInternal<native><override>(): void
+
+      @experimental
+      # Sets the `material` to be applied to the `mesh`.
+      SetMaterial<native><epic_internal>(InMaterial: ?material): void
+
+      @experimental
+      # Sets the `mesh` to be rendered.
+      SetMesh<native><epic_internal>(InMesh: mesh): void
+
+      ___ParameterCollection_On_Collideable_Changed<epic_internal>(): void = external {}
+
+      ___ParameterCollection_On_Queryable_Changed<epic_internal>(): void = external {}
+
+      ___ParameterCollection_On_Visible_Changed<epic_internal>(): void = external {}
+
+      @experimental
       # Enable/disable collision on this mesh. If enabled, meshes may collide in the physics simulation.
       var Collideable<public>: logic = external {}
 
@@ -1084,6 +2345,29 @@ Temporary<public> := module {
 
       # Enable/disable visibility of this mesh.
       var Visible<public>: logic = external {}
+    }
+
+    @experimental
+    metasound_trigger<native><epic_internal> := class<epic_internal> {
+      SoundComponentTarget<native><epic_internal>: ?sound_component = external {}
+
+      Trigger<native><epic_internal>(): void
+
+      TriggerIdentifier<native><epic_internal>: string = external {}
+    }
+
+    @deprecated
+    @experimental
+    no_collision_override<native><epic_internal> := class<concrete><final><epic_internal>(collision_override) {}
+
+    @experimental
+    null_component_query_iterator<native><epic_internal> := class<epic_internal>(component_query_iterator_interface) {
+      NextValue<native><override>()<transacts><decides>: component
+    }
+
+    @experimental
+    null_entity_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface) {
+      NextValue<native><override>()<transacts><decides>: entity
     }
 
     @experimental
@@ -1111,12 +2395,28 @@ Temporary<public> := module {
       TargetVolume<native><public>: collision_element
     }
 
+    @deprecated
+    @experimental
+    overlap_result<native><epic_internal> := struct<epic_internal> {
+      OtherComponent<native><public>: ?component
+
+      OtherEntity<native><public>: ?entity
+
+      ThisComponent<native><public>: ?component
+
+      ThisEntity<native><public>: ?entity
+    }
+
     @experimental
     # Used to spawn a `particle_system` at the location of this entity. The `particle_system` will simulate while the `particle_system_component` is in the scene.
     #
     # Dependencies:
     #   * `transform_component` on the entity positions the `particle_system`.
-    particle_system_component<native><public> := class<final_super><epic_internal>(component, enableable) {
+    particle_system_component<native><public> := class<final_super><epic_internal>(
+      component,
+      enableable,
+      property_changed_interface
+    ) {
       # Disables the simulation and rendering of this `particle_system`.
       Disable<override><native>(): void
 
@@ -1125,6 +2425,21 @@ Temporary<public> := module {
 
       # Succeeds if the component is enabled, fails if it’s disabled.
       IsEnabled<override><native>()<transacts><decides>: void
+
+      OnAddedToSceneInternal<native><override>(): void
+
+      OnBeginSimulationInternal<native><override>(): void
+
+      OnInitializedInternal<native><override>(): void
+
+      OnPropertyChangedFromVerse<native><override>(PropertyName: string)<transacts>: void
+
+      OnRemovingFromSceneInternal<native><override>(): void
+
+      OnUninitializingInternal<native><override>(): void
+
+      @editable
+      ParticleSystem<native><epic_internal>: particle_system = external {}
 
       Play<native><public>(): void
 
@@ -1135,8 +2450,70 @@ Temporary<public> := module {
       var<private> AutoPlay<native><public>: logic = external {}
 
       @editable
+      @replicated("RepNotify")
       # Controls if the `particle_system_component` should start enabled.
       var<private> Enabled<native><public>: logic = external {}
+    }
+
+    @experimental
+    physics_component<native><epic_internal> := class<final><final_super>(component, enableable) {
+      @experimental
+      # Disable this object.
+      Disable<native><override>(): void
+
+      @experimental
+      # Enable this object.
+      Enable<native><override>(): void
+
+      @experimental
+      # Event signaled when the component experiences a blocking hit
+      HitEvent<native><public>: listenable(hit_result) = external {}
+
+      @experimental
+      # Succeeds if the component is enabled, fails if it’s disabled.
+      IsEnabled<native><override>()<transacts><decides>: void
+
+      OnAddedToSceneInternal<native><override>(): void
+
+      OnInitializedInternal<native><override>(): void
+
+      OnRemovingFromSceneInternal<native><override>(): void
+
+      OnUninitializingInternal<native><override>(): void
+    }
+
+    @experimental
+    physics_scene_component<native><epic_internal> := class<final><final_super><epic_internal>(component) {
+      @available { MinUploadedAtFNVersion := 2930 }
+      FindEntityOverlaps<native><public>(QueryEntity: entity, QueryTransform: transform)<transacts>: generator(overlap_hit)
+
+      @available { MinUploadedAtFNVersion := 2930 }
+      FindEntitySweepHits<native><public>(
+        QueryEntity: entity,
+        QueryTransform: transform,
+        QueryTraceVector: vector3
+      )<transacts>: generator(sweep_hit)
+
+      @available { MinUploadedAtFNVersion := 2930 }
+      FindShapeOverlaps<native><public>(
+        QueryShape: collision_volume,
+        QueryTransform: transform
+      )<transacts>: generator(overlap_hit)
+
+      @available { MinUploadedAtFNVersion := 2930 }
+      FindShapeSweepHits<native><public>(
+        QueryShape: collision_volume,
+        QueryTransform: transform,
+        QueryTraceVector: vector3
+      )<transacts>: generator(sweep_hit)
+
+      OnAddedToSceneInternal<native><override>(): void
+
+      OnInitializedInternal<native><override>(): void
+
+      OnRemovingFromSceneInternal<native><override>(): void
+
+      OnUninitializingInternal<native><override>(): void
     }
 
     @experimental
@@ -1144,6 +2521,8 @@ Temporary<public> := module {
     # to simulate any kind of light sources that have rectangular areas, such as televisions or monitor screens, overhead lighting
     # fixtures, or wall sconces.
     rect_light_component<native><public> := class<final>(light_component) {
+      OnAddedToSceneInternal<native><override>(): void
+
       # The bounds of the light's visible influence, in centimeters. This clamping of the light's influence is not physically correct but very important for performance,
       # larger lights cost more. The light falloff is based on Inverse Square law. Towards the tail end of the AttenuationRadius,
       # there is an additional smoothing factor to fade out the light contribution to 0 to avoid a hard cutoff.
@@ -1166,19 +2545,112 @@ Temporary<public> := module {
     }
 
     @experimental
+    replication_component<native><epic_internal> := class<final_super>(component) {
+      @editable
+      # Internal only flag to make this entity always relevant for replication to clients
+      AlwaysRelevant<native><epic_internal>: logic = external {}
+
+      OnAddedToSceneInternal<native><override>(): void
+
+      OnRemovingFromSceneInternal<native><override>(): void
+    }
+
+    @experimental
+    rigid_body_component<native><epic_internal> := class<final><final_super><epic_internal>(component) {
+      BeginOverlapEvent<native><public>: listenable(overlap_hit) = external {}
+
+      EndOverlapEvent<native><public>: listenable(overlap_hit) = external {}
+
+      EntityEnteredEvent<native><public>: listenable(entity) = external {}
+
+      EntityExitedEvent<native><public>: listenable(entity) = external {}
+
+      OnAddedToSceneInternal<native><override>(): void
+
+      OnBeginSimulationInternal<native><override>(): void
+
+      OnEndSimulationInternal<native><override>(): void
+
+      OnInitializedInternal<native><override>(): void
+
+      OnRemovingFromSceneInternal<native><override>(): void
+
+      OnUninitializingInternal<native><override>(): void
+
+      @experimental
+      # Enable/disable collision on this mesh. If enabled, meshes may collide in the physics simulation.
+      var Collideable<public>: logic = external {}
+
+      @editable
+      # The collision profile to use for shapes that do not specify their own profile.
+      var CollisionProfile<public>: collision_profile = external {}
+
+      @experimental
+      # Enable/Disable simulation of this body.
+      var Dynmamic<public>: logic = external {}
+
+      @experimental
+      # Enable/disable spatial queries against this mesh. Disabling this field will also disable EntityEnteredEvent/EntityExitedEvent.
+      var Queryable<public>: logic = external {}
+    }
+
+    @experimental
     # An event which can be sent through the scene graph.
     scene_event<native><public> := interface {}
 
     @experimental
-    sound_component<native><public> := class<abstract><final_super><epic_internal>(component, enableable) {
+    @deprecated
+    # Base class for all two-dimensional shapes.
+    shape2<native><epic_internal> := class<epic_internal> {}
+
+    @experimental
+    @deprecated
+    # Base class for all three-dimensional shapes.
+    shape3<native><epic_internal> := class<epic_internal> {}
+
+    @hide_in_editor
+    @experimental
+    simulation_entity<native><epic_internal> := class<concrete><unique><transacts>(entity) {}
+
+    @experimental
+    slow_component_array_copy_query_iterator<native><epic_internal> := class<epic_internal>(component_query_iterator_interface) {
+      NextValue<native><override>()<transacts><decides>: component
+    }
+
+    @experimental
+    slow_entity_array_copy_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface) {
+      NextValue<native><override>()<transacts><decides>: entity
+    }
+
+    @experimental
+    sound_component<native><public> := class<abstract><final_super><epic_internal>(
+      component,
+      property_changed_interface,
+      enableable
+    ) {
       # Disable the sound component.
       Disable<override><native>(): void
 
       # Enable the sound component.
       Enable<override><native>(): void
 
+      # The path to the sound asset
+      InternalMetaSoundAssetPath<native><epic_internal>: metasound = external {}
+
       # Succeeds if the sound component is enabled, fails if it is disabled.
       IsEnabled<override><native>()<transacts><decides>: void
+
+      OnAddedToSceneInternal<native><override>(): void
+
+      OnBeginSimulationInternal<native><override>(): void
+
+      OnInitializedInternal<native><override>(): void
+
+      OnPropertyChangedFromVerse<native><override>(PropertyName: string)<transacts>: void
+
+      OnRemovingFromSceneInternal<native><override>(): void
+
+      OnUninitializingInternal<native><override>(): void
 
       # Play the sound asset
       Play<native><public>(): void
@@ -1190,13 +2662,27 @@ Temporary<public> := module {
       var<private> AutoPlay<native><public>: logic = external {}
 
       @editable
+      @replicated("RepNotify")
       var<private> Enabled<native><public>: logic = external {}
+    }
+
+    @experimental
+    @deprecated
+    # A sphere in three-dimensional space.
+    sphere3<native><epic_internal> := class<final><concrete>(convex_volume3) {
+      # Center point of the sphere.
+      Center<native><public>: vector3 = external {}
+
+      # Radius of the sphere.
+      Radius<native><public>: float = external {}
     }
 
     @experimental
     # A `sphere_light_component` emits light in all directions into the scene from a spherical source shape with a specified radius. A radius of 0 makes it a point light. You can use these
     # to simulate any kind of light sources that emit in all directions, such as a light bulb.
     sphere_light_component<native><public> := class<final>(light_component) {
+      OnAddedToSceneInternal<native><override>(): void
+
       # The bounds of the light's visible influence, in centimeters. This clamping of the light's influence is not physically correct but very important for performance,
       # larger lights cost more. The light falloff is based on Inverse Square law. Towards the tail end of the AttenuationRadius,
       # there is an additional smoothing factor to fade out the light contribution to 0 to avoid a hard cutoff.
@@ -1215,6 +2701,8 @@ Temporary<public> := module {
     # extents of the `OuterConeAngleDegrees` a falloff takes place, creating a penumbra, or softening around the `spot_light_component`'s disc of
     # illumination. The Radius of the light defines the length of the cones. More simply, this will work like a flash light or stage can light.
     spot_light_component<native><public> := class<final>(light_component) {
+      OnAddedToSceneInternal<native><override>(): void
+
       # The bounds of the light's visible influence, in centimeters. This clamping of the light's influence is not physically correct but very important for performance,
       # larger lights cost more. The light falloff is based on Inverse Square law. Towards the tail end of the AttenuationRadius,
       # there is an additional smoothing factor to fade out the light contribution to 0 to avoid a hard cutoff.
@@ -1267,8 +2755,6 @@ Temporary<public> := module {
       TargetVolume<native><public>: collision_element
     }
 
-    using { /Verse.org/Native }
-    using { /Verse.org/Simulation/Tags }
     @experimental
     # Used to add tags to an entity. Tagged entities can then be queried using `entity.FindEntitiesWithTag` and `entity.FindParentEntitiesWithTag`.
     #   * Finding entities from the simulation entity for tagged entities only considers any `tag_component` that has run `OnAddedToScene`.
@@ -1285,18 +2771,72 @@ Temporary<public> := module {
       # Checks if this container contains ANY of the tags in the specified container, also checks against parent tags {"A.1"}.HasAny({"A","B"}) will return True, {"A"}.HasAny({"A.1","B"}) will return False If InTags is empty/invalid it will always return False.
       HasAny<native><override>(InTags: []tag)<computes><decides><reads>: void
 
+      OnAddedToSceneInternal<native><override>(): void
+
+      OnRemovingFromSceneInternal<native><override>(): void
+
       # Removes a tag from this component. Returns `true` if the tag was present before being removed.
       RemoveTag<native><public>(TagToRemove: tag)<transacts>: logic
     }
 
     @experimental
+    # Used to render a string at the location of this entity.
+    #
+    # Dependencies:
+    #   * `transform_component` on the entity positions the `text_display_component`.
+    text_display_component<native><epic_internal> := class<final_super>(component, enableable) {
+      # Disable this object.
+      Disable<native><override>(): void
+
+      # Enable this object.
+      Enable<native><override>(): void
+
+      # Succeeds if the component is enabled, fails if it is disabled.
+      IsEnabled<native><override>()<transacts><decides>: void
+
+      OnAddedToSceneInternal<native><override>(): void
+
+      OnInitializedInternal<native><override>(): void
+
+      OnRemovingFromSceneInternal<native><override>(): void
+
+      @editable
+      @replicated("RepNotify")
+      # The color with which to display the text.
+      var Color<native><public>: color = external {}
+
+      @editable
+      @replicated("RepNotify")
+      # The time in seconds for the text to fully fade in.
+      var FadeInTime<native><epic_internal>: float = external {}
+
+      @editable
+      @replicated("RepNotify")
+      # The time in seconds for the text to fully fade out.
+      var FadeOutTime<native><epic_internal>: float = external {}
+
+      @experimental
+      @replicated("RepNotify")
+      # Message to be displayed on the entity.
+      var Message<native><public>: message = external {}
+    }
+
+    @experimental
     # Describes discrete phases of a frame update. Subscribe to members of the tick_events object to run code before or after the physics system has updated your object, allowing you to affect or react to these updates.
     tick_events<native><public> := class<epic_internal> {
+      DuringPhysics<native><epic_internal>: execution_listenable = external {}
+
+      EndFrame<native><epic_internal>: execution_listenable = external {}
+
+      EndPhysics<native><epic_internal>: execution_listenable = external {}
+
       # Listen `PostPhysics` to run your code after the physics system has updated your object this frame.
       PostPhysics<native><public>: execution_listenable = external {}
 
       # Listen `PrePhysics` to run your code before the physics system has updated your object this frame.
       PrePhysics<native><public>: execution_listenable = external {}
+
+      StartPhysics<native><epic_internal>: execution_listenable = external {}
     }
 
     @experimental
@@ -1305,6 +2845,10 @@ Temporary<public> := module {
       # Returns the global transform of the entity.
       GetGlobalTransform<native><public>()<transacts>: transform
 
+      OnInitializedInternal<native><override>(): void
+
+      OnUninitializingInternal<native><override>(): void
+
       # Sets the global transform of the entity.
       SetGlobalTransform<native><public>(NewGlobalTransform: transform)<transacts>: void
 
@@ -1312,11 +2856,28 @@ Temporary<public> := module {
       SetLocalTransform<native><public>(NewLocalTransform: transform)<transacts>: void
 
       @editable
+      @replicated("RepNotify")
       # LocalTransform to its parent
       var<private> LocalTransform<native><public>: transform = external {}
 
+      @replicated("RepNotify")
       # alternate origin than the default parent
       var<private> Origin<native><public>: ?origin = external {}
+    }
+
+    @hide_in_editor
+    @experimental
+    typed_element_component<native><epic_internal> := class<final_super>(component) {}
+
+    @experimental
+    @deprecated
+    # Base class for all three-dimensional volumes.
+    volume3<native><epic_internal> := class<epic_internal>(shape3) {}
+
+    @deprecated
+    @experimental
+    volume_collision_override<native><epic_internal> := class<concrete><final><epic_internal>(collision_override) {
+      CollisionVolume<native><public>: convex_volume3 = external {}
     }
   }
 
@@ -1524,6 +3085,9 @@ Temporary<public> := module {
     # `MakeShortestRotationBetween(InitialVector, FinalVector)?.GetAngle()` is as small as possible.
     MakeShortestRotationBetween<native><public>(InitialVector: vector3, FinalVector: vector3)<transacts>: rotation
 
+    # Makes a `vector3` with all components `1.0`.
+    Ones<epic_internal>()<computes>: vector3 = external {}
+
     # Returns degrees from `Radians`.
     RadiansToDegrees<public>(Radians: float)<computes><reads>: float = external {}
 
@@ -1541,6 +3105,10 @@ Temporary<public> := module {
       FinalRotation: rotation,
       Parameter: float
     )<transacts><decides>: rotation
+
+    # Makes a `string` representation of `InTransform` where the result is on the form.
+    # `"Scale: {ToString(`InTransform.Scale`)} Rotation: {ToString(`InTransform.Rotation`)} Translation: {ToString(`InTransform.Translation`)}.
+    ToString<native><epic_internal>(InTransform: transform)<computes><reads>: string
 
     # Makes a `string` representation of `rotation` in axis/degrees format with a left-handed sign convention.
     # `ToString(MakeRotation(vector3{X:=1.0, Y:=0.0, Z:=0.0}, PiFloat/2.0))` produces the string: `"Axis: {x=1.000000,y=0.000000,z=0.000000} Angle: 90.000000"`.
@@ -1566,6 +3134,18 @@ Temporary<public> := module {
 
     # Makes a `vector3` by applying `InTransform` to `InVector` without applying `InTransform.Scale`.
     TransformVectorNoScale<native><public>(InTransform: transform, InVector: vector3)<computes><reads>: vector3
+
+    # Makes a unit `vector3` pointing in the positive X axis (forward)
+    XAxis<epic_internal>()<computes>: vector3 = external {}
+
+    # Makes a unit `vector3` pointing in the positive Y axis (right)
+    YAxis<epic_internal>()<computes>: vector3 = external {}
+
+    # Makes a unit `vector3` pointing in the positive Z axis (up)
+    ZAxis<epic_internal>()<computes>: vector3 = external {}
+
+    # Makes a `vector3` with all components `0.0`.
+    Zero<epic_internal>()<computes>: vector3 = external {}
 
     # Makes a `vector2` by multiplying the components of `Right` by `Left`.
     operator'*'<public>(Left: float, Right: vector2)<computes>: vector2 = external {}
@@ -1677,6 +3257,72 @@ Temporary<public> := module {
     }
   }
 
+  # Module import path: /UnrealEngine.com/Temporary/Testing
+  Testing<public> := module {
+    # test_reporter is a test result aggregator that writes test results to a log stream and can compile and print a summary of test results.
+    test_reporter<native><epic_internal> := class {
+      # Sets the default log level of the displayed message. See log_level enum for more info on log levels. Defaults to log_level.Normal.
+      DefaultLevel<native><epic_internal>: log_level = external {}
+
+      # Returns a string of the test results summary.
+      GetSummaryStrings<native><epic_internal>(?Level: log_level = external {}): []string
+
+      # Logs `Message` to the `test_reporter` log stream. This allows users to add context for results to the summary.
+      Log<native><epic_internal>(Message: string, ?Level: log_level = external {}): void
+
+      # The name of this `test_reporter`. Used when displaying results summary.
+      Name<native><epic_internal>: string = external {}
+
+      # Prints a report of Verse API that was called in runtime, resets the report count
+      PrintEpicAPICallSummary<native><epic_internal>(): void
+
+      # Prints a summary of test results to the log stream and resets the test results.
+      PrintSummary<native><epic_internal>(?Level: log_level = external {}): void
+
+      # Report a test result of `Failed`. `Category` and `SubCategory` are used to calculate test result stats as part of printing the summary.
+      ReportTestFailed<native><epic_internal>(
+        Message: string,
+        ?Category: string = external {},
+        ?SubCategory: string = external {}
+      ): void
+
+      # Report a test result of `Passed`. `Category` and `SubCategory` are used to calculate test result stats as part of printing the summary.
+      ReportTestPassed<native><epic_internal>(
+        Message: string,
+        ?Category: string = external {},
+        ?SubCategory: string = external {}
+      ): void
+
+      # Report a test result of `Result`. `Category` and `SubCategory` are used to calculate test result stats as part of printing the summary.
+      ReportTestResult<native><epic_internal>(
+        Message: string,
+        Result: test_result,
+        ?Category: string = external {},
+        ?SubCategory: string = external {}
+      ): void
+
+      # Report a test result of `Skipped`. `Category` and `SubCategory` are used to calculate test result stats as part of printing the summary.
+      ReportTestSkipped<native><epic_internal>(
+        Message: string,
+        ?Category: string = external {},
+        ?SubCategory: string = external {}
+      ): void
+
+      # Resets test results.
+      Reset<native><epic_internal>(): void
+    }
+
+    # test result outcomes
+    test_result<native><epic_internal> := enum {
+      Failed
+
+      Passed
+
+      Skipped
+    }
+  }
+
+  using { /UnrealEngine.com/Temporary/SceneGraph }
   using { /UnrealEngine.com/Temporary/SpatialMath }
   using { /Verse.org/Assets }
   using { /Verse.org/Colors }
@@ -1822,6 +3468,23 @@ Temporary<public> := module {
       Stretch
     }
 
+    @experimental
+    local_hud_component<epic_internal> := class<final_super>(component) {
+      @experimental
+      Hide<public>(Player: player): void = external {}
+
+      OnBeginSimulation<override>(): void = external {}
+
+      OnEndSimulation<override>(): void = external {}
+
+      @experimental
+      Show<public>(Player: player): void = external {}
+
+      var Canvas<public>: canvas
+
+      var UISlot<public>: player_ui_slot
+    }
+
     # Specifies the gap outside each edge separating a `widget` from its neighbors.
     # Distance is measured in units where `1.0` unit is the width of a pixel at 1080p resolution.
     margin<native><public> := struct {
@@ -1836,6 +3499,36 @@ Temporary<public> := module {
 
       # The top edge spacing.
       Top<native><public>: float = external {}
+    }
+
+    # A widget to display a material.
+    material_block<native><epic_internal> := class(widget) {
+      # The size this widget desired to be displayed in. Used only during initialization of the widget and not modified by SetDesiredSize.
+      DefaultDesiredSize<native><public>: vector2 = external {}
+
+      # The image to render. Used only during initialization of the widget and not modified by SetImage.
+      DefaultImage<native><public>: material
+
+      # Tinting applied to the image. Used only during initialization of the widget and not modified by SetTint.
+      DefaultTint<native><public>: color = external {}
+
+      # Gets the size this widget desired to be displayed in.
+      GetDesiredSize<native><public>(): vector2
+
+      # Gets the image to render.
+      GetImage<native><public>(): material
+
+      # Gets the tint applied to the image.
+      GetTint<native><public>(): color
+
+      # Sets the size this widget desired to be displayed in.
+      SetDesiredSize<native><public>(InDesiredSize: vector2): void
+
+      # Sets the image to render.
+      SetImage<native><public>(InImage: material): void
+
+      # Sets the tint applied to the image.
+      SetTint<native><public>(InColor: color): void
     }
 
     # Used by`widget` orientation modes.
@@ -1982,6 +3675,9 @@ Temporary<public> := module {
       SetTextOpacity<native><public>(InOpacity: type { _X: float where 0.000000 <= _X, _X <= 1.000000 }): void
     }
 
+    # Text block widget. Displays text to the user.
+    text_block_internal<native><epic_internal> := class(text_base) {}
+
     # Text justification values:
     #   Left: Justify the text logically to the left based on current culture.
     #   Center: Justify the text in the center.
@@ -2059,6 +3755,39 @@ Temporary<public> := module {
       None
     }
 
+    # Widget created from a umg_widget_class_asset.
+    umg_widget<native><epic_internal> := class<epic_internal>(widget) {
+      # The widget_blueprint asset to create.
+      Asset<native><epic_internal>: umg_widget_class_asset
+
+      GetNamedSlotOptional_<native><epic_internal>(NamedSlotName: []char)<transacts>: ?widget
+
+      GetNamedSlot_<native><epic_internal>(NamedSlotName: []char)<transacts>: widget
+
+      GetViewmodelOptional_<native><epic_internal>(ViewmodelType: type, ViewmodelName: []char)<transacts>: ViewmodelType
+
+      GetViewmodel_<native><epic_internal>(ViewmodelType: type, ViewmodelName: []char)<transacts>: ViewmodelType
+
+      SetNamedSlotOptional_<native><epic_internal>(NamedSlotName: []char, NamedSlotInstance: ?widget)<transacts>: void
+
+      SetNamedSlot_<native><epic_internal>(NamedSlotName: []char, NamedSlotInstance: widget)<transacts>: void
+
+      SetViewmodelOptional_<native><epic_internal>(
+        ViewmodelType: type,
+        ViewmodelName: []char,
+        ViewmodelInstance: ViewmodelType
+      )<transacts>: void
+
+      SetViewmodel_<native><epic_internal>(
+        ViewmodelType: type,
+        ViewmodelName: []char,
+        ViewmodelInstance: ViewmodelType
+      )<transacts>: void
+    }
+
+    # Verse interface to native `umg asset`.
+    umg_widget_class_asset<native><epic_internal> := class<computes><final>(client_asset) {}
+
     # `widget` vertical alignment mode.
     vertical_alignment<native><public> := enum {
       # Align `widget` to the bottom of the slot.
@@ -2080,6 +3809,9 @@ Temporary<public> := module {
       # Fails if no parent exists, such as if this `widget` is not in the `player_ui` or is itself the root `widget`.
       GetParentWidget<native><public>()<transacts><decides>: widget
 
+      # Gets the render opacity of the widget.
+      GetRenderOpacity<native><epic_internal>(): float
+
       # Returns the `widget` that added this `widget` to the `player_ui`. The root `widget` will return itself.
       # Fails if this `widget` is not in the `player_ui`.
       GetRootWidget<native><public>()<transacts><decides>: widget
@@ -2090,8 +3822,17 @@ Temporary<public> := module {
       # `true` if this `widget` can be modified interactively by the player.
       IsEnabled<native><public>(): logic
 
+      # `true` if this `widget` consumes input when `widget_visibility` is Visible.
+      IsHitTestVisible<native><epic_internal>(): logic
+
       # Enables or disables whether the `player` can interact with this `widget`.
       SetEnabled<native><public>(InIsEnabled: logic): void
+
+      # Enables or disables whether this `widget` consumes input when `widget_visibility` is Visible.
+      SetHitTestVisible<native><epic_internal>(InIsHitTestVisible: logic): void
+
+      # Sets the render opacity of the widget.
+      SetRenderOpacity<native><epic_internal>(InRenderOpacity: float): void
 
       # Shows or hides the `widget` without removing itself from the containing `player_ui`.
       # See `widget_visibility` for details.
@@ -2119,6 +3860,103 @@ Temporary<public> := module {
       Visible
     }
   }
+
+  @experimental
+  playable<epic_internal> := interface<epic_internal> {
+    @experimental
+    GetDuration<public>()<decides>: float
+
+    @experimental
+    GetOnFinishedEvent<public>()<computes><decides><reads>: listenable(tuple())
+
+    @experimental
+    GetOnPausedEvent<public>(): listenable(tuple())
+
+    @experimental
+    GetOnPlayedEvent<public>(): listenable(tuple())
+
+    @experimental
+    GetOnStoppedEvent<public>(): listenable(tuple())
+
+    @experimental
+    Pause<public>(): void
+
+    @experimental
+    Play<public>(): void
+
+    @experimental
+    Stop<public>(?BlendOutTime: float = external {}): void
+  }
+}
+
+Tests<public> := module {
+  # Module import path: /UnrealEngine.com/Tests/NexusUtils
+  NexusUtils<public> := module {
+    nexus_utils<native><epic_internal> := class {
+      HelloWorld<native><public>(): void
+    }
+  }
+}
+
+using { /Verse.org/Simulation }
+using { /Verse.org/Simulation/Tags }
+# Module import path: /UnrealEngine.com/VerseQueryTestSuite
+VerseQueryTestSuite<public> := module {
+  @hide_in_editor
+  tag_component_test_tag_bike<native><epic_internal> := class(tag_component_test_tag_vehicle) {}
+
+  @hide_in_editor
+  tag_component_test_tag_car<native><epic_internal> := class(tag_component_test_tag_vehicle) {}
+
+  @hide_in_editor
+  tag_component_test_tag_datsun<native><epic_internal> := class(tag_component_test_tag_car) {}
+
+  @hide_in_editor
+  tag_component_test_tag_norton<native><epic_internal> := class(tag_component_test_tag_bike) {}
+
+  @hide_in_editor
+  tag_component_test_tag_vehicle<native><epic_internal> := class(tag) {}
+
+  @hide_in_editor
+  @experimental
+  verse_query_not_used_test_entity<native><epic_internal> := class(entity) {}
+
+  @hide_in_editor
+  @experimental
+  verse_query_other_test_component<native><epic_internal> := class<final_super>(component) {}
+
+  @hide_in_editor
+  verse_query_tag_animal<native><epic_internal> := class(tag) {}
+
+  @hide_in_editor
+  verse_query_tag_cat<native><epic_internal> := class(verse_query_tag_animal) {}
+
+  @hide_in_editor
+  verse_query_tag_cheddar_cat<native><epic_internal> := class(verse_query_tag_cat) {}
+
+  @hide_in_editor
+  verse_query_tag_dog<native><epic_internal> := class(verse_query_tag_animal) {}
+
+  @hide_in_editor
+  verse_query_tag_jello_cat<native><epic_internal> := class(verse_query_tag_cat) {}
+
+  @hide_in_editor
+  verse_query_tag_kimchi_dog<native><epic_internal> := class(verse_query_tag_dog) {}
+
+  @hide_in_editor
+  verse_query_tag_pollo_dog<native><epic_internal> := class(verse_query_tag_dog) {}
+
+  @hide_in_editor
+  @experimental
+  verse_query_test_component<native><epic_internal> := class<final_super>(component) {}
+
+  @hide_in_editor
+  @experimental
+  verse_query_test_entity<native><epic_internal> := class(entity) {}
+
+  @hide_in_editor
+  @experimental
+  verse_query_unused_test_component<native><epic_internal> := class<final_super>(component) {}
 }
 
 WebAPI<public> := module {
@@ -2146,4 +3984,39 @@ WebAPI<public> := module {
   client_id<native><public> := class<abstract><computes> {}
 
   response<native><public> := class<internal> {}
+}
+
+WorldPartition<public> := module {
+  using { /Verse.org/Assets }
+  # Module import path: /UnrealEngine.com/WorldPartition/VerseWorldPartition
+  VerseWorldPartition<public> := module {
+    GetDataLayerManager<native><public>()<transacts>: ?data_layer_manager
+
+    data_layer_asset<native><public> := class<computes><final><epic_internal>(asset) {}
+
+    # Data Layer Manager used to get/set the runtime state of Data Layers.
+    data_layer_manager<native><public> := class<concrete> {
+      # Returns data layer effective runtime state.
+      GetDataLayerEffectiveRuntimeState<native><public>(DataLayerAsset: data_layer_asset): data_layer_runtime_state
+
+      # Sets data layer runtime state.
+      SetDataLayerRuntimeState<native><public>(
+        DataLayerAsset: data_layer_asset,
+        State: data_layer_runtime_state,
+        IsRecursive: logic
+      ): logic
+    }
+
+    # Unloaded: Associated content is unloaded. Loaded: Associated content is loaded but not visible. Activated: Associated content is loaded and visible. Represents possible Data Layer runtime states.
+    data_layer_runtime_state<native><public> := enum {
+      # Activated (meaning loaded and visible)
+      Activated
+
+      # Loaded (meaning loaded but not visible)
+      Loaded
+
+      # Unloaded
+      Unloaded
+    }
+  }
 }
