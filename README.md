@@ -1,3 +1,9 @@
+# ⚠️ REPOSITORY STRUCTURE UNDER MAINTENANCE ⚠️
+
+Please use the commit history in the meandtime!
+
+---
+
 # Unreal Engine for Fortnite
 
 A basic repository to accumulate a knowledgebase around UEFN and to track public API diffs.
