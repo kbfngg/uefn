@@ -66,6 +66,11 @@
 			"FriendlyName": "SolarisVer",
 			"Version": 1
 		},
+		"22CB7C5DC22C4082997B9DB9C82131FA":
+		{
+			"FriendlyName": "FortItemEntryVersion",
+			"Version": 1
+		},
 		"23AFE18E4CE14E588D61C252B953BEB7":
 		{
 			"FriendlyName": "Landscape",
@@ -269,7 +274,7 @@
 		"717F9EE7E9B0493A88B391321B388107":
 		{
 			"FriendlyName": "AssetRegistry",
-			"Version": 18
+			"Version": 17
 		},
 		"76A52329092345B598AED841CF2F6AD8":
 		{
@@ -314,7 +319,7 @@
 		"860A4F4F4E87FB68CE1397B7BAA859A7":
 		{
 			"FriendlyName": "AtomFramework",
-			"Version": 14
+			"Version": 16
 		},
 		"8652A554966A466C9FD71C6DD61B1ADB":
 		{
@@ -1420,6 +1425,7 @@
 			"/Script/FortniteGame.VkConversationNode_Speech",
 			"/Script/FortniteGame.WaterVolume_Athena",
 			"/Script/FortniteUI.FortCTAButton",
+			"/Script/FortniteUI.HUDEquippedItemViewModel",
 			"/Script/FortniteUI.HUDPlayerInfoListViewmodel",
 			"/Script/FortniteUI.HUDPlayerInfoViewmodel",
 			"/Script/FortNPCCharacterMovieSceneBindings.FortNPCCharacterMovieSceneReplaceableBinding",
@@ -2163,7 +2169,6 @@
 			"/Script/FortniteGame.FortAmbientAudioVolume",
 			"/Script/FortniteGame.FortGameUserSettings",
 			"/Script/FortniteGame.UEFNCustomAgentAnimInstance",
-			"/Script/FortniteUI.HUDEquippedItemViewModel",
 			"/Script/GameplayCameras.ArrayCameraNode",
 			"/Script/GameplayCameras.AttachToPlayerPawnCameraNode",
 			"/Script/GameplayCameras.BaseFramingCameraNode",
@@ -2192,12 +2197,6 @@
 	"ClassPublicLists":
 	{
 		"VKCreateUGC": [
-			"/Script/CommonConversationGraph.ConversationGraph",
-			"/Script/CommonConversationGraph.ConversationGraphNode_EntryPoint",
-			"/Script/CommonConversationGraph.ConversationGraphNode_Knot",
-			"/Script/CommonConversationRuntime.ConversationDatabase",
-			"/Script/Engine.LocalFogVolume",
-			"/Script/Engine.LocalFogVolumeComponent",
 			"/Script/Engine.Material",
 			"/Script/Engine.MaterialInstanceConstant",
 			"/Script/Engine.SoundAttenuation",
@@ -2206,13 +2205,6 @@
 			"/Script/Engine.StaticMesh",
 			"/Script/Engine.Texture2D",
 			"/Script/FortniteGame.BuildingTextureData",
-			"/Script/FortniteGame.VkConversationNode_Choice",
-			"/Script/FortniteGame.VkConversationNode_DefaultEntryPoint",
-			"/Script/FortniteGame.VkConversationNode_Event",
-			"/Script/FortniteGame.VkConversationNode_Random",
-			"/Script/FortniteGame.VkConversationNode_Repeat",
-			"/Script/FortniteGame.VkConversationNode_Restart",
-			"/Script/FortniteGame.VkConversationNode_Speech",
 			"/Script/MetasoundEngine.MetaSoundPatch",
 			"/Script/MetasoundEngine.MetaSoundSource",
 			"/Script/Niagara.NiagaraSystem"
@@ -6096,6 +6088,8 @@
 			"/Game/Athena/Environments/Island/Materials/Dino.Dino",
 			"/Game/Athena/Environments/Island/Materials/FenceIsland.FenceIsland",
 			"/Game/Athena/Environments/Island/Materials/GuardChair.GuardChair",
+			"/Game/Athena/Environments/Island/Materials/M_Island_2.M_Island_2",
+			"/Game/Athena/Environments/Island/Materials/M_Island_Inst_Game.M_Island_Inst_Game",
 			"/Game/Athena/Environments/Island/Materials/Mail.Mail",
 			"/Game/Athena/Environments/Island/Materials/OilDrumIsland_Island.OilDrumIsland_Island",
 			"/Game/Athena/Environments/Island/Materials/PickupIsland.PickupIsland",
@@ -7680,6 +7674,8 @@
 			"/Game/Creative/BuildingActors/Props/Asteria/TextureData/CP_TD_Rock_Common_A_Small_B.CP_TD_Rock_Common_A_Small_B",
 			"/Game/Creative/BuildingActors/Props/Asteria/TextureData/CP_TD_Rock_Common_A_Small_C.CP_TD_Rock_Common_A_Small_C",
 			"/Game/Creative/BuildingActors/Props/Asteria/TextureData/CP_TD_Rock_Common_Large_B.CP_TD_Rock_Common_Large_B",
+			"/Game/Creative/BuildingActors/Props/Materials/CP_M_Meteor_Inst.CP_M_Meteor_Inst",
+			"/Game/Creative/BuildingActors/Props/Materials/CP_M_Meteor_NoFX.CP_M_Meteor_NoFX",
 			"/Game/Creative/BuildingActors/Props/Materials/CP_MI_Primal_Street_Light_Dust_NoRVT.CP_MI_Primal_Street_Light_Dust_NoRVT",
 			"/Game/Creative/BuildingActors/Props/Meshes/Triple_Shoes_02.Triple_Shoes_02",
 			"/Game/Creative/BuildingActors/Props/TextureData/CP_Fortilla_TD_Swatch_Yellow.CP_Fortilla_TD_Swatch_Yellow",
@@ -8959,7 +8955,11 @@
 			"/Game/Environments/Apollo/Sets/Settlement/Props/TextureData/TD_Settlement_ShippingContainer_Teal.TD_Settlement_ShippingContainer_Teal",
 			"/Game/Environments/Apollo/Sets/Shared/Props/Materials/MI_Shared_BathroomStall_01.MI_Shared_BathroomStall_01",
 			"/Game/Environments/Apollo/Sets/SharkIsland/Materials/MI_Generic_Tile_DefaultSpecRough.MI_Generic_Tile_DefaultSpecRough",
+			"/Game/Environments/Apollo/Sets/SharkIsland/Materials/MI_Layered_Rock_01_a.MI_Layered_Rock_01_a",
+			"/Game/Environments/Apollo/Sets/SharkIsland/Materials/MI_Layered_Rock_01_b.MI_Layered_Rock_01_b",
+			"/Game/Environments/Apollo/Sets/SharkIsland/Materials/MI_Layered_Rock_01_c.MI_Layered_Rock_01_c",
 			"/Game/Environments/Apollo/Sets/SharkIsland/Materials/MI_RoofTrim.MI_RoofTrim",
+			"/Game/Environments/Apollo/Sets/SharkIsland/Materials/MI_Shark_Head_Rock.MI_Shark_Head_Rock",
 			"/Game/Environments/Apollo/Sets/SharkIsland/Materials/MI_Shark_Tail_Rock.MI_Shark_Tail_Rock",
 			"/Game/Environments/Apollo/Sets/SharkIsland/Props/Materials/MI_Rug_01.MI_Rug_01",
 			"/Game/Environments/Apollo/Sets/SharkIsland/Props/Materials/MI_SharkIsland_Lights.MI_SharkIsland_Lights",
@@ -10611,6 +10611,7 @@
 			"/Game/Environments/Helios/Props/Brimstone/Brimstone_Brazier_B/Materials/BP_Brimstone_Brazier_B.BP_Brimstone_Brazier_B",
 			"/Game/Environments/Helios/Props/Brimstone/Brimstone_Cell_Bench_A/TextureData/TD_Brimstone_Cell_Bench_A.TD_Brimstone_Cell_Bench_A",
 			"/Game/Environments/Helios/Props/Brimstone/Brimstone_Chandelier_A/Materials/MI_Brimstone_Chandelier_A.MI_Brimstone_Chandelier_A",
+			"/Game/Environments/Helios/Props/Brimstone/Brimstone_HangingCage_A/Materials/BP_Brimstone_HangingCage_A.BP_Brimstone_HangingCage_A",
 			"/Game/Environments/Helios/Props/Brimstone/Brimstone_HoodedStatue_A/Materials/MI_Brimstone_HoodedStatue_A.MI_Brimstone_HoodedStatue_A",
 			"/Game/Environments/Helios/Props/Brimstone/Brimstone_HoodedStatue_A/Materials/Nanite/MI_NITE_Brimstone_HoodedStatue_A.MI_NITE_Brimstone_HoodedStatue_A",
 			"/Game/Environments/Helios/Props/Brimstone/Brimstone_Sconce_A/Materials/MI_Brimstone_Sconce_A.MI_Brimstone_Sconce_A",
@@ -13569,10 +13570,13 @@
 			"/Niagara/DynamicInputs/Multiply/Multiply_Float.Multiply_Float",
 			"/Niagara/DynamicInputs/Multiply/Multiply_FloatByInt.Multiply_FloatByInt",
 			"/Niagara/DynamicInputs/Multiply/Multiply_Int.Multiply_Int",
+			"/Niagara/DynamicInputs/Multiply/Multiply_LinearColorByFloat.Multiply_LinearColorByFloat",
 			"/Niagara/DynamicInputs/Multiply/Multiply_Vector.Multiply_Vector",
 			"/Niagara/DynamicInputs/Multiply/Multiply_Vector2.Multiply_Vector2",
 			"/Niagara/DynamicInputs/Multiply/Multiply_Vector2D.Multiply_Vector2D",
 			"/Niagara/DynamicInputs/Multiply/Multiply_Vector2D_ByFloat.Multiply_Vector2D_ByFloat",
+			"/Niagara/DynamicInputs/Multiply/Multiply_Vector4.Multiply_Vector4",
+			"/Niagara/DynamicInputs/Multiply/Multiply_Vector4_ByFloat.Multiply_Vector4_ByFloat",
 			"/Niagara/DynamicInputs/Multiply/Multiply_VectorByFloat.Multiply_VectorByFloat",
 			"/Niagara/DynamicInputs/Multiply/ScaleAndBiasFloat.ScaleAndBiasFloat",
 			"/Niagara/DynamicInputs/NiagaraID/MakeNiagaraIDFromInt.MakeNiagaraIDFromInt",
@@ -26301,6 +26305,7 @@
 			"/Game/Environments/Helios/Props/LightSource/BP_Lightsource_CH5_GlobalProp_Spotlight.BP_Lightsource_CH5_GlobalProp_Spotlight_C",
 			"/Game/Environments/Helios/Props/LightSource/LightSource_ArmChandeliers_A/Blueprints/BP_LightSource_ArmChandelier_Height_parent.BP_LightSource_ArmChandelier_Height_parent_C",
 			"/Game/Environments/Helios/Props/Outdoor/Outdoor_Benches_A/Blueprints/BP_Outdoor_Bench_A.BP_Outdoor_Bench_A_C",
+			"/Game/Environments/Helios/Props/RustBucket/RustBucket_SmallSilo_A/TextureData/TD_RustBucket_SmallSilo_A_RCP.TD_RustBucket_SmallSilo_A_RCP_C",
 			"/Game/Environments/Helios/Props/Transit/Transit_Chariot_A/Blueprints/BP_Transit_Chariot_C.BP_Transit_Chariot_C_C",
 			"/Game/Environments/Helios/Props/Underground/Underground_RabbitOwl_A/Blueprints/BP_Underground_RabbitOwl_A.BP_Underground_RabbitOwl_A_C",
 			"/Game/Environments/Helios/Props/Utility/Utility_GarbageCan_A/Blueprints/BP_Utility_GarbageCan_A.BP_Utility_GarbageCan_A_C",

@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-33.20-CL-39082670
+# Generated from build: ++Fortnite+Release-33.30-CL-39435251
 #################################################
 
 using { /UnrealEngine.com/Temporary/SpatialMath }
@@ -980,9 +980,6 @@ Temporary<public> := module {
     @experimental
     # Used to handle general interaction.
     interactable_component<native><public> := class<final_super>(component, enableable) {
-      # Returns whether the specified agent can interact.
-      CanInteract<native><native_callable><public>(Agent: agent)<computes><decides><reads>: void
-
       # Event fires when an interaction has ended before completing successfully. Sends the formerly interacting agent.  This event is called on all interacting agents when Disable() is called on the component.
       CanceledEvent<native><public>: listenable(agent) = external {}
 
@@ -993,9 +990,6 @@ Temporary<public> := module {
       Enable<native><override>(): void
 
       InteractFinishedEvent<native><public>: listenable(agent) = external {}
-
-      # Returns an appropriate message to display to players to communicate the current state of the interactable.
-      InteractMessage<native><native_callable><public>(Agent: agent)<computes><decides><reads>: message
 
       # Succeeds if the component is enabled, fails if it’s disabled.
       IsEnabled<native><override>()<transacts><decides>: void

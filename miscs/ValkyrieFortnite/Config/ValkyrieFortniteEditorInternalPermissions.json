@@ -752,13 +752,6 @@
 				"/Script/Engine.KismetMathLibrary:Wrap",
 				"/Script/Engine.KismetMathLibrary:Xor_Int64Int64",
 				"/Script/Engine.KismetMathLibrary:Xor_IntInt",
-				"/Script/FortniteUI.HUDEquippedItemViewModel:GetItemName",
-				"/Script/FortniteUI.HUDEquippedItemViewModel:HasInfiniteAmmo",
-				"/Script/FortniteUI.HUDEquippedItemViewModel:HasInfiniteAmmoSurplus",
-				"/Script/FortniteUI.HUDEquippedItemViewModel:ShowRecharge",
-				"/Script/FortniteUI.HUDEquippedItemViewModel:IsMagazineType",
-				"/Script/FortniteUI.HUDEquippedItemViewModel:GetAmmoCountText",
-				"/Script/FortniteUI.HUDEquippedItemViewModel:GetAmmoSurplusText",
 				"/Engine/EditorBlueprintResources/StandardMacros.StandardMacros:IsValid"
 			]
 		}
@@ -1030,7 +1023,6 @@
 			"/Script/FortniteGame.UEFNCustomAgentAnimInstance":			{ "Visible": true },
 			"/Script/FortniteGame.FortAmbientAudioVolume":				{ "Visible": true },
 			"/Script/FortniteGame.FortGameUserSettings":				{ "Visible": true },
-			"/Script/FortniteUI.HUDEquippedItemViewModel":				{ "Visible": true },
 			"/Script/GameplayCameras.AttachToPlayerPawnCameraNode":		{  },
 			"/Script/GameplayCameras.OcclusionMaterialCameraNode":		{  },
 			"/Script/GameplayCameras.ArrayCameraNode":					{  },
