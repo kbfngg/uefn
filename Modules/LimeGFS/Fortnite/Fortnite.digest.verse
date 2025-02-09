@@ -5,13 +5,10 @@
 # Generated from build: ++Fortnite+Release-33.20-CL-39082670
 #################################################
 
+using { /Fortnite.com/Characters }
+using { /Fortnite.com/Teams }
+# Module import path: /Fortnite.com/AI
 AI<public> := module {
-  @experimental
-  (Agent: agent).AddInjectedBehavior<native><epic_internal>(BehaviorTreeInjection: behavior_tree_injection)<transacts>: void
-
-  @experimental
-  (Agent: agent).RemoveInjectedBehavior<native><epic_internal>(BehaviorTreeInjection: behavior_tree_injection)<transacts>: void
-
   # Returns the `npc_behavior` for `InAgent`.
   (InAgent: agent).GetNPCBehavior<native><public>()<transacts><decides>: npc_behavior
 
@@ -22,10 +19,6 @@ AI<public> := module {
   # Get the current fort_guard_actions interface for the specified character.
   (InCharacter: fort_character).GetFortGuardActions<native><public>()<transacts><decides>: fort_guard_actions
 
-  @experimental
-  # Get the current fort_guard_perception interface for the specified character.
-  (InCharacter: fort_character).GetFortGuardPerception<native><epic_internal>()<transacts><decides>: fort_guard_perception
-
   # Get the current fort_leashable interface for the specified character.
   (InCharacter: fort_character).GetFortLeashable<native><public>()<transacts><decides>: fort_leashable
 
@@ -33,159 +26,12 @@ AI<public> := module {
   # Get the current fort_npc_actions interface for the specified character.
   (InCharacter: fort_character).GetFortNPCActions<native><public>()<transacts><decides>: fort_npc_actions
 
-  @experimental
-  # Get the current fort_npc_perception interface for the specified character.
-  (InCharacter: fort_character).GetFortNPCPerception<native><epic_internal>()<transacts><decides>: fort_npc_perception
-
   # Get the navigatable interface for the specified character
   (InCharacter: fort_character).GetNavigatable<native><public>()<transacts><decides>: navigatable
 
   @experimental
   # Returns the `entity` for `InNPCBehavior`.
   (InNPCBehavior: npc_behavior).GetEntity<native><public>()<computes><decides><reads>: entity
-
-  using { /Fortnite.com/AI/CompanionAI/PingCommand }
-  using { /Fortnite.com/Characters }
-  using { /UnrealEngine.com/Temporary/SceneGraph }
-  using { /UnrealEngine.com/Temporary/SpatialMath }
-  using { /Verse.org/Native }
-  using { /Verse.org/Simulation }
-  # Module import path: /Fortnite.com/AI/CompanionAI
-  CompanionAI<public> := module {
-    @experimental
-    (Agent: agent).GetTeamMembers<native><epic_internal>()<transacts>: []agent
-
-    @experimental
-    (Character: fort_character).GetNPCLeashRadius<native><epic_internal>()<transacts>: tuple(float, float)
-
-    @experimental
-    (Character: fort_character).IsBeingDBNOCarried<native><epic_internal>()<transacts><decides>: void
-
-    @experimental
-    (InEntity: entity).GetAgent<native><epic_internal>()<transacts>: ?agent
-
-    # Module import path: /Fortnite.com/AI/CompanionAI/PingCommand
-    PingCommand<epic_internal> := module {
-      @experimental
-      command_type<native><epic_internal> := enum {
-        back_to_default
-
-        back_to_me
-
-        go_to
-
-        hold_position
-
-        invalid
-
-        revive
-      }
-
-      @experimental
-      entity_type<native><epic_internal> := enum {
-        building_actor
-
-        container
-
-        pawn
-
-        pickup
-
-        player_built_actor
-
-        undefined
-
-        weapon
-      }
-    }
-
-    @experimental
-    ToString<epic_internal>(Type: command_type)<transacts>: string = external {}
-
-    @experimental
-    ToString<epic_internal>(Type: entity_type)<transacts>: string = external {}
-
-    @hide_in_editor
-    @experimental
-    @available { MinUploadedAtFNVersion := 3200 }
-    companion_ai<epic_internal> := class<concrete>(npc_behavior) {
-      OnBegin<override>()<suspends>: void = external {}
-    }
-
-    @hide_in_editor
-    @experimental
-    default_npc_behavior<epic_internal> := class(npc_behavior) {}
-
-    @experimental
-    # Fortnite NPC AI Management
-    follower_actions_component<native><epic_internal> := class(fort_guard_actions_component) {
-      @experimental
-      IsFollowingBehaviorEnabled<native><epic_internal>()<transacts>: logic
-
-      @experimental
-      # Run the NPC default behavior
-      RunDefaultBehavior<native><epic_internal>()<suspends>: ai_action_result
-    }
-
-    @experimental
-    @hide_in_editor
-    ping_component<native><epic_internal> := class<final_super><epic_internal>(component) {
-      @experimental
-      AreNPCCommandsEnabled<native><epic_internal>()<transacts>: logic
-
-      @experimental
-      CanAcceptPingCommand<native><epic_internal>()<transacts>: logic
-
-      @experimental
-      ConvertPingToAttack<native><epic_internal>(AttackTarget: agent): void
-
-      @experimental
-      ConvertedEvent<epic_internal>(): subscribable(tuple()) = external {}
-
-      @experimental
-      DeclineNPCCommand<native><epic_internal>(PlayUnableToPerformAction: logic): void
-
-      @experimental
-      EnableCommandWheel<native><epic_internal>(Enabled: logic): void
-
-      @experimental
-      GetCurrentNPCCommand<native><epic_internal>()<transacts><decides>: ping_info
-
-      @experimental
-      IsAttackCommandEnabled<native><epic_internal>()<transacts>: logic
-
-      OnInitialized<native><override>(): void
-
-      @experimental
-      OnNPCCommand<native><epic_internal>()<suspends>: ?ping_info
-
-      OnUninitializing<native><override>(): void
-
-      @experimental
-      UnconvertedEvent<epic_internal>(): subscribable(tuple()) = external {}
-    }
-
-    @experimental
-    ping_info<native><epic_internal> := struct {
-      @experimental
-      Emitter<native><public>: ?agent
-
-      @experimental
-      EntityType<native><public>: entity_type
-
-      @experimental
-      Location<native><public>: vector3
-
-      @experimental
-      LocationOnHorizontalSurface<native><public>: logic
-
-      @experimental
-      Target<native><public>: ?entity
-
-      @experimental
-      Type<native><public>: command_type
-    }
-  }
 
   @experimental
   # Generate a navigation_target from an entity
@@ -217,24 +63,6 @@ AI<public> := module {
     Success
   }
 
-  @experimental
-  ai_target_component<native><epic_internal> := class<final><final_super>(component) {
-    OnAddedToScene<native><override>(): void
-
-    OnInitialized<native><override>(): void
-
-    OnRemovingFromScene<native><override>(): void
-  }
-
-  @experimental
-  behavior_tree_injection<native><epic_internal> := class {
-    @editable
-    Action<native><epic_internal>: injected_action
-
-    @editable
-    Condition<native><epic_internal>: injected_condition
-  }
-
   focus_interface<native><public> := interface<epic_internal> {
     # Look At specified Agent. Will never complete unless interrupted.
     MaintainFocus<public>(Agent: agent)<suspends>: void
@@ -244,49 +72,13 @@ AI<public> := module {
   }
 
   @experimental
-  @hide_in_editor
-  # Fortnite Bots AI actions management
-  fort_bot_actions_component<native><epic_internal> := class<epic_internal>(fort_npc_actions_component) {
-    @experimental
-    # Play an emote
-    PlayEmote<native><epic_internal>(Emote: emote)<suspends>: ai_action_result
-
-    @experimental
-    # Play a random emote from the character emotes bank
-    PlayRandomEmote<native><public>()<suspends>: ai_action_result
-  }
-
-  @experimental
-  # Perception settings for damage.
-  fort_damage_perception_settings<native><epic_internal> := class<final><concrete> {
-    @experimental
-    @editable
-    # Specifies duration in seconds after damage stimuli generated by this sense become forgotten. 0 means never.
-    MaxStimulusDuration<native><public>: float = external {}
-
-    @experimental
-    @editable
-    # Specifies if damage perception is enabled.
-    SenseEnabled<native><public>: logic = external {}
-  }
-
-  @experimental
   # Fortnite Guards AI actions management
   fort_guard_actions<native><public> := interface<epic_internal>(fort_npc_actions) {
-    # Attack the navigation obstacle
-    Attack<epic_internal>(Target: fort_obstacle_info)<suspends>: ai_action_result
-
     # Attack the target
     Attack<public>(Target: fort_target_info)<suspends>: ai_action_result
 
-    # Change stance to crouch
-    Crouch<epic_internal>()<suspends>: ai_action_result
-
     # Move in range to attack the current target
     MoveInRangeToAttack<public>()<suspends>: ai_action_result
-
-    # Play an emote
-    PlayEmote<epic_internal>(Emote: emote)<suspends>: ai_action_result
 
     # Play a random emote from the character emotes bank
     PlayRandomEmote<public>()<suspends>: ai_action_result
@@ -296,39 +88,18 @@ AI<public> := module {
 
     # Roam around the current position. Use the fort_leashable_component to specify the radius, else will roam anywhere.
     RoamAround<public>(?MovementType: movement_type = external {})<suspends>: navigation_result
-
-    # Go back to standing
-    StandUp<epic_internal>(): ai_action_result
-
-    # Change movement speed to sprint and switch to tactical sprint when energy is full.
-    TacticalSprint<epic_internal>()<suspends>: ai_action_result
   }
 
   @experimental
-  @hide_in_editor
   # Fortnite Guards AI actions management
   fort_guard_actions_component<native><public> := class<epic_internal>(fort_npc_actions_component, fort_guard_actions) {
-    @experimental
-    # Attack the navigation obstacle
-    Attack<native><override>(Target: fort_obstacle_info)<suspends>: ai_action_result
-
     @experimental
     # Attack the target
     Attack<native><override>(Target: fort_target_info)<suspends>: ai_action_result
 
     @experimental
-    # Change stance to crouch
-    Crouch<native><override>()<suspends>: ai_action_result
-
-    @experimental
     # Move in range to attack the current target
     MoveInRangeToAttack<native><override>()<suspends>: ai_action_result
-
-    OnInitialized<native><override>(): void
-
-    @experimental
-    # Play an emote
-    PlayEmote<native><override>(Emote: emote)<suspends>: ai_action_result
 
     @experimental
     # Play a random emote from the character emotes bank
@@ -341,14 +112,6 @@ AI<public> := module {
     @experimental
     # Roam around the current position. Use the fort_leashable_component to specify the radius, else will roam anywhere.
     RoamAround<native><override>(?MovementType: movement_type = external {})<suspends>: navigation_result
-
-    @experimental
-    # Go back to standing
-    StandUp<native><override>(): ai_action_result
-
-    @experimental
-    # Change movement speed to sprint and switch to tactical sprint when energy is full.
-    TacticalSprint<native><override>()<suspends>: ai_action_result
   }
 
   @experimental
@@ -368,27 +131,6 @@ AI<public> := module {
   }
 
   @experimental
-  # Fortnite NPC perception management
-  fort_guard_perception<native><epic_internal> := interface<epic_internal>(fort_npc_perception) {
-    @experimental
-    # Get the current alert level of the guard.
-    GetAlertLevel<public>()<computes><reads>: fort_guard_alert_level
-
-    @experimental
-    # Get the current alert level of a target for the guard.
-    GetAlertLevel<public>(Target: entity)<computes><decides><reads>: fort_guard_alert_level
-
-    @experimental
-    # Get information about the current target.
-    GetCurrentTargetInfo<public>()<computes><decides><reads>: fort_target_info
-
-    @experimental
-    # Get information about the potential current obstacle
-    GetObstacleInfo<epic_internal>()<computes><decides><reads>: fort_obstacle_info
-  }
-
-  @experimental
-  @hide_in_editor
   # Fortnite guard perception management
   fort_guard_perception_component<native><public> := class<epic_internal>(fort_npc_perception_component) {
     @experimental
@@ -410,52 +152,6 @@ AI<public> := module {
     @experimental
     # Get information about the current target.
     GetCurrentTargetInfo<native><public>()<computes><decides><reads>: fort_target_info
-
-    @experimental
-    # Get information about the potential current obstacle
-    GetObstacleInfo<native><epic_internal>()<computes><decides><reads>: fort_obstacle_info
-
-    @experimental
-    # Event when a new best obstacle is detected
-    ObstacleChangedEvent<native><epic_internal>: listenable(fort_obstacle_info) = external {}
-
-    OnInitialized<native><override>(): void
-
-    OnUninitializing<native><override>(): void
-  }
-
-  @experimental
-  # Perception settings for hearing.
-  fort_hearing_perception_settings<native><epic_internal> := class<final><concrete> {
-    @experimental
-    @editable
-    # Specifies if this sense is able to detect enemies.
-    EnemiesDetected<native><public>: logic = external {}
-
-    @experimental
-    @editable
-    # Specifies if this sense is able to detect friendlies.
-    FriendliesDetected<native><public>: logic = external {}
-
-    @experimental
-    @editable
-    # Maximum hearing distance in meters to notice a target.
-    HearingRange<native><public>: float = external {}
-
-    @experimental
-    @editable
-    # Specifies duration in seconds after audio stimuli generated by this sense become forgotten. 0 means never.
-    MaxStimulusDuration<native><public>: float = external {}
-
-    @experimental
-    @editable
-    # Specifies if this sense is able to detect neutral targets.
-    NeutralsDetected<native><public>: logic = external {}
-
-    @experimental
-    @editable
-    # Specifies if hearing is enabled.
-    SenseEnabled<native><public>: logic = external {}
   }
 
   fort_leashable<native><public> := interface<epic_internal> {
@@ -474,16 +170,11 @@ AI<public> := module {
   }
 
   @experimental
-  @hide_in_editor
   # Fortnite NPC leash management
   fort_leashable_component<native><public> := class<final_super><epic_internal>(component, fort_leashable) {
     @experimental
     # Removes the current leash.
     ClearLeash<native><override>(): void
-
-    OnInitialized<native><override>(): void
-
-    OnUninitializing<native><override>(): void
 
     @experimental
     # Set the agent to be the new center of the leash.
@@ -500,35 +191,14 @@ AI<public> := module {
 
   @experimental
   # Fortnite NPC AI actions management
-  fort_npc_actions<native><public> := interface<epic_internal>(navigatable, focus_interface) {
-    @experimental
-    # Fires the currently equipped weapon.
-    FireCurrentWeapon<epic_internal>()<suspends>: void
-
-    @experimental
-    # Add spare ammo for the currently equipped weapon.
-    GiveAmmoForCurrentWeapon<epic_internal>(AmmoQuantity: int)<suspends>: void
-
-    @experimental
-    # Try to reload the currently equipped weapon.
-    ReloadCurrentWeapon<epic_internal>()<suspends>: logic
-  }
+  fort_npc_actions<native><public> := interface<epic_internal>(navigatable, focus_interface) {}
 
   @experimental
-  @hide_in_editor
   # Fortnite NPC AI actions management
   fort_npc_actions_component<native><public> := class<final_super><epic_internal>(component, fort_npc_actions) {
     @experimental
-    # Fires the currently equipped weapon.
-    FireCurrentWeapon<native><override>()<suspends>: void
-
-    @experimental
     # Return the current destination of the character
     GetCurrentDestination<native><override>()<transacts><decides>: vector3
-
-    @experimental
-    # Add spare ammo for the currently equipped weapon.
-    GiveAmmoForCurrentWeapon<native><override>(AmmoQuantity: int)<suspends>: void
 
     @experimental
     # Look At specified Agent. Will never complete unless interrupted.
@@ -547,14 +217,6 @@ AI<public> := module {
       ?AllowPartialPath: logic = external {}
     )<suspends>: navigation_result
 
-    OnInitialized<native><override>(): void
-
-    OnUninitializing<native><override>(): void
-
-    @experimental
-    # Try to reload the currently equipped weapon.
-    ReloadCurrentWeapon<native><override>()<suspends>: logic
-
     @experimental
     # Apply a multiplier on the movement speed (Multiplier is clamped between 0.5 and 2)
     SetMovementSpeedMultiplier<native><override>(Multiplier: float): void
@@ -569,37 +231,11 @@ AI<public> := module {
   }
 
   @experimental
-  # NPC Component
-  fort_npc_component<native><epic_internal> := class(fort_game_component) {
-    @editable
-    NPCCharacterDefinition<native><epic_internal>: npc_character_definition
-
-    OnEndSimulation<override><final>(): void = external {}
-
-    OnRoundBegin<override><final>()<suspends>: void = external {}
-
-    OnRoundEnd<override><final>(): void = external {}
-  }
-
-  @experimental
-  # Fortnite NPC perception management
-  fort_npc_perception<native><epic_internal> := interface<epic_internal> {
-    @experimental
-    # Get the last known position of a target.
-    GetLastKnownPosition<public>(Target: entity)<computes><decides><reads>: vector3
-  }
-
-  @experimental
-  @hide_in_editor
   # Fortnite NPC perception management
   fort_npc_perception_component<native><public> := class<final_super><epic_internal>(component) {
     @experimental
     # Get the last known position of a target.
     GetLastKnownPosition<native><public>(Target: entity)<computes><decides><reads>: vector3
-
-    OnInitialized<native><override>(): void
-
-    OnUninitializing<native><override>(): void
 
     @experimental
     # Event when a target is added.
@@ -631,75 +267,6 @@ AI<public> := module {
   }
 
   @experimental
-  # Information about a perceived obstacle.
-  fort_obstacle_info<native><epic_internal> := class<epic_internal> {
-    @experimental
-    Location<native><public>: vector3
-
-    @experimental
-    Obstacle<native><public>: entity
-
-    @experimental
-    Status<native><public>: fort_obstacle_status
-  }
-
-  @experimental
-  fort_obstacle_status<native><epic_internal> := enum {
-    blocked_by_obstacle
-
-    incoming_obstacle
-
-    trap_obstacle
-  }
-
-  @experimental
-  # Perception settings for sight.
-  fort_sight_perception_settings<native><epic_internal> := class<final><concrete> {
-    @experimental
-    @editable
-    # Specifies if this sense is able to detect enemies.
-    EnemiesDetected<native><public>: logic = external {}
-
-    @experimental
-    @editable
-    # Specifies if this sense is able to detect friendlies.
-    FriendliesDetected<native><public>: logic = external {}
-
-    @experimental
-    @editable
-    # Maximum sight distance in meters to keep on seeing a target.
-    # This value will be clamped between 'SightRadius' and 300 meters.
-    LoseSightRadius<native><public>: float = external {}
-
-    @experimental
-    @editable
-    # Specifies duration in seconds after sight stimuli generated by this sense become forgotten. 0 means never.
-    MaxStimulusDuration<native><public>: float = external {}
-
-    @experimental
-    @editable
-    # Specifies if this sense is able to detect neutral targets.
-    NeutralsDetected<native><public>: logic = external {}
-
-    @experimental
-    @editable
-    # How far to the side AI can see, in radians.
-    # The value represents the angle measured in relation to the forward vector, not the whole range.
-    PeripheralVisionAngle<native><public>: float = external {}
-
-    @experimental
-    @editable
-    # Specifies if sight is enabled.
-    SenseEnabled<native><public>: logic = external {}
-
-    @experimental
-    @editable
-    # Maximum sight distance in meters to notice a target.
-    # This value will be clamped between 0 and 300 meters.
-    SightRadius<native><public>: float = external {}
-  }
-
-  @experimental
   # Information about a perceived target.
   fort_target_info<native><public> := class<epic_internal> {
     @experimental
@@ -715,96 +282,7 @@ AI<public> := module {
     Target<native><public>: entity
   }
 
-  @experimental
-  # Perception settings for touch.
-  fort_touch_perception_settings<native><epic_internal> := class<final><concrete> {
-    @experimental
-    @editable
-    # Specifies if this sense is able to detect enemies.
-    EnemiesDetected<native><public>: logic = external {}
-
-    @experimental
-    @editable
-    # Specifies if this sense is able to detect friendlies.
-    FriendliesDetected<native><public>: logic = external {}
-
-    @experimental
-    @editable
-    # Specifies duration in seconds after touch stimuli generated by this sense become forgotten. 0 means never.
-    MaxStimulusDuration<native><public>: float = external {}
-
-    @experimental
-    @editable
-    # Specifies if this sense is able to detect neutral targets.
-    NeutralsDetected<native><public>: logic = external {}
-
-    @experimental
-    @editable
-    # Specifies if touch perception is enabled.
-    SenseEnabled<native><public>: logic = external {}
-  }
-
-  @experimental
-  @hide_in_editor
-  # Fortnite Wildlife AI actions management
-  fort_wildlife_actions_component<native><epic_internal> := class<epic_internal>(fort_npc_actions_component) {
-    OnInitialized<native><override>(): void
-  }
-
-  @experimental
-  # Inherit from this to implement an action for an AI. The action will be started when the associated decision allow it and is the highest priority.
-  injected_action<native><epic_internal> := class<abstract>(injected_behavior_script_base) {
-    GetAgent<native><epic_internal>()<transacts><decides>: agent
-
-    # Called when the action is relevant and allowed by its decision. Returns if the action was a success or a failure.
-    OnBegin<native_callable><epic_internal>()<suspends>: ai_action_result
-
-    # Called when the action end with the result of OnBegin or ai_action_result.Canceled if interrupted.
-    OnEnd<native_callable><epic_internal>(ActionResult: ai_action_result): void = external {}
-  }
-
-  @import_as("/Script/VerseFortnite.UInjectedBehaviorScriptBase")
-  injected_behavior_script_base<native><epic_internal> := class<abstract> {}
-
-  @experimental
-  # Inherit from this to implement a condition in an injected behavior to decide if an action can be injected.
-  injected_condition<native><epic_internal> := class<abstract>(injected_behavior_script_base) {
-    # Triggered when the associated action end with its result.
-    ActionEndedEvent<native><epic_internal>: listenable(ai_action_result) = external {}
-
-    # Triggered when the associated action is started.
-    ActionStartedEvent<native><epic_internal>: listenable(tuple()) = external {}
-
-    # Call this when the condition is met to run the associated action.
-    AllowAction<native><epic_internal>(): void
-
-    # Call this when the condition to run the associated action is no longer met.
-    DenyAction<native><epic_internal>(): void
-
-    GetAgent<native><epic_internal>()<transacts><decides>: agent
-
-    # Return if the associated action is currently allowed.
-    IsActionAllowed<native><epic_internal>()<computes><decides><reads>: void
-
-    # Return if the associated action is currently in progress.
-    IsActionInProgress<native><epic_internal>()<computes><decides><reads>: void
-
-    # Called when the behavior is relevant. The coroutine should loop and call Allow/DenyAction to set if the  action can be executed. Action like moving or shooting shouldn't be done in this function. Condition start denied and are considered denied once execution finished.
-    OnBegin<native_callable><epic_internal>()<suspends>: void
-
-    # Called after OnBegin when the behavior is no longer relevant. Ex: Behavior injected in threatened and the NPC is no longer threatened.
-    OnEnd<native_callable><epic_internal>(): void = external {}
-  }
-
-  movement_style<native><epic_internal> := enum {
-    Running
-
-    Walking
-  }
-
-  movement_type<native><public> := class<concrete><final><computes><epic_internal> {
-    MovementStyle<native><epic_internal>: movement_style = external {}
-  }
+  movement_type<native><public> := class<concrete><final><computes><epic_internal> {}
 
   # Module import path: /Fortnite.com/AI/movement_types
   movement_types<public> := module {
@@ -867,33 +345,8 @@ AI<public> := module {
     # This function is called when the NPC is removed from the simulation.
     OnEnd<native_callable><public>(): void = external {}
   }
-
-  @experimental
-  npc_behavior_component<native><epic_internal> := class<final_super>(component) {
-    OnBeginSimulation<native><override>(): void
-
-    OnEndSimulation<native><override>(): void
-
-    OnInitialized<native><override>(): void
-
-    SetNPCBehavior<native><public>(NewNPCBehavior: npc_behavior)<transacts>: void
-
-    @editable
-    var<private> NPCBehavior<native><public>: npc_behavior
-  }
 }
 
-using { /Fortnite.com/AI }
-using { /Fortnite.com/Assets }
-using { /Fortnite.com/Characters }
-using { /Fortnite.com/Game }
-using { /Fortnite.com/Teams }
-using { /Fortnite.com/Vehicles }
-using { /UnrealEngine.com/Abilities }
-using { /UnrealEngine.com/Temporary/Diagnostics }
-using { /UnrealEngine.com/Temporary/SceneGraph }
-using { /UnrealEngine.com/Temporary/SceneGraph/VerseCamera }
-using { /Verse.org/Assets }
 # Module import path: /Fortnite.com/Animation
 Animation<public> := module {
   # Module import path: /Fortnite.com/Animation/PlayAnimation
@@ -902,15 +355,10 @@ Animation<public> := module {
     (InCharacter: fort_character).GetPlayAnimationController<native><public>()<transacts><decides>: play_animation_controller
 
     @experimental
-    @hide_in_editor
     fort_npc_play_animation_component<native><public> := class<final_super><epic_internal>(
       component,
       play_animation_controller
     ) {
-      OnInitialized<native><override>(): void
-
-      OnUninitializing<native><override>(): void
-
       Play<override>(
         AnimationSequence: animation_sequence,
         ?PlayRate: float = external {},
@@ -1014,91 +462,6 @@ Animation<public> := module {
   }
 }
 
-# Module import path: /Fortnite.com/Assets
-Assets<public> := module {
-  emote<native><epic_internal> := class<computes><final><epic_internal>(asset) {}
-
-  npc_character_definition<native><epic_internal> := class<computes><final><epic_internal>(asset) {}
-}
-
-using { /Fortnite.com/FortSafeZone }
-# Module import path: /Fortnite.com/Blastberry
-Blastberry<public> := module {
-  # Module import path: /Fortnite.com/Blastberry/Respawn
-  Respawn<public> := module {
-    (InAgent: agent).GetDeathLocation<native><epic_internal>()<transacts><decides>: transform
-
-    (InAgent: agent).GetTimeRemainingForRespawn<native><epic_internal>()<transacts><decides>: float
-
-    blastberry_respawn_logic<native><epic_internal> := class<concrete><epic_internal>(blastberry_respawn_logic_base) {
-      CalculateRespawnLocation<native_callable><epic_internal>(
-        RespawningAgent: agent,
-        WholeTeamDead: logic,
-        DebugRandRange: float,
-        DebugRandAngle: float
-      ): transform = external {}
-
-      EQSQueryCompleted<native_callable><epic_internal>(ResultAgent: agent, ResultLoc: vector3): vector3 = external {}
-
-      Initialize<native_callable><epic_internal>(InPlayspace: fort_playspace): void = external {}
-
-      PlayerRespawned<native_callable><epic_internal>(RespawnedAgent: agent): void = external {}
-
-      RunSoloEQSQuery<native><epic_internal>(
-        RespawningAgent: agent,
-        SpawnLocation: vector3,
-        SafeZoneRadius: float,
-        SafeZoneCenter: vector3
-      ): void
-    }
-
-    @import_as("/Script/BlastBerryRuntime.UBlastBerryVerseRespawnLogic")
-    blastberry_respawn_logic_base<native><epic_internal> := class<abstract> {}
-
-    respawn_information<native><public> := struct<epic_internal> {
-      DeathLocation<public>: vector3
-
-      SpawnLocation<public>: vector3
-    }
-
-    team_translation_group<epic_internal> := class {
-      GetAverageTranslation<public>()<transacts><decides>: vector3 = external {}
-
-      GetGroupWeight<public>()<transacts>: int = external {}
-
-      InRangeOfGroup<public>(InAgent: agent, RangeSq: float)<transacts>: logic = external {}
-
-      InSafeZone<public>(SafeZoneCenter: vector3, SafeZoneRadius: float)<transacts>: logic = external {}
-
-      ResetCachedData<public>()<transacts>: void = external {}
-
-      SafeZone<epic_internal>: fort_storm_safe_zone
-
-      var Agents<public>: []agent = external {}
-
-      var CachedGroupWeight<public>: ?int = external {}
-    }
-  }
-}
-
-# Module import path: /Fortnite.com/Building
-Building<public> := module {
-  @experimental
-  building_component<native><epic_internal> := class<final><final_super>(component) {
-    @experimental
-    Damage<native><public>(Amount: float): void
-
-    @experimental
-    IsPlayerBuilt<native><public>()<decides>: void
-
-    @experimental
-    var CanBeDamaged<public>: logic = external {}
-
-    @experimental
-    var CanBeReplaced<public>: logic = external {}
-  }
-}
-
 # Module import path: /Fortnite.com/Characters
 Characters<public> := module {
   # Returns the `fort_character` for `InAgent`. Fails if `InAgent` is not a `fort_character`.
@@ -1126,21 +489,11 @@ Characters<public> := module {
     #  - 1: `true` if the character is crouching. `false` if the character is not crouching.
     CrouchedEvent<public>(): listenable(tuple(fort_character, logic))
 
-    # Signaled when this `fort_character` changes 'Down But Not Out' (DBNO) state.
-    # Sends `tuple` payload:
-    #  - 0: the `fort_character` that changed DBNO state.
-    #  - 1: the `fort_character` that instigated the DBNO state change.
-    #  - 2: `true` if the character is DBNO. `false` if the character is not DBNO.
-    DownButNotOutEvent<epic_internal>(): listenable(tuple(fort_character, ?fort_character, logic))
-
     # Signaled when this `fort_character` is eliminated from the match.
     EliminatedEvent<public>(): listenable(elimination_result)
 
     # Returns the agent associated with this `fort_character`. Use this when interacting with APIs that require an `agent` reference.
     GetAgent<public>()<transacts><decides>: agent
-
-    @experimental
-    GetEntity<epic_internal>()<transacts><decides>: entity
 
     # Returns the location where this `fort_character` is looking or aiming from.
     GetViewLocation<public>()<transacts>: vector3
@@ -1184,9 +537,6 @@ Characters<public> := module {
     # Signaled when this `fort_character` jumps. Returns a listenable with a payload of this `fort_character`.
     JumpedEvent<public>(): listenable(fort_character)
 
-    # Epic internal - Signaled when this `fort_character` possesses a pawn.
-    PossessedEvent<epic_internal>(): listenable(fort_character)
-
     # Puts this `fort_character` into stasis, preventing certain types of movement specified by `Args`.
     PutInStasis<public>(Args: stasis_args)<transacts>: void
 
@@ -1209,152 +559,6 @@ Characters<public> := module {
     TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void
   }
 
-  @hide_in_editor
-  @experimental
-  fort_character_component<native><epic_internal> := class<final><final_super>(component, fort_character) {
-    @experimental
-    (/Fortnite.com/Characters/fort_character:)GetEntity<override>()<transacts><decides>: entity = external {}
-
-    CrouchedEvent<override>(): listenable(tuple(fort_character, logic)) = external {}
-
-    @experimental
-    Damage<override>(Amount: float): void = external {}
-
-    @experimental
-    Damage<override>(Args: damage_args): void = external {}
-
-    DamagedEvent<override>(): listenable(damage_result) = external {}
-
-    DamagedOvershieldEvent<override>(): listenable(damage_result) = external {}
-
-    DamagedShieldEvent<override>(): listenable(damage_result) = external {}
-
-    DownButNotOutEvent<override>(): listenable(tuple(fort_character, logic)) = external {}
-
-    EliminatedEvent<override>(): listenable(elimination_result) = external {}
-
-    @experimental
-    FortCharacter<native><public>: fort_character
-
-    @experimental
-    GetAgent<override>()<transacts><decides>: agent = external {}
-
-    @experimental
-    GetHealth<override>()<transacts>: float = external {}
-
-    @experimental
-    GetMaxHealth<override>()<transacts>: float = external {}
-
-    @experimental
-    GetMaxOvershield<override>()<transacts>: float = external {}
-
-    @experimental
-    GetMaxShield<override>()<transacts>: float = external {}
-
-    @experimental
-    GetOvershield<override>()<transacts>: float = external {}
-
-    @experimental
-    GetShield<override>()<transacts>: float = external {}
-
-    @experimental
-    GetTransform<override>()<transacts>: transform = external {}
-
-    @experimental
-    GetViewLocation<override>()<transacts>: vector3 = external {}
-
-    @experimental
-    GetViewRotation<override>()<transacts>: rotation = external {}
-
-    @experimental
-    Heal<override>(Amount: float): void = external {}
-
-    @experimental
-    Heal<override>(Args: healing_args): void = external {}
-
-    HealedEvent<override>(): listenable(healing_result) = external {}
-
-    HealedOvershieldEvent<override>(): listenable(healing_result) = external {}
-
-    HealedShieldEvent<override>(): listenable(healing_result) = external {}
-
-    @experimental
-    Hide<override>(): void = external {}
-
-    @experimental
-    IsActive<override>()<transacts><decides>: void = external {}
-
-    @experimental
-    IsCrouching<override>()<transacts><decides>: void = external {}
-
-    @experimental
-    IsDownButNotOut<override>()<transacts><decides>: void = external {}
-
-    @experimental
-    IsFalling<override>()<transacts><decides>: void = external {}
-
-    @experimental
-    IsFlying<override>()<transacts><decides>: void = external {}
-
-    @experimental
-    IsGliding<override>()<transacts><decides>: void = external {}
-
-    @experimental
-    IsInAir<override>()<transacts><decides>: void = external {}
-
-    @experimental
-    IsInWater<override>()<transacts><decides>: void = external {}
-
-    @experimental
-    IsOnGround<override>()<transacts><decides>: void = external {}
-
-    @experimental
-    IsVulnerable<override>()<transacts><decides>: void = external {}
-
-    JumpedEvent<override>(): listenable(fort_character) = external {}
-
-    PossessedEvent<override>(): listenable(fort_character) = external {}
-
-    @experimental
-    PutInStasis<override>(Args: stasis_args)<transacts>: void = external {}
-
-    @experimental
-    ReleaseFromStasis<override>()<transacts>: void = external {}
-
-    @experimental
-    SetHealth<override>(Health: float)<transacts>: void = external {}
-
-    @experimental
-    SetMaxHealth<override>(MaxHealth: float)<transacts>: void = external {}
-
-    @experimental
-    SetMaxOvershield<override>(MaxOvershield: float)<transacts>: void = external {}
-
-    @experimental
-    SetMaxShield<override>(MaxShield: float)<transacts>: void = external {}
-
-    @experimental
-    SetOvershield<override>(Overshield: float)<transacts>: void = external {}
-
-    @experimental
-    SetShield<override>(Shield: float)<transacts>: void = external {}
-
-    @experimental
-    SetVulnerability<override>(Vulnerable: logic)<transacts>: void = external {}
-
-    @experimental
-    Show<override>(): void = external {}
-
-    SprintedEvent<override>(): listenable(tuple(fort_character, logic)) = external {}
-
-    @experimental
-    TeleportTo<override>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-  }
-
-  npc_character_modifier<native><epic_internal> := class<abstract> {
-    ModifyCharacter<native_callable><public>(Character: fort_character): void
-  }
-
   # Parameters for `fort_character.PutInStasis` function.
   stasis_args<native><public> := struct {
     # Controls if `fort_character` can still perform emotes while in stasis.
@@ -1368,6 +572,14 @@ Characters<public> := module {
   }
 }
 
+using { /Fortnite.com/AI }
+using { /Fortnite.com/Game }
+using { /UnrealEngine.com/Temporary/SceneGraph }
+using { /Verse.org/Assets }
+using { /Verse.org/Native }
+using { /Verse.org/Simulation }
+using { /Verse.org/Simulation/Tags }
+# Module import path: /Fortnite.com/Devices
 Devices<public> := module {
   @experimental
   # Returns the simulation entity at the root of the experience this `creative_device` is operating within.
@@ -1380,10 +592,6 @@ Devices<public> := module {
   #   * The simulation entity is the rootmost entity in an experience.
   #   * Fails if this `creative_object` is not operating in a context with a valid SimulationEntity.
   (CreativeObject: creative_object).GetSimulationEntity<native><public>()<transacts><decides>: entity
-
-  @experimental
-  # Returns the `entity` associated to that `CreativeObject.
-  (CreativeObject: creative_object_interface).GetEntity<native><epic_internal>()<transacts><decides>: entity
 
   # Returns the `fort_playspace` that `CreativeObject` belongs to.
   (CreativeObject: creative_object_interface).GetPlayspace<native><public>()<transacts>: fort_playspace
@@ -1404,42 +612,9 @@ Devices<public> := module {
   # Generates a `creative_object_interface` for every creative object that has been marked with the specified `Tag`. Will not find anything if called on an `entity` that is not in the scene.
   (InEntity: entity).FindCreativeObjectsWithTag<native><public>(Tag: tag)<transacts>: generator(creative_object_interface)
 
-  @available { MinUploadedAtFNVersion := 2930 }
-  # Generates a `creative_object_interface` for every creative object that has been marked with the specified `Tag`. Will not find anything if called on a default constructed object.
-  (InMovableObject: creative_movable_object_base).FindCreativeObjectsWithTagInternal<native><epic_internal>(Tag: tag)<transacts>: generator(creative_object_interface)
-
   @available { MinUploadedAtFNVersion := 3300 }
   # Generates a `creative_object_interface` for every creative object that has been marked with the specified `Tag`. Will not find anything if called on an `npc_behavior` that is not simulating.
   (InNPCBehavior: npc_behavior).FindCreativeObjectsWithTag<native><public>(Tag: tag)<transacts>: generator(creative_object_interface)
-
-  (MovableObject: creative_movable_object_base).GetTransformInternalImpl<native><epic_internal>()<transacts>: transform
-
-  # Moves the `creative_movable_object_base` to the specified `Position` and `Rotation` over the specified time. If an animation is currently playing on the `creative_movable_object_base` it will be stopped and put into the `AnimationNotSet` state.
-  (MovableObject: creative_movable_object_base).MoveToInternal<epic_internal>(
-    Position: vector3,
-    Rotation: rotation,
-    OverTime: float
-  )<suspends>: move_to_result = external {}
-
-  # Moves the `creative_movable_object_base` to the specified `Transform` over the specified time. If an animation is currently playing on the `creative_movable_object_base` it will be stopped and put into the `AnimationNotSet` state.
-  (MovableObject: creative_movable_object_base).MoveToInternal<epic_internal>(
-    Transform: transform,
-    OverTime: float
-  )<suspends>: move_to_result = external {}
-
-  (MovableObject: creative_movable_object_base).MoveToInternalImpl<epic_internal>(
-    TargetTransform: transform,
-    OverTime: float
-  )<suspends>: move_to_internal_result = external {}
-
-  (MovableObject: creative_movable_object_base).TeleportToInternal<epic_internal>(
-    Position: vector3,
-    Rotation: rotation
-  )<transacts><decides>: void = external {}
-
-  (MovableObject: creative_movable_object_base).TeleportToInternal<epic_internal>(Transform: transform)<transacts><decides>: void = external {}
-
-  (MovableObject: creative_movable_object_base).TeleportToInternalImpl<native><epic_internal>(Transform: transform)<transacts>: teleport_to_result
 
   # Module import path: /Fortnite.com/Devices/CreativeAnimation
   CreativeAnimation<public> := module {
@@ -1448,12 +623,6 @@ Devices<public> := module {
     #  * Treasure chests
     #  * Loot llamas
     (Prop: creative_prop).GetAnimationController<public>()<transacts><decides>: animation_controller = external {}
-
-    # Native implementation of `GetAnimationController`.
-    GetAnimationController<native><epic_internal>(MovableObject: creative_movable_object_base)<transacts>: tuple(
-      ?animation_controller,
-      get_animation_controller_result
-    )
 
     # Module import path: /Fortnite.com/Devices/CreativeAnimation/InterpolationTypes
     # Convenience interpolation modes. These built in modes are based on the CSS animation standard: https://www.w3.org/TR/css-easing-1/
@@ -1497,32 +666,17 @@ Devices<public> := module {
       # Pauses the animation if it is already playing.
       Pause<public>(): void = external {}
 
-      # Native implementation of `Pause`.
-      PauseInternal<native><epic_internal>(): playstoppause_result
-
       # Starts or resumes playback of the animation.
       Play<public>(): void = external {}
 
-      # Native implementation of `Play`.
-      PlayInternal<native><epic_internal>(): playstoppause_result
-
       # Sets the animation for the `animation_controller`. Animations are processed in the order provided in `Keyframes`. See notes in `keyframe_delta` and `animation_mode` for more details on controlling the animations.
       SetAnimation<public>(Keyframes: []keyframe_delta, ?Mode: animation_mode): void = external {}
-
-      # Native implementation of `SetAnimation`.
-      SetAnimationInternal<native><epic_internal>(
-        Keyframes: []keyframe_delta,
-        ?AnimationMode: animation_mode = external {}
-      ): set_animation_result
 
       # Signaled when the state has changed. Use `GetState` to get the new state.
       StateChangedEvent<native><public>: listenable(tuple()) = external {}
 
       # Stops playback and resets the animation to the first keyframe. Also resets the prop transform. Calling this method is valid while the animation is in the `Playing` or `Paused` states.
       Stop<public>(): void = external {}
-
-      # Native implementation of `Stop`.
-      StopInternal<native><epic_internal>(): playstoppause_result
     }
 
     # `animation_controller` states.
@@ -1586,21 +740,6 @@ Devices<public> := module {
       Y1<native><public>: float = external {}
     }
 
-    # Results for `animation_controller.GetAnimationController' function.
-    get_animation_controller_result<native><epic_internal> := enum {
-      # The target of the animation is not an animatable prop. This could be because:
-      #  * It is not a `creative_prop` that can be animated.
-      #  * It was disposed or otherwise destroyed.
-      #  * It has the 'Register with Structural Grid' option set in UEFN.
-      InvalidObject
-
-      # Function succeeded.
-      Ok
-
-      # An unknown error has occurred.
-      UnknownError
-    }
-
     # Instead of specifying the actual keyframe positions, we specify the keyframe *deltas*. This allows us to treat the initial position of the prop as keyframe 0 and avoid the question of how to get the prop to its initial location. For a `animation_mode.Loop` animation, the net rotation and translation must both be zero. Each delta is interpreted as a world-space transformation to be concatenated onto the previous transform(s).
     keyframe_delta<native><public> := struct {
       # Target position of the `creative_prop`. This is a world-space coordinate in cm, with the initial position of the `creative_prop` acting as coordinate (0,0).
@@ -1619,57 +758,6 @@ Devices<public> := module {
       # Time in seconds the `creative_prop` should animate between its last frame and this frame.
       Time<native><public>: float
     }
-
-    # Results for `animation_controller`s play, pause, and stop functions.
-    playstoppause_result<native><epic_internal> := enum {
-      # No animation has been successfully set via SetAnimation, or that animation has been cleared by a failed call to SetAnimation.
-      AnimationNotSet
-
-      # The target of the animation is not an animatable prop. This could be because:
-      #  * It is not a `creative_prop` that can be animated.
-      #  * It was disposed or otherwise destroyed.
-      #  * It has the 'Register with Structural Grid' option set in UEFN.
-      InvalidObject
-
-      # Function succeeded.
-      Ok
-    }
-
-    # Results for `animation_controller.SetAnimation` function.
-    set_animation_result<native><epic_internal> := enum {
-      # See the documentation for cubic_bezier_parameters for more information.
-      InvalidInterpolationParameters
-
-      # The translation component of a keyframe contained a NaN or Inf.
-      InvalidLocation
-
-      # The target of the animation is not an animatable prop. This could be because:
-      #  * It is not a `creative_prop` that can be animated.
-      #  * It was disposed or otherwise destroyed.
-      #  * It has the 'Register with Structural Grid' option set in UEFN.
-      InvalidObject
-
-      # The delta time value of a keyframe was negative.
-      InvalidTime
-
-      # The animation would cause the object to at least partially leave the boundaries of play.
-      KeyframeOutOfBounds
-
-      # The animation mode was 'Loop' but there was a net translation or rotation in the keyframes.
-      LoopingAnimationDoesNotLoop
-
-      # No keyframes were provided.
-      NoKeyframes
-
-      # Function succeeded.
-      Ok
-
-      # The target of the animation cannot be scaled.
-      ScaleNotAllowed
-
-      # An unknown error has occurred.
-      UnknownError
-    }
   }
 
   # A default asset to be used when creating an editor-specified `creative_prop_asset` variable.
@@ -1684,8 +772,6 @@ Devices<public> := module {
   # Deprecated, use `FindCreativeObjectsWithTag` instead.
   # Returns an array containing creative objects which have tag(s) matching the specified `SearchCriteria`.
   GetCreativeObjectsWithTags<native><public>(SearchCriteria: tag_search_criteria)<transacts>: []creative_object_interface
-
-  HandleMoveToInternalResult<epic_internal>(Result: move_to_internal_result): move_to_result = external {}
 
   Patchwork<public> := module {
     cable_splitter_device<public> := class<concrete><final>(patchwork_device) {}
@@ -1765,9 +851,6 @@ Devices<public> := module {
     spawn_prop_result
   )
 
-  # Returns a `string` representation of `move_to_internal_result` objects.
-  ToString<epic_internal>(MoveToInternalResult: move_to_internal_result)<computes>: string = external {}
-
   # Used to set up islands so players will earn Battle Pass XP when they interact with your island. Accolades are achievements or accomplishments that players can complete to earn XP.
   accolades_device<public> := class<concrete><final>(creative_device_base) {
     # Awards the XP to `agent`.
@@ -1785,6 +868,7 @@ Devices<public> := module {
   }
 
   using { /UnrealEngine.com/Temporary/SpatialMath }
+  using { /Verse.org/Native }
   # Used in conjunction with `advanced_storm_controller_device` to customize individual storm phases.
   advanced_storm_beacon_device<public> := class<concrete><final>(creative_device_base) {
     # Moves the `advanced_storm_beacon_device` to the specified `Position` and `Rotation` over the specified time, in seconds.
@@ -1822,9 +906,6 @@ Devices<public> := module {
 
     # Commands patroller to follow the *Next Patrol Path Group* instead of the default *Patrol Path Group*.
     GoToNextPatrolGroup<public>(Patroller: agent): void = external {}
-
-    # Commands patroller to follow the *Next Patrol Path* in the *Patrol Path Group*.
-    GoToNextPatrolPath<epic_internal>(Patroller: agent): void = external {}
 
     # Signaled when a guard cannot reach the next `ai_patrol_path_device`.
     NextNodeUnreachableEvent<public>: listenable(agent) = external {}
@@ -1873,6 +954,54 @@ Devices<public> := module {
 
     # Starts or resumes reverse playback of the animation.
     PlayReverse<public>(): void = external {}
+  }
+
+  # Used to dynamically assemble or disassemble one or more building actors. Only available in LEGO islands.
+  assembly_device<public> := class<concrete><final>(creative_device_base, enableable) {
+    # Initiates the assembly process.
+    Assemble<public>(): void = external {}
+
+    # Initiates the assembly process.
+    Assemble<public>(Agent: agent): void = external {}
+
+    # Signaled when the device finishes assembling, at the same time as other 'finished' effects are started.
+    AssemblyFinishedEvent<public>: listenable(?agent) = external {}
+
+    # Disable this object.
+    Disable<override>(): void = external {}
+
+    # Initiates the disassembly process.
+    Disassemble<public>(): void = external {}
+
+    # Initiates the disassembly process.
+    Disassemble<public>(Agent: agent): void = external {}
+
+    # Signaled when the device finishes disassembling.
+    DisassemblyFinishedEvent<public>: listenable(?agent) = external {}
+
+    # Enable this object.
+    Enable<override>(): void = external {}
+
+    # Succeeds if the object is enabled, fails if it’s disabled.
+    IsEnabled<override>()<transacts><decides>: void = external {}
+
+    # Succeeds if the device is paused, fails if it is not.
+    IsPaused<public>()<transacts><decides>: void = external {}
+
+    # Pause the assembly or disassembly process.
+    Pause<public>(): void = external {}
+
+    # Pause the assembly or disassembly process.
+    Pause<public>(Agent: agent): void = external {}
+
+    # Resets affected building actors to the state they were in at the start of the round.
+    Reset<public>(): void = external {}
+
+    # Resets affected building actors to the state they were in at the start of the round.
+    Reset<public>(Agent: agent): void = external {}
+
+    # The amount of progress the device has made towards fully assembling (1.0) or fully disassembling (0.0).
+    var<private> Progress<public>: float = external {}
   }
 
   # Evaluates attributes for `agent` when signaled from other devices. Acts as branching logic, checking whether the `agent` associated with the signal passes all of the tests setup in this device, then sends a signal on either `PassEvent` or `FailEvent`.
@@ -1944,6 +1073,7 @@ Devices<public> := module {
   }
 
   using { /Fortnite.com/Game }
+  using { /Verse.org/Simulation }
   # Used to create a customizable turret that can search for nearby targets.
   automated_turret_device<public> := class<concrete><final>(creative_device_base, healthful, healable) {
     # Triggers when someone enters the activation radius while nobody else is there.
@@ -2001,11 +1131,6 @@ Devices<public> := module {
     # Sets the range in meters at which the turret will target to `Range`.
     # This is clamped between `2.0` and `100.0` meters. Setting it lower than 2m will disable Targeting.
     SetTargetRange<public>(Range: float): void = external {}
-
-    # Set the turret to the team with the chosen index number.
-    #  * `TeamIndex` is clamped to valid team values, with a minimum of `1`.
-    #  * Only usable if `Possible Targets` is not set to `Everyone`.
-    SetTeam<override>(TeamIndex: int): void = external {}
 
     # Set the turret to the same team as the supplied `Agent`.
     #  * Only usable if `Possible Targets` is not set to `Everyone`.
@@ -2095,9 +1220,6 @@ Devices<public> := module {
     # Returns `true` if the device border is enabled.
     GetShowBorder<public>()<transacts>: logic = external {}
 
-    # Returns the device *Text*.
-    GetText<epic_internal>()<transacts>: string = external {}
-
     # Returns the *Text Size* of the device *Text*.
     GetTextSize<public>()<transacts>: int = external {}
 
@@ -2140,18 +1262,6 @@ Devices<public> := module {
     HealStopEvent<public>: listenable(agent) = external {}
   }
 
-  @experimental
-  bridge_component<native><epic_internal> := class<final><final_super>(component) {
-    @experimental
-    AsCreativeDevice<public>(Type: subtype(creative_device_base))<suspends>: ?Type = external {}
-
-    OnAddedToSceneInternal<native><override>(): void
-
-    OnInitializedInternal<native><override>(): void
-
-    OnUninitializingInternal<native><override>(): void
-  }
-
   # Used to create a button which can trigger other devices when an agent interacts with it.
   button_device<public> := class<concrete><final>(creative_device_base) {
     # Disables this device.
@@ -2159,9 +1269,6 @@ Devices<public> := module {
 
     # Enables this device.
     Enable<public>(): void = external {}
-
-    # Returns the text that displays when an `agent` is close to this button and looks at it.
-    GetInteractionText<epic_internal>()<transacts>: string = external {}
 
     # Returns the duration of the interaction required to activate this device (in seconds).
     GetInteractionTime<public>()<transacts>: float = external {}
@@ -2188,35 +1295,6 @@ Devices<public> := module {
     #  * `MaxCount` must be between `0` and `10`.
     #  * `0` indicates no limit on trigger count.
     SetMaxTriggerCount<public>(MaxCount: int): void = external {}
-  }
-
-  # Used to focus the camera on specific `agent`s.
-  camera_focus_device<epic_internal> := class<concrete><final>(creative_device_base) {
-    # Disables this device.
-    Disable<public>(): void = external {}
-
-    # Drops focus from `Agent`.
-    DropFocus<public>(Agent: agent): void = external {}
-
-    # Drops focus from all `agent`s.
-    DropFocusForAll<public>(): void = external {}
-
-    # Enables this device.
-    Enable<public>(): void = external {}
-
-    # Focuses the camera on `Agent`.
-    Focus<public>(Agent: agent): void = external {}
-
-    # Focuses the camera on all `agent`s.
-    FocusAll<public>(): void = external {}
-
-    # Signaled when the camera stops focusing on an `agent`.
-    # Sends the `agent` that stopped being focused on.
-    FocusIsDroppedEvent<public>: listenable(agent) = external {}
-
-    # Signaled when the camera focuses on an `agent`.
-    # Sends the `agent` being focused on.
-    FocusOnEvent<public>: listenable(agent) = external {}
   }
 
   # Used to place a campfire in the world that an `agent` can use to heal themselves.
@@ -2314,9 +1392,6 @@ Devices<public> := module {
     # Sends the `agent` that entered this device area.
     FirstAgentEntersEvent<public>: listenable(agent) = external {}
 
-    # Returns an array of agents that are currently occupying the Capture Area.
-    GetAgentsInVolume<epic_internal>()<computes><reads>: []agent = external {}
-
     # Returns the *Capture Height* (in meters) of the capture area.
     GetHeight<public>()<computes><reads>: float = external {}
 
@@ -2325,9 +1400,6 @@ Devices<public> := module {
 
     # Gives control of this device to the capturing `agent`'s team.
     GiveControl<public>(Agent: agent): void = external {}
-
-    # Is true when `Agent` is in the Capture Area.
-    IsInArea<epic_internal>(Agent: agent)<transacts><decides>: void = external {}
 
     # Signaled when an item is consumed by this device.
     # Sends the `agent` that provided the item to this device.
@@ -2467,36 +1539,6 @@ Devices<public> := module {
     Show<public>(): void = external {}
   }
 
-  # Allows management of groups of `character_device`s e.g. changing all to have the same outfit, emote, or animation.
-  character_device_controller_device<epic_internal> := class<concrete><final>(creative_device_base) {
-    # Changes the character appearance of the associated `character_device`s.
-    ChangeCharacterAppearance<public>(): void = external {}
-
-    # Changes the character idle animation of the associated `character_device`s.
-    ChangeCharacterIdleAnimated<public>(): void = external {}
-
-    # Changes the character idle pose of the associated `character_device`s.
-    ChangeCharacterIdlePose<public>(): void = external {}
-
-    # Plays an emote on the associated `character_device`s.
-    PerformEmote<public>(): void = external {}
-
-    # Resets the character appearance of the associated `character_device`s.
-    ResetCharacters<public>(): void = external {}
-  }
-
-  # Used to transform character appearance.
-  character_transformation_device<epic_internal> := class<concrete><final>(creative_device_base) {
-    # Sets `Agent` visibility to invisible.
-    Hide<public>(Agent: agent): void = external {}
-
-    # Transforms `Agent` into the character configured by this device.
-    TransformInto<public>(Agent: agent): void = external {}
-
-    # Plays the transform effect for `Agent`.
-    TransformIntoEffectAvatar<public>(Agent: agent): void = external {}
-  }
-
   # Used to trigger level sequences that allow coordination of cinematic animation, transformation, and audio tracks.
   cinematic_sequence_device<public> := class<concrete><final>(creative_device_base) {
     # Returns the playback rate of the sequence.
@@ -2557,16 +1599,6 @@ Devices<public> := module {
     TogglePause<public>(Agent: agent): void = external {}
   }
 
-  clapboard_device<epic_internal> := class<concrete><final>(creative_device_base) {
-    # Disables this device.
-    Disable<public>(): void = external {}
-
-    # Enables this device.
-    Enable<public>(): void = external {}
-
-    TimeReachedEvent<public>: listenable(tuple()) = external {}
-  }
-
   # Used together with `class_designer_device` to control how/when created classes can be accessed by `agent`s.
   class_and_team_selector_device<public> := class<concrete><final>(creative_device_base) {
     # Changes the `Agent`'s class.
@@ -2597,15 +1629,8 @@ Devices<public> := module {
   }
 
   # Used together with `class_selector_device` to create class based gameplay. Defines custom class attributes and inventory loadouts.
-  class_designer_device<public> := class<concrete><final>(creative_device_base) {
-    # Returns an array of agents that are currently of *Class* defined by this device.
-    GetClassMembers<epic_internal>()<computes><reads>: []agent = external {}
+  class_designer_device<public> := class<concrete><final>(creative_device_base) {}
 
-    # Is true if `Agent` is on *Class* defined by this device.
-    IsOfClass<epic_internal>(Agent: agent)<transacts><decides>: void = external {}
-  }
-
-  using { /Verse.org/Simulation }
   # Used to allow players to select their *Class* from a *Class Selector UI*.
   class_selector_ui_device<public> := class<concrete><final>(creative_device_base) {
     # Signaled when an `agent` changes a class.
@@ -2693,9 +1718,6 @@ Devices<public> := module {
 
     # Enables this device.
     Enable<public>(): void = external {}
-
-    # Returns the text that appears when `agent`s approach the device.
-    GetInteractionText<epic_internal>()<transacts>: string = external {}
 
     # Returns the time (in seconds) that an interaction with this device will take to complete.
     GetInteractionTime<public>()<transacts>: float = external {}
@@ -2815,10 +1837,7 @@ Devices<public> := module {
   }
 
   # Inherit from this to create a custom creative device. Inherited classes will appear in the UEFN content browser the next time Verse compiles. Instances of your derived `creative_device` can then be placed in the island by dragging them from the content browser into the scene.
-  creative_device<native><public> := class<concrete>(creative_movable_object_base, creative_object_interface) {
-    # Returns the `fort_playspace` that `creative_device` belongs to.
-    GetPlayspaceEpicInternal<override><native>()<transacts>: fort_playspace
-
+  creative_device<native><public> := class<concrete>(creative_object_interface) {
     # Returns the transform of the `creative_device` with units in cm.
     GetTransform<override>()<transacts>: transform = external {}
 
@@ -2837,8 +1856,6 @@ Devices<public> := module {
     # Override to add custom logic when the game experience ends. Any coroutines spawned inside `OnEnd` may never execute.
     OnEnd<native_callable><public>(): void = external {}
 
-    PlayspaceEpicInternal<native><epic_internal>: ?fort_playspace = external {}
-
     # Shows this device in the world.
     Show<native><public>()<transacts>: void
 
@@ -2850,25 +1867,13 @@ Devices<public> := module {
   }
 
   # Internal asset for representing creative devices.
-  creative_device_asset<native><public> := class<computes><final><epic_internal>(asset) {}
+  creative_device_asset<native><public> := class<computes><final><epic_internal> {}
 
   # Base class for creative_device.
-  creative_device_base<native><public> := class<abstract><epic_internal>(creative_object) {
-    # Set this device invisible in the world.
-    Hide_Internal<native><epic_internal>()<transacts>: void
-
-    # Set this device visible in the world.
-    Show_Internal<native><epic_internal>()<transacts>: void
-  }
-
-  @import_as("/Script/VerseDevices.UVerseMovableObjectBase")
-  creative_movable_object_base<native><epic_internal> := class<abstract><epic_internal> {}
+  creative_device_base<native><public> := class<abstract><epic_internal>(creative_object) {}
 
   # Base class for creative devices and props.
-  creative_object<native><public> := class<epic_internal>(creative_movable_object_base, creative_object_interface) {
-    # Returns the `fort_playspace` that `creative_object` belongs to.
-    GetPlayspaceEpicInternal<override><native>()<transacts>: fort_playspace
-
+  creative_object<native><public> := class<epic_internal>(creative_object_interface) {
     # Returns the transform of the `creative_object` with units in cm. You must check `creative_object.IsValid` before calling this if there is a possibility the object has been disposed or destroyed by gameplay.
     # Otherwise a runtime error will result.
     GetTransform<override>()<transacts>: transform = external {}
@@ -2879,9 +1884,6 @@ Devices<public> := module {
     # Moves the `creative_object` to the specified `Transform` over the specified time, in seconds. If an animation is currently playing on the `creative_object` it will be stopped and put into the `AnimationNotSet` state.
     MoveTo<public>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
 
-    # Sets the team to a specific user. 0 is no team.
-    SetTeam<native><epic_internal>(TeamIndex: type { _X: int where 0 <= _X, _X <= 255 }): void
-
     # Teleports the `creative_object` to the specified `Position` and `Rotation`.
     TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
 
@@ -2889,10 +1891,7 @@ Devices<public> := module {
     TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
-  creative_object_interface<native><public> := interface<epic_internal>(positional) {
-    # Returns the `fort_playspace` that `CreativeObject` belongs to.
-    GetPlayspaceEpicInternal<native_callable><epic_internal>()<transacts>: fort_playspace
-  }
+  creative_object_interface<native><public> := interface<epic_internal>(positional) {}
 
   # A Fortnite prop that has been placed or spawned in the island.
   creative_prop<native><public> := class<concrete><final>(creative_object, invalidatable) {
@@ -2904,9 +1903,6 @@ Devices<public> := module {
 
     # Succeeds if this object has been disposed of either via `Dispose()` or through an external system.
     IsDisposed<native><final><public>()<transacts><decides>: void
-
-    # Returns true if the `creative_prop` is hidden in the world.
-    IsHidden<native><epic_internal>()<transacts>: logic
 
     # Succeeds if this object has not been disposed of either via `Dispose()` or through an external system.
     IsValid<native><override>()<transacts><decides>: void
@@ -2923,8 +1919,6 @@ Devices<public> := module {
 
   # Asset used to spawn `creative_prop` instances.
   creative_prop_asset<native><public> := class<computes><concrete><final><epic_internal> {}
-
-  creative_prop_debug_log<epic_internal> := class(log_channel) {}
 
   # Used to customize one creature type at a time. Place multiple `creature_manager_device`s for each type of creature on your island.
   creature_manager_device<public> := class<concrete><final>(creative_device_base) {
@@ -2993,32 +1987,6 @@ Devices<public> := module {
     Enable<public>(): void = external {}
   }
 
-  # Used to create a specialized light which can be enabled and disabled and set to a desired color in response to in game events.
-  customizable_color_light_device<epic_internal> := class<concrete><final>(creative_device_base) {
-    # Resets the light to its initial state.
-    Reset<public>(Agent: agent): void = external {}
-
-    # Sets the light color to `Agent`'s team color.
-    SetToTeamColor<public>(Agent: agent): void = external {}
-
-    # Toggles between `TurnOn` and `TurnOff`.
-    Toggle<public>(Agent: agent): void = external {}
-
-    # Turns off the light.
-    TurnOff<public>(Agent: agent): void = external {}
-
-    # Turns on the light.
-    TurnOn<public>(Agent: agent): void = external {}
-
-    # Signaled when this `popup_device` is turned off for an `agent`.
-    # Sends the `agent` looking at the popup.
-    TurnedOffEvent<public>: listenable(agent) = external {}
-
-    # Signaled when this `popup_device` is turned on for an `agent`.
-    # Sends the `agent` looking at the popup.
-    TurnedOnEvent<public>: listenable(agent) = external {}
-  }
-
   # Used to create a light which can have its color and brightness manipulated in response to in-game events.
   customizable_light_device<public> := class<concrete><final>(creative_device_base) {
     # Dims the light by *Dimming Amount*.
@@ -3068,19 +2036,8 @@ Devices<public> := module {
     # Sends the `agent` exiting the volume.
     AgentExitsEvent<public>: listenable(agent) = external {}
 
-    # Returns an array of agents that are currently occupying the volume.
-    GetAgentsInVolume<epic_internal>()<computes><reads>: []agent = external {}
-
     # Returns the damage to be applied each tick within the volume.
     GetDamage<public>()<transacts>: int = external {}
-
-    GetSelectedClass<epic_internal>(): int = external {}
-
-    GetSelectedClassFunction<epic_internal>: device_function_get_int = external {}
-
-    GetSelectedTeam<epic_internal>(): int = external {}
-
-    GetSelectedTeamFunction<epic_internal>: device_function_get_int = external {}
 
     # Is true when `Agent` is in the zone.
     IsInVolume<public>(Agent: agent)<transacts><decides>: void = external {}
@@ -3093,17 +2050,6 @@ Devices<public> := module {
 
     # Updates *Selected Team* to `Agent`'s team.
     UpdateSelectedTeam<public>(Agent: agent): void = external {}
-  }
-
-  # Used to capture `agent` dance moves.
-  dance_capture_device<epic_internal> := class<concrete><final>(creative_device_base) {
-    # Signaled when this device is activated by an `agent`.
-    # Sends the `agent` that activated this device.
-    ActivatedEvent<public>: listenable(agent) = external {}
-
-    # Signaled when this device is deactivated by an `agent`.
-    # Sends the `agent` that deactivated this device.
-    DeactivatedEvent<public>: listenable(agent) = external {}
   }
 
   # Used to project a hologram of a character performing dance emotes.
@@ -3137,229 +2083,6 @@ Devices<public> := module {
 
     # Optional agent targeted by `Source`.
     Target<native><public>: ?agent
-  }
-
-  # Partial implementation of `device_event(:type)` with no return payload.
-  device_event<epic_internal>() := device_event(tuple())
-
-  # Base implementation for events on `creative_device`s.
-  device_event<native><epic_internal>(t: type) := class<abstract>(listenable(t)) {
-    EventName<native><public>: string
-  }
-
-  # Implementation of `device_event(:type)` with required `agent` payload.
-  device_event_agent<native><epic_internal> := class(device_event(agent)) {
-    Await<native><override>()<suspends>: agent
-
-    # Subscribes Callback to this event. That same Callback will only be triggered once per event even if it is called with Subscribe more than once.
-    Subscribe<native><override>(Callback: type { __(: agent): void })<transacts>: cancelable
-  }
-
-  # Implementation of `device_event(:type)` with a `tuple(agent, float)` payload.
-  device_event_agent_float<native><epic_internal> := class(device_event(tuple(agent, float))) {
-    Await<native><override>()<suspends>: tuple(agent, float)
-
-    # Subscribes Callback to this event. That same Callback will only be triggered once per event even if it is called with Subscribe more than once.
-    Subscribe<native><override>(Callback: type { __(: agent, : float): void })<transacts>: cancelable
-  }
-
-  # Implementation of `device_event(:type)` with a `tuple(agent, int)` payload.
-  device_event_agent_int<native><epic_internal> := class(device_event(tuple(agent, int))) {
-    Await<native><override>()<suspends>: tuple(agent, int)
-
-    # Subscribes Callback to this event. That same Callback will only be triggered once per event even if it is called with Subscribe more than once.
-    Subscribe<native><override>(Callback: type { __(: agent, : int): void })<transacts>: cancelable
-  }
-
-  # Implementation of `device_event(:type)` with `device_ai_interaction_result` payload.
-  device_event_ai_interaction<native><epic_internal> := class(device_event(device_ai_interaction_result)) {
-    Await<native><override>()<suspends>: device_ai_interaction_result
-
-    SourceName<native><public>: string
-
-    # Subscribes Callback to this event. That same Callback will only be triggered once per event even if it is called with Subscribe more than once.
-    Subscribe<native><override>(Callback: type { __(: device_ai_interaction_result): void })<transacts>: cancelable
-
-    TargetName<native><public>: string
-  }
-
-  # Implementation of `device_event(:type)` with required `int` payload.
-  device_event_int<native><epic_internal> := class(device_event(int)) {
-    Await<native><override>()<suspends>: int
-
-    # Subscribes Callback to this event. That same Callback will only be triggered once per event even if it is called with Subscribe more than once.
-    Subscribe<native><override>(Callback: type { __(: int): void })<transacts>: cancelable
-  }
-
-  # Implementation of `device_event(:type)` with optional `agent` payload.
-  device_event_optional_agent<native><epic_internal> := class(device_event(?agent)) {
-    Await<native><override>()<suspends>: ?agent
-
-    # Subscribes Callback to this event. That same Callback will only be triggered once per event even if it is called with Subscribe more than once.
-    Subscribe<native><override>(Callback: type { __(: ?agent): void })<transacts>: cancelable
-  }
-
-  # Implementation of `device_event(:type)` with a `tuple(?agent, int)` payload.
-  device_event_optional_agent_int<native><epic_internal> := class(device_event(tuple(?agent, int))) {
-    Await<native><override>()<suspends>: tuple(?agent, int)
-
-    # Subscribes Callback to this event. That same Callback will only be triggered once per event even if it is called with Subscribe more than once.
-    Subscribe<native><override>(Callback: type { __(: ?agent, : int): void })<transacts>: cancelable
-  }
-
-  # Implementation of `device_event(:type)` with a `tuple(?agent, fort_vehicle, int)` payload.
-  device_event_optional_agent_vehicle_int<native><epic_internal> := class(device_event(tuple(?agent, fort_vehicle, int))) {
-    Await<native><override>()<suspends>: tuple(?agent, fort_vehicle, int)
-
-    # Subscribes Callback to this event. That same Callback will only be triggered once per event even if it is called with Subscribe more than once.
-    Subscribe<native><override>(Callback: type { __(: ?agent, : fort_vehicle, : int): void })<transacts>: cancelable
-  }
-
-  # Implementation of `device_event(:type)` with required `fort_vehicle` payload.
-  device_event_vehicle<native><epic_internal> := class(device_event(fort_vehicle)) {
-    Await<native><override>()<suspends>: fort_vehicle
-
-    # Subscribes Callback to this event. That same Callback will only be triggered once per event even if it is called with Subscribe more than once.
-    Subscribe<native><override>(Callback: type { __(: fort_vehicle): void })<transacts>: cancelable
-  }
-
-  # Implementation of `device_event(:type)` with no payload.
-  device_event_void<native><epic_internal> := class(device_event(tuple())) {
-    Await<native><override>()<suspends>: tuple()
-
-    # Subscribes Callback to this event. That same Callback will only be triggered once per event even if it is called with Subscribe more than once.
-    Subscribe<native><override>(Callback: type { __(): void })<transacts>: cancelable
-  }
-
-  device_function<native><epic_internal> := class {
-    FunctionName<native><epic_internal>: string
-
-    Invoke<native><epic_internal>(): void
-
-    Invoke<native><epic_internal>(InAgent: agent): void
-  }
-
-  device_function_get_agent<native><epic_internal> := class(device_function_get_base) {
-    Invoke<native><epic_internal>()<computes><reads>: ?agent
-  }
-
-  device_function_get_agent_array<native><epic_internal> := class(device_function_get_base) {
-    Invoke<native><epic_internal>()<computes><reads>: []agent
-  }
-
-  device_function_get_base<native><epic_internal> := class<abstract> {
-    FunctionName<native><epic_internal>: string
-  }
-
-  device_function_get_color<native><epic_internal> := class(device_function_get_base) {
-    Invoke<native><epic_internal>()<computes><reads>: color
-  }
-
-  device_function_get_float<native><epic_internal> := class(device_function_get_base) {
-    Invoke<native><epic_internal>()<computes><reads>: float
-  }
-
-  device_function_get_int<native><epic_internal> := class(device_function_get_base) {
-    Invoke<native><epic_internal>()<computes><reads>: int
-  }
-
-  device_function_get_logic<native><epic_internal> := class(device_function_get_base) {
-    Invoke<native><epic_internal>()<computes><reads>: logic
-  }
-
-  device_function_get_string<native><epic_internal> := class(device_function_get_base) {
-    Invoke<native><epic_internal>()<computes><reads>: string
-  }
-
-  device_function_get_vector3<native><epic_internal> := class(device_function_get_base) {
-    Invoke<native><epic_internal>()<computes><reads>: vector3
-  }
-
-  device_function_set_agent<native><epic_internal> := class(device_function_set_base) {
-    Invoke<native><epic_internal>(InAgent: ?agent): void
-  }
-
-  device_function_set_agent_array<native><epic_internal> := class(device_function_set_base) {
-    Invoke<native><epic_internal>(InAgents: []agent): void
-  }
-
-  device_function_set_base<native><epic_internal> := class<abstract> {
-    FunctionName<native><epic_internal>: string
-  }
-
-  device_function_set_color<native><epic_internal> := class(device_function_set_base) {
-    Invoke<native><epic_internal>(Value: color): void
-  }
-
-  device_function_set_float<native><epic_internal> := class(device_function_set_base) {
-    Invoke<native><epic_internal>(Value: float): void
-  }
-
-  device_function_set_int<native><epic_internal> := class(device_function_set_base) {
-    Invoke<native><epic_internal>(Value: int): void
-  }
-
-  device_function_set_logic<native><epic_internal> := class(device_function_set_base) {
-    Invoke<native><epic_internal>(Value: logic): void
-  }
-
-  device_function_set_message<native><epic_internal> := class(device_function_set_base) {
-    Invoke<native><epic_internal>(Value: message): void
-  }
-
-  device_function_set_multi_parameter_base<native><epic_internal> := class<abstract>(device_function_set_base) {
-    ReturnType<native><epic_internal>: ?subtype(function_parameter_base) = external {}
-  }
-
-  device_function_set_params_by_name<native><epic_internal> := class(device_function_set_multi_parameter_base) {
-    Invoke<native><epic_internal>(NamedParameters: [string]function_parameter_base)<transacts>: ?function_parameter_base
-
-    ParameterTypes<native><epic_internal>: [string]subtype(function_parameter_base)
-  }
-
-  device_function_set_params_by_name_const<native><epic_internal> := class(device_function_set_params_by_name) {
-    InvokeConst<native><epic_internal>(NamedParameters: [string]function_parameter_base)<computes><reads>: ?function_parameter_base
-  }
-
-  device_function_set_params_by_type<native><epic_internal> := class(device_function_set_multi_parameter_base) {
-    Invoke<native><epic_internal>(TypeExclusiveParameters: []function_parameter_base)<transacts>: ?function_parameter_base
-
-    ParameterTypes<native><epic_internal>: []subtype(function_parameter_base)
-  }
-
-  device_function_set_params_by_type_const<native><epic_internal> := class(device_function_set_params_by_type) {
-    InvokeConst<native><epic_internal>(TypeExclusiveParameters: []function_parameter_base)<computes><reads>: ?function_parameter_base
-  }
-
-  device_function_set_string<native><epic_internal> := class(device_function_set_base) {
-    Invoke<native><epic_internal>(Value: string): void
-  }
-
-  device_function_set_vector3<native><epic_internal> := class(device_function_set_base) {
-    Invoke<native><epic_internal>(Value: vector3): void
-  }
-
-  # Class that implements the common logic for a healthful, damageable, healable device.
-  device_health<native><epic_internal> := class<epic_internal>(healthful, damageable, healable) {
-    Damage<override><native>(Amount: float): void
-
-    Damage<override><native>(Args: damage_args): void
-
-    DamagedEvent<override>(): listenable(damage_result) = external {}
-
-    GetHealth<override><native>()<transacts>: float
-
-    GetMaxHealth<override><native>()<transacts>: float
-
-    Heal<override><native>(Amount: float): void
-
-    Heal<override><native>(Args: healing_args): void
-
-    HealedEvent<override>(): listenable(healing_result) = external {}
-
-    SetHealth<override><native>(Health: float)<transacts>: void
-
-    SetMaxHealth<override><native>(MaxHealth: float)<transacts>: void
   }
 
   # Used to customize (or prevent) the 'down but not out' player state between 'healthy' and 'removed from game'.
@@ -3479,37 +2202,10 @@ Devices<public> := module {
     EliminationEvent<public>: listenable(?agent) = external {}
   }
 
-  emote_controller_device<epic_internal> := class<concrete><final>(creative_device_base) {
-    # Disables this device.
-    Disable<public>(): void = external {}
-
-    # Disables `agent` emote effects.
-    DisableAgentEffects<public>(): void = external {}
-
-    # Enables this device.
-    Enable<public>(): void = external {}
-
-    # Enables `agent` emote effects.
-    EnableAgentEffects<public>(): void = external {}
-
-    # Grants emote item to `Agent`.
-    GrantEmoteItem<public>(Agent: agent): void = external {}
-
-    # Grants emote item all `agent`s.
-    GrantEmoteItemAll<public>(): void = external {}
-  }
-
   # Used to configure rules that can end the current round or game.
   end_game_device<public> := class<concrete><final>(creative_device_base) {
     # Ends the round/game. Uses `Agent`'s team to determine if the round/game ends when *Activating Team* is enabled.
     Activate<public>(Agent: agent): void = external {}
-
-    # Ends the round/game. Determines who wins based on the *Winning Team* option.
-    # If *Winning Team* is set to *Activating Team* and *Activating Team* is set to a value other than *Any*, it will declare that team as the winner.
-    # If *Activating Team* is set to *Any* it will work the same as if *Winning Team* was set to *Winning Team*.
-    ActivateNoAgent<epic_internal>(): void = external {}
-
-    ActivateNoAgentFunction<epic_internal>: device_function_set_params_by_type = external {}
 
     # Disables this device.
     Disable<public>(): void = external {}
@@ -3611,48 +2307,6 @@ Devices<public> := module {
 
     # Resets fuel stock to *Fuel Capacity* value.
     Reset<public>(): void = external {}
-  }
-
-  function_parameter_agent<native><epic_internal> := class<computes>(function_parameter_base) {
-    Value<native><epic_internal>: ?agent
-  }
-
-  function_parameter_agent_array<native><epic_internal> := class<computes>(function_parameter_base) {
-    Value<native><epic_internal>: []agent
-  }
-
-  function_parameter_base<native><epic_internal> := class<abstract><computes> {}
-
-  function_parameter_color<native><epic_internal> := class<computes>(function_parameter_base) {
-    Value<native><epic_internal>: color
-  }
-
-  function_parameter_float<native><epic_internal> := class<computes>(function_parameter_base) {
-    Value<native><epic_internal>: float
-  }
-
-  function_parameter_fort_vehicle<native><epic_internal> := class<computes>(function_parameter_base) {
-    Value<native><epic_internal>: ?fort_vehicle
-  }
-
-  function_parameter_int<native><epic_internal> := class<computes>(function_parameter_base) {
-    Value<native><epic_internal>: int
-  }
-
-  function_parameter_logic<native><epic_internal> := class<computes>(function_parameter_base) {
-    Value<native><epic_internal>: logic
-  }
-
-  function_parameter_message<native><epic_internal> := class<computes>(function_parameter_base) {
-    Value<native><epic_internal>: ?message
-  }
-
-  function_parameter_string<native><epic_internal> := class<computes>(function_parameter_base) {
-    Value<native><epic_internal>: string
-  }
-
-  function_parameter_vector3<native><epic_internal> := class<computes>(function_parameter_base) {
-    Value<native><epic_internal>: vector3
   }
 
   # Used to update the camera’s current viewpoint and rotation based on current camera mode.
@@ -3909,9 +2563,6 @@ Devices<public> := module {
     # Returns the time (in seconds) for which the HUD message will be displayed. `0.0` means the message is displayed persistently.
     GetDisplayTime<public>()<transacts>: float = external {}
 
-    # Returns the *Message* to be displayed when the HUD message is activated.
-    GetText<epic_internal>()<transacts>: string = external {}
-
     # Hides the HUD message.
     Hide<public>(): void = external {}
 
@@ -3998,18 +2649,8 @@ Devices<public> := module {
     # Enables this device.
     Enable<public>(): void = external {}
 
-    # Returns the number of items this item granter will award for all items in the Item Granter.
-    GetItemCount<epic_internal>()<transacts>: int = external {}
-
-    # Returns the number of items this item granter will award for at the specified index in the Item Granter. This will return 0 if the index is invalid.
-    GetItemCountAtIndex<epic_internal>(Index: int)<transacts>: int = external {}
-
-    GetItemDisplayNameAtIndex<epic_internal>(Index: int)<transacts>: string = external {}
-
     # Returns the current Item Index that this device will grant when activated.
     GetItemIndex<public>()<transacts>: int = external {}
-
-    GetItemInventoryCountAtIndex<epic_internal>(Agent: agent, Index: int)<transacts>: int = external {}
 
     # Grants an item to `Agent`.
     GrantItem<public>(Agent: agent): void = external {}
@@ -4035,21 +2676,8 @@ Devices<public> := module {
     # Sends the `agent` that was granted the item.
     ItemGrantedEvent<public>: listenable(agent) = external {}
 
-    # Signaled when an item is granted to an `agent`.
-    # Sends the `agent` that was granted the item, as well as the number of items granted.
-    ItemGrantedWithCountEvent<epic_internal>: listenable(tuple(agent, int)) = external {}
-
     # Restocks this device back to its starting inventory count.
     RestockItems<public>(): void = external {}
-
-    # Sets the number of items this item granter will award for all items in the Item Granter. `Number` must be greater than 0.
-    SetItemCount<epic_internal>(Count: int): void = external {}
-
-    # Sets the number of items this item granter will award for the item at `Index`.
-    # `Number` must be greater than 0.
-    # If *Cycle Behavior* is *Stop*, `ItemIndex` is clamped to the number of items in the Item Granter.
-    #  If *Cycle Behavior* is *Wrap*, `ItemIndex` is modulo'd to the number of items in the Item Granter.
-    SetItemCountAtIndex<epic_internal>(ItemIndex: int, Count: int): void = external {}
 
     # Sets the next item to be granted.
     #  * `Index` should be between `0` and the available item count - 1.
@@ -4087,10 +2715,6 @@ Devices<public> := module {
     Enable<public>(): void = external {}
   }
 
-  item_shop_mannequin_device<epic_internal> := class<final>(character_device) {
-    OpenStore<public>(Agent: agent): void = external {}
-  }
-
   # Used to configuration and spawn items that players can pick up and use.
   item_spawner_device<public> := class<concrete><final>(base_item_spawner_device) {
     # Cycles device to next configured item.
@@ -4111,12 +2735,6 @@ Devices<public> := module {
     # Spawns the current item.
     SpawnItem<public>(): void = external {}
   }
-
-  using { /UnrealEngine.com/Temporary/SceneGraph }
-  using { /Verse.org/Native }
-  @import_as("/Script/FortniteGame.ULevelSaveRecord")
-  @experimental
-  level_save_record<native><epic_internal> := class<epic_internal> {}
 
   # Used to customize the state and accessibility of doors. `lock_device` only works with assets that have a door attached.
   lock_device<public> := class<concrete><final>(creative_device_base) {
@@ -4200,40 +2818,6 @@ Devices<public> := module {
     Enable<public>(): void = external {}
   }
 
-  melee_designer_device<epic_internal> := class<final>(creative_device_base) {}
-
-  move_to_debug_log<epic_internal> := class(log_channel) {}
-
-  # Results for `MoveToInternal`.
-  move_to_internal_result<epic_internal> := enum {
-    # The destination would cause the object to be at least partially outside the island's boundaries.
-    DestinationOutOfBounds
-
-    # The destination has been reached.
-    DestinationReached
-
-    # NaN or Infinity in the requested destination.
-    InvalidDestination
-
-    # The object being moved is no longer valid. Example invalid states:
-    #  * The object has been destroyed during gameplay.
-    #  * The object has been destroyed by Verse.
-    #  * The object has the 'Register with Structural Grid' option set in UEFN.
-    InvalidObject
-
-    # The `OverTime` parameter was not a float greater than zero.
-    InvalidTime
-
-    # The object being moved cannot be scaled.
-    ScaleNotAllowed
-
-    # An unknown error occurred. If this happens frequently, contact Epic support.
-    UnknownError
-
-    # The move was terminated before completion (e.g., via the `animation_controller` API).
-    WillNotReachDestination
-  }
-
   # Results for `MoveTo`.
   move_to_result<public> := enum {
     # The destination has been reached.
@@ -4276,9 +2860,6 @@ Devices<public> := module {
     # Signaled when an `agent` exits this zone.
     # Sends the `agent` exiting this zone.
     AgentExitsEvent<public>: listenable(agent) = external {}
-
-    # Returns an array of agents that are currently occupying the volume.
-    GetAgentsInVolume<epic_internal>()<computes><reads>: []agent = external {}
 
     # Is true when `Agent` is in the zone.
     IsInVolume<public>(Agent: agent)<transacts><decides>: void = external {}
@@ -4464,18 +3045,6 @@ Devices<public> := module {
     # Signaled when this device has direct line of sight to an `agent`.
     # Sends the `agent` seen by this device.
     DeviceSeesAgentEvent<public>: listenable(agent) = external {}
-
-    # Returns an array of agents that are currently of the class defined by this device.
-    GetLookingAtDeviceAgents<epic_internal>()<computes><reads>: []agent = external {}
-
-    # Returns an array of agents that are currently of the class defined by this device.
-    GetPerceivedAgents<epic_internal>()<computes><reads>: []agent = external {}
-
-    # Succeeds when `Agent` is registered to this checkpoint.
-    IsLookingAtDevice<epic_internal>(Agent: agent)<transacts><decides>: void = external {}
-
-    # Succeeds when `Agent` is registered to this checkpoint.
-    IsPerceived<epic_internal>(Agent: agent)<transacts><decides>: void = external {}
   }
 
   # Physics boulder that can be dislodged and damage `agent`s, vehicles, creatures, and structures.
@@ -4577,12 +3146,6 @@ Devices<public> := module {
     # Sends the `agent` that activated this device.
     FirstActivationPerAgentEvent<public>: listenable(agent) = external {}
 
-    # Returns an array of agents that are currently registered to this checkpoint.
-    GetRegisteredAgents<epic_internal>()<computes><reads>: []agent = external {}
-
-    # Succeeds when `Agent` is registered to this checkpoint.
-    IsRegistered<epic_internal>(Agent: agent)<transacts><decides>: void = external {}
-
     # Registers this checkpoint for `Agent`. This sets the respawn point and can clear `Agent`'s inventory depending on this device's settings. Multiple `agent`s can be registered to this device at one time.
     Register<public>(Agent: agent): void = external {}
   }
@@ -4613,9 +3176,6 @@ Devices<public> := module {
 
     # Returns the number of players currently counted by this device
     GetCount<public>()<transacts>: int = external {}
-
-    # Returns an array of agents that are currently counted by the device.
-    GetCountedAgents<epic_internal>()<computes><reads>: []agent = external {}
 
     # Returns the number of players required for this counter to succeed.
     GetTargetCount<public>()<transacts>: int = external {}
@@ -4798,32 +3358,9 @@ Devices<public> := module {
     # Sends the `int` index of the button that was clicked.
     RespondingButtonEvent<public>: listenable(tuple(agent, int)) = external {}
 
-    # Sets all *Button Text* based on the contents of an array of messages and alters the button count based on the size of the array.
-    # Button count is not updated on active Popups.
-    # `Text` should be no more than `24` characters.
-    SetAllButtons<epic_internal>(Text: []message): void = external {}
-
-    # Sets the *Title*, *Description* and *Buttons* for this popup then displays a message for all users.
-    SetAndShow<epic_internal>(Title: message, Description: message, ButtonsText: []message): void = external {}
-
-    # Sets the *Title*, *Description* and *Buttons* for this popup then displays a message for a specific user.
-    SetAndShow<epic_internal>(
-      Title: message,
-      Description: message,
-      ButtonsText: []message,
-      Agent: agent
-    ): void = external {}
-
     # Sets the number of buttons this popup has.
     # Button Count is not updated on active Popups.
     SetButtonCount<public>(Count: int): void = external {}
-
-    # Sets the Button Text for a button at a specific index on this popup.
-    #  * `Text` should be no more than `24` characters.
-    #  * If `Text` is empty the button will show *OK* instead.
-    #  * Button 1 uses `Index` 0. If set, `UpdateCount` will also update the number of buttons
-    # if you are setting a button that isn't currently showing.
-    SetButtonText<epic_internal>(Text: message, Index: int, UpdateCount: logic): void = external {}
 
     # Sets the *Button Text* for a button at a specific index on this popup.
     #  * `Text` should be no more than `24` characters.
@@ -5111,9 +3648,6 @@ Devices<public> := module {
     # `0` indicates the pulse will continue indefinitely.
     GetLoopCount<public>()<transacts>: int = external {}
 
-    # Returns the tempo (in beats per minute or BPM) at which the pulses generated by this pulse trigger will travel.
-    GetTempo<epic_internal>()<transacts>: float = external {}
-
     # Returns the speed (in meters per second) at which the pulses generated by this pulse trigger will travel.
     GetWaveSpeed<public>()<transacts>: float = external {}
 
@@ -5131,9 +3665,6 @@ Devices<public> := module {
 
     # Sets the total number of times this pulse will complete before ending. `LoopCount = 0` indicates the pulse should continue indefinitely.
     SetLoopCount<public>(LoopCount: int): void = external {}
-
-    # Sets the tempo (in beats per minute or BPM) at which the pulses generated by this pulse trigger will travel.
-    SetTempo<epic_internal>(Tempo: float): void = external {}
 
     # Sets the speed (in meters per second) at which the pulses generated by this pulse trigger will travel.
     SetWaveSpeed<public>(Speed: float): void = external {}
@@ -5307,48 +3838,6 @@ Devices<public> := module {
     ToggleMatchmaking<public>(): void = external {}
   }
 
-  # Gives the ability to save player progress, location, resources and stats persistently across games.
-  save_point_device<epic_internal> := class<concrete><final>(creative_device_base) {
-    # Signaled when data is saved for an `agent`.
-    ActivationEvent<public>: listenable(agent) = external {}
-
-    # Clears all saved data for `Agent`.
-    ClearData<public>(Agent: agent): void = external {}
-
-    # Clears all saved data for all `agent`s in the current session.
-    ClearDataForAll<public>(): void = external {}
-
-    # Signaled when data is cleared for an `agent`.
-    ClearedEvent<public>: listenable(agent) = external {}
-
-    # Disables this device.
-    Disable<public>(): void = external {}
-
-    # Enables this device.
-    Enable<public>(): void = external {}
-
-    # Returns whether the `agent`'s data is automatically saved while they play.
-    GetAutoSaveEnabled<public>()<transacts>: logic = external {}
-
-    # Load data for `Agent`.
-    Load<public>(Agent: agent): void = external {}
-
-    # Loads Data for all players in the current session.
-    LoadDataForAll<public>(): void = external {}
-
-    # Signaled when data is loaded for an `agent`.
-    LoadedEvent<public>: listenable(agent) = external {}
-
-    # Save data for `Agent`. This function does nothing if `Agent` is already eliminated.
-    Save<public>(Agent: agent): void = external {}
-
-    # Saves Data for all players in the current session.
-    SaveDataForAll<public>(): void = external {}
-
-    # Sets whether the `agent`'s data is automatically saved while they play.
-    SetAutoSaveEnabled<public>(Enabled: logic): void = external {}
-  }
-
   # Used to manipulate scores using in-experience triggers. If *Activating Team* is set to a specific team, then you should use the `agent` overloads of each function. The `agent`'s team will be used to determine if that `agent` is allowed to affect the state of the device.
   score_manager_device<public> := class<concrete><final>(creative_device_base) {
     # Grants points.
@@ -5356,9 +3845,6 @@ Devices<public> := module {
 
     # Grant points to `Agent`.
     Activate<public>(Agent: agent): void = external {}
-
-    # Immediately awards the specified score quantity to the indicated agent. Does not require Activate to be called subsequently, and will not modify the device's current Score Award quantity
-    AwardScore<epic_internal>(Agent: agent, ScoreToAward: int): void = external {}
 
     # Decrements the score quantity to be awarded by the next activation by `1`.
     Decrement<public>(): void = external {}
@@ -5527,44 +4013,6 @@ Devices<public> := module {
 
     # Fires when a vehicle is at full health, returns the repaired vehicle.
     VehicleRepairEndEvent<public>: listenable(fort_vehicle) = external {}
-  }
-
-  shared_saved_data_device<epic_internal> := class<concrete><final>(creative_device_base) {
-    # Signaled if the save result is off when the state is checked.
-    # Sends the `agent` that initiated the check.
-    CheckResultOffEvent<public>: listenable(agent) = external {}
-
-    # Signaled if the save result is on when the state is checked.
-    # Sends the `agent` that initiated the check.
-    CheckResultOnEvent<public>: listenable(agent) = external {}
-
-    # Checks the device state with `Agent` acting as the instigator of the action.
-    CheckState<public>(Agent: agent): void = external {}
-
-    # Disables this device.
-    Disable<public>(): void = external {}
-
-    # Enables this device.
-    Enable<public>(): void = external {}
-
-    # Loads the device state with `Agent` acting as the instigator of the action.
-    LoadState<public>(Agent: agent): void = external {}
-
-    # Saves the device state with `Agent` acting as the instigator of the action.
-    SaveState<public>(Agent: agent): void = external {}
-
-    # Signaled when state is saved.
-    # Sends the `agent` that initiated the save.
-    StateSaveEvent<public>: listenable(agent) = external {}
-
-    # Toggles between `TurnOn` and `TurnOff` with `Agent` acting as the instigator of the action.
-    ToggleState<public>(Agent: agent): void = external {}
-
-    # Turns off the device with `Agent` acting as the instigator of the action.
-    TurnOff<public>(Agent: agent): void = external {}
-
-    # Turns on this device with `Agent` acting as the instigator of the action.
-    TurnOn<public>(Agent: agent): void = external {}
   }
 
   # A single customizable pop up target that can be hit by `agent`s to trigger various events.
@@ -5769,9 +4217,6 @@ Devices<public> := module {
     # Enables volume locking which prevents users from leaving the volume once they've entered.
     EnableVolumeLocking<public>(): void = external {}
 
-    # Returns an array of agents that are currently occupying the volume.
-    GetAgentsInVolume<epic_internal>()<computes><reads>: []agent = external {}
-
     # Is true when `Agent` is in the volume.
     IsInVolume<public>(Agent: agent)<transacts><decides>: void = external {}
 
@@ -5936,24 +4381,6 @@ Devices<public> := module {
     # Teleports the `storm_controller_device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
     # Existing storms will not target the new location, but newly generated storms will.
     TeleportTo<override>(Transform: transform)<transacts><decides>: void = external {}
-  }
-
-  # Used to play streamed music.
-  streaming_radio_device<epic_internal> := class<concrete><final>(creative_device_base) {
-    # Changes audio channel for `Agent`.
-    ChangeChannel<public>(Agent: agent): void = external {}
-
-    # Disables this device.
-    Disable<public>(): void = external {}
-
-    # Enables this device.
-    Enable<public>(): void = external {}
-
-    # Starts playing audio for `Agent`.
-    Play<public>(Agent: agent): void = external {}
-
-    # Stops playing audio for `Agent`.
-    Stop<public>(Agent: agent): void = external {}
   }
 
   # Used to spawn and configure an aerial supply drop that can provide players with customized weapons/supplies.
@@ -6124,9 +4551,6 @@ Devices<public> := module {
     # Sends the `agent` team member who eliminated the enemy.
     EnemyEliminatedEvent<public>: listenable(agent) = external {}
 
-    # Returns an array of agents that are currently of the team defined by this device.
-    GetTeamMembers<epic_internal>()<computes><reads>: []agent = external {}
-
     # Is true if `Agent` is on *Team*.
     IsOnTeam<public>(Agent: agent)<transacts><decides>: void = external {}
 
@@ -6241,10 +4665,6 @@ Devices<public> := module {
     # Clears this device's saved data for all `agent`s.
     ClearPersistenceDataForAll<public>(Agent: agent): void = external {}
 
-    # Signaled when the timer clears persistent data for an `agent`.
-    # Sends the `agent` that cleared the persistent data.
-    ClearedEvent<epic_internal>: listenable(agent) = external {}
-
     # Completes the timer.
     Complete<public>(): void = external {}
 
@@ -6288,13 +4708,6 @@ Devices<public> := module {
     # Loads this device's saved data for `Agent`.
     Load<public>(Agent: agent): void = external {}
 
-    # Loads this device's saved data for all players.
-    LoadForAll<epic_internal>(): void = external {}
-
-    # Signaled when the timer loads data for an `agent`.
-    # Sends the `agent` that loaded.
-    LoadedEvent<epic_internal>: listenable(agent) = external {}
-
     # Pauses the timer.
     Pause<public>(): void = external {}
 
@@ -6333,13 +4746,6 @@ Devices<public> := module {
 
     # Saves this device's data for `Agent`.
     Save<public>(Agent: agent): void = external {}
-
-    # Saves this device's data for all players.
-    SaveForAll<epic_internal>(): void = external {}
-
-    # Signaled when the timer saves data for an `agent`.
-    # Sends the `agent` that saved.
-    SavedEvent<epic_internal>: listenable(agent) = external {}
 
     # Sets the remaining time (in seconds) on the timer, if active. Use this function if the timer is set to use the same time for all `agent`'s.
     SetActiveDuration<public>(Time: float): void = external {}
@@ -6391,13 +4797,6 @@ Devices<public> := module {
     # Clears tracked progress for `Agent`. Only valid if *Use Persistence* is set to *Use*.
     ClearPersistence<public>(Agent: agent): void = external {}
 
-    # Clears tracked progress for all valid `agent`s. Only valid if *Use Persistence* is set to *Use*.
-    ClearPersistenceForAll<epic_internal>(): void = external {}
-
-    # Signaled when the tracker clears persistent data for an `agent`.
-    # Sends the `agent` that cleared the persistent data.
-    ClearedEvent<epic_internal>: listenable(agent) = external {}
-
     # The objective immediately completes.
     Complete<public>(Agent: agent): void = external {}
 
@@ -6411,20 +4810,9 @@ Devices<public> := module {
     # Decrease the tracked value by *Amount to Change on Received Signal* for `Agent`.
     Decrement<public>(Agent: agent): void = external {}
 
-    # Returns an array of agents that currently have this tracker active.
-    GetActiveAgents<epic_internal>()<computes><reads>: []agent = external {}
-
-    # Returns the description for the `tracker_device`, which is displayed if *Show on HUD* is enabled.
-    # `GetDescriptionText` has a 64 character limit.
-    GetDescriptionText<epic_internal>()<transacts>: string = external {}
-
     # Returns the target value that must be achieved in order for `CompleteEvent` to trigger.
     # Clamped to `0 <= GetTarget <= 10000`.
     GetTarget<public>()<transacts>: int = external {}
-
-    # Returns the title for the `tracker_device`, which is displayed if *Show on HUD* is enabled.
-    # `GetTitleText` has a 32 character limit.
-    GetTitleText<epic_internal>()<transacts>: string = external {}
 
     # Returns the current total tracked value for all players.
     GetValue<public>()<transacts>: int = external {}
@@ -6453,10 +4841,6 @@ Devices<public> := module {
     # Loads tracked progress for all valid `agent`s. Only valid if *Use Persistence* is set to *Use*.
     LoadForAll<public>(): void = external {}
 
-    # Signaled when the tracker loads data for an `agent`.
-    # Sends the `agent` that loaded.
-    LoadedEvent<epic_internal>: listenable(agent) = external {}
-
     # Removes this device from `Agent` (and any `agent`s sharing progress).
     Remove<public>(Agent: agent): void = external {}
 
@@ -6468,13 +4852,6 @@ Devices<public> := module {
 
     # Saves tracked progress for `Agent`. Only valid if *Use Persistence* is set to *Use*.
     Save<public>(Agent: agent): void = external {}
-
-    # Saves tracked progress for all valid `agent`s. Only valid if *Use Persistence* is set to *Use*.
-    SaveForAll<epic_internal>(): void = external {}
-
-    # Signaled when the tracker saves data for an `agent`.
-    # Sends the `agent` that saved.
-    SavedEvent<epic_internal>: listenable(agent) = external {}
 
     # Sets a description for the `tracker_device`, which is displayed if *Show on HUD* is enabled.
     # `Text` has a 64 character limit.
@@ -6656,9 +5033,6 @@ Devices<public> := module {
     # Returns the number of times the device has spawned a mod box.
     GetSpawnCount<public>()<transacts>: int = external {}
 
-    # Succeeds if *Possible Mods* is set to `Custom List`.
-    GetUsingCustomList<epic_internal>()<transacts><decides>: void = external {}
-
     # Succeeds if the object is enabled, fails if it's disabled.
     IsEnabled<override>()<transacts><decides>: void = external {}
 
@@ -6794,9 +5168,6 @@ Devices<public> := module {
     # Sends the `agent` that exited the vehicle.
     AgentExitsVehicleEvent<public>: listenable(agent) = external {}
 
-    # Applies off-road tires to the vehicle if applicable.
-    ApplyOffRoadTires<epic_internal>(): void = external {}
-
     # Sets `agent` as the vehicle's driver.
     AssignDriver<public>(Agent: agent): void = external {}
 
@@ -6812,53 +5183,8 @@ Devices<public> := module {
     # Enables this device.
     Enable<public>(): void = external {}
 
-    # Returns the `agent` who is currently driving the vehicle.
-    GetDriver<epic_internal>()<transacts><decides>: agent = external {}
-
-    # Gets the amount of fuel(or energy) in the vehicle as a percentage between `0.0` and `100.0`.
-    GetFuelRemaining<epic_internal>()<transacts>: float = external {}
-
-    # Returns the vehicle's current health.
-    # Returns 0.0 if the vehicle does not exist.
-    GetVehicleHealth<epic_internal>()<transacts>: float = external {}
-
-    # Returns the vehicle's maximum health.
-    GetVehicleMaxHealth<epic_internal>(Amount: float): void = external {}
-
-    # Checks to see if a vehicle is currently spawned from this device.
-    HasVehicle<epic_internal>()<transacts><decides>: void = external {}
-
-    # Succeeds if `agent` is the driver of the vehicle.
-    IsDriver<epic_internal>(Agent: agent)<transacts><decides>: void = external {}
-
-    # Succeeds if `agent` is the passenger of the vehicle.
-    IsPassenger<epic_internal>(Agent: agent)<transacts><decides>: void = external {}
-
-    # Pops all of the tires on the vehicle, if applicable.
-    PopAllTires<epic_internal>(): void = external {}
-
-    # Reverts to road tires on the vehicle if applicable.
-    RemoveTireMods<epic_internal>(): void = external {}
-
-    # Repairs all of the tires on the vehicle, if applicable.
-    RepairAllTires<epic_internal>(): void = external {}
-
-    # Restores the vehicle to full health.
-    RepairVehicle<epic_internal>(): void = external {}
-
     # Spawns a new vehicle. The previous vehicle will be destroyed before a new vehicle spawns.
     RespawnVehicle<public>(): void = external {}
-
-    # Sets the amount of fuel(or energy) in the vehicle as a percentage between `0.0` and `100.0`.
-    SetFuelRemaining<epic_internal>(Amount: float): void = external {}
-
-    # Sets the vehicle's current health to the supplied amount.
-    # Health will be clamped between `1.0` and *Max Health*.
-    SetVehicleHealth<epic_internal>(Amount: float): void = external {}
-
-    # Sets the vehicle's maximum health to the supplied value.
-    # Health will be clamped between `1.0` and `9,999.0`.
-    SetVehicleMaxHealth<epic_internal>(Amount: float): void = external {}
 
     # Signaled when a vehicle is spawned or respawned by this device.
     # Sends the fort_vehicle who was spawned.
@@ -7111,12 +5437,6 @@ Devices<public> := module {
 
     # Signaled when an `agent` exits the device volume.
     AgentExitsEvent<public>: listenable(agent) = external {}
-
-    # Returns an array of agents that are currently occupying the volume.
-    GetAgentsInVolume<epic_internal>()<computes><reads>: []agent = external {}
-
-    # Succeeds when `Agent` is in the volume.
-    IsInVolume<epic_internal>(Agent: agent)<transacts><decides>: void = external {}
   }
 
   # Used to create and manipulate volumes of water where players can swim, fish, or drive boats.
@@ -7189,9 +5509,6 @@ Devices<public> := module {
     # `Source` is the `agent` that dismounted the wildlife.
     # `Target` is the wildlife that was dismounted.
     DismountedEvent<public>: listenable(device_ai_interaction_result) = external {}
-
-    # Eliminates wildlife tamed by `Agent`.
-    EliminateTamed<epic_internal>(Agent: agent): void = external {}
 
     # Signaled when wildlife is eliminated.
     # `Source` is the `agent` that eliminated the wildlife. If the wildlife was eliminated by a non-agent, or because the oldest wildlife was eliminated as Spawn function was called after spawn count was exceeded, then `Source` is 'false'.
@@ -7296,391 +5613,6 @@ Devices<public> := module {
     #  * This value is clamped.
     SetMaximumRegrowths<public>(MaximumRegrowths: int): void = external {}
   }
-
-  # Creates a zipline that moves players from point to point.
-  zipline_device<epic_internal> := class<concrete><final>(creative_device_base) {
-    # Signaled when an `agent` attaches to the zipline.
-    # Sends `agent` that attached.
-    AttachEvent<public>: listenable(agent) = external {}
-
-    # Signaled when an `agent` detaches from the zipline.
-    # Sends `agent` that detached.
-    DetachEvent<public>: listenable(agent) = external {}
-
-    # Returns true if `Agent`is currently attached to this zipline.
-    IsAttached<public>(Agent: agent)<transacts><decides>: void = external {}
-  }
-}
-
-# Module import path: /Fortnite.com/FN1Native
-FN1Native<public> := module {
-  # Module import path: /Fortnite.com/FN1Native/FortBus
-  FortBus<public> := module {
-    fort_battlebus<native><epic_internal> := class<epic_internal>(fort_battlebus_base) {
-      DesiredDoorOpenTime<native><public>: float = external {}
-
-      DeviationAngle<native><public>: float = external {}
-
-      DropZone<native><public>: fort_battlebus_zone = external {}
-
-      EjectAllPassengers<native><public>()<transacts>: void
-
-      FlightHeight<native><public>: float = external {}
-
-      FlightSpeed<native><public>: float = external {}
-
-      Initialize<native><public>()<transacts>: void
-
-      OnAllPassengersExited<native><public>: listenable(tuple()) = external {}
-
-      OnDropZoneEntered<native><public>: listenable(tuple()) = external {}
-
-      OnDropZoneExited<native><public>: listenable(tuple()) = external {}
-
-      OnFlightEnded<native><public>: listenable(tuple()) = external {}
-
-      OnFlightStarted<native><public>: listenable(tuple()) = external {}
-
-      OnPassengerExited<native><public>: listenable(agent) = external {}
-
-      SpawnZone<native><public>: fort_battlebus_zone = external {}
-
-      StartFlightPath<native><public>()<transacts>: void
-
-      StartsEnabled<native><public>: logic = external {}
-
-      VolumeSource<native><public>: creative_device
-    }
-
-    @import_as("/Script/FN1NativeRuntime.UVerseFortniteBattlebus")
-    fort_battlebus_base<native><epic_internal> := class<abstract> {}
-
-    fort_battlebus_zone<native><epic_internal> := struct<concrete> {
-      @editable
-      ZoneMax<native><public>: vector2 = external {}
-
-      @editable
-      ZoneMin<native><public>: vector2 = external {}
-    }
-  }
-
-  # Module import path: /Fortnite.com/FN1Native/FortStorm
-  FortStorm<public> := module {
-    fort_storm<native><epic_internal> := class<epic_internal>(fort_storm_base) {
-      GetPhaseIndex<native><epic_internal>()<transacts><decides>: int
-
-      InitialRadius<native><public>: float
-
-      Initialize<native><epic_internal>()<transacts>: void
-
-      PauseStorm<native><epic_internal>()<transacts>: void
-
-      Phases<native><public>: []fort_storm_phase
-
-      ResumeStorm<native><epic_internal>()<transacts>: void
-
-      SetCurrentPhase<native><epic_internal>(InCurrentPhase: int)<transacts>: void
-
-      StormVolumes<native><public>: []fort_storm_volume
-
-      VolumeSource<native><public>: creative_device
-    }
-
-    @import_as("/Script/FN1NativeRuntime.UVerseFortniteStorm")
-    fort_storm_base<native><epic_internal> := class<abstract> {}
-
-    fort_storm_phase<native><public> := struct<concrete><epic_internal> {
-      @editable
-      Damage<native><public>: float = external {}
-
-      @editable
-      EndLocationDistanceMax<native><public>: float = external {}
-
-      @editable
-      EndLocationDistanceMin<native><public>: float = external {}
-
-      @editable
-      EndRadius<native><public>: float = external {}
-
-      @editable
-      OverrideEndLocation<native><public>: ?vector3 = external {}
-
-      @editable
-      ShrinkTime<native><public>: float = external {}
-
-      @editable
-      WaitTime<native><public>: float = external {}
-    }
-
-    fort_storm_volume<native><public> := struct<concrete><epic_internal> {
-      @editable
-      RejectionChance<native><public>: float = external {}
-
-      @editable
-      VolumeActor<native><public>: ?creative_prop = external {}
-    }
-  }
-
-  # Module import path: /Fortnite.com/FN1Native/GameMode
-  GameMode<public> := module {
-    fort_br_gamemode<native><epic_internal> := class<epic_internal>(fort_gamemode_base) {
-      AircraftFinishedEvent<native><public>: listenable(tuple()) = external {}
-
-      Initialize<native><public>(): logic
-
-      PlayerPawnEliminatedEvent<native><public>: listenable(agent) = external {}
-
-      PlayerPawnRespawnedEvent<native><public>: listenable(agent) = external {}
-
-      StartAircraftPhase<native><public>(): logic
-
-      StartMatch<native><public>(): logic
-
-      StartSafeZonesPhase<native><public>(): logic
-
-      StartWarmupPhase<native><public>(): logic
-
-      TeamWonEvent<native><public>: listenable(team) = external {}
-
-      WaitingForPlayersCountdownStartedEvent<native><public>: listenable(float) = external {}
-
-      WaitingForPlayersFinishedEvent<native><public>: listenable(tuple()) = external {}
-
-      WarmupFinishedEvent<native><public>: listenable(tuple()) = external {}
-    }
-
-    @import_as("/Script/FN1NativeRuntime.UVerseFortGameMode")
-    fort_gamemode_base<native><epic_internal> := class<abstract> {}
-
-    fort_reload_gamemode<native><epic_internal> := class<epic_internal>(fort_br_gamemode) {
-      AllowRespawns<native><public>(bInAllowRespawns: logic): void
-
-      AreRespawnsActive<native><public>()<transacts>: logic
-
-      ConsumedRemainingTeamLivesEvent<native><public>: listenable(tuple(agent, int)) = external {}
-
-      GetGameModeTeamSize<native><public>()<transacts><decides>: int
-
-      GetRespawnDelay<native><public>(InAgent: agent)<transacts><decides>: float
-
-      GetTeamLivesRemaining<native><public>(InTeam: team)<transacts><decides>: int
-
-      GetTimeUntilRespawnDisabled<native><public>()<transacts>: float
-
-      GetTimeUntilTeamLivesRecharge<native><public>(InTeam: team)<transacts><decides>: float
-
-      IsWaveRespawnEnabled<native><public>()<transacts>: logic
-
-      RespawnsDisabledCoundownStartedEvent<native><public>: listenable(float) = external {}
-
-      RespawnsDisabledEvent<native><public>: listenable(tuple()) = external {}
-
-      RespawnsEnabledEvent<native><public>: listenable(tuple()) = external {}
-
-      SetAllowRespawnsOutsideStormPhase<native><public>(bInAllowRespawnsOutsideStormPhase: logic): void
-
-      SpawnTestPlayers<native><public>(InSquadCount: int, InPlayersPerSquad: int): logic
-
-      TeamLivesChangedEvent<native><public>: listenable(tuple(agent, team, int, int)) = external {}
-
-      TimeUntilTeamLivesRechargeChangedEvent<native><public>: listenable(tuple(agent, team, float, float)) = external {}
-    }
-  }
-}
-
-using { /Fortnite.com/Devices }
-using { /Fortnite.com/Playspaces }
-using { /UnrealEngine.com/Temporary/SpatialMath }
-using { /UnrealEngine.com/Temporary/UI }
-using { /Verse.org/Colors }
-using { /Verse.org/Native }
-FeralCorgi<public> := module {
-  # Module import path: /Fortnite.com/FeralCorgi/AnalyticsBridge
-  AnalyticsBridge<epic_internal> := module {
-    SendELOAnalyticForPlayer<native><epic_internal>(
-      Player: player,
-      MatchPoints: float,
-      TeamPoints: float,
-      IndividualPoints: float
-    ): void
-  }
-
-  # Module import path: /Fortnite.com/FeralCorgi/BackfillControlBridge
-  BackfillControlBridge<epic_internal> := module {
-    EmptyFunction<native><epic_internal>(): void
-  }
-
-  # Module import path: /Fortnite.com/FeralCorgi/CommonBridge
-  CommonBridge<epic_internal> := module {
-    AgentRespawnCleanup<native><epic_internal>(Agent: agent, RespawnPosition: vector3): void
-
-    GetVersePlayerId<native><epic_internal>(Player: player)<transacts>: int
-
-    SendTestEvent<native><epic_internal>(
-      EventName: string,
-      TargetAgents: []agent,
-      Params: [string]float
-    )<transacts><decides>: void
-  }
-
-  # Module import path: /Fortnite.com/FeralCorgi/PlayerLoadingStatusBridge
-  PlayerLoadingStatusBridge<epic_internal> := module {
-    AwaitPlayersLoading<native><epic_internal>(Playspace: fort_playspace)<suspends>: void
-
-    GetNumPlayersLoading<native><epic_internal>(Playspace: fort_playspace)<computes><reads>: int
-
-    GetPlayersLoading<native><epic_internal>(Playspace: fort_playspace)<computes><reads>: []player
-
-    IsPlayerLoading<native><epic_internal>(Playspace: fort_playspace, Player: player)<transacts><decides>: void
-  }
-
-  # Module import path: /Fortnite.com/FeralCorgi/ReservationHoldingBridge
-  ReservationHoldingBridge<epic_internal> := module {
-    EnableLeavingPlayerReservationHolding<native><epic_internal>(Playspace: fort_playspace, HoldingTime: float): void
-
-    FreeHeldReservation<native><epic_internal>(Playspace: fort_playspace, Player: player): logic
-
-    RestoreSessionReservationHoldingSettings<native><epic_internal>(Playspace: fort_playspace): void
-  }
-
-  # Module import path: /Fortnite.com/FeralCorgi/SessionAttributesBridge
-  SessionAttributesBridge<epic_internal> := module {
-    ApplyMatchEarlyLeaveBanhammerToPlayer<native><epic_internal>(Player: player, Details: string): logic
-
-    EndMatch<native><epic_internal>(Playspace: fort_playspace)<transacts><decides>: void
-
-    GetUpdatedRankForPlayers<native><epic_internal>(
-      Playspace: fort_playspace,
-      Players: []player
-    )<suspends>: []ranked_track_progress
-
-    IsPlaytest<native><epic_internal>(Playspace: fort_playspace)<transacts><decides>: void
-
-    IsPrivateMatch<native><epic_internal>(Playspace: fort_playspace)<transacts><decides>: void
-
-    IsRankedMatch<native><epic_internal>(Playspace: fort_playspace)<transacts><decides>: void
-
-    IsUsingCustomMatchKeys<native><epic_internal>(Playspace: fort_playspace)<transacts><decides>: void
-  }
-
-  using { /Fortnite.com/Playspaces }
-  using { /UnrealEngine.com/Temporary/SpatialMath }
-  using { /Verse.org/Assets }
-  using { /Verse.org/Colors }
-  using { /Verse.org/Native }
-  using { /Verse.org/Simulation }
-  # Base class for creating analytic events from Verse. This would be the only public api, feral_analytics* would not be made public.
-  analytics_event_base<native><epic_internal> := class<persistent> {
-    GetEventName<native><epic_internal>(): string
-
-    Send<native><epic_internal>(): void
-
-    Send<native><epic_internal>(Agent: agent): void
-  }
-
-  apparatus_bridge<native><epic_internal> := class {
-    DisableDisabling<native><epic_internal>(Agent: agent): void
-
-    DisablePlanting<native><epic_internal>(Agent: agent): void
-
-    EnableDisabling<native><epic_internal>(Agent: agent): void
-
-    EnablePlanting<native><epic_internal>(Agent: agent): void
-
-    NativeStateChangedEvent<public>(): listenable([]char) = external {}
-
-    NativeStateChangedEventWithAgent<public>(): listenable(tuple(string, ?agent)) = external {}
-
-    ResetApparatus<native><epic_internal>(): void
-
-    SetApparatusTimerRemaining<native><epic_internal>(Time: int): void
-
-    Setup<native><public>(): void
-  }
-
-  cheat_bridge<native><epic_internal> := class<concrete>(cheat_bridge_base) {
-    NativeCheatEvent<public>(): listenable(tuple(player, string, float)) = external {}
-  }
-
-  @import_as("/Script/FeralCorgiGameplayRuntime.UCheatBridge")
-  cheat_bridge_base<native><epic_internal> := class<abstract><epic_internal> {}
-
-  # Base class to inherit from to pass to feral_analytics_attributes_request.AppendToAttributes to inject attributes in an analytics event
-  feral_analytics_attributes_base<native><epic_internal> := class<persistent> {}
-
-  # System to allow verse to listen for native analytic events to allow injection of custom data
-  feral_analytics_attributes_request<native><epic_internal> := class<persistent> {
-    AppendToAttributes<native><public>(FieldPrefix: string, Object: feral_analytics_attributes_base): void
-
-    AppendToAttributesTags<native><public>(AddTags: []string): void
-
-    OnRequestAttributes<public>(): listenable(tuple([string]agent)) = external {}
-  }
-
-  # Feral base class for creating analytic events to allow proper name and allow use of Tags to inject native data
-  feral_analytics_event_base<native><epic_internal> := class<persistent>(analytics_event_base) {
-    GetAgentId<native><epic_internal>(Agent: agent): string
-
-    Send<native><override>(): void
-
-    Send<native><override>(Agent: agent): void
-
-    SendWithTags<native><epic_internal>(AddTags: []string): void
-
-    SendWithTags<native><epic_internal>(Agent: agent, AddTags: []string): void
-  }
-
-  game_state_component_bridge<native><epic_internal> := class<concrete> {
-    OnReceivedEvent<public>(): listenable(tuple(string, []agent, [string]float)) = external {}
-
-    SendEvent<native><epic_internal>(
-      EventName: string,
-      TargetAgents: []agent,
-      Params: [string]float
-    )<transacts><decides>: void
-  }
-
-  player_display_info<native><epic_internal> := struct {
-    CurrentXP<native>: int
-
-    Image<native>: texture
-
-    LargeImage<native>: texture
-
-    SmallImage<native>: texture
-
-    SquadColor<native>: color
-  }
-
-  player_display_info_manager<native><epic_internal> := class {
-    GetDisplayInfo<native><epic_internal>(InPlayer: player)<computes><reads>: player_display_info
-  }
-
-  ranked_track_progress<native><epic_internal> := struct<concrete> {
-    AccountId<native><public>: string = external {}
-
-    CurrentHabanero<native><public>: int = external {}
-
-    CurrentPlayerPosition<native><public>: int = external {}
-
-    GameId<native><public>: string = external {}
-
-    HabaneroLastUpdatedTime<native><public>: int = external {}
-
-    HabaneroType<native><public>: string = external {}
-
-    HighestHabanero<native><public>: int = external {}
-
-    LastQueriedTime<native><public>: float = external {}
-
-    ProgressTowardsNextHabanero<native><public>: float = external {}
-
-    TrackGUID<native><public>: string = external {}
-
-    bProgressIsStale<native><public>: logic = external {}
-
-    bSkippedRequestDueToTTL<native><public>: logic = external {}
-  }
 }
 
 # Module import path: /Fortnite.com/FortPlayerUtilities
@@ -7694,128 +5626,15 @@ FortPlayerUtilities<public> := module {
   # Respawns the character for `InAgent` at the provided `RespawnPosition` and applies the yaw of `RespawnRotation`.
   (InAgent: agent).Respawn<native><public>(RespawnPosition: vector3, RespawnRotation: rotation)<transacts>: void
 
-  (InAgent: agent).RestartPlayer<native><epic_internal>(
-    RespawnPosition: vector3,
-    RespawnRotation: rotation,
-    SpawnOnGround: logic
-  )<transacts>: void
-
-  # Sets `InAgent` to spectate the `agent` that eliminated them.
-  # Fails if the eliminating `player` has also been eliminated.
-  (InAgent: agent).SpectateEliminator<native><epic_internal>()<transacts><decides>: void
-
-  # Sets `InAgent` to spectate `ParticipantToSpectate`.
-  # Fails if:
-  #  * `ParticipantToSpectate` is already eliminated.
-  #  * `ParticipantToSpectate` is the same as `InAgent`.
-  (InAgent: agent).SpectateParticipant<native><epic_internal>(ParticipantToSpectate: agent)<transacts><decides>: void
-
   # Returns an `[]player`s currently spectating `InPlayer`.
   (InPlayer: player).GetPlayersSpectating<native><public>()<transacts>: []player
 
   # Sends `InPlayer` back to the main game lobby.
   (InPlayer: player).SendToLobby<native><public>()<transacts>: void
-
-  # Sets the dynamic resolution behavior based on the preferred rendering mode.
-  SetPreferredRenderingModeHint<native><epic_internal>(
-    Players: []player,
-    InPreferredRenderingMode: preferred_rendering_mode
-  ): void
-
-  # The possible dynamic resolution rendering modes
-  preferred_rendering_mode<native><epic_internal> := enum {
-    # Maximize the framerate
-    MaximizeFramerate
-
-    # Maximize the dynamic resolution by setting a lower target framerate
-    MaximizeResolution
-  }
-}
-
-# Module import path: /Fortnite.com/FortSafeZone
-FortSafeZone<public> := module {
-  fort_safe_zone<native><epic_internal> := class<epic_internal>(fort_safe_zone_base) {
-    GetRemainingPhaseTime<native><epic_internal>()<transacts><decides>: float
-
-    GetSafeZone<native><epic_internal>()<transacts><decides>: fort_storm_safe_zone
-
-    GetSafeZoneAfterDelay<native><epic_internal>(Delay: float)<transacts><decides>: fort_storm_safe_zone
-
-    GetSafeZoneIdx<native><epic_internal>()<transacts><decides>: int
-
-    GetSafeZonePhase<native><epic_internal>(PhaseIdx: int)<transacts><decides>: fort_storm_safe_zone_phase
-
-    GetTimeUntilSafeZonePhase<native><epic_internal>(PhaseIdx: int)<transacts><decides>: float
-
-    IsInSafeZone<native><epic_internal>(TestLocation: vector3)<transacts><decides>: void
-
-    IsStormForming<native><epic_internal>()<transacts>: logic
-
-    IsStormHolding<native><epic_internal>()<transacts>: logic
-  }
-
-  @import_as("/Script/VerseFortnite.UVerseFortniteSafeZone")
-  fort_safe_zone_base<native><epic_internal> := class<abstract> {}
-
-  fort_storm_safe_zone<native><epic_internal> := struct<epic_internal> {
-    Center<native><public>: vector3 = external {}
-
-    Radius<native><public>: float = external {}
-  }
-
-  fort_storm_safe_zone_phase<native><epic_internal> := struct<epic_internal> {
-    ShrinkTime<native><public>: float
-
-    WaitTime<native><public>: float
-  }
 }
 
 # Module import path: /Fortnite.com/Game
 Game<public> := module {
-  @experimental
-  # Activate a camera behavior component for a player, setting it as the active view target
-  (InCameraBehavior: camera_behavior_component).ActivateForPlayer<native><epic_internal>(InPlayer: player)<transacts><decides>: void
-
-  @experimental
-  (InCameraBehavior: camera_behavior_component).ActivateForPlayerAtIndex<native><epic_internal>(InPlayerIndex: int)<transacts><decides>: void
-
-  @experimental
-  # Deactivate a camera behavior component for a player, restoring the player's view target to the default
-  (InCameraBehavior: camera_behavior_component).DeactivateForPlayer<native><epic_internal>(InPlayer: player)<transacts><decides>: void
-
-  @experimental
-  (InCameraBehavior: camera_behavior_component).DeactivateForPlayerAtIndex<native><epic_internal>(InPlayerIndex: int)<transacts><decides>: void
-
-  @experimental
-  # Activate a camera component for a player, setting it as the active view target
-  (InCameraBehavior: camera_component).ActivateForPlayer<native><epic_internal>(InPlayer: player)<transacts><decides>: void
-
-  @experimental
-  (InCameraBehavior: camera_component).ActivateForPlayerAtIndex<native><epic_internal>(InPlayerIndex: int)<transacts><decides>: void
-
-  @experimental
-  # Deactivate a camera component for a player, restoring the player's view target to the default
-  (InCameraBehavior: camera_component).DeactivateForPlayer<native><epic_internal>(InPlayer: player)<transacts><decides>: void
-
-  @experimental
-  (InCameraBehavior: camera_component).DeactivateForPlayerAtIndex<native><epic_internal>(InPlayerIndex: int)<transacts><decides>: void
-
-  @experimental
-  GetPlayerCameraView<native><epic_internal>(Player: player)<transacts><decides>: fort_player_camera_view
-
-  @experimental
-  GetPlayerCameraViewByIndex<native><epic_internal>(PlayerIndex: int)<transacts><decides>: fort_player_camera_view
-
-  HandleTeleportToResult<epic_internal>(
-    Result: teleport_to_result,
-    TargetTragsform: transform
-  )<transacts><decides>: void = external {}
-
-  # Implementation of the `game_action_instigator` interface for `agent`s.
-  agent_instigator_impl<native><epic_internal> := class(game_action_instigator) {
-    TheAgent<native><epic_internal>: agent
-  }
-
   # Parameters for common damage functions on Fortnite objects.
   damage_args<native><public> := struct {
     # Amount of damage to apply to the object.
@@ -7864,53 +5683,6 @@ Game<public> := module {
     # `fort_character` that eliminated `EliminatedCharacter` from the match. `EliminatingCharacter` will be false when `EliminatedCharacter` was eliminated through non-character actions, such as environmental damage.
     EliminatingCharacter<native><public>: ?fort_character
   }
-
-  @experimental
-  fort_ability_component<native><epic_internal> := class(ability_component) {
-    OnBeginSimulation<native><override>(): void
-
-    OnEndSimulation<native><override>(): void
-  }
-
-  @experimental
-  fort_damageable_component<native><epic_internal> := class(damageable_component) {
-    @experimental
-    DamagedEventWithAgent<native><epic_internal>: listenable(tuple(float, ?agent)) = external {}
-
-    @editable
-    @experimental
-    MaxHealth<native><epic_internal>: float = external {}
-
-    OnBeginSimulation<native><override>(): void
-
-    OnEndSimulation<native><override>(): void
-
-    OnInitialized<native><override>(): void
-
-    OnUninitializing<native><override>(): void
-
-    @experimental
-    var Health<public>: float = external {}
-  }
-
-  @experimental
-  fort_game_component<native><epic_internal> := class<abstract><final_super>(component) {
-    OnBeginSimulation<native><override>(): void
-
-    OnEndSimulation<native><override>(): void
-
-    @experimental
-    # Override to add custom logic when the game experience begins.
-    OnRoundBegin<native_callable><protected>()<suspends>: void = external {}
-
-    @experimental
-    # Override to add custom logic when the game experience ends. Any coroutines spawned inside `OnEnd` may never execute.
-    OnRoundEnd<native_callable><protected>(): void = external {}
-  }
-
-  @experimental
-  # Component used to associate a camera behavior component with a player
-  fort_player_camera_view<native><epic_internal> := class<epic_internal>(player_camera_view) {}
 
   # Implemented by Fortnite objects that can be passed through game action events, such as damage and heal.
   # For example: player, vehicle, or weapon.
@@ -7990,647 +5762,26 @@ Game<public> := module {
 
   # Implemented by Fortnite objects that have shields. A shield is a method of protection that can take incoming damage while leaving the health state unchanged.
   shieldable<native><public> := interface<epic_internal> {
-    # Signaled when the overshield is damaged.
-    DamagedOvershieldEvent<epic_internal>(): listenable(damage_result)
-
     # Signaled when the shield is damaged.
     DamagedShieldEvent<public>(): listenable(damage_result)
-
-    # Returns the maximum overshield state of the object. This value will be between 0.0 and Inf.
-    GetMaxOvershield<epic_internal>()<transacts>: float
 
     # Returns the maximum shield state of the object. This value will be between 0.0 and Inf.
     GetMaxShield<public>()<transacts>: float
 
-    # Returns the overshield state of the object. This value will be between 0.0 and `MaxOvershield`
-    GetOvershield<epic_internal>()<transacts>: float
-
     # Returns the shield state of the object. This value will be between 0.0 and `MaxShield`
     GetShield<public>()<transacts>: float
 
-    # Signaled when the oversshield is healed.
-    HealedOvershieldEvent<epic_internal>(): listenable(healing_result)
-
     # Signaled when the shield is healed.
     HealedShieldEvent<public>(): listenable(healing_result)
-
-    # Sets the maximum overshield state of the object.
-    #  * MaxOvershield will be clamped between 0.0 and Inf.
-    #  * Current overshield state will be scaled up or down based on the scale difference between the old and new MaxOvershield state.
-    SetMaxOvershield<epic_internal>(MaxOvershield: float)<transacts>: void
 
     # Sets the maximum shield state of the object.
     #  * MaxShield will be clamped between 0.0 and Inf.
     #  * Current shield state will be scaled up or down based on the scale difference between the old and new MaxShield state.
     SetMaxShield<public>(MaxShield: float)<transacts>: void
 
-    # Sets the overshield state of the object.
-    #  * Overshield state will be clamped between 0.0 and `MaxOvershield`.
-    SetOvershield<epic_internal>(Overshield: float)<transacts>: void
-
     # Sets the shield state of the object.
     #  * Shield state will be clamped between 0.0 and `MaxShield`.
     SetShield<public>(Shield: float)<transacts>: void
-  }
-
-  teleport_to_debug_log<epic_internal> := class(log_channel) {}
-
-  # Results for `TeleportTo` of creative objects and devices.
-  teleport_to_result<native><epic_internal> := enum {
-    # There is something colliding with the requested destination.
-    CollidingDestination
-
-    # The destination would cause the object to be at least partially outside the island's boundaries.
-    DestinationOutOfBounds
-
-    # `NaN` or `Infinity` in the requested destination.
-    InvalidDestination
-
-    # The object being moved is no longer valid. Example invalid states:
-    #  * The object has been destroyed during gameplay.
-    #  * The object has been destroyed by Verse.
-    #  * The object has the *Register with Structural Grid* option set in UEFN.
-    InvalidObject
-
-    # Success.
-    Ok
-
-    # The object being moved cannot be scaled.
-    ScaleNotAllowed
-
-    # An unknown error occurred. If this happens frequently, contact Epic support.
-    UnknownError
-  }
-}
-
-Itemization<public> := module {
-  @experimental
-  active_item_limit_behavior<native><public> := enum<persistable> {
-    Block
-
-    UnequipLeastRecentlyUsed
-  }
-
-  @experimental
-  add_inventory_result<native><public> := struct<epic_internal> {
-    Inventory<native><public>: inventory_component
-
-    ParentInventory<native><public>: inventory_component
-  }
-
-  @experimental
-  add_items_result<native><public> := struct<epic_internal> {
-    AddedItems<native><public>: []entity
-
-    Inventory<native><public>: inventory_component
-  }
-
-  @experimental
-  calculate_count_info<native><epic_internal> := struct {
-    Instigators<native>: []agent = external {}
-
-    Owner<native>: entity = external {}
-  }
-
-  @experimental
-  change_items_slot_result<native><public> := struct<epic_internal> {
-    Inventory<native><public>: inventory_component
-
-    SlotChangedItems<native><public>: []item_slot_change
-  }
-
-  @experimental
-  equippable_inventory_component<native><public> := class(inventory_component) {
-    @editable
-    AutoEquipRequirementList<native><public>: []item_requirement_base = external {}
-
-    CanEquipItem<native><public>(Item: entity)<decides>: void
-
-    EquipItem<native><public>(Item: entity)<transacts><decides>: void
-
-    @editable
-    EquipmentRestrictionList<native><public>: []equippable_item_restriction_base = external {}
-
-    @editable
-    ShowSlotBindings<native><public>: logic = external {}
-
-    @editable
-    SlotBindingList<native><epic_internal>: []tuple(input_action(type), int) = external {}
-
-    UnequipItem<native><public>(Item: entity)<transacts><decides>: void
-
-    var<private> ActiveItemList<native><public>: []entity = external {}
-  }
-
-  @experimental
-  equippable_inventory_hotbar_component<native><public> := class(equippable_inventory_component) {
-    AutoEquipRequirementList<override>: []item_requirement_base = external {}
-
-    EquipmentRestrictionList<override>: []equippable_item_restriction_base = external {}
-
-    var TotalSlots<override>: int = external {}
-  }
-
-  @experimental
-  equippable_inventory_slot_component<native><public> := class(equippable_inventory_component) {
-    AutoEquipRequirementList<override>: []item_requirement_base = external {}
-
-    EquipmentRestrictionList<override>: []equippable_item_restriction_base = external {}
-
-    var TotalSlots<override>: int = external {}
-  }
-
-  @experimental
-  equippable_item_restriction<native><public> := class(equippable_item_restriction_base) {
-    @editable
-    ActiveLimitBehaviour<native><public>: active_item_limit_behavior = external {}
-
-    @editable
-    ActiveSlotLimit<native><public>: int = external {}
-
-    AppliesTo<native><public>(Item: entity)<transacts><decides>: void
-
-    GetActiveLimitBehaviour<native><public>(Item: entity)<transacts><decides>: active_item_limit_behavior
-
-    GetActiveSlotLimit<native><public>(Item: entity)<transacts><decides>: int
-
-    @editable
-    ItemRequirement<native><public>: ?item_requirement_base = external {}
-  }
-
-  @import_as("/Script/ItemizationCoreRuntime.UEquippableItemRestrictionBase")
-  @experimental
-  equippable_item_restriction_base<native><public> := class<unique><concrete> {}
-
-  @experimental
-  inventory_backpack_component<public> := class(inventory_component) {
-    var TotalSlots<override>: int = external {}
-  }
-
-  @experimental
-  inventory_component<native><public> := class<final_super>(component) {
-    AddItems<native><final><public>(Item: []entity)<transacts><decides>: add_items_result
-
-    CanAddItem<native><public>(Item: entity)<decides>: void
-
-    CanRemoveItem<native><public>(Item: entity)<decides>: void
-
-    GetItems<native><final><public>(): []entity
-
-    InventoryAddedEvent<native><public>: listenable(add_inventory_result) = external {}
-
-    InventoryPropertyChangedEvent<native><public>: listenable(inventory_property_change_result) = external {}
-
-    InventoryRemovedEvent<native><public>: listenable(remove_inventory_result) = external {}
-
-    @editable
-    ItemRequirement<native><public>: ?item_requirement_base = external {}
-
-    ItemsAddedEvent<native><public>: listenable(add_items_result) = external {}
-
-    ItemsRemovedEvent<native><public>: listenable(remove_items_result) = external {}
-
-    ItemsSlotChangedEvent<native><public>: listenable(change_items_slot_result) = external {}
-
-    OnInitializedInternal<native><override>(): void
-
-    OnUninitializingInternal<native><override>(): void
-
-    RemoveItems<native><final><public>(Item: []entity)<transacts><decides>: remove_items_result
-
-    @editable
-    VerseGameplayTags<native><epic_internal>: tag_container = external {}
-
-    @editable
-    @replicated("")
-    var<private> EnableItemStacking<native><public>: logic = external {}
-
-    @editable_non_concrete
-    @replicated("")
-    var<private> InventoryDescription<native><public>: message
-
-    @editable_non_concrete
-    @replicated("")
-    var<private> InventoryDisplayName<native><public>: message
-
-    @replicated("")
-    var<private> InventoryMaxStackSizeOverride<native><public>: int = external {}
-
-    @editable
-    @replicated("")
-    var<private> InventoryName<native><public>: string = external {}
-
-    @replicated("")
-    var<private> InventoryType<native><public>: inventory_creation_type = external {}
-
-    @editable
-    @replicated("")
-    var<private> PickupPriority<native><public>: int = external {}
-
-    @editable
-    @replicated("")
-    var<private> TotalSlots<native><protected>: int = external {}
-  }
-
-  using { /UnrealEngine.com/Abilities }
-  using { /UnrealEngine.com/EpicGamesRestricted/Network }
-  using { /UnrealEngine.com/Temporary/SceneGraph }
-  using { /UnrealEngine.com/Temporary/SpatialMath }
-  using { /Verse.org/Assets }
-  using { /Verse.org/Colors }
-  using { /Verse.org/Native }
-  using { /Verse.org/Simulation }
-  using { /Verse.org/Simulation/Tags }
-  @experimental
-  inventory_creation_type<native><public> := enum<persistable> {
-    Runtime
-
-    SetupData
-  }
-
-  @experimental
-  inventory_property_change_result<native><public> := struct<epic_internal> {
-    Inventory<native><public>: inventory_component
-
-    ParentInventory<native><public>: inventory_component
-  }
-
-  @experimental
-  inventory_setup_data<native><public> := class<concrete> {
-    ApplyTo<native><public>(Target: inventory_component)<decides>: inventory_setup_data_result
-
-    @editable
-    InventorySetupDataName<native><public>: string = external {}
-  }
-
-  @experimental
-  inventory_setup_data_result<native><public> := struct<epic_internal> {
-    AddedInventoryMap<native><public>: []tuple(inventory_component, []entity)
-
-    Inventory<native><public>: inventory_component
-  }
-
-  @experimental
-  item_ability_binding<native><final><epic_internal> := class<concrete> {
-    @editable_non_concrete
-    var<private> Ability<native><public>: ?ability = external {}
-
-    @editable
-    var<private> ActiveState<native><public>: item_state = external {}
-
-    @editable_non_concrete
-    var<private> Cooldowns<native><public>: []item_ability_cooldown = external {}
-
-    @editable_non_concrete
-    var<private> Costs<native><public>: []item_ability_cost = external {}
-
-    @editable_non_concrete
-    var<private> InputAction<native><public>: ?input_action(type) = external {}
-  }
-
-  @experimental
-  item_ability_component<native><final><epic_internal> := class(item_component_base) {
-    CanMerge<override><native_callable>(OtherComponent: ?component)<decides>: void = external {}
-
-    @editable
-    var<private> Abilities<native><public>: []item_ability_binding
-  }
-
-  @experimental
-  @import_as("/Script/ItemizationCoreRuntime.UItemAbilityCooldown")
-  item_ability_cooldown<native><epic_internal> := class<unique><abstract> {}
-
-  @experimental
-  item_ability_cooldown_time<native><epic_internal> := class(item_ability_cooldown) {}
-
-  @experimental
-  item_ability_cooldown_velocity_based<native><epic_internal> := class(item_ability_cooldown) {}
-
-  @experimental
-  @import_as("/Script/ItemizationCoreRuntime.UItemAbilityCost")
-  item_ability_cost<native><epic_internal> := class<unique><abstract> {}
-
-  @experimental
-  item_ability_cost_item<native><epic_internal> := class(item_ability_cost) {}
-
-  @experimental
-  item_amount_change<native><public> := struct<epic_internal> {
-    Item<native><public>: entity
-
-    NewAmount<native><public>: int
-
-    PreviousAmount<native><public>: int
-  }
-
-  @experimental
-  item_attach_component<native><final><epic_internal> := class(item_component_base) {
-    @editable
-    Attachments<native><public>: []item_attachment_definition = external {}
-
-    CanMerge<override><native_callable>(OtherComponent: ?component)<decides>: void = external {}
-  }
-
-  @experimental
-  item_attachment_definition<native><epic_internal> := class<unique><concrete> {
-    @editable
-    var AttachmentVisibility<native><public>: item_state_filter = external {}
-  }
-
-  @experimental
-  # Anything using this component should be considered an item. Required to interact with inventories.
-  item_component<native><public> := class<final>(item_component_base) {
-    CanMerge<override><native_callable>(OtherComponent: ?component)<decides>: void = external {}
-
-    GetItemDescription<native><epic_internal>(): message
-
-    GetItemName<native><epic_internal>(): message
-
-    GetItemShortDescription<native><epic_internal>(): message
-
-    ItemChangedAmountEvent<native><public>: listenable(item_amount_change) = external {}
-
-    ItemChangedSlotEvent<native><public>: listenable(item_slot_change) = external {}
-
-    ItemChangedStateEvent<native><public>: listenable(item_state_change) = external {}
-
-    OnInitializedInternal<native><override>(): void
-
-    OnItemStateChanged<native><public>()<transacts><decides>: void
-
-    var<private> Amount<native><public>: int = external {}
-
-    @replicated("")
-    var<private> ItemDefinition<native><epic_internal>: ?item_definition_base = external {}
-
-    var<private> Slot<native><public>: int = external {}
-
-    var<private> State<native><public>: item_state = external {}
-  }
-
-  @experimental
-  item_component_base<native><public> := class<abstract><final_super><epic_internal>(component) {
-    CanMerge<native_callable><public>(OtherComponent: ?component)<decides>: void = external {}
-
-    Merge<native_callable><public>(OtherComponent: component)<transacts>: void = external {}
-
-    OnInitializedInternal<native><override>(): void
-
-    ShouldBeUnique<native><public>()<decides>: void
-  }
-
-  @experimental
-  item_definition_base<native><epic_internal> := class<computes><concrete>(asset) {}
-
-  @experimental
-  item_icon_component<native><final><epic_internal> := class(item_component_base) {
-    CanMerge<override><native>(OtherComponent: ?component)<decides>: void
-
-    @editable_non_concrete
-    var<private> Icon<native><public>: ?texture = external {}
-  }
-
-  @experimental
-  item_mesh_attachment_definition<native><epic_internal> := class<concrete>(item_attachment_definition) {
-    @editable
-    AnimationSequence<native><public>: ?animation_sequence = external {}
-
-    @editable
-    Mesh<native><public>: mesh = external {}
-
-    @editable
-    var AttachToSocketName<native><public>: string = external {}
-
-    @editable
-    var MeshScale<native><public>: vector3 = external {}
-
-    @editable
-    var OffsetLocation<native><public>: vector3 = external {}
-
-    @editable
-    var OffsetRotation<native><public>: rotation = external {}
-  }
-
-  @experimental
-  @import_as("/Script/ItemizationCoreRuntime.UItemOwnerPoseAsset")
-  item_owner_pose<native><epic_internal> := class<concrete><unique>(asset) {}
-
-  @experimental
-  item_owner_pose_component<native><final><epic_internal> := class(item_component_base) {
-    @editable
-    OwnerPose<native><public>: ?item_owner_pose = external {}
-
-    @editable
-    var<private> ApplyPoseState<native><public>: item_state_filter = external {}
-
-    @editable
-    var<private> PosePriority<native><public>: float = external {}
-  }
-
-  @experimental
-  item_rarity<native><public> := class<unique><concrete> {
-    @editable
-    RarityColor<native><public>: color = external {}
-
-    @editable
-    RarityDescription<native><public>: string = external {}
-
-    @editable
-    RarityName<native><public>: string = external {}
-
-    @editable
-    RarityTier<native><public>: float = external {}
-  }
-
-  @experimental
-  item_rarity_component<native><final><public> := class(item_component_base) {
-    @editable
-    var<private> Rarity<native><public>: ?item_rarity
-  }
-
-  @experimental
-  item_requirement<native><public> := class(item_requirement_base) {
-    CanAcceptItem<native><public>(Item: entity)<transacts><decides>: void
-
-    @editable
-    RequirementDescription<native><public>: string = external {}
-
-    @editable
-    RequirementName<native><public>: string = external {}
-  }
-
-  @import_as("/Script/ItemizationCoreRuntime.UItemRequirementBase")
-  @experimental
-  item_requirement_base<native><public> := class<unique><concrete> {}
-
-  @experimental
-  item_slot_change<native><public> := struct<epic_internal> {
-    Item<native><public>: entity
-
-    NewSlot<native><public>: int
-
-    PreviousSlot<native><public>: int
-  }
-
-  @experimental
-  item_stack_size_component<native><final><epic_internal> := class(item_component_base) {
-    CanMerge<override><native>(OtherComponent: ?component)<decides>: void
-
-    Merge<override><native_callable>(OtherComponent: component)<transacts>: void = external {}
-
-    SetMaxStackSize<native><public>(NewMaxStackSize: int): void
-
-    SetStackSize<native><public>(NewStackSize: int): void
-
-    @editable
-    var<private> MaxStackSize<native><public>: int = external {}
-
-    @editable
-    var<private> StackSize<native><public>: int = external {}
-  }
-
-  @experimental
-  item_state<native><public> := enum {
-    Equipped
-
-    InInventory
-
-    NotInInventory
-  }
-
-  @experimental
-  item_state_change<native><public> := struct<epic_internal> {
-    Item<native><public>: entity
-
-    NewState<native><public>: item_state
-
-    PreviousState<native><public>: item_state
-  }
-
-  @experimental
-  item_state_filter<native><epic_internal> := enum {
-    Equipped
-
-    EquippedAndActive
-
-    Owned
-  }
-
-  @experimental
-  item_type<native><public> := class<concrete><unique> {
-    @editable
-    ItemTypeDescription<native><public>: string = external {}
-
-    @editable
-    ItemTypeName<native><public>: string = external {}
-
-    @editable
-    ParentType<native><public>: ?item_type = external {}
-  }
-
-  @experimental
-  item_type_component<native><final><public> := class(item_component_base) {
-    GetItemTypeTags<native><epic_internal>(): tag_container
-
-    @editable
-    var<private> ItemType<native><public>: item_type
-  }
-
-  @experimental
-  # Loot Data
-  loot<native><epic_internal> := struct<concrete> {
-    @editable
-    Items<native>: []entity = external {}
-
-    @editable
-    LootPools<native>: []loot_pool = external {}
-
-    @editable
-    MaxSelections<native>: ?int = external {}
-
-    @editable
-    Weight<native>: loot_weight_calculator = external {}
-  }
-
-  @experimental
-  # Spawns loot to the world or award it to an agent inventory.
-  loot_component<native><epic_internal> := class<final_super>(component, enableable) {
-    AwardLoot<native><public>(Target: entity, Instigators: []agent, DestroyOverflow: logic): []entity
-
-    Disable<native><override>(): void
-
-    Enable<native><override>(): void
-
-    IsEnabled<native><override>()<transacts><decides>: void
-
-    @editable
-    Items<native><public>: []entity = external {}
-
-    @editable
-    LootPools<native><public>: []loot_pool = external {}
-
-    SpawnPickups<native><public>(Instigators: []agent): []entity
-  }
-
-  @experimental
-  # It can be overriden. It will return how many times the loot can be rolled
-  loot_count_calculator<native><epic_internal> := class<concrete> {}
-
-  @experimental
-  # Fixed amount of rolls
-  loot_count_calculator_fixed<native><epic_internal> := class<concrete>(loot_count_calculator) {}
-
-  @experimental
-  # Random range of rolls
-  loot_count_calculator_range<native><epic_internal> := class<concrete>(loot_count_calculator) {}
-
-  @experimental
-  # Weighted amount of rolls
-  loot_count_calculator_weighted<native><epic_internal> := class<concrete>(loot_count_calculator) {}
-
-  @experimental
-  loot_distribution<native><epic_internal> := struct<concrete> {
-    @category("Values")
-    @editable
-    Count<native>: int = external {}
-
-    @category("Values")
-    @editable
-    Weight<native>: float = external {}
-  }
-
-  @experimental
-  # The Data for the loot component to work with
-  loot_pool<native><epic_internal> := class<concrete> {}
-
-  @experimental
-  loot_weight_calculator<native><epic_internal> := class<concrete> {}
-
-  @experimental
-  loot_weight_calculator_fixed<epic_internal> := class<concrete>(loot_weight_calculator) {}
-
-  @experimental
-  loot_weight_calculator_info<native><epic_internal> := struct {
-    Instigators<native>: []agent = external {}
-
-    Items<native>: []entity = external {}
-
-    LootPools<native>: []loot_pool = external {}
-
-    Owner<native>: ?entity = external {}
-  }
-
-  @experimental
-  remove_inventory_result<native><public> := struct<epic_internal> {
-    Inventory<native><public>: inventory_component
-
-    ParentInventory<native><public>: inventory_component
-  }
-
-  @experimental
-  remove_items_result<native><public> := struct<epic_internal> {
-    Inventory<native><public>: inventory_component
-
-    RemovedItems<native><public>: []entity
   }
 }
 
@@ -8659,9 +5810,6 @@ Playspaces<public> := module {
     # Signaled when a participant `agent` leaves the `fort_playspace`. Returns a subscribable with a payload of the`agent` that left the `fort_playspace`.
     ParticipantRemovedEvent<public>(): listenable(agent)
 
-    # Signaled when a human `player` abandons the `fort_playspace` via exit match button. Will not fire if the playerleft via a crash, match end, or getting kicked. Returns a subscribable with a payload of the`player` that leftthe `fort_playspace`.
-    PlayerAbandonedEvent<epic_internal>(): listenable(player)
-
     # Signaled when a human `player` joins the `fort_playspace`. Returns a subscribable with a payload of the`player` that entered the `fort_playspace`.
     PlayerAddedEvent<public>(): listenable(player)
 
@@ -8670,23 +5818,11 @@ Playspaces<public> := module {
   }
 }
 
-using { /Verse.org/Simulation }
-using { /Verse.org/Simulation/Tags }
-# Module import path: /Fortnite.com/QuestUtilities
-QuestUtilities<public> := module {
-  BroadcastCustomVerb<native><epic_internal>(Author: agent, CustomVerbNameTag: tag, Amount: int): void
-}
-
 # Module import path: /Fortnite.com/Teams
 Teams<public> := module {
   # Collection used to manage `team`s and `agent`s on those teams.
   # Use `fort_playspace.GetTeamCollection()` to get the `team_collection` for the active experience.
   fort_team_collection<native><public> := interface<epic_internal> {
-    @experimental
-    # Adds `InEntity` to the team that matches `InTeamTag`.
-    # Fails if `InTeamTag` is not a registered team in the `fort_team_collection`.
-    AddToTeam<native_callable><epic_internal>(InEntity: entity, InTeamTag: team_tag)<transacts><decides>: void
-
     # Adds `InAgent` to `InTeam`.
     # Fails if `InTeam` is not part of the `fort_team_collection`.
     AddToTeam<public>(InAgent: agent, InTeam: team)<transacts><decides>: void
@@ -8695,33 +5831,9 @@ Teams<public> := module {
     # Fails if `InTeam` is not part of the `fort_team_collection`.
     GetAgents<public>(InTeam: team)<transacts><decides>: []agent
 
-    @experimental
-    # Returns an array of all `entities on `InTeam`.
-    # Fails if `InTeam` is not part of the `fort_team_collection`.
-    GetEntities<epic_internal>(InTeam: team)<transacts><decides>: []entity
-
-    @experimental
-    # Get the `team` that `InEntity` is on.
-    # Fails if `InEntity` is not on a team in this `fort_team_collection`.
-    GetTeam<epic_internal>(InEntity: entity)<transacts><decides>: team
-
     # Get the `team` that `InAgent` is on.
     # Fails if `InAgent` is not on a team in this `fort_team_collection`.
     GetTeam<public>(InAgent: agent)<transacts><decides>: team
-
-    @experimental
-    # Returns the `team_attitude` between `Agent` and `Entity`.
-    # Fails if:
-    #  * `Agent` is not on a team in this `fort_team_collection`.
-    #  * `Entity` is not on a team in this `fort_team_collection`.
-    GetTeamAttitude<epic_internal>(Agent: agent, Entity: entity)<transacts><decides>: team_attitude
-
-    @experimental
-    # Returns the `team_attitude` between `Entity1` and `Entity2`.
-    # Fails if:
-    #  * `Entity1` is not on a team in this `fort_team_collection`.
-    #  * `Entity2` is not on a team in this `fort_team_collection`.
-    GetTeamAttitude<epic_internal>(Entity1: entity, Entity2: entity)<transacts><decides>: team_attitude
 
     # Returns the `team_attitude` between `Agent1` and `Agent2`.
     # Fails if:
@@ -8735,44 +5847,14 @@ Teams<public> := module {
     #  * `Team2` is not in this `fort_team_collection`.
     GetTeamAttitude<public>(Team1: team, Team2: team)<transacts><decides>: team_attitude
 
-    @experimental
-    # Get the team associated with the tag `InTag`. Fails if no such team is associated with `InTag`
-    GetTeamByTag<epic_internal>(InTeamTag: team_tag)<transacts><decides>: team
-
-    # Get all of the tags associated with the team `InTeam`. Fails if `InTeam` is not a valid team within the team collection
-    GetTeamTags<epic_internal>(InTeam: team)<transacts><decides>: tag_container
-
     # Returns an array of all the `team`s known to this `fort_team_collection`
     GetTeams<public>()<transacts>: []team
-
-    @experimental
-    # Succeeds if `InEntity` is on `InTeam`.
-    # Fails if:
-    #  * `InEntity` is not on `InTeam`.
-    #  * `InTeam` is not part of the `fort_team_collection`.
-    IsOnTeam<epic_internal>(InEntity: entity, InTeam: team)<transacts><decides>: void
 
     # Succeeds if `InAgent` is on `InTeam`.
     # Fails if:
     #  * `InAgent` is not on `InTeam`.
     #  * `InTeam` is not part of the `fort_team_collection`.
     IsOnTeam<public>(InAgent: agent, InTeam: team)<transacts><decides>: void
-
-    @experimental
-    # Register a team component with the team collection, so that its team can automatically be changed as teams are associated with its tag.
-    # Fails if:
-    #  * The team component's tag is not set
-    #  * The team component is not attached to an entity
-    #  * The owning entity of the team component is already registered.
-    RegisterTeamComponent<native_callable><epic_internal>(InTeamComponent: team_component)<transacts><decides>: void
-
-    @experimental
-    # Associate the team `InTeam` with the tag `InTeamTag`, so that it can be accessed by team_component. Fails if `InTeam` is not a valid team within the team collection
-    SetTaggedTeam<epic_internal>(InTeamTag: team_tag, InTeam: team)<transacts><decides>: void
-
-    @experimental
-    # Unregister a team component from the team collection. Fails if the team component is not registered with the team collection
-    UnregisterTeamComponent<native_callable><epic_internal>(InTeamComponent: team_component)<transacts><decides>: void
   }
 
   # A generic set of team attitudes. Use this enum to model relationship behavior between your experience's agents/teams.
@@ -8786,44 +5868,13 @@ Teams<public> := module {
     # Agents/teams are neutral. In Fortnite games items and AI not belonging to a `friendly` or `hostile` team are `neutral`.
     Neutral
   }
-
-  @experimental
-  team_component<native><epic_internal> := class<final><final_super>(component) {
-    # Get the team object for the team this entity is on - Fails if team is not registered. team_pvp_01_tag, team_pvp_02_tag and team_monster_tag are registered already by default
-    GetTeam<native><public>()<transacts><decides>: team
-
-    OnAddedToScene<native><override>(): void
-
-    OnBeginSimulation<native><override>(): void
-
-    OnEndSimulation<native><override>(): void
-
-    OnInitialized<native><override>(): void
-
-    OnRemovingFromScene<native><override>(): void
-
-    OnSimulate<override>()<suspends>: void = external {}
-
-    OnUninitializing<native><override>(): void
-
-    @experimental
-    # Tag that uniquely identifies the team this entity is on
-    var TeamTag<public>: team_tag = external {}
-  }
-
-  @experimental
-  team_monster_tag<native><epic_internal> := class<concrete>(team_tag) {}
-
-  @experimental
-  team_pvp_01_tag<native><epic_internal> := class<concrete>(team_tag) {}
-
-  @experimental
-  team_pvp_02_tag<native><epic_internal> := class<concrete>(team_tag) {}
-
-  @experimental
-  team_tag<native><epic_internal> := class<concrete>(tag) {}
 }
 
+using { /Fortnite.com/Playspaces }
+using { /UnrealEngine.com/Temporary/SpatialMath }
+using { /UnrealEngine.com/Temporary/UI }
+using { /Verse.org/Colors }
+# Module import path: /Fortnite.com/UI
 UI<public> := module {
   # Deprecated. This function affects all players. Please use `fort_playspace.GetHUDController().HideElements()`.
   # Hides a set of HUD elements.
@@ -8849,256 +5900,57 @@ UI<public> := module {
   # Text button with normal styling applied.
   button_regular<native><public> := class<final>(text_button_base) {}
 
-  creative_hud_identifier_all<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
+  creative_hud_identifier_all<public> := class<final>(hud_element_identifier) {}
 
-    TreatAsChildTagCollection<override>: logic = external {}
-  }
-
-  creative_hud_identifier_build_menu<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
-
-  creative_hud_identifier_crafting_resources<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_build_menu<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_elimination_counter<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_crafting_resources<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_equipped_item<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_elimination_counter<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_experience_level<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_equipped_item<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_experience_supercharged<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_experience_level<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_experience_ui<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_experience_supercharged<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_health<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_experience_ui<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_health_numbers<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_health<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_hud_info<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_health_numbers<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_interaction_prompts<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_hud_info<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_map_prompts<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_interaction_prompts<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_mimimap<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_map_prompts<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_minimap<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_mimimap<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_pickup_stream<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_minimap<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_player_count<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_pickup_stream<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_player_inventory<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_player_count<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_round_info<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_player_inventory<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_round_timer<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_round_info<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_shield_numbers<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_round_timer<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_shields<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_shield_numbers<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_shileds<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_shields<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_storm_notifications<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_shileds<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_storm_timer<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_storm_notifications<public> := class<final>(hud_element_identifier) {}
 
-  creative_hud_identifier_team_info<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-  }
+  creative_hud_identifier_storm_timer<public> := class<final>(hud_element_identifier) {}
 
-  dynamic_ui_allowed<native><epic_internal> := struct {
-    # Custom z order used to draw this widget. (Higher numbered z order widget are drawn in front of lower numbered one).
-    CustomZOrder<native><public>: int = external {}
-
-    # Layout constraint to apply to this widget when putting it on screen.
-    LayoutConstraint<native><public>: dynamic_ui_constraint_base
-
-    # Unique id is used to make this widget a separate instance from other widget of the same class.
-    UniqueID<native><public>: string = external {}
-
-    # The `widget` to show.
-    Widget<native><public>: widget
-
-    # Z order used to draw this widget.
-    ZOrder<native><public>: dynamic_ui_z_order = external {}
-  }
-
-  dynamic_ui_anchor<native><epic_internal> := enum {
-    BottomCenter
-
-    BottomLeft
-
-    BottomRight
-
-    CenterCenter
-
-    CenterLeft
-
-    CenterRight
-
-    TopCenter
-
-    TopLeft
-
-    TopRight
-  }
-
-  dynamic_ui_constraint_alignment<native><epic_internal> := class<epic_internal>(dynamic_ui_constraint_base) {
-    # By which anchor should the widget be attached.
-    Anchor<native><epic_internal>: dynamic_ui_anchor = external {}
-
-    # Horizontal alignment of the widget on screen.
-    HorizontalAlignment<native><epic_internal>: horizontal_alignment
-
-    # Vertical alignment of the widget on screen.
-    VerticalAlignment<native><epic_internal>: vertical_alignment
-  }
-
-  dynamic_ui_constraint_base<native><epic_internal> := class<epic_internal> {
-    # Offset applied to the widget after the constraint is resolved.
-    Offset<native><epic_internal>: vector2 = external {}
-  }
-
-  dynamic_ui_constraint_replace<native><epic_internal> := class<epic_internal>(dynamic_ui_constraint_base) {
-    # Unique id used to identify and attach to a specific instance of the target widget class.
-    UniqueID<native><epic_internal>: string = external {}
-
-    # The `widget` to replace.
-    Widget<native><epic_internal>: widget
-  }
-
-  dynamic_ui_constraint_replace_fn<native><epic_internal> := class<epic_internal>(dynamic_ui_constraint_base) {
-    # Unique id used to identify and attach to a specific widget
-    UniqueID<native><epic_internal>: string = external {}
-
-    # Path to widget class.
-    WidgetClassPath<native><epic_internal>: string
-  }
-
-  dynamic_ui_constraint_widget<native><epic_internal> := class<epic_internal>(dynamic_ui_constraint_base) {
-    # By which anchor should the source widget be attached to the target widget.
-    Anchor<native><epic_internal>: dynamic_ui_anchor = external {}
-
-    # To which anchor should the source widget be attached on the target widget.
-    TargetAnchor<native><epic_internal>: dynamic_ui_anchor = external {}
-
-    # Unique id used to identify and attach to a specific instance of the target widget class.
-    UniqueID<native><epic_internal>: string = external {}
-
-    # The `widget` to attach to.
-    Widget<native><epic_internal>: widget
-  }
-
-  dynamic_ui_constraint_widget_fn<native><epic_internal> := class<epic_internal>(dynamic_ui_constraint_base) {
-    # By which anchor should the source widget be attached to the target widget.
-    Anchor<native><epic_internal>: dynamic_ui_anchor = external {}
-
-    # To which anchor should the source widget be attached on the target widget.
-    TargetAnchor<native><epic_internal>: dynamic_ui_anchor = external {}
-
-    # Unique id used to identify and attach to a specific widget.
-    UniqueID<native><epic_internal>: string = external {}
-
-    # Path to widget class.
-    WidgetClassPath<native><epic_internal>: string
-  }
-
-  # Dynamic UI panel to handle the scenes and apply the constraints.
-  dynamic_ui_panel<native><epic_internal> := class<final>(widget) {
-    # Adds `scene` to this panel.
-    AddScene<native><epic_internal>(Scene: dynamic_ui_scene): void
-
-    # Removes `scene` from this panel.
-    RemoveScene<native><epic_internal>(Scene: dynamic_ui_scene): void
-  }
-
-  dynamic_ui_scene<native><epic_internal> := struct {
-    # list of allowed widgets in this scene.
-    AllowedList<native><public>: []dynamic_ui_allowed = external {}
-
-    UnallowedList<native><public>: []dynamic_ui_unallowed = external {}
-  }
-
-  dynamic_ui_unallowed<native><epic_internal> := struct {
-    # Unallow widget with this unique ID.
-    UniqueID<native><public>: string
-
-    # Path to widget class.
-    WidgetClassPath<native><public>: string = external {}
-  }
-
-  using { /UnrealEngine.com/Temporary/SpatialMath }
-  using { /UnrealEngine.com/Temporary/UI }
-  dynamic_ui_z_order<native><epic_internal> := enum {
-    Back
-
-    Custom
-
-    Front
-
-    Middle
-  }
-
-  # Editable text widget. Allows the user to type in a custom text. Only permits a single line of text to be entered.
-  editable_text<native><epic_internal> := class<final>(editable_text_base) {}
-
-  # Editable text block widget common base class. Allows the user to type in a custom text.
-  editable_text_base<native><epic_internal> := class<abstract>(text_base) {
-    # Called whenever the text is committed. This happens when the user presses enter or the text box loses focus.
-    OnTextCommitted<public>(): listenable(widget_message) = external {}
-  }
-
-  # Editable text widget contained in a box. Allows the user to type in a custom text. Only permits a single line of text to be entered.
-  editable_text_box<native><epic_internal> := class<final>(editable_text_base) {}
+  creative_hud_identifier_team_info<public> := class<final>(hud_element_identifier) {}
 
   # A HUD controller that allows for showing and hiding of HUD elements.
   fort_hud_controller<native><public> := interface<epic_internal> {
@@ -9112,111 +5964,22 @@ UI<public> := module {
     ShowElements<public>(HUDElements: []hud_element_identifier): void
   }
 
-  @import_as("/Script/VerseFortniteUI.UVerseFortniteWidgetViewmodel")
-  # Verse interface to native `widget viewmodel`.
-  fortnite_widget_viewmodel<native><epic_internal> := class<abstract> {}
-
-  function_parameter_fortnite_widget_viewmodel<native><epic_internal> := class<computes>(function_parameter_base) {
-    Value<native><epic_internal>: ?fortnite_widget_viewmodel
-  }
-
-  # Base class for hud elements associated with game phase hud elements
-  hud_element_game_phase_identifier_base<native><epic_internal> := class<abstract><epic_internal>(hud_element_identifier) {
-    # Internal index converted to EAthenaGamePhaseStep
-    InternalIndex<native><epic_internal>: int
-  }
-
-  # Base class for hud elements identified by a gameplay tag
-  hud_element_gameplay_tag_identifier_base<native><epic_internal> := class<abstract><epic_internal>(hud_element_identifier) {
-    # Internal string used to make a lookup of an FGameplayTag
-    InternalTag<native><epic_internal>: string
-
-    # If set to true the only child tags from the InternalTag will be included in the identifier
-    TreatAsChildTagCollection<native><epic_internal>: logic = external {}
-  }
-
   # Used to identify a HUD element.
   hud_element_identifier<native><public> := class<abstract><epic_internal> {}
 
-  # Base class for hud elements associated with world resource hud elements
-  hud_element_world_resource_identifier_base<native><epic_internal> := class<abstract><epic_internal>(hud_element_identifier) {
-    # Internal index converted to EFortResourceType
-    InternalIndex<native><epic_internal>: int
-  }
+  hud_identifier_world_resource_gold_currency<public> := class<final>(hud_element_identifier) {}
 
-  hud_identifier_game_phase_bus_flying<epic_internal> := class<final>(hud_element_game_phase_identifier_base) {
-    InternalIndex<override>: int = external {}
-  }
+  hud_identifier_world_resource_ingredient<public> := class<final>(hud_element_identifier) {}
 
-  hud_identifier_game_phase_bus_locked<epic_internal> := class<final>(hud_element_game_phase_identifier_base) {
-    InternalIndex<override>: int = external {}
-  }
+  hud_identifier_world_resource_metal<public> := class<final>(hud_element_identifier) {}
 
-  hud_identifier_game_phase_countdown<epic_internal> := class<final>(hud_element_game_phase_identifier_base) {
-    InternalIndex<override>: int = external {}
-  }
+  hud_identifier_world_resource_permanite<public> := class<final>(hud_element_identifier) {}
 
-  hud_identifier_game_phase_end_game<epic_internal> := class<final>(hud_element_game_phase_identifier_base) {
-    InternalIndex<override>: int = external {}
-  }
+  hud_identifier_world_resource_stone<public> := class<final>(hud_element_identifier) {}
 
-  hud_identifier_game_phase_final_countdown<epic_internal> := class<final>(hud_element_game_phase_identifier_base) {
-    InternalIndex<override>: int = external {}
-  }
+  hud_identifier_world_resource_wood<public> := class<final>(hud_element_identifier) {}
 
-  hud_identifier_game_phase_none<epic_internal> := class<final>(hud_element_game_phase_identifier_base) {
-    InternalIndex<override>: int = external {}
-  }
-
-  hud_identifier_game_phase_setup<epic_internal> := class<final>(hud_element_game_phase_identifier_base) {
-    InternalIndex<override>: int = external {}
-  }
-
-  hud_identifier_game_phase_storm_forming<epic_internal> := class<final>(hud_element_game_phase_identifier_base) {
-    InternalIndex<override>: int = external {}
-  }
-
-  hud_identifier_game_phase_storm_holding<epic_internal> := class<final>(hud_element_game_phase_identifier_base) {
-    InternalIndex<override>: int = external {}
-  }
-
-  hud_identifier_game_phase_storm_shrinking<epic_internal> := class<final>(hud_element_game_phase_identifier_base) {
-    InternalIndex<override>: int = external {}
-  }
-
-  hud_identifier_game_phase_warmup<epic_internal> := class<final>(hud_element_game_phase_identifier_base) {
-    InternalIndex<override>: int = external {}
-  }
-
-  hud_identifier_world_resource_gold_currency<public> := class<final>(hud_element_world_resource_identifier_base) {
-    InternalIndex<override>: int = external {}
-  }
-
-  hud_identifier_world_resource_ingredient<public> := class<final>(hud_element_world_resource_identifier_base) {
-    InternalIndex<override>: int = external {}
-  }
-
-  hud_identifier_world_resource_metal<public> := class<final>(hud_element_world_resource_identifier_base) {
-    InternalIndex<override>: int = external {}
-  }
-
-  hud_identifier_world_resource_permanite<public> := class<final>(hud_element_world_resource_identifier_base) {
-    InternalIndex<override>: int = external {}
-  }
-
-  hud_identifier_world_resource_stone<public> := class<final>(hud_element_world_resource_identifier_base) {
-    InternalIndex<override>: int = external {}
-  }
-
-  hud_identifier_world_resource_wood<public> := class<final>(hud_element_world_resource_identifier_base) {
-    InternalIndex<override>: int = external {}
-  }
-
-  player_hud_identifier_all<public> := class<final>(hud_element_gameplay_tag_identifier_base) {
-    InternalTag<override>: string = external {}
-
-    TreatAsChildTagCollection<override>: logic = external {}
-  }
+  player_hud_identifier_all<public> := class<final>(hud_element_identifier) {}
 
   # Slider with a text value. Displays a slider, its progress bar and value.
   slider_regular<native><public> := class<final>(widget) {
@@ -9314,9 +6077,6 @@ Vehicles<public> := module {
 
   # Main API implemented by Fortnite vehicles.
   fort_vehicle<native><public> := interface<unique><epic_internal>(positional, healthful, damageable, game_action_causer) {
-    @experimental
-    GetEntity<epic_internal>()<transacts><decides>: entity
-
     # Returns the maximum fuel capacity of the vehicle. If the vehicle uses fuel, this value will be between 1.0 and Inf. Otherwise, this value will be -1.0.
     GetFuelCapacity<public>()<transacts>: float
 
@@ -9334,411 +6094,5 @@ Vehicles<public> := module {
 
     # Succeeds if this `fort_vehicle` is standing on ground.
     IsOnGround<public>()<transacts><decides>: void
-  }
-
-  @hide_in_editor
-  @experimental
-  fort_vehicle_component<native><epic_internal> := class<final_super>(component, fort_vehicle) {
-    @experimental
-    (/Fortnite.com/Vehicles/fort_vehicle:)GetEntity<override>()<transacts><decides>: entity = external {}
-
-    @experimental
-    Damage<override>(Amount: float): void = external {}
-
-    @experimental
-    Damage<override>(Args: damage_args): void = external {}
-
-    @experimental
-    DamagedEvent<override>(): listenable(damage_result) = external {}
-
-    @experimental
-    FortVehicle<native><public>: fort_vehicle
-
-    @experimental
-    # Returns the maximum fuel capacity of the vehicle. If the vehicle uses fuel, this value will be between 1.0 and Inf. Otherwise, this value will be -1.0.
-    GetFuelCapacity<override>()<transacts>: float = external {}
-
-    @experimental
-    # Returns the fuel state of the vehicle. If the vehicle uses fuel, this value will be between 0.0 and `GetFuelCapacity`. Otherwise, this value will be -1.0.
-    GetFuelRemaining<override>()<transacts>: float = external {}
-
-    @experimental
-    GetHealth<override>()<transacts>: float = external {}
-
-    @experimental
-    GetMaxHealth<override>()<transacts>: float = external {}
-
-    @experimental
-    GetPassengers<override>()<transacts>: []fort_character = external {}
-
-    @experimental
-    GetTransform<override>()<transacts>: transform = external {}
-
-    @experimental
-    IsInAir<override>()<transacts><decides>: void = external {}
-
-    @experimental
-    IsInWater<override>()<transacts><decides>: void = external {}
-
-    @experimental
-    IsOnGround<override>()<transacts><decides>: void = external {}
-
-    @experimental
-    SetHealth<override>(Health: float)<transacts>: void = external {}
-
-    @experimental
-    SetMaxHealth<override>(MaxHealth: float)<transacts>: void = external {}
-  }
-}
-
-VerseInternalTesting<public> := module {
-  using { /Fortnite.com/Characters }
-  using { /Fortnite.com/Devices }
-  using { /Fortnite.com/Game }
-  using { /Fortnite.com/Vehicles }
-  using { /UnrealEngine.com/Temporary/Diagnostics }
-  using { /UnrealEngine.com/Temporary/SpatialMath }
-  using { /UnrealEngine.com/Temporary/Testing }
-  using { /Verse.org/Colors }
-  using { /Verse.org/Simulation }
-  # Module import path: /Fortnite.com/VerseInternalTesting/NexusFramework
-  NexusFramework<public> := module {
-    example_nexus_device<epic_internal> := class(nexus_test_device) {
-      OnBegin<override>()<suspends>: void = external {}
-
-      OnEnd<override>(): void = external {}
-    }
-
-    nexus_test_device<epic_internal> := class(creative_device) {
-      AddCheck<epic_internal>(IsPassed: logic, TestName: string, ContextString: string): void = external {}
-
-      AddFail<epic_internal>(TestName: string, ContextString: string): void = external {}
-
-      AddPass<epic_internal>(TestName: string, ContextString: string): void = external {}
-
-      AddResults<epic_internal>(TestName: string, Passed: logic, ContextString: string): void = external {}
-
-      AddSkip<epic_internal>(IsPassed: logic, TestName: string, ContextString: string): void = external {}
-
-      OnBegin<override>()<suspends>: void = external {}
-
-      OnEnd<override>(): void = external {}
-
-      @editable
-      var TestRunner<public>: nexus_test_runner = external {}
-    }
-
-    nexus_test_runner<epic_internal> := class(creative_device) {
-      OnEnd<override>(): void = external {}
-    }
-  }
-
-  # Module import path: /Fortnite.com/VerseInternalTesting/VerseFramework
-  VerseFramework<public> := module {
-    device_event_agent_handler_mock<public> := class(test_device_event_handler_mock) {
-      Subscribe<public>(Event: listenable(agent)): void = external {}
-
-      var ArgAgent<public>: ?agent = external {}
-    }
-
-    device_event_agent_int_handler_mock<public> := class(test_device_event_handler_mock) {
-      Subscribe<public>(Event: listenable(tuple(agent, int))): void = external {}
-
-      var ArgAgent<public>: ?agent = external {}
-
-      var ArgInt<public>: int = external {}
-    }
-
-    device_event_ai_interaction_handler_mock<public> := class(test_device_event_handler_mock) {
-      Subscribe<public>(Event: listenable(device_ai_interaction_result)): void = external {}
-
-      var ArgSource<public>: ?agent = external {}
-
-      var ArgTarget<public>: ?agent = external {}
-    }
-
-    device_event_damage_result_handler_mock<public> := class(test_device_event_handler_mock) {
-      Subscribe<public>(Event: listenable(damage_result)): void = external {}
-
-      var ArgAmount<public>: float = external {}
-
-      var ArgInstigator<public>: ?game_action_instigator = external {}
-
-      var ArgSource<public>: ?game_action_causer = external {}
-    }
-
-    device_event_fort_vehicle_handler_mock<public> := class(test_device_event_handler_mock) {
-      Subscribe<public>(Event: listenable(fort_vehicle)): void = external {}
-
-      var ArgVehicle<public>: ?fort_vehicle = external {}
-    }
-
-    device_event_healing_result_handler_mock<public> := class(test_device_event_handler_mock) {
-      Subscribe<public>(Event: listenable(healing_result)): void = external {}
-
-      var ArgAmount<public>: float = external {}
-
-      var ArgInstigator<public>: ?game_action_instigator = external {}
-
-      var ArgSource<public>: ?game_action_causer = external {}
-    }
-
-    device_event_optional_agent_handler_mock<public> := class(test_device_event_handler_mock) {
-      Subscribe<public>(Event: listenable(?agent)): void = external {}
-
-      var ArgAgent<public>: ?agent = external {}
-    }
-
-    device_event_optional_agent_int_handler_mock<public> := class(test_device_event_handler_mock) {
-      Subscribe<public>(Event: listenable(tuple(?agent, int))): void = external {}
-
-      var ArgAgent<public>: ?agent = external {}
-
-      var ArgInt<public>: int = external {}
-    }
-
-    device_event_void_handler_mock<public> := class(test_device_event_handler_mock) {
-      Subscribe<public>(Event: listenable(tuple())): void = external {}
-    }
-
-    test_case<public> := struct {
-      Category<public>: []string
-
-      Func<public>: type { __()<suspends>: void }
-
-      Name<public>: string
-
-      TimeoutOverride<public>: ?float = external {}
-    }
-
-    test_device<epic_internal> := class(creative_device) {
-      AfterAll<public>()<suspends>: void = external {}
-
-      AfterEach<public>()<suspends>: void = external {}
-
-      BeforeAll<public>()<suspends>: void = external {}
-
-      BeforeEach<public>()<suspends>: void = external {}
-
-      OnBegin<override>(): void = external {}
-
-      RegisterTests<public>(): void = external {}
-
-      SuiteName<public>: string = external {}
-
-      TestCases<public>(): []test_case = external {}
-
-      var TestRunner<public>: test_runner = external {}
-    }
-
-    test_device_event_handler_mock<public> := class<concrete> {
-      Await<public>()<suspends>: void = external {}
-
-      Cancel<public>()<transacts>: void = external {}
-
-      GetCallCount<public>(): int = external {}
-
-      ResetCallCount<public>(): void = external {}
-    }
-
-    test_runner<epic_internal> := class {
-      AddExcludeFilter<public>(Filter: string)<transacts>: void = external {}
-
-      AddIncludeFilter<public>(Filter: string)<transacts>: void = external {}
-
-      CheckArrayContains<public>(ActualArray: []string, Expected: string, Message: string): void = external {}
-
-      CheckArrayDoesNotContain<public>(ActualArray: []string, Expected: string, Message: string): void = external {}
-
-      CheckEqual<public>(
-        Actual: creative_object,
-        Expected: transform,
-        Message: string,
-        ?Tolerance: float = external {},
-        ?Timeout: float = external {}
-      )<suspends>: void = external {}
-
-      CheckEqual<public>(
-        ActualFortCharacter: fort_character,
-        ExpectedTranslation: vector3,
-        Message: string,
-        ?Tolerance: float = external {},
-        ?Timeout: float = external {},
-        ?CompareX: logic = external {},
-        ?CompareY: logic = external {},
-        ?CompareZ: logic = external {}
-      )<suspends>: void = external {}
-
-      CheckEqual<public>(Expected: agent, Actual: agent, Message: string): void = external {}
-
-      CheckEqual<public>(Expected: color, Actual: color, Message: string, ?Tolerance: float = external {}): void = external {}
-
-      CheckEqual<public>(Expected: float, Actual: float, Message: string, ?Tolerance: float = external {}): void = external {}
-
-      CheckEqual<public>(Expected: int, Actual: int, Message: string): void = external {}
-
-      CheckEqual<public>(
-        Expected: rotation,
-        Actual: rotation,
-        Message: string,
-        ?Tolerance: float = external {}
-      ): void = external {}
-
-      CheckEqual<public>(Expected: string, Actual: string, Message: string): void = external {}
-
-      CheckEqual<public>(
-        Expected: transform,
-        Actual: transform,
-        Message: string,
-        ?Tolerance: float = external {}
-      ): void = external {}
-
-      CheckEqual<public>(
-        Expected: vector2,
-        Actual: vector2,
-        Message: string,
-        ?Tolerance: float = external {}
-      ): void = external {}
-
-      CheckEqual<public>(Expected: vector2i, Actual: vector2i, Message: string): void = external {}
-
-      CheckEqual<public>(
-        Expected: vector3,
-        Actual: vector3,
-        Message: string,
-        ?Tolerance: float = external {}
-      ): void = external {}
-
-      CheckEqualFloatArray<public>(Expected: []float, Actual: []float, Message: string): void = external {}
-
-      CheckEqualIntArray<public>(Expected: []int, Actual: []int, Message: string): void = external {}
-
-      CheckFailure<public>(TestFuncEval: ?any, FuncName: string)<decides>: void = external {}
-
-      CheckNotEqual<public>(
-        Actual: creative_object,
-        Expected: transform,
-        Message: string,
-        ?Tolerance: float = external {},
-        ?Timeout: float = external {}
-      )<suspends>: void = external {}
-
-      CheckNotEqual<public>(Expected: agent, Actual: agent, Message: string): void = external {}
-
-      CheckNotEqual<public>(Expected: float, Actual: float, Message: string): void = external {}
-
-      CheckNotEqual<public>(Expected: int, Actual: int, Message: string): void = external {}
-
-      CheckNotEqual<public>(Expected: string, Actual: string, Message: string): void = external {}
-
-      CheckNotEqual<public>(
-        Expected: transform,
-        Actual: transform,
-        Message: string,
-        ?Tolerance: float = external {}
-      ): void = external {}
-
-      CheckNotTrue<public>(Actual: logic, Message: string): void = external {}
-
-      CheckTrue<public>(Actual: logic, Message: string): void = external {}
-
-      ClearLastTestResult<public>(): void = external {}
-
-      ClearLogOutput<public>(): void = external {}
-
-      ClearTests<public>()<transacts>: void = external {}
-
-      DefaultSetupFunctionTimeoutInSeconds<public>: float = external {}
-
-      DefaultTestTimeoutInSeconds<public>: float = external {}
-
-      GetDisplayTime<public>(DurationInSec: float): string = external {}
-
-      IsTestCaseIncluded<public>(TestCase: test_case)<transacts><decides>: void = external {}
-
-      Log<public>(Level: log_level, Message: string)<transacts>: void = external {}
-
-      PrintLogOutput<public>()<transacts>: void = external {}
-
-      RaiseFunctionFailure<public>(FuncName: string)<transacts>: void = external {}
-
-      RecordFlakinessTestResult<public>(TestName: string, Succeeded: logic)<transacts>: void = external {}
-
-      RegisterTests<public>(TestSuite: test_suite)<transacts>: void = external {}
-
-      Require<public>(OptionalAgent: ?agent, Message: string)<transacts><decides>: agent = external {}
-
-      ResetExcludeFilters<public>()<transacts>: void = external {}
-
-      ResetIncludeFilters<public>()<transacts>: void = external {}
-
-      Run<public>()<suspends>: void = external {}
-
-      RunTestSuites<public>()<suspends>: void = external {}
-
-      var CurrentTestSuite<public>: string = external {}
-
-      var EnableDebugOutput<public>: logic = external {}
-
-      var EnableFlakinessEvaluation<public>: logic = external {}
-
-      var EnableLogOutput<public>: logic = external {}
-
-      var EnableTimeTracking<public>: logic = external {}
-
-      var EnableVerboseOutput<public>: logic = external {}
-
-      var FlakinessRunCount<public>: int = external {}
-
-      var LastTestErrors<public>: []string = external {}
-
-      var LogOutput<public>: []string = external {}
-
-      var SetupFunctionTimeoutInSeconds<public>: float = external {}
-
-      var TargetTestSuite<public>: string = external {}
-
-      var TestReporter<public>: test_reporter = external {}
-
-      var TestTimeoutInSeconds<public>: float = external {}
-    }
-
-    test_runner_device<epic_internal> := class(creative_device) {
-      OnBegin<override>()<suspends>: void = external {}
-
-      @editable
-      TestReportName<public>: string = external {}
-
-      @editable
-      TestReportVerbosity<public>: log_level = external {}
-
-      TestRunner<public>: test_runner = external {}
-
-      var Status<public>: test_runner_status = external {}
-    }
-
-    test_runner_status<public> := enum {
-      Complete
-
-      Pending
-
-      Running
-
-      Setup
-    }
-
-    test_suite<public> := struct {
-      AfterAllFunc<public>: type { __()<suspends>: void }
-
-      AfterEachFunc<public>: type { __()<suspends>: void }
-
-      BeforeAllFunc<public>: type { __()<suspends>: void }
-
-      BeforeEachFunc<public>: type { __()<suspends>: void }
-
-      Cases<public>: []test_case
-
-      Name<public>: string
-    }
   }
 }

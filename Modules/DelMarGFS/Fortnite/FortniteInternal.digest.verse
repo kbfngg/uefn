@@ -1944,6 +1944,7 @@ Devices<public> := module {
   }
 
   using { /Fortnite.com/Game }
+  using { /Verse.org/Simulation }
   # Used to create a customizable turret that can search for nearby targets.
   automated_turret_device<public> := class<concrete><final>(creative_device_base, healthful, healable) {
     # Triggers when someone enters the activation radius while nobody else is there.
@@ -2605,7 +2606,6 @@ Devices<public> := module {
     IsOfClass<epic_internal>(Agent: agent)<transacts><decides>: void = external {}
   }
 
-  using { /Verse.org/Simulation }
   # Used to allow players to select their *Class* from a *Class Selector UI*.
   class_selector_ui_device<public> := class<concrete><final>(creative_device_base) {
     # Signaled when an `agent` changes a class.
@@ -3129,6 +3129,18 @@ Devices<public> := module {
     # Enables this device.
     Enable<public>(): void = external {}
   }
+
+  del_mar_checkpoint_device<epic_internal> := class<concrete><final>(creative_device_base) {}
+
+  # Used to created an EMP Hazard that slows vehicles.
+  del_mar_emp_hazard_device<epic_internal> := class<concrete><final>(creative_device_base) {
+    # Signaled when a vehicle triggers the EMP Hazard.Sends the `agent` that controls the vehicle.
+    EMPHazardTriggeredEvent<public>: listenable(agent) = external {}
+  }
+
+  del_mar_player_start_device<epic_internal> := class<concrete><final>(creative_device_base) {}
+
+  del_mar_speed_pad_device<epic_internal> := class<concrete><final>(creative_device_base) {}
 
   # Payload of `device_event_ai_interaction`.
   device_ai_interaction_result<native><public> := struct<epic_internal> {

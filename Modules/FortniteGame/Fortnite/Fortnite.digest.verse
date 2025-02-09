@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-33.11-CL-38773622
+# Generated from build: ++Fortnite+Release-33.20-CL-39082670
 #################################################
 
 using { /Fortnite.com/Characters }
@@ -1025,7 +1025,6 @@ Devices<public> := module {
   }
 
   using { /Fortnite.com/Game }
-  using { /Verse.org/Simulation }
   # Used to create a customizable turret that can search for nearby targets.
   automated_turret_device<public> := class<concrete><final>(creative_device_base, healthful, healable) {
     # Triggers when someone enters the activation radius while nobody else is there.
@@ -1583,6 +1582,7 @@ Devices<public> := module {
   # Used together with `class_selector_device` to create class based gameplay. Defines custom class attributes and inventory loadouts.
   class_designer_device<public> := class<concrete><final>(creative_device_base) {}
 
+  using { /Verse.org/Simulation }
   # Used to allow players to select their *Class* from a *Class Selector UI*.
   class_selector_ui_device<public> := class<concrete><final>(creative_device_base) {
     # Signaled when an `agent` changes a class.
@@ -2078,6 +2078,44 @@ Devices<public> := module {
     # Signaled when an `agent` is the victim of a shake down.
     # Sends the `agent` that is the victim.
     ShakenDownEvent<public>: listenable(agent) = external {}
+  }
+
+  # Use to create a sprite that players can trade in a weapon for a random legendary weapon or a custom item list.
+  earth_sprite_device<public> := class<concrete><final>(creative_device_base, enableable) {
+    # Disable the device.
+    Disable<override>(): void = external {}
+
+    # Disable the device’s ability to grant items. Can still interact and consume weapons.
+    DisableItemGranting<public>(): void = external {}
+
+    # Prevents the `agent` from trading.
+    DisableTradingForPlayer<public>(Agent: agent): void = external {}
+
+    # Enable the device, and resets all trade counts the Sprite is tracking.
+    Enable<override>(): void = external {}
+
+    # Enable the device’s ability to grant items.
+    EnableItemGranting<public>(): void = external {}
+
+    # Allows a `agent` to trade, and will reset the `agent`'s trade count for this Sprite.
+    EnableTradingForPlayer<public>(Agent: agent): void = external {}
+
+    # Triggers when the grant timer has completed.
+    # Sends the triggering `agent`.
+    GrantTimerCompletedEvent<public>: listenable(?agent) = external {}
+
+    # Makes the Earth Sprite invisible.
+    Hide<public>(): void = external {}
+
+    # Succeeds if the device is enabled, fails if it's disabled.
+    IsEnabled<override>()<transacts><decides>: void = external {}
+
+    # Makes the Earth Sprite visible.
+    Show<public>(): void = external {}
+
+    # Triggers when a player gives the Earth Sprite a weapon.
+    # Sends the triggering `agent`.
+    WeaponConsumedEvent<public>: listenable(agent) = external {}
   }
 
   # Base class for types of volumes with special gameplay properties.

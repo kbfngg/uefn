@@ -1292,6 +1292,10 @@
 				"AllowList": [ "bUseCollection", "DaySequenceCollection", "Mode", "BlendPolicy", "BlendAmount", "Bias", "VolumeShapeComponents", "DayNightCycle", "DayNightCycleTime" ]
 			},
 			{
+				"Type": "/Script/DaySequence.DaySequenceActor",
+				"AllowList": [ "DaySequenceCollection" ]
+			},
+			{
 				"Type": "/Script/FortniteGame.FortDaySequenceActor",
 				"AllowList": [ "SunAngle", "SkyLightCubeMapBlend" ]
 			},

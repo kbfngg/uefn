@@ -1875,6 +1875,54 @@ Devices<public> := module {
     PlayReverse<public>(): void = external {}
   }
 
+  # Used to dynamically assemble or disassemble one or more building actors. Only available in LEGO islands.
+  assembly_device<public> := class<concrete><final>(creative_device_base, enableable) {
+    # Initiates the assembly process.
+    Assemble<public>(): void = external {}
+
+    # Initiates the assembly process.
+    Assemble<public>(Agent: agent): void = external {}
+
+    # Signaled when the device finishes assembling, at the same time as other 'finished' effects are started.
+    AssemblyFinishedEvent<public>: listenable(?agent) = external {}
+
+    # Disable this object.
+    Disable<override>(): void = external {}
+
+    # Initiates the disassembly process.
+    Disassemble<public>(): void = external {}
+
+    # Initiates the disassembly process.
+    Disassemble<public>(Agent: agent): void = external {}
+
+    # Signaled when the device finishes disassembling.
+    DisassemblyFinishedEvent<public>: listenable(?agent) = external {}
+
+    # Enable this object.
+    Enable<override>(): void = external {}
+
+    # Succeeds if the object is enabled, fails if it’s disabled.
+    IsEnabled<override>()<transacts><decides>: void = external {}
+
+    # Succeeds if the device is paused, fails if it is not.
+    IsPaused<public>()<transacts><decides>: void = external {}
+
+    # Pause the assembly or disassembly process.
+    Pause<public>(): void = external {}
+
+    # Pause the assembly or disassembly process.
+    Pause<public>(Agent: agent): void = external {}
+
+    # Resets affected building actors to the state they were in at the start of the round.
+    Reset<public>(): void = external {}
+
+    # Resets affected building actors to the state they were in at the start of the round.
+    Reset<public>(Agent: agent): void = external {}
+
+    # The amount of progress the device has made towards fully assembling (1.0) or fully disassembling (0.0).
+    var<private> Progress<public>: float = external {}
+  }
+
   # Evaluates attributes for `agent` when signaled from other devices. Acts as branching logic, checking whether the `agent` associated with the signal passes all of the tests setup in this device, then sends a signal on either `PassEvent` or `FailEvent`.
   attribute_evaluator_device<public> := class<concrete><final>(trigger_base_device) {
     # Tests whether the specified agent satisfies the required conditions specified on the device (e.g. eliminations/score), and fires either the `PassEvent` or `FailEvent` accordingly.
@@ -1944,6 +1992,7 @@ Devices<public> := module {
   }
 
   using { /Fortnite.com/Game }
+  using { /Verse.org/Simulation }
   # Used to create a customizable turret that can search for nearby targets.
   automated_turret_device<public> := class<concrete><final>(creative_device_base, healthful, healable) {
     # Triggers when someone enters the activation radius while nobody else is there.
@@ -2605,7 +2654,6 @@ Devices<public> := module {
     IsOfClass<epic_internal>(Agent: agent)<transacts><decides>: void = external {}
   }
 
-  using { /Verse.org/Simulation }
   # Used to allow players to select their *Class* from a *Class Selector UI*.
   class_selector_ui_device<public> := class<concrete><final>(creative_device_base) {
     # Signaled when an `agent` changes a class.
