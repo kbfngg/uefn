@@ -11,6 +11,11 @@
 				"Rules": [ "View" ],
 				"Subclasses": "All"
 			}
+		},
+		"AllowedMenus": {
+			"LevelEditor.LevelViewportToolBar.Options": {
+				"AllowList": { "+": [ "HighResScreenshot" ] }
+			}
 		}
 	},
 	"ValkyrieProjectSettings": {
@@ -22,9 +27,8 @@
 	"PropertyEditorClassPermissionList": {
 		"+": [
 			{
-				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/ValkyrieEditor.ValkyrieProjectSettingsEditorViewModel",
-				"AllowList": [ "Title", "Description", "VersePath", "Kind", "DocsUrl", "UGCLocDescriptor" ]
+				"AllowList": [ "Kind" ]
 			},
 			{
 				"Type": "/Script/FortniteGame.BuildingActor",

@@ -464,7 +464,7 @@
 		"C1270312AB730B1E0B1EC74571C70F73":
 		{
 			"FriendlyName": "CustomizableObjectVer",
-			"Version": 54
+			"Version": 56
 		},
 		"C1270312AB730B1E0B1EC790917A7105":
 		{
@@ -549,7 +549,7 @@
 		"EF0A537D90DA4CD2BCA16D6AE21E3589":
 		{
 			"FriendlyName": "FortItemDefinitionVersion",
-			"Version": 18
+			"Version": 19
 		},
 		"F2AED0AC9AFE416F8664AA7FFA26D6FC":
 		{
@@ -617,9 +617,11 @@
 			"/CreativeCoreDevices/HUDMessage/MVVM_UEFN_HUDMessage.MVVM_UEFN_HUDMessage_C",
 			"/Game/Creative/Devices/Quests/MVVM_UEFN_Tracker.MVVM_UEFN_Tracker_C",
 			"/Game/Creative/PostProcess/PP_70sPrint.PP_70sPrint_C",
+			"/Game/Creative/PostProcess/PP_80sCartoon.PP_80sCartoon_C",
 			"/Game/Creative/PostProcess/PP_ActionLines.PP_ActionLines_C",
 			"/Game/Creative/PostProcess/PP_CCTV.PP_CCTV_C",
 			"/Game/Creative/PostProcess/PP_Comic.PP_Comic_C",
+			"/Game/Creative/PostProcess/PP_ComicNoir.PP_ComicNoir_C",
 			"/Game/Creative/PostProcess/PP_Crazy.PP_Crazy_C",
 			"/Game/Creative/PostProcess/PP_Dark.PP_Dark_C",
 			"/Game/Creative/PostProcess/PP_Desolate.PP_Desolate_C",
@@ -2157,6 +2159,7 @@
 			"/Script/ItemizationCoreRuntime.ItemComponentData_Icon",
 			"/Script/ItemizationCoreRuntime.ItemComponentData_MaxStackSize",
 			"/Script/ItemizationCoreRuntime.ItemComponentData_StackSize",
+			"/Script/ItemizationCoreRuntime.ItemComponentData_Traits",
 			"/Script/LocalizableMessage.LocalizableMessage",
 			"/Script/LocalizableMessage.LocalizableMessageParameterEntry",
 			"/Script/MovieSceneGameplayEventTrack.MovieSceneGameplayEvent",
@@ -9557,6 +9560,7 @@
 			"/Game/Environments/Props/Street/Materials/PP2/MI_Sign_Handicapped_Ambient.MI_Sign_Handicapped_Ambient",
 			"/Game/Environments/Props/Street/Materials/PP2/MI_Sign_NoUTurn_Ambient.MI_Sign_NoUTurn_Ambient",
 			"/Game/Environments/Props/Street/Materials/PP2/MI_Sign_Reserved_Parking_Ambient.MI_Sign_Reserved_Parking_Ambient",
+			"/Game/Environments/Props/Street/Materials/PP2/MI_StreetLight_04_ambient_Cone.MI_StreetLight_04_ambient_Cone",
 			"/Game/Environments/Props/Street/Materials/PP2/MI_StreetLightUrban_02_Ambient_Cone.MI_StreetLightUrban_02_Ambient_Cone",
 			"/Game/Environments/Props/Street/Materials/PP2/MI_StreetLightUrban_04_Ambient.MI_StreetLightUrban_04_Ambient",
 			"/Game/Environments/Props/Street/Materials/PP2/MI_StreetProp_StreetlightSuburban_01_Ambient.MI_StreetProp_StreetlightSuburban_01_Ambient",
@@ -22397,9 +22401,11 @@
 			"/Game/Creative/Misc/Razor/CP_Razor_Vein_03.CP_Razor_Vein_03_C",
 			"/Game/Creative/PostProcess/PostProcessEffectActor.PostProcessEffectActor_C",
 			"/Game/Creative/PostProcess/PP_70sPrint.PP_70sPrint_C",
+			"/Game/Creative/PostProcess/PP_80sCartoon.PP_80sCartoon_C",
 			"/Game/Creative/PostProcess/PP_ActionLines.PP_ActionLines_C",
 			"/Game/Creative/PostProcess/PP_CCTV.PP_CCTV_C",
 			"/Game/Creative/PostProcess/PP_Comic.PP_Comic_C",
+			"/Game/Creative/PostProcess/PP_ComicNoir.PP_ComicNoir_C",
 			"/Game/Creative/PostProcess/PP_Crazy.PP_Crazy_C",
 			"/Game/Creative/PostProcess/PP_Dark.PP_Dark_C",
 			"/Game/Creative/PostProcess/PP_Desolate.PP_Desolate_C",
