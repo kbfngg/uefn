@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-25.10-CL-26000959
+# Generated from build: ++Fortnite+Release-25.11-CL-26171015
 #################################################
 
 # Module import path: /Fortnite.com/AI
