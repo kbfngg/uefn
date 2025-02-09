@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-32.10-CL-37958378
+# Generated from build: ++Fortnite+Release-32.11-CL-38202817
 #################################################
 
 using { /Fortnite.com/Characters }
