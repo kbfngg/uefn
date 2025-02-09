@@ -254,7 +254,7 @@
 		"70371DB9DD6C4D2EA51DF7BD2C462558":
 		{
 			"FriendlyName": "FortWeaponItemDefinitionVersion",
-			"Version": 2
+			"Version": 3
 		},
 		"717F9EE7E9B0493A88B391321B388107":
 		{
@@ -469,7 +469,7 @@
 		"C1270312AB730B1E0B1EC74571C70F73":
 		{
 			"FriendlyName": "CustomizableObjectVer",
-			"Version": 59
+			"Version": 62
 		},
 		"C1270312AB730B1E0B1EC790917A7105":
 		{
@@ -564,7 +564,7 @@
 		"EF0A537D90DA4CD2BCA16D6AE21E3589":
 		{
 			"FriendlyName": "FortItemDefinitionVersion",
-			"Version": 19
+			"Version": 21
 		},
 		"F2AED0AC9AFE416F8664AA7FFA26D6FC":
 		{
@@ -632,9 +632,11 @@
 			"/CreativeCoreDevices/HUDMessage/MVVM_UEFN_HUDMessage.MVVM_UEFN_HUDMessage_C",
 			"/Game/Creative/Devices/Quests/MVVM_UEFN_Tracker.MVVM_UEFN_Tracker_C",
 			"/Game/Creative/PostProcess/PP_70sPrint.PP_70sPrint_C",
+			"/Game/Creative/PostProcess/PP_80sCartoon.PP_80sCartoon_C",
 			"/Game/Creative/PostProcess/PP_ActionLines.PP_ActionLines_C",
 			"/Game/Creative/PostProcess/PP_CCTV.PP_CCTV_C",
 			"/Game/Creative/PostProcess/PP_Comic.PP_Comic_C",
+			"/Game/Creative/PostProcess/PP_ComicNoir.PP_ComicNoir_C",
 			"/Game/Creative/PostProcess/PP_Crazy.PP_Crazy_C",
 			"/Game/Creative/PostProcess/PP_Dark.PP_Dark_C",
 			"/Game/Creative/PostProcess/PP_Desolate.PP_Desolate_C",
@@ -1191,6 +1193,7 @@
 			"/Script/Engine.World",
 			"/Script/Engine.WorldDataLayers",
 			"/Script/Engine.WorldPartition",
+			"/Script/Engine.WorldPartitionDestructibleHLODMeshComponent",
 			"/Script/Engine.WorldPartitionEditorSpatialHash",
 			"/Script/Engine.WorldPartitionHLOD",
 			"/Script/Engine.WorldPartitionHLODSourceActorsFromCell",
@@ -1369,6 +1372,8 @@
 			"/Script/FortniteGame.PlayStopPauseInterface",
 			"/Script/FortniteGame.WaterVolume_Athena",
 			"/Script/FortniteUI.FortCTAButton",
+			"/Script/FortniteUI.HUDPlayerInfoListViewmodel",
+			"/Script/FortniteUI.HUDPlayerInfoViewmodel",
 			"/Script/GameplayAbilities.AbilitySystemComponent",
 			"/Script/GameplayCameras.CompositeCameraShakePattern",
 			"/Script/GameplayCameras.ConstantCameraShakePattern",
@@ -1887,7 +1892,8 @@
 			"/Script/WorldPartitionHLODUtilities.HLODBuilderInstancingSettings",
 			"/Script/WorldPartitionHLODUtilities.HLODBuilderMeshApproximateSettings",
 			"/Script/WorldPartitionHLODUtilities.HLODBuilderMeshMergeSettings",
-			"/Script/WorldPartitionHLODUtilities.HLODBuilderMeshSimplifySettings"
+			"/Script/WorldPartitionHLODUtilities.HLODBuilderMeshSimplifySettings",
+			"/Script/WorldPartitionHLODUtilities.WorldPartitionHLODModifierMeshDestruction"
 		],
 		"VKCreateUGCEarlyAccess": [],
 		"VKCreateUGCEpicDeveloper": [
@@ -3979,6 +3985,7 @@
 			"/CRD_AudioPlayer/SetupAssets/PID_CP_Devices_CRD_AudioPlayer.PID_CP_Devices_CRD_AudioPlayer",
 			"/CRD_BallSpawner/SetupAssets/PID_CP_Devices_BallSpawner.PID_CP_Devices_BallSpawner",
 			"/CRD_Bouncer/SetupAssets/PID_CP_Devices_BouncerGallery.PID_CP_Devices_BouncerGallery",
+			"/CRD_CameraModes/SetupAssets/PID_CP_Devices_FirstPerson.PID_CP_Devices_FirstPerson",
 			"/CRD_CameraModes/SetupAssets/PID_CP_Devices_FixedPoint.PID_CP_Devices_FixedPoint",
 			"/CRD_CameraModes/SetupAssets/PID_CP_Devices_Orbit.PID_CP_Devices_Orbit",
 			"/CRD_CameraModes/SetupAssets/PID_CP_Devices_Perspective.PID_CP_Devices_Perspective",
@@ -14739,6 +14746,7 @@
 			"/CRD_Analytic/BP_Creative_Analytic_Manager.BP_Creative_Analytic_Manager_C",
 			"/CRD_Analytic/Device_AnalyticDevice_V2.Device_AnalyticDevice_V2_C",
 			"/CRD_AnimatedMesh/Device_AnimatedMesh.Device_AnimatedMesh_C",
+			"/CRD_Ascender/Device_Ascender.Device_Ascender_C",
 			"/CRD_AudioMixer/Device_CRD_AudioMixer.Device_CRD_AudioMixer_C",
 			"/CRD_AudioPlayer/Device_CRD_AudioPlayer.Device_CRD_AudioPlayer_C",
 			"/CRD_AudioPlayer/Device_CRD_AudioPlayer_Migrated.Device_CRD_AudioPlayer_Migrated_C",
@@ -14753,6 +14761,7 @@
 			"/CRD_Bouncer/SetupAssets/Tire_Bouncer/BP_Device_TireBouncerShort.BP_Device_TireBouncerShort_C",
 			"/CRD_Bouncer/SetupAssets/Tire_Bouncer/BP_Device_TireBouncerTall.BP_Device_TireBouncerTall_C",
 			"/CRD_Bouncer/SetupAssets/Tire_Bouncer/BP_Device_TireBouncerToppled.BP_Device_TireBouncerToppled_C",
+			"/CRD_CameraModes/Device_CameraModes_FirstPerson.Device_CameraModes_FirstPerson_C",
 			"/CRD_CameraModes/Device_CameraModes_FixedPoint.Device_CameraModes_FixedPoint_C",
 			"/CRD_CameraModes/Device_CameraModes_Orbit.Device_CameraModes_Orbit_C",
 			"/CRD_CameraModes/Device_CameraModes_Parent.Device_CameraModes_Parent_C",
@@ -22329,6 +22338,7 @@
 			"/Game/Creative/BuildingActors/Props/CP_BirthdayCake2021_NoDestroy.CP_BirthdayCake2021_NoDestroy_C",
 			"/Game/Creative/BuildingActors/Props/CP_BirthdayCake2022_NoDestroy.CP_BirthdayCake2022_NoDestroy_C",
 			"/Game/Creative/BuildingActors/Props/CP_BirthdayCake2023_NoDestroy.CP_BirthdayCake2023_NoDestroy_C",
+			"/Game/Creative/BuildingActors/Props/CP_BirthdayCake2024_NoDestroy.CP_BirthdayCake2024_NoDestroy_C",
 			"/Game/Creative/BuildingActors/Props/CP_BirthdayCake_NoDestroy.CP_BirthdayCake_NoDestroy_C",
 			"/Game/Creative/BuildingActors/Props/CP_BP_Audio_Helios_BoomBox_A.CP_BP_Audio_Helios_BoomBox_A_C",
 			"/Game/Creative/BuildingActors/Props/CP_BP_Commerce_HangingLight_B.CP_BP_Commerce_HangingLight_B_C",
@@ -23927,9 +23937,11 @@
 			"/Game/Creative/Misc/Razor/CP_Razor_Vein_03.CP_Razor_Vein_03_C",
 			"/Game/Creative/PostProcess/PostProcessEffectActor.PostProcessEffectActor_C",
 			"/Game/Creative/PostProcess/PP_70sPrint.PP_70sPrint_C",
+			"/Game/Creative/PostProcess/PP_80sCartoon.PP_80sCartoon_C",
 			"/Game/Creative/PostProcess/PP_ActionLines.PP_ActionLines_C",
 			"/Game/Creative/PostProcess/PP_CCTV.PP_CCTV_C",
 			"/Game/Creative/PostProcess/PP_Comic.PP_Comic_C",
+			"/Game/Creative/PostProcess/PP_ComicNoir.PP_ComicNoir_C",
 			"/Game/Creative/PostProcess/PP_Crazy.PP_Crazy_C",
 			"/Game/Creative/PostProcess/PP_Dark.PP_Dark_C",
 			"/Game/Creative/PostProcess/PP_Desolate.PP_Desolate_C",

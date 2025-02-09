@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-31.20-CL-36253989
+# Generated from build: ++Fortnite+Release-31.30-CL-36600465
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -5276,16 +5276,16 @@ Playspaces<public> := module {
   #
   # To access the `fort_playspace` for a `creative_device` use `creative_device.GetPlayspace`.
   fort_playspace<native><public> := interface<epic_internal> {
-    # Get an `[]player`s in the current `fort_playspace`.
+    # Get all `player`s that are in the current `fort_playspace`.
     GetPlayers<public>()<transacts>: []player
 
     # Get the `fort_team_collection` for the current `fort_playspace`.
     GetTeamCollection<public>()<transacts>: fort_team_collection
 
-    # Signaled when a `player` joins the `fort_playspace`. Returns a subscribable with a payload of the`fort_character` that entered the `fort_playspace`.
+    # Signaled when a `player` joins the `fort_playspace`. Returns a subscribable with a payload of the`player` that entered the `fort_playspace`.
     PlayerAddedEvent<public>(): listenable(player)
 
-    # Signaled when a `player` leaves the `fort_playspace`. Returns a subscribable with a payload of the`fort_character` that left the `fort_playspace`.
+    # Signaled when a `player` leaves the `fort_playspace`. Returns a subscribable with a payload of the`player` that left the `fort_playspace`.
     PlayerRemovedEvent<public>(): listenable(player)
   }
 }
