@@ -30,7 +30,9 @@
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Engine.MaterialFunction", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": true, "SubClasses": false }
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Engine.MaterialFunctionInstance", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": true, "SubClasses": false }
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Engine.MaterialParameterCollection", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": true, "SubClasses": true }
+			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Engine.SubsurfaceProfile", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": true, "SubClasses": false }
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Engine.SkeletalMesh", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": true, "SubClasses": true }
+			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Engine.SkeletalMeshLODSettings", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": true, "SubClasses": false }
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Engine.Skeleton", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": true, "SubClasses": false }
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Engine.SoundCue", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": false, "SubClasses": true }
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Engine.AmbientSound", "Visible": true, "Edit": false, "Create": true, "Import": false, "Export": false, "SubClasses": false }
@@ -52,6 +54,7 @@
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Niagara.NiagaraSystem", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": true, "SubClasses": true }
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/NiagaraEditor.NiagaraParameterDefinitions", "Visible": true, "Edit": true, "Create": false, "Import": true, "Export": true, "SubClasses": true }
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/PhysicsCore.PhysicalMaterial", "Visible": true, "Edit": true, "Create": false, "Import": true, "Export": true, "SubClasses": false }
+			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Engine.PhysicsAsset", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": true, "SubClasses": true }
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Solaris.VerseClass", "Visible": true, "Edit": false, "Create": false, "Import": false, "Export": false, "SubClasses": false }
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/SoundCueTemplates.SoundCueTemplate", "Visible": false, "Edit": false, "Create": false, "Import": false, "Export": false, "SubClasses": true }
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/FortniteGame.FortItemDefinition", "Visible": true, "Edit": true, "Create": false, "Import": true, "Export": true, "SubClasses": true }
@@ -123,6 +126,8 @@
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Game/Creative/Sets/GrayBox/Blueprints/Walls/GrayBox_Window_D.GrayBox_Window_D_C", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Game/Creative/Sets/GrayBox/Blueprints/Walls/GrayBox_Window_S.GrayBox_Window_S_C", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 
+			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/CinematicCamera.CameraRig_Crane", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
+			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/CinematicCamera.CameraRig_Rail", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/CinematicCamera.CineCameraActor", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/CinematicCamera.CineCameraComponent", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 
@@ -158,7 +163,7 @@
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.MaterialExpressionMaterialAttributeLayers", "Visible": "Forbid", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.MaterialExpressionPathTracingQualitySwitch", "Visible": "Forbid", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.MaterialExpressionPathTracingRayTypeSwitch", "Visible": "Forbid", "VisibleOnPin": "Forbid" },
-			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.MaterialExpressionSparseVolumeTextureSampleParameter", "Visible": "Forbid", "VisibleOnPin": "Forbid" },
+			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.MaterialExpressionSparseVolumeTextureSample", "Visible": "Forbid", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.MaterialExpressionStrataBSDF", "Visible": "Forbid", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.MaterialExpressionStrataUtilityBase", "Visible": "Forbid", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.PostProcessVolume", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
@@ -170,6 +175,9 @@
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.SceneComponent", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.SkeletalMeshActor", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.SkeletalMeshComponent", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
+			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.SkeletalMeshLODSettings", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
+			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.SkeletalMeshLODGroupSettings", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
+			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.SkeletalMeshOptimizationSettings", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.SkyLight", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.SkyLightComponent", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
 			{ "$type": "ValkyrieClassRulesConfig", "ClassPath": "/Script/Engine.SkyAtmosphere", "Visible": "AllowExact", "VisibleOnPin": "Forbid" },
@@ -474,6 +482,7 @@
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/ControlRigDeveloper.ControlRigGraph" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/ControlRigDeveloper.ControlRigGraphNode" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/CoreUObject.MetaData" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/CRD_AudioPlayerRuntime.CreativeAudioComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/CRD_GameStreamRuntime.CreativeGameStreamDeviceComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/CRD_ModalDialogUI.CreativeModalDialogAllowedConversionFunction" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/CRD_ModalDialogUI.CreativeModalDialogConversionFunction" },
@@ -543,7 +552,6 @@
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Engine.StaticMeshComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Engine.StaticMeshDescriptionBulkData" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Engine.StaticMeshSocket" },
-			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Engine.SubsurfaceProfile" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Engine.TextRenderComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Engine.Texture2D" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Engine.TimelineComponent" },
@@ -570,6 +578,8 @@
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteAI.FortNavSystem" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.CaptureComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.CreativeEditOnlyMeshComponent" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.CreativeAttenuationVizComponent" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.CreativeRegisteredPlayersManagerComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.CreativeIslandResourceComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.CreativeProxyManagerComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.CreativeQuestComponent" },
@@ -640,6 +650,9 @@
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/GameplayAbilities.AbilitySystemComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/GeometryCacheTracks.MovieSceneGeometryCacheSection" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/GeometryCollectionTracks.MovieSceneGeometryCollectionSection" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/GeometryFramework.DynamicMesh" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/GeometryFramework.DynamicMeshActor" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/GeometryFramework.DynamicMeshComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/HmxAudio.FusionSynthComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/HmxAudio.MediaMusicTimelineGenerator" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/HmxAudio.MidiNoteEventRouterComponent" },
@@ -711,6 +724,7 @@
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/ModelViewViewModel.MVVMViewClass" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/ModelViewViewModelBlueprint.MVVMBlueprintView" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/ModelViewViewModelBlueprint.MVVMWidgetBlueprintExtension_View" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/MovieScene.MovieSceneMetaData" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/MovieScene.MovieScene" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/MovieScene.MovieSceneBoolSection" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/MovieScene.MovieSceneBuiltInEasingFunction" },
@@ -830,6 +844,7 @@
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Water.GerstnerWaterWaves" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Water.LakeCollisionComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Water.OceanBoxCollisionComponent" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Water.WaterBodyInfoMeshComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Water.WaterMeshComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Water.WaterSplineComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Water.WaterSplineMetadata" },
@@ -928,6 +943,18 @@
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Engine.RuntimeFloatCurve" },
 
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.UserOptionDefinitionContainer" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.BuildingSMActorClassData" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.BuildingActorClassData" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.BuildingFloorActorClassData" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.BuildingGameplayActorClassData" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.BuildingPillarActorClassData" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.BuildingPropActorClassData" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.BuildingPropCornerActorClassData" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.BuildingPropWallActorClassData" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.BuildingRoofActorClassData" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.BuildingStairsActorClassData" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.BuildingTimeOfDayLightsActorClassData" },
+			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/FortniteGame.BuildingWallActorClassData" },
 
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/GameplayTags.GameplayTag" },
 
@@ -968,7 +995,8 @@
 			"EM_AssetPlacementEdMode",
 			"EM_ActorPicker",
 			"EM_SceneDepthPicker",
-			"SequencerToolsEditMode"
+			"SequencerToolsEditMode",
+			"PhysicsAssetEditor"
 		]
 	},
 	"AllowedImportExtensions": {
@@ -1108,6 +1136,7 @@
 				"Internationalization",
 				"LoadingSaving",
 				"EditorPerformanceSettings",
+				"WorldPartitionEditorSettings",
 				"Output Log"
 			]
 		},
@@ -1128,7 +1157,8 @@
 			"$type": "ValkyrieSectionList",
 			"Sections": [
 				"CurveEditor",
-				"LevelSequenceEditor"
+				"LevelSequenceEditor",
+				"VerseEditor"
 			]
 		}
 	},
@@ -1252,7 +1282,22 @@
 			{
 				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Engine.SkeletalMesh",
-				"AllowList": [ "MaterialSlots", "MaterialList", "Material", "Mesh", "Transform", "Miscellaneous", "File Path", "Skeleton", "PositiveBoundsExtension", "NegativeBoundsExtension", "MeshReductionSettings", "PercentTriangles", "SelectLOD", "ScreenSize", "MinLOD", "QualityLevelMinLOD", "LODForCollision", "SkeletalMeshSectionListNameLOD_0", "SkeletalMeshSectionListNameLOD_1", "SkeletalMeshSectionListNameLOD_2", "SkeletalMeshSectionListNameLOD_3", "SkeletalMeshSectionListNameLOD_4", "SkeletalMeshSectionListNameLOD_5", "SkeletalMeshSectionListNameLOD_6", "SkeletalMeshSectionListNameLOD_7", "SkeletalMeshOptimizationSettings", "LODGroup", "LODImport", "QualityLevelMinLOD", "AutoComputeLOD", "NumberOfLODs", "ApplyChanges", "LODButtons", "DefaultAnimatingRig" ]
+				"AllowList": [ "MaterialSlots", "MaterialList", "Material", "Mesh", "Transform", "Miscellaneous", "File Path", "Skeleton", "PositiveBoundsExtension", "NegativeBoundsExtension", "MeshReductionSettings", "PercentTriangles", "SelectLOD", "ScreenSize", "MinLOD", "QualityLevelMinLOD", "LODForCollision", "SkeletalMeshSectionListNameLOD_0", "SkeletalMeshSectionListNameLOD_1", "SkeletalMeshSectionListNameLOD_2", "SkeletalMeshSectionListNameLOD_3", "SkeletalMeshSectionListNameLOD_4", "SkeletalMeshSectionListNameLOD_5", "SkeletalMeshSectionListNameLOD_6", "SkeletalMeshSectionListNameLOD_7", "SkeletalMeshOptimizationSettings", "LODGroup", "LODImport", "QualityLevelMinLOD", "AutoComputeLOD", "NumberOfLODs", "ApplyChanges", "LODButtons", "DefaultAnimatingRig", "PhysicsAsset", "LODSettings", "LodSettingsAsset" ]
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Engine.SkeletalMeshLODSettings",
+				"DenyList": [ "DisableBelowMinLodStripping", "bOverrideLODStreamingSettings", "bSupportLODStreaming", "MaxNumStreamedLODs", "MaxNumOptionalLODs" ]
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Engine.SkeletalMeshLODGroupSettings",
+				"DenyList": [ "ScreenSize", "LODHysteresis", "BoneFilterActionOption", "BoneList", "BonesToPrioritize", "SectionsToPrioritize", "WeightOfPrioritization", "BakePose" ]
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Engine.SkeletalMeshOptimizationSettings",
+				"DenyList": [ "TerminationCriterion", "NumOfVertPercentage", "MaxNumOfTriangles", "MaxNumOfTrianglesPercentage", "MaxNumOfVertsPercentage", "bEnforceBoneBoundaries", "bMergeCoincidentVertBones", "VolumeImportance", "bRemapMorphTargets", "WeldingThreshold", "MaxBonesPerVertex", "bLockEdges", "bLockColorBounaries" ]
 			},
 			{
 				"$type": "ValkyrieClassPropertyPermissionList",
@@ -1433,7 +1478,7 @@
 			{
 				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/FortniteGame.BuildingActor",
-				"AllowList": [ "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "SavedHealthPct" ]
+				"AllowList": [ "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "SavedHealthPct", "bPropagateDrawDistanceOnAdditionalComponent" ]
 			},
 			{
 				"$type": "ValkyrieClassPropertyPermissionList",
@@ -1692,6 +1737,11 @@
 			},
 			{
 				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/WorldPartitionEditor.WorldPartitionEditorSettings",
+				"AllowList": [ "bDisableLoadingInEditor" ]
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/UnrealEd.EditorSettings",
 				"AllowList": [ "DummyPropertyThatDoesNotExist" ]
 			},
@@ -1710,6 +1760,18 @@
 				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/CinematicCamera.CineCameraComponent",
 				"AllowList": [ "Filmback", "LensSettings", "FocusSettings", "CurrentFocalLength", "CurrentAperture", "CurrentFocusDistance" ],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/CinematicCamera.CameraRig_Crane",
+				"AllowList": [ "CranePitch", "CraneYaw", "CraneArmLength", "bLockMountPitch", "bLockMountYaw" ],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/CinematicCamera.CameraRig_Rail",
+				"AllowList": [ "CurrentPositionOnRail", "bLockOrientationToRail", "bShowRailVisualization", "PreviewMeshScale" ],
 				"bAllowListAllSubclassProperties": true
 			},
 			{
@@ -1762,14 +1824,19 @@
 			{
 				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Water.WaterBodyOceanComponent",
-				"AllowList": [ "CollisionExtents" ]
+				"AllowList": [ "CollisionExtents", "OceanExtents" ]
 			},
 			{
 				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Water.WaterBody",
 				"AllowList": [ "Depth", "RiverWidth", "Velocity", "AudioIntensity", "SplinePointDetails", "WaterSplineMetadataDetails",
 					"WaterSplinePointDetails", "WaterSplinePointMetadataDetails", "SelectSplinePoints", "NoneSelected", "InputKey", "Location", "Rotation",
-					"Scale", "ArriveTangent", "LeaveTangent", "Type", "WaterWaves" ]
+					"Scale", "ArriveTangent", "LeaveTangent", "Type", "WaterWaves", "WaterInfoMeshComponent", "DilatedWaterInfoMeshComponent", "WaterBodyStaticMeshComponents" ]
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Game/Athena/Apollo/Environments/Landscape/Water/FortWaterBodyBP.FortWaterBodyBP_C",
+				"AllowList": [ "FortSplineWaterAudio" ]
 			},
 			{
 				"$type": "ValkyrieClassPropertyPermissionList",
@@ -1949,16 +2016,17 @@
 				]
 			},
 			{
-				"$type": "ValkyrieStructPropertyPermissionList", "Type": "/Script/FortniteGame.PlaysetSettings",
-				"AllowList": [ "Category", "Name", "ShortDescription", "LongDescription", "SmallThumbnail", "LargeThumbnail", "CreativeTags", "bAutomaticBoundingBox", "BoundingBox", "OffsetType", "GroundSnapTolerance", "bGenerateProps" ]
-			},
-			{
 				"$type": "ValkyrieStructPropertyPermissionList", "Type": "/Script/Engine.SpatialHashRuntimeGrid",
 				"DenyList": [ "GridName", "Origin", "bBlockOnSlowStreaming", "Priority", "DebugColor", "bClientOnlyVisible", "HLODLayer" ]
 			},
 			{
 				"$type": "ValkyrieStructPropertyPermissionList", "Type": "/Script/Engine.SoundModulationDefaultRoutingSettings",
 				"AllowList": [ "VolumeRouting", "VolumeModulationDestination" ]
+			},
+			{
+				"$type": "ValkyrieStructPropertyPermissionList",
+				"Type": "/Script/PhysicsUtilities.PhysAssetCreateParams",
+				"AllowList": [ "MinBoneSize", "MinWeldSize", "GeomType", "VertWeight", "bAutoOrientToBone", "bWalkPastSmall", "bBodyForAll", "bDisableCollisionsByDefault", "HullCount", "MaxHullVerts", "LevelSetResolution" ]
 			}
 		]
 	},
@@ -2023,6 +2091,13 @@
 				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Engine.NavigationObjectBase",
 				"AllowList": [ "CapsuleComponent", "GoodSprite", "BadSprite" ],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Engine.NavModifierComponent",
+				"AllowList": [ "AreaClass" ],
 				"DenyList": [],
 				"bAllowListAllSubclassProperties": true
 			},
@@ -2093,7 +2168,7 @@
 				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Water.WaterBodyComponent",
 				"AllowList": [ "OwningWaterZone", "UnderwaterPostProcessSettings", "PhysicalMaterial", "WaterMaterial", "WaterHLODMaterial", "WaterLODMaterial",
-					"UnderwaterPostProcessMaterial", "WaterInfoMaterial", "LayerWeightmapSettings", "ShapeDilation", "CollisionHeightOffset",
+					"UnderwaterPostProcessMaterial", "WaterInfoMaterial", "LayerWeightmapSettings", "ShapeDilation", "CollisionHeightOffset", "WaterStaticMeshMaterial",
 					"WaterMeshOverride", "bAlwaysGenerateWaterMeshTiles", "OverlapMaterialPriority", "WaterBodyIslands", "WaterBodyExclusionVolumes",
 					"WaterZoneOverride", "WaterNavAreaClass" ],
 				"DenyList": [],
@@ -2232,6 +2307,13 @@
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Devices/CaptureArea/Meshes/Sm_CaptureAreaCylinder.Sm_CaptureAreaCylinder", "Alias": "/FortniteVKCreateUGC/Game/Creative/Devices/CaptureArea/Meshes/Sm_CaptureAreaCylinder" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Devices/DeviceZone_Base/Meshes/CP_DeviceZone_CylinderFramePlaced_01.CP_DeviceZone_CylinderFramePlaced_01", "Alias": "/FortniteVKCreateUGC/Game/Creative/Devices/DeviceZone_Base/Meshes/CP_DeviceZone_CylinderFramePlaced_01" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Devices/DeviceZone_Base/Meshes/CP_DeviceZone_CylinderFramePlacer_01.CP_DeviceZone_CylinderFramePlacer_01", "Alias": "/FortniteVKCreateUGC/Game/Creative/Devices/DeviceZone_Base/Meshes/CP_DeviceZone_CylinderFramePlacer_01" },
+
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Devices/EliminationManager/Materials/MI_CP_Device_GenericBaseBeam_01_EliminationManager.MI_CP_Device_GenericBaseBeam_01_EliminationManager", "Alias": "/FortniteVKCreateUGC/Game/Creative/Devices/EliminationManager/Materials/MI_CP_Device_GenericBaseBeam_01_EliminationManager" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Devices/EliminationManager/Materials/MI_CP_Device_GenericBase_Placed_01_EliminationManager.MI_CP_Device_GenericBase_Placed_01_EliminationManager", "Alias": "/FortniteVKCreateUGC/Game/Creative/Devices/EliminationManager/Materials/MI_CP_Device_GenericBase_Placed_01_EliminationManager" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Devices/PatrolPath/Materials/CP_MI_Device_PatrolPath_Placed_Invalid_01.CP_MI_Device_PatrolPath_Placed_Invalid_01", "Alias": "/FortniteVKCreateUGC/Game/Creative/Devices/PatrolPath/Materials/CP_MI_Device_PatrolPath_Placed_Invalid_01" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Devices/PatrolPath/Materials/CP_MI_Device_PatrolPath_Numbers_01.CP_MI_Device_PatrolPath_Numbers_01", "Alias": "/FortniteVKCreateUGC/Game/Creative/Devices/PatrolPath/Materials/CP_MI_Device_PatrolPath_Numbers_01" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Devices/PatrolPath/Materials/CP_MI_Device_PatrolPath_Placed_Group_01.CP_MI_Device_PatrolPath_Placed_Group_01", "Alias": "/FortniteVKCreateUGC/Game/Creative/Devices/PatrolPath/Materials/CP_MI_Device_PatrolPath_Placed_Group_01" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Devices/PatrolPath/Meshes/CP_Device_PatrolPath_01.CP_Device_PatrolPath_01", "Alias": "/FortniteVKCreateUGC/Game/Creative/Devices/PatrolPath/Meshes/CP_Device_PatrolPath_01" },
 			
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Engine/EditorLandscapeResources/SplineEditorMesh.SplineEditorMesh", "Alias": "/FortniteVKCreateUGC/Engine/EditorLandscapeResources/SplineEditorMesh" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Engine/MapTemplates/TilingNoise05.TilingNoise05", "Alias": "/FortniteVKCreateUGC/Engine/MapTemplates/TilingNoise05" },
@@ -3496,7 +3578,6 @@
 	},
 	"AssetAliasExclusionFolders": {
 		"=": [
-			 { "$type": "ValkyrieAssetAliasExclusionFolder", "AssetFolders": [ "/Game/Creative/Sets/PropSets/Minerva", "/Game/Creative/Environments/Sets/Minerva" ], "bRecursiveFolders": true }
 		]
 	},
 	"AllowedEnums": {
@@ -3764,7 +3845,7 @@
 			{
 				"$type": "ValkyrieMenuRules",
 				"MenuName": "LevelEditor.MainMenu.Build",
-				"AllowList": [ "BuildHLODs", "BuildAllLandscape", "ValkyrieExportProjectLocalization" ]
+				"AllowList": [ "BuildHLODs", "BuildMinimap", "BuildAllLandscape", "ValkyrieExportProjectLocalization" ]
 			},
 			{
 				"$type": "ValkyrieMenuRules",
@@ -3807,7 +3888,7 @@
 			{
 				"$type": "ValkyrieMenuRules",
 				"MenuName": "LevelEditor.LevelEditorToolBar.AddQuickMenu.Cinematic",
-				"AllowList": [ "CameraShakeSourceActor", "CineCameraActor" ]
+				"AllowList": [ "CameraShakeSourceActor", "CineCameraActor", "CameraRig_Crane", "CameraRig_Rail" ]
 			},
 			{
 				"$type": "ValkyrieMenuRules",
@@ -4107,6 +4188,36 @@
 				"MenuName": "AssetEditor.BlueprintEditor.MainMenu.Help",
 				"bExtenders": true,
 				"AllowList": [ "OpenDocumentation", "VisitEpicGamesDotCom", "CreditsUnrealEd", "AboutUnrealEd" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.PhysicsAssetEditor.ToolBar",
+				"bExtenders": true,
+				"AllowList": [ "PreviewMesh", "PreviewAnimation", "ReferencePose", "CreateAsset", "EnableCollision", "DisableCollision", "ApplyPhysicalMaterial" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "AssetEditor.PhysicsAssetEditor.MainMenu.Edit",
+				"bExtenders": true,
+				"AllowList": [ "Undo", "Redo", "UndoHistory", "ShowSelected", "HideSelected", "ToggleShowOnlySelected", "ShowAll", "HideAll", "DeselectAll", "ToggleShowSelected", "SelectAllBodies", "SelectKinematicBodies", "ToggleSelectionType", "SelectShapesQueryOnly", "SelectShapesQueryAndProbe", "SelectShapesProbeOnly", "EditorPreferencesMenu", "ProjectSettingsMenu" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "Persona.AnimViewportCharacterMenu",
+				"bExtenders": true,
+				"DenyList": [ "ToggleMassProperties", "ConstraintConstraintModeSubMenu" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "Persona.AnimViewportCharacterMenu.MeshRenderModeSubMenu",
+				"bExtenders": true,
+				"AllowList": [ "MeshRenderingMode_Solid", "MeshRenderingMode_Solid", "MeshRenderingMode_None" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "Persona.AnimViewportCharacterMenu.CollisionRenderModeSubMenu",
+				"bExtenders": true,
+				"AllowList": [ "RenderOnlySelectedSolid", "HideKinematicBodies", "CollisionOpacity", "CollisionRenderingMode_Solid", "CollisionRenderingMode_Wireframe", "CollisionRenderingMode_SolidWireframe", "CollisionRenderingMode_None" ]
 			}
 		]
 	},
@@ -4169,6 +4280,7 @@
 					"BottomRightModeTab",
 					"ValkyrieProjectSize",
 					"VerseExplorerTab",
+					"WorldBrowserPartitionEditor",
 					"WorldBrowserComposition",
 					"WorldBrowserDetails",
 					"WorldSettingsTab",
@@ -4225,7 +4337,7 @@
 					"SequenceBrowser",
 					"AnimCurveViewerTab",
 					"AnimBlueprintPreviewEditor",
-					"AnimBlueprintParentPlayerEditor",
+					"AnimBlueprintParentPlayerEditor"
 				]
 			},
 			{
@@ -4284,6 +4396,21 @@
 					"MVVMTab",
 					"ViewModelPanel"
 				]
+			},
+			{
+				"$type": "ValkyrieTabManagerRules",
+				"TabManagerName": "PhysicsAssetEditor",
+				"AllowList": [
+					"Viewport",
+					"Viewport1",
+					"Viewport2",
+					"Viewport3",
+					"DetailsTab",
+					"SkeletonTreeView",
+					"PhysicsAssetGraphView",
+					"PhysicsAssetTools",
+					"AdvancedPreviewTab"
+				]
 			}
 		]
 	},
@@ -4325,6 +4452,8 @@
 	},
 	"PlacementToolAllowedActorClasses": {
 		"=": [
+			"CameraRig_Crane",
+			"CameraRig_Rail",
 			"CameraShakeSourceActor",
 			"CineCameraActor",
 			"PointLight",

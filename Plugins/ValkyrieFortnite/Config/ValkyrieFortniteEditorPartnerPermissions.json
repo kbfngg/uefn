@@ -11,11 +11,6 @@
 	},
 	"PropertyEditorStructPermissionList": {
 		"+": [
-			{
-				"$type": "ValkyrieStructPropertyPermissionList",
-				"Type": "/Script/FortniteGame.PlaysetSettings",
-				"AllowList": [ "Category", "Name", "ShortDescription", "LongDescription", "SmallThumbnail", "LargeThumbnail", "CreativeTags", "bAutomaticBoundingBox", "BoundingBox", "OffsetType", "GroundSnapTolerance", "bGenerateProps", "bIsPublic" ]
-			}
 		]
 	},
 	"bMultiPluginProjectAllowed": true,
