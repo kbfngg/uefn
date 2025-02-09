@@ -2,13 +2,13 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-25.11-CL-26171015
+# Generated from build: ++Fortnite+Release-25.20-CL-26474516
 #################################################
 
 Temporary<public> := module {
   # Module import path: /UnrealEngine.com/Temporary/Curves
   Curves<public> := module {
-    editable_curve<native><public> := class<final> {
+    editable_curve<native><public> := class<final><concrete> {
       # Evaluates this float curve at the specified time and returns the result as a float
       Evaluate<native><public>(Time: float): float
     }
@@ -22,10 +22,10 @@ Temporary<public> := module {
       Channel<native><public>: subtype(debug_draw_channel) = external {}
 
       # Clears all debug draw from this debug_draw instance.
-      Clear<native><public>(): void
+      Clear<native><public>()<transacts>: void
 
       # Clears all debug draw for the channel.
-      ClearChannel<native><public>(): void
+      ClearChannel<native><public>()<transacts>: void
 
       # Draws an arrow pointing from Start to End locations, and using the provided draw parameters.
       DrawArrow<native><public>(
@@ -36,7 +36,7 @@ Temporary<public> := module {
         ?Thickness: float = external {},
         ?DrawDurationPolicy: debug_draw_duration_policy = external {},
         ?Duration: float = external {}
-      ): void
+      )<transacts>: void
 
       # Draws a box at the named location, and using the provided draw parameters
       DrawBox<native><public>(
@@ -47,7 +47,7 @@ Temporary<public> := module {
         ?Thickness: float = external {},
         ?DrawDurationPolicy: debug_draw_duration_policy = external {},
         ?Duration: float = external {}
-      ): void
+      )<transacts>: void
 
       # Draws a capsule at the named location, and using the provided draw parameters.
       DrawCapsule<native><public>(
@@ -59,7 +59,7 @@ Temporary<public> := module {
         ?Thickness: float = external {},
         ?DrawDurationPolicy: debug_draw_duration_policy = external {},
         ?Duration: float = external {}
-      ): void
+      )<transacts>: void
 
       # Draws a cone at the named location, and using the provided draw parameters.
       DrawCone<native><public>(
@@ -73,7 +73,7 @@ Temporary<public> := module {
         ?Thickness: float = external {},
         ?DrawDurationPolicy: debug_draw_duration_policy = external {},
         ?Duration: float = external {}
-      ): void
+      )<transacts>: void
 
       # Draws a cylinder at the named location, and using the provided draw parameters.
       DrawCylinder<native><public>(
@@ -85,7 +85,7 @@ Temporary<public> := module {
         ?Thickness: float = external {},
         ?DrawDurationPolicy: debug_draw_duration_policy = external {},
         ?Duration: float = external {}
-      ): void
+      )<transacts>: void
 
       # Draws a line from Start to End locations, and using the provided draw parameters.
       DrawLine<native><public>(
@@ -95,7 +95,7 @@ Temporary<public> := module {
         ?Thickness: float = external {},
         ?DrawDurationPolicy: debug_draw_duration_policy = external {},
         ?Duration: float = external {}
-      ): void
+      )<transacts>: void
 
       # Draws a point at the named location, and using the provided draw parameters.
       DrawPoint<native><public>(
@@ -104,7 +104,7 @@ Temporary<public> := module {
         ?Thickness: float = external {},
         ?DrawDurationPolicy: debug_draw_duration_policy = external {},
         ?Duration: float = external {}
-      ): void
+      )<transacts>: void
 
       # Draws a sphere at the named location, and using the provided draw parameters.
       DrawSphere<native><public>(
@@ -115,13 +115,13 @@ Temporary<public> := module {
         ?Thickness: float = external {},
         ?DrawDurationPolicy: debug_draw_duration_policy = external {},
         ?Duration: float = external {}
-      ): void
+      )<transacts>: void
 
       # Hide Debug Draw for the channel for all users.
-      HideChannel<native><public>(): void
+      HideChannel<native><public>()<transacts>: void
 
       # Show Debug Draw for the channel for all users.
-      ShowChannel<native><public>(): void
+      ShowChannel<native><public>()<transacts>: void
     }
 
     # debug_draw_channel is the base class used to define debug draw channels.
@@ -204,19 +204,27 @@ Temporary<public> := module {
     # Returns the radians of `rotation` around the axis of `rotation`. See also `GetAxis`.
     (Rotation: rotation).GetAngle<native><public>()<varies>: float
 
-    # Makes a `vector3` from the axis of `rotation`.If `rotation` is nearly identity, this will return the +X axis. See also `GetAngle`.
+    # Makes a `vector3` from the axis of `rotation`.
+    # If `rotation` is nearly identity, this will return the +X axis. See also `GetAngle`.
     (Rotation: rotation).GetAxis<native><public>()<varies>: vector3
 
-    # Makes a unit `vector3` pointing in the local space *forward* direction in world space coordinates.This is equivalent to: `RotateVector(Rotation, vector3{X:=1.0, Y:=0.0, Z:=0.0})`.
+    # Makes a unit `vector3` pointing in the local space *forward* direction in world space coordinates.
+    # This is equivalent to: `RotateVector(Rotation, vector3{X:=1.0, Y:=0.0, Z:=0.0})`.
     (Rotation: rotation).GetLocalForward<public>()<transacts>: vector3 = external {}
 
-    # Makes a unit `vector3` pointing in the the local space *right* direction in world space coordinates.This is equivalent to: `RotateVector(Rotation, vector3{X:=0.0, Y:=1.0, Z:=0.0})`.
+    # Makes a unit `vector3` pointing in the the local space *right* direction in world space coordinates.
+    # This is equivalent to: `RotateVector(Rotation, vector3{X:=0.0, Y:=1.0, Z:=0.0})`.
     (Rotation: rotation).GetLocalRight<public>()<transacts>: vector3 = external {}
 
-    # Makes a unit `vector3` pointing in the local space *up* direction in world space coordinates.This is equivalent to: `RotateVector(Rotation, vector3{X:=0.0, Y:=0.0, Z:=1.0})`.
+    # Makes a unit `vector3` pointing in the local space *up* direction in world space coordinates.
+    # This is equivalent to: `RotateVector(Rotation, vector3{X:=0.0, Y:=0.0, Z:=1.0})`.
     (Rotation: rotation).GetLocalUp<public>()<transacts>: vector3 = external {}
 
-    # Makes an `[]float` with three elements: * *yaw* degrees of `rotation` * *pitch* degrees of `rotation` * *roll* degrees of `rotation`using the conventions of `MakeRotationFromYawPitchRollDegrees`.
+    # Makes an `[]float` with three elements:
+    #  * *yaw* degrees of `rotation`
+    #  * *pitch* degrees of `rotation`
+    #  * *roll* degrees of `rotation`
+    # using the conventions of `MakeRotationFromYawPitchRollDegrees`.
     (Rotation: rotation).GetYawPitchRollDegrees<native><public>()<varies>: []float
 
     # Makes a `rotation` by inverting `Rotation` such that `ApplyRotation(Rotation, Rotation.Invert())) = IdentityRotation`.
@@ -234,7 +242,8 @@ Temporary<public> := module {
     # Succeeds when each component of `V` is within `AbsoluteTolerance` of `0.0`.
     (V: vector2).IsAlmostZero<public>(AbsoluteTolerance: float)<computes><decides>: void = external {}
 
-    # Returns `V` if all components are finite.Fails if any of the components are not finite.
+    # Returns `V` if all components are finite.
+    # Fails if any of the components are not finite.
     (V: vector2).IsFinite<public>()<computes><decides>: vector2 = external {}
 
     # Returns the length of `V`.
@@ -243,13 +252,15 @@ Temporary<public> := module {
     # Returns the squared length of `V`.
     (V: vector2).LengthSquared<public>()<varies>: float = external {}
 
-    # Makes a unit length `vector3` pointing in the same direction of `V`.Fails if `V.IsAlmostZero[] or not V.IsFinite[]`.
+    # Makes a unit length `vector3` pointing in the same direction of `V`.
+    # Fails if `V.IsAlmostZero[] or not V.IsFinite[]`.
     (V: vector2).MakeUnitVector<native><public>()<varies><decides>: vector2
 
     # Succeeds when each component of `V` is within `AbsoluteTolerance` of `0.0`.
     (V: vector3).IsAlmostZero<public>(AbsoluteTolerance: float)<computes><decides>: void = external {}
 
-    # Returns `V` if all components are finite.Fails if any of the components are not finite.
+    # Returns `V` if all components are finite.
+    # Fails if any of the components are not finite.
     (V: vector3).IsFinite<public>()<computes><decides>: vector3 = external {}
 
     # Returns the length of `V`.
@@ -264,7 +275,8 @@ Temporary<public> := module {
     # Returns the length of `V` as if `V.Z = 0.0`.
     (V: vector3).LengthXY<public>()<varies>: float = external {}
 
-    # Makes a unit length `vector3` pointing in the same direction of `V`.Fails if `V.IsAlmostZero[] or not V.IsFinite[]`.
+    # Makes a unit length `vector3` pointing in the same direction of `V`.
+    # Fails if `V.IsAlmostZero[] or not V.IsFinite[]`.
     (V: vector3).MakeUnitVector<native><public>()<varies><decides>: vector3
 
     # Returns the cross product of `V1` and `V2`.
@@ -273,7 +285,9 @@ Temporary<public> := module {
     # Returns radians from `Degrees`.
     DegreesToRadians<public>(Degrees: float)<varies>: float = external {}
 
-    # Returns the 'distance' between `Rotation1` and `Rotation2`. The result will be between: * `0.0`, representing equivalent rotations and * `1.0` representing rotations which are 180 degrees apart (i.e., the shortest rotation between them is 180 degrees around some axis).
+    # Returns the 'distance' between `Rotation1` and `Rotation2`. The result will be between:
+    #  * `0.0`, representing equivalent rotations and
+    #  * `1.0` representing rotations which are 180 degrees apart (i.e., the shortest rotation between them is 180 degrees around some axis).
     Distance<native><public>(Rotation1: rotation, Rotation2: rotation)<varies>: float
 
     # Returns the Euclidean distance between `V1` and `V2`.
@@ -303,7 +317,8 @@ Temporary<public> := module {
     # Returns the dot product of `V1` and `V2`.
     DotProduct<public>(V1: vector2i, V2: vector2i)<computes>: int = external {}
 
-    # Makes a `vector2i` that is component-wise equal to `V1` and `V2`.Fails if any component of `V1` does not equal the corresponding component of `V2`.
+    # Makes a `vector2i` that is component-wise equal to `V1` and `V2`.
+    # Fails if any component of `V1` does not equal the corresponding component of `V2`.
     Equals<public>(V1: vector2i, V2: vector2i)<computes><decides>: vector2i = external {}
 
     # Makes the identity `rotation`.
@@ -315,45 +330,58 @@ Temporary<public> := module {
     # Succeeds when each component of `V1` and `V2` are within `AbsoluteTolerance` of each other.
     IsAlmostEqual<public>(V1: vector3, V2: vector3, AbsoluteTolerance: float)<computes><decides>: void = external {}
 
-    # Used to linearly interpolate/extrapolate between `From` (when `Parameter = 0.0`)and `To` (when `Parameter = 1.0`). Expects that all arguments are finite.Returns `From*(1 - Parameter) + To*Parameter`.
+    # Used to linearly interpolate/extrapolate between `From` (when `Parameter = 0.0`) and `To` (when `Parameter = 1.0`). Expects that all arguments are finite.
+    # Returns `From*(1 - Parameter) + To*Parameter`.
     Lerp<public>(From: vector2, To: vector2, Parameter: float)<varies>: vector2 = external {}
 
-    # Used to linearly interpolate/extrapolate between `From` (when `Parameter = 0.0`)and `To` (when `Parameter = 1.0`). Expects that all arguments are finite.Returns `From*(1 - Parameter) + To*Parameter`.
+    # Used to linearly interpolate/extrapolate between `From` (when `Parameter = 0.0`) and `To` (when `Parameter = 1.0`). Expects that all arguments are finite.
+    # Returns `From*(1 - Parameter) + To*Parameter`.
     Lerp<public>(From: vector3, To: vector3, Parameter: float)<varies>: vector3 = external {}
 
-    # Makes a `rotation` from `Axis` and `AngleRadians` using a left-handed sign convention (e.g.a positive rotation around +Z takes +X to +Y). If `Axis.IsAlmostZero[]`, make the identity rotation.
+    # Makes a `rotation` from `Axis` and `AngleRadians` using a left-handed sign convention (e.g. a positive rotation around +Z takes +X to +Y). If `Axis.IsAlmostZero[]`, make the identity rotation.
     MakeRotation<native><public>(Axis: vector3, AngleRadians: float)<varies>: rotation
 
-    # Makes a `rotation` by applying `YawRightDegrees`, `PitchUpDegrees`, and `RollClockwiseDegrees`, in that order: * first a *yaw* about the Z axis with a positive angle indicating a clockwise rotation when viewed from above, * then a *pitch* about the new Y axis with a positive angle indicating 'nose up', * followed by a *roll* about the new X axis axis with a positive angle indicating a clockwise rotation when viewed along +X.Note that these conventions differ from `MakeRotation` but match `ApplyYaw`, `ApplyPitch`, and `ApplyRoll`.
+    # Makes a `rotation` by applying `YawRightDegrees`, `PitchUpDegrees`, and `RollClockwiseDegrees`, in that order:
+    #  * first a *yaw* about the Z axis with a positive angle indicating a clockwise rotation when viewed from above,
+    #  * then a *pitch* about the new Y axis with a positive angle indicating 'nose up',
+    #  * followed by a *roll* about the new X axis axis with a positive angle indicating a clockwise rotation when viewed along +X.
+    # Note that these conventions differ from `MakeRotation` but match `ApplyYaw`, `ApplyPitch`, and `ApplyRoll`.
     MakeRotationFromYawPitchRollDegrees<native><public>(
       YawRightDegrees: float,
       PitchUpDegrees: float,
       RollClockwiseDegrees: float
     )<varies>: rotation
 
-    # Makes the smallest angular `rotation` from `InitialRotation` to `FinalRotation` such that:`InitialRotation.RotateBy(MakeShortestRotationBetween(InitialRotation, FinalRotation)) = FinalRotation` and`MakeShortestRotationBetween(InitialRotation, FinalRotation)?.GetAngle()` is as small as possible.
+    # Makes the smallest angular `rotation` from `InitialRotation` to `FinalRotation` such that:
+    # `InitialRotation.RotateBy(MakeShortestRotationBetween(InitialRotation, FinalRotation)) = FinalRotation` and
+    # `MakeShortestRotationBetween(InitialRotation, FinalRotation)?.GetAngle()` is as small as possible.
     MakeShortestRotationBetween<native><public>(InitialRotation: rotation, FinalRotation: rotation)<transacts>: rotation
 
-    # Makes the smallest angular `rotation` from `InitialVector` to `FinalVector` such that:`InitialVector.RotateBy(MakeShortestRotationBetween(InitialVector, Vector)) = FinalVector` and`MakeShortestRotationBetween(InitialVector, FinalVector)?.GetAngle()` is as small as possible.
+    # Makes the smallest angular `rotation` from `InitialVector` to `FinalVector` such that:
+    # `InitialVector.RotateBy(MakeShortestRotationBetween(InitialVector, Vector)) = FinalVector` and
+    # `MakeShortestRotationBetween(InitialVector, FinalVector)?.GetAngle()` is as small as possible.
     MakeShortestRotationBetween<native><public>(InitialVector: vector3, FinalVector: vector3)<transacts>: rotation
 
     # Returns degrees from `Radians`.
     RadiansToDegrees<public>(Radians: float)<varies>: float = external {}
 
-    # Makes a `vector2` by inverting the `SurfaceNormal` component of `Direction`.Fails if `not SurfaceNormal.MakeUnitVector[]`.
+    # Makes a `vector2` by inverting the `SurfaceNormal` component of `Direction`.
+    # Fails if `not SurfaceNormal.MakeUnitVector[]`.
     ReflectVector<native><public>(Direction: vector2, SurfaceNormal: vector2)<varies><decides>: vector2
 
-    # Makes a `vector3` by inverting the `SurfaceNormal` component of `Direction`.Fails if `not SurfaceNormal.MakeUnitVector[]`.
+    # Makes a `vector3` by inverting the `SurfaceNormal` component of `Direction`.
+    # Fails if `not SurfaceNormal.MakeUnitVector[]`.
     ReflectVector<native><public>(Direction: vector3, SurfaceNormal: vector3)<varies><decides>: vector3
 
-    # Used to perform spherical linear interpolation between `From` (when `Parameter = 0.0`)and `To` (when `Parameter = 1.0`). Expects that `0.0 <= Parameter <= 1.0`.
+    # Used to perform spherical linear interpolation between `From` (when `Parameter = 0.0`) and `To` (when `Parameter = 1.0`). Expects that `0.0 <= Parameter <= 1.0`.
     Slerp<native><public>(
       InitialRotation: rotation,
       FinalRotation: rotation,
       Parameter: float
     )<transacts><decides>: rotation
 
-    # Makes a `string` representation of `rotation` in axis/degrees format with a left-handed sign convention.`ToString(MakeRotation(vector3{X:=1.0, Y:=0.0, Z:=0.0}, PiFloat/2.0))` produces the string:`"Axis: {x=1.000000,y=0.000000,z=0.000000} Angle: 90.000000"`.
+    # Makes a `string` representation of `rotation` in axis/degrees format with a left-handed sign convention.
+    # `ToString(MakeRotation(vector3{X:=1.0, Y:=0.0, Z:=0.0}, PiFloat/2.0))` produces the string: `"Axis: {x=1.000000,y=0.000000,z=0.000000} Angle: 90.000000"`.
     ToString<native><public>(Rotation: rotation)<varies>: []char
 
     # Makes a `string` representation of `V`.
@@ -492,13 +520,19 @@ Temporary<public> := module {
   using { /Verse.org/Simulation }
   # Module import path: /UnrealEngine.com/Temporary/UI
   UI<public> := module {
-    # Returns the `player_ui` component associated with `Player`.Fails if there is no `player_ui` associated with `Player`.
+    # Returns the `player_ui` component associated with `Player`.
+    # Fails if there is no `player_ui` associated with `Player`.
     GetPlayerUI<native><public>(Player: player)<transacts><decides>: player_ui
 
-    # Make a canvas slot for fixed position widget.If Size is set, then the Offsets is calculated and the SizeToContent is set to false.If Size is not set, then Right and Bottom are set to zero and are not used. The widget size will be automatically calculated. The SizeToContent is set to true.The widget is not anchored and will not move if the parent is resized.The Anchors is set to zero.
+    # Make a canvas slot for fixed position widget.
+    # If Size is set, then the Offsets is calculated and the SizeToContent is set to false.
+    # If Size is not set, then Right and Bottom are set to zero and are not used. The widget size will be automatically calculated. The SizeToContent is set to true.
+    # The widget is not anchored and will not move if the parent is resized.
+    # The Anchors is set to zero.
     MakeCanvasSlot<native><public>(Widget: widget, Position: vector2, ?Size: vector2 = external {}, ?ZOrder: type { _X: int where 0 <= _X, _X <= 2147483647 } = external {}, ?Alignment: vector2 = external {})<computes>: canvas_slot
 
-    # The anchors of a `widget` determine its the position and sizing relative to its parent.`anchor`s range from `(0.0, 0.0)` (left, top) to `(1.0, 1.0)` (right, bottom).
+    # The anchors of a `widget` determine its the position and sizing relative to its parent.
+    # `anchor`s range from `(0.0, 0.0)` (left, top) to `(1.0, 1.0)` (right, bottom).
     anchors<native><public> := struct {
       # Holds the maximum anchors, (right, bottom). The valid range is between `0.0` and `1.0`.
       Maximum<native><public>: vector2 = external {}
@@ -548,22 +582,26 @@ Temporary<public> := module {
 
     # Slot for a canvas widget.
     canvas_slot<native><public> := struct {
-      # Alignment is the pivot/origin point of the widget.Starting in the upper left at (0.0,0.0), ending in the lower right at (1.0,1.0).
+      # Alignment is the pivot/origin point of the widget.
+      # Starting in the upper left at (0.0,0.0), ending in the lower right at (1.0,1.0).
       Alignment<native><public>: vector2 = external {}
 
-      # The border for the margin and how the widget is resized with its parent.Values are defined between 0.0 and 1.0.
+      # The border for the margin and how the widget is resized with its parent.
+      # Values are defined between 0.0 and 1.0.
       Anchors<native><public>: anchors = external {}
 
-      # The offset that defined the size and position of the widget.When the anchors are well defined, the Offsets.Left represent the distance in pixels from the Anchors Minimum.X,the Offsets.Bottom represent the distance in pixel from the Anchors Maximun.Y, effectily controlling the desiredwidget size. When the anchors are not well defined, the Offsets.Left and Offsets.Top represent the widget positionand Offsets.Right and Offset.Bottom represent the widget size.
+      # The offset that defined the size and position of the widget.
+      # When the anchors are well defined, the Offsets.Left represent the distance in pixels from the Anchors Minimum.X, the Offsets.Bottom represent the distance in pixel from the Anchors Maximum.Y, effectively controlling the desired widget size. When the anchors are not well defined, the Offsets.Left and Offsets.Top represent the widget position and Offsets.Right and Offset.Bottom represent the widget size.
       Offsets<native><public>: margin = external {}
 
-      # When true we use the widget's desired size. The size calculated by the Offets is ignored.
+      # When true we use the widget's desired size. The size calculated by the Offsets is ignored.
       SizeToContent<native><public>: logic = external {}
 
       # The widget assigned to this slot.
       Widget<native><public>: widget
 
-      # Z Order of this slot relative to other slots in this canvas panel.Higher values are rendered last (and so they will appear to be on top)
+      # Z Order of this slot relative to other slots in this canvas panel.
+      # Higher values are rendered last (and so they will appear to be on top)
       ZOrder<native><public>: type { _X: int where 0 <= _X, _X <= 2147483647 } = external {}
     }
 
@@ -612,7 +650,8 @@ Temporary<public> := module {
       Right
     }
 
-    # Specifies the gap outside each edge separating a `widget` from its neighbors.Distance is measured in units where `1.0` unit is the width of a pixel at 1080p resolution.
+    # Specifies the gap outside each edge separating a `widget` from its neighbors.
+    # Distance is measured in units where `1.0` unit is the width of a pixel at 1080p resolution.
     margin<native><public> := struct {
       # The bottom edge spacing.
       Bottom<native><public>: float = external {}
@@ -650,13 +689,15 @@ Temporary<public> := module {
 
     # Slot for an overlay widget
     overlay_slot<native><public> := struct {
-      # Horizontal alignment of the widget inside the slot.This alignment is only applied after the layout space for the widget slot is created and determines the widget alignment within that space.
+      # Horizontal alignment of the widget inside the slot.
+      # This alignment is only applied after the layout space for the widget slot is created and determines the widget alignment within that space.
       HorizontalAlignment<native><public>: horizontal_alignment = external {}
 
       # Empty distance in pixels that surrounds the widget inside the slot. Assumes 1080p resolution.
       Padding<native><public>: margin = external {}
 
-      # Vertical alignment of the widget inside the slot.This alignment is only applied after the layout space for the widget slot is created and determines the widget alignment within that space.
+      # Vertical alignment of the widget inside the slot.
+      # This alignment is only applied after the layout space for the widget slot is created and determines the widget alignment within that space.
       VerticalAlignment<native><public>: vertical_alignment = external {}
 
       # The widget assigned to this slot.
@@ -701,16 +742,19 @@ Temporary<public> := module {
 
     # Slot for a stack_box widget
     stack_box_slot<native><public> := struct {
-      # The available space will be distributed proportionally.If not set, the slot will use the desired size of the widget.
+      # The available space will be distributed proportionally.
+      # If not set, the slot will use the desired size of the widget.
       Distribution<native><public>: ?float = external {}
 
-      # Horizontal alignment of the widget inside the slot.This alignment is only applied after the layout space for the widget slot is created and determines the widget alignment within that space.
+      # Horizontal alignment of the widget inside the slot.
+      # This alignment is only applied after the layout space for the widget slot is created and determines the widget alignment within that space.
       HorizontalAlignment<native><public>: horizontal_alignment = external {}
 
       # Empty distance in pixels that surrounds the widget inside the slot. Assumes 1080p resolution.
       Padding<native><public>: margin = external {}
 
-      # Vertical alignment of the widget inside the slot.This alignment is only applied after the layout space for the widget slot is created and determines the widget alignment within that space.
+      # Vertical alignment of the widget inside the slot.
+      # This alignment is only applied after the layout space for the widget slot is created and determines the widget alignment within that space.
       VerticalAlignment<native><public>: vertical_alignment = external {}
 
       # The widget assigned to this slot.
@@ -722,7 +766,8 @@ Temporary<public> := module {
       # The justification to display to the user. Used only during initialization of the widget and not modified by SetJustification.
       DefaultJustification<native><public>: text_justification = external {}
 
-      # The policy that determine what happens when the text is longer than its allowed length. Used only during initialization of the widget and not modified by SetOverflowPolicy.
+      # The policy that determine what happens when the text is longer than its allowed length.
+      # Used only during initialization of the widget and not modified by SetOverflowPolicy.
       DefaultOverflowPolicy<native><public>: text_overflow_policy = external {}
 
       # The text to display to the user. Used only during initialization of the widget and not modified by SetText.
@@ -734,7 +779,7 @@ Temporary<public> := module {
       # The opacity of the displayed text. Used only during initialization of the widget and not modified by SetTextOpacity.
       DefaultTextOpacity<native><public>: type { _X: float where 0.000000 <= _X, _X <= 1.000000 } = external {}
 
-      # Gets the text justificattion in the widget.
+      # Gets the text justification in the widget.
       GetJustification<native><public>(): text_justification
 
       # Gets the policy that determine what happens when the text is longer than its allowed length.
@@ -765,7 +810,11 @@ Temporary<public> := module {
       SetTextOpacity<native><public>(InOpacity: type { _X: float where 0.000000 <= _X, _X <= 1.000000 }): void
     }
 
-    # Text justification values:  Left: Justify the text logically to the left.  Center: Justify the text in the center.  Right: Justify the text logically to the right.The Left and Right value will flip when the local culture is right-to-left.
+    # Text justification values:
+    #   Left: Justify the text logically to the left.
+    #   Center: Justify the text in the center.
+    #   Right: Justify the text logically to the right.
+    # The Left and Right value will flip when the local culture is right-to-left.
     text_justification<native><public> := enum {
       Center
 
@@ -774,7 +823,9 @@ Temporary<public> := module {
       Right
     }
 
-    # Text overflow policy values:  Clip: Overflowing text will be clipped.  Ellipsis: Overflowing text will be replaced with an ellipsis.
+    # Text overflow policy values:
+    #   Clip: Overflowing text will be clipped.
+    #   Ellipsis: Overflowing text will be replaced with an ellipsis.
     text_overflow_policy<native><public> := enum {
       Clip
 
@@ -807,13 +858,15 @@ Temporary<public> := module {
 
     # Base class for all UI elements drawn on the `player`'s screen.
     widget<native><public> := class<abstract><unique><epic_internal> {
-      # Returns the `widget`'s parent `widget`.Fails if no parent exists, such as if this `widget` is not in the `player_ui` or is itself the root `widget`.
+      # Returns the `widget`'s parent `widget`.
+      # Fails if no parent exists, such as if this `widget` is not in the `player_ui` or is itself the root `widget`.
       GetParentWidget<native><public>()<transacts><decides>: widget
 
-      # Returns the `widget` that added this `widget` to the `player_ui`. The root `widget` will return itself.Fails if this `widget` is not in the `player_ui`.
+      # Returns the `widget` that added this `widget` to the `player_ui`. The root `widget` will return itself.
+      # Fails if this `widget` is not in the `player_ui`.
       GetRootWidget<native><public>()<transacts><decides>: widget
 
-      # Returns the current `widget_visbility` state.
+      # Returns the current `widget_visibility` state.
       GetVisibility<native><public>(): widget_visibility
 
       # `true` if this `widget` can be modified interactively by the player.
@@ -822,7 +875,8 @@ Temporary<public> := module {
       # Enables or disables whether the `player` can interact with this `widget`.
       SetEnabled<native><public>(InIsEnabled: logic): void
 
-      # Shows or hides the `widget` without removing itself from the containing `player_ui`.See `widget_visibility` for details.
+      # Shows or hides the `widget` without removing itself from the containing `player_ui`.
+      # See `widget_visibility` for details.
       SetVisibility<native><public>(InVisibility: widget_visibility): void
     }
 
@@ -848,6 +902,40 @@ Temporary<public> := module {
 
       # The `widget` is visible and occupies layout space.
       Visible
+    }
+  }
+}
+
+WorldPartition<public> := module {
+  # Module import path: /UnrealEngine.com/WorldPartition/VerseWorldPartition
+  VerseWorldPartition<public> := module {
+    GetDataLayerManager<native><public>()<transacts>: ?data_layer_manager
+
+    data_layer_asset<native><public> := class<computes><final><epic_internal> {}
+
+    # Data Layer Manager used to get/set the runtime state of Data Layers.
+    data_layer_manager<native><public> := class<concrete> {
+      # Returns data layer effective runtime state.
+      GetDataLayerEffectiveRuntimeState<native><public>(DataLayerAsset: data_layer_asset): data_layer_runtime_state
+
+      # Sets data layer runtime state.
+      SetDataLayerRuntimeState<native><public>(
+        DataLayerAsset: data_layer_asset,
+        State: data_layer_runtime_state,
+        IsRecursive: logic
+      ): logic
+    }
+
+    # Unloaded: Associated content is unloaded. Loaded: Associated content is loaded but not visible. Activated: Associated content is loaded and visible. Represents possible Data Layer runtime states.
+    data_layer_runtime_state<native><public> := enum {
+      # Activated (meaning loaded and visible)
+      Activated
+
+      # Loaded (meaning loaded but not visible)
+      Loaded
+
+      # Unloaded
+      Unloaded
     }
   }
 }
