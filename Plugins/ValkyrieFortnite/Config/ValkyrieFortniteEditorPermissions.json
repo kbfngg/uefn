@@ -118,6 +118,7 @@
 			"/Script/ControlRig.SphericalPoseReaderDebugSettings",
 			"/Script/ControlRig.RigUnit_RotationConstraint_AdvancedSettings",
 			"/Script/ControlRigSpline.ControlRigSpline",
+			"/Script/FortniteAI.NPCCustomEffect",
 			"/Script/IKRig.IKRigInputSkeleton",
 			"/Script/IKRig.IKRigSkeleton",
 			"/Script/IKRig.AnimNode_IKRig",
@@ -178,7 +179,9 @@
 	},
 	"_comment_ValkyrieAudioSettings": "Properties related to Audio including SoundWaves, SoundCues, Metasounds, etc.",
 	"ValkyrieAudioSettings": {
-		"MaxSoundWaveImportLengthSeconds": 300
+		"MaxSoundWaveImportLengthSeconds": 300,
+		"bEnableLoadingBehaviorForceInline": false
+		
 	},
 	"_comment_ValkyrieUMGSettings": "Properties related to UMG, including the UMG editor and MVVM framework",
 	"ValkyrieUMGSettings": {
@@ -420,12 +423,14 @@
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Awareness.CharacterModifier_Awareness_C": 							{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_CosmeticSpawn.CharacterModifier_CosmeticSpawn_C": 					{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_DefaultBehavior.CharacterModifier_DefaultBehavior_C": 				{ "Visible": true },
+			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Effects.CharacterModifier_Effects_C": 						{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_GuardBehavior.CharacterModifier_GuardBehavior_C":					{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_GuardInventory.CharacterModifier_GuardInventory_C":				{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_GuardPerception.CharacterModifier_GuardPerception_C":				{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_GuardSpawn.CharacterModifier_GuardSpawn_C":						{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_GuardVerseBehavior.CharacterModifier_GuardVerseBehavior_C":		{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Health.CharacterModifier_Health_C": 								{ "Visible": true },
+			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Movement.CharacterModifier_Movement_C": 							{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_PatrolPath.CharacterModifier_PatrolPath_C":						{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Perception.CharacterModifier_Perception_C":						{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Taming.CharacterModifier_Taming_C": 								{ "Visible": true },
@@ -467,6 +472,7 @@
 			"/CreativeCoreDevices/Device_Trigger_Parent_V2.Device_Trigger_Parent_V2_C":									{  },
 			"/CreativeCoreDevices/HUDMessage/MVVM_UEFN_HUDMessage.MVVM_UEFN_HUDMessage_C":								{ "Visible": true },
 			"/CreativeCoreDevices/Beacon/UEFN_BeaconBadge_ViewModel.UEFN_BeaconBadge_ViewModel_C":						{ "Visible": true },
+			"/CreativeCoreDevices/PowerUp/LastActiveCustomPlayerFXComponent.LastActiveCustomPlayerFXComponent_C":		{  },
 			"/FMInWorldKnobs/Gameplay/Components/BP_FabricNoteLabelComponent.BP_FabricNoteLabelComponent_C":			{  },
 			"/FMInWorldKnobs/Gameplay/Components/BP_FabricPageInfoComponent.BP_FabricPageInfoComponent_C":				{  },
 			"/FMInWorldKnobs/Gameplay/Components/BP_FabricPipsComponent.BP_FabricPipsComponent_C":						{  },
@@ -526,6 +532,7 @@
 			"/Game/Creative/Devices/LockDevice/BP_InteractVisualizationComponent.BP_InteractVisualizationComponent_C":	{  },
 			"/Game/Creative/Devices/LockDevice/BP_KeyLockComponent.BP_KeyLockComponent_C":								{  },
 			"/Game/Creative/Devices/MapMarker/CreativeMapMarkerComponent.CreativeMapMarkerComponent_C":					{  },
+			"/Game/Creative/Devices/Quests/MVVM_UEFN_Tracker.MVVM_UEFN_Tracker_C":										{  },
 			"/Game/Creative/Devices/Team_Selector/Components/Creative_TeamSelection_Component.Creative_TeamSelection_Component_C":{  },
 			"/Game/Creative/Devices/VolumeMutator/GE_Creative_MutatorSpeedMinZero.GE_Creative_MutatorSpeedMinZero_C":	{  },
 			"/Game/Creative/Items/Atmospheric_Particles/CP_P_Atmospheric_Parent.CP_P_Atmospheric_Parent_C":				{  },
@@ -1112,6 +1119,24 @@
 			"/Script/InterchangePipelines.InterchangeGenericMaterialPipeline":	{  },
 			"/Script/InterchangePipelines.InterchangeGenericMeshPipeline":		{  },
 			"/Script/InterchangePipelines.InterchangeGenericTexturePipeline":	{  },
+			"/Script/ItemizationCoreRuntime.InventoryCollection":				{  },
+			"/Script/ItemizationCoreRuntime.InventoryDefinition":				{  },
+			"/Script/ItemizationCoreRuntime.InventorySetupData":				{  },
+			"/Script/ItemizationCoreRuntime.ItemAbilityCooldown":				{  },
+			"/Script/ItemizationCoreRuntime.ItemAbilityConfigurationAsset":		{  },
+			"/Script/ItemizationCoreRuntime.ItemAbilityCost":					{  },
+			"/Script/ItemizationCoreRuntime.ItemAttachmentDefinition":			{  },
+			"/Script/ItemizationCoreRuntime.ItemComponentBase":					{  },
+			"/Script/ItemizationCoreRuntime.ItemDefinition":					{  },
+			"/Script/ItemizationCoreRuntime.ItemInputAction":					{  },
+			"/Script/ItemizationCoreRuntime.ItemInputMappingContext":			{  },
+			"/Script/ItemizationCoreRuntime.ItemOwnerPoseAsset":				{  },
+			"/Script/ItemizationCoreRuntime.ItemRarity":						{  },
+			"/Script/ItemizationCoreRuntime.ItemRequirements":					{  },
+			"/Script/ItemizationCoreRuntime.ItemType":							{  },
+			"/Script/ItemizationCoreUI.InventoryCollectionViewModel":			{  },
+			"/Script/ItemizationCoreUI.InventoryItemEntryViewModel":			{  },
+			"/Script/ItemizationCoreUI.InventoryViewModel":						{  },
 			"/Script/Landscape.ControlPointMeshActor":							{  },
 			"/Script/Landscape.ControlPointMeshComponent":						{  },
 			"/Script/Landscape.Landscape":										{  },
@@ -1397,7 +1422,6 @@
 			"/Script/UMG.MovieSceneMarginSection":								{  },
 			"/Script/UMG.MovieSceneMarginTrack":								{ "Visible": true },
 			"/Script/UMG.MovieSceneWidgetMaterialTrack":						{ "Visible": true },
-			"/Script/UMG.NamedSlot":											{ "Visible": true },
 			"/Script/UMG.Overlay":												{ "Visible": true },
 			"/Script/UMG.OverlaySlot":											{  },
 			"/Script/UMG.ScaleBox":												{ "Visible": true },
@@ -2390,7 +2414,7 @@
 			},
 			{
 				"Type": "/CreativeCoreDevices/Device_AirVent_V2.Device_AirVent_V2_C", 
-				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct"  ]
+				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct"  ]
 			},
 			{
 				"Type": "/Script/FortniteGame.BuildingProp_SwitchDevice", 
@@ -2790,7 +2814,18 @@
 				"bAllowListAllSubclassProperties": true
 			},
 			{
+				"Type": "/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Effects.CharacterModifier_Effects_C",
+				"bAllowListAllProperties": false,
+				"bAllowListAllSubclassProperties": false,
+				"AllowList": [ "SpawnEffect", "DeathEffect" ]
+			},
+			{
 				"Type": "/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Health.CharacterModifier_Health_C",
+				"bAllowListAllProperties": true,
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Movement.CharacterModifier_Movement_C",
 				"bAllowListAllProperties": true,
 				"bAllowListAllSubclassProperties": true
 			},
@@ -2933,6 +2968,11 @@
 				"AllowList": [ "VolumeRouting", "VolumeModulationDestination" ]
 			},
 			{
+				"Type": "/Script/FortniteAI.NPCCustomEffect",
+				"AllowList": [ "VisualEffect", "VisualEffectSocket", "SoundEffect", "SoundEffectSocket" ],
+				"DenyList": [ "EffectTag" ]
+			},
+			{
 				"Type": "/Script/PhysicsUtilities.PhysAssetCreateParams",
 				"AllowList": [ "MinBoneSize", "MinWeldSize", "GeomType", "VertWeight", "bAutoOrientToBone", "bWalkPastSmall", "bBodyForAll", "bDisableCollisionsByDefault", "HullCount", "MaxHullVerts", "LevelSetResolution" ]
 			},
@@ -2993,7 +3033,7 @@
 			},
 			{
 				"Type": "/Script/Engine.InstancedStaticMeshComponent",
-				"AllowList": ["InstancingRandomSeed", "InstanceStartCullDistance", "InstanceEndCullDistance", "InstanceReorderTable", ],
+				"AllowList": ["InstancingRandomSeed", "InstanceStartCullDistance", "InstanceEndCullDistance", "InstanceReorderTable" ],
 				"bAllowListAllSubclassProperties": true
 			},
 			{

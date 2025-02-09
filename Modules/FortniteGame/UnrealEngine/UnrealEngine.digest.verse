@@ -2,8 +2,11 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-28.20-CL-31165234
+# Generated from build: ++Fortnite+Release-28.30-CL-31511038
 #################################################
+
+# Module import path: /UnrealEngine.com/Assets
+Assets<public> := module {}
 
 Temporary<public> := module {
   # Module import path: /UnrealEngine.com/Temporary/Curves
@@ -492,7 +495,7 @@ Temporary<public> := module {
     }
 
     # 2-dimensional vector with `float` components.
-    vector2<native><public> := struct<concrete><computes> {
+    vector2<native><public> := struct<concrete><computes><persistable> {
       @editable
       X<native><public>: float = external {}
 
@@ -501,7 +504,7 @@ Temporary<public> := module {
     }
 
     # 2-dimensional vector with `int` components.
-    vector2i<native><public> := struct<concrete><computes> {
+    vector2i<native><public> := struct<concrete><computes><persistable> {
       @editable
       X<native><public>: int = external {}
 
@@ -510,7 +513,7 @@ Temporary<public> := module {
     }
 
     # 3-dimensional vector with `float` components.
-    vector3<native><public> := struct<concrete><computes> {
+    vector3<native><public> := struct<concrete><computes><persistable> {
       @editable
       X<native><public>: float = external {}
 

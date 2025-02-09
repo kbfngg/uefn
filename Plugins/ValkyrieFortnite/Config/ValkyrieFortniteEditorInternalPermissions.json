@@ -744,6 +744,9 @@
 			]
 		}
 	},
+	"ValkyrieAudioSettings": {
+		"bEnableLoadingBehaviorForceInline": true
+	},
 	"ValkyrieEditorSettings": {
 		"AllowedAssetTypes": {
 			"/Script/Engine.AnalysisProperties":		{ "Rules": ["View","Create"] },

@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-28.20-CL-31165234
+# Generated from build: ++Fortnite+Release-28.30-CL-31511038
 #################################################
 
 # Module import path: /Verse.org/Assets
@@ -355,7 +355,7 @@ Colors<public> := module {
 
   # Represents colors as RGB triples in the ACES 2065-1 color space.
   # Component values are linear (i.e. `*gamma* = 1.0`).
-  color<native><public> := struct<concrete><computes> {
+  color<native><public> := struct<concrete><computes><persistable> {
     @editable
     # Blue component of this `color`.
     B<native><public>: float = external {}
