@@ -3,7 +3,8 @@
 	"bEnableAccessToUnreleasedContent": true,
 
 	"ValkyrieProjectSettings": {
-		"bMultiProjectAllowed": true
+		"bMultiProjectAllowed": true,
+		"bProjectRenameAllowed": true
 	},
 	"ValkyrieBlueprintsSettings": {
 		"bEnableBlueprintGraph": true,
@@ -759,7 +760,14 @@
 			"/Script/Engine.PoseAsset":					{ "Rules": ["View","Create"] },
 			"/Script/Engine.UserDefinedEnum":			{ "Rules": ["View","Create"], "Subclasses": "All"},
 			"/Script/Engine.UserDefinedStruct":			{ "Rules": ["View","Create"], "Subclasses": "All"},
-			"/Script/HarmonixMidi.MidiFile":			{ "Rules": ["View","Import"] }
+			"/Script/AnimNext.AnimNextSchedule":		{ "Rules": ["View","Create"] },
+			"/Script/AnimNext.AnimNextGraph":			{ "Rules": ["View","Create"] },
+			"/Script/AnimNext.AnimNextParameterBlock":	{ "Rules": ["View","Create"] },
+			"/Script/AnimNextEditor.AnimNextWorkspace":	{ "Rules": ["View","Create"] },
+			"/Script/GameplayCameras.CameraRigAsset":	{ "Rules": ["View","Create"] },
+			"/Script/GameplayCameras.CameraVariableAsset":	{ "Rules": ["View","Create"], "Subclasses": "All"},
+			"/Script/VerseAssets.ParameterCollectionGeneratedClass":	{ "Rules": ["View","Create"] },
+			"/Script/VerseAssetsEditor.ParameterCollectionBlueprint":	{ "Rules": ["View","Create"] }
 		},
 		"AllowedClasses": {
 			"/Script/AnimGraph.AnimBlueprintExtension_Attributes":		{  },
@@ -952,15 +960,31 @@
 			"/Script/Engine.KismetMathLibrary":							{ "Visible": true },
 			"/Script/Engine.KismetSystemLibrary":						{ "Visible": true },
 			"/Script/Engine.PoseLink": {},
-			"/Script/FabricEngineSequencer.FabricAudioSyncSection":		{ },
-			"/Script/FabricEngineSequencer.FabricAudioSyncTrack":		{ "Visible": true },
 			"/Script/FortniteGame.BaseUEFNAnimInstance":				{ "Visible": true },
 			"/Script/FortniteGame.UEFNCustomAgentAnimInstance":			{ "Visible": true },
-			"/Script/HarmonixMidi.MidiFile":							{  },
+			"/Script/GameplayCameras.AttachToPlayerPawnCameraNode":		{  },
+			"/Script/GameplayCameras.OcclusionMaterialCameraNode":		{  },
+			"/Script/GameplayCameras.ArrayCameraNode":					{  },
+			"/Script/GameplayCameras.BoomArmCameraNode":				{  },
+			"/Script/GameplayCameras.DampenPositionCameraNode":			{  },
+			"/Script/GameplayCameras.FieldOfViewCameraNode":			{  },
+			"/Script/GameplayCameras.LensParametersCameraNode":			{  },
+			"/Script/GameplayCameras.OffsetCameraNode":					{  },
+			"/Script/GameplayCameras.BaseFramingCameraNode":			{  },
+			"/Script/GameplayCameras.DollyFramingCameraNode":			{  },
+			"/Script/GameplayCameras.PanningFramingCameraNode":			{  },
 			"/Script/UnrealEd.EdGraphNode_Comment":						{ "Visible": true },
-			"/Script/ValkyrieCommon.ValkyrieContentWorkerDebugManager": { "Visible": true }
+			"/Script/ValkyrieCommon.ValkyrieContentWorkerDebugManager": { "Visible": true },
+			"/Script/VerseAssets.ParameterCollection":					{ "Visible": true },
+			"/Script/VerseAssetsEditor.ParameterCollectionBlueprint":	{ "Visible": true }
 		},
 		"AllowedMenus": {
+			"AssetEditor.ParameterCollectionEditor.MainMenu": {
+				"AllowList": [ "File", "Edit", "Asset", "Window", "Help" ]
+			},
+			"AssetEditor.ParameterCollectionEditor.MainMenu.File": {
+				"AllowList": [ "SaveAsset", "SaveAll"]
+			},
 			"SkeletonTree.BlendProfilesMenu": {
 				"AllowList": [ "CreateTimeBlendProfile", "CreateWeightBlendProfile", "CreateBlendMask" ]
 			},
@@ -990,6 +1014,14 @@
 				}
 			}
 		},
+		"AllowedTabs": {
+			"ParameterCollectionEditor": {
+				"AllowList": [
+					"VariableEdition",
+					"DefaultValues"
+				]
+			}
+		},
 		"AllowedPlacementToolEntries": {
 			"AllowedCategories": {
 				"+": [
@@ -1002,7 +1034,6 @@
 		},
 		"AllowedImportExtensions": {
 			"+": [
-				"mid"
 			]
 		}
 	},

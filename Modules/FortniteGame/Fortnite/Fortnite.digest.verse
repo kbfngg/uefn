@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-30.40-CL-35235494
+# Generated from build: ++Fortnite+Release-31.00-CL-35447195
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -19,11 +19,39 @@ AI<public> := module {
   # Get the navigatable interface for the specified character
   (InCharacter: fort_character).GetNavigatable<native><public>()<transacts><decides>: navigatable
 
+  @experimental
+  # Returns the `entity` for `InNPCBehavior`.
+  (InNPCBehavior: npc_behavior).GetEntity<native><public>()<computes><decides><reads>: entity
+
+  @experimental
+  # Generate a navigation_target from an entity
+  MakeNavigationTarget<native><public>(Entity: entity)<decides>: navigation_target
+
   # Generate a navigation_target from any position
   MakeNavigationTarget<native><public>(Position: vector3): navigation_target
 
   # Generate a navigation_target from an agent
   MakeNavigationTarget<native><public>(Target: agent): navigation_target
+
+  @experimental
+  # Create a `navigation_target` from a `target_info`.
+  MakeNavigationTarget<native><public>(TargetInfo: target_info): navigation_target
+
+  @experimental
+  # Result of an AI action
+  ai_action_result<native><public> := enum {
+    # The action has been canceled before completion
+    Canceled
+
+    # The action was not allowed to start
+    Disallowed
+
+    # The action has failed during its execution
+    Failure
+
+    # The action has been successfully executed
+    Success
+  }
 
   focus_interface<native><public> := interface<epic_internal> {
     # Look At specified Agent. Will never complete unless interrupted.
@@ -31,6 +59,70 @@ AI<public> := module {
 
     # Look At specified location. Will never complete unless interrupted.
     MaintainFocus<public>(Location: vector3)<suspends>: void
+  }
+
+  @experimental
+  # Fortnite Guards AI actions management
+  fort_guard_actions_component<native><public> := class<epic_internal>(fort_npc_actions_component) {
+    @experimental
+    # Attack the target
+    Attack<native><public>(Target: target_info)<suspends>: ai_action_result
+
+    @experimental
+    # Move in range to attack the current target
+    MoveInRangeToAttack<native><public>()<suspends>: ai_action_result
+
+    @experimental
+    # Play a random emote from the character emotes bank
+    PlayRandomEmote<native><public>()<suspends>: ai_action_result
+
+    @experimental
+    # Revive the specified target
+    Revive<native><public>(Target: agent)<suspends>: ai_action_result
+
+    @experimental
+    # Roam around the current position. Use the fort_leashable_component to specify the radius, else will roam anywhere.
+    RoamAround<native><public>(?MovementType: movement_type = external {})<suspends>: navigation_result
+  }
+
+  @experimental
+  # The different alert levels of a guard.
+  fort_guard_alert_level<native><public> := enum {
+    # The guard has identified a hostile target.
+    Alerted
+
+    # The guard has identified a hostile target but can't see it any more.
+    LostTarget
+
+    # The guard has seen a hostile target but hasn't identified it yet.
+    Suspicious
+
+    # The guard has not detected any hostile target.
+    Unaware
+  }
+
+  @experimental
+  # Fortnite guard perception management
+  fort_guard_perception_component<native><public> := class<epic_internal>(fort_npc_perception_component) {
+    @experimental
+    # Event when the alert level of the guard has changed.
+    AlertLevelChangedEvent<native><public>: listenable(fort_guard_alert_level) = external {}
+
+    @experimental
+    # Event when the current target has changed.
+    CurrentTargetChangedEvent<native><public>: listenable(target_info) = external {}
+
+    @experimental
+    # Get the current alert level of the guard.
+    GetAlertLevel<native><public>()<computes><reads>: fort_guard_alert_level
+
+    @experimental
+    # Get the current alert level of a target for the guard.
+    GetAlertLevel<native><public>(Target: entity)<computes><decides><reads>: fort_guard_alert_level
+
+    @experimental
+    # Get information about the current target.
+    GetCurrentTargetInfo<native><public>()<computes><decides><reads>: target_info
   }
 
   fort_leashable<native><public> := interface<epic_internal> {
@@ -46,6 +138,99 @@ AI<public> := module {
     #  'InnerRadius' ranges from 0.0 to 20000.0 (in centimeters).
     #  'OuterRadius' ranges from 0.0 to 20000.0 (in centimeters) and no less than 'InnerRadius'.
     SetLeashPosition<public>(Location: vector3, InnerRadius: float, OuterRadius: float): void
+  }
+
+  @experimental
+  # Fortnite NPC leash management
+  fort_leashable_component<native><public> := class<epic_internal>(component, fort_leashable) {
+    @experimental
+    # Removes the current leash.
+    ClearLeash<native><override>(): void
+
+    @experimental
+    # Set the agent to be the new center of the leash.
+    #  'InnerRadius' ranges from 0.0 to 20000.0 (in centimeters).
+    #  'OuterRadius' ranges from 0.0 to 20000.0 (in centimeters) and no less than 'InnerRadius'.
+    SetLeashAgent<native><override>(Agent: agent, InnerRadius: float, OuterRadius: float): void
+
+    @experimental
+    # Set custom leash position.
+    #  'InnerRadius' ranges from 0.0 to 20000.0 (in centimeters).
+    #  'OuterRadius' ranges from 0.0 to 20000.0 (in centimeters) and no less than 'InnerRadius'.
+    SetLeashPosition<native><override>(Location: vector3, InnerRadius: float, OuterRadius: float): void
+  }
+
+  @experimental
+  # Fortnite NPC AI actions management
+  fort_npc_actions_component<native><public> := class<epic_internal>(component, navigatable, focus_interface) {
+    @experimental
+    # Return the current destination of the character
+    GetCurrentDestination<native><override>()<transacts><decides>: vector3
+
+    @experimental
+    # Look At specified Agent. Will never complete unless interrupted.
+    MaintainFocus<native><override>(Agent: agent)<suspends>: void
+
+    @experimental
+    # Look At specified location. Will never complete unless interrupted.
+    MaintainFocus<native><override>(Location: vector3)<suspends>: void
+
+    @experimental
+    # Navigate toward the specified target
+    NavigateTo<native><override>(
+      Target: navigation_target,
+      ?MovementType: movement_type = external {},
+      ?ReachRadius: float = external {},
+      ?AllowPartialPath: logic = external {}
+    )<suspends>: navigation_result
+
+    @experimental
+    # Apply a multiplier on the movement speed (Multiplier is clamped between 0.5 and 2)
+    SetMovementSpeedMultiplier<native><override>(Multiplier: float): void
+
+    @experimental
+    # Stop navigation
+    StopNavigation<native><override>(): void
+
+    @experimental
+    # Wait for a specific duration
+    Wait<native><override>(?Duration: float = external {})<suspends>: void
+  }
+
+  @experimental
+  # Fortnite NPC perception management
+  fort_npc_perception_component<native><public> := class<epic_internal>(component) {
+    @experimental
+    # Get the last known position of a target.
+    GetLastKnownPosition<native><public>(Target: entity)<computes><decides><reads>: vector3
+
+    @experimental
+    # Event when a target is added.
+    TargetAddedEvent<native><public>: listenable(target_info) = external {}
+
+    @experimental
+    # Event when a target is heard. Hearing sense must be active.
+    TargetHeardEvent<native><public>: listenable(target_info) = external {}
+
+    @experimental
+    # Event when the info about a target has been updated.
+    TargetInfoUpdatedEvent<native><public>: listenable(target_info) = external {}
+
+    @experimental
+    # Event when a target was removed.
+    TargetRemovedEvent<native><public>: listenable(entity) = external {}
+
+    @experimental
+    # Event when a target is seen. Sight sense must be active.
+    TargetSeenEvent<native><public>: listenable(target_info) = external {}
+
+    @experimental
+    # Event when a target is touched. Touch sense must be active.
+    TargetTouchedEvent<native><public>: listenable(target_info) = external {}
+
+    @experimental
+    # Information about all detected targets.
+    var<private> DetectedTargets<native><public>: []target_info
   }
 
   movement_type<native><public> := class<concrete><final><computes><epic_internal> {}
@@ -111,6 +296,22 @@ AI<public> := module {
     # This function is called when the NPC is removed from the simulation.
     OnEnd<native_callable><public>(): void = external {}
   }
+
+  @experimental
+  # Information about a perceived target.
+  target_info<native><public> := struct<epic_internal> {
+    @experimental
+    # Attitude toward this target.
+    Attitude<native><public>: team_attitude
+
+    @experimental
+    # True if the target can be seen.
+    HasLineOfSight<native><public>: logic
+
+    @experimental
+    # The source of the detection stimuli.
+    Target<native><public>: entity
+  }
 }
 
 # Module import path: /Fortnite.com/Animation
@@ -119,6 +320,25 @@ Animation<public> := module {
   PlayAnimation<public> := module {
     # Get the play_animation_controller for the specified character.
     (InCharacter: fort_character).GetPlayAnimationController<native><public>()<transacts><decides>: play_animation_controller
+
+    @experimental
+    fort_npc_play_animation_component<native><public> := class<epic_internal>(component, play_animation_controller) {
+      Play<override>(
+        AnimationSequence: animation_sequence,
+        ?PlayRate: float = external {},
+        ?StartPositionSeconds: float = external {},
+        ?BlendInTime: float = external {},
+        ?BlendOutTime: float = external {}
+      ): play_animation_instance = external {}
+
+      PlayAndAwait<override>(
+        AnimationSequence: animation_sequence,
+        ?PlayRate: float = external {},
+        ?StartPositionSeconds: float = external {},
+        ?BlendInTime: float = external {},
+        ?BlendOutTime: float = external {}
+      )<suspends>: play_animation_result = external {}
+    }
 
     # An interface for playing an animation on an object.
     play_animation_controller<native><public> := interface<epic_internal> {
@@ -535,6 +755,8 @@ Devices<public> := module {
       Enable<public>(): void = external {}
     }
 
+    song_sync_device<public> := class<concrete><final>(patchwork_device) {}
+
     # Output Patchwork audio for players to hear.
     speaker_device<public> := class<concrete><final>(patchwork_device) {}
 
@@ -738,12 +960,17 @@ Devices<public> := module {
     UnregisterAll<public>(): void = external {}
   }
 
-  using { /Verse.org/Simulation }
+  using { /Fortnite.com/Game }
   # Used to create a customizable turret that can search for nearby targets.
-  automated_turret_device<public> := class<concrete><final>(creative_device_base) {
+  automated_turret_device<public> := class<concrete><final>(creative_device_base, healthful, healable) {
     # Triggers when someone enters the activation radius while nobody else is there.
     # Sends the activating `agent`. If the activator is a non-agent then `false` is returned.
     ActivatedEvent<public>: listenable(?agent) = external {}
+
+    # Clears the turret's current target and returns the turret to searching for targets.
+    #  * If the current target is still in range, it'll likely be the best target, and will be reacquired.
+    #  * Combine with disabled targeting for best results.
+    ClearTarget<public>(): void = external {}
 
     # Triggers when the turret is damaged.
     # Sends the triggering `agent`. If the activator is a non-agent then `false` is returned.
@@ -759,10 +986,38 @@ Devices<public> := module {
     # Enables the turret to rotate, target, and track.
     Enable<public>(): void = external {}
 
+    GetHealth<override>()<transacts>: float = external {}
+
+    GetMaxHealth<override>()<transacts>: float = external {}
+
+    # Returns the `agent` currently targeted by the device.
+    GetTarget<public>(): ?agent = external {}
+
+    Heal<override>(Amount: float): void = external {}
+
+    Heal<override>(Args: healing_args): void = external {}
+
+    HealedEvent<override>(): listenable(healing_result) = external {}
+
+    # Sets the range in meters at which the turret will activate to `Range`.
+    # This is clamped between `2.0` and `100.0` meters.
+    SetActivationRange<public>(Range: float): void = external {}
+
+    # Sets the amount of damage the turret will do per shot to targets to `Damage`.
+    SetDamage<public>(Damage: float): void = external {}
+
+    SetHealth<override>(Health: float)<transacts>: void = external {}
+
+    SetMaxHealth<override>(MaxHealth: float)<transacts>: void = external {}
+
     # Set the supplied `Agent` as the turret's target.
     #  * The target will only change if `Agent` is within the activation radius, has direct line-of-sight to the turret,
     # is on a targetable team as determined by `Possible Targets`, and is not Down But Not Out.
     SetTarget<public>(Agent: agent): void = external {}
+
+    # Sets the range in meters at which the turret will target to `Range`.
+    # This is clamped between `2.0` and `100.0` meters. Setting it lower than 2m will disable Targeting.
+    SetTargetRange<public>(Range: float): void = external {}
 
     # Set the turret to the same team as the supplied `Agent`.
     #  * Only usable if `Possible Targets` is not set to `Everyone`.
@@ -1025,10 +1280,10 @@ Devices<public> := module {
     FirstAgentEntersEvent<public>: listenable(agent) = external {}
 
     # Returns the *Capture Height* (in meters) of the capture area.
-    GetHeight<public>()<varies>: float = external {}
+    GetHeight<public>()<computes><reads>: float = external {}
 
     # Returns the *Capture Radius* (in meters) of the capture area.
-    GetRadius<public>()<varies>: float = external {}
+    GetRadius<public>()<computes><reads>: float = external {}
 
     # Gives control of this device to the capturing `agent`'s team.
     GiveControl<public>(Agent: agent): void = external {}
@@ -1137,6 +1392,17 @@ Devices<public> := module {
 
   # Allows players to change their outfit in game!
   changing_booth_device<public> := class<concrete><final>(creative_device_base) {}
+
+  # Sends an Event for every signal it receives. A simple relay to connect multiple devices together.
+  # It can also broadcast an event to the playspace and listen for any other channel devices broadcasting
+  # to the playspace.
+  channel_device<public> := class<concrete><final>(creative_device_base) {
+    # Signaled when either `Transmit` is called.
+    ReceivedTransmitEvent<public>: listenable(?agent) = external {}
+
+    # Calls `ReceivedTransmitEvent`, optionally with `Agent` as the instigator.
+    Transmit<public>(Agent: ?agent): void = external {}
+  }
 
   # Used to configure a single interactive mannequin, that can visualize characters, clothing, and perform emotes.
   character_device<public> := class<concrete>(creative_device_base) {
@@ -1254,6 +1520,10 @@ Devices<public> := module {
 
   # Used to allow players to select their *Class* from a *Class Selector UI*.
   class_selector_ui_device<public> := class<concrete><final>(creative_device_base) {
+    # Signaled when an `agent` changes a class.
+    # Sends the `agent` that selected a class and the `int` class that the player has changed to.
+    ClassChangedEvent<public>: listenable(tuple(agent, int)) = external {}
+
     # Signaled when an `agent` selects a class.
     # Sends the `agent` that selected a class.
     ClassSelectedEvent<public>: listenable(agent) = external {}
@@ -2015,6 +2285,34 @@ Devices<public> := module {
     UnawareEvent<public>: listenable(agent) = external {}
   }
 
+  using { /Verse.org/Simulation }
+  # Use to create a cactus with healing fruits that can be burst to heal nearby players.
+  healing_cactus_device<public> := class<concrete><final>(creative_device_base) {
+    # Burst the plant if the device is enabled, passing in the triggering `agent`.
+    # If there is no triggering `agent`, players will only be healed if `Heal Targets` is set to `Everyone`.
+    Burst<public>(): void = external {}
+
+    # Burst the plant if the device is enabled, passing in the triggering `agent`.
+    # If there is no triggering `agent`, players will only be healed if `Heal Targets` is set to `Everyone`.
+    Burst<public>(Agent: agent): void = external {}
+
+    # Triggers when the plant bursts, passing in the triggering `agent`.
+    BurstEvent<public>: listenable(?agent) = external {}
+
+    # Disables the device to prevent interaction and growth.
+    Disable<public>(): void = external {}
+
+    # Enables the device to allow interaction and let it grow.
+    Enable<public>(): void = external {}
+
+    # Grows the plant if the device is enabled. If `Infinite Regrowths` is `false`, this is limited by `Maximum Regrowths`.
+    # If someone is too close, the plant won't grow until they move away.
+    Grow<public>(): void = external {}
+
+    # Triggers when the plant grows.
+    GrowEvent<public>: listenable(tuple()) = external {}
+  }
+
   # Used to regenerate an `agent`'s health and/or shields.
   health_powerup_device<public> := class<concrete><final>(powerup_device) {
     # Returns the current *Magnitude* for the powerup.
@@ -2058,6 +2356,10 @@ Devices<public> := module {
 
     # Hides the HUD message.
     Hide<public>(): void = external {}
+
+    # Hides the currently set HUD *Message* on `Agent`s screen.
+    # Use this when the device is setup to target specific `agent`s.
+    Hide<public>(Agent: agent): void = external {}
 
     # Sets the time (in seconds) the HUD message will be displayed. `0.0` will display the HUD message persistently.
     SetDisplayTime<public>(Time: float): void = external {}
@@ -2137,8 +2439,26 @@ Devices<public> := module {
     # Enables this device.
     Enable<public>(): void = external {}
 
+    # Returns the current Item Index that this device will grant when activated.
+    GetItemIndex<public>()<transacts>: int = external {}
+
     # Grants an item to `Agent`.
     GrantItem<public>(Agent: agent): void = external {}
+
+    # Grants an item at a specific `ItemIndex` to an `Agent`.
+    #  `Index` should be between `0` and the available item count - 1.
+    #  If Value is out of bounds, which item is granted is determined by *Cycle Behavior*.
+    GrantItemIndex<public>(Agent: agent, ItemIndex: int): void = external {}
+
+    # Grants an item at a specific `ItemIndex` to all players.
+    #  Only functions when *Receiving Players* is set to *All* or *Team Index*.
+    #  `Index` should be between `0` and the available item count - 1.
+    #  If Value is out of bounds, which item is granted is determined by *Cycle Behavior*.
+    GrantItemIndex<public>(ItemIndex: int): void = external {}
+
+    # Grants an item without requiring an agent reference.
+    #  This only works when *Receiving Players* is set to *All* or *Team Index*.
+    GrantItemToAll<public>(): void = external {}
 
     # Signaled when an item is granted to an `agent`.
     # Sends the `agent` that was granted the item.
@@ -2452,9 +2772,15 @@ Devices<public> := module {
   }
 
   # Provides a collection of destructible devices that you can select from to use as objectives in your game.
-  objective_device<public> := class<concrete><final>(creative_device_base) {
+  objective_device<public> := class<concrete><final>(creative_device_base, healthful, damageable, healable) {
     # Activates an objective pulse at `Agent`'s location pointing toward this device.
     ActivateObjectivePulse<public>(Agent: agent): void = external {}
+
+    Damage<override>(Amount: float): void = external {}
+
+    Damage<override>(Args: damage_args): void = external {}
+
+    DamagedEvent<override>(): listenable(damage_result) = external {}
 
     # Deactivates the objective pulse at `Agent`'s location.
     DeactivateObjectivePulse<public>(Agent: agent): void = external {}
@@ -2466,8 +2792,25 @@ Devices<public> := module {
     # Sends the `agent` that destroyed this device.
     DestroyedEvent<public>: listenable(agent) = external {}
 
+    GetHealth<override>()<transacts>: float = external {}
+
+    GetMaxHealth<override>()<transacts>: float = external {}
+
+    Heal<override>(Amount: float): void = external {}
+
+    Heal<override>(Args: healing_args): void = external {}
+
+    HealedEvent<override>(): listenable(healing_result) = external {}
+
     # Hides this device from the world.
     Hide<public>(): void = external {}
+
+    SetHealth<override>(Health: float)<transacts>: void = external {}
+
+    # Sets the device either invulnerable or damageable
+    SetInvulnerable<public>(Invulnerable: logic): void = external {}
+
+    SetMaxHealth<override>(MaxHealth: float)<transacts>: void = external {}
 
     # Shows this device in the world.
     Show<public>(): void = external {}
@@ -2888,6 +3231,9 @@ Devices<public> := module {
 
     # Returns the `Agent` has the powerup's effect (or another of the same type) applied to them.
     HasEffect<public>(Agent: agent)<transacts><decides>: void = external {}
+
+    # Succeeds if the powerup is currently spawned.
+    IsSpawned<public>()<transacts><decides>: void = external {}
 
     # Signaled when the powerup is picked up by an `agent`.
     # Sends the `agent` that picked up the powerup.
@@ -4330,6 +4676,9 @@ Devices<public> := module {
 
   # Specialized `vehicle_spawner_device` that allows a UFO to be configured and spawned.
   vehicle_spawner_ufo_device<public> := class<concrete><final>(vehicle_spawner_device) {}
+
+  # Specialized `vehicle_spawner_device` that allows a valet SUV to be configured and spawned.
+  vehicle_spawner_valet_suv_device<public> := class<concrete><final>(vehicle_spawner_device) {}
 
   # Specialized `vehicle_spawner_device` that allows a war bus to be configured and spawned.
   vehicle_spawner_war_bus_device<public> := class<concrete><final>(vehicle_spawner_device) {}

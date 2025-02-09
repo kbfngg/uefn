@@ -11,11 +11,6 @@
 				"Rules": [ "View" ],
 				"Subclasses": "All"
 			}
-		},
-		"AllowedMenus": {
-			"LevelEditor.LevelViewportToolBar.Options": {
-				"AllowList": { "+": [ "HighResScreenshot" ] }
-			}
 		}
 	},
 	"ValkyrieProjectSettings": {
