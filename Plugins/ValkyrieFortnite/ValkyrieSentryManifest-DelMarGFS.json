@@ -486,6 +486,11 @@
 			"FriendlyName": "GameNetworkVersion",
 			"Version": 0
 		},
+		"CDB409211590F339ECA16F61923EC589":
+		{
+			"FriendlyName": "FortQuestItemDefinitionVersion",
+			"Version": 0
+		},
 		"CFFC743F43B04480939114DF171D2073":
 		{
 			"FriendlyName": "Dev-Framework",
@@ -1703,6 +1708,7 @@
 			"/Script/Niagara.NiagaraDataInterfaceMeshRendererInfo",
 			"/Script/Niagara.NiagaraDataInterfaceParticleRead",
 			"/Script/Niagara.NiagaraDataInterfaceSkeletalMesh",
+			"/Script/Niagara.NiagaraDataInterfaceSocketReader",
 			"/Script/Niagara.NiagaraDataInterfaceSpriteRendererInfo",
 			"/Script/Niagara.NiagaraDataInterfaceStaticMesh",
 			"/Script/Niagara.NiagaraDataInterfaceTexture",
@@ -24701,11 +24707,11 @@
 			"/Game/Environments/Asteria/Sets/Quarry/Quarry_Scaffolding_A/Blueprints/Asteria_Quarry_ScaffoldingStairBalcony_A.Asteria_Quarry_ScaffoldingStairBalcony_A_C",
 			"/Game/Environments/Asteria/Sets/Quarry/Quarry_Scaffolding_A/Blueprints/Asteria_Quarry_ScaffoldingStairF_A.Asteria_Quarry_ScaffoldingStairF_A_C",
 			"/Game/Environments/Asteria/Sets/Quarry/Quarry_Scaffolding_A/Blueprints/Asteria_Quarry_ScaffoldingWall_B.Asteria_Quarry_ScaffoldingWall_B_C",
-			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_SlurpRoom_Doorway_A.Asteria_SlurpRoom_Doorway_A_C",
+			"/Game/Environments/Asteria/Sets/SlurpRoom/Blueprints/Asteria_SlurpRoom_Doorway_A.Asteria_SlurpRoom_Doorway_A_C",
 			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_SlurpRoom_StringLights_A.Asteria_SlurpRoom_StringLights_A_C",
 			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_SlurpRoom_StringLights_B.Asteria_SlurpRoom_StringLights_B_C",
 			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_SlurpRoom_Wall_A.Asteria_SlurpRoom_Wall_A_C",
-			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_SlurpRoom_Window_A.Asteria_SlurpRoom_Window_A_C",
+			"/Game/Environments/Asteria/Sets/SlurpRoom/Blueprints/Asteria_SlurpRoom_Window_A.Asteria_SlurpRoom_Window_A_C",
 			"/Game/Environments/Asteria/Sets/SlurpRoom/Blueprints/Asteria_SlurpRoom_Window_B.Asteria_SlurpRoom_Window_B_C",
 			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_StringLights_02.Asteria_StringLights_02_C",
 			"/Game/Environments/Asteria/Sets/TattooShop/BluePrints/Asteria_TattooShop_Wall_A.Asteria_TattooShop_Wall_A_C",

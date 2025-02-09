@@ -1205,7 +1205,7 @@
 			},
 			{
 				"Type": "/Script/ValkyrieEditor.ValkyrieEditorConfig",
-				"AllowList": [ "bRunAdditionalClients", "AdditionalClientLogins" ]
+				"AllowList": [ "bEnableWorkspaceFeature", "bRunAdditionalClients", "AdditionalClientLogins" ]
 			}
 		]
 	},

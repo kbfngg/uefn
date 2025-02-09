@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-32.00-CL-37505882
+# Generated from build: ++Fortnite+Release-32.10-CL-37958378
 #################################################
 
 using { /UnrealEngine.com/Temporary/SpatialMath }
@@ -15,6 +15,31 @@ Assets<public> := module {
     ?Rotation: rotation = external {},
     ?StartDelay: float = external {}
   )<transacts>: cancelable
+}
+
+JSON<public> := module {
+  # Parse a JSON string returning a value with its contents
+  Parse<native><public>(JSONString: string)<transacts><decides>: value
+
+  value<native><public> := class {
+    # Retrieve an array value or fail if value is not a json array
+    AsArray<native><public>()<transacts><decides>: []value
+
+    # Retrieve a float value or fail if value is not a json number
+    AsFloat<native><public>()<transacts><decides>: float
+
+    # Retrieve an integer value or fail if value is not a json number
+    AsInt<native><public>()<transacts><decides>: int
+
+    # Retrieve an object value or fail if value is not null
+    AsNull<native><public>()<transacts><decides>: void
+
+    # Retrieve an object value or fail if value is not a json object
+    AsObject<native><public>()<transacts><decides>: [string]value
+
+    # Retrieve an object value or fail if value is not a string
+    AsString<native><public>()<transacts><decides>: string
+  }
 }
 
 Temporary<public> := module {
@@ -1609,4 +1634,20 @@ Temporary<public> := module {
       Visible
     }
   }
+}
+
+WebAPI<public> := module {
+  MakeClient<constructor><native><public>(ClientId: client_id)<converges>: client
+
+  body_response<native><public> := class<internal>(response) {
+    GetBody<native><public>()<computes>: string
+  }
+
+  client<native><public> := class<final><computes><internal> {
+    Get<native><public>(Path: string)<suspends>: response
+  }
+
+  client_id<native><public> := class<abstract><computes> {}
+
+  response<native><public> := class<internal> {}
 }

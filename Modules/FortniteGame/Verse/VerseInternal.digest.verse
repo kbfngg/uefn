@@ -2,13 +2,12 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-32.00-CL-37505882
+# Generated from build: ++Fortnite+Release-32.10-CL-37958378
 #################################################
 
 using { /Verse.org/ParameterCollections }
 using { /Verse.org/Restricted }
 using { /Verse.org/VerseEngine }
-using { /Verse.org/VerseEngine/Component }
 # Module import path: /Verse.org/Assets
 Assets<public> := module {
   # Create an asset reference to the given internal asset path
@@ -782,25 +781,6 @@ Restricted<public> := module {
 }
 
 Simulation<public> := module {
-  GetComponentOfTypeForPlayer<native><epic_internal>(
-    InPlayer: player_component,
-    Type: type
-  )<transacts><decides>: vk_component
-
-  GetComponentOfTypeForPlayer<native><epic_internal>(PlayerIndex: int, Type: type)<transacts><decides>: vk_component
-
-  GetOrCreateComponentOfTypeForPlayer<native><epic_internal>(
-    InPlayer: player_component,
-    Type: type
-  )<transacts><decides>: vk_component
-
-  GetOrCreateComponentOfTypeForPlayer<native><epic_internal>(
-    PlayerIndex: int,
-    Type: type
-  )<transacts><decides>: vk_component
-
-  GetPlayerComponentByIndex<native><epic_internal>(PlayerIndex: int)<transacts><decides>: player_component
-
   # Returns the `session` corresponding to the current round.  The result can be used with `weak_map` to implement global variables.
   # Note: may be changed in a future release to return a single instance per game. Round-local behavior should not be relied upon.
   GetSession<native><public>()<computes><reads>: session
@@ -817,7 +797,6 @@ Simulation<public> := module {
   Sleep<native><public>(Seconds: float)<suspends>: void
 
   using { /Verse.org/Native }
-  using { /Verse.org/VerseEngine/Component }
   # Module import path: /Verse.org/Simulation/Tags
   Tags<public> := module {
     # Succeeds if Left and Right are equal.
@@ -825,15 +804,6 @@ Simulation<public> := module {
 
     # Succeeds if all tags in Left are found in Right and all tags in Right are found in Left.
     Equals<native><epic_internal>(Left: tag_container, Right: tag_container)<transacts><decides>: void
-
-    # Get a list of components that match the specified tag.
-    FindObjectWithTag<native><epic_internal>(Tag: tag)<transacts><decides>: vk_component
-
-    # Get a list of components that match the specified tag.
-    FindObjectsWithTag<native><epic_internal>(Tag: tag)<transacts>: []vk_component
-
-    # Get a list of components that match the specified criteria.
-    FindObjectsWithTags<native><epic_internal>(SearchCriteria: tag_search_criteria): []vk_component
 
     # Utility function to allow for easy construction from editor exposable tag_selector
     MakeTag<native><epic_internal>(Selector: tag_selector)<transacts><decides>: tag
@@ -944,21 +914,6 @@ Simulation<public> := module {
 
       # Checks if this container contains ANY of the tags in the specified container, also checks against parent tags {"A.1"}.HasAny({"A","B"}) will return True, {"A"}.HasAny({"A.1","B"}) will return False If InTags is empty/invalid it will always return False.
       HasAny<public>(InTags: []tag)<computes><decides><reads>: void
-    }
-
-    # Component used for tagging objects for retrieval later. Useful when connecting runtime scripts with editor placed objects.
-    vk_tag_container_component<native><epic_internal> := class<final>(vk_component) {
-      # Add a single tag to this vk_component.
-      AddTag<native><epic_internal>(TagToAdd: tag): void
-
-      # Get the tags associated with this vk_component. These may be specified in the editor.
-      GetTags<native><epic_internal>(): tag_container
-
-      # Remove a single tag from this vk_component.
-      RemoveTag<native><epic_internal>(TagToRemove: tag): logic
-
-      # Set the tags associated with this vk_component.
-      SetTags<native><epic_internal>(InTags: tag_container): void
     }
   }
 
@@ -1169,10 +1124,6 @@ Simulation<public> := module {
   # Module import path: /Verse.org/Simulation/player_array_helper
   player_array_helper<epic_internal> := module {
     TestFunc<native><epic_internal>(new_value: int): int
-  }
-
-  player_component<native><epic_internal> := class<unique>(vk_component) {
-    GetHandle<native><public>()<transacts>: player
   }
 
   player_multicast_delegate<native><epic_internal> := class<final>(multicast_delegate(player)) {}
@@ -1564,6 +1515,7 @@ Verse<public> := module {
   }
 }
 
+using { /Verse.org/VerseEngine/Component }
 # Module import path: /Verse.org/VerseEngine
 VerseEngine<public> := module {
   # Module import path: /Verse.org/VerseEngine/Component
@@ -1648,219 +1600,5 @@ VerseEngine<public> := module {
     Await<native><override>()<suspends>: t
 
     Broadcast<native><override>(__dupe___unnamed_parameter_33: t): void
-  }
-}
-
-# Module import path: /Verse.org/VerseExperimental
-VerseExperimental<public> := module {
-  # Creates and initializes a new instance with the specified year, month, day, hour, minute, second and millisecond.
-  CreateDateTime<native><public>(
-    Year: int,
-    Month: int,
-    Day: int,
-    Hour: int,
-    Minute: int,
-    Second: int,
-    Millisecond: int
-  )<transacts><decides>: date_time
-
-  # Creates and initializes a new instance with the specified days, hours, minutes, seconds and milliseconds.
-  CreateTimeSpan<native><public>(
-    Days: int,
-    Hours: int,
-    Minutes: int,
-    Seconds: int,
-    Milliseconds: int
-  )<transacts>: time_span
-
-  # Returns the maximum date value. The maximum date value is December 31, 9999, 23:59:59.9999999. See DateTimeMin
-  DateTimeMax<public>()<transacts>: date_time = external {}
-
-  # Returns the minimum date value. The minimum date value is January 1, 0001, 00:00:00.0. See DateTimeMax
-  DateTimeMin<public>()<transacts>: date_time = external {}
-
-  # Return the number of days in the specified month of the specified year
-  DaysInMonth<native><public>(Year: int, Month: int): int
-
-  # Return the number of days in the specified year
-  DaysInYear<native><public>(Year: int): int
-
-  GetDate<native><public>(Val: date_time): date_parts
-
-  GetDay<native><public>(Val: date_time): int
-
-  GetDayOfWeek<native><public>(Val: date_time): day_of_week
-
-  GetDays<native><public>(Val: time_span): int
-
-  GetHours<native><public>(Val: date_time): int
-
-  GetHours<native><public>(Val: time_span): int
-
-  GetMicroseconds<native><public>(Val: date_time): int
-
-  GetMicroseconds<native><public>(Val: time_span): int
-
-  GetMilliseconds<native><public>(Val: date_time): int
-
-  GetMilliseconds<native><public>(Val: time_span): int
-
-  GetMinutes<native><public>(Val: date_time): int
-
-  GetMinutes<native><public>(Val: time_span): int
-
-  GetMonth<native><public>(Val: date_time): int
-
-  GetMonthOfYear<native><public>(Val: date_time): month_of_year
-
-  GetNanoseconds<native><public>(Val: date_time): int
-
-  GetNanoseconds<native><public>(Val: time_span): int
-
-  GetSeconds<native><public>(Val: date_time): int
-
-  GetSeconds<native><public>(Val: time_span): int
-
-  GetTimeOfDay<native><public>(Val: date_time): time_of_day_parts
-
-  GetTotalDays<native><public>(Val: time_span): int
-
-  GetTotalHours<native><public>(Val: time_span): int
-
-  GetTotalMicroseconds<native><public>(Val: time_span): int
-
-  GetTotalMilliseconds<native><public>(Val: time_span): int
-
-  GetTotalMinutes<native><public>(Val: time_span): int
-
-  GetTotalSeconds<native><public>(Val: time_span): int
-
-  GetYear<native><public>(Val: date_time): int
-
-  Greater<public>(Left: date_time, Right: date_time)<transacts><decides>: date_time = external {}
-
-  Greater<public>(Left: time_span, Right: time_span)<transacts><decides>: time_span = external {}
-
-  GreaterEqual<public>(Left: date_time, Right: date_time)<transacts><decides>: date_time = external {}
-
-  GreaterEqual<public>(Left: time_span, Right: time_span)<transacts><decides>: time_span = external {}
-
-  Less<public>(Left: date_time, Right: date_time)<transacts><decides>: date_time = external {}
-
-  Less<public>(Left: time_span, Right: time_span)<transacts><decides>: time_span = external {}
-
-  LessEqual<public>(Left: date_time, Right: date_time)<transacts><decides>: date_time = external {}
-
-  LessEqual<public>(Left: time_span, Right: time_span)<transacts><decides>: time_span = external {}
-
-  # Returns a string representation of the datetime in the following format: yyyy.mm.dd-hh.mm.ss. Assumes Datetime is in UTC.
-  ToString<native><public>(Val: date_time): string
-
-  # Returns a string representation of the time span in the following format: yyyy.mm.dd-hh.mm.ss.
-  ToString<native><public>(Val: time_span): string
-
-  # Returns the current UTC date_time.
-  UtcNow<native><public>(): date_time
-
-  ValidateDateTime<native><public>(
-    Year: int,
-    Month: int,
-    Day: int,
-    Hour: int,
-    Minute: int,
-    Second: int,
-    Millisecond: int
-  ): logic
-
-  date_parts<native><public> := struct<internal> {
-    Day<native>: int
-
-    Month<native>: int
-
-    Year<native>: int
-  }
-
-  date_time<native><public> := struct {
-    Ticks<native><public>: int = external {}
-  }
-
-  # Enumerates the days of the week in 7-day calendars.
-  day_of_week<native><public> := enum {
-    Friday
-
-    Monday
-
-    Saturday
-
-    Sunday
-
-    Thursday
-
-    Tuesday
-
-    Wednesday
-  }
-
-  # Enumerates the months of the year in 12-month calendars.
-  month_of_year<native><public> := enum {
-    April
-
-    August
-
-    December
-
-    February
-
-    January
-
-    July
-
-    June
-
-    March
-
-    May
-
-    November
-
-    October
-
-    September
-  }
-
-  operator'*'<public>(Left: float, Right: time_span): time_span = external {}
-
-  operator'*'<public>(Left: time_span, Right: float): time_span = external {}
-
-  operator'+'<public>(Left: date_time, Right: time_span): date_time = external {}
-
-  operator'+'<public>(Left: time_span, Right: time_span): time_span = external {}
-
-  operator'-'<public>(Left: date_time, Right: date_time): time_span = external {}
-
-  operator'-'<public>(Left: date_time, Right: time_span): date_time = external {}
-
-  operator'-'<public>(Left: time_span, Right: time_span): time_span = external {}
-
-  operator'-'<public>(Right: time_span): time_span = external {}
-
-  operator'/'<public>(Left: time_span, Right: float): time_span = external {}
-
-  time_of_day_parts<native><public> := struct<internal> {
-    Hours<native>: int
-
-    Microseconds<native>: int
-
-    Milliseconds<native>: int
-
-    Minutes<native>: int
-
-    Nanoseconds<native>: int
-
-    Seconds<native>: int
-  }
-
-  time_span<native><public> := struct {
-    Ticks<public>: int = external {}
   }
 }
