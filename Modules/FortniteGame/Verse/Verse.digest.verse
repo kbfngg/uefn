@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.20-CL-32716692
+# Generated from build: ++Fortnite+Release-29.30-CL-32982357
 #################################################
 
 # Module import path: /Verse.org/Assets
@@ -11,9 +11,9 @@ Assets<public> := module {
 
   material<native><public> := interface<epic_internal> {}
 
-  mesh<native><public> := class<computes><final><epic_internal> {}
+  mesh<native><public> := class<computes><concrete><final><epic_internal> {}
 
-  particle_system<native><public> := class<computes><final><epic_internal> {}
+  particle_system<native><public> := class<computes><concrete><final><epic_internal> {}
 
   texture<native><public> := class<computes><final><epic_internal> {}
 }
@@ -784,11 +784,11 @@ Verse<public> := module {
   Pow<native><public>(A: float, B: float)<varies>: float
 
   # Writes `Message` to a dedicated `Print` log while displaying it in `Color` on the client screen for `Duration` seconds. By default, `Color` is `NamedColors.White` and `Duration` is `2.0` seconds.
-  Print<native><public>(Message: message, ?Duration: float = external {}, ?Color: color = external {}): void
+  Print<native><public>(Message: message, ?Duration: float = external {}, ?Color: color = external {})<transacts>: void
 
   using { /Verse.org/Colors }
   # Writes `Message` to a dedicated `Print` log while displaying it in `Color` on the client screen for `Duration` seconds. By default, `Color` is `NamedColors.White` and `Duration` is `2.0` seconds.
-  Print<native><public>(Message: string, ?Duration: float = external {}, ?Color: color = external {}): void
+  Print<native><public>(Message: string, ?Duration: float = external {}, ?Color: color = external {})<transacts>: void
 
   # Returns the quotient `X/Y` as defined by Euclidean division, i.e.:
   #  * `Quotient[X/Y] = Floor[X/Y]` when `Y > 0`

@@ -455,9 +455,6 @@
 		"_comment_AllowedClasses2": "Classes marked with Visible: true will appear in class pickers such as for Blueprint parent classes, UClass* FProperties, etc.",
 		"_comment_AllowedClasses3": "Note: All Blueprints must be listed in FortExposedAssetLists. BPs should only be listed here if they are subclassable (Visible:true), but must still go in a FortExposedAssetList.",
 		"AllowedClasses": {
-			"/NPCDefault/Types/CharacterType_Custom.CharacterType_Custom_C":																{ "Visible": true },
-			"/NPCDefault/Types/CharacterType_Guard.CharacterType_Guard_C":																	{ "Visible": true },
-			"/NPCDefault/Types/CharacterType_Wildlife.CharacterType_Wildlife_C":															{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Awareness.CharacterModifier_Awareness_C": 							{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_CosmeticSpawn.CharacterModifier_CosmeticSpawn_C": 					{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_DefaultBehavior.CharacterModifier_DefaultBehavior_C": 				{ "Visible": true },
@@ -469,6 +466,7 @@
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_GuardVerseBehavior.CharacterModifier_GuardVerseBehavior_C":		{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Health.CharacterModifier_Health_C": 								{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Movement.CharacterModifier_Movement_C": 							{ "Visible": true },
+			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Navigation.CharacterModifier_Navigation_C": 						{ "Visible": true },			
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_PatrolPath.CharacterModifier_PatrolPath_C":						{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Perception.CharacterModifier_Perception_C":						{ "Visible": true },
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Taming.CharacterModifier_Taming_C": 								{ "Visible": true },
@@ -3218,7 +3216,7 @@
 			},
 			{
 				"Type": "/Script/VerseFortnite.NPCCharacterDefinition",
-				"DenyList": [ "FortReleaseVersion", "GameplayTags", "SkeletalMesh", "CharacterBlueprint", "AnimPreset", "IKRetargeter", "CharacterParts", "OverrideMaterials", "AnimationBP"],
+				"DenyList": [ "FortReleaseVersion", "GameplayTags", "SkeletalMesh", "CharacterBlueprint", "AnimPreset", "IKRetargeter", "CharacterParts", "OverrideMaterials", "AnimationBP", "AssembledMeshSchema", "MarkerIconOverride"],
 				"bAllowListAllProperties": true,
 				"bAllowListAllSubclassProperties": true
 			},
@@ -3264,6 +3262,11 @@
 			},
 			{
 				"Type": "/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Movement.CharacterModifier_Movement_C",
+				"bAllowListAllProperties": true,
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Navigation.CharacterModifier_Navigation_C",
 				"bAllowListAllProperties": true,
 				"bAllowListAllSubclassProperties": true
 			},

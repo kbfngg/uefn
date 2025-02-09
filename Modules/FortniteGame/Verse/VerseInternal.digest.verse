@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.20-CL-32716692
+# Generated from build: ++Fortnite+Release-29.30-CL-32982357
 #################################################
 
 using { /Verse.org/ParameterCollections }
@@ -50,7 +50,7 @@ Assets<public> := module {
     GetMaterialInterface<native><override>(): ue_material_interface
   }
 
-  mesh<native><public> := class<computes><final><epic_internal>(asset) {}
+  mesh<native><public> := class<computes><concrete><final><epic_internal>(asset) {}
 
   parameterized_material<native><epic_internal> := class<epic_internal>(material, parameter_collection) {
     GetAsset<override>(): material_asset = external {}
@@ -60,11 +60,11 @@ Assets<public> := module {
     Material<native><epic_internal>: material
   }
 
-  particle_system<native><public> := class<computes><final><epic_internal>(client_asset) {}
+  particle_system<native><public> := class<computes><concrete><final><epic_internal>(client_asset) {}
 
   skeletal_mesh<native><epic_internal> := class<computes><final><epic_internal>(asset) {}
 
-  sound<native><epic_internal> := class<computes><final><epic_internal>(client_asset) {}
+  sound<native><epic_internal> := class<computes><concrete><final><epic_internal>(client_asset) {}
 
   texture<native><public> := class<computes><final><epic_internal>(texture_base) {}
 
@@ -1492,11 +1492,11 @@ Verse<public> := module {
   Pow<native><public>(A: float, B: float)<varies>: float
 
   # Writes `Message` to a dedicated `Print` log while displaying it in `Color` on the client screen for `Duration` seconds. By default, `Color` is `NamedColors.White` and `Duration` is `2.0` seconds.
-  Print<native><public>(Message: message, ?Duration: float = external {}, ?Color: color = external {}): void
+  Print<native><public>(Message: message, ?Duration: float = external {}, ?Color: color = external {})<transacts>: void
 
   using { /Verse.org/Colors }
   # Writes `Message` to a dedicated `Print` log while displaying it in `Color` on the client screen for `Duration` seconds. By default, `Color` is `NamedColors.White` and `Duration` is `2.0` seconds.
-  Print<native><public>(Message: string, ?Duration: float = external {}, ?Color: color = external {}): void
+  Print<native><public>(Message: string, ?Duration: float = external {}, ?Color: color = external {})<transacts>: void
 
   # Returns the quotient `X/Y` as defined by Euclidean division, i.e.:
   #  * `Quotient[X/Y] = Floor[X/Y]` when `Y > 0`
