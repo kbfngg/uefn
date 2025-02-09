@@ -417,6 +417,7 @@
 			"/Script/Engine.DataAsset":							{ "Rules": ["View","Create"] },
 			"/Script/Engine.DataLayerAsset":					{ "Rules": ["View","Create"] },
 			"/Script/Engine.DataTable":							{ "Rules": ["View"] },
+			"/Script/Entity.EntityPrefab":						{ "Rules": ["View","Create"] },
 			"/Script/Engine.HLODLayer":							{ "Rules": ["View","Create"] },
 			"/Script/Engine.Material":							{ "Rules": ["View","Create","Import","Export","Public"] },
 			"/Script/Engine.MaterialInstanceConstant":			{ "Rules": ["View","Create","Import","Export","Public"] },
@@ -446,6 +447,9 @@
 			"/Script/HairStrandsCore.GroomBindingAsset":		{ "Rules": [ "View", "Create" ] },
 			"/Script/HarmonixDsp.FusionPatch":					{ "Rules": [ "View", "Create" ] },			
 			"/Script/ImgMedia.ImgMediaSource":					{ "Rules": ["View","Create"] },
+			"/Script/ItemizationCoreRuntime.ItemComponentData_Icon":		{ "Rules": ["View","Create"] },
+			"/Script/ItemizationCoreRuntime.ItemComponentData_MaxStackSize":{ "Rules": ["View","Create"] },
+			"/Script/ItemizationCoreRuntime.ItemComponentData_StackSize":	{ "Rules": [ "View" ] },
 			"/Script/Landscape.LandscapeLayerInfoObject":		{ "Rules": ["View","Create"] },
 			"/Script/Landscape.LandscapeGrassType":				{ "Rules": ["View","Create"] },
 			"/Script/LevelSequence.LevelSequence":				{ "Rules": ["View","Create","Import","Export"], "Subclasses": "NativeOnly" },
@@ -1140,6 +1144,8 @@
 			"/Script/Engine.MaterialExpressionVolumetricCloudEmptySpaceSkippingOutput":			{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionWhileLoop":										{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionWorldPosition":									{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Entity.EntityPrefab":														{ "Visible": true },
+			"/Script/EntityLevel.EntityLevel":													{ },
 			"/Script/InterchangeImport.MaterialExpressionMaterialXAppend3Vector":				{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/InterchangeImport.MaterialExpressionMaterialXAppend4Vector":				{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/InterchangeImport.MaterialExpressionMaterialXBurn":						{ "Visible": true,	"Subclasses": "NativeOnly" },
@@ -1462,6 +1468,9 @@
 			"/Script/InterchangePipelines.InterchangeGenericMaterialPipeline":	{  },
 			"/Script/InterchangePipelines.InterchangeGenericMeshPipeline":		{  },
 			"/Script/InterchangePipelines.InterchangeGenericTexturePipeline":	{  },
+			"/Script/ItemizationCoreRuntime.ItemComponentData_Icon":			{ "Visible": true },
+			"/Script/ItemizationCoreRuntime.ItemComponentData_MaxStackSize":	{ "Visible": true },
+			"/Script/ItemizationCoreRuntime.ItemComponentData_StackSize":		{ "Visible": true },
 			"/Script/Landscape.ControlPointMeshActor":							{  },
 			"/Script/Landscape.ControlPointMeshComponent":						{  },
 			"/Script/Landscape.Landscape":										{  },
@@ -1731,6 +1740,8 @@
 			"/Script/Persona.PersonaPreviewSceneAnimationController":			{ "Visible": true },
 			"/Script/Persona.PersonaPreviewSceneDefaultController":				{ "Visible": true },
 			"/Script/Persona.PersonaPreviewSceneRefPoseController":				{ "Visible": true },
+			"/Script/Persona.AnimAssetFindReplaceCurves":						{ "Visible": true },
+			"/Script/Persona.AnimAssetFindReplaceSyncMarkers":					{ "Visible": true },
 			"/Script/PlayspaceSystem.OverlapComponent":							{  },
 			"/Script/PointLight.PointLightNativeComponent":						{  },
 			"/Script/PropManipulation.PropManipulationNativeComponent":			{  },
@@ -1835,7 +1846,10 @@
 			"/Wind/Gameplay/WindFields/Parent/WindSpline_Parent.WindSpline_Parent_C":{  },
 			"/Script/Engine.FloatSpringState":									{  },
 			"/Script/Engine.QuaternionSpringState":								{  },
-			"/Script/Engine.VectorSpringState":									{  }
+			"/Script/Engine.VectorSpringState":									{  },
+			"/Script/VerseQuery.EntityQueryManager":							{  },
+			"/Script/VerseQuery.EntityTypeQueryContainer":						{  },
+			"/Script/VerseQuery.TaggedObjectQueryContainer":					{  }
 		},
 		"AllowedMenus": {
 			"AssetEditor.IKRetargetEditor.MainMenu.CreateMenu": {
@@ -2004,6 +2018,7 @@
 					"ActorAttachToSubMenu",
 					"DetachFromParent",
 					"ValidateActors",
+					"FixValidationIssues",
 					"TransformSubMenu",
 					"PivotSubMenu",
 					"PilotSelectedActor",
@@ -2016,7 +2031,13 @@
 					"Teleport",
 					"ScriptedActorActions",
 					"AddAnchoredNote",
-					"AddCameraNote"
+					"AddCameraNote",
+					"AddEntityMenu", 
+					"SaveAsPrefab", 
+					"GroupEntities",
+					"EditPrefab", 
+					"BrowseToPrefab", 
+					"PushPrefabOverrides"
 				]
 			},
 			"LevelEditor.ActorContextMenu.AddActor": {
@@ -2041,13 +2062,18 @@
 				"DenyList": [ "RectLight", "PlayerStart", "Trigger", "RuntimeVirtualTextureVolume", "CameraActor" ]
 			},
 			"LevelEditor.LevelEditorToolBar.AddQuickMenu": {
-				"AllowList": [ "Basic", "Lights", "Shapes", "Cinematic", "Volumes", "Visual", "OpenPlaceActors" ]
+				"AllowList": [ "Basic", "Lights", "Shapes", "Cinematic", "Volumes", "Visual", "OpenPlaceActors", "Entities" ]
 			},
 			"LevelEditor.LevelEditorToolBar.AddQuickMenu.Basic": {
 				"AllowList": [ "Actor", "PointLight" ]
 			},
 			"LevelEditor.LevelEditorToolBar.AddQuickMenu.Cinematic": {
 				"AllowList": [ "CameraShakeSourceActor", "CineCameraActor", "CameraRig_Crane", "CameraRig_Rail" ]
+			},
+			"LevelEditor.LevelEditorToolBar.AddQuickMenu.Entities": {
+				"AllowList": [
+					"entity"
+				]
 			},
 			"LevelEditor.LevelEditorToolBar.AddQuickMenu.Lights": {
 				"AllowList": [ "DirectionalLight", "PointLight", "SpotLight", "SkyLight", "RectLight" ]
@@ -2158,6 +2184,9 @@
 			"UnrealEd.ViewportToolbar.View": {
 				"AllowList": [ "LitMode", "UnlitMode", "WireframeMode", "DetailLightingMode", "LightingOnlyMode", "ReflectionOverrideMode", "CollisionPawn", "CollisionVisibility", "VisualizeBufferViewMode", "VisualizeNaniteViewMode", "VisualizeLumenViewMode", "VisualizeVirtualShadowMapViewMode" ]
 			},
+			"ViewportToolbarBase.Show": {
+				"AllowList": [ "Common_AntiAliasing", "Common_Atmosphere", "Common_BSP", "Common_Collision", "Common_Decals", "Common_Fog", "Common_Grid", "Common_Landscape", "Common_MediaPlanes", "Common_Navigation", "Common_Particles", "Common_SkeletalMeshes", "Common_StaticMeshes", "Common_Translucency", "ShowHLODsMenu", "ShowRevisionControlMenu", "ShowCoopNotes" ]
+			},
 			"SpatialProfiler.SettingsToolBar.SettingsMenu": {
 				"AllowList": [ "ShowStats" ]
 			}
@@ -2195,7 +2224,8 @@
 					"PersonaSequenceRecorderSettings",
 					"SequenceBrowser",
 					"AnimCurveViewerTab",
-					"CurveEditor"
+					"CurveEditor",
+					"FindReplaceTab"
 				]
 			},
 			"BlueprintEditor": {
@@ -2323,7 +2353,8 @@
 					"AdvancedPreviewTab",
 					"PersonaSequenceRecorderSettings",
 					"SequenceBrowser",
-					"AnimCurveMetadataEditorTab"
+					"AnimCurveMetadataEditorTab",
+					"FindReplaceTab"
 				]
 			},
 			"SkeletalMeshEditor": {
@@ -2339,7 +2370,8 @@
 					"PersonaSequenceRecorderSettings",
 					"MorphTargetsTab",
 					"AnimCurveMetadataEditorTab",
-					"ToolBox"
+					"ToolBox",
+					"FindReplaceTab"
 				]
 			},
 			"WidgetBlueprintEditor": {
@@ -2468,7 +2500,8 @@
 				"Shapes",
 				"Volumes",
 				"Visual",
-				"Cinematic"
+				"Cinematic",
+				"Entities"
 			],
 			"AllowedClasses": [
 				"CameraRig_Crane",
@@ -2490,6 +2523,7 @@
 				"Cone",
 				"Cube",
 				"Cylinder",
+				"entity",
 				"Plane",
 				"Sphere",
 				"WindDirectionalSource"
@@ -2511,7 +2545,8 @@
 			"VKT_Verse_Elimination",
 			"VKT_Verse_AI_Stronghold",
 			"VKT_Verse_PropHunt",
-			"Deserted"
+			"Deserted",
+			"PrefabExample"
 		]
 	},
 	"PropertyEditorClassPermissionList": {
@@ -2736,7 +2771,7 @@
 			},
 			{
 				"Type": "/FortUILibrary/UGC/Widgets/Buttons/CTA/WBP_UEFN_ButtonCTA_Base.WBP_UEFN_ButtonCTA_Base_C",
-				"AllowList": [ "MinWidth", "MinHeight", "bSelectable", "bShouldSelectUponReceivingFocus", "bInteractableWhenSelected", "ClickMethod", "TouchMethod", "PressMethod", "InputPriority", "Text", "TextSecondary", "BackgroundMaterial", "BorderMaterial", "IsBorderAdditive", "ClickEvent" ]
+				"AllowList": [ "MinWidth", "MinHeight", "bSelectable", "bShouldSelectUponReceivingFocus", "bInteractableWhenSelected", "ClickMethod", "TouchMethod", "PressMethod", "InputPriority", "Text", "TextSecondary", "BackgroundMaterial", "BorderMaterial", "IsBorderAdditive", "ClickEvent", "OnButtonBaseClicked" ]
 			},
 			{
 				"Type": "/Script/UMG.Image",
@@ -3212,7 +3247,7 @@
 			},
 			{
 				"Type": "/Script/ValkyrieEditor.ValkyrieProjectSettingsEditorViewModel",
-				"AllowList": [ "Title", "Description", "VersePath", "DocsUrl", "UGCLocDescriptor" ]
+				"AllowList": [ "Title", "Description", "VersePath", "DocsUrl", "UGCLocDescriptor", "bIsUsingNewInventorySystem", "ExperimentalAccessWarning", "bIsUsingSceneGraphSystem" ]
 			},
 			{
 				"Type": "/Script/Engine.CameraShakeBase",
@@ -3351,7 +3386,7 @@
 			},
 			{
 				"Type": "/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_UI.CharacterModifier_UI_C",
-				"bAllowListAllProperties": true,
+				"DenyList": [ "HealthBarHeight" ],
 				"bAllowListAllSubclassProperties": true
 			},
 			{

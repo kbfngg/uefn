@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-30.00-CL-33760522
+# Generated from build: ++Fortnite+Release-30.10-CL-34184790
 #################################################
 
 # Module import path: /Verse.org/Assets
@@ -558,6 +558,8 @@ Simulation<public> := module {
 
     MinComponentValue<public>: ?t = external {}
 
+    ShowNormalize<public>: logic = external {}
+
     ShowPreserveRatio<public>: logic = external {}
 
     SpinBoxDelta<public>: ?t = external {}
@@ -575,6 +577,8 @@ Simulation<public> := module {
     MouseLinearDeltaSensitivity<public>: float = external {}
 
     MouseShiftMovePixelPerDelta<public>: float = external {}
+
+    ShowNormalize<public>: logic = external {}
 
     ShowPreserveRatio<public>: logic = external {}
 

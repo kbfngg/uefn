@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-30.00-CL-33760522
+# Generated from build: ++Fortnite+Release-30.10-CL-34184790
 #################################################
 
 using { /UnrealEngine.com/Temporary/SpatialMath }
@@ -178,6 +178,461 @@ Temporary<public> := module {
 
       Warning
     }
+  }
+
+  SceneGraph<public> := module {
+    @experimental
+    # Finds all components attached to entities below and including `InEntity` of type `ComponentType`.When querying from the simulation entity, the simulation entity itself is not included in the results.The order of the returned components is unspecified and subject to change.
+    (InEntity: entity).FindComponents<native><public>(ComponentType: subtype(component))<transacts>: []ComponentType
+
+    @experimental
+    # Finds all entities below and including `InEntity` of type `EntityType`.When querying from the simulation entity, the simulation entity itself is not included in the results.The order of the returned entities is unspecified and subject to change.
+    (InEntity: entity).FindEntities<native><public>(EntityType: subtype(entity))<transacts>: []EntityType
+
+    @experimental
+    # Finds all entities below and including `InEntity` whose `transform_component.Translation` is inside `Shape`.When querying from the simulation entity, the simulation entity itself is not included in the results.The order of the returned entities is unspecified and subject to change.
+    (InEntity: entity).FindEntitiesOriginInside<native><public>(Shape: convex_volume3)<transacts>: []entity
+
+    @experimental
+    # Finds all entities below and including `InEntity` whose `collision_component` shape overlaps with `Shape`.When querying from the simulation entity, the simulation entity itself is not included in the results.The order of the returned entities is unspecified and subject to change.
+    (InEntity: entity).FindEntitiesOverlapping<native><public>(Shape: convex_volume3)<transacts>: []entity
+
+    @experimental
+    # Finds all entities below and including `InEntity` containing a component of type `ComponentType`.When querying from the simulation entity, the simulation entity itself is not included in the results.The order of the returned entities is unspecified and subject to change.
+    (InEntity: entity).FindEntitiesWithComponent<native><public>(ComponentType: subtype(component))<transacts>: []entity
+
+    @experimental
+    # Finds all entities below and including `InEntity` with `Tag` present in their `tag_component`.When querying from the simulation entity, the simulation entity itself is not included in the results.The order of the returned entities is unspecified and subject to change.
+    (InEntity: entity).FindEntitiesWithTag<native><public>(Tag: tag)<transacts>: []entity
+
+    @experimental
+    # Finds all components attached to parent entities above `InEntity` of type `ComponentType`.The order of the returned components is unspecified and subject to change.
+    (InEntity: entity).FindParentComponents<native><public>(ComponentType: subtype(component))<transacts>: []ComponentType
+
+    @experimental
+    # Finds all parent entities above `InEntity` of type `EntityType`.The order of the returned entities is unspecified and subject to change.
+    (InEntity: entity).FindParentEntities<native><public>(EntityType: subtype(entity))<transacts>: []EntityType
+
+    @experimental
+    # Finds all parent entities above `InEntity` whose `transform_component.Translation` is inside `Shape`.The order of the returned components is unspecified and subject to change.
+    (InEntity: entity).FindParentEntitiesOriginInside<native><public>(Shape: convex_volume3)<transacts>: []entity
+
+    @experimental
+    # Finds all parent entities above `InEntity` whose `collision_component` shape overlaps with `Shape`.The order of the returned components is unspecified and subject to change.
+    (InEntity: entity).FindParentEntitiesOverlapping<native><public>(Shape: convex_volume3)<transacts>: []entity
+
+    @experimental
+    # Finds all parent entities above `InEntity` containing a component of type `ComponentType`.The order of the returned entities is unspecified and subject to change.
+    (InEntity: entity).FindParentEntitiesWithComponent<native><public>(ComponentType: subtype(component))<transacts>: []entity
+
+    @experimental
+    # Finds all parent entities above `InEntity` with `Tag` present in their `tag_component`.The order of the returned entities is unspecified and subject to change.
+    (InEntity: entity).FindParentEntitiesWithTag<native><public>(Tag: tag)<transacts>: []entity
+
+    @experimental
+    # Returns the simulation entity parent for this entity.  * The simulation entity is the rootmost entity in an experience.  * Fails if this entity is not currently in the scene.
+    (InEntity: entity).GetSimulationEntity<native><public>()<transacts><decides>: entity
+
+    using { /UnrealEngine.com/Temporary/SpatialMath }
+    using { /Verse.org/Simulation/Tags }
+    @experimental
+    # Axis aligned box volume.
+    axis_aligned_box3<native><public> := class<final><concrete>(convex_volume3) {
+      # Center point of the box.
+      Center<native><public>: vector3 = external {}
+
+      # Extent of the box.
+      Extent<native><public>: vector3 = external {}
+    }
+
+    @experimental
+    # Used to make an entity collide with other scene objects, including preventing players and NPCs from passing through the entity.Overlap queries can only find entities with enabled `collision_components`.Dependencies:  * `transform_component` on the entity positions the `collision_component`.  * `mesh_component` on the entity provides the collision shape for the `collision_component`.
+    collision_component<native><public> := class<final>(component, enableable) {
+      # Disables the `collision_component`. Scene objects will pass through this entity if collision is disabled.
+      Disable<native><override>(): void
+
+      # Enables the `collision_component`. Scene objects will pass through this entity if collision is disabled.
+      Enable<native><override>(): void
+
+      # Succeeds if the component is enabled, fails if it's disabled.
+      IsEnabled<native><override>()<transacts><decides>: void
+
+      OnAddedToScene<native><override>(): void
+
+      # Sets up collision simulation for the entity.
+      OnBeginSimulation<native><override>(): void
+
+      # Tears down collision simulation for the entity.
+      OnEndSimulation<native><override>(): void
+
+      OnInitialized<native><override>(): void
+
+      OnRemovingFromScene<native><override>(): void
+
+      OnUninitializing<native><override>(): void
+    }
+
+    @experimental
+    # Base class for authoring logic and data in the SceneGraph. Using components youcan author re-usable building blocks of logic and data which can then be added toentities in the scene.Components are a very low level building block which can be used in many ways.For example:  * Exposing engine level concepts like mesh or sound  * Adding gameplay capabilities like damage or interaction  * Storing an inventory for a character in the gameAs components are generic there is no specific way that they must be used.It is up to the needs of your experience if you use one big game componentor if you break up logic into many small components.Currently UEFN will not allow you to add more than one component of a givensubclass of component (for example, only one type of light_component). This restrictionwill be relaxed in the future where components will be able to decide if theywish to allow only one instance or many instances of the same component to existtogether on one entity.==============================================================================Component Lifetime  Components move through a series of lifetime functions as they are added  to entities, added to the scene, and begin running in the simulation. Components  should override these methods to perform setup and run their simulation.  As a component shuts down it will then move through shutdown version of these  functions, giving users the opportunity to clean up any retained state on the  component before it is disposed.  Lifetime Methods:    OnInitialized       OnAddedToScene         OnBeginSimulation -> OnSimulate<suspends>         OnEndSimulation       OnRemovingFromScene    OnUninitializing==============================================================================
+    component<native><public> := class<abstract><unique>(disposable) {
+      @experimental
+      # Disposes of the component and all its resources.  * Disposed components are removed from the scene and cannot be added back.  * Flows through `OnEndSimulation`-> `OnRemovingFromScene`-> `OnUninitializing`.
+      Dispose<native><override><final>(): void
+
+      @experimental
+      # Determines if the component has been disposed from the `Dispose` method. Disposed components cannot be added back to the scene.
+      IsDisposed<native><final><public>()<transacts><decides>: void
+
+      @experimental
+      # Succeeds if the component is currently in the scene.  * After `OnAddedToScene` is called this call succeeds.  * After `OnRemovingFromScene` is called this call fails.
+      IsInScene<native><final><public>()<transacts><decides>: void
+
+      @experimental
+      # Succeeds if the component is currently initialized with its parent entity.  * After `OnInitialized` is called this call succeeds.  * After `OnUninitializing` is called this call fails.
+      IsInitialized<native><final><public>()<transacts><decides>: void
+
+      @experimental
+      # Succeeds if the component is currently simulating.  * After `OnBeginSimulation` is called this call succeeds.  * After `OnEndSimulation` is called this call fails.
+      IsSimulating<native><final><public>()<transacts><decides>: void
+
+      @experimental
+      # Called when the component is added to the scene by parenting it under the simulation entity or another entity already in the scene.  * Querying for components in the scene is valid after this phase completes.  * `OnInitialized` is guaranteed to run before `OnAddedToScene`.
+      OnAddedToScene<native><native_callable><protected>(): void
+
+      @experimental
+      # Called when the component begins simulating within the scene.  * Use this to set up TickEvent callbacks or other setup that must be guaranteed to complete immediately.  * `OnAddedToScene` is guaranteed to run before `OnBeginSimulation`.
+      OnBeginSimulation<native><native_callable><protected>(): void
+
+      @experimental
+      # Called when the component ends simulation within the scene.  * Simulation ends on a component when the experience resets, the parent entity is removed from the scene, or the component is disposed.  * Cached TickEvents cancelables should be canceled in `OnEndSimulation`.  * `OnSimulate` task will be canceled before `OnEndSimulation` is called.  * `OnEndSimulation` is only called on components that have already had `OnBeginSimulation` called.
+      OnEndSimulation<native><native_callable><protected>(): void
+
+      @experimental
+      # Called when the component is added to an entity using `entity.AddEntities`.  * Components can check for dependent sibling components at this stage through `entity.GetComponents`.  * Components can add additional components at this stage using `entity.AddComponents`
+      OnInitialized<native><native_callable><protected>(): void
+
+      @experimental
+      # Called when the component is about to be removed from the scene.  * Components are removed from a scene when the parent entity is removed from the scene or the component is disposed.  * `OnRemovingFromScene` is only called on components that have already had `OnAddedToScene` called.
+      OnRemovingFromScene<native><native_callable><protected>(): void
+
+      @experimental
+      # Called when the component begins simulating within the scene.  * Use this to add asynchronous/suspends update logic for a component.  * `OnBeginSimulation` is guaranteed to run before `OnSimulate`.  * `OnSimulate` will be cancelled before `OnEndSimulation`
+      OnSimulate<native_callable><protected>()<suspends>: void = external {}
+
+      @experimental
+      # Called when the component is about to be removed from the parent entity.  * Components are removed from their parent entity when they are disposed.  * `OnUninitializing` is only called on components that have already had `OnInitialized` called.
+      OnUninitializing<native><native_callable><protected>(): void
+
+      @experimental
+      # The parent entity of this component.  * Components must have a parent entity pointer provided when being constructed.  * Components cannot be moved between parents.  * The parent pointer remains valid even after the component has been disposed.
+      var<private> Entity<public>: entity
+
+      @experimental
+      # Set callbacks to `TickEvents.PrePhysics` and `TickEvents.PostPhysics` to receive per-frame updatesbefore and after physics is updated on your object.
+      var<private> TickEvents<protected>: tick_events = external {}
+    }
+
+    @experimental
+    # Base class for all convex volumes.
+    convex_volume3<native><public> := class<epic_internal>(volume3) {
+      # Determines if `Point` falls within the boundaries of this `convex_volume3`.
+      Contains<native><public>(Point: vector3)<computes><decides><reads>: void
+    }
+
+    using { /Verse.org/Assets }
+    using { /Verse.org/Colors }
+    using { /Verse.org/Simulation }
+    @experimental
+    # A `directional_light_component` simulates light that is being emitted from a source that is infinitelyfar away. This means that all shadows cast by this light will be parallel, making this the ideal choicefor simulating sunlight.
+    directional_light_component<native><public> := class<final>(light_component) {
+      @experimental
+      # Controls the amount of shadow occlusion. A value of 0.0 means no occlusion, thus no shadow.
+      var ShadowOpacity<public>: type { _X: float where 0.000000 <= _X, _X <= 1.000000 } = external {}
+    }
+
+    @experimental
+    # Entities are the base object in the SceneGraph.  * Objects in experiences are constructed of one or more entities.  * Entities are hierarchical. You can query your parent using `GetParent` and add child entities using `AddEntities`.  * Behavior is added to entities through `component`s. You can add new components using `AddComponents`.  * The structure and content of entities is dynamic and be changed at any time through your experience.==============================================================================Deriving from entity  In the SceneGraph system a class that derives from `entity` is also known as a prefab. Prefabs are useful when you  want to spawn/re-use a collection of entities and components many times within your game. Primarily prefabs are  authored through the editor, with their Verse classes generated as part of the build into the projects  Assets.digest.verse file.  While you can create base prefabs for common game object types like a vehicle or character, we highly recommended  that you do not add code directly to the entity class, and instead keep logic in components. Keeping logic and data in  components allows you to restructure your prefabs throughout production of your experience, without needing to massively  refactor your class structure.
+    entity<native><public> := class<concrete><unique><transacts>(disposable) {
+      @experimental
+      # Adds the provided components to the entity.   * If a component is not allowed to be added to this entity it is skipped.  * Components are added following these rules:      1. All components are added to the entity child list.      2. All components have `OnInitialized` called.      3. All components have `OnAddedToScene` called (if this entity is in the scene).      4. All components have `OnBeginSimulation` called (if this entity is simulating).
+      AddComponents<native><final><public>(Components: []component): void
+
+      @experimental
+      # Adds the provided entities as children of this entity.  * If child entity already has a parent, removes the entity from its current parent and adds it to the new one.  * Added child entities will move through their lifetime methods until they match the state of the new parent.
+      AddEntities<native><final><public>(NewChildEntities: []entity): void
+
+      @experimental
+      # Disposes of the entity and all its resources.  * Disposed entities are removed from the scene and cannot be added back.  * Flows through `OnEndSimulation`-> `OnRemovingFromScene`-> `OnUninitializing`.
+      Dispose<native><override><final>(): void
+
+      @experimental
+      # Returns the child components of type ComponentType.  * To get all child components use `GetComponents(component)`.  * To get a single component use `GetComponent(some_component)[0]`.
+      GetComponents<native><final><public>(ComponentType: subtype(component))<transacts>: []ComponentType
+
+      @experimental
+      # Returns the child entities belonging to this entity which are accessible from the calling context.  * This method only gets the direct entity children. To query multiple levels down the entity structure use    the Find* query methods instead.
+      GetEntities<native><final><public>()<transacts>: []entity
+
+      @experimental
+      # Returns the parent entity of this entity.  * The parent entity controls the lifetime of its child entities and components. When an entity    is removed from the scene, all its child entities and components will be removed as well.  * Some entities may choose to re-parent child entities before being disposed For example,    a vehicle might drop an attached wheel vs. having the wheel entity be removed with the vehicle.  * Method fails if there is currently no parent entity.
+      GetParent<native><final><public>()<transacts><decides>: entity
+
+      @experimental
+      # Succeeds if the entity has been disposed by the `Dispose` method. Disposed entities cannot be added back to the scene.
+      IsDisposed<native><final><public>()<transacts><decides>: void
+
+      @experimental
+      # Removes this entity from its parent. This is used to remove entities from the scene temporarily.  * Components on this entity and its children will run through `OnEndSimulation` -> `OnRemovingFromScene`.  * Entity can be added back later by using `NewParent.AddEntities`.  * If this entity is no longer needed then consider using `Dispose` instead of `RemoveFromParent`.
+      RemoveFromParent<native><final><public>(): void
+    }
+
+    @experimental
+    # Reference type to editor defined prefab. Only generated digest code should reference this type.
+    entity_prefab<native><public> := class<computes><epic_internal> {}
+
+    @experimental
+    # Used to subscribe a callback to a DeltaTime based callback from one of the phases in a component's `TickEvents` object.'IMPORTANT: You must keep a pointer on your component to the returned `cancelable`. Otherwise the GC will eventuallyclean up your subscription and your callback will stop being invoked.
+    execution_subscribable<native><public> := class<epic_internal>(subscribable(float)) {
+      @experimental
+      # Subscribe a callback function to this TickEvent phase. The input parameter to your function (DeltaTime) is the time that haspassed between the last update and the current update.
+      Subscribe<native><override>(Callback: type { __(: float): void })<transacts>: cancelable
+    }
+
+    @experimental
+    # Base class for light components in the SceneGraph.Dependencies:  * `transform_component` on the entity positions the light.Examples of components implementing `light_component`:  * `directional_light_component`  * `point_light_component`  * `rect_light_component`  * `spot_light_component`
+    light_component<native><public> := class<abstract><epic_internal>(component) {
+      # Returns the color of the light.
+      GetColor<native><public>()<transacts>: color
+
+      OnInitialized<native><override>(): void
+
+      OnUninitializing<native><override>(): void
+
+      # Sets the color of the light. Note that this can change the light’s effective intensity.
+      SetColor<native><public>(InColor: color)<transacts>: void
+
+      @experimental
+      # If the light affects global illumination, when ray-traced global illumination is enabled.
+      var AffectGlobalIllumination<public>: logic = external {}
+
+      @experimental
+      # If the light affects objects in reflections, when ray-traced reflection is enabled.
+      var AffectReflection<public>: logic = external {}
+
+      @experimental
+      # If the light casts high quality shadows, such that hair-strands are self-shadowing. When this option is enabled, there is an extra GPU cost for this light.
+      var CastDeepShadows<public>: logic = external {}
+
+      @experimental
+      # If the light casts any shadows.
+      var CastShadows<public>: logic = external {}
+
+      @experimental
+      # If the light casts shadows on volumetric fog. Disabling this can save GPU time.
+      var CastVolumetricShadow<public>: logic = external {}
+
+      @experimental
+      # The total energy the light emits in candela. The renderer clamps between 0.0 and 20.0.
+      var Intensity<public>: float = external {}
+    }
+
+    @experimental
+    # Used to render a `mesh` at the location of this entity. A mesh is a set of polygons that can be used to represent shapesin the world such as:  * foliage and terrain decorations  * movers (for example, doors and lifts)  * procedurally created buildingsDependencies:  * `transform_component` on the entity positions the mesh.
+    mesh_component<native><public> := class<final>(component, enableable) {
+      @experimental
+      # Disables rendering of this mesh.
+      Disable<native><override>(): void
+
+      @experimental
+      # Enables rendering of this mesh.
+      Enable<native><override>(): void
+
+      @experimental
+      # Succeeds if the component is enabled, fails if it's disabled.
+      IsEnabled<native><override>()<transacts><decides>: void
+
+      OnAddedToScene<native><override>(): void
+
+      OnInitialized<native><override>(): void
+
+      OnRemovingFromScene<native><override>(): void
+
+      @experimental
+      # A material to be applied to this mesh. If this is set to `false` the base material on the mesh asset will be used.
+      var Material<native><public>: ?material = external {}
+
+      @editable
+      @experimental
+      # The `mesh` to be rendered by this `mesh_component`.
+      var Mesh<native><public>: mesh = external {}
+    }
+
+    @experimental
+    # Constrains the transform of this entity so it is always offset relatively from its parent entity.Any changes made to the parent entity's `transform_component` will automatically cause this entity to change too.Dependencies:  * `transform_component` on the entity provides the world transform to be constrained.
+    parent_constraint_component<native><public> := class(component) {
+      OnInitialized<native><override>(): void
+
+      OnUninitializing<native><override>(): void
+    }
+
+    @experimental
+    # Used to spawn a `particle_system` at the location of this entity. The `particle_system` will simulate whilethe `particle_system_component` is in the scene.Dependencies:  * `transform_component` on the entity positions the `particle_system`.
+    particle_system_component<native><public> := class<final>(component, enableable) {
+      @editable
+      @experimental
+      # Controls if the `particle_system_component` should start enabled.
+      AutoEnable<native><public>: logic = external {}
+
+      @experimental
+      # Disables the simulation and rendering of this `particle_system`.
+      Disable<native><override>(): void
+
+      @experimental
+      # Enables the simulation and rendering of this `particle_system`.
+      Enable<native><override>(): void
+
+      @experimental
+      # Succeeds if the component is enabled, fails if it’s disabled.
+      IsEnabled<override>()<transacts><decides>: void = external {}
+
+      OnAddedToScene<native><override>(): void
+
+      OnInitialized<native><override>(): void
+
+      OnRemovingFromScene<native><override>(): void
+
+      OnUninitializing<native><override>(): void
+
+      @editable
+      # Controls if the `particle_system_component` should run a simulation preview in UEFN. This isseparate from `AutoEnable` so users can control what starts in the game separately from the editor.
+      PreviewInEditor<native><public>: logic = external {}
+
+      @editable
+      @experimental
+      # The `particle_system` to be created by this component.
+      var ParticleSystem<native><public>: particle_system = external {}
+    }
+
+    @experimental
+    # A `point_light_component` emits light equally in all directions from a single point in space.
+    point_light_component<native><public> := class<final>(light_component) {}
+
+    @experimental
+    # A `rect_light_component` emits light into the scene from a rectangular plane with a specified width and height. You can use theseto simulate any kind of light sources that have rectangular areas, such as televisions or monitor screens, overhead lightingfixtures, or wall sconces.
+    rect_light_component<native><public> := class<final>(light_component) {
+      @experimental
+      # The bounds of the light’s visible influence. This clamping of the light's influence is not physically correct but very important for performance, larger lights cost more.This clamping of the light's influence is not physically correct but very important for performance. Larger lights cost more. Clamped between 8.0 and 16384.0.
+      var AttenuationRadius<public>: float = external {}
+
+      @experimental
+      # The angle of the barn door in degrees attached to the light source rect. Clamped between 0.0 and 90.0 degrees.
+      var BarnDoorAngle<public>: float = external {}
+
+      @experimental
+      # The length of the barn door attached to the light source rect. Clamped to a minimum of 0.0 cm.
+      var BarnDoorLength<public>: float = external {}
+
+      @experimental
+      # The height of the light source rect. Note that light source's shapes which intersect shadow casting geometry can cause shadowing artifacts.Clamped between 0.0 and 1000.0 cm.
+      var SourceHeight<public>: float = external {}
+
+      @experimental
+      # The width of the light source rect. Note that light source shapes which intersect shadow casting geometry can cause shadowing artifacts.Clamped between 0.0 and 1000.0 cm.
+      var SourceWidth<public>: float = external {}
+    }
+
+    @experimental
+    # Base class for all three-dimensional shapes.
+    shape3<native><public> := class<epic_internal> {}
+
+    @experimental
+    # A sphere in three-dimensional space.
+    sphere3<native><public> := class<final><concrete>(convex_volume3) {
+      # Center point of the sphere.
+      Center<native><public>: vector3 = external {}
+
+      # Radius of the sphere.
+      Radius<native><public>: float = external {}
+    }
+
+    @experimental
+    # A `spot_light_component` emits light from a single point in a cone shape. The shape of the light is defined by two cones: the `InnerConeAngle`and `OuterConeAngle`. Within the `InnerConeAngle` the light achieves full brightness. As you go from the extent of the inner radius to theextents of the `OuterConeAngle` a falloff takes place, creating a penumbra, or softening around the `spot_light_component`'s disc ofillumination. The Radius of the light defines the length of the cones. More simply, this will work like a flash light or stage can light.
+    spot_light_component<native><public> := class<final>(light_component) {
+      @experimental
+      # The light’s inner cone shaped angle in degrees. Clamped between 1.0 and 80.00.
+      var InnerConeAngle<public>: float = external {}
+
+      @experimental
+      # The light's 'outer cone shaped angle in degrees. Clamped between 1.0 and 80.00.
+      var OuterConeAngle<public>: float = external {}
+    }
+
+    @experimental
+    # Used to add tags to an entity. Tagged entities can then be queried using `entity.FindEntitiesWithTag` and `entity.FindParentEntitiesWithTag`.  * Finding entities from the simulation entity for tagged entities only considers any `tag_component` that has run `OnAddedToScene`.
+    tag_component<native><public> := class<final>(component) {
+      # Adds a tag to this component.
+      AddTag<native><public>(TagToAdd: tag)<transacts>: void
+
+      # Returns the tags associated with this component. These may be specified in the editor.
+      GetTags<native><public>()<transacts>: tag_view
+
+      OnAddedToScene<native><override>(): void
+
+      OnRemovingFromScene<native><override>(): void
+
+      # Removes a tag from this component. Returns `true` if the tag was present.
+      RemoveTag<native><public>(TagToRemove: tag)<transacts>: logic
+    }
+
+    @experimental
+    # Used to render a string at the location of this entity.Dependencies:  * `transform_component` on the entity positions the `text_display_component`.
+    text_display_component<native><public> := class<final>(component) {
+      OnAddedToScene<native><override>(): void
+
+      OnInitialized<native><override>(): void
+
+      OnRemovingFromScene<native><override>(): void
+
+      @editable
+      @experimental
+      # Text to be displayed on the entity.
+      var Text<native><public>: string = external {}
+    }
+
+    @experimental
+    # Describes discrete phases of a frame update. Subscribe to members of the tick_events object to run codebefore or after the physics system has updated your object, allowing you to affect or react to these updates.
+    tick_events<native><public> := class<epic_internal> {
+      # Subscribe callbacks to `PostPhysics` to run your code after the physics system has updated your object this frame.
+      PostPhysics<native><public>: execution_subscribable = external {}
+
+      # Subscribe callbacks to `PrePhysics` to run your code before the physics system has updated your object this frame.
+      PrePhysics<native><public>: execution_subscribable = external {}
+    }
+
+    @experimental
+    # Stores the world transform for an entity, which is used to position the entity.  * If you wish for an entity to update its transform when its parent entity transform changes then    you must also add a `parent_constraint_component` to the entity.
+    transform_component<native><public> := class<final>(component) {
+      @experimental
+      # Returns the world transform of the entity.
+      GetTransform<native><public>()<transacts>: transform
+
+      OnInitialized<native><override>(): void
+
+      OnUninitializing<native><override>(): void
+
+      @experimental
+      # Sets the world transform of the entity.
+      SetTransform<native><public>(NewTransform: transform): void
+
+      @editable
+      @experimental
+      # The value of `InitialRelativeTransform` is used when spawning an entity into the scene.  * When spawning an entity with a `transform_component`, the entity is offset by `InitialRelativeOffset` from the new parent entity's transform.  * When spawning an entity with a `transform_component` as a child of the simulation entity the entity is offset by `InitialRelativeOffset` from the simulation entity's transform.  * When spawning a prefab each sub-entity with a `transform_component` is offset by `InitialRelativeTransform` from its parent entities transform.
+      var InitialRelativeTransform<native><public>: transform = external {}
+    }
+
+    @experimental
+    # Base class for all three-dimensional volumes.
+    volume3<native><public> := class<epic_internal>(shape3) {}
   }
 
   using { /Verse.org/Native }

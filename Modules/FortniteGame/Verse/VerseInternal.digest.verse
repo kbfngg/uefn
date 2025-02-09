@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-30.00-CL-33760522
+# Generated from build: ++Fortnite+Release-30.10-CL-34184790
 #################################################
 
 using { /Verse.org/ParameterCollections }
@@ -1047,7 +1047,7 @@ Simulation<public> := module {
 
     MinComponentValue<public>: ?t = external {}
 
-    ShowNormalize<epic_internal>: logic = external {}
+    ShowNormalize<public>: logic = external {}
 
     ShowPreserveRatio<public>: logic = external {}
 
@@ -1067,7 +1067,7 @@ Simulation<public> := module {
 
     MouseShiftMovePixelPerDelta<public>: float = external {}
 
-    ShowNormalize<epic_internal>: logic = external {}
+    ShowNormalize<public>: logic = external {}
 
     ShowPreserveRatio<public>: logic = external {}
 
