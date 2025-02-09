@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-24.40-CL-25521145
+# Generated from build: ++Fortnite+Release-25.00-CL-25784668
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -393,6 +393,18 @@ Devices<public> := module {
     Enable<public>(): void = external {}
   }
 
+  # Used to track `agent` events used to generate analytics.
+  analytics_device<public> := class<concrete><final>(creative_device_base) {
+    # Adds an event for `Agent`.
+    AddEvent<public>(Agent: agent): void = external {}
+
+    # Disables this device.
+    Disable<public>(): void = external {}
+
+    # Enables this device.
+    Enable<public>(): void = external {}
+  }
+
   # Used to select, spawn, and configure a skeletal mesh to play a specific animation.
   animated_mesh_device<public> := class<concrete><final>(creative_device_base) {
     # Pauses playback of the animation.
@@ -524,6 +536,26 @@ Devices<public> := module {
 
     # Updates the device display to show the current *Text*.
     UpdateDisplay<public>(): void = external {}
+  }
+
+  # Used to create a bouncer that can launch players, vehicles, and more into the air with optional effects.
+  bouncer_device<public> := class<concrete><final>(creative_device_base) {
+    # Signaled when the condition in the *On Bounced Trigger* option is met and someone or something is launched.
+    #  * Sends the `agent` that bounced. If a vehicle bounced, sends the driver. If a projectile bounced, sends its instigator.
+    #  * Sends `false` if something else bounced, including a vehicle with no driver
+    BouncedEvent<public>: listenable(?agent) = external {}
+
+    # Disables bouncing on this device, as well as any visual and audio effects.
+    Disable<public>(): void = external {}
+
+    # Enables bouncing on this device, as well as any visual and audio effects.
+    Enable<public>(): void = external {}
+
+    # Signaled when the heal effect starts for an `agent`.
+    HealStartEvent<public>: listenable(agent) = external {}
+
+    # Signaled when the heal effect stops for an `agent`.
+    HealStopEvent<public>: listenable(agent) = external {}
   }
 
   # Used to create a button which can trigger other devices when an agent interacts with it.
@@ -837,6 +869,26 @@ Devices<public> := module {
     # Signaled when the UI is opened.
     # Sends the `agent` that is responsible for opening the UI.
     UIOpenedEvent<public>: listenable(agent) = external {}
+  }
+
+  # Used to place a collectible item into the world.
+  collectible_object_device<public> := class<concrete><final>(creative_device_base) {
+    # Signaled when the collectible item is collected.
+    # Sends the `agent` that collected the item.
+    CollectedEvent<public>: listenable(agent) = external {}
+
+    # Makes the collectible invisible.
+    Hide<public>(): void = external {}
+
+    # Immediately respawns the object for the instigating agent.
+    # This will be affected by the option *Consume If Collected By*.
+    Respawn<public>(Agent: agent): void = external {}
+
+    # Immediately respawns the object for all agents.
+    RespawnForAll<public>(): void = external {}
+
+    # Makes the collectible visible.
+    Show<public>(): void = external {}
   }
 
   # Used to create a tile that changes colors when `agent`s interact with it.
@@ -1310,6 +1362,19 @@ Devices<public> := module {
 
   # Used to let `agent`s slide on any surface with accompanying visual and audio effects.
   grind_powerup_device<public> := class<concrete><final>(powerup_device) {}
+
+  using { /Verse.org/Colors }
+  # Used to create customizable Grind Rails.
+  grind_rail_device<public> := class<concrete><final>(creative_device_base) {
+    # Disables this device, preventing players from grinding on the rail.
+    Disable<public>(): void = external {}
+
+    # Enables this device, letting players grind on the rail.
+    Enable<public>(): void = external {}
+
+    # Sets the color of the Grind Rail.
+    SetRailColor<public>(Color: color): void = external {}
+  }
 
   # Used to spawn guards that can patrol and attack other `agent`s.
   guard_spawner_device<public> := class<concrete><final>(creative_device_base) {
@@ -2082,7 +2147,19 @@ Devices<public> := module {
   }
 
   # Allows customization of the Prop-o-Matic weapon functions and how the game reacts to players using it.
-  prop_o_matic_manager_device<public> := class<concrete><final>(creative_device_base) {}
+  prop_o_matic_manager_device<public> := class<concrete><final>(creative_device_base) {
+    # Signaled when an `agent` begins entering a disguise.
+    # Sends the `agent` that began entering the disguise.
+    BeginEnteringDisguiseEvent<public>: listenable(agent) = external {}
+
+    # Signaled when an `agent` exits a disguise.
+    # Sends the `agent` that exited the disguise.
+    ExitingDisguiseEvent<public>: listenable(agent) = external {}
+
+    # Signaled when an `agent` finishes entering a disguise.
+    # Sends the `agent` that finished entering the disguise.
+    FinishEnteringDisguiseEvent<public>: listenable(agent) = external {}
+  }
 
   # Base class for devices that spawn a prop object.
   prop_spawner_base_device<public> := class<abstract><epic_internal>(creative_device_base) {
@@ -3914,16 +3991,16 @@ UI<public> := module {
     # Subscribable event that fires when the value of the slider has changed.
     OnValueChanged<public>(): listenable(widget_message) = external {}
 
-    # Sets the maximum value of the slider.
+    # Sets the maximum value of the slider, will enforce that the sliders maximum value is always larger than or equal to the minimum value.
     SetMaxValue<native><public>(InMaxValue: float): void
 
-    # Sets the minimum value of the slider.
+    # Sets the minimum value of the slider, will enforce that the sliders maximum value is always larger than or equal to the minimum value.
     SetMinValue<native><public>(InMinValue: float): void
 
     # Sets the amount to adjust the value by, when using a controller or keyboard.
     SetStepSize<native><public>(InValue: float): void
 
-    # Sets the value of the slider.
+    # Sets the value of the slider, will clamp the value to be within the sliders minimum and maximum value.
     SetValue<native><public>(InValue: float): void
   }
 

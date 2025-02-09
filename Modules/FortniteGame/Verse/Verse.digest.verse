@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-24.40-CL-25521145
+# Generated from build: ++Fortnite+Release-25.00-CL-25784668
 #################################################
 
 # Module import path: /Verse.org/Assets
@@ -785,13 +785,13 @@ Verse<public> := module {
   # Used for message localization.
   locale<native><public> := struct<computes><epic_internal> {}
 
-  localizable_float<epic_internal> := class<computes><internal>(localizable_value) {}
+  localizable_float<native><epic_internal> := class<computes><internal>(localizable_value) {}
 
-  localizable_int<epic_internal> := class<computes><internal>(localizable_value) {}
+  localizable_int<native><epic_internal> := class<computes><internal>(localizable_value) {}
 
-  localizable_string<epic_internal> := class<computes><internal>(localizable_value) {}
+  localizable_string<native><epic_internal> := class<computes><internal>(localizable_value) {}
 
-  localizable_value<epic_internal> := interface {}
+  localizable_value<native><epic_internal> := interface {}
 
   # A localizable text message.
   message<native><public> := class<computes><epic_internal> {}

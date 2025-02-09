@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-24.40-CL-25521145
+# Generated from build: ++Fortnite+Release-25.00-CL-25784668
 #################################################
 
 Temporary<public> := module {
@@ -16,6 +16,126 @@ Temporary<public> := module {
 
   # Module import path: /UnrealEngine.com/Temporary/Diagnostics
   Diagnostics<public> := module {
+    # debug draw class to draw debug shapes on screen.
+    debug_draw<native><public> := class {
+      # Channel will be used to clear specific debug draw.
+      Channel<native><public>: subtype(debug_draw_channel) = external {}
+
+      # Clears all debug draw from this debug_draw instance.
+      Clear<native><public>(): void
+
+      # Clears all debug draw for the channel.
+      ClearChannel<native><public>(): void
+
+      # Draws an arrow pointing from Start to End locations, and using the provided draw parameters.
+      DrawArrow<native><public>(
+        Start: vector3,
+        End: vector3,
+        ?ArrowSize: float = external {},
+        ?Color: color = external {},
+        ?Thickness: float = external {},
+        ?DrawDurationPolicy: debug_draw_duration_policy = external {},
+        ?Duration: float = external {}
+      ): void
+
+      # Draws a box at the named location, and using the provided draw parameters
+      DrawBox<native><public>(
+        Center: vector3,
+        Rotation: rotation,
+        ?Extent: vector3 = external {},
+        ?Color: color = external {},
+        ?Thickness: float = external {},
+        ?DrawDurationPolicy: debug_draw_duration_policy = external {},
+        ?Duration: float = external {}
+      ): void
+
+      # Draws a capsule at the named location, and using the provided draw parameters.
+      DrawCapsule<native><public>(
+        Center: vector3,
+        Rotation: rotation,
+        ?Height: float = external {},
+        ?Radius: float = external {},
+        ?Color: color = external {},
+        ?Thickness: float = external {},
+        ?DrawDurationPolicy: debug_draw_duration_policy = external {},
+        ?Duration: float = external {}
+      ): void
+
+      # Draws a cone at the named location, and using the provided draw parameters.
+      DrawCone<native><public>(
+        Origin: vector3,
+        Direction: vector3,
+        ?Height: float = external {},
+        ?NumSides: int = external {},
+        ?AngleWidthRadians: float = external {},
+        ?AngleHeightRadians: float = external {},
+        ?Color: color = external {},
+        ?Thickness: float = external {},
+        ?DrawDurationPolicy: debug_draw_duration_policy = external {},
+        ?Duration: float = external {}
+      ): void
+
+      # Draws a cylinder at the named location, and using the provided draw parameters.
+      DrawCylinder<native><public>(
+        Start: vector3,
+        End: vector3,
+        ?NumSegments: int = external {},
+        ?Radius: float = external {},
+        ?Color: color = external {},
+        ?Thickness: float = external {},
+        ?DrawDurationPolicy: debug_draw_duration_policy = external {},
+        ?Duration: float = external {}
+      ): void
+
+      # Draws a line from Start to End locations, and using the provided draw parameters.
+      DrawLine<native><public>(
+        Start: vector3,
+        End: vector3,
+        ?Color: color = external {},
+        ?Thickness: float = external {},
+        ?DrawDurationPolicy: debug_draw_duration_policy = external {},
+        ?Duration: float = external {}
+      ): void
+
+      # Draws a point at the named location, and using the provided draw parameters.
+      DrawPoint<native><public>(
+        Position: vector3,
+        ?Color: color = external {},
+        ?Thickness: float = external {},
+        ?DrawDurationPolicy: debug_draw_duration_policy = external {},
+        ?Duration: float = external {}
+      ): void
+
+      # Draws a sphere at the named location, and using the provided draw parameters.
+      DrawSphere<native><public>(
+        Center: vector3,
+        ?Radius: float = external {},
+        ?Color: color = external {},
+        ?NumSegments: int = external {},
+        ?Thickness: float = external {},
+        ?DrawDurationPolicy: debug_draw_duration_policy = external {},
+        ?Duration: float = external {}
+      ): void
+
+      # Hide Debug Draw for the channel for all users.
+      HideChannel<native><public>(): void
+
+      # Show Debug Draw for the channel for all users.
+      ShowChannel<native><public>(): void
+    }
+
+    # debug_draw_channel is the base class used to define debug draw channels.
+    debug_draw_channel<native><public> := class<abstract> {}
+
+    # Enumerated presets for policies describing a desired draw duration.
+    debug_draw_duration_policy<native><public> := enum {
+      FiniteDuration
+
+      Persistent
+
+      SingleFrame
+    }
+
     # log class to send messages to the default log
     log<native><public> := class {
       # Print message using the given log level
