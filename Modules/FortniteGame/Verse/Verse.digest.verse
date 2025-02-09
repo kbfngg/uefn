@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.01-CL-32291970
+# Generated from build: ++Fortnite+Release-29.10-CL-32391220
 #################################################
 
 # Module import path: /Verse.org/Assets
@@ -12,6 +12,8 @@ Assets<public> := module {
   material<native><public> := interface<epic_internal> {}
 
   mesh<native><public> := class<computes><final><epic_internal> {}
+
+  particle_system<native><public> := class<computes><final><epic_internal> {}
 
   texture<native><public> := class<computes><final><epic_internal> {}
 }

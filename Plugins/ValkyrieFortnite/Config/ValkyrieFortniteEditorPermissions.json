@@ -577,6 +577,7 @@
 			"/Game/Creative/PostProcess/PP_OldCartoon.PP_OldCartoon_C":													{ "Visible": true },
 			"/Game/Creative/PostProcess/PP_Pixelizer.PP_Pixelizer_C":													{ "Visible": true },
 			"/Game/Creative/PostProcess/PP_RadialBlur.PP_RadialBlur_C":													{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_Rain.PP_Rain_C":																{ "Visible": true },
 			"/Game/Creative/PostProcess/PP_Red.PP_Red_C":																{ "Visible": true },
 			"/Game/Creative/PostProcess/PP_Retro.PP_Retro_C":															{ "Visible": true },
 			"/Game/Creative/PostProcess/PP_Sepia.PP_Sepia_C":															{ "Visible": true },
@@ -1936,7 +1937,34 @@
 				"AllowList": [ "DaySequencePreviewTime" ]
 			},
 			"LevelEditor.ActorContextMenu": {
-				"AllowList": [ "FindInContentBrowser", "OpenSelectionInPropertyMatrix", "BulkEditComponentsSubmenu", "FocusViewportToSelection", "GoHere", "SnapCameraToObject", "SnapObjectToCamera", "SnapAlignSubMenu", "SelectSubMenu", "EditSubMenu", "VisibilitySubMenu", "AddActor", "ReplaceActor", "ActorAttachToSubMenu", "DetachFromParent", "ValidateActors", "TransformSubMenu", "PivotSubMenu", "GroupMenu", "meshPerfEntry", "DeviceScriptsCopyReference", "OpenUVEditor", "CopyActorFilePathtoClipboard", "SaveActor", "Teleport", "ScriptedActorActions" ]
+				"AllowList": [ 
+					"FindInContentBrowser",
+					"OpenSelectionInPropertyMatrix",
+					"BulkEditComponentsSubmenu",
+					"FocusViewportToSelection",
+					"GoHere",
+					"SnapCameraToObject",
+					"SnapObjectToCamera",
+					"SnapAlignSubMenu",
+					"SelectSubMenu",
+					"EditSubMenu",
+					"VisibilitySubMenu",
+					"AddActor",
+					"ReplaceActor",
+					"ActorAttachToSubMenu",
+					"DetachFromParent",
+					"ValidateActors",
+					"TransformSubMenu",
+					"PivotSubMenu",
+					"GroupMenu",
+					"meshPerfEntry",
+					"DeviceScriptsCopyReference",
+					"OpenUVEditor",
+					"CopyActorFilePathtoClipboard",
+					"SaveActor",
+					"Teleport",
+					"ScriptedActorActions"
+				]
 			},
 			"LevelEditor.ActorContextMenu.AddActor": {
 				"DenyList": [ "RectLight", "PlayerStart", "Trigger", "RuntimeVirtualTextureVolume", "CameraActor" ]
@@ -1960,7 +1988,7 @@
 				"DenyList": [ "RectLight", "PlayerStart", "Trigger", "RuntimeVirtualTextureVolume", "CameraActor" ]
 			},
 			"LevelEditor.LevelEditorToolBar.AddQuickMenu": {
-				"AllowList": [ "Basic", "Lights", "Shapes", "Cinematic", "Volumes", "Visual", "OpenPlaceActors"]
+				"AllowList": [ "Basic", "Lights", "Shapes", "Cinematic", "Volumes", "Visual", "OpenPlaceActors" ]
 			},
 			"LevelEditor.LevelEditorToolBar.AddQuickMenu.Basic": {
 				"AllowList": [ "Actor", "PointLight" ]
@@ -2963,7 +2991,7 @@
 			},
 			{
 				"Type": "/Script/ValkyrieEditor.ValkyrieEditorConfig",
-				"AllowList": [ "DefaultProjectName", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "ReferencedContentCacheSizeGB", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "bEnableIterativeValidation", "bLoadAssetsForValidation", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "EnabledPermissions", "EffectivePermissions", "EntitledPermissions" ]
+				"AllowList": [ "DefaultProjectName", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "ReferencedContentCacheSizeGB", "bStartupWithLastProject", "bAssignProjectVersePathAutomatically", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "bEnableIterativeValidation", "bLoadAssetsForValidation", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "EnabledPermissions", "EffectivePermissions", "EntitledPermissions" ]
 			},
 			{
 				"Type": "/Script/CinematicCamera.CineCameraActor",

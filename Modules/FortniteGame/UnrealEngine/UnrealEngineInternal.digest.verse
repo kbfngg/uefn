@@ -2,14 +2,41 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.01-CL-32291970
+# Generated from build: ++Fortnite+Release-29.10-CL-32391220
 #################################################
+
+Abilities<public> := module {
+  using { /UnrealEngine.com/Temporary/SceneGraph }
+  ability<native><public> := class {
+    Activate<native><protected>()<suspends>: void
+
+    GameplayAbilityPath<native><epic_internal>: ?string = external {}
+
+    PropertyLinks<native><epic_internal>: []ability_property_link = external {}
+  }
+
+  ability_component<native><public> := class(component) {
+    ActivateAbility<native><epic_internal>(Ability: ability): void
+
+    ActivateAbility<native><public>(Ability: subtype(ability)): void
+
+    GiveAbility<native><epic_internal>(Ability: ability)<transacts><decides>: void
+
+    GiveAbility<native><public>(Ability: subtype(ability))<transacts><decides>: void
+  }
+
+  ability_property_link<native><epic_internal> := struct {
+    NativePropertyName<native><epic_internal>: string
+
+    VersePropertyName<native><epic_internal>: string
+  }
+}
 
 using { /UnrealEngine.com/Temporary/SpatialMath }
 using { /Verse.org/Assets }
 # Module import path: /UnrealEngine.com/Assets
 Assets<public> := module {
-  SpawnParticleSystem<native><epic_internal>(
+  SpawnParticleSystem<native><public>(
     Asset: particle_system,
     Position: vector3,
     ?Rotation: rotation = external {},
@@ -189,7 +216,7 @@ Engine<public> := module {
 }
 
 EntityFramework<public> := module {
-  using { /UnrealEngine.com/EntityFramework/Entity }
+  using { /UnrealEngine.com/Temporary/SceneGraph }
   using { /Verse.org/Native }
   # Module import path: /UnrealEngine.com/EntityFramework/ActorBridgeComponent
   ActorBridgeComponent<public> := module {
@@ -201,438 +228,42 @@ EntityFramework<public> := module {
     @import_as("/Script/FortniteGame.ULevelSaveRecord")
     level_save_record<native><epic_internal> := class<epic_internal> {}
   }
-
-  using { /UnrealEngine.com/EpicGamesRestricted/Network }
-  using { /UnrealEngine.com/Temporary/SpatialMath }
-  using { /UnrealEngine.com/Temporary/UI }
-  using { /Verse.org/Assets }
-  using { /Verse.org/Colors }
-  using { /Verse.org/Simulation }
-  # Module import path: /UnrealEngine.com/EntityFramework/Component
-  Component<public> := module {
-    attachment_component<native><epic_internal> := class(component) {
-      # Attaches the owner entity to the specified entity. This method will compute relative transform from the current world transform of both entity
-      AttachTo<native><public>(InParentEntity: entity)<transacts><decides>: void
-
-      # Attach the owner entity to the specified entity, use the specified transform as the relation to it
-      AttachTo<native><public>(InParentEntity: entity, NewRelativeTransform: transform)<transacts><decides>: void
-
-      # Automatically attach to owner at initialization
-      AutoAttachToOwner<native><public>: logic = external {}
-
-      # Detaches the owner entity if it was attached to an other entity
-      DetachFrom<native><public>()<transacts><decides>: void
-
-      # Retrieve the transform of the attachment
-      GetAttachedTransform<native><public>()<decides>: transform
-
-      # The component is being initialized, called when it is attach to an entity
-      Initialize<native><override>(): void
-
-      # Internal epic method to know if this component is allowed on client
-      IsAllowedOnClient<override>(): logic = external {}
-
-      # Set relative transform
-      SetRelativeTransform<native><public>(Transform: transform)<transacts><decides>: void
-
-      # Set relative transform from a global transform
-      SetRelativeTransformFromGlobal<native><public>(Transform: transform)<transacts><decides>: void
-
-      # The component is being uninitialized, called when it is about to be detached from an entity
-      Uninitialize<native><override>(): void
-
-      # The relative transform to the attached entity
-      var ParentEntity<native><public>: ?entity = external {}
-
-      # The relative transform to the attached entity
-      var RelativeTransform<native><public>: ?transform = external {}
-    }
-
-    camera_entity_component<native><epic_internal> := class(component) {
-      # Notification called then the component owner entity was added to a world
-      AddedToWorld<native><override>(): void
-
-      # Notification called when the game simulation has started
-      BeginPlay<native><override>(): void
-
-      GetAspectRatio<public>(): float = external {}
-
-      GetFieldOfView<public>(): float = external {}
-
-      GetIsActive<public>(): logic = external {}
-
-      # The component is being initialized, called when it is attach to an entity
-      Initialize<native><override>(): void
-
-      # Internal epic method to know if this component is allowed on client
-      IsAllowedOnClient<override>(): logic = external {}
-
-      # Notification called when the component owner entity is about to be removed from world
-      RemovingFromWorld<native><override>(): void
-
-      # Set the aspect ratio of the camera
-      SetAspectRatio<public>(InAspectRatio: float): void = external {}
-
-      # Set the field of view of the camera in degrees
-      SetFieldOfView<public>(InFieldOfView: float): void = external {}
-
-      # Enable or disable the camera
-      SetIsActive<public>(InIsActive: logic): void = external {}
-
-      # The component is being uninitialized, called when it is about to be detached from an entity
-      Uninitialize<native><override>(): void
-    }
-
-    hit_result<native><epic_internal> := struct {
-      HitLocation<native><public>: vector3
-
-      HitNormal<native><public>: vector3
-
-      OtherComponent<native><public>: ?physics_component
-
-      OtherEntity<native><public>: ?entity
-
-      ThisComponent<native><public>: ?physics_component
-
-      ThisEntity<native><public>: ?entity
-    }
-
-    @hide_in_editor
-    light_entity_component<native><epic_internal> := class(component) {
-      # The component is being initialized, called when it is attach to an entity
-      Initialize<native><override>(): void
-
-      # Internal epic method to know if this component is allowed on client
-      IsAllowedOnClient<override>(): logic = external {}
-
-      # The component is being uninitialized, called when it is about to be detached from an entity
-      Uninitialize<native><override>(): void
-    }
-
-    local_hud_component<epic_internal> := class(component) {
-      BeginPlay<override>(): void = external {}
-
-      EndPlay<override>(): void = external {}
-
-      Hide<public>(Player: player): void = external {}
-
-      IsAllowedOnClient<override>(): logic = external {}
-
-      Show<public>(Player: player): void = external {}
-
-      var Canvas<public>: canvas
-
-      var UISlot<public>: player_ui_slot
-    }
-
-    @hide_in_editor
-    mesh_component<native><epic_internal> := class(component) {
-      # Internal epic method to know if this component is allowed on client
-      IsAllowedOnClient<override>(): logic = external {}
-    }
-
-    particle_system_component<native><epic_internal> := class<final>(component) {
-      # Activate the particle system
-      Activate<native><public>(): void
-
-      # Notification called then the component owner entity was added to a world
-      AddedToWorld<native><override>(): void
-
-      # Deactivate the particle system
-      Deactivate<native><public>(): void
-
-      # The component is being initialized, called when it is attach to an entity
-      Initialize<native><override>(): void
-
-      # Internal epic method to know if this component is allowed on client
-      IsAllowedOnClient<override>(): logic = external {}
-
-      # Notification called when the component owner entity is about to be removed from world
-      RemovingFromWorld<native><override>(): void
-
-      # The component is being uninitialized, called when it is about to be detached from an entity
-      Uninitialize<native><override>(): void
-
-      @replicated("RepNotify")
-      # The path to the particle system asset
-      var ParticleSystem<native><public>: ?particle_system = external {}
-    }
-
-    physics_component<native><epic_internal> := class(component) {
-      # Notification called then the component owner entity was added to a world
-      AddedToWorld<native><override>(): void
-
-      # Event signaled when the component experiences a blocking hit
-      HitEvent<native><public>: listenable(hit_result) = external {}
-
-      # The component is being initialized, called when it is attach to an entity
-      Initialize<native><override>(): void
-
-      # Internal epic method to know if this component is allowed on client
-      IsAllowedOnClient<override>(): logic = external {}
-
-      # Notification called when the component owner entity is about to be removed from world
-      RemovingFromWorld<native><override>(): void
-
-      # The component is being uninitialized, called when it is about to be detached from an entity
-      Uninitialize<native><override>(): void
-    }
-
-    point_light_entity_component<native><public> := class<final>(light_entity_component) {
-      GetAttenuationRadius<public>(): float = external {}
-
-      GetColor<public>(): color = external {}
-
-      GetIntensity<public>(): float = external {}
-
-      GetSourceLength<public>(): float = external {}
-
-      GetSourceRadius<public>(): float = external {}
-
-      SetAttenuationRadius<public>(NewRadius: float): void = external {}
-
-      SetColor<public>(NewColor: color): void = external {}
-
-      SetIntensity<public>(NewIntensity: float): void = external {}
-
-      SetSourceLength<public>(NewLength: float): void = external {}
-
-      SetSourceRadius<public>(NewRadius: float): void = external {}
-    }
-
-    sound_component<native><epic_internal> := class(component) {
-      # The component is being initialized, called when it is attach to an entity
-      Initialize<native><override>(): void
-
-      # Internal epic method to know if this component is allowed on client
-      IsAllowedOnClient<override>(): logic = external {}
-
-      # Play the sound asset
-      Play<native><public>(): void
-
-      # Play the sound asset
-      Stop<native><public>(): void
-
-      # The component is being uninitialized, called when it is about to be detached from an entity
-      Uninitialize<native><override>(): void
-
-      @editable
-      @replicated("RepNotify")
-      # The path to the sound asset
-      var Sound<native><public>: sound = external {}
-    }
-
-    spot_light_entity_component<native><public> := class<final>(light_entity_component) {
-      GetAttenuationRadius<public>(): float = external {}
-
-      GetColor<public>(): color = external {}
-
-      GetInnerConeAngle<public>(): float = external {}
-
-      GetIntensity<public>(): float = external {}
-
-      GetOuterConeAngle<public>(): float = external {}
-
-      GetSourceLength<public>(): float = external {}
-
-      GetSourceRadius<public>(): float = external {}
-
-      SetAttenuationRadius<public>(NewRadius: float): void = external {}
-
-      SetColor<public>(NewColor: color): void = external {}
-
-      SetInnerConeAngle<public>(NewInnerConeAngle: float): void = external {}
-
-      SetIntensity<public>(NewIntensity: float): void = external {}
-
-      SetOuterConeAngle<public>(NewOuterConeAngle: float): void = external {}
-
-      SetSourceLength<public>(NewLength: float): void = external {}
-
-      SetSourceRadius<public>(NewRadius: float): void = external {}
-    }
-
-    static_mesh_component<native><epic_internal> := class(mesh_component) {
-      # The component is being initialized, called when it is attach to an entity
-      Initialize<native><override>(): void
-
-      # Internal epic method to know if this component is allowed on client
-      IsAllowedOnClient<override>(): logic = external {}
-
-      # The component is being uninitialized, called when it is about to be detached from an entity
-      Uninitialize<native><override>(): void
-
-      @replicated("RepNotify")
-      # The path to the material asset of a static mesh
-      var Material<native><public>: ?material = external {}
-
-      @replicated("RepNotify")
-      # The path to the static mesh asset
-      var Mesh<native><public>: mesh = external {}
-    }
-  }
-
-  using { /UnrealEngine.com/Execution }
-  # Module import path: /UnrealEngine.com/EntityFramework/Entity
-  Entity<public> := module {
-    @import_as("/Script/Entity.UBaseEntity")
-    base_entity<native><public> := class<abstract> {}
-
-    component<native><epic_internal> := class<abstract><unique> {
-      # Notification called then the component owner entity was added to a world
-      AddedToWorld<native><native_callable><protected>(): void
-
-      # Notification called when the game simulation has started
-      BeginPlay<native><native_callable><protected>(): void
-
-      # Notification called when the game simulation has ended
-      EndPlay<native><native_callable><protected>(): void
-
-      # Returns the owner of this component
-      GetOwner<native><public>()<transacts><decides>: entity
-
-      # The component is being initialized, called when it is attach to an entity
-      Initialize<native><native_callable><protected>(): void
-
-      IsAllowedOnClient<native_callable><epic_internal>(): logic = external {}
-
-      # Notification called when the component owner entity is about to be removed from world
-      RemovingFromWorld<native><native_callable><protected>(): void
-
-      # The component is being uninitialized, called when it is about to be detached from an entity
-      Uninitialize<native><native_callable><protected>(): void
-    }
-
-    # Module import path: /UnrealEngine.com/EntityFramework/Entity/engine_execution
-    engine_execution<public> := module {
-      GetSubscribables<native><epic_internal>(ForEntity: entity): engine_execution_subscribables
-    }
-
-    engine_execution_subscribables<native><public> := class {
-      DuringPhysics<native><public>: execution_subscribable = external {}
-
-      EndFrame<native><public>: execution_subscribable = external {}
-
-      EndPhysics<native><public>: execution_subscribable = external {}
-
-      PostPhysics<native><public>: execution_subscribable = external {}
-
-      PrePhysics<native><public>: execution_subscribable = external {}
-
-      StartPhysics<native><public>: execution_subscribable = external {}
-    }
-
-    entity<native><epic_internal> := class<concrete><unique><transacts>(base_entity) {
-      # Add a component to the list of component, it will fail if the component type is already in the list
-      AddComponent<native><public>(InComponent: component)<transacts><decides>: void
-
-      # Adds an owned entity to an entity
-      AddEntity<native><public>(InEntity: entity)<transacts><decides>: void
-
-      # Destroy the entity
-      Dispose<native><public>(): void
-
-      # Retreive a component of a specified type
-      GetComponentByType<native><public>(ComponentType: subtype(component))<transacts><decides>: ComponentType
-
-      # Returns any accessible child entities of this entity
-      GetEntities<native><final><public>()<transacts>: []entity
-
-      # Returns the owner of this entity if any
-      GetOwner<native><public>()<transacts><decides>: entity
-
-      # Determine if the entity has been disposed
-      IsDisposed<native><public>()<decides>: void
-
-      # Remove a component from the entity
-      RemoveComponent<native><public>(InComponent: component)<transacts><decides>: void
-
-      # Removes an owned entity from an entity
-      RemoveEntity<native><public>(InEntity: entity)<transacts><decides>: void
-    }
-
-    # Module import path: /UnrealEngine.com/EntityFramework/Entity/entity_initializer
-    entity_initializer<epic_internal> := module {
-      # Tells that specified component type need to be initialized before
-      InitializeDependency<native><public>(
-        OwnerEntity: entity,
-        ComponentType: subtype(component),
-        Mode: mode
-      )<transacts><decides>: ComponentType
-
-      mode<native><public> := enum {
-        get
-
-        get_or_create
-      }
-    }
-
-    entity_prefab<native><epic_internal> := class<computes>(asset) {}
-
-    replication_component<native><epic_internal> := class(component) {
-      # The component is being initialized, called when it is attach to an entity
-      AddedToWorld<native><override>(): void
-
-      # Internal epic method to know if this component is allowed on client
-      IsAllowedOnClient<override>(): logic = external {}
-
-      # The component is being uninitialized, called when it is about to be detached from an entity
-      RemovingFromWorld<native><override>(): void
-    }
-
-    transform_component<native><epic_internal> := class(component) {
-      # The component is being initialized, called when it is attach to an entity
-      Initialize<native><override>(): void
-
-      # Internal epic method to know if this component is allowed on client
-      IsAllowedOnClient<override>(): logic = external {}
-
-      # Utility method to set the transform of an entity and notifying listeners
-      SetTransform<native><public>(NewTransform: transform): void
-
-      # The component is being uninitialized, called when it is about to be detached from an entity
-      Uninitialize<native><override>(): void
-
-      @editable
-      # Initial value of the transform of the entity, relative to its owner if any
-      var InitialRelativeTransform<native><public>: transform = external {}
-
-      @replicated("RepNotify")
-      # Current transform of the entity, relative to the world
-      var Transform<native><public>: transform = external {}
-    }
-
-    typed_element_component<native><epic_internal> := class(component) {}
-  }
 }
 
 # Module import path: /UnrealEngine.com/EntityTestSuite
 EntityTestSuite<public> := module {
   @hide_in_editor
-  init_test_component<native><epic_internal> := class(component) {
-    # The component is being initialized, called when it is attach to an entity
-    Initialize<native><override>(): void
+  lambda_test_component<native><epic_internal> := class(component) {
+    OnAddedToScene<native><override>(): void
+
+    OnBeginSimulation<native><override>(): void
+
+    OnEndSimulation<native><override>(): void
+
+    OnInitialized<native><override>(): void
+
+    OnRemovingFromScene<native><override>(): void
+
+    OnSimulate<override>()<suspends>: void = external {}
+
+    OnUninitializing<native><override>(): void
   }
 
   @hide_in_editor
-  lambda_test_component<native><epic_internal> := class(component) {
-    # Notification called then the component owner entity was added to a world
-    AddedToWorld<native><override>(): void
+  lambda_test_component_2<native><epic_internal> := class(component) {
+    OnAddedToScene<native><override>(): void
 
-    # Notification called when the game simulation has started
-    BeginPlay<native><override>(): void
+    OnBeginSimulation<native><override>(): void
 
-    # Notification called when the game simulation has ended
-    EndPlay<native><override>(): void
+    OnEndSimulation<native><override>(): void
 
-    # The component is being initialized, called when it is attach to an entity
-    Initialize<native><override>(): void
+    OnInitialized<native><override>(): void
 
-    # Notification called when the component owner entity is about to be removed from world
-    RemovingFromWorld<native><override>(): void
+    OnRemovingFromScene<native><override>(): void
 
-    # The component is being uninitialized, called when it is about to be detached from an entity
-    Uninitialize<native><override>(): void
+    OnSimulate<override>()<suspends>: void = external {}
+
+    OnUninitializing<native><override>(): void
   }
 
   @hide_in_editor
@@ -899,23 +530,6 @@ EpicGamesRestricted<public> := module {
   }
 }
 
-# Module import path: /UnrealEngine.com/Execution
-Execution<public> := module {
-  execution_subscribable<native><public> := class {
-    Subscribe<native><public>(Callback: type { __(): void }, ?Interval: float = external {})<transacts>: execution_subscription
-
-    SubscribeWithTime<native><public>(Callback: type { __(: float): void }, ?Interval: float = external {})<transacts>: execution_subscription
-  }
-
-  execution_subscription<native><public> := class(cancelable) {
-    Cancel<native><override>()<transacts>: void
-
-    RunAfter<native><public>(__dupe___unnamed_parameter_46: execution_subscription)<transacts>: void
-
-    RunBefore<native><public>(__dupe___unnamed_parameter_47: execution_subscription)<transacts>: void
-  }
-}
-
 # Module import path: /UnrealEngine.com/ExecutionTestSuite
 ExecutionTestSuite<public> := module {}
 
@@ -1111,6 +725,415 @@ Temporary<public> := module {
 
       Warning
     }
+  }
+
+  SceneGraph<public> := module {
+    using { /UnrealEngine.com/EpicGamesRestricted/Network }
+    using { /UnrealEngine.com/Temporary/SpatialMath }
+    using { /UnrealEngine.com/Temporary/UI }
+    using { /Verse.org/Assets }
+    using { /Verse.org/Colors }
+    using { /Verse.org/Simulation }
+    attachment_component<native><epic_internal> := class(component) {
+      # Attaches the owner entity to the specified entity. This method will compute relative transform from the current world transform of both entity
+      AttachTo<native><public>(InParentEntity: entity)<transacts><decides>: void
+
+      # Attach the owner entity to the specified entity, use the specified transform as the relation to it
+      AttachTo<native><public>(InParentEntity: entity, NewRelativeTransform: transform)<transacts><decides>: void
+
+      # Automatically attach to owner at initialization
+      AutoAttachToOwner<native><public>: logic = external {}
+
+      # Detaches the owner entity if it was attached to an other entity
+      DetachFrom<native><public>()<transacts><decides>: void
+
+      # Retrieve the transform of the attachment
+      GetAttachedTransform<native><public>()<decides>: transform
+
+      # Internal epic method to know if this component is allowed on client
+      IsAllowedOnClient<override>(): logic = external {}
+
+      # The component is being initialized, called when it is attach to an entity
+      OnInitialized<native><override>(): void
+
+      # The component is being uninitialized, called when it is about to be detached from an entity
+      OnUninitializing<native><override>(): void
+
+      # Set relative transform
+      SetRelativeTransform<native><public>(Transform: transform)<transacts><decides>: void
+
+      # Set relative transform from a global transform
+      SetRelativeTransformFromGlobal<native><public>(Transform: transform)<transacts><decides>: void
+
+      # The relative transform to the attached entity
+      var ParentEntity<native><public>: ?entity = external {}
+
+      # The relative transform to the attached entity
+      var RelativeTransform<native><public>: ?transform = external {}
+    }
+
+    @import_as("/Script/Entity.UBaseEntity")
+    base_entity<native><public> := class<abstract> {}
+
+    basic_camera_component<native><epic_internal> := class(component) {
+      GetFieldOfView<public>(): float = external {}
+
+      # Internal epic method to know if this component is allowed on client
+      IsAllowedOnClient<override>(): logic = external {}
+
+      # Notification called then the component owner entity was added to a world
+      OnAddedToScene<native><override>(): void
+
+      # The component is being initialized, called when it is attach to an entity
+      OnInitialized<native><override>(): void
+
+      # Notification called when the component owner entity is about to be removed from world
+      OnRemovingFromScene<native><override>(): void
+
+      # The component is being uninitialized, called when it is about to be detached from an entity
+      OnUninitializing<native><override>(): void
+
+      # Set the field of view of the camera in degrees
+      SetFieldOfView<public>(InFieldOfView: float): void = external {}
+    }
+
+    using { /Verse.org/Native }
+    component<native><epic_internal> := class<abstract><unique>(disposable) {
+      Dispose<native><override><final>(): void
+
+      IsAllowedOnClient<native_callable><epic_internal>(): logic = external {}
+
+      IsDisposed<native><final><public>()<decides>: void
+
+      # Notification called then the component owner entity was added to a scene
+      OnAddedToScene<native><native_callable><protected>(): void
+
+      # Called when the componnet starts simulating. Use this to set up tick updates or other setup that must be guaranteed to complete immediately.
+      OnBeginSimulation<native><native_callable><protected>(): void
+
+      # Notification called when the game simulation has ended
+      OnEndSimulation<native><native_callable><protected>(): void
+
+      # The component is being initialized, called when it is attached to an entity
+      OnInitialized<native><native_callable><protected>(): void
+
+      # Notification called when the component owner entity is about to be removed from a scene
+      OnRemovingFromScene<native><native_callable><protected>(): void
+
+      # Called after `OnBeginSimulation`. Code running in `OnSimulate` will be cancelled before `OnEndSimulation` runs.
+      OnSimulate<native_callable><protected>()<suspends>: void = external {}
+
+      # The component is being uninitialized, called when it is about to be detached from an entity
+      OnUninitializing<native><native_callable><protected>(): void
+
+      var<private> Entity<public>: entity = external {}
+    }
+
+    damage_component<native><epic_internal> := class(component) {
+      Damage<native><public>(Amount: float): void
+    }
+
+    # Module import path: /UnrealEngine.com/Temporary/SceneGraph/engine_execution
+    engine_execution<public> := module {
+      GetSubscribables<native><epic_internal>(ForEntity: entity): engine_execution_subscribables
+    }
+
+    engine_execution_subscribables<native><public> := class {
+      DuringPhysics<native><public>: execution_subscribable = external {}
+
+      EndFrame<native><public>: execution_subscribable = external {}
+
+      EndPhysics<native><public>: execution_subscribable = external {}
+
+      PostPhysics<native><public>: execution_subscribable = external {}
+
+      PrePhysics<native><public>: execution_subscribable = external {}
+
+      StartPhysics<native><public>: execution_subscribable = external {}
+    }
+
+    entity<native><epic_internal> := class<concrete><unique><transacts>(base_entity, disposable) {
+      AttachComponents<native><final><public>(Components: []component)<transacts>: void
+
+      AttachEntities<native><final><public>(NewChildEntities: []entity)<transacts>: void
+
+      Dispose<native><override><final>(): void
+
+      GetComponents<native><final><public>(ComponentType: subtype(component))<varies>: []ComponentType
+
+      GetEntities<native><final><public>()<transacts>: []entity
+
+      GetParent<native><final><public>()<varies><decides>: entity
+
+      IsDisposed<native><final><public>()<decides>: void
+
+      UnsetParent<native><final><public>()<transacts>: void
+    }
+
+    # Module import path: /UnrealEngine.com/Temporary/SceneGraph/entity_initializer
+    entity_initializer<epic_internal> := module {
+      # Tells that specified component type need to be initialized before
+      InitializeDependency<native><public>(
+        OwnerEntity: entity,
+        ComponentType: subtype(component),
+        Mode: mode
+      )<transacts><decides>: ComponentType
+
+      mode<native><public> := enum {
+        get
+
+        get_or_create
+      }
+    }
+
+    entity_prefab<native><epic_internal> := class<computes>(asset) {}
+
+    execution_subscribable<native><public> := class {
+      Subscribe<native><public>(Callback: type { __(): void }, ?Interval: float = external {})<transacts>: execution_subscription
+
+      SubscribeWithTime<native><public>(Callback: type { __(: float): void }, ?Interval: float = external {})<transacts>: execution_subscription
+    }
+
+    execution_subscription<native><public> := class(cancelable) {
+      Cancel<native><override>()<transacts>: void
+
+      RunAfter<native><public>(__dupe___unnamed_parameter_46: execution_subscription)<transacts>: void
+
+      RunBefore<native><public>(__dupe___unnamed_parameter_47: execution_subscription)<transacts>: void
+    }
+
+    hit_result<native><epic_internal> := struct {
+      HitLocation<native><public>: vector3
+
+      HitNormal<native><public>: vector3
+
+      OtherComponent<native><public>: ?physics_component
+
+      OtherEntity<native><public>: ?entity
+
+      ThisComponent<native><public>: ?physics_component
+
+      ThisEntity<native><public>: ?entity
+    }
+
+    @hide_in_editor
+    light_entity_component<native><epic_internal> := class(component) {
+      # Internal epic method to know if this component is allowed on client
+      IsAllowedOnClient<override>(): logic = external {}
+
+      # The component is being initialized, called when it is attach to an entity
+      OnInitialized<native><override>(): void
+
+      # The component is being uninitialized, called when it is about to be detached from an entity
+      OnUninitializing<native><override>(): void
+    }
+
+    local_hud_component<epic_internal> := class(component) {
+      Hide<public>(Player: player): void = external {}
+
+      IsAllowedOnClient<override>(): logic = external {}
+
+      OnBeginSimulation<override>(): void = external {}
+
+      OnEndSimulation<override>(): void = external {}
+
+      Show<public>(Player: player): void = external {}
+
+      var Canvas<public>: canvas
+
+      var UISlot<public>: player_ui_slot
+    }
+
+    @hide_in_editor
+    mesh_component<native><epic_internal> := class(component) {
+      # Internal epic method to know if this component is allowed on client
+      IsAllowedOnClient<override>(): logic = external {}
+    }
+
+    particle_system_component<native><epic_internal> := class<final>(component) {
+      # Activate the particle system
+      Activate<native><public>(): void
+
+      # Deactivate the particle system
+      Deactivate<native><public>(): void
+
+      # Internal epic method to know if this component is allowed on client
+      IsAllowedOnClient<override>(): logic = external {}
+
+      # Notification called then the component owner entity was added to a world
+      OnAddedToScene<native><override>(): void
+
+      # The component is being initialized, called when it is attach to an entity
+      OnInitialized<native><override>(): void
+
+      # Notification called when the component owner entity is about to be removed from world
+      OnRemovingFromScene<native><override>(): void
+
+      # The component is being uninitialized, called when it is about to be detached from an entity
+      OnUninitializing<native><override>(): void
+
+      SetBeamEnd<native><epic_internal>(BeamEnd: vector3): void
+
+      SetBeamEndTangent<native><epic_internal>(BeamEndTangent: vector3): void
+
+      SetBeamStart<native><epic_internal>(BeamStart: vector3): void
+
+      SetBeamStartTangent<native><epic_internal>(BeamStartTangent: vector3): void
+
+      SetBeamWidth<native><epic_internal>(BeamWidth: float): void
+
+      @replicated("RepNotify")
+      # The path to the particle system asset
+      var ParticleSystem<native><public>: particle_system = external {}
+    }
+
+    physics_component<native><epic_internal> := class(component) {
+      # Event signaled when the component experiences a blocking hit
+      HitEvent<native><public>: listenable(hit_result) = external {}
+
+      # Internal epic method to know if this component is allowed on client
+      IsAllowedOnClient<override>(): logic = external {}
+
+      # Notification called then the component owner entity was added to a world
+      OnAddedToScene<native><override>(): void
+
+      # The component is being initialized, called when it is attach to an entity
+      OnInitialized<native><override>(): void
+
+      # Notification called when the component owner entity is about to be removed from world
+      OnRemovingFromScene<native><override>(): void
+
+      # The component is being uninitialized, called when it is about to be detached from an entity
+      OnUninitializing<native><override>(): void
+    }
+
+    point_light_entity_component<native><public> := class<final>(light_entity_component) {
+      GetAttenuationRadius<public>(): float = external {}
+
+      GetColor<public>(): color = external {}
+
+      GetIntensity<public>(): float = external {}
+
+      GetSourceLength<public>(): float = external {}
+
+      GetSourceRadius<public>(): float = external {}
+
+      SetAttenuationRadius<public>(NewRadius: float): void = external {}
+
+      SetColor<public>(NewColor: color): void = external {}
+
+      SetIntensity<public>(NewIntensity: float): void = external {}
+
+      SetSourceLength<public>(NewLength: float): void = external {}
+
+      SetSourceRadius<public>(NewRadius: float): void = external {}
+    }
+
+    replication_component<native><epic_internal> := class(component) {
+      # Internal epic method to know if this component is allowed on client
+      IsAllowedOnClient<override>(): logic = external {}
+
+      # The component is being initialized, called when it is attach to an entity
+      OnAddedToScene<native><override>(): void
+
+      # The component is being uninitialized, called when it is about to be detached from an entity
+      OnRemovingFromScene<native><override>(): void
+    }
+
+    sound_component<native><epic_internal> := class(component) {
+      # Internal epic method to know if this component is allowed on client
+      IsAllowedOnClient<override>(): logic = external {}
+
+      # The component is being initialized, called when it is attach to an entity
+      OnInitialized<native><override>(): void
+
+      # The component is being uninitialized, called when it is about to be detached from an entity
+      OnUninitializing<native><override>(): void
+
+      # Play the sound asset
+      Play<native><public>(): void
+
+      # Play the sound asset
+      Stop<native><public>(): void
+
+      @replicated("RepNotify")
+      # The path to the sound asset
+      var Sound<native><public>: sound = external {}
+    }
+
+    spot_light_entity_component<native><public> := class<final>(light_entity_component) {
+      GetAttenuationRadius<public>(): float = external {}
+
+      GetColor<public>(): color = external {}
+
+      GetInnerConeAngle<public>(): float = external {}
+
+      GetIntensity<public>(): float = external {}
+
+      GetOuterConeAngle<public>(): float = external {}
+
+      GetSourceLength<public>(): float = external {}
+
+      GetSourceRadius<public>(): float = external {}
+
+      SetAttenuationRadius<public>(NewRadius: float): void = external {}
+
+      SetColor<public>(NewColor: color): void = external {}
+
+      SetInnerConeAngle<public>(NewInnerConeAngle: float): void = external {}
+
+      SetIntensity<public>(NewIntensity: float): void = external {}
+
+      SetOuterConeAngle<public>(NewOuterConeAngle: float): void = external {}
+
+      SetSourceLength<public>(NewLength: float): void = external {}
+
+      SetSourceRadius<public>(NewRadius: float): void = external {}
+    }
+
+    static_mesh_component<native><epic_internal> := class(mesh_component) {
+      # Internal epic method to know if this component is allowed on client
+      IsAllowedOnClient<override>(): logic = external {}
+
+      OnAddedToScene<native><override>(): void
+
+      OnInitialized<native><override>(): void
+
+      OnRemovingFromScene<native><override>(): void
+
+      @replicated("RepNotify")
+      # The path to the material asset of a static mesh
+      var Material<native><public>: ?material = external {}
+
+      @replicated("RepNotify")
+      # The path to the static mesh asset
+      var Mesh<native><public>: mesh = external {}
+    }
+
+    transform_component<native><epic_internal> := class(component) {
+      # Internal epic method to know if this component is allowed on client
+      IsAllowedOnClient<override>(): logic = external {}
+
+      # The component is being initialized, called when it is attach to an entity
+      OnInitialized<native><override>(): void
+
+      # The component is being uninitialized, called when it is about to be detached from an entity
+      OnUninitializing<native><override>(): void
+
+      # Utility method to set the transform of an entity and notifying listeners
+      SetTransform<native><public>(NewTransform: transform): void
+
+      @editable
+      # Initial value of the transform of the entity, relative to its owner if any
+      var InitialRelativeTransform<native><public>: transform = external {}
+
+      @replicated("RepNotify")
+      # Current transform of the entity, relative to the world
+      var Transform<native><public>: transform = external {}
+    }
+
+    @hide_in_editor
+    typed_element_component<native><epic_internal> := class(component) {}
   }
 
   using { /Verse.org/Native }
@@ -2117,7 +2140,7 @@ Tests<public> := module {
 
       ForwardVector<override>()<transacts>: vector3 = external {}
 
-      GetCollisionComponent<public>(): collision_component = external {}
+      GetCollisionComponent<public>(): vk_collision_component = external {}
 
       GetEntity<public>(): vk_entity = external {}
 
@@ -2618,59 +2641,6 @@ VGameplayRst<public> := module {
 
   # Module import path: /UnrealEngine.com/VGameplayRst/Physics
   Physics<public> := module {
-    collision_component<native><public> := class<final>(vk_component) {
-      GetCollisionProfileName<native><public>()<transacts>: string
-
-      GetCollisionShapeMode<native><public>()<transacts>: collision_shape_mode
-
-      GetEnabled<native><public>(): logic
-
-      GetGravityEnabled<native><public>(): logic
-
-      GetMovable<native><public>()<transacts>: logic
-
-      GetSendHitEventsOnCollide<native><public>()<transacts>: logic
-
-      GetSendOverlapEvents<native><public>()<transacts>: logic
-
-      GetUseContinuousCollisionDetection<native><public>(): logic
-
-      SetBoxCollisionShapeMode<native><public>(BoxExtent: vector3)<transacts>: void
-
-      SetCapsuleCollisionShapeMode<native><public>(Height: float, Radius: float)<transacts>: void
-
-      SetCollisionProfileName<native><public>(CollisionProfile: string)<transacts>: void
-
-      SetCustomDegreeOfFreedomConstrain<native><public>(CustomMovementPlaneNormal: vector3): void
-
-      SetDegreeOfFreedomContraint<native><public>(MovementMode: dof_movement_mode): void
-
-      SetEnabled<native><public>(InIsEnabled: logic): void
-
-      SetGravityEnabled<native><public>(EnableGravity: logic): void
-
-      SetMeshCollisionShapeMode<native><epic_internal>(Mesh: mesh)<transacts>: void
-
-      # Looks at the static_mesh_component for the mesh.
-      SetMeshCollisionShapeMode<native><public>()<transacts>: void
-
-      SetMovable<native><public>(IsMovable: logic)<transacts>: void
-
-      SetSendHitEventsOnCollide<native><public>(EnableHitEvents: logic)<transacts>: void
-
-      SetSendOverlapEvents<native><public>(EnableOverlapEvents: logic)<transacts>: void
-
-      SetSphereCollisionShapeMode<native><public>(Radius: float)<transacts>: void
-
-      SetUseContinuousCollisionDetection<native><public>(UseCCD: logic): void
-
-      WaitBeginOverlap<native><public>()<suspends>: overlap_result
-
-      WaitEndOverlap<native><public>()<suspends>: overlap_result
-
-      WaitHit<native><public>()<suspends>: hit_result_legacy
-    }
-
     collision_shape_mode<native><public> := enum {
       CollisionBox
 
@@ -2704,8 +2674,8 @@ VGameplayRst<public> := module {
       # The surface normal at the location at which the hit occured on OtherEntityID
       HitNormal<native><public>: vector3
 
-      # The collision_component belonging to the entity hit
-      OtherComponent<native><public>: collision_component
+      # The vk_collision_component belonging to the entity hit
+      OtherComponent<native><public>: vk_collision_component
 
       # The ID belonging to the entity hit
       OtherEntityID<native><public>: int
@@ -2714,7 +2684,7 @@ VGameplayRst<public> := module {
     overlap_result<native><public> := class {
       FromSweep<native><public>: logic
 
-      OtherComponent<native><public>: collision_component
+      OtherComponent<native><public>: vk_collision_component
 
       OtherEntityID<native><public>: int
 
@@ -2794,6 +2764,59 @@ VGameplayRst<public> := module {
 
       Test
     }
+
+    vk_collision_component<native><public> := class<final>(vk_component) {
+      GetCollisionProfileName<native><public>()<transacts>: string
+
+      GetCollisionShapeMode<native><public>()<transacts>: collision_shape_mode
+
+      GetEnabled<native><public>(): logic
+
+      GetGravityEnabled<native><public>(): logic
+
+      GetMovable<native><public>()<transacts>: logic
+
+      GetSendHitEventsOnCollide<native><public>()<transacts>: logic
+
+      GetSendOverlapEvents<native><public>()<transacts>: logic
+
+      GetUseContinuousCollisionDetection<native><public>(): logic
+
+      SetBoxCollisionShapeMode<native><public>(BoxExtent: vector3)<transacts>: void
+
+      SetCapsuleCollisionShapeMode<native><public>(Height: float, Radius: float)<transacts>: void
+
+      SetCollisionProfileName<native><public>(CollisionProfile: string)<transacts>: void
+
+      SetCustomDegreeOfFreedomConstrain<native><public>(CustomMovementPlaneNormal: vector3): void
+
+      SetDegreeOfFreedomContraint<native><public>(MovementMode: dof_movement_mode): void
+
+      SetEnabled<native><public>(InIsEnabled: logic): void
+
+      SetGravityEnabled<native><public>(EnableGravity: logic): void
+
+      SetMeshCollisionShapeMode<native><epic_internal>(Mesh: mesh)<transacts>: void
+
+      # Looks at the static_mesh_component for the mesh.
+      SetMeshCollisionShapeMode<native><public>()<transacts>: void
+
+      SetMovable<native><public>(IsMovable: logic)<transacts>: void
+
+      SetSendHitEventsOnCollide<native><public>(EnableHitEvents: logic)<transacts>: void
+
+      SetSendOverlapEvents<native><public>(EnableOverlapEvents: logic)<transacts>: void
+
+      SetSphereCollisionShapeMode<native><public>(Radius: float)<transacts>: void
+
+      SetUseContinuousCollisionDetection<native><public>(UseCCD: logic): void
+
+      WaitBeginOverlap<native><public>()<suspends>: overlap_result
+
+      WaitEndOverlap<native><public>()<suspends>: overlap_result
+
+      WaitHit<native><public>()<suspends>: hit_result_legacy
+    }
   }
 
   # Module import path: /UnrealEngine.com/VGameplayRst/Transform
@@ -2866,64 +2889,413 @@ VGameplayRst<public> := module {
   }
 }
 
+using { /UnrealEngine.com/EpicGamesRestricted/Network }
+using { /UnrealEngine.com/Temporary/SceneGraph }
 using { /Verse.org/Native }
+using { /Verse.org/Simulation }
+using { /Verse.org/Simulation/Tags }
+# Module import path: /UnrealEngine.com/VerseCamera
+VerseCamera<public> := module {
+  GetPlayerCameraView<native><epic_internal>(Player: player)<transacts><decides>: player_camera_view
+
+  GetPlayerCameraViewByIndex<native><epic_internal>(PlayerIndex: int)<transacts><decides>: player_camera_view
+
+  camera_behavior_component<native><epic_internal> := class(component) {
+    @replicated("")
+    var CameraDirector<native><public>: camera_director_interface = external {}
+
+    @replicated("")
+    var DefaultEvaluatorContext<native><public>: ?camera_evaluator_context = external {}
+  }
+
+  camera_blend_mode<native><epic_internal> := enum {
+    Cubic
+
+    EaseIn
+
+    EaseInOut
+
+    EaseOut
+
+    Linear
+  }
+
+  camera_boom_collision_type<native><epic_internal> := enum {
+    Instant
+
+    Predictive
+  }
+
+  camera_component<native><epic_internal> := class(basic_camera_component) {}
+
+  camera_dead_zone_shape<native><epic_internal> := enum {
+    Cylinder
+
+    Rectangle
+
+    Sphere
+  }
+
+  camera_director_default<native><epic_internal> := class(camera_director_interface) {
+    AddCameraMode<native><override>(CameraMode: camera_mode): void
+
+    AddSubDirector<native><override>(Director: camera_director_interface): void
+
+    DetermineActiveCameraMode<native><override>(CameraStackLayer: tag): ?camera_mode
+
+    RemoveCameraMode<native><override>(CameraMode: camera_mode): void
+
+    RemoveSubDirector<native><override>(Director: camera_director_interface): void
+  }
+
+  camera_director_interface<native><epic_internal> := interface {
+    AddCameraMode<native_callable><public>(CameraMode: camera_mode): void
+
+    AddSubDirector<native_callable><public>(Director: camera_director_interface): void
+
+    DetermineActiveCameraMode<native_callable><public>(CameraStackLayer: tag): ?camera_mode
+
+    RemoveCameraMode<native_callable><public>(CameraMode: camera_mode): void
+
+    RemoveSubDirector<native_callable><public>(Director: camera_director_interface): void
+  }
+
+  camera_evaluator_context<native><epic_internal> := class<unique>(camera_evaluator_context_base) {}
+
+  @import_as("/Script/VerseCamera.UVerseCameraEvaluatorContext")
+  camera_evaluator_context_base<native><epic_internal> := class<abstract> {}
+
+  camera_fixed_angle_follow_type<native><epic_internal> := enum {
+    InterpolationFollow
+
+    SpringFollow
+  }
+
+  camera_layer_gameplay_tag<native><epic_internal> := class(camera_layer_tag) {}
+
+  camera_layer_tag<native><epic_internal> := class(tag) {}
+
+  camera_mode<native><epic_internal> := class<concrete><unique> {
+    ClearEvaluatorContext<native><public>(): void
+
+    SetEvaluatorContext<native><public>(OverriddenEvaluatorContext: camera_evaluator_context): void
+
+    UpdateCameraModeParameters<native><public>(): void
+
+    @editable
+    @replicated("")
+    var BlendInParams<native><public>: camera_mode_blend_params = external {}
+
+    @editable
+    @replicated("")
+    var BlendOutParams<native><public>: camera_mode_blend_params = external {}
+
+    var CameraModeTag<native><public>: tag = external {}
+
+    @editable
+    @replicated("")
+    var Priority<native><public>: float = external {}
+  }
+
+  @import_as("/Script/VerseCamera.UVerseCameraMode")
+  camera_mode_base<native><epic_internal> := class<abstract> {}
+
+  camera_mode_blend_params<native><epic_internal> := struct<concrete> {
+    @editable
+    BlendExponent<native><epic_internal>: float = external {}
+
+    @editable
+    BlendFunction<native><epic_internal>: camera_blend_mode = external {}
+
+    @editable
+    BlendPriority<native><epic_internal>: float = external {}
+
+    @editable
+    BlendTime<native><epic_internal>: float = external {}
+  }
+
+  camera_mode_default_tag<native><epic_internal> := class(tag) {}
+
+  camera_mode_fixed_angle<native><epic_internal> := class<unique>(camera_mode) {
+    @editable
+    var CameraAnglePitch<native><public>: float = external {}
+
+    @editable
+    var CameraAngleYaw<native><public>: float = external {}
+
+    @editable
+    var CameraDistance<native><public>: float = external {}
+
+    var CameraModeTag<override>: tag = external {}
+
+    @editable
+    var CollisionCutoutSize<native><public>: float = external {}
+
+    @editable
+    var CollisionInTime<native><public>: float = external {}
+
+    @editable
+    var CollisionOutTime<native><public>: float = external {}
+
+    @editable
+    var CollisionSize<native><public>: float = external {}
+
+    @editable
+    var CollisionType<native><public>: camera_boom_collision_type = external {}
+
+    @editable
+    var DeadZoneEnabled<native><public>: logic = external {}
+
+    @editable
+    var DeadzoneDiameter<native><public>: float = external {}
+
+    @editable
+    var DeadzoneHeight<native><public>: float = external {}
+
+    @editable
+    var DeadzoneType<native><public>: camera_dead_zone_shape = external {}
+
+    @editable
+    var DeadzoneWidth<native><public>: float = external {}
+
+    @editable
+    var FieldOfViewDegrees<native><public>: float = external {}
+
+    @editable
+    var FollowType<native><public>: camera_fixed_angle_follow_type = external {}
+
+    @editable
+    var InterpolationFollowMaxDistance<native><public>: float = external {}
+
+    @editable
+    var InterpolationFollowSpeed<native><public>: float = external {}
+
+    @editable
+    var OffsetHorizontal<native><public>: float = external {}
+
+    var OffsetSpace<native><public>: camera_offset_space = external {}
+
+    @editable
+    var OffsetVertical<native><public>: float = external {}
+
+    @editable
+    var SpringFollowMaxDistance<native><public>: float = external {}
+
+    @editable
+    var SpringFollowStiffness<native><public>: float = external {}
+  }
+
+  camera_mode_fixed_angle_tag<native><epic_internal> := class(camera_mode_tag) {}
+
+  camera_mode_fixed_point<native><epic_internal> := class<unique>(camera_mode) {
+    var CameraModeTag<override>: tag = external {}
+
+    @editable
+    var ClampEnabled<native><public>: logic = external {}
+
+    @editable
+    var ClampPitchMax<native><public>: float = external {}
+
+    @editable
+    var ClampPitchMin<native><public>: float = external {}
+
+    @editable
+    var ClampYawMax<native><public>: float = external {}
+
+    @editable
+    var ClampYawMin<native><public>: float = external {}
+
+    @editable
+    var DeadzoneEnabled<native><public>: logic = external {}
+
+    @editable
+    var DeadzonePitch<native><public>: float = external {}
+
+    @editable
+    var DeadzonePitchOffset<native><public>: float = external {}
+
+    @editable
+    var DeadzoneYaw<native><public>: float = external {}
+
+    @editable
+    var DeadzoneYawOffset<native><public>: float = external {}
+
+    @editable
+    var FieldOfViewDegrees<native><public>: float = external {}
+
+    @editable
+    var LookAtOffsetSpace<native><public>: camera_offset_space = external {}
+
+    @editable
+    var LookAtTargetEnabled<native><public>: logic = external {}
+
+    @editable
+    var LookAtTargetOffsetDistance<native><public>: float = external {}
+
+    @editable
+    var LookAtTargetOffsetHorizontal<native><public>: float = external {}
+
+    @editable
+    var LookAtTargetOffsetVertical<native><public>: float = external {}
+  }
+
+  camera_mode_fixed_point_tag<native><epic_internal> := class(camera_mode_tag) {}
+
+  camera_mode_tag<native><epic_internal> := class(tag) {}
+
+  camera_mode_third_person<native><epic_internal> := class<unique>(camera_mode) {
+    UpdateCameraModeParameters<override><native>(): void
+
+    @editable
+    var CameraDistance<native><public>: float = external {}
+
+    var CameraModeTag<override>: tag = external {}
+
+    @editable
+    var CameraOffsetHorizontal<native><public>: float = external {}
+
+    @editable
+    var CameraOffsetSpace<native><public>: camera_offset_space = external {}
+
+    @editable
+    var CameraOffsetVertical<native><public>: float = external {}
+
+    var CollisionCutoutSize<native><public>: float = external {}
+
+    var CollisionInTime<native><public>: float = external {}
+
+    var CollisionOutTime<native><public>: float = external {}
+
+    var CollisionSize<native><public>: float = external {}
+
+    var CollisionType<native><public>: camera_boom_collision_type = external {}
+
+    @editable
+    var FieldOfViewDegrees<native><public>: float = external {}
+
+    @editable
+    var IsSpringFollowEnabled<native><public>: logic = external {}
+
+    @editable
+    var LookAtOffsetSpace<native><public>: camera_offset_space = external {}
+
+    @editable
+    var LookAtTargetOffsetDistance<native><public>: float = external {}
+
+    @editable
+    var LookAtTargetOffsetHorizontal<native><public>: float = external {}
+
+    @editable
+    var LookAtTargetOffsetVertical<native><public>: float = external {}
+
+    @editable
+    var SpringFollowMaxDistance<native><public>: float = external {}
+
+    @editable
+    var SpringFollowStiffness<native><public>: float = external {}
+  }
+
+  camera_mode_third_person_tag<native><epic_internal> := class(camera_mode_tag) {}
+
+  camera_offset_space<native><epic_internal> := enum {
+    CameraSpace
+
+    TargetSpace
+
+    WorldSpace
+  }
+
+  entity_camera_evaluator_context<native><epic_internal> := class<unique>(camera_evaluator_context) {
+    @replicated("")
+    var CameraEntity<native><public>: ?entity = external {}
+
+    @replicated("")
+    var TargetEntity<native><public>: ?entity = external {}
+  }
+
+  player_camera_view<native><epic_internal> := class(player_camera_view_base) {
+    GetCameraBehavior<native><epic_internal>(): ?camera_behavior_component
+
+    SetCameraBehavior<native><epic_internal>(CameraBehavior: camera_behavior_component): void
+  }
+
+  @import_as("/Script/VerseCamera.UVersePlayerCameraViewComponent")
+  player_camera_view_base<native><epic_internal> := class<abstract> {}
+}
+
 # Module import path: /UnrealEngine.com/VerseQuery
 VerseQuery<public> := module {
-  (InEntity: entity).FindChildComponents<native><epic_internal>(ComponentType: subtype(component))<varies>: []ComponentType
+  (InEntity: entity).FindChildComponents<native><epic_internal>(ComponentType: subtype(component))<varies>: component_query_iterator_interface
 
-  (InEntity: entity).FindChildEntities<native><epic_internal>(EntityType: subtype(entity))<varies>: []EntityType
+  (InEntity: entity).FindChildEntities<native><epic_internal>(EntityType: subtype(entity))<varies>: entity_query_iterator_interface
 
-  (InEntity: entity).FindChildEntitiesIn<native><epic_internal>(Shape: query_shape)<varies>: []entity
+  (InEntity: entity).FindChildEntitiesInside<native><epic_internal>(Shape: volume3): entity_query_iterator_interface
 
-  (InEntity: entity).FindChildEntitiesWithComponent<native><epic_internal>(ComponentType: subtype(component))<varies>: []entity
+  (InEntity: entity).FindChildEntitiesOriginInside<native><epic_internal>(Shape: volume3): entity_query_iterator_interface
 
-  (InEntity: entity).FindChildEntitiesWithTag<native><epic_internal>(Tag: tag)<varies>: []entity
+  (InEntity: entity).FindChildEntitiesOverlapping<native><epic_internal>(Shape: shape3): entity_query_iterator_interface
 
-  (InEntity: entity).FindParentComponents<native><epic_internal>(ComponentType: subtype(component))<varies>: []ComponentType
+  (InEntity: entity).FindChildEntitiesWithComponent<native><epic_internal>(ComponentType: subtype(component))<varies>: entity_query_iterator_interface
 
-  (InEntity: entity).FindParentEntities<native><epic_internal>(EntityType: subtype(entity))<varies>: []EntityType
+  (InEntity: entity).FindChildEntitiesWithTag<native><epic_internal>(Tag: tag)<varies>: entity_query_iterator_interface
 
-  (InEntity: entity).FindParentEntitiesIn<native><epic_internal>(Shape: query_shape)<varies>: []entity
+  (InEntity: entity).FindParentComponents<native><epic_internal>(ComponentType: subtype(component))<varies>: component_query_iterator_interface
 
-  (InEntity: entity).FindParentEntitiesWithComponent<native><epic_internal>(ComponentType: subtype(component))<varies>: []entity
+  (InEntity: entity).FindParentEntities<native><epic_internal>(EntityType: subtype(entity))<varies>: entity_query_iterator_interface
 
-  (InEntity: entity).FindParentEntitiesWithTag<native><epic_internal>(Tag: tag)<varies>: []entity
+  (InEntity: entity).FindParentEntitiesInside<native><epic_internal>(Shape: volume3): entity_query_iterator_interface
 
-  core_entity_query_iterator<native><epic_internal> := class(query_iterator, query_iterator_base) {
-    IsValid<native><override>(): logic
+  (InEntity: entity).FindParentEntitiesOriginInside<native><epic_internal>(Shape: volume3): entity_query_iterator_interface
 
-    Next<native><override>(): ?entity
+  (InEntity: entity).FindParentEntitiesOverlapping<native><epic_internal>(Shape: shape3): entity_query_iterator_interface
+
+  (InEntity: entity).FindParentEntitiesWithComponent<native><epic_internal>(ComponentType: subtype(component))<varies>: entity_query_iterator_interface
+
+  (InEntity: entity).FindParentEntitiesWithTag<native><epic_internal>(Tag: tag)<varies>: entity_query_iterator_interface
+
+  # Axis aligned box volume
+  axis_aligned_box3<native><epic_internal> := class<final><concrete>(volume3) {
+    Extent<native><public>: vector3 = external {}
+
+    Origin<native><public>: vector3 = external {}
+  }
+
+  component_query_iterator_interface<native><epic_internal> := interface<epic_internal> {
+    NextValue<native_callable><public>()<transacts><decides>: component
+  }
+
+  entity_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface) {
+    NextValue<native><override>()<transacts><decides>: entity
+  }
+
+  entity_query_iterator_interface<native><epic_internal> := interface<epic_internal> {
+    NextValue<native_callable><public>()<transacts><decides>: entity
   }
 
   @import_as("/Script/VerseQuery.UEntityQueryManager")
   entity_query_manager<native><epic_internal> := class {}
 
-  null_query_iterator<native><epic_internal> := class(query_iterator) {
-    IsValid<native><override>(): logic
+  null_component_query_iterator<native><epic_internal> := class<epic_internal>(component_query_iterator_interface) {
+    NextValue<native><override>()<transacts><decides>: component
+  }
 
-    Next<native><override>(): ?entity
+  null_entity_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface) {
+    NextValue<native><override>()<transacts><decides>: entity
   }
 
   @hide_in_editor
   playspace_association_component<native><epic_internal> := class(component) {}
 
-  query_iterator<native><epic_internal> := interface {
-    IsValid<public>(): logic
+  shape2<native><epic_internal> := class<epic_internal> {}
 
-    Next<public>(): ?entity
+  shape3<native><epic_internal> := class<epic_internal> {}
+
+  slow_component_array_copy_query_iterator<native><epic_internal> := class<epic_internal>(component_query_iterator_interface) {
+    NextValue<native><override>()<transacts><decides>: component
   }
 
-  @import_as("/Script/VerseQuery.UQueryIteratorBase")
-  query_iterator_base<native><epic_internal> := class {}
-
-  # Abstract base representation of a shape. SHOULD EVENTUALLY BE REPALCED BY WHETEVER PHYSICS TYPES WE WANT TO EXPOSE
-  query_shape<native><epic_internal> := class<abstract> {}
-
-  # Axis aligned box volume
-  query_shape_box<native><epic_internal> := class<concrete>(query_shape) {
-    Extent<native><public>: vector3 = external {}
-
-    Origin<native><public>: vector3 = external {}
+  slow_entity_array_copy_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface) {
+    NextValue<native><override>()<transacts><decides>: entity
   }
 
   # Component used for tagging objects for retrieval later. Useful when connecting runtime scripts with editor placed objects.
@@ -2931,14 +3303,14 @@ VerseQuery<public> := module {
     # Add a single tag to this component.
     AddTag<native><override>(TagToAdd: tag): void
 
-    # Notification called then the component owner entity was added to a world
-    AddedToWorld<native><override>(): void
+    # Notification called then the component owner entity was added to a Scene
+    OnAddedToScene<native><override>(): void
+
+    # Notification called when the component owner entity is about to be removed from Scene
+    OnRemovingFromScene<native><override>(): void
 
     # Remove a single tag from this component.
     RemoveTag<native><override>(TagToRemove: tag): logic
-
-    # Notification called when the component owner entity is about to be removed from world
-    RemovingFromWorld<native><override>(): void
 
     # Set the tags associated with this component.
     SetTags<native><override>(InTags: tag_container): void
@@ -2948,26 +3320,25 @@ VerseQuery<public> := module {
     # Add a single tag to this component.
     AddTag<native><epic_internal>(TagToAdd: tag): void
 
-    # Notification called then the component owner entity was added to a world
-    AddedToWorld<native><override>(): void
-
     # Get the tags associated with this component. These may be specified in the editor.
     GetTags<native><epic_internal>(): tag_container
+
+    # Notification called then the component owner entity was added to a Scene
+    OnAddedToScene<native><override>(): void
+
+    # Notification called when the component owner entity is about to be removed from Scene
+    OnRemovingFromScene<native><override>(): void
 
     # Remove a single tag from this component.
     RemoveTag<native><epic_internal>(TagToRemove: tag): logic
 
-    # Notification called when the component owner entity is about to be removed from world
-    RemovingFromWorld<native><override>(): void
-
     # Set the tags associated with this component.
     SetTags<native><epic_internal>(InTags: tag_container): void
   }
+
+  volume3<native><epic_internal> := class<epic_internal>(shape3) {}
 }
 
-using { /UnrealEngine.com/EntityFramework/Entity }
-using { /Verse.org/Simulation }
-using { /Verse.org/Simulation/Tags }
 # Module import path: /UnrealEngine.com/VerseQueryTestSuite
 VerseQueryTestSuite<public> := module {
   @hide_in_editor

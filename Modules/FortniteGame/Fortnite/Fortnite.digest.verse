@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.01-CL-32291970
+# Generated from build: ++Fortnite+Release-29.10-CL-32391220
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -1184,6 +1184,12 @@ Devices<public> := module {
 
     # Plays the sequence. An instigating 'Agent' is required when the device is set to anything except *Everyone*.
     Play<public>(Agent: agent): void = external {}
+
+    # Plays the sequence in reverse. This will only work when the device is set to *Everyone*
+    PlayReverse<public>(): void = external {}
+
+    # Plays the sequence in reverse. An instigating 'Agent' is required when the device is set to anything except *Everyone*.
+    PlayReverse<public>(Agent: agent): void = external {}
 
     # Set the playback rate of the sequence.
     SetPlayRate<public>(PlayRate: float): void = external {}
@@ -4190,6 +4196,9 @@ Devices<public> := module {
 
   # Specialized `vehicle_spawner_device` that allows a Quadcrasher to be configured and spawned.
   vehicle_spawner_quadcrasher_device<public> := class<concrete><final>(vehicle_spawner_device) {}
+
+  # Specialized `vehicle_spawner_device` that allows a Rocket Racing Vehicle to be configured and spawned.
+  vehicle_spawner_rocketracing_device<public> := class<concrete><final>(vehicle_spawner_device) {}
 
   # Specialized `vehicle_spawner_device` that allows a Prevalent sedan to be configured and spawned.
   vehicle_spawner_sedan_device<public> := class<concrete><final>(vehicle_spawner_device) {}
