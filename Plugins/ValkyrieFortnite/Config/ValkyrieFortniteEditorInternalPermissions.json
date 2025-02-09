@@ -58,6 +58,16 @@
 			},
 			{
 				"$type": "ValkyrieEditorAssetClassRules",
+				"ClassName": "/Script/Engine.AnimComposite",
+				"Visible": true,
+				"Edit": true,
+				"Create": true,
+				"Import": false,
+				"Export": false,
+				"SubClasses": false
+			},
+			{
+				"$type": "ValkyrieEditorAssetClassRules",
 				"ClassName": "/Script/Engine.UserDefinedEnum",
 				"Visible": true,
 				"Edit": true,
@@ -1071,8 +1081,30 @@
 				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Engine.PoseAsset",
 				"AllowList": [
-					"SourceAnimation"
+					"SourceAnimation",
+					"bAdditivePose"
 				]
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Engine.AnimComposite",
+				"AllowList": [
+					"RateScale",
+					"bLoop",
+					"RateScale",
+					"SequenceLength",
+					"PreviewBasePose"
+				]
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Engine.SkeletalMesh",
+				"AllowList": [ "MaterialSlots", "MaterialList", "Material", "Mesh", "Transform", "Miscellaneous", "File Path", "Skeleton", "PositiveBoundsExtension", "NegativeBoundsExtension", "MeshReductionSettings", "PercentTriangles", "SelectLOD", "ScreenSize", "MinLOD", "QualityLevelMinLOD", "LODForCollision", "SkeletalMeshSectionListNameLOD_0", "SkeletalMeshSectionListNameLOD_1", "SkeletalMeshSectionListNameLOD_2", "SkeletalMeshSectionListNameLOD_3", "SkeletalMeshSectionListNameLOD_4", "SkeletalMeshSectionListNameLOD_5", "SkeletalMeshSectionListNameLOD_6", "SkeletalMeshSectionListNameLOD_7", "SkeletalMeshOptimizationSettings", "LODGroup", "LODImport", "QualityLevelMinLOD", "AutoComputeLOD", "NumberOfLODs", "ApplyChanges", "LODButtons", "DefaultAnimatingRig", "PostProcessAnimBlueprint" ]
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Engine.SkeletalMeshComponent",
+				"AllowList": [ "SkeletalMesh", "AnimationData", "SkeletalMeshAsset", "AnimationMode", "AnimClass", "bDisablePostProcessBlueprint" ]
 			}
 		]
 	},

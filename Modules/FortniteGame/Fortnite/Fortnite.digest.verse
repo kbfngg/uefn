@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-24.10-CL-24770548
+# Generated from build: ++Fortnite+Release-24.20-CL-24939793
 #################################################
 
 # Module import path: /Fortnite.com/Characters
@@ -90,7 +90,6 @@ Characters<public> := module {
 }
 
 using { /Fortnite.com/Game }
-using { /Fortnite.com/Playspaces }
 using { /Verse.org/Simulation/Tags }
 # Module import path: /Fortnite.com/Devices
 Devices<public> := module {
@@ -713,18 +712,33 @@ Devices<public> := module {
     # Pauses the sequence.
     Pause<public>(): void = external {}
 
-    # Plays the sequence.
+    # Pauses the sequence. An instigating 'Agent' is required when the device is set
+    # to anything except *Everyone*.
+    Pause<public>(Agent: agent): void = external {}
+
+    # Plays the sequence. This will only work when the device is set to *Everyone*
     Play<public>(): void = external {}
+
+    # Plays the sequence. An instigating 'Agent' is required when the device is set
+    # to anything except *Everyone*.
+    Play<public>(Agent: agent): void = external {}
 
     # Stops the sequence.
     Stop<public>(): void = external {}
 
-    # Signaled when the sequence is started for an `agent`.
-    # Sends the `agent` associated with the sequence.
+    # Stops the sequence. An instigating 'Agent' is required when the device is set
+    # to anything except *Everyone*.
+    Stop<public>(Agent: agent): void = external {}
+
+    # Signaled when the sequence is stopped.
     StoppedEvent<public>: listenable(tuple()) = external {}
 
     # Toggles between `Play` and `Stop`.
     TogglePause<public>(): void = external {}
+
+    # Toggles between `Play` and `Stop`. An instigating 'Agent' is required when the device is set
+    # to anything except *Everyone*.
+    TogglePause<public>(Agent: agent): void = external {}
   }
 
   # Used together with `class_designer_device` to control how/when created classes can be accessed by `agent`s.
@@ -777,6 +791,10 @@ Devices<public> := module {
     # Signaled when an `agent` closes the UI.
     # Sends the `agent` that closed the UI.
     UIClosedEvent<public>: listenable(agent) = external {}
+
+    # Signaled when the UI is opened.
+    # Sends the `agent` that is responsible for opening the UI.
+    UIOpenedEvent<public>: listenable(agent) = external {}
   }
 
   # Used to create a tile that changes colors when `agent`s interact with it.
@@ -1231,11 +1249,20 @@ Devices<public> := module {
     # Disables this device. Guards will despawn if *Despawn Guards When Disabled* is set.
     Disable<public>(): void = external {}
 
+    # Dismisses all hired guards that were recruited by `Instigator`.
+    DismissAgentHiredGuards<public>(Instigator: agent): void = external {}
+
+    # Dismisses all hired guards.
+    DismissAllHiredGuards<public>(): void = external {}
+
     # Enables this device. Guards will start to spawn.
     Enable<public>(): void = external {}
 
     # Forces guard to attack `Target`, bypassing perception checks.
     ForceAttackTarget<public>(Target: agent): void = external {}
+
+    # Hires guards to `Instigator`'s team.
+    Hire<public>(Instigator: agent): void = external {}
 
     # Resets the spawn count allowing spawning of a new batch of guards.
     Reset<public>(): void = external {}
@@ -1249,6 +1276,10 @@ Devices<public> := module {
     # Tries to spawn a guard. If *Auto Hire When Spawned* is set to *Triggering Player* the guard will be
     # hired by `Instigator`.
     Spawn<public>(Instigator: agent): void = external {}
+
+    # Signaled when a guard is spawned.
+    # Sends the `agent` guard who was spawned.
+    SpawnedEvent<public>: listenable(agent) = external {}
   }
 
   # Used to regenerate an `agent`'s health and/or shields.
@@ -1797,11 +1828,35 @@ Devices<public> := module {
     # Enables this device.
     Enable<public>(): void = external {}
 
+    # Returns the *Button Text* for this popup at a specified index.
+    GetButtonText<public>(Index: int)<transacts>: []char = external {}
+
+    # Returns the *Description* text for this popup.
+    GetDescriptionText<public>()<transacts>: []char = external {}
+
+    # Returns the *Title* text for this popup.
+    GetTitleText<public>()<transacts>: []char = external {}
+
     # Hides the popup from all `agent`s in the experience.
     Hide<public>(): void = external {}
 
     # Hides the popup from `Agent`.
     Hide<public>(Agent: agent): void = external {}
+
+    # Signaled when *Button <Index>* on this device is pushed by an `agent`.
+    # Sends the `agent` that pushed the button.
+    # Sends the `int` index of the clicked the button.
+    RespondingButtonEvent<public>: listenable(tuple(agent, int)) = external {}
+
+    # Sets the number of buttons this popup has.
+    #  Button Count is not updated on active Popups.
+    SetButtonCount<public>(Count: int): void = external {}
+
+    # Sets the *Button Text* for a button at a specific index on this popup.
+    #  * `Text` should be no more than `8` characters.
+    #  * If `Text` is empty the button will show *OK* instead.
+    #  * Button 1 uses `Index` 0.
+    SetButtonText<public>(Text: message, Index: int): void = external {}
 
     # Sets the *Description* text for this popup. `Text` should be no more than `350` characters.
     SetDescriptionText<public>(Text: message): void = external {}
@@ -3331,6 +3386,9 @@ Devices<public> := module {
 
   # Used to spawn various wildlife that players can herd, hunt, or tame.
   wildlife_spawner_device<public> := class<concrete><final>(creative_device_base) {
+    # Consumes energy from wildlife belonging to `Agent` by *Energy Consume Amount*.
+    ConsumeEnergy<public>(Agent: agent): void = external {}
+
     # Consumes energy from wildlife by *Energy Consume Amount*.
     ConsumeEnergyForAll<public>(): void = external {}
 
@@ -3343,6 +3401,9 @@ Devices<public> := module {
     # Disables this device.
     Disable<public>(): void = external {}
 
+    # Dismounts `Agent` from wildlife.
+    Dismount<public>(Agent: agent): void = external {}
+
     # Dismounts all `agent`s from wildlife.
     DismountAll<public>(): void = external {}
 
@@ -3352,11 +3413,30 @@ Devices<public> := module {
     # Resets the count on the *Total Spawn Count* option.
     Reset<public>(): void = external {}
 
+    # Restores energy to wildlife belonging to `Agent` by *Energy Restore Amount*.
+    RestoreEnergy<public>(Agent: agent): void = external {}
+
     # Restores energy to wildlife by *Energy Restore Amount*.
     RestoreEnergyForAll<public>(): void = external {}
 
+    # Teleports `Agent` to the nearest wildlife, then `Agent` mounts that wildlife.
+    Ride<public>(Agent: agent): void = external {}
+
     # Spawns wildlife from this device.
     Spawn<public>(): void = external {}
+
+    # Signaled when this device spawns wildlife.
+    # Sends the `agent` wildlife that was spawned.
+    SpawnedEvent<public>: listenable(agent) = external {}
+
+    # Tames wildlife, making them AI partners of `Agent`.
+    Tame<public>(Agent: agent): void = external {}
+
+    # Untames any tamed wildlife that belong to `Agent`.
+    Untame<public>(Agent: agent): void = external {}
+
+    # Untames all wildlife.
+    UntameAll<public>(): void = external {}
   }
 }
 
@@ -3614,19 +3694,26 @@ Teams<public> := module {
   }
 }
 
+using { /Fortnite.com/Playspaces }
 using { /UnrealEngine.com/Temporary/SpatialMath }
 using { /UnrealEngine.com/Temporary/UI }
 using { /Verse.org/Colors }
 # Module import path: /Fortnite.com/UI
 UI<public> := module {
+  # Deprecated. This function affects all players. Please use `fort_playspace.GetHUDController().HideElements()`.
   # Hides a set of HUD elements.
   (PlayerUI: player_ui).HideHUDElements<native><public>(HUDElements: []hud_element_identifier): void
 
+  # Deprecated. This function affects all players. Please use `fort_playspace.GetHUDController().ResetElementVisibility()`.
   # Resets the visibility for a set of HUD elements.
   (PlayerUI: player_ui).ResetHUDElementVisibility<native><public>(HUDElements: []hud_element_identifier): void
 
+  # Deprecated. This function affects all players. Please use `fort_playspace.GetHUDController().ShowElements()`.
   # Shows a set of HUD elements.
   (PlayerUI: player_ui).ShowHUDElements<native><public>(HUDElements: []hud_element_identifier): void
+
+  # Get the `fort_hud_controller` for the current `fort_playspace`.
+  (Playspace: fort_playspace).GetHUDController<native><public>(): fort_hud_controller
 
   # Text button with big and loud styling applied.
   button_loud<native><public> := class<final>(text_button_base) {}
@@ -3684,6 +3771,18 @@ UI<public> := module {
   creative_hud_identifier_storm_timer<public> := class<final>(hud_element_identifier) {}
 
   creative_hud_identifier_team_info<public> := class<final>(hud_element_identifier) {}
+
+  # A HUD controller that allows for showing and hiding of HUD elements.
+  fort_hud_controller<native><public> := interface {
+    # Hides a set of HUD elements.
+    HideElements<public>(HUDElements: []hud_element_identifier): void
+
+    # Resets the visibility for a set of HUD elements.
+    ResetElementVisibility<public>(HUDElements: []hud_element_identifier): void
+
+    # Shows a set of HUD elements.
+    ShowElements<public>(HUDElements: []hud_element_identifier): void
+  }
 
   # Used to identify a HUD element.
   hud_element_identifier<native><public> := class<abstract><epic_internal> {}

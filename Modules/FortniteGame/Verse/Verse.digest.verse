@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-24.10-CL-24770548
+# Generated from build: ++Fortnite+Release-24.20-CL-24939793
 #################################################
 
 # Module import path: /Verse.org/Assets
@@ -763,9 +763,6 @@ Verse<public> := module {
     # Tasks are resumed in the order they were suspended. Each task will perform as
     # much work as it can until it encounters a blocking call, whereupon it will
     # transfer control to the next suspended task.
-    #
-    # Assertion fails if `Signal` is called in the middle of a `Signal` call
-    # on the same `event`.
     Signal<native><override>(Val: t): void
   }
 

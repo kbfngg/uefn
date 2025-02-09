@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-24.10-CL-24770548
+# Generated from build: ++Fortnite+Release-24.20-CL-24939793
 #################################################
 
 Temporary<public> := module {
@@ -587,7 +587,7 @@ Temporary<public> := module {
     }
 
     # The main interface for adding and removing `widget`s to a player's UI.
-    player_ui<native><public> := class<final> {
+    player_ui<native><public> := class<final><epic_internal> {
       # Adds `Widget` to this `player_ui` using default `player_ui_slot` configuration options.
       AddWidget<native><public>(Widget: widget): void
 
