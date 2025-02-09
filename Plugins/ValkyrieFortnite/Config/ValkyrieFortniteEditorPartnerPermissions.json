@@ -1,0 +1,25 @@
+{
+	"$type": "ValkyrieFortniteEditorPermissionSettings",
+	"PropertyEditorClassPermissionList": {
+		"+": [
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/ValkyrieEditor.ValkyrieProjectSettingsEditorViewModel",
+				"AllowList": [ "Title", "Description", "DocsUrl", "Attributions", "Kind", "UGCLocDescriptor" ]
+			}
+		]
+	},
+	"PropertyEditorStructPermissionList": {
+		"+": [
+			{
+				"$type": "ValkyrieStructPropertyPermissionList",
+				"Type": "/Script/FortniteGame.PlaysetSettings",
+				"AllowList": [ "Category", "Name", "ShortDescription", "LongDescription", "SmallThumbnail", "LargeThumbnail", "CreativeTags", "bAutomaticBoundingBox", "BoundingBox", "OffsetType", "GroundSnapTolerance", "bGenerateProps", "bIsPublic" ]
+			}
+		]
+	},
+	"bMultiPluginProjectAllowed": true,
+	"bProjectKindExposed": true,
+	"bLocalizationEnabled": true,
+	"bAddProjectExternalContentAllowed": true
+}
