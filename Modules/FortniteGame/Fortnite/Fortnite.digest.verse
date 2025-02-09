@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-30.10-CL-34184790
+# Generated from build: ++Fortnite+Release-30.20-CL-34554470
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -2372,6 +2372,52 @@ Devices<public> := module {
 
     # Sets the delay time to respawn the barrel, clamped between `0.0` and `1000.0` seconds.This will override the delay timer if set during the delay countdown.
     SetRespawnDelay<public>(RespawnDelay: float): void = external {}
+  }
+
+  # Use to create a flaming hoop that accelerates and applies nitro to players and vehicles.
+  nitro_hoop_device<public> := class<concrete><final>(creative_device_base) {
+    # Allow the device to enter the cooldown state after a player or vehicle triggers it.
+    AllowCooldown<public>(): void = external {}
+
+    # Triggers when the device enters the cooldown state, becoming disabled.
+    # This is not triggered by manually calling `Disable`.
+    CooldownStartEvent<public>: listenable(tuple()) = external {}
+
+    # Disable the device. This causes the device to enter the cooldown state until the device is re-enabled by `Enable`, `DisallowCooldown`, or `Enable on Phase`.
+    Disable<public>(): void = external {}
+
+    # Prevent the device from entering the cooldown state after use. Until `AllowCooldown` is called, triggering the device will not begin cooldown.
+    # If the device is currently in the cooldown state, this ends the cooldown state and re-enables the device.
+    DisallowCooldown<public>(): void = external {}
+
+    # Enable the device. If the device is currently in the cooldown state, this also ends the cooldown state.
+    Enable<public>(): void = external {}
+
+    # Triggers when the device becomes enabled after being disabled, potentially through the cooldown state.
+    EnabledEvent<public>: listenable(tuple()) = external {}
+
+    # Return the default duration of the cooldown state in seconds.
+    GetDefaultCooldownDuration<public>(): float = external {}
+
+    # Succeeds if the device is currently enabled.
+    # The device is not enabled if it is in the cooldown state, or has otherwise been manually disabled.
+    IsEnabled<public>()<transacts><decides>: void = external {}
+
+    # Triggers when a player triggers the device.
+    # Sends the triggering `agent`.
+    PlayerTriggeredEvent<public>: listenable(agent) = external {}
+
+    # Set the default duration of the cooldown state to `Seconds`.
+    #  * `Seconds` is clamped between `1.0` and `60.0`.
+    SetDefaultCooldownDuration<public>(Seconds: float): void = external {}
+
+    # Enter the cooldown state for `Seconds` seconds. If the device is already in the cooldown state, re-enable it after `Seconds` seconds.
+    # `Seconds` is clamped to a minimum of `1.0`.
+    StartCooldown<public>(Seconds: float): void = external {}
+
+    # Triggers when a vehicle triggers the device.
+    # Sends the driver as the triggering `agent`. If the vehicle has no driver then `false` is returned.
+    VehicleTriggeredEvent<public>: listenable(?agent) = external {}
   }
 
   # Used to spawn NPCs made with Character Definition asset.
@@ -5041,6 +5087,9 @@ UI<public> := module {
 
     # The direction the shadow is cast. Used only during initialization of the widget and not modified by SetShadowOffset.
     DefaultShadowOffset<native><public>: ?vector2 = external {}
+
+    # The opacity of the shadow. Used only during initialization of the widget and not modified by SetShadowOpacity.
+    DefaultShadowOpacity<native><public>: type { _X: float where 0.000000 <= _X, _X <= 1.000000 } = external {}
 
     # Gets the color of the shadow.
     GetShadowColor<native><public>(): color

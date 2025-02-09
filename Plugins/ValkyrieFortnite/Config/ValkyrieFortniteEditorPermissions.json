@@ -26,13 +26,13 @@
 	"ValkyrieBlueprintsSettings": {
 		"bEnableBlueprintGraph": false,
 		"AllowedFunctions": [
-			"/Script/UMG.UserWidget.QueuePauseAnimation",
-			"/Script/UMG.UserWidget.QueuePlayAnimation",
-			"/Script/UMG.UserWidget.QueuePlayAnimationForward",
-			"/Script/UMG.UserWidget.QueuePlayAnimationReverse",
-			"/Script/UMG.UserWidget.QueuePlayAnimationTimeRange",
-			"/Script/UMG.UserWidget.QueueStopAllAnimations",
-			"/Script/UMG.UserWidget.QueueStopAnimation"
+			"/Script/UMG.UserWidget:QueuePauseAnimation",
+			"/Script/UMG.UserWidget:QueuePlayAnimation",
+			"/Script/UMG.UserWidget:QueuePlayAnimationForward",
+			"/Script/UMG.UserWidget:QueuePlayAnimationReverse",
+			"/Script/UMG.UserWidget:QueuePlayAnimationTimeRange",
+			"/Script/UMG.UserWidget:QueueStopAllAnimations",
+			"/Script/UMG.UserWidget:QueueStopAnimation"
 		],
 		"AllowedEnums": [
 			"/Script/AnimationCore.EEulerRotationOrder",
@@ -310,7 +310,7 @@
 			"hdr",
 			"jpeg",
 			"jpg",
-			"json",			
+			"json",
 			"obj",
 			"ogg",
 			"pcx",
@@ -443,9 +443,11 @@
 			"/Script/FortniteGame.BuildingTextureData":			{ "Rules": ["View","Public"] },
 			"/Script/FortniteGame.FortGameFeatureData":			{ "Rules": ["View"] },
 			"/Script/FortniteGame.FortItemDefinition":			{ "Rules": ["View"], "Subclasses": "All" },
+			"/Script/FortniteGame.FortItemComponentData_LevelLimits": { "Rules": [ "View", "Create" ] },
+			"/Script/FortniteGame.FortItemComponentData_LargeIcon":	{ "Rules": ["View","Create"] },
 			"/Script/HairStrandsCore.GroomAsset": 				{ "Rules": [ "View", "Create", "Import" ] },
 			"/Script/HairStrandsCore.GroomBindingAsset":		{ "Rules": [ "View", "Create" ] },
-			"/Script/HarmonixDsp.FusionPatch":					{ "Rules": [ "View", "Create" ] },			
+			"/Script/HarmonixDsp.FusionPatch":					{ "Rules": [ "View", "Create" ] },
 			"/Script/ImgMedia.ImgMediaSource":					{ "Rules": ["View","Create"] },
 			"/Script/ItemizationCoreRuntime.ItemComponentData_Icon":		{ "Rules": ["View","Create"] },
 			"/Script/ItemizationCoreRuntime.ItemComponentData_MaxStackSize":{ "Rules": ["View","Create"] },
@@ -1352,6 +1354,8 @@
 			"/Script/FortniteGame.FortHLODTemplatedInstancedStaticMeshComponent":{ },
 			"/Script/FortniteGame.FortInspectorCameraCreative":					{  },
 			"/Script/FortniteGame.FortInspectorCameraCreativePreview":			{  },
+			"/Script/FortniteGame.FortItemComponentData_LevelLimits":			{ "Visible": true },
+			"/Script/FortniteGame.FortItemComponentData_LargeIcon":				{ "Visible": true },
 			"/Script/FortniteGame.FortLevelInstanceSaveActor":					{  },
 			"/Script/FortniteGame.FortLevelOverlayConfig":						{  },
 			"/Script/FortniteGame.FortLevelScriptActor":						{  },
@@ -1758,6 +1762,7 @@
 			"/Script/RigVMDeveloper.RigVMPin":									{  },
 			"/Script/ShielderGameplayRuntime.ShielderCollisionHelperComponent":	{  },
 			"/Script/SlateCore.Geometry":										{  },
+			"/Script/SlateCore.SlateBrush":										{  },
 			"/Script/SmartObjectsModule.SmartObjectCollection":					{  },
 			"/Script/SmartObjectsModule.SmartObjectPersistentCollection":		{  },
 			"/Script/SoundLibrary.SoundLibraryComponent":						{  },
@@ -1846,7 +1851,6 @@
 			"/Wind/Gameplay/WindFields/Parent/WindSpline_Parent.WindSpline_Parent_C":{  },
 			"/Script/Engine.FloatSpringState":									{  },
 			"/Script/Engine.QuaternionSpringState":								{  },
-			"/Script/Engine.VectorSpringState":									{  },
 			"/Script/VerseQuery.EntityQueryManager":							{  },
 			"/Script/VerseQuery.EntityTypeQueryContainer":						{  },
 			"/Script/VerseQuery.TaggedObjectQueryContainer":					{  }
@@ -2261,7 +2265,8 @@
 					"ValkyrieProjectSettingsEditor",
 					"ValkyrieProjectSize",
 					"VerseExplorerTab",
-					"NiagaraDebugger"
+					"NiagaraDebugger",
+					"LoosePropertyFixup"
 				]
 			},
 			"LevelEditor": {
@@ -2501,7 +2506,8 @@
 				"Volumes",
 				"Visual",
 				"Cinematic",
-				"Entities"
+				"Entities",
+				"AllClasses"
 			],
 			"AllowedClasses": [
 				"CameraRig_Crane",
@@ -2546,7 +2552,16 @@
 			"VKT_Verse_AI_Stronghold",
 			"VKT_Verse_PropHunt",
 			"Deserted",
-			"PrefabExample"
+			"PrefabExample",
+			"VKT_Talisman_Template",
+			"VKT_Talisman_Bridge",
+			"UEFNDesignASpeedwayRace",
+			"CE_UEFN",
+			"CE_Modeling",
+			"CE_Materials",
+			"CE_Landscape",
+			"CE_Greyboxing",
+			"CE_CharacterCameraControl"
 		]
 	},
 	"PropertyEditorClassPermissionList": {
@@ -3247,7 +3262,7 @@
 			},
 			{
 				"Type": "/Script/ValkyrieEditor.ValkyrieProjectSettingsEditorViewModel",
-				"AllowList": [ "Title", "Description", "VersePath", "DocsUrl", "UGCLocDescriptor", "bIsUsingNewInventorySystem", "ExperimentalAccessWarning", "bIsUsingSceneGraphSystem" ]
+				"AllowList": [ "Title", "Description", "VersePath", "DocsUrl", "UGCLocDescriptor", "ExperimentalAccessWarning", "bIsUsingSceneGraphSystem" ]
 			},
 			{
 				"Type": "/Script/Engine.CameraShakeBase",
@@ -3640,7 +3655,7 @@
 			},
 			{
 				"Type": "/Script/Engine.LightComponent",
-				"AllowList": ["MaxDistanceFadeRange", "MaxDrawDistance", "SpecularScale"],
+				"AllowList": ["MaxDistanceFadeRange", "MaxDrawDistance", "SpecularScale", "PreviewShadowMapChannel"],
 				"bAllowListAllSubclassProperties": true
 			},
 			{
