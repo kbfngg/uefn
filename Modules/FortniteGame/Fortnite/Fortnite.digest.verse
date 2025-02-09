@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-31.00-CL-35447195
+# Generated from build: ++Fortnite+Release-31.10-CL-35935822
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -536,12 +536,6 @@ Characters<public> := module {
   }
 }
 
-using { /Fortnite.com/Game }
-using { /UnrealEngine.com/Temporary/SceneGraph }
-using { /Verse.org/Assets }
-using { /Verse.org/Simulation }
-using { /Verse.org/Simulation/Tags }
-# Module import path: /Fortnite.com/Devices
 Devices<public> := module {
   @experimental
   # Returns the simulation entity at the root of the experience this `creative_device` is operating within.  * The simulation entity is the rootmost entity in an experience.  * Fails if this `creative_device` is not operating in a context with a valid SimulationEntity.
@@ -1147,6 +1141,13 @@ Devices<public> := module {
 
     # Signaled when the heal effect stops for an `agent`.
     HealStopEvent<public>: listenable(agent) = external {}
+  }
+
+  using { /UnrealEngine.com/Temporary/SceneGraph }
+  @experimental
+  bridge_component<native><public> := class<final>(component) {
+    @experimental
+    AsCreativeDevice<public>(Type: subtype(creative_device_base))<suspends>: ?Type = external {}
   }
 
   # Used to create a button which can trigger other devices when an agent interacts with it.
@@ -3743,6 +3744,51 @@ Devices<public> := module {
     Target<public>(Agent: agent): void = external {}
   }
 
+  using { /Fortnite.com/Vehicles }
+  # A one stop automated refueling and repairing station for your vehicles.
+  service_station_device<public> := class<concrete><final>(creative_device_base, healthful, damageable, enableable) {
+    Damage<override>(Amount: float): void = external {}
+
+    Damage<override>(Args: damage_args): void = external {}
+
+    DamagedEvent<override>(): listenable(damage_result) = external {}
+
+    Disable<override>(): void = external {}
+
+    Enable<override>(): void = external {}
+
+    GetHealth<override>()<transacts>: float = external {}
+
+    GetMaxHealth<override>()<transacts>: float = external {}
+
+    # Check if any vehicle is inside the service station.
+    IsAnyVehicleInside<public>()<transacts><decides>: void = external {}
+
+    IsEnabled<override>()<transacts><decides>: void = external {}
+
+    SetHealth<override>(Health: float)<transacts>: void = external {}
+
+    SetMaxHealth<override>(MaxHealth: float)<transacts>: void = external {}
+
+    # Fires when a vehicle enters the service station, returns the vehicle that entered.
+    VehicleEnteredEvent<public>: listenable(fort_vehicle) = external {}
+
+    # Fires when a vehicle leaves the service station, returns the vehicle that exited.
+    VehicleExitedEvent<public>: listenable(fort_vehicle) = external {}
+
+    # Fires on the first tick of a vehicle refueling, returns the refueled vehicle.
+    VehicleFuelingBeginEvent<public>: listenable(fort_vehicle) = external {}
+
+    # Fires when a vehicle is at full fuel, returns the refueled vehicle.
+    VehicleFuelingEndEvent<public>: listenable(fort_vehicle) = external {}
+
+    # Fires when a vehicle starts repairing, returns the repaired vehicle.
+    VehicleRepairBeginEvent<public>: listenable(fort_vehicle) = external {}
+
+    # Fires when a vehicle is at full health, returns the repaired vehicle.
+    VehicleRepairEndEvent<public>: listenable(fort_vehicle) = external {}
+  }
+
   # A single customizable pop up target that can be hit by `agent`s to trigger various events.
   shooting_range_target_device<public> := class<concrete><final>(creative_device_base) {
     # Signaled when the target is hit in the bullseye area.
@@ -4554,7 +4600,6 @@ Devices<public> := module {
   # Specialized `vehicle_spawner_device` that allows an armored battle bus to be configured and spawned.
   vehicle_spawner_armored_battle_bus_device<public> := class<concrete><final>(vehicle_spawner_device) {}
 
-  using { /Fortnite.com/Vehicles }
   # Specialized `vehicle_spawner_device` that allows an ATK (all terrain kart) to be configured and spawned.
   vehicle_spawner_atk_device<public> := class<concrete><final>(vehicle_spawner_device) {}
 
@@ -5479,7 +5524,12 @@ UI<public> := module {
 }
 
 using { /Fortnite.com/Characters }
+using { /Fortnite.com/Game }
 using { /Fortnite.com/Teams }
+using { /UnrealEngine.com/Temporary/SceneGraph }
+using { /Verse.org/Assets }
+using { /Verse.org/Simulation }
+using { /Verse.org/Simulation/Tags }
 # Module import path: /Fortnite.com/Vehicles
 Vehicles<public> := module {
   # Returns the `fort_vehicle` for `InCharacter`.
@@ -5488,6 +5538,12 @@ Vehicles<public> := module {
 
   # Main API implemented by Fortnite vehicles.
   fort_vehicle<native><public> := interface<unique><epic_internal>(positional, healthful, damageable, game_action_causer) {
+    # Returns the maximum fuel capacity of the vehicle. If the vehicle uses fuel, this value will be between 1.0 and Inf. Otherwise, this value will be -1.0.
+    GetFuelCapacity<public>()<transacts>: float
+
+    # Returns the fuel state of the vehicle. If the vehicle uses fuel, this value will be between 0.0 and `GetFuelCapacity`. Otherwise, this value will be -1.0.
+    GetFuelRemaining<public>()<transacts>: float
+
     # Returns an array with all the passengers of the vehicle.
     GetPassengers<public>(): []fort_character
 

@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-31.00-CL-35447195
+# Generated from build: ++Fortnite+Release-31.10-CL-35935822
 #################################################
 
 using { /Verse.org/ParameterCollections }
@@ -80,7 +80,7 @@ Assets<public> := module {
 
     GetMaterialInterface<native><override>(): ue_material_interface
 
-    Material<native><epic_internal>: material
+    Material<native><epic_internal>: (/Verse.org/Assets:)material
   }
 
   # parameter_collection that will be generated in the digest from the Editable

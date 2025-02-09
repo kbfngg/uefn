@@ -179,7 +179,7 @@
 		"5B4C06B724634AF8805BBF70CDF5D0DD":
 		{
 			"FriendlyName": "FortniteSeason",
-			"Version": 12
+			"Version": 13
 		},
 		"5C843CDCEDB54347BD422CD4FC239B6B":
 		{
@@ -304,7 +304,7 @@
 		"860A4F4F4E87FB68CE1397B7BAA859A7":
 		{
 			"FriendlyName": "AtomFramework",
-			"Version": 12
+			"Version": 13
 		},
 		"8652A554966A466C9FD71C6DD61B1ADB":
 		{
@@ -469,7 +469,7 @@
 		"C1270312AB730B1E0B1EC74571C70F73":
 		{
 			"FriendlyName": "CustomizableObjectVer",
-			"Version": 56
+			"Version": 58
 		},
 		"C1270312AB730B1E0B1EC790917A7105":
 		{
@@ -856,6 +856,7 @@
 			"/Script/Engine.LevelBounds",
 			"/Script/Engine.LevelInstanceComponent",
 			"/Script/Engine.LocalFogVolume",
+			"/Script/Engine.LocalFogVolumeComponent",
 			"/Script/Engine.LocalLightComponent",
 			"/Script/Engine.LocationVolume",
 			"/Script/Engine.LODSyncComponent",
@@ -2080,6 +2081,7 @@
 			"/Script/VerseAssetsEditor.ParameterCollectionBlueprint"
 		],
 		"VKCreateUGCPartner": [
+			"/Script/FortCreativeStreamingComponent.FortCreativeStreamingComponent",
 			"/Script/FortniteGame.BuildingEditModeMetadata"
 		]
 	},
@@ -2087,6 +2089,7 @@
 	{
 		"VKCreateUGC": [
 			"/Script/Engine.LocalFogVolume",
+			"/Script/Engine.LocalFogVolumeComponent",
 			"/Script/Engine.Material",
 			"/Script/Engine.MaterialInstanceConstant",
 			"/Script/Engine.SoundAttenuation",
@@ -3980,6 +3983,7 @@
 			"/CRD_CinematicSequence/SetupAssets/PID_CP_Devices_Cinematic.PID_CP_Devices_Cinematic",
 			"/CRD_ClassSelectorUI/SetupAssets/PID_CP_Devices_ClassSelectorUI.PID_CP_Devices_ClassSelectorUI",
 			"/CRD_Crashpad/SetupAssets/PID_CP_Devices_CrashpadV2.PID_CP_Devices_CrashpadV2",
+			"/CRD_CreatorProfile/SetupAssets/PID_CP_Devices_CreatorProfile.PID_CP_Devices_CreatorProfile",
 			"/CRD_CrowdVolume/SetupAssets/PID_CP_Devices_CrowdVolume.PID_CP_Devices_CrowdVolume",
 			"/CRD_DirectionalLauncher/SetupAssets/PID_CP_Device_DLauncherInvasion.PID_CP_Device_DLauncherInvasion",
 			"/CRD_DirectionalLauncher/SetupAssets/PID_CP_Device_DLauncherPrimal.PID_CP_Device_DLauncherPrimal",
@@ -14258,6 +14262,7 @@
 			"/Game/Athena/Items/Cosmetics/Characters/CID_030_Athena_Commando_M_Halloween.CID_030_Athena_Commando_M_Halloween"
 		],
 		"VKCreateUGCPartner": [
+			"/CRD_VideoPlayer/SetupAssets/PID_Device_VideoPlayerV3.PID_Device_VideoPlayerV3",
 			"/Game/Athena/Items/Cosmetics/Dances/EID_Bellringer.EID_Bellringer",
 			"/Game/Athena/Items/Cosmetics/Dances/EID_Breakboy.EID_Breakboy",
 			"/Game/Athena/Items/Cosmetics/Dances/EID_BreakDance.EID_BreakDance",
@@ -14752,6 +14757,7 @@
 			"/CRD_ClassSelectorUI/Device_ClassSelectorUI.Device_ClassSelectorUI_C",
 			"/CRD_Crashpad/Device_Crashpad_V2.Device_Crashpad_V2_C",
 			"/CRD_CreatorProfile/CreatorProfile_WidgetComponent.CreatorProfile_WidgetComponent_C",
+			"/CRD_CreatorProfile/Device_CreatorProfile.Device_CreatorProfile_C",
 			"/CRD_CrowdVolume/BP_CrowdVolume_Device.BP_CrowdVolume_Device_C",
 			"/CRD_DirectionalLauncher/Device_DirectionalLauncher_Generic.Device_DirectionalLauncher_Generic_C",
 			"/CRD_DirectionalLauncher/Device_DirectionalLauncher_LowGravity.Device_DirectionalLauncher_LowGravity_C",
@@ -26812,7 +26818,9 @@
 		],
 		"VKCreateUGCEarlyAccess": [],
 		"VKCreateUGCEpicDeveloper": [],
-		"VKCreateUGCPartner": []
+		"VKCreateUGCPartner": [
+			"/CRD_VideoPlayer/Device_VideoPlayer_V3.Device_VideoPlayer_V3_C"
+		]
 	},
 	"ClassTypesList": [
 		"/Script/ControlRig.ControlRigBlueprintGeneratedClass",

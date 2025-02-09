@@ -179,7 +179,7 @@
 		"5B4C06B724634AF8805BBF70CDF5D0DD":
 		{
 			"FriendlyName": "FortniteSeason",
-			"Version": 12
+			"Version": 13
 		},
 		"5C843CDCEDB54347BD422CD4FC239B6B":
 		{
@@ -304,7 +304,7 @@
 		"860A4F4F4E87FB68CE1397B7BAA859A7":
 		{
 			"FriendlyName": "AtomFramework",
-			"Version": 12
+			"Version": 13
 		},
 		"8652A554966A466C9FD71C6DD61B1ADB":
 		{
@@ -469,7 +469,7 @@
 		"C1270312AB730B1E0B1EC74571C70F73":
 		{
 			"FriendlyName": "CustomizableObjectVer",
-			"Version": 56
+			"Version": 58
 		},
 		"C1270312AB730B1E0B1EC790917A7105":
 		{
@@ -878,6 +878,7 @@
 			"/Script/Engine.LevelBounds",
 			"/Script/Engine.LevelInstanceComponent",
 			"/Script/Engine.LocalFogVolume",
+			"/Script/Engine.LocalFogVolumeComponent",
 			"/Script/Engine.LocalLightComponent",
 			"/Script/Engine.LocationVolume",
 			"/Script/Engine.LODSyncComponent",
@@ -2134,6 +2135,7 @@
 	{
 		"VKCreateUGC": [
 			"/Script/Engine.LocalFogVolume",
+			"/Script/Engine.LocalFogVolumeComponent",
 			"/Script/Engine.Material",
 			"/Script/Engine.MaterialInstanceConstant",
 			"/Script/Engine.SoundAttenuation",
@@ -19268,6 +19270,7 @@
 			"/FlamingHoopsGameplay/Gameplay/Actors/BGA_Moonflax_FlamingHoop_Parent.BGA_Moonflax_FlamingHoop_Parent_C",
 			"/FlipperGameplay/Building/Containers/Cooler_Container.Cooler_Container_C",
 			"/FlipperGameplay/Items/PizzaParty/BGA_Athena_PizzaParty.BGA_Athena_PizzaParty_C",
+			"/FlipperGameplay/Items/PizzaParty/BGA_Athena_PizzaParty_Base.BGA_Athena_PizzaParty_Base_C",
 			"/FMDeviceCables/Gameplay/BP_DeviceCableWildcardPortComponent.BP_DeviceCableWildcardPortComponent_C",
 			"/FMDeviceCables/Gameplay/BP_FMMusicManagerRandomizer.BP_FMMusicManagerRandomizer_C",
 			"/FMDeviceCables/Gameplay/BP_MojoDeviceCablePortComponent.BP_MojoDeviceCablePortComponent_C",
@@ -26493,6 +26496,7 @@
 			"/Game/Creative/Devices/Common/Components/CreativeEditOnlyBeam.CreativeEditOnlyBeam_C",
 			"/Game/Creative/Devices/Common/Components/CreativePreviewOnlyMesh.CreativePreviewOnlyMesh_C",
 			"/Game/Creative/Devices/Common/Components/CreativeVolumeFrame.CreativeVolumeFrame_C",
+			"/Game/Creative/Devices/Common/Components/FNEDeviceCostComponent.FNEDeviceCostComponent_C",
 			"/Game/Creative/Devices/Common/Creative_Device_EditOnly_Parent.Creative_Device_EditOnly_Parent_C",
 			"/Game/Creative/Devices/Common/Creative_Device_Prop_Parent.Creative_Device_Prop_Parent_C",
 			"/Game/Creative/Devices/Common/Creative_Device_Prop_Spawner.Creative_Device_Prop_Spawner_C",
@@ -29552,11 +29556,11 @@
 			"/Game/Environments/Asteria/Sets/Quarry/Quarry_Scaffolding_A/Blueprints/Asteria_Quarry_ScaffoldingStairBalcony_A.Asteria_Quarry_ScaffoldingStairBalcony_A_C",
 			"/Game/Environments/Asteria/Sets/Quarry/Quarry_Scaffolding_A/Blueprints/Asteria_Quarry_ScaffoldingStairF_A.Asteria_Quarry_ScaffoldingStairF_A_C",
 			"/Game/Environments/Asteria/Sets/Quarry/Quarry_Scaffolding_A/Blueprints/Asteria_Quarry_ScaffoldingWall_B.Asteria_Quarry_ScaffoldingWall_B_C",
-			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_SlurpRoom_Doorway_A.Asteria_SlurpRoom_Doorway_A_C",
+			"/Game/Environments/Asteria/Sets/SlurpRoom/Blueprints/Asteria_SlurpRoom_Doorway_A.Asteria_SlurpRoom_Doorway_A_C",
 			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_SlurpRoom_StringLights_A.Asteria_SlurpRoom_StringLights_A_C",
 			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_SlurpRoom_StringLights_B.Asteria_SlurpRoom_StringLights_B_C",
 			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_SlurpRoom_Wall_A.Asteria_SlurpRoom_Wall_A_C",
-			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_SlurpRoom_Window_A.Asteria_SlurpRoom_Window_A_C",
+			"/Game/Environments/Asteria/Sets/SlurpRoom/Blueprints/Asteria_SlurpRoom_Window_A.Asteria_SlurpRoom_Window_A_C",
 			"/Game/Environments/Asteria/Sets/SlurpRoom/Blueprints/Asteria_SlurpRoom_Window_B.Asteria_SlurpRoom_Window_B_C",
 			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_StringLights_02.Asteria_StringLights_02_C",
 			"/Game/Environments/Asteria/Sets/TattooShop/BluePrints/Asteria_TattooShop_Wall_A.Asteria_TattooShop_Wall_A_C",

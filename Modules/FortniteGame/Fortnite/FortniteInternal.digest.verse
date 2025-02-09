@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-31.00-CL-35447195
+# Generated from build: ++Fortnite+Release-31.10-CL-35935822
 #################################################
 
 AI<public> := module {
@@ -587,7 +587,7 @@ AI<public> := module {
     OnRoundEnd<override><final>(): void = external {}
 
     @editable_non_concrete
-    var NPCBehavior<native><public>: npc_behavior
+    var NPCBehavior<public>: npc_behavior
   }
 
   @experimental
@@ -1812,7 +1812,7 @@ Devices<public> := module {
   }
 
   @experimental
-  bridge_component<native><epic_internal> := class(component) {
+  bridge_component<native><public> := class<final>(component) {
     @experimental
     AsCreativeDevice<public>(Type: subtype(creative_device_base))<suspends>: ?Type = external {}
 
@@ -4941,63 +4941,47 @@ Devices<public> := module {
 
   using { /Fortnite.com/Vehicles }
   # A one stop automated refueling and repairing station for your vehicles.
-  service_station_device<epic_internal> := class<concrete><final>(creative_device_base) {
-    # Request to check if any vehicle is inside the service station.
-    CheckIfVehicleIsInside<epic_internal>(): void = external {}
+  service_station_device<public> := class<concrete><final>(creative_device_base, healthful, damageable, enableable) {
+    Damage<override>(Amount: float): void = external {}
 
-    # Fires when the Service Station is damaged
-    DamagedEvent<epic_internal>: listenable(tuple()) = external {}
+    Damage<override>(Args: damage_args): void = external {}
 
-    # Fires When the Service Station is destroyed
-    DestroyedEvent<epic_internal>: listenable(tuple()) = external {}
+    DamagedEvent<override>(): listenable(damage_result) = external {}
 
-    # Disables this device.
-    Disable<epic_internal>(): void = external {}
+    Disable<override>(): void = external {}
 
-    # Enables this device.
-    Enable<epic_internal>(): void = external {}
+    Enable<override>(): void = external {}
 
-    # Fires when a vehicle enters the service station at full fuel, returns the vehicle that entered
-    VehicleEnteredAtFullFuelEvent<epic_internal>: listenable(fort_vehicle) = external {}
+    GetHealth<override>()<transacts>: float = external {}
 
-    # Fires when a vehicle enters the service station at full health, returns the vehicle that entered
-    VehicleEnteredAtFullHealthEvent<epic_internal>: listenable(fort_vehicle) = external {}
+    GetMaxHealth<override>()<transacts>: float = external {}
 
-    # Fires when a vehicle enters the service station, returns the vehicle that entered
-    VehicleEnteredEvent<epic_internal>: listenable(fort_vehicle) = external {}
+    # Check if any vehicle is inside the service station.
+    IsAnyVehicleInside<public>()<transacts><decides>: void = external {}
 
-    # Response for if vehicle is inside service station
-    VehicleIsInsideEvent<epic_internal>: listenable(tuple()) = external {}
+    IsEnabled<override>()<transacts><decides>: void = external {}
 
-    # Response for if vehicle is not inside service station
-    VehicleIsNotInsideEvent<epic_internal>: listenable(tuple()) = external {}
+    SetHealth<override>(Health: float)<transacts>: void = external {}
 
-    # Fires when a vehicle leaves the service station, returns the vehicle that left
-    VehicleLeftEvent<epic_internal>: listenable(fort_vehicle) = external {}
+    SetMaxHealth<override>(MaxHealth: float)<transacts>: void = external {}
 
-    # Fires when a vehicle leaves the service station while full health, returns the vehicle that left
-    VehicleLeftUnderFullFuelEvent<epic_internal>: listenable(fort_vehicle) = external {}
+    # Fires when a vehicle enters the service station, returns the vehicle that entered.
+    VehicleEnteredEvent<public>: listenable(fort_vehicle) = external {}
 
-    # Fires when a vehicle leaves the service station while full health, returns the vehicle that left
-    VehicleLeftUnderFullHealthEvent<epic_internal>: listenable(fort_vehicle) = external {}
+    # Fires when a vehicle leaves the service station, returns the vehicle that exited.
+    VehicleExitedEvent<public>: listenable(fort_vehicle) = external {}
 
-    # Fires when a vehicle leaves the service station before it can receive any fuel, returns the vehicle that left
-    VehicleLeftWithoutBeingRefueledEvent<epic_internal>: listenable(fort_vehicle) = external {}
+    # Fires on the first tick of a vehicle refueling, returns the refueled vehicle.
+    VehicleFuelingBeginEvent<public>: listenable(fort_vehicle) = external {}
 
-    # Fires when a vehicle leaves the service station before it can receive any health, returns the vehicle that left
-    VehicleLeftWithoutBeingRepairedEvent<epic_internal>: listenable(fort_vehicle) = external {}
+    # Fires when a vehicle is at full fuel, returns the refueled vehicle.
+    VehicleFuelingEndEvent<public>: listenable(fort_vehicle) = external {}
 
-    # Fires on the first tick of a vehicle refueling, returns the vehicle refueled
-    VehicleStartedFuelingEvent<epic_internal>: listenable(fort_vehicle) = external {}
+    # Fires when a vehicle starts repairing, returns the repaired vehicle.
+    VehicleRepairBeginEvent<public>: listenable(fort_vehicle) = external {}
 
-    # Fires when a vehicle starts repairing, returns the vehicle repaired
-    VehicleStartedRepairingEvent<epic_internal>: listenable(fort_vehicle) = external {}
-
-    # Fires when a vehicle finishes refueling, returns the vehicle refueled
-    VehicleStoppedFuelingEvent<epic_internal>: listenable(fort_vehicle) = external {}
-
-    # Fires when a vehicle stops repairing, returns the vehicle repaired
-    VehicleStoppedRepairingEvent<epic_internal>: listenable(fort_vehicle) = external {}
+    # Fires when a vehicle is at full health, returns the repaired vehicle.
+    VehicleRepairEndEvent<public>: listenable(fort_vehicle) = external {}
   }
 
   shared_saved_data_device<epic_internal> := class<concrete><final>(creative_device_base) {
@@ -8225,6 +8209,12 @@ Vehicles<public> := module {
     @experimental
     GetEntity<epic_internal>()<transacts><decides>: entity
 
+    # Returns the maximum fuel capacity of the vehicle. If the vehicle uses fuel, this value will be between 1.0 and Inf. Otherwise, this value will be -1.0.
+    GetFuelCapacity<public>()<transacts>: float
+
+    # Returns the fuel state of the vehicle. If the vehicle uses fuel, this value will be between 0.0 and `GetFuelCapacity`. Otherwise, this value will be -1.0.
+    GetFuelRemaining<public>()<transacts>: float
+
     # Returns an array with all the passengers of the vehicle.
     GetPassengers<public>(): []fort_character
 
@@ -8255,6 +8245,14 @@ Vehicles<public> := module {
 
     @experimental
     FortVehicle<native><public>: fort_vehicle
+
+    @experimental
+    # Returns the maximum fuel capacity of the vehicle. If the vehicle uses fuel, this value will be between 1.0 and Inf. Otherwise, this value will be -1.0.
+    GetFuelCapacity<override>()<transacts>: float = external {}
+
+    @experimental
+    # Returns the fuel state of the vehicle. If the vehicle uses fuel, this value will be between 0.0 and `GetFuelCapacity`. Otherwise, this value will be -1.0.
+    GetFuelRemaining<override>()<transacts>: float = external {}
 
     @experimental
     GetHealth<override>()<transacts>: float = external {}
@@ -8512,11 +8510,15 @@ VerseInternalTesting<public> := module {
     }
 
     nexus_test_device<epic_internal> := class(creative_device) {
+      AddCheck<epic_internal>(IsPassed: logic, TestName: string, ContextString: string): void = external {}
+
       AddFail<epic_internal>(TestName: string, ContextString: string): void = external {}
 
       AddPass<epic_internal>(TestName: string, ContextString: string): void = external {}
 
       AddResults<epic_internal>(TestName: string, Passed: logic, ContextString: string): void = external {}
+
+      AddSkip<epic_internal>(IsPassed: logic, TestName: string, ContextString: string): void = external {}
 
       OnBegin<override>()<suspends>: void = external {}
 

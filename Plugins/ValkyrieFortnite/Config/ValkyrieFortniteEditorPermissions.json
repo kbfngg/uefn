@@ -425,6 +425,7 @@
 			"/Script/Entity.EntityPrefab":						{ "Rules": ["View","Create"] },
 			"/Script/Engine.HLODLayer":							{ "Rules": ["View","Create"] },
 			"/Script/Engine.LocalFogVolume":					{ "Rules": ["View","Create","Public"] },
+			"/Script/Engine.LocalFogVolumeComponent":			{ "Rules": ["View","Create","Public"] },
 			"/Script/Engine.Material":							{ "Rules": ["View","Create","Import","Export","Public"] },
 			"/Script/Engine.MaterialInstanceConstant":			{ "Rules": ["View","Create","Import","Export","Public"] },
 			"/Script/Engine.MaterialFunction":					{ "Rules": ["View","Create"] },
@@ -924,6 +925,7 @@
 			"/Script/Engine.Level":												{  },
 			"/Script/Engine.LevelBounds":										{  },
 			"/Script/Engine.LocalFogVolume":									{ "Visible": true },
+			"/Script/Engine.LocalFogVolumeComponent":							{ "Visible": true },
 			"/Script/Engine.LocalLightComponent":								{ "Visible": true },
 			"/Script/Engine.LocationVolume":									{  },
 			"/Script/Engine.MaterialEditorOnlyData":							{  },
@@ -3042,6 +3044,18 @@
 				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct" ]
 			},
 			{
+				"Type": "/CRD_Creatures/Device_CreatureManager_V2.Device_CreatureManager_V2_C",
+				"DenyList": [ "AITypeOptions", "CreatureAIDiedTriggerComponent" ]
+			},
+			{
+				"Type": "/CRD_Creatures/Device_CreaturePlacer_V2.Device_CreaturePlacer_V2_C",
+				"DenyList": [ "CreatureSkeletalMeshComponent", "SpawnGroupVisuals", "SelectedSpawnLimit", "CreatureKilledTransmitComponent", "DeimosSpawnerOptions", "PawnNumberCapOptions", "SpawnGroupOptions", "SpawnTimingOptions", "SpawnLimitOptions", "EQSQueryOptions", "TurnOnReceiverComponent", "TurnOffReceiverComponent", "KillAllAIReceiverComponent", "KillSpawnerReceiverComponent", "OnKilledMessagerComponent" ]
+			},
+			{
+				"Type": "/CRD_Creatures/Device_CreatureSpawner_V2.Device_CreatureSpawner_V2_C",
+				"DenyList": [ "DeimosSpawnerOptions", "PawnNumberCapOptions", "SpawnGroupOptions", "SpawnTimingOptions", "SpawnLimitOptions", "EQSQueryOptions", "TurnOnReceiverComponent", "TurnOffReceiverComponent", "KillAllAIReceiverComponent", "KillSpawnerReceiverComponent", "OnKilledMessagerComponent" ]
+			},
+			{
 				"Type": "/Game/Athena/Items/EnvironmentalItems/Sentry/Turret/BGA_Athena_Sentry_Turret.BGA_Athena_Sentry_Turret_C",
 				"AllowList": [ "DummyPropertyThatDoesNotExist" ]
 			},
@@ -3640,8 +3654,8 @@
 			},
 			{
 				"Type": "/Script/Engine.PrimitiveComponent",
-				"AllowList": ["bHasCustomNavigableGeometry", "BoundsScale", "bVisibleInReflectionCaptures", "OnComponentBeginOverlap", "OnComponentEndOverlap", "OnComponentHit", "OnComponentPhysicsStateChanged", "bWantsEditorEffects",
-					"bAllowCullDistanceVolume", "bNeverDistanceCull", "bCastHiddenShadow", "bCastFarShadow", "VirtualTextureRenderPassType", "RuntimeVirtualTextures", "bIsActorTextureStreamingBuiltData", "bIsValidTextureStreamingBuiltData", "AlwaysLoadOnClient",
+				"AllowList": ["bHasCustomNavigableGeometry", "BoundsScale", "bVisibleInReflectionCaptures", "OnComponentBeginOverlap", "OnComponentEndOverlap", "OnComponentHit", "OnComponentPhysicsStateChanged", "bSelectable", "bWantsEditorEffects",
+					"bAllowCullDistanceVolume", "bNeverDistanceCull", "bCastHiddenShadow", "bCastFarShadow", "VirtualTextureRenderPassType", "RuntimeVirtualTextures", "bIsActorTextureStreamingBuiltData", "bIsValidTextureStreamingBuiltData", "AlwaysLoadOnClient", "AlwaysLoadOnServer",
 					"bHasPerInstanceHitProxies", "ExcludeFromHLODLevels", "CustomPrimitiveData", "bCastContactShadow", "bRenderCustomDepth", "CustomDepthStencilValue", "CustomDepthStencilWriteMask", "bFillCollisionUnderneathForNavmesh", "bHasNoStreamableTextures"],
 				"bAllowListAllSubclassProperties": true
 			},
@@ -3652,7 +3666,7 @@
 			},
 			{
 				"Type": "/Script/Engine.StaticMeshComponent",
-				"AllowList": ["StaticMeshImportVersion", "ForcedLodModel", "StaticMeshDerivedDataKey", "MaterialStreamingRelativeBoxes", "bEvaluateWorldPositionOffsetInRayTracing", "StreamingTextureData", "OverriddenLightMapRes", "bUseAsOccluder",
+				"AllowList": ["StaticMeshImportVersion", "ForcedLodModel", "StaticMeshDerivedDataKey", "MaterialStreamingRelativeBoxes", "bEvaluateWorldPositionOffsetInRayTracing", "StreamingTextureData", "bOverrideLightMapRes", "OverriddenLightMapRes", "bUseAsOccluder",
 					"LightmassSettings", "bUseDefaultCollision", "bOverrideDistanceFieldSelfShadowBias", "DistanceFieldSelfShadowBias"],
 				"bAllowListAllSubclassProperties": true
 			},
