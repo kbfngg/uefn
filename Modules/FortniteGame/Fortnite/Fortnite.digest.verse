@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-28.10-CL-30676362
+# Generated from build: ++Fortnite+Release-28.20-CL-31165234
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -1069,6 +1069,52 @@ Devices<public> := module {
     ItemReturnedEvent<public>: listenable(agent) = external {}
   }
 
+  # Creates a chair where `Agent`s can sit.
+  chair_device<public> := class<concrete><final>(creative_device_base) {
+    # Disables the Chair.
+    # A disabled Chair cannot be interacted with
+    # and any `agent` currently occupying the Chair will be ejected.
+    Disable<public>(): void = external {}
+
+    # Prevents any seated `agent` from leaving the Chair manually.
+    # While Exit is disabled, call Eject to force them out.
+    DisableExit<public>(): void = external {}
+
+    # Ejects any `agent` currently in the chair.
+    Eject<public>(): void = external {}
+
+    # Makes `Agent` exit this chair if they are currently in the chair.
+    Eject<public>(Agent: agent): void = external {}
+
+    # Enables the Chair.
+    # An enabled Chair can be interacted with and occupied
+    # by any `agent` that meets the requirements.
+    Enable<public>(): void = external {}
+
+    # Allows any seated `agent` to leave the chair manually.
+    EnableExit<public>(): void = external {}
+
+    # Signaled when an `agent` stops sitting on the Chair.
+    # Sends the standing `Agent`.
+    ExitedEvent<public>: listenable(agent) = external {}
+
+    # Returns the `agent` currently occupying the chair.
+    GetSeatedAgent<public>(): ?agent = external {}
+
+    # Succeeds if the chair is currently occupied.
+    IsOccupied<public>()<transacts><decides>: void = external {}
+
+    # Succeeds if `Agent` is currently in the chair .
+    IsSeated<public>(Agent: agent)<transacts><decides>: void = external {}
+
+    # Makes `Agent` sit on this chair if they meet the requirements.
+    Seat<public>(Agent: agent): void = external {}
+
+    # Signaled when an `agent` sits on the Chair.
+    # Sends the sitting `agent`.
+    SeatedEvent<public>: listenable(agent) = external {}
+  }
+
   # Allows players to change their outfit in game!
   changing_booth_device<public> := class<concrete><final>(creative_device_base) {}
 
@@ -1340,7 +1386,7 @@ Devices<public> := module {
     MoveTo<public>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
 
     # Override to add custom logic when the game experience begins.
-    OnBegin<public>()<suspends>: void = external {}
+    OnBegin<native_callable><public>()<suspends>: void = external {}
 
     # Override to add custom logic when the game experience ends. Any coroutines spawned inside `OnEnd` may never execute.
     OnEnd<native_callable><public>(): void = external {}
@@ -1997,6 +2043,44 @@ Devices<public> := module {
     Show<public>(Message: message, ?DisplayTime: float = external {}): void = external {}
   }
 
+  # Used to listen for the player activating or releasing certain inputs.
+  # The input is defined by the *Input* option.
+  # Players can configure the key for the input in the Creative Input Actions section of the Keyboard Settings.
+  input_trigger_device<public> := class<concrete><final>(creative_device_base) {
+    # Disables this device.
+    # A disabled Input Trigger will not listen for inputs
+    # and will never show on the HUD.
+    Disable<public>(): void = external {}
+
+    # Enables this device.
+    # An Input Trigger will listen for inputs from players that meet the device requirements.
+    Enable<public>(): void = external {}
+
+    # Succeeds if `Agent` is currently holding the input.
+    IsHeld<public>(Agent: agent)<transacts><decides>: void = external {}
+
+    # Signaled when the tracked input is pressed by an `agent`.
+    # Sends the `agent` that pressed the input.
+    PressedEvent<public>: listenable(agent) = external {}
+
+    # Adds `Agent` to the registered player list.
+    # *Registered Player Behavior* determines whether registered players meet the device requirements.
+    Register<public>(Agent: agent): void = external {}
+
+    # Signaled when the tracked input is released by an `agent`.
+    # Sends the `agent` that released the input.
+    # Sends the `float` duration that the input was held.
+    ReleasedEvent<public>: listenable(tuple(agent, float)) = external {}
+
+    # Removes `Agent` from the registered player list.
+    # *Registered Player Behavior* determines whether registered players meet the device requirements.
+    Unregister<public>(Agent: agent): void = external {}
+
+    # Clears the list of registered players.
+    # *Registered Player Behavior* determines whether registered players meet the device requirements.
+    UnregisterAll<public>(): void = external {}
+  }
+
   # Used to grant items to `agent`s. Items can either be dropped at the `agent`'s location or added directly to their inventory.
   item_granter_device<public> := class<concrete><final>(creative_device_base) {
     # Clears saved data for `Agent`, preventing them from receiving items while offline. This only works when *Grant While Offline* is set to *Yes*.
@@ -2103,6 +2187,43 @@ Devices<public> := module {
 
     # Unlocks the door. `Agent` is the instigator of the action.
     Unlock<public>(Agent: agent): void = external {}
+  }
+
+  # Used to control the behavior of the map & minimap.
+  # Activation for a given `agent` can occur automatically via the device's *Activate Automatically* user option, by the `agent` entering and exiting the device's volume if using the *Activate on Trigger* user option, or via events from other devices or verse.
+  # When more than one map controller is activated for a given `agent`, the one with the highest *Map Priority* user option applies.
+  map_controller_device<public> := class<concrete><final>(creative_device_base) {
+    # Adds the map controller to all `agent`s in the experience.
+    # If multiple map controllers are active for an `agent`, the one with the highest *Map Priority* is used.
+    Activate<public>(): void = external {}
+
+    # Adds the map controller to the provided `Agent`'s map controller stack.
+    # If multiple map controllers are active for an `agent`, the one with the highest *Map Priority* is used.
+    Activate<public>(Agent: agent): void = external {}
+
+    # Removes the map controller from all `agent`s in the experience.
+    # The next highest priority active map controller will be used, or if none exists, the default behavior will be restored.
+    Deactivate<public>(): void = external {}
+
+    # Removes the map controller from the provided `Agent`'s map controller stack.
+    # The next highest priority active map controller will be used, or if none exists, the default behavior will be restored.
+    Deactivate<public>(Agent: agent): void = external {}
+
+    # Disables the device.
+    # Disabling the device will deactivate it for all `agents` in the experience, turn off the trigger functionality, and prevent it from responding to events.
+    Disable<public>(): void = external {}
+
+    # Enables the device.
+    # Enabling the device will allow it to be activated, both by incoming events, and by trigger if using *Activate on Trigger*.
+    Enable<public>(): void = external {}
+
+    # Returns the *Capture Box Size* (in meters).
+    GetCaptureBoxSize<public>()<transacts>: float = external {}
+
+    # Sets the *Capture Box Size* (in meters).
+    # *Capture Box Size* refers to the length and width of the area used for both the map capture image as well as the activation trigger.
+    # Value is clamped between `25.0` and `2500.0` meters.
+    SetCaptureBoxSize<public>(Size: float): void = external {}
   }
 
   # Used to create custom points of interest and markers on the minimap and overview map.

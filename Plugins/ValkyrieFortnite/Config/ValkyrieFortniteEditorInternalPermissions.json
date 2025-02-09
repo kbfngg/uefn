@@ -2,6 +2,9 @@
 	"bEnableAccessToLegacyContent": true,
 	"bEnableAccessToUnreleasedContent": true,
 
+	"ValkyrieProjectSettings": {
+		"bMultiProjectAllowed": true
+	},
 	"ValkyrieBlueprintsSettings": {
 		"bEnableBlueprintGraph": true,
 		"AllowedEnums": {

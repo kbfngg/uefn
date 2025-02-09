@@ -2,14 +2,14 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-28.10-CL-30676362
+# Generated from build: ++Fortnite+Release-28.20-CL-31165234
 #################################################
 
 # Module import path: /Verse.org/Assets
 Assets<public> := module {
   animation_sequence<native><public> := class<computes><final><epic_internal> {}
 
-  material<native><public> := class<computes><epic_internal> {}
+  material<native><public> := interface<epic_internal> {}
 
   mesh<native><public> := class<computes><final><epic_internal> {}
 
@@ -418,6 +418,9 @@ Native<public> := module {
   @attribscope_struct
   import_as_attribute<epic_internal> := class(attribute) {}
 }
+
+# Module import path: /Verse.org/ParameterCollections
+ParameterCollections<public> := module {}
 
 using { /Verse.org/Concurrency }
 # Module import path: /Verse.org/Random
