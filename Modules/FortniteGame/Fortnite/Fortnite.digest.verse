@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-24.20-CL-24939793
+# Generated from build: ++Fortnite+Release-24.30-CL-25210886
 #################################################
 
 # Module import path: /Fortnite.com/Characters
@@ -38,7 +38,10 @@ Characters<public> := module {
     # Returns the agent associated with this `fort_character`. Use this when interacting with APIs that require an `agent` reference.
     GetAgent<public>()<transacts><decides>: agent
 
-    # Returns the rotation defining where this `fort_character` is looking/aiming.
+    # Returns the location where this `fort_character` is looking or aiming from.
+    GetViewLocation<public>()<transacts>: vector3
+
+    # Returns the rotation where this `fort_character` is looking or aiming at.
     GetViewRotation<public>()<transacts>: rotation
 
     # Sets this `fort_character` visibility to invisible.
@@ -47,9 +50,30 @@ Characters<public> := module {
     # Succeeds if this `fort_character` is in the world and has not been eliminated. Most fort_character actions will silently fail if this fails. Please test IsActive if you want to handle these failure cases rather than allow them to silently fail.
     IsActive<public>()<transacts><decides>: void
 
+    # Succeeds if this `fort_character` is crouching.
+    IsCrouching<public>()<transacts><decides>: void
+
     # Succeeds if this `fort_character` is in the 'Down But Not Out' state. In this state the character is down but
     # can still be revived by teammates for a period of time.
     IsDownButNotOut<public>()<transacts><decides>: void
+
+    # Succeeds if this `fort_character` is in falling locomotion state.
+    IsFalling<public>()<transacts><decides>: void
+
+    # Succeeds if this `fort_character` is in flying locomotion state.
+    IsFlying<public>()<transacts><decides>: void
+
+    # Succeeds if this `fort_character` is in gliding locomotion state.
+    IsGliding<public>()<transacts><decides>: void
+
+    # Succeeds if this `fort_character` is standing in the air.
+    IsInAir<public>()<transacts><decides>: void
+
+    # Succeeds if this `fort_character` is inside water volume.
+    IsInWater<public>()<transacts><decides>: void
+
+    # Succeeds if this `fort_character` is standing on the ground.
+    IsOnGround<public>()<transacts><decides>: void
 
     # Succeeds if this `fort_character` can be damaged. Fails if this `fort_character` cannot be damaged.
     IsVulnerable<public>()<transacts><decides>: void
@@ -90,6 +114,7 @@ Characters<public> := module {
 }
 
 using { /Fortnite.com/Game }
+using { /Verse.org/Simulation }
 using { /Verse.org/Simulation/Tags }
 # Module import path: /Fortnite.com/Devices
 Devices<public> := module {
@@ -255,6 +280,10 @@ Devices<public> := module {
       # the `creative_prop`
       DeltaRotation<native><public>: rotation
 
+      # Target scale for the `creative_prop`. Scale is multiplicative to the starting Scale of
+      # the `creative_prop`
+      DeltaScale<native><public>: vector3 = external {}
+
       # Interpolation mode for this `keyframe_delta`. See `InterpolationTypes` for standard interpolation
       # options. See `cubic_bezier_parameters` for authoring custom interpolations.
       #
@@ -283,6 +312,16 @@ Devices<public> := module {
     Asset: creative_prop_asset,
     Position: vector3,
     Rotation: rotation)<transacts>: tuple(?creative_prop,
+    spawn_prop_result
+  )
+
+  # Spawns a `creative_prop` at the specified `Transform`. `Units are in cm.
+  # Returns tuple:
+  #  0: Instance of a `creative_prop`. False if no `creative_prop` could be created. See `spawn_prop_result` for failure cases.
+  #  1: Success or failure results.
+  SpawnProp<native><public>(
+    Asset: creative_prop_asset,
+    Transform: transform)<transacts>: tuple(?creative_prop,
     spawn_prop_result
   )
 
@@ -928,8 +967,15 @@ Devices<public> := module {
     # is currently playing on the `creative_prop` it will be stopped and put into the `AnimationNotSet` state.
     MoveTo<public>(Position: vector3, Rotation: rotation, OverTime: float)<suspends>: move_to_result = external {}
 
+    # Move the `creative_prop` to the specified `Transform` over the specified time. If an animation
+    # is currently playing on the `creative_prop` it will be stopped and put into the `AnimationNotSet` state.
+    MoveTo<public>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
+
     # Teleport the `creative_prop` to the specified `Position` and `Rotation`.
     TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
+
+    # Teleport the `creative_prop` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
+    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Asset used to spawn `creative_prop` instances.
@@ -1066,6 +1112,15 @@ Devices<public> := module {
     Enable<public>(): void = external {}
   }
 
+  # Payload of `device_event_ai_interaction`.
+  device_ai_interaction_result<native><public> := struct<epic_internal> {
+    # Optional agent that triggered the interaction
+    Source<native><public>: ?agent
+
+    # Optional agent targeted by `Source`.
+    Target<native><public>: ?agent
+  }
+
   # Used to customize (or prevent) the 'down but not out' player state between 'healthy' and 'removed from game'.
   down_but_not_out_device<public> := class<concrete><final>(creative_device_base) {
     # Signaled when an `agent` is set to the `down but not out` player state.
@@ -1111,6 +1166,18 @@ Devices<public> := module {
 
   # Base class for types of volumes with special gameplay properties.
   effect_volume_device<public> := class<abstract><epic_internal>(creative_device_base) {
+    # Disables this device.
+    Disable<public>(): void = external {}
+
+    # Enables this device.
+    Enable<public>(): void = external {}
+  }
+
+  # Used to send custom messages to the elimination feed.
+  elimination_feed_device<public> := class<concrete><final>(creative_device_base) {
+    # Activates this device. `Agent` is used as the instigator of the action.
+    Activate<public>(Agent: agent): void = external {}
+
     # Disables this device.
     Disable<public>(): void = external {}
 
@@ -1243,6 +1310,9 @@ Devices<public> := module {
 
   # Used to spawn guards that can patrol and attack other `agent`s.
   guard_spawner_device<public> := class<concrete><final>(creative_device_base) {
+    # Despawns guards.
+    Despawn<public>(): void = external {}
+
     # Despawns guards. `Instigator` will be considered as the eliminator of those guards.
     Despawn<public>(Instigator: agent): void = external {}
 
@@ -1258,7 +1328,7 @@ Devices<public> := module {
     # Enables this device. Guards will start to spawn.
     Enable<public>(): void = external {}
 
-    # Forces guard to attack `Target`, bypassing perception checks.
+    # Forces guards to attack `Target`, bypassing perception checks.
     ForceAttackTarget<public>(Target: agent): void = external {}
 
     # Hires guards to `Instigator`'s team.
@@ -1272,6 +1342,9 @@ Devices<public> := module {
 
     # Prevents guards from being hired.
     SetGuardsNotHireable<public>(): void = external {}
+
+    # Tries to spawn a guard.
+    Spawn<public>(): void = external {}
 
     # Tries to spawn a guard. If *Auto Hire When Spawned* is set to *Triggering Player* the guard will be
     # hired by `Instigator`.
@@ -3410,6 +3483,10 @@ Devices<public> := module {
     # Enables this device.
     Enable<public>(): void = external {}
 
+    # Signaled when wildlife is force-spawned and causes the oldest wildlife to be eliminated.
+    # Sends the `agent` wildlife that was spawned.
+    ForceSpawnedEvent<public>: listenable(agent) = external {}
+
     # Resets the count on the *Total Spawn Count* option.
     Reset<public>(): void = external {}
 
@@ -3492,10 +3569,10 @@ Game<public> := module {
     # Use `Damage(:damage_args):void` when damage is being applied from a known instigator and source.
     Damage<public>(Amount: float): void
 
-    # Damage the `damagable` object by `Args.Amount`. Setting `Amount` to less than 0 will cause no damage.
+    # Damage the `damageable` object by `Args.Amount`. Setting `Amount` to less than 0 will cause no damage.
     Damage<public>(Args: damage_args): void
 
-    # Signaled when damage is applied to the `damagable` object.
+    # Signaled when damage is applied to the `damageable` object.
     DamagedEvent<public>(): listenable(damage_result)
   }
 
@@ -3752,6 +3829,8 @@ UI<public> := module {
 
   creative_hud_identifier_mimimap<public> := class<final>(hud_element_identifier) {}
 
+  creative_hud_identifier_minimap<public> := class<final>(hud_element_identifier) {}
+
   creative_hud_identifier_pickup_stream<public> := class<final>(hud_element_identifier) {}
 
   creative_hud_identifier_player_count<public> := class<final>(hud_element_identifier) {}
@@ -3763,6 +3842,8 @@ UI<public> := module {
   creative_hud_identifier_round_timer<public> := class<final>(hud_element_identifier) {}
 
   creative_hud_identifier_shield_numbers<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_shields<public> := class<final>(hud_element_identifier) {}
 
   creative_hud_identifier_shileds<public> := class<final>(hud_element_identifier) {}
 
@@ -3888,7 +3969,6 @@ UI<public> := module {
 
 using { /Fortnite.com/Characters }
 using { /Fortnite.com/Teams }
-using { /Verse.org/Simulation }
 # Module import path: /Fortnite.com/Vehicles
 Vehicles<public> := module {
   # Returns the `fort_vehicle` for `InCharacter`.
@@ -3896,5 +3976,17 @@ Vehicles<public> := module {
   (InCharacter: fort_character).GetVehicle<native><public>()<transacts><decides>: fort_vehicle
 
   # Main API implemented by Fortnite vehicles.
-  fort_vehicle<native><public> := interface<unique><epic_internal>(positional, healthful, damageable) {}
+  fort_vehicle<native><public> := interface<unique><epic_internal>(positional, healthful, damageable) {
+    # Returns an array with all the passengers of the vehicle.
+    GetPassengers<public>(): []fort_character
+
+    # Succeeds if this `fort_vehicle` is standing in air.
+    IsInAir<public>()<transacts><decides>: void
+
+    # Succeeds if this `fort_vehicle` is standing in water.
+    IsInWater<public>()<transacts><decides>: void
+
+    # Succeeds if this `fort_vehicle` is standing on ground.
+    IsOnGround<public>()<transacts><decides>: void
+  }
 }
