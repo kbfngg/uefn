@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-28.30-CL-31511038
+# Generated from build: ++Fortnite+Release-29.00-CL-31978752
 #################################################
 
 # Module import path: /UnrealEngine.com/Assets
@@ -142,7 +142,7 @@ Temporary<public> := module {
     # log class to send messages to the default log
     log<native><public> := class {
       # Print message using the given log level
-      (log:)Print<native><public>(Message: []char, ?Level: log_level = external {})<computes>: void
+      (log:)Print<native><public>(Message: string, ?Level: log_level = external {})<computes>: void
 
       # Channel class name will be added as a prefix used when printing the message e.g. '[log_channel]: #Message
       Channel<native><public>: subtype(log_channel)
@@ -392,16 +392,16 @@ Temporary<public> := module {
 
     # Makes a `string` representation of `rotation` in axis/degrees format with a left-handed sign convention.
     # `ToString(MakeRotation(vector3{X:=1.0, Y:=0.0, Z:=0.0}, PiFloat/2.0))` produces the string: `"Axis: {x=1.000000,y=0.000000,z=0.000000} Angle: 90.000000"`.
-    ToString<native><public>(Rotation: rotation)<varies>: []char
+    ToString<native><public>(Rotation: rotation)<varies>: string
 
     # Makes a `string` representation of `V`.
-    ToString<native><public>(V: vector2)<varies>: []char
+    ToString<native><public>(V: vector2)<varies>: string
 
     # Makes a `string` representation of `V`.
-    ToString<native><public>(V: vector2i)<computes>: []char
+    ToString<native><public>(V: vector2i)<computes>: string
 
     # Makes a `string` representation of `V`.
-    ToString<native><public>(V: vector3)<varies>: []char
+    ToString<native><public>(V: vector3)<varies>: string
 
     # Makes a `vector2` by converting the components of `V` to `float`s.
     ToVector2<public>(V: vector2i)<transacts>: vector2 = external {}
@@ -531,7 +531,7 @@ Temporary<public> := module {
   using { /Verse.org/Simulation }
   # Module import path: /UnrealEngine.com/Temporary/UI
   UI<public> := module {
-    # Returns the `player_ui` component associated with `Player`.
+    # Returns the `player_ui` vk_component associated with `Player`.
     # Fails if there is no `player_ui` associated with `Player`.
     GetPlayerUI<native><public>(Player: player)<transacts><decides>: player_ui
 
@@ -806,7 +806,7 @@ Temporary<public> := module {
       GetOverflowPolicy<native><public>(): text_overflow_policy
 
       # Gets the text currently in the widget.
-      GetText<native><public>(): []char
+      GetText<native><public>(): string
 
       # Gets the color of the displayed text.
       GetTextColor<native><public>(): color
