@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-33.20-CL-39082670
+# Generated from build: ++Fortnite+Release-33.30-CL-39435251
 #################################################
 
 AINavigation<public> := module {
@@ -312,7 +312,12 @@ JSON<public> := module {
 Playspace<public> := module {
   @hide_in_editor
   @experimental
-  playspace_association_component<native><epic_internal> := class<final_super><epic_internal>(component) {}
+  playspace_association_component<native><epic_internal> := class<final_super><epic_internal>(
+    component,
+    simulation_entity_interop_handler
+  ) {
+    Initialize<native><override><native_callable>(IteropObject: simulation_interop_object): void
+  }
 }
 
 Temporary<public> := module {
@@ -2053,7 +2058,7 @@ Temporary<public> := module {
     # Used to handle general interaction.
     interactable_component<native><public> := class<final_super>(component, enableable) {
       # Returns whether the specified agent can interact.
-      CanInteract<native><native_callable><public>(Agent: agent)<computes><decides><reads>: void
+      CanInteract<native><native_callable><epic_internal>(Agent: agent)<computes><decides><reads>: void
 
       # Event fires when an interaction has ended before completing successfully. Sends the formerly interacting agent.  This event is called on all interacting agents when Disable() is called on the component.
       CanceledEvent<native><public>: listenable(agent) = external {}
@@ -2067,7 +2072,7 @@ Temporary<public> := module {
       InteractFinishedEvent<native><public>: listenable(agent) = external {}
 
       # Returns an appropriate message to display to players to communicate the current state of the interactable.
-      InteractMessage<native><native_callable><public>(Agent: agent)<computes><decides><reads>: message
+      InteractMessage<native><native_callable><epic_internal>(Agent: agent)<computes><decides><reads>: message
 
       # Succeeds if the component is enabled, fails if it’s disabled.
       IsEnabled<native><override>()<transacts><decides>: void
@@ -2611,6 +2616,14 @@ Temporary<public> := module {
     @hide_in_editor
     @experimental
     simulation_entity<native><epic_internal> := class<concrete><unique><transacts>(entity) {}
+
+    simulation_entity_interop_handler<native><epic_internal> := interface<epic_internal> {
+      Initialize<native_callable><epic_internal>(IteropObject: simulation_interop_object): void
+    }
+
+    @hide_in_editor
+    @import_as("/Script/Entity.ASimulationEntity")
+    simulation_interop_object<native><epic_internal> := class {}
 
     @experimental
     slow_component_array_copy_query_iterator<native><epic_internal> := class<epic_internal>(component_query_iterator_interface) {

@@ -2,9 +2,10 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-33.20-CL-39082670
+# Generated from build: ++Fortnite+Release-33.30-CL-39435251
 #################################################
 
+using { /Verse.org/Native }
 using { /Verse.org/Restricted }
 using { /Verse.org/VerseEngine }
 # Module import path: /Verse.org/Assets
@@ -506,101 +507,12 @@ Concurrency<public> := module {
 
 using { /UnrealEngine.com/Temporary/SpatialMath }
 using { /Verse.org/Assets }
-using { /Verse.org/Native }
 using { /Verse.org/Simulation }
 # Module import path: /Verse.org/ControlInput
 ControlInput<public> := module {
   GetPlayerInput<native><epic_internal>(Player: player)<transacts><decides>: player_input
 
-  # Module import path: /Verse.org/ControlInput/InputVerbs
-  InputVerbs<epic_internal> := module {
-    Crouch<epic_internal>: verb = external {}
-
-    Emote<epic_internal>: verb = external {}
-
-    Fire<epic_internal>: verb = external {}
-
-    Jump<epic_internal>: verb = external {}
-
-    LookUp<epic_internal>: verb = external {}
-
-    MoveForward<epic_internal>: verb = external {}
-
-    MoveRight<epic_internal>: verb = external {}
-
-    MoveUp<epic_internal>: verb = external {}
-
-    Reload<epic_internal>: verb = external {}
-
-    Sprint<epic_internal>: verb = external {}
-
-    Target<epic_internal>: verb = external {}
-
-    Turn<epic_internal>: verb = external {}
-
-    Use<epic_internal>: verb = external {}
-  }
-
   MakeInputAsset<native><epic_internal>(t: type, InputAction: input_action(t), Path: string)<converges>: input_action(t)
-
-  @import_as("/Script/VerseInput.UVerseInputClientActionVerbBase")
-  action<native><epic_internal> := class<computes><abstract> {}
-
-  apply_impulse_action<native><epic_internal> := class(action) {
-    Impulse<native><epic_internal>: vector3
-  }
-
-  dead_zone<native><epic_internal> := class<computes>(modifier) {
-    LowerThreshold<native><epic_internal>: float = external {}
-
-    Type<native><epic_internal>: dead_zone_type = external {}
-
-    UpperThreshold<native><epic_internal>: float = external {}
-  }
-
-  dead_zone_type<native><epic_internal> := enum {
-    Axial
-
-    Radial
-  }
-
-  down<native><epic_internal> := class<computes>(trigger) {
-    ActuationThreshold<native><epic_internal>: float = external {}
-  }
-
-  exponential_response<native><epic_internal> := class<computes>(modifier) {
-    CurveExponent<native><epic_internal>: vector3 = external {}
-  }
-
-  hold<native><epic_internal> := class<computes>(trigger) {
-    ActuationThreshold<native><epic_internal>: float = external {}
-
-    AffectedByTimeDilation<native><epic_internal>: logic = external {}
-
-    HoldTimeThreshold<native><epic_internal>: float = external {}
-
-    IsOneShot<native><epic_internal>: logic = external {}
-  }
-
-  hold_and_release<native><epic_internal> := class<computes>(trigger) {
-    ActuationThreshold<native><epic_internal>: float = external {}
-
-    AffectedByTimeDilation<native><epic_internal>: logic = external {}
-
-    HoldTimeThreshold<native><epic_internal>: float = external {}
-  }
-
-  input_action_verb<native><epic_internal> := class<computes> {
-    Actions<native><epic_internal>: []action
-
-    ConsumeInput<native><epic_internal>: logic = external {}
-
-    Modifiers<native><epic_internal>: []modifier = external {}
-
-    Triggers<native><epic_internal>: []trigger
-
-    Verb<native><epic_internal>: verb
-  }
 
   input_events<native><public>(t: type) := class {
     ActivationCanceledEvent<native><public>: listenable(tuple(player, t, float)) = external {}
@@ -614,27 +526,7 @@ ControlInput<public> := module {
     DetectionOngoingEvent<native><public>: listenable(tuple(player, t, float)) = external {}
   }
 
-  launch_action<native><epic_internal> := class(action) {
-    Velocity<native><epic_internal>: vector3
-  }
-
-  modifier<native><epic_internal> := class<computes><abstract><epic_internal> {}
-
-  negate<native><epic_internal> := class<computes>(modifier) {
-    X<native><epic_internal>: logic = external {}
-
-    Y<native><epic_internal>: logic = external {}
-
-    Z<native><epic_internal>: logic = external {}
-  }
-
-  play_sound_action<native><epic_internal> := class(action) {
-    Sound<native><epic_internal>: sound
-  }
-
   player_input<native><epic_internal> := class {
-    AddInputActionVerb<native><epic_internal>(InputActionVerb: input_action_verb): void
-
     AddInputMapping<native><public>(InputMapping: input_mapping): void
 
     GetInputEvents<native><public>(t: type, ActionToBind: input_action(t)): input_events(t)
@@ -647,59 +539,7 @@ ControlInput<public> := module {
 
     MakeVector3InputEvents<native_callable><epic_internal>(): input_events(vector3) = external {}
 
-    RemoveInputActionVerb<native><epic_internal>(InputActionVerb: input_action_verb): void
-
     RemoveInputMapping<native><public>(InputMapping: input_mapping): void
-  }
-
-  pressed<native><epic_internal> := class<computes>(trigger) {
-    ActuationThreshold<native><epic_internal>: float = external {}
-  }
-
-  released<native><epic_internal> := class<computes>(trigger) {
-    ActuationThreshold<native><epic_internal>: float = external {}
-  }
-
-  scale<native><epic_internal> := class<computes>(modifier) {
-    Scale<native><epic_internal>: vector3 = external {}
-  }
-
-  smooth<native><epic_internal> := class<computes>(modifier) {}
-
-  spawn_particle_effect_action<native><epic_internal> := class(action) {
-    ParticleSystem<native><epic_internal>: particle_system
-  }
-
-  swizzle<native><epic_internal> := class<computes>(modifier) {
-    Order<native><epic_internal>: swizzle_order = external {}
-  }
-
-  swizzle_order<native><epic_internal> := enum {
-    XZY
-
-    YXZ
-
-    YZX
-
-    ZXY
-
-    ZYX
-  }
-
-  tap<native><epic_internal> := class<computes>(trigger) {
-    ActuationThreshold<native><epic_internal>: float = external {}
-
-    AffectedByTimeDilation<native><epic_internal>: logic = external {}
-
-    TapReleaseTimeThreshold<native><epic_internal>: float = external {}
-  }
-
-  trigger<native><epic_internal> := class<computes><abstract><epic_internal> {}
-
-  verb<native><epic_internal> := class<computes><epic_internal> {
-    InputNames<native><epic_internal>: []string
-
-    IsAxis<native><epic_internal>: logic
   }
 }
 
