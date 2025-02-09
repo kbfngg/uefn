@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.40-CL-33291686
+# Generated from build: ++Fortnite+Release-30.00-CL-33760522
 #################################################
 
 using { /UnrealEngine.com/Temporary/SpatialMath }
@@ -214,11 +214,11 @@ Temporary<public> := module {
     (InitialRotation: rotation).UnrotateBy<native><public>(RotationToRemove: rotation)<transacts>: rotation
 
     # Returns the radians of `rotation` around the axis of `rotation`. See also `GetAxis`.
-    (Rotation: rotation).GetAngle<native><public>()<varies>: float
+    (Rotation: rotation).GetAngle<native><public>()<computes><reads>: float
 
     # Makes a `vector3` from the axis of `rotation`.
     # If `rotation` is nearly identity, this will return the +X axis. See also `GetAngle`.
-    (Rotation: rotation).GetAxis<native><public>()<varies>: vector3
+    (Rotation: rotation).GetAxis<native><public>()<computes><reads>: vector3
 
     # Makes a unit `vector3` pointing in the local space *forward* direction in world space coordinates.
     # This is equivalent to: `RotateVector(Rotation, vector3{X:=1.0, Y:=0.0, Z:=0.0})`.
@@ -237,7 +237,7 @@ Temporary<public> := module {
     #  * *pitch* degrees of `rotation`
     #  * *roll* degrees of `rotation`
     # using the conventions of `MakeRotationFromYawPitchRollDegrees`.
-    (Rotation: rotation).GetYawPitchRollDegrees<native><public>()<varies>: []float
+    (Rotation: rotation).GetYawPitchRollDegrees<native><public>()<computes><reads>: []float
 
     # Makes a `rotation` by inverting `Rotation` such that `ApplyRotation(Rotation, Rotation.Invert())) = IdentityRotation`.
     (Rotation: rotation).Invert<native><public>()<transacts>: rotation
@@ -259,14 +259,14 @@ Temporary<public> := module {
     (V: vector2).IsFinite<public>()<computes><decides>: vector2 = external {}
 
     # Returns the length of `V`.
-    (V: vector2).Length<public>()<varies>: float = external {}
+    (V: vector2).Length<public>()<computes><reads>: float = external {}
 
     # Returns the squared length of `V`.
-    (V: vector2).LengthSquared<public>()<varies>: float = external {}
+    (V: vector2).LengthSquared<public>()<computes><reads>: float = external {}
 
     # Makes a unit length `vector3` pointing in the same direction of `V`.
     # Fails if `V.IsAlmostZero[] or not V.IsFinite[]`.
-    (V: vector2).MakeUnitVector<native><public>()<varies><decides>: vector2
+    (V: vector2).MakeUnitVector<native><public>()<computes><decides><reads>: vector2
 
     # Succeeds when each component of `V` is within `AbsoluteTolerance` of `0.0`.
     (V: vector3).IsAlmostZero<public>(AbsoluteTolerance: float)<computes><decides>: void = external {}
@@ -276,58 +276,58 @@ Temporary<public> := module {
     (V: vector3).IsFinite<public>()<computes><decides>: vector3 = external {}
 
     # Returns the length of `V`.
-    (V: vector3).Length<public>()<varies>: float = external {}
+    (V: vector3).Length<public>()<computes><reads>: float = external {}
 
     # Returns the squared length of `V`.
     (V: vector3).LengthSquared<public>()<computes>: float = external {}
 
     # Returns the squared length of `V` as if `V.Z = 0.0`.
-    (V: vector3).LengthSquaredXY<public>()<varies>: float = external {}
+    (V: vector3).LengthSquaredXY<public>()<computes><reads>: float = external {}
 
     # Returns the length of `V` as if `V.Z = 0.0`.
-    (V: vector3).LengthXY<public>()<varies>: float = external {}
+    (V: vector3).LengthXY<public>()<computes><reads>: float = external {}
 
     # Makes a unit length `vector3` pointing in the same direction of `V`.
     # Fails if `V.IsAlmostZero[] or not V.IsFinite[]`.
-    (V: vector3).MakeUnitVector<native><public>()<varies><decides>: vector3
+    (V: vector3).MakeUnitVector<native><public>()<computes><decides><reads>: vector3
 
     # Returns the 'smallest angular distance' between `Rotation1` and `Rotation2` in radians.
-    AngularDistance<native><public>(Rotation1: rotation, Rotation2: rotation)<varies>: float
+    AngularDistance<native><public>(Rotation1: rotation, Rotation2: rotation)<computes><reads>: float
 
     # Returns the cross product of `V1` and `V2`.
-    CrossProduct<native><public>(V1: vector3, V2: vector3)<varies>: vector3
+    CrossProduct<native><public>(V1: vector3, V2: vector3)<computes><reads>: vector3
 
     # Returns radians from `Degrees`.
-    DegreesToRadians<public>(Degrees: float)<varies>: float = external {}
+    DegreesToRadians<public>(Degrees: float)<computes><reads>: float = external {}
 
     # Returns the 'distance' between `Rotation1` and `Rotation2`. The result will be between:
     #  * `0.0`, representing equivalent rotations and
     #  * `1.0` representing rotations which are 180 degrees apart (i.e., the shortest rotation between them is 180 degrees around some axis).
-    Distance<native><public>(Rotation1: rotation, Rotation2: rotation)<varies>: float
+    Distance<native><public>(Rotation1: rotation, Rotation2: rotation)<computes><reads>: float
 
     # Returns the Euclidean distance between `V1` and `V2`.
-    Distance<native><public>(V1: vector2, V2: vector2)<varies>: float
+    Distance<native><public>(V1: vector2, V2: vector2)<computes><reads>: float
 
     # Returns the Euclidean distance between `V1` and `V2`.
-    Distance<native><public>(V1: vector3, V2: vector3)<varies>: float
+    Distance<native><public>(V1: vector3, V2: vector3)<computes><reads>: float
 
     # Returns the squared Euclidean distance between `V1` and `V2`.
-    DistanceSquared<native><public>(V1: vector2, V2: vector2)<varies>: float
+    DistanceSquared<native><public>(V1: vector2, V2: vector2)<computes><reads>: float
 
     # Returns the squared Euclidean distance between `V1` and `V2`.
-    DistanceSquared<native><public>(V1: vector3, V2: vector3)<varies>: float
+    DistanceSquared<native><public>(V1: vector3, V2: vector3)<computes><reads>: float
 
     # Returns the squared 2-D Euclidean distance between `V1` and `V2` by ignoring their difference in `Z`.
-    DistanceSquaredXY<native><public>(V1: vector3, V2: vector3)<varies>: float
+    DistanceSquaredXY<native><public>(V1: vector3, V2: vector3)<computes><reads>: float
 
     # Returns the 2-D Euclidean distance between `V1` and `V2` by ignoring the difference in `Z`.
-    DistanceXY<native><public>(V1: vector3, V2: vector3)<varies>: float
+    DistanceXY<native><public>(V1: vector3, V2: vector3)<computes><reads>: float
 
     # Returns the dot product of `V1` and `V2`.
-    DotProduct<native><public>(V1: vector2, V2: vector2)<varies>: float
+    DotProduct<native><public>(V1: vector2, V2: vector2)<computes><reads>: float
 
     # Returns the dot product of `V1` and `V2`.
-    DotProduct<native><public>(V1: vector3, V2: vector3)<varies>: float
+    DotProduct<native><public>(V1: vector3, V2: vector3)<computes><reads>: float
 
     # Returns the dot product of `V1` and `V2`.
     DotProduct<public>(V1: vector2i, V2: vector2i)<computes>: int = external {}
@@ -347,18 +347,18 @@ Temporary<public> := module {
 
     # Used to linearly interpolate/extrapolate between `From` (when `Parameter = 0.0`) and `To` (when `Parameter = 1.0`). Expects that all arguments are finite.
     # Returns `From*(1 - Parameter) + To*Parameter`.
-    Lerp<public>(From: vector2, To: vector2, Parameter: float)<varies>: vector2 = external {}
+    Lerp<public>(From: vector2, To: vector2, Parameter: float)<computes><reads>: vector2 = external {}
 
     # Used to linearly interpolate/extrapolate between `From` (when `Parameter = 0.0`) and `To` (when `Parameter = 1.0`). Expects that all arguments are finite.
     # Returns `From*(1 - Parameter) + To*Parameter`.
-    Lerp<public>(From: vector3, To: vector3, Parameter: float)<varies>: vector3 = external {}
+    Lerp<public>(From: vector3, To: vector3, Parameter: float)<computes><reads>: vector3 = external {}
 
     # Makes a new `rotation` from the component wise subtraction of the Euler angle components in `RotationA` by
     # the Euler angle components in `RotationB` and ensures the returned value is normalized.
     MakeComponentWiseDeltaRotation<native><public>(RotationA: rotation, RotationB: rotation)<transacts>: rotation
 
     # Makes a `rotation` from `Axis` and `AngleRadians` using a left-handed sign convention (e.g. a positive rotation around +Z takes +X to +Y). If `Axis.IsAlmostZero[]`, make the identity rotation.
-    MakeRotation<native><public>(Axis: vector3, AngleRadians: float)<varies>: rotation
+    MakeRotation<native><public>(Axis: vector3, AngleRadians: float)<computes><reads>: rotation
 
     # Makes a `rotation` by applying `YawRightDegrees`, `PitchUpDegrees`, and `RollClockwiseDegrees`, in that order:
     #  * first a *yaw* about the Z axis with a positive angle indicating a clockwise rotation when viewed from above,
@@ -369,7 +369,7 @@ Temporary<public> := module {
       YawRightDegrees: float,
       PitchUpDegrees: float,
       RollClockwiseDegrees: float
-    )<varies>: rotation
+    )<computes><reads>: rotation
 
     # Makes the smallest angular `rotation` from `InitialRotation` to `FinalRotation` such that:
     # `InitialRotation.RotateBy(MakeShortestRotationBetween(InitialRotation, FinalRotation)) = FinalRotation` and
@@ -382,15 +382,15 @@ Temporary<public> := module {
     MakeShortestRotationBetween<native><public>(InitialVector: vector3, FinalVector: vector3)<transacts>: rotation
 
     # Returns degrees from `Radians`.
-    RadiansToDegrees<public>(Radians: float)<varies>: float = external {}
+    RadiansToDegrees<public>(Radians: float)<computes><reads>: float = external {}
 
     # Makes a `vector2` by inverting the `SurfaceNormal` component of `Direction`.
     # Fails if `not SurfaceNormal.MakeUnitVector[]`.
-    ReflectVector<native><public>(Direction: vector2, SurfaceNormal: vector2)<varies><decides>: vector2
+    ReflectVector<native><public>(Direction: vector2, SurfaceNormal: vector2)<computes><decides><reads>: vector2
 
     # Makes a `vector3` by inverting the `SurfaceNormal` component of `Direction`.
     # Fails if `not SurfaceNormal.MakeUnitVector[]`.
-    ReflectVector<native><public>(Direction: vector3, SurfaceNormal: vector3)<varies><decides>: vector3
+    ReflectVector<native><public>(Direction: vector3, SurfaceNormal: vector3)<computes><decides><reads>: vector3
 
     # Used to perform spherical linear interpolation between `From` (when `Parameter = 0.0`) and `To` (when `Parameter = 1.0`). Expects that `0.0 <= Parameter <= 1.0`.
     Slerp<native><public>(
@@ -401,28 +401,28 @@ Temporary<public> := module {
 
     # Makes a `string` representation of `rotation` in axis/degrees format with a left-handed sign convention.
     # `ToString(MakeRotation(vector3{X:=1.0, Y:=0.0, Z:=0.0}, PiFloat/2.0))` produces the string: `"Axis: {x=1.000000,y=0.000000,z=0.000000} Angle: 90.000000"`.
-    ToString<native><public>(Rotation: rotation)<varies>: string
+    ToString<native><public>(Rotation: rotation)<computes><reads>: string
 
     # Makes a `string` representation of `V`.
-    ToString<native><public>(V: vector2)<varies>: string
+    ToString<native><public>(V: vector2)<computes><reads>: string
 
     # Makes a `string` representation of `V`.
     ToString<native><public>(V: vector2i)<computes>: string
 
     # Makes a `string` representation of `V`.
-    ToString<native><public>(V: vector3)<varies>: string
+    ToString<native><public>(V: vector3)<computes><reads>: string
 
     # Makes a `vector2` by converting the components of `V` to `float`s.
     ToVector2<public>(V: vector2i)<transacts>: vector2 = external {}
 
     # Makes a `vector2i` by component-wise truncation of `V` to `ints`s.
-    ToVector2i<public>(V: vector2)<varies><decides>: vector2i = external {}
+    ToVector2i<public>(V: vector2)<computes><decides><reads>: vector2i = external {}
 
     # Makes a `vector3` by applying `InTransform` to `InVector`.
-    TransformVector<native><public>(InTransform: transform, InVector: vector3)<varies>: vector3
+    TransformVector<native><public>(InTransform: transform, InVector: vector3)<computes><reads>: vector3
 
     # Makes a `vector3` by applying `InTransform` to `InVector` without applying `InTransform.Scale`.
-    TransformVectorNoScale<native><public>(InTransform: transform, InVector: vector3)<varies>: vector3
+    TransformVectorNoScale<native><public>(InTransform: transform, InVector: vector3)<computes><reads>: vector3
 
     # Makes a `vector2` by multiplying the components of `Right` by `Left`.
     operator'*'<public>(Left: float, Right: vector2)<computes>: vector2 = external {}

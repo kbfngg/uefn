@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.40-CL-33291686
+# Generated from build: ++Fortnite+Release-30.00-CL-33760522
 #################################################
 
 # Module import path: /Verse.org/Assets
@@ -423,9 +423,6 @@ Native<public> := module {
   import_as_attribute<epic_internal> := class(attribute) {}
 }
 
-# Module import path: /Verse.org/ParameterCollections
-ParameterCollections<public> := module {}
-
 using { /Verse.org/Concurrency }
 # Module import path: /Verse.org/Random
 Random<public> := module {
@@ -671,30 +668,30 @@ Verse<public> := module {
   (X: float).IsFinite<public>()<computes><decides>: float = external {}
 
   # Returns the inverse hyperbolic cosine of `X` if `1.0 <= X`.
-  ArCosh<native><public>(X: float)<varies>: float
+  ArCosh<native><public>(X: float)<computes><reads>: float
 
   # Returns the inverse hyperbolic sine of `X` if `IsFinite(X)`.
-  ArSinh<native><public>(X: float)<varies>: float
+  ArSinh<native><public>(X: float)<computes><reads>: float
 
   # Returns the inverse hyperbolic tangent of `X` if `IsFinite(X)`.
-  ArTanh<native><public>(X: float)<varies>: float
+  ArTanh<native><public>(X: float)<computes><reads>: float
 
   # Returns the inverse cosine (arccosine) of `X` if `-1.0 <= X <= 1.0`.
-  ArcCos<native><public>(X: float)<varies>: float
+  ArcCos<native><public>(X: float)<computes><reads>: float
 
   # Returns the inverse sine (arcsine) of `X` if `-1.0 <= X <= 1.0`.
-  ArcSin<native><public>(X: float)<varies>: float
+  ArcSin<native><public>(X: float)<computes><reads>: float
 
   # Returns the inverse tangent (arctangent) of `X` such that:`-PiFloat/2.0 <= ArcTan(x) <= PiFloat/2.0`.
-  ArcTan<native><public>(X: float)<varies>: float
+  ArcTan<native><public>(X: float)<computes><reads>: float
 
   # Returns the angle in radians at the origin between a ray pointing to `(X, Y)` and the positive `X` axis such that `-PiFloat < ArcTan(Y, X) <= PiFloat`.
   # Returns 0.0 if `X=0.0 and Y=0.0`.
-  ArcTan<native><public>(Y: float, X: float)<varies>: float
+  ArcTan<native><public>(Y: float, X: float)<computes><reads>: float
 
   # Returns the smallest `int` that is greater than or equal to `Val`.
   # Fails if `not IsFinite(Val)`.
-  Ceil<native><public>(Val: float)<varies><decides>: int
+  Ceil<native><public>(Val: float)<computes><decides><reads>: int
 
   # Constrains the value of `Val` between `A` and `B`. Robustly handles different argument orderings.
   # Returns the median of `Val`, `A`, and `B`.
@@ -709,24 +706,24 @@ Verse<public> := module {
 
   # Returns the cosine of `X` if `IsFinite(X)`.
   # Returns `NaN` if `not IsFinite(X)
-  Cos<native><public>(X: float)<varies>: float
+  Cos<native><public>(X: float)<computes><reads>: float
 
   # Returns the hyperbolic cosine of `X`.
-  Cosh<native><public>(X: float)<varies>: float
+  Cosh<native><public>(X: float)<computes><reads>: float
 
   # Halts the Verse runtime with error `Message`.
   Err<native><public>(Message: string)<computes>: false
 
   # Returns the natural exponent of `X`.
-  Exp<native><public>(X: float)<varies>: float
+  Exp<native><public>(X: float)<computes><reads>: float
 
   # Returns the largest `int` that is less than or equal to `Val`.
   # Fails if `not IsFinite(Val)`.
-  Floor<native><public>(Val: float)<varies><decides>: int
+  Floor<native><public>(Val: float)<computes><decides><reads>: int
 
   # Returns the `int` that equals `Val` without the fractional part.
   # Fails if `not IsFinite(val)`.
-  Int<native><public>(Val: float)<varies><decides>: int
+  Int<native><public>(Val: float)<computes><decides><reads>: int
 
   # Succeeds if `Val1` and `Val2` are within `AbsoluteTolerance` of each other.
   IsAlmostEqual<public>(Val1: float, Val2: float, AbsoluteTolerance: float)<computes><decides>: void = external {}
@@ -736,16 +733,16 @@ Verse<public> := module {
 
   # Used to linearly interpolate/extrapolate between `From` (when `Parameter = 0.0`) and `To` (when `Parameter = 1.0`). Expects that all arguments are finite.
   # Returns `From*(1 - Parameter) + To*Parameter`.
-  Lerp<native><public>(From: float, To: float, Parameter: float)<varies>: float
+  Lerp<native><public>(From: float, To: float, Parameter: float)<computes><reads>: float
 
   # Returns the natural logarithm of `X`.
-  Ln<native><public>(X: float)<varies>: float
+  Ln<native><public>(X: float)<computes><reads>: float
 
   # Makes a `string` by localizing `Message` based on the current `locale`.
-  Localize<native><public>(Message: message)<varies>: string
+  Localize<native><public>(Message: message)<computes><reads>: string
 
   # Returns the base `B` logarithm of `X`.
-  Log<public>(B: float, X: float)<varies>: float = external {}
+  Log<public>(B: float, X: float)<computes><reads>: float = external {}
 
   MakeLocalizableValue<epic_internal>(V: float): localizable_float = external {}
 
@@ -781,7 +778,7 @@ Verse<public> := module {
   PiFloat<public>: float = external {}
 
   # Returns `A` to the power of `B`.
-  Pow<native><public>(A: float, B: float)<varies>: float
+  Pow<native><public>(A: float, B: float)<computes><reads>: float
 
   # Writes `Message` to a dedicated `Print` log while displaying it in `Color` on the client screen for `Duration` seconds. By default, `Color` is `NamedColors.White` and `Duration` is `2.0` seconds.
   Print<native><public>(Message: message, ?Duration: float = external {}, ?Color: color = external {})<transacts>: void
@@ -799,7 +796,7 @@ Verse<public> := module {
 
   # Returns `Val` rounded to the nearest `int`. When the fractional part of `Val` is `0.5`, rounds to the nearest *even* `int` (per the IEEE-754 default rounding mode).
   # Fails if `not IsFinite(Val)`.
-  Round<native><public>(Val: float)<varies><decides>: int
+  Round<native><public>(Val: float)<computes><decides><reads>: int
 
   # Returns the sign of `Val`:
   #  * `1.0` if `Val > 0.0`
@@ -816,27 +813,27 @@ Verse<public> := module {
 
   # Returns the sine of `X` if `IsFinite(X)`.
   # Returns `NaN` if `not IsFinite(X)
-  Sin<native><public>(X: float)<varies>: float
+  Sin<native><public>(X: float)<computes><reads>: float
 
   # Returns the hyperbolic sine of `X`.
-  Sinh<native><public>(X: float)<varies>: float
+  Sinh<native><public>(X: float)<computes><reads>: float
 
   # Returns the square root of `X` if `X >= 0.0`.
   # Returns `NaN` if `X < 0.0`.
-  Sqrt<native><public>(X: float)<varies>: float
+  Sqrt<native><public>(X: float)<computes><reads>: float
 
   # Returns the tangent of `X` if `IsFinite(X)`.
   # Returns `NaN` if `not IsFinite(X).
-  Tan<native><public>(X: float)<varies>: float
+  Tan<native><public>(X: float)<computes><reads>: float
 
   # Returns the hyperbolic tangent of `X`.
-  Tanh<native><public>(X: float)<varies>: float
+  Tanh<native><public>(X: float)<computes><reads>: float
 
   # Makes a `string` from `Character`.
   ToString<native><public>(Character: char)<computes>: string
 
   # Makes a `string` representation of `Val`.
-  ToString<native><public>(Val: float)<varies>: string
+  ToString<native><public>(Val: float)<computes><reads>: string
 
   # Makes a printable `string` representation of `Val`.
   ToString<native><public>(Val: int)<computes>: string

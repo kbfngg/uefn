@@ -16,6 +16,11 @@
 			"FriendlyName": "Dev-Automation",
 			"Version": 1
 		},
+		"0EF08371325A4310A25A70CBCB52220D":
+		{
+			"FriendlyName": "EBTTaskModulateVehicleSpeedVersion",
+			"Version": 1
+		},
 		"11310AED2E554D61AF679AA3C5A1082C":
 		{
 			"FriendlyName": "Paper2DVer",
@@ -74,12 +79,12 @@
 		"2763920D0F784B39986E4BB3A88D666D":
 		{
 			"FriendlyName": "PCGBaseVer",
-			"Version": 22
+			"Version": 23
 		},
 		"28E21331501F47238110FA64EA10DA1E":
 		{
 			"FriendlyName": "StateTreeAsset",
-			"Version": 16
+			"Version": 18
 		},
 		"29E575DDE0A346279D10D276232CDCEA":
 		{
@@ -189,7 +194,7 @@
 		"601D1886AC644F84AA16D3DE0DEAC7D6":
 		{
 			"FriendlyName": "FortniteMain",
-			"Version": 134
+			"Version": 142
 		},
 		"60C4F0DE8B264C34AA9372015DFF09CC":
 		{
@@ -449,7 +454,7 @@
 		"C1270312AB730B1E0B1EC74571C70F73":
 		{
 			"FriendlyName": "CustomizableObjectVer",
-			"Version": 50
+			"Version": 51
 		},
 		"C1270312AB730B1E0B1EC790917A7105":
 		{
@@ -494,7 +499,7 @@
 		"DC49959B53C04DE79156EA885E7C5D39":
 		{
 			"FriendlyName": "Dev-RigVM",
-			"Version": 9
+			"Version": 10
 		},
 		"DD659724936911EEB7B9E2F7A734574D":
 		{
@@ -529,7 +534,7 @@
 		"EF0A537D90DA4CD2BCA16D6AE21E3589":
 		{
 			"FriendlyName": "FortItemDefinitionVersion",
-			"Version": 9
+			"Version": 10
 		},
 		"F2AED0AC9AFE416F8664AA7FFA26D6FC":
 		{
@@ -715,7 +720,7 @@
 			"/Script/AudioEditor.SoundCueGraph",
 			"/Script/AudioEditor.SoundCueGraphNode",
 			"/Script/AudioEditor.SoundCueGraphNode_Root",
-			"/Script/AudioMetadata.AudioAssetUserData",
+			"/Script/AudioGameplay.AudioAssetUserData",
 			"/Script/AudioModulation.SoundControlBus",
 			"/Script/AudioModulation.SoundControlBusMix",
 			"/Script/CableComponent.CableComponent",
@@ -1234,6 +1239,7 @@
 			"/Script/FortniteGame.FortActorComponent_Affiliation",
 			"/Script/FortniteGame.FortActorMetadataComponent",
 			"/Script/FortniteGame.FortActorTemplatesComponent",
+			"/Script/FortniteGame.FortAthenaSplineZipline",
 			"/Script/FortniteGame.FortBuildingAddStructuralSupportComponent",
 			"/Script/FortniteGame.FortBuildingAddStructuralSupportMarkerComponent",
 			"/Script/FortniteGame.FortCreativeAccoladesComponent",
@@ -1256,7 +1262,6 @@
 			"/Script/FortniteGame.FortCreativeTimerObjective",
 			"/Script/FortniteGame.FortCreativeVolumeLinkComponent",
 			"/Script/FortniteGame.FortDaySequenceActor",
-			"/Script/FortniteGame.FortDependantReplicationHelperComponent",
 			"/Script/FortniteGame.FortEventResponderComponent",
 			"/Script/FortniteGame.FortFXCustomizationComponent",
 			"/Script/FortniteGame.FortGameFeatureData",
@@ -1269,6 +1274,7 @@
 			"/Script/FortniteGame.FortHLODTemplatedInstancedStaticMeshComponent",
 			"/Script/FortniteGame.FortInspectorCameraCreative",
 			"/Script/FortniteGame.FortInspectorCameraCreativePreview",
+			"/Script/FortniteGame.FortInstigatorDependentReplicationHelper",
 			"/Script/FortniteGame.FortLevelInstanceSaveActor",
 			"/Script/FortniteGame.FortLevelOverlayConfig",
 			"/Script/FortniteGame.FortLevelScriptActor",
@@ -1450,6 +1456,8 @@
 			"/Script/Landscape.ControlPointMeshComponent",
 			"/Script/Landscape.Landscape",
 			"/Script/Landscape.LandscapeComponent",
+			"/Script/Landscape.LandscapeEditLayer",
+			"/Script/Landscape.LandscapeEditLayerSplines",
 			"/Script/Landscape.LandscapeGizmoActiveActor",
 			"/Script/Landscape.LandscapeGizmoRenderComponent",
 			"/Script/Landscape.LandscapeGrassType",
@@ -1457,6 +1465,7 @@
 			"/Script/Landscape.LandscapeLayerInfoObject",
 			"/Script/Landscape.LandscapeMaterialInstanceConstant",
 			"/Script/Landscape.LandscapeMeshCollisionComponent",
+			"/Script/Landscape.LandscapeMeshProxyComponent",
 			"/Script/Landscape.LandscapeNaniteComponent",
 			"/Script/Landscape.LandscapeSplineActor",
 			"/Script/Landscape.LandscapeSplineControlPoint",
@@ -1479,6 +1488,7 @@
 			"/Script/LiveLinkComponents.LiveLinkComponentController",
 			"/Script/LiveLinkMovieScene.MovieSceneLiveLinkSection",
 			"/Script/LiveLinkMovieScene.MovieSceneLiveLinkTrack",
+			"/Script/LiveLinkSequencer.TakeRecorderLiveLinkSource",
 			"/Script/MannequinRuntime.MannequinAnalyticsComponent",
 			"/Script/MediaAssets.MediaSoundComponent",
 			"/Script/MediaAssets.MediaTexture",
@@ -1748,8 +1758,19 @@
 			"/Script/SoundLibrary.SoundLibraryComponent",
 			"/Script/TakeMovieScene.MovieSceneTakeSection",
 			"/Script/TakeMovieScene.MovieSceneTakeTrack",
+			"/Script/TakeRecorderSources.TakeRecorderActorSource",
+			"/Script/TakeRecorderSources.TakeRecorderCameraCutSource",
+			"/Script/TakeRecorderSources.TakeRecorderLevelSequenceSource",
+			"/Script/TakeRecorderSources.TakeRecorderLevelVisibilitySource",
+			"/Script/TakeRecorderSources.TakeRecorderMicrophoneAudioSource",
+			"/Script/TakeRecorderSources.TakeRecorderNearbySpawnedActorSource",
+			"/Script/TakeRecorderSources.TakeRecorderPlayerSource",
+			"/Script/TakeRecorderSources.TakeRecorderWorldSource",
+			"/Script/TakesCore.ActorRecorderPropertyMap",
 			"/Script/TakesCore.TakeMetaData",
 			"/Script/TakesCore.TakePreset",
+			"/Script/TakesCore.TakeRecorderSources",
+			"/Script/TakeTrackRecorders.MovieSceneAnimationTrackRecorderSettings",
 			"/Script/TemplateSequence.SequenceCameraShakePattern",
 			"/Script/UMG.CanvasPanel",
 			"/Script/UMG.CanvasPanelSlot",
@@ -2174,10 +2195,12 @@
 			"/Script/CoreUObject.Vector4f",
 			"/Script/Engine.AnimSyncMarker",
 			"/Script/Engine.FloatAnimationAttribute",
+			"/Script/Engine.FloatSpringState",
 			"/Script/Engine.InputRange",
 			"/Script/Engine.InputScaleBiasClamp",
 			"/Script/Engine.IntegerAnimationAttribute",
 			"/Script/Engine.PointerToUberGraphFrame",
+			"/Script/Engine.QuaternionSpringState",
 			"/Script/Engine.RuntimeFloatCurve",
 			"/Script/Engine.StringAnimationAttribute",
 			"/Script/Engine.TransformAnimationAttribute",
@@ -3021,7 +3044,6 @@
 			"/CRD_ItemContainer/SetupAssets/PID_CP_Devices_ItemContainer_V2.PID_CP_Devices_ItemContainer_V2",
 			"/CRD_ItemRemover/SetupAssets/PID_Device_ItemRemover.PID_Device_ItemRemover",
 			"/CRD_LimeItemSpawner/SetupAssets/PID_CP_Devices_LimeItemSpawner.PID_CP_Devices_LimeItemSpawner",
-			"/CRD_Mannequin/SetupAssets/PID_CP_Character_Device_Controller_V2.PID_CP_Character_Device_Controller_V2",
 			"/CRD_MapDevice/SetupAssets/PID_CP_Devices_MapControllerDevice.PID_CP_Devices_MapControllerDevice",
 			"/CRD_ModalDialog/SetupAssets/PID_Device_PopupDialog.PID_Device_PopupDialog",
 			"/CRD_ModularBassSynth/SetupAssets/PID_CP_Devices_ModularBassSynth.PID_CP_Devices_ModularBassSynth",
@@ -3115,6 +3137,7 @@
 			"/CRD_WildsPlants/SetupAssets/PID_CP_Devices_BombFlower.PID_CP_Devices_BombFlower",
 			"/CRD_WildsPlants/SetupAssets/PID_CP_Devices_SlurpPlant.PID_CP_Devices_SlurpPlant",
 			"/CRD_WildsPlants/SetupAssets/PID_CP_Devices_StinkFlower.PID_CP_Devices_StinkFlower",
+			"/CRD_Zipline/SetupAssets/PID_Device_Zipline.PID_Device_Zipline",
 			"/CreativeCoreDevices/SetupAssets/PID_Collectibles_Object_V2.PID_Collectibles_Object_V2",
 			"/CreativeCoreDevices/SetupAssets/PID_CP_Devices_CaptureArea_V2.PID_CP_Devices_CaptureArea_V2",
 			"/CreativeCoreDevices/SetupAssets/PID_CP_Devices_KeyLock_V2.PID_CP_Devices_KeyLock_V2",
@@ -3528,6 +3551,9 @@
 			"/Engine/EngineMaterials/DefaultNormal_Uncompressed.DefaultNormal_Uncompressed",
 			"/Engine/EngineMaterials/DefaultPhysicalMaterial.DefaultPhysicalMaterial",
 			"/Engine/EngineMaterials/FlatNormal.FlatNormal",
+			"/Engine/EngineMaterials/FlattenMaterial.FlattenMaterial",
+			"/Engine/EngineMaterials/FlattenMaterial_VT.FlattenMaterial_VT",
+			"/Engine/EngineMaterials/FlattenMaterial_WS_Normal_VT.FlattenMaterial_WS_Normal_VT",
 			"/Engine/EngineMaterials/Good64x64TilingNoiseHighFreq.Good64x64TilingNoiseHighFreq",
 			"/Engine/EngineMaterials/RandomVectors_WithXNeighbor.RandomVectors_WithXNeighbor",
 			"/Engine/EngineMaterials/T_SphereShadow_RGBA_5-15-30-60deg.T_SphereShadow_RGBA_5-15-30-60deg",
@@ -4267,6 +4293,7 @@
 			"/FortniteBaseMaterials/FortniteBase/Tiling/MI_CR_DamageOverlay.MI_CR_DamageOverlay",
 			"/FortniteBaseMaterials/Functions/MF_QualitySwitch_MaterialAttributes.MF_QualitySwitch_MaterialAttributes",
 			"/FortniteBaseMaterials/Functions/MF_QualitySwitch_Scalar.MF_QualitySwitch_Scalar",
+			"/FortniteBaseMaterials/Functions/MF_QualitySwitch_Vector.MF_QualitySwitch_Vector",
 			"/FortniteFoliage/Meshes/CP_CH4_Flowers_Classic_Heather_01.CP_CH4_Flowers_Classic_Heather_01",
 			"/FortniteFoliage/Meshes/CP_CH4_Grass_Standard_01.CP_CH4_Grass_Standard_01",
 			"/FortniteFoliage/Meshes/CP_CH4_GravelRocksSmall_01.CP_CH4_GravelRocksSmall_01",
@@ -4601,74 +4628,9 @@
 			"/Game/Athena/Heroes/Meshes/Heads/Dev_TestAsset_Head_01.Dev_TestAsset_Head_01",
 			"/Game/Athena/Heroes/Meshes/Heads/M_Med_Soldier_Head_01_ATH.M_Med_Soldier_Head_01_ATH",
 			"/Game/Athena/HLODSetup/Materials/BaseFlattenMaterialAthena_MedHLOD.BaseFlattenMaterialAthena_MedHLOD",
-			"/Game/Athena/HUD/LTM/Playground/CoreGamer/CoreGamer_ObjectiveRadial.CoreGamer_ObjectiveRadial",
 			"/Game/Athena/Items/Cosmetics/Backpacks/BID_STWHeroNoDefaultBackpack.BID_STWHeroNoDefaultBackpack",
-			"/Game/Athena/Items/Cosmetics/Characters/Character_BoneMarrow.Character_BoneMarrow",
-			"/Game/Athena/Items/Cosmetics/Characters/Character_CasualCherie.Character_CasualCherie",
-			"/Game/Athena/Items/Cosmetics/Characters/Character_FauxVenom.Character_FauxVenom",
-			"/Game/Athena/Items/Cosmetics/Characters/Character_MirageHike.Character_MirageHike",
-			"/Game/Athena/Items/Cosmetics/Characters/Character_PennantSeasGlare_B.Character_PennantSeasGlare_B",
-			"/Game/Athena/Items/Cosmetics/Characters/Character_SirWolf.Character_SirWolf",
-			"/Game/Athena/Items/Cosmetics/Characters/Character_StreetGothSummer.Character_StreetGothSummer",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_001_Athena_Commando_F_Default.CID_001_Athena_Commando_F_Default",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_005_Athena_Commando_M_Default.CID_005_Athena_Commando_M_Default",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_072_Athena_Commando_M_Scout.CID_072_Athena_Commando_M_Scout",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_088_Athena_Commando_M_SpaceBlack.CID_088_Athena_Commando_M_SpaceBlack",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_102_Athena_Commando_M_Raven.CID_102_Athena_Commando_M_Raven",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_105_Athena_Commando_F_SpaceBlack.CID_105_Athena_Commando_F_SpaceBlack",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_109_Athena_Commando_M_Pizza.CID_109_Athena_Commando_M_Pizza",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_128_Athena_Commando_F_Hazmat.CID_128_Athena_Commando_F_Hazmat",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_133_Athena_Commando_F_Deco.CID_133_Athena_Commando_F_Deco",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_136_Athena_Commando_M_StreetBasketball.CID_136_Athena_Commando_M_StreetBasketball",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_154_Athena_Commando_M_Gumshoe.CID_154_Athena_Commando_M_Gumshoe",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_155_Athena_Commando_F_Gumshoe.CID_155_Athena_Commando_F_Gumshoe",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_172_Athena_Commando_F_SharpDresser.CID_172_Athena_Commando_F_SharpDresser",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_176_Athena_Commando_M_Lifeguard.CID_176_Athena_Commando_M_Lifeguard",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_184_Athena_Commando_M_DurrburgerWorker.CID_184_Athena_Commando_M_DurrburgerWorker",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_199_Athena_Commando_F_BlueSamurai.CID_199_Athena_Commando_F_BlueSamurai",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_250_Athena_Commando_M_EvilCowboy.CID_250_Athena_Commando_M_EvilCowboy",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_323_Athena_Commando_M_Barbarian.CID_323_Athena_Commando_M_Barbarian",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_326_Athena_Commando_F_WavyMan.CID_326_Athena_Commando_F_WavyMan",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_340_Athena_Commando_F_RobotTrouble.CID_340_Athena_Commando_F_RobotTrouble",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_344_Athena_Commando_M_IceCream.CID_344_Athena_Commando_M_IceCream",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_354_Athena_Commando_M_MunitionsExpert.CID_354_Athena_Commando_M_MunitionsExpert",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_373_Athena_Commando_M_Pirate01.CID_373_Athena_Commando_M_Pirate01",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_377_Athena_Commando_F_DarkShaman.CID_377_Athena_Commando_F_DarkShaman",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_401_Athena_Commando_M_Miner.CID_401_Athena_Commando_M_Miner",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_468_Athena_Commando_F_TennisWhite.CID_468_Athena_Commando_F_TennisWhite",
 			"/Game/Athena/Items/Cosmetics/Characters/CID_480_Athena_Commando_F_Bubblegum.CID_480_Athena_Commando_F_Bubblegum",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_494_Athena_Commando_M_MechPilotShark.CID_494_Athena_Commando_M_MechPilotShark",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_498_Athena_Commando_M_WildWest.CID_498_Athena_Commando_M_WildWest",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_504_Athena_Commando_M_Lopex.CID_504_Athena_Commando_M_Lopex",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_507_Athena_Commando_M_StarWalker.CID_507_Athena_Commando_M_StarWalker",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_536_Athena_Commando_F_DurrburgerWorker.CID_536_Athena_Commando_F_DurrburgerWorker",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_573_Athena_Commando_M_Haunt.CID_573_Athena_Commando_M_Haunt",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_588_Athena_Commando_M_GoatRobe.CID_588_Athena_Commando_M_GoatRobe",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_606_Athena_Commando_F_JetSki.CID_606_Athena_Commando_F_JetSki",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_624_Athena_Commando_M_TeriyakiWarrior.CID_624_Athena_Commando_M_TeriyakiWarrior",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_639_Athena_Commando_F_NeonAnimal.CID_639_Athena_Commando_F_NeonAnimal",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_647_Athena_Commando_F_WingedFury.CID_647_Athena_Commando_F_WingedFury",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_719_Athena_Commando_F_Blonde.CID_719_Athena_Commando_F_Blonde",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_759_Athena_Commando_F_RapVillainess.CID_759_Athena_Commando_F_RapVillainess",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_883_Athena_Commando_M_ChOneJonesy.CID_883_Athena_Commando_M_ChOneJonesy",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_884_Athena_Commando_F_ChOneRamirez.CID_884_Athena_Commando_F_ChOneRamirez",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_904_Athena_Commando_M_Jekyll.CID_904_Athena_Commando_M_Jekyll",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_982_Athena_Commando_M_DriftWinter.CID_982_Athena_Commando_M_DriftWinter",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_983_Athena_Commando_F_CupidWinter.CID_983_Athena_Commando_F_CupidWinter",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_A_042_Athena_Commando_F_Scholar.CID_A_042_Athena_Commando_F_Scholar",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_A_046_Athena_Commando_F_AssembleR.CID_A_046_Athena_Commando_F_AssembleR",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_A_061_Athena_Commando_M_PaddedArmorOrder.CID_A_061_Athena_Commando_M_PaddedArmorOrder",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_A_076_Athena_Commando_F_DinoCollector.CID_A_076_Athena_Commando_F_DinoCollector",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_A_192_Athena_Commando_F_Suspenders.CID_A_192_Athena_Commando_F_Suspenders",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_A_416_Athena_Commando_M_Armadillo.CID_A_416_Athena_Commando_M_Armadillo",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_Creative_Mannequin_M_Default.CID_Creative_Mannequin_M_Default",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_NPC_Athena_Commando_M_AlienRobot.CID_NPC_Athena_Commando_M_AlienRobot",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_NPC_Athena_Commando_M_HeistSummerIsland.CID_NPC_Athena_Commando_M_HeistSummerIsland",
 			"/Game/Athena/Items/Cosmetics/Characters/CID_NPC_Athena_Commando_M_HenchmanBad.CID_NPC_Athena_Commando_M_HenchmanBad",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_NPC_Athena_Commando_M_HenchmanGood.CID_NPC_Athena_Commando_M_HenchmanGood",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_NPC_Athena_Commando_M_PaddedArmorArctic.CID_NPC_Athena_Commando_M_PaddedArmorArctic",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_NPC_Athena_Commando_M_Scrapyard.CID_NPC_Athena_Commando_M_Scrapyard",
-			"/Game/Athena/Items/Cosmetics/Characters/CID_NPC_Athena_Commando_M_TacticalFishermanOil.CID_NPC_Athena_Commando_M_TacticalFishermanOil",
 			"/Game/Athena/Items/QuestInteractables/BigPiano/Materials/M_KeysText.M_KeysText",
 			"/Game/Athena/Items/QuestInteractables/BigPiano/Materials/MI_PianoKey_Black.MI_PianoKey_Black",
 			"/Game/Athena/Items/QuestInteractables/BigPiano/Materials/MI_PianoKey_White.MI_PianoKey_White",
@@ -6037,7 +5999,6 @@
 			"/Game/Creative/Devices/ActionTrigger/Materials/MI_ActionTrigger.MI_ActionTrigger",
 			"/Game/Creative/Devices/BallSpawner/Materials/CP_MI_Device_BallSpawner_Ball_01.CP_MI_Device_BallSpawner_Ball_01",
 			"/Game/Creative/Devices/BallSpawner/Meshes/CP_Device_BallSpawner_Ball_01.CP_Device_BallSpawner_Ball_01",
-			"/Game/Creative/Devices/Billboard/Creative_Background_Widget.Creative_Background_Widget",
 			"/Game/Creative/Devices/Billboard/M_ClearBorder.M_ClearBorder",
 			"/Game/Creative/Devices/Billboard/Materials/Widget3D_Masked_BillboardDisplay_TwoSided.Widget3D_Masked_BillboardDisplay_TwoSided",
 			"/Game/Creative/Devices/Bomb/Meshes/CP_Device_Bomb_01.CP_Device_Bomb_01",
@@ -6052,7 +6013,6 @@
 			"/Game/Creative/Devices/Class_Selector/Materials/MI_Class_Selector.MI_Class_Selector",
 			"/Game/Creative/Devices/Common/Components/fCurve_MoveMeshToCenter.fCurve_MoveMeshToCenter",
 			"/Game/Creative/Devices/Common/CreativePowerups/Materials/M_PowerUpOrb.M_PowerUpOrb",
-			"/Game/Creative/Devices/Common/UI/Creative_GenericText_Widget.Creative_GenericText_Widget",
 			"/Game/Creative/Devices/CreaturePlacer/Materials/M_CreaturePlacer_CharacterHighlight.M_CreaturePlacer_CharacterHighlight",
 			"/Game/Creative/Devices/CreaturePlacer/VFX/P_CreaturePlacer_Transition.P_CreaturePlacer_Transition",
 			"/Game/Creative/Devices/CTF_Flag/Materials/MI_CTF_Flag.MI_CTF_Flag",
@@ -11861,6 +11821,7 @@
 			"/ContentHall/Blueprints/BP_DemoDisplay.BP_DemoDisplay_C",
 			"/ContentHall/Blueprints/BP_DemoRoom.BP_DemoRoom_C",
 			"/ControlRig/StandardFunctionLibrary/StandardFunctionLibrary.StandardFunctionLibrary_C",
+			"/CowCatcherMod/Mods/CowCatcher/BGA_Barricade_CowCatcher.BGA_Barricade_CowCatcher_C",
 			"/CRD_Accolades/SetupAssets/Device_Accolades_V2.Device_Accolades_V2_C",
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_Awareness.CharacterModifier_Awareness_C",
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_CosmeticSpawn.CharacterModifier_CosmeticSpawn_C",
@@ -11937,7 +11898,6 @@
 			"/CRD_ItemRemover/Device_ItemRemover_V2.Device_ItemRemover_V2_C",
 			"/CRD_LimeItemSpawner/Device_LimeItemSpawner.Device_LimeItemSpawner_C",
 			"/CRD_Mannequin/Device_Character_Base_V2.Device_Character_Base_V2_C",
-			"/CRD_Mannequin/Device_Character_Controller_V2.Device_Character_Controller_V2_C",
 			"/CRD_Mannequin/SetupAssets/Character_Mannequin.Character_Mannequin_C",
 			"/CRD_MapDevice/Device_MapController.Device_MapController_C",
 			"/CRD_ModalDialog/Device_PopUpDialog_V2.Device_PopUpDialog_V2_C",
@@ -11995,6 +11955,7 @@
 			"/CRD_WildsPlants/CRD_StinkFlower.CRD_StinkFlower_C",
 			"/CRD_WildsPlants/Device_WildsPlants_Parent.Device_WildsPlants_Parent_C",
 			"/CRD_Zipline/CRD_ZiplineSplineMeshComponent.CRD_ZiplineSplineMeshComponent_C",
+			"/CRD_Zipline/Device_Zipline.Device_Zipline_C",
 			"/CreativeCoreDevices/AirVent/B_HVAC_Prop_V2.B_HVAC_Prop_V2_C",
 			"/CreativeCoreDevices/AlwaysCook/Device_Beacon_V2_Beam_Blue.Device_Beacon_V2_Beam_Blue_C",
 			"/CreativeCoreDevices/AlwaysCook/Device_Beacon_V2_Beam_Green.Device_Beacon_V2_Beam_Green_C",
@@ -14647,6 +14608,7 @@
 			"/Game/Athena/Items/Components/BuildingActorLootDropOnDeathComponent.BuildingActorLootDropOnDeathComponent_C",
 			"/Game/Athena/Items/Consumables/Balloons/BGA_Balloons_Consumable_Rope.BGA_Balloons_Consumable_Rope_C",
 			"/Game/Athena/Items/Consumables/SneakySnowman/Version2/Athena_Prop_SneakySnowmanV2.Athena_Prop_SneakySnowmanV2_C",
+			"/Game/Athena/Items/Consumables/ZipLine/SplineZipline/BP_Athena_Environmental_ZipLine_Spline.BP_Athena_Environmental_ZipLine_Spline_C",
 			"/Game/Athena/Items/EnvironmentalItems/ExplosiveProps/Apollo_GasPump_Valet.Apollo_GasPump_Valet_C",
 			"/Game/Athena/Items/EnvironmentalItems/ExplosiveProps/Athena_BuildingProp_Explosive.Athena_BuildingProp_Explosive_C",
 			"/Game/Athena/Items/EnvironmentalItems/ExplosiveProps/Athena_Prop_BurstReaction_Exploding_GasTank.Athena_Prop_BurstReaction_Exploding_GasTank_C",
@@ -21516,6 +21478,7 @@
 		"/Script/ControlRig.ControlRigBlueprintGeneratedClass",
 		"/Script/CoreUObject.Class",
 		"/Script/CoreUObject.LinkerPlaceholderClass",
+		"/Script/CoreUObject.VerseVMClass",
 		"/Script/Engine.AnimBlueprintGeneratedClass",
 		"/Script/Engine.BlueprintGeneratedClass",
 		"/Script/ModelViewViewModel.MVVMInstancedViewModelGeneratedClass",
@@ -21528,6 +21491,7 @@
 		"/Script/RigVM.RigVMMemoryStorageGeneratorClass",
 		"/Script/Solaris.VerseClass",
 		"/Script/UMG.WidgetBlueprintGeneratedClass",
+		"/Script/VerseAssets.EditableDataObjectGeneratedClass",
 		"/Script/VerseNative.VerseClassBase"
 	]
 }

@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.40-CL-33291686
+# Generated from build: ++Fortnite+Release-30.00-CL-33760522
 #################################################
 
 AINavigation<public> := module {
@@ -43,9 +43,9 @@ Abilities<public> := module {
   ability_component<native><public> := class(component) {}
 
   ability_property_link<native><epic_internal> := struct {
-    NativePropertyName<native><epic_internal>: string
+    NativePropertyName<native><public>: string
 
-    VersePropertyName<native><epic_internal>: string
+    VersePropertyName<native><public>: string
   }
 }
 
@@ -303,7 +303,6 @@ EntityTestSuite<public> := module {
   test_component<native><epic_internal> := class(component) {}
 }
 
-using { /Verse.org/VerseEngine/Component }
 # Module import path: /UnrealEngine.com/EpicGames
 EpicGames<public> := module {
   # Module import path: /UnrealEngine.com/EpicGames/Input
@@ -563,9 +562,8 @@ EpicGamesRestricted<public> := module {
   }
 }
 
-# Module import path: /UnrealEngine.com/ExecutionTestSuite
-ExecutionTestSuite<public> := module {}
-
+using { /Verse.org/Simulation }
+using { /Verse.org/VerseEngine/Component }
 # Module import path: /UnrealEngine.com/Playspace
 Playspace<public> := module {
   PlayerType<native><epic_internal> := enum {
@@ -789,9 +787,313 @@ Temporary<public> := module {
 
     (InEntity: entity).FindParentEntitiesWithTag<native><epic_internal>(Tag: tag)<transacts>: []entity
 
+    # Returns the `simulation_entity` for the `InEntity.
+    (InEntity: entity).GetSimulationEntity<native><epic_internal>()<transacts><decides>: simulation_entity
+
     using { /UnrealEngine.com/EpicGamesRestricted/Network }
-    using { /UnrealEngine.com/Temporary/UI }
+    using { /UnrealEngine.com/Temporary/SpatialMath }
     using { /Verse.org/Assets }
+    using { /Verse.org/Native }
+    using { /Verse.org/Simulation }
+    using { /Verse.org/Simulation/Tags }
+    # Module import path: /UnrealEngine.com/Temporary/SceneGraph/VerseCamera
+    VerseCamera<public> := module {
+      # Activate a camera behavior component for a player, setting it as the active view target
+      (InCameraBehavior: camera_behavior_component).ActivateForPlayer<native><epic_internal>(InPlayer: player)<transacts><decides>: void
+
+      (InCameraBehavior: camera_behavior_component).ActivateForPlayerAtIndex<native><epic_internal>(InPlayerIndex: int)<transacts><decides>: void
+
+      # Deactivate a camera behavior component for a player, restoring the player's view target to the default
+      (InCameraBehavior: camera_behavior_component).DeactivateForPlayer<native><epic_internal>(InPlayer: player)<transacts><decides>: void
+
+      (InCameraBehavior: camera_behavior_component).DeactivateForPlayerAtIndex<native><epic_internal>(InPlayerIndex: int)<transacts><decides>: void
+
+      GetPlayerCameraView<native><epic_internal>(Player: player)<transacts><decides>: player_camera_view
+
+      GetPlayerCameraViewByIndex<native><epic_internal>(PlayerIndex: int)<transacts><decides>: player_camera_view
+
+      # Component that owns higher level camera behavior.
+      # Owns a CameraDirector, which is responsible for selecting the best camera mode every update.
+      # Owns a default EvaluationContext, which is responsible for setting the default camera transform, before camera logic is applied
+      camera_behavior_component<native><epic_internal> := class(component) {
+        # Internal epic method to know if this component is allowed on client
+        IsAllowedOnClient<override>(): logic = external {}
+
+        @replicated("")
+        # Reponsible for deciding which camera modes should be active on each layer
+        var CameraDirector<public>: camera_director = external {}
+
+        @replicated("")
+        # The evaluation context sets an initial transform for the camera, before camera mode logic is applied. This evaluation context is used as the default if a camera mode does not provide its own
+        var DefaultEvaluationContext<public>: camera_evaluation_context = external {}
+      }
+
+      # Represents the physical body, lens of the camera and other cinematographic qualities, such as sensor size, aspect ratio lock/constraint, focal length, focus distance, post-process settings, etc.
+      camera_component<native><epic_internal> := class(basic_camera_component) {
+        # Internal epic method to know if this component is allowed on client
+        IsAllowedOnClient<override>(): logic = external {}
+      }
+
+      # Base class for Camera Directors defined in Verse
+      camera_director<native><epic_internal> := class(camera_director_base) {
+        # Add a camera mode to the list for consideration
+        AddCameraMode<native_callable><public>(CameraMode: camera_mode): void = external {}
+
+        # Determine which camera mode should be active
+        DetermineActiveCameraModes<native_callable><public>(): []camera_mode = external {}
+
+        # Remove a camera mode from the list for consideration
+        RemoveCameraMode<native_callable><public>(CameraMode: camera_mode): void = external {}
+      }
+
+      @import_as("/Script/VerseCamera.UVerseCameraDirectorBase")
+      camera_director_base<native><epic_internal> := class {}
+
+      # Default camera director implementation  - Simply returns the highest priority camera mode every update
+      camera_director_default<native><epic_internal> := class<final>(camera_director) {
+        # Add a camera mode to the list for consideration
+        AddCameraMode<native><override>(CameraMode: camera_mode): void
+
+        # Determine which camera mode should be active
+        DetermineActiveCameraModes<native><override>(): []camera_mode
+
+        # Remove a camera mode from the list for consideration
+        RemoveCameraMode<native><override>(CameraMode: camera_mode): void
+      }
+
+      # Base class for Verse camera evaluation contexts
+      camera_evaluation_context<native><epic_internal> := class(camera_evaluation_context_base) {
+        # Update the evaluation context. Override this to modify the initial camera transform and other initial camera parameters before any camera modes are run
+        Update<native_callable><public>(
+          InputParameters: camera_evaluation_context_input_parameters,
+          OutputParameters: camera_evaluation_context_output_parameters
+        )<transacts><decides>: void = external {}
+      }
+
+      @import_as("/Script/VerseCamera.UVerseCameraEvaluationContext")
+      camera_evaluation_context_base<native><epic_internal> := class<abstract> {}
+
+      # Input params to a camera evaluation context update
+      camera_evaluation_context_input_parameters<native><epic_internal> := class<final> {
+        # Entity that owns the camera behavior component
+        var CameraBehaviorEntity<native><epic_internal>: entity = external {}
+
+        # Time elapsed since last update
+        var DeltaTime<native><public>: float = external {}
+      }
+
+      # Output params to a camera evaluation context update
+      camera_evaluation_context_output_parameters<native><epic_internal> := class<final>(camera_output_parameters) {
+        # If written to, will set the target distance
+        var TargetDistance<native><epic_internal>: ?float = external {}
+      }
+
+      # A camera mode builds up a camera transform piece by piece by executing a camera rig asset
+      camera_mode<native><epic_internal> := class<concrete><unique><final> {
+        GetCameraModeTag<native><public>()<transacts><decides>: verse_camera_mode_tag
+
+        @replicated("")
+        # Camera evaluation context. Used to override default camera transform, and set target entity
+        var CameraEvaluationContext<public>: camera_evaluation_context = external {}
+
+        @replicated("")
+        # Camera rig asset that defines the behavior of the camera mode
+        var CameraRigAsset<public>: camera_rig_asset = external {}
+
+        @replicated("")
+        # Priority level that can be used by camera directors to determine the best camera mode
+        var Priority<public>: float = external {}
+
+        @replicated("")
+        @editable
+        # Root camera operation - This is mutually exclusive with CameraRigAsset, but allows you to build up a camera mode completely in Verse
+        var RootCameraOperation<native><epic_internal>: ?camera_operation = external {}
+      }
+
+      @import_as("/Script/VerseCamera.UVerseCameraMode")
+      camera_mode_base<native><epic_internal> := class<abstract> {}
+
+      # A camera operation is a primitive operation that is used to build up a camera transform piece by piece
+      camera_operation<native><epic_internal> := class<concrete><unique>(camera_operation_base) {
+        # Called when the camera mode is initialized
+        Initialize<native_callable><public>(InitParams: camera_operation_initialization_parameters)<transacts><decides>: void = external {}
+
+        # Called by the camera mode to build up the camera settings
+        Update<native_callable><public>(
+          InputParams: camera_operation_input_parameters,
+          OutputParams: camera_operation_output_parameters
+        ): void = external {}
+      }
+
+      @import_as("/Script/VerseCamera.UVerseCameraNode")
+      camera_operation_base<native><epic_internal> := class<abstract> {}
+
+      # Camera operation initialization parameters
+      camera_operation_initialization_parameters<native><epic_internal> := class<final> {}
+
+      # Input params to a camera operation
+      camera_operation_input_parameters<native><epic_internal> := class<final> {
+        GetCameraParameterValue<native><epic_internal>(Parameter: camera_parameter_float)<transacts><decides>: float
+
+        GetCameraParameterValue<native><epic_internal>(Parameter: camera_parameter_integer)<transacts><decides>: int
+
+        # Get the value of a camera parameter
+        GetCameraParameterValue<native><epic_internal>(Parameter: camera_parameter_logic)<transacts><decides>: void
+
+        GetCameraParameterValue<native><epic_internal>(Parameter: camera_parameter_rotation)<transacts><decides>: rotation
+
+        GetCameraParameterValue<native><epic_internal>(Parameter: camera_parameter_transform)<transacts><decides>: transform
+
+        GetCameraParameterValue<native><epic_internal>(Parameter: camera_parameter_vector2)<transacts><decides>: vector2
+
+        GetCameraParameterValue<native><epic_internal>(Parameter: camera_parameter_vector3)<transacts><decides>: vector3
+
+        # Camera location from the initial evaluator execution, or previous operation if an operation modified it before this one
+        var CameraLocation<native><public>: vector3 = external {}
+
+        # Camera rotation from the initial evaluator execution,  or previous operation if an operation modified it before this one
+        var CameraRotation<native><public>: rotation = external {}
+
+        # Delta time since last update
+        var DeltaTime<native><public>: float = external {}
+
+        # Camera evaluation context that the owning camera mode is running in
+        var EvaluationContext<native><public>: ?camera_evaluation_context = external {}
+      }
+
+      # Output params to a camera operation
+      camera_operation_output_parameters<native><epic_internal> := class<final>(camera_output_parameters) {}
+
+      camera_output_parameters<native><epic_internal> := class {
+        Reset_Internal<native><epic_internal>(): void
+
+        SetCameraVariable<native><epic_internal>(CameraVariable: camera_variable_float, Value: float)<transacts><decides>: void
+
+        SetCameraVariable<native><epic_internal>(CameraVariable: camera_variable_integer, Value: int)<transacts><decides>: void
+
+        # Set a camera variable value
+        SetCameraVariable<native><epic_internal>(CameraVariable: camera_variable_logic, Value: logic)<transacts><decides>: void
+
+        SetCameraVariable<native><epic_internal>(
+          CameraVariable: camera_variable_rotation,
+          Value: rotation
+        )<transacts><decides>: void
+
+        SetCameraVariable<native><epic_internal>(
+          CameraVariable: camera_variable_transform,
+          Value: transform
+        )<transacts><decides>: void
+
+        SetCameraVariable<native><epic_internal>(
+          CameraVariable: camera_variable_vector2,
+          Value: vector2
+        )<transacts><decides>: void
+
+        SetCameraVariable<native><epic_internal>(
+          CameraVariable: camera_variable_vector3,
+          Value: vector3
+        )<transacts><decides>: void
+
+        # If written to, will set the camera field of view
+        var CameraFieldOfViewDegrees<native><public>: ?float = external {}
+
+        # If written to, will set the camera location
+        var CameraLocation<native><public>: ?vector3 = external {}
+
+        # If written to, will set the camera rotation
+        var CameraRotation<native><public>: ?rotation = external {}
+      }
+
+      camera_parameter_float<native><epic_internal> := class {
+        @editable
+        Value<native><public>: float = external {}
+
+        @editable
+        Variable<native><public>: camera_variable_float = external {}
+      }
+
+      camera_parameter_integer<native><epic_internal> := class {
+        @editable
+        Value<native><public>: int = external {}
+
+        @editable
+        Variable<native><public>: camera_variable_integer = external {}
+      }
+
+      camera_parameter_logic<native><epic_internal> := class {
+        @editable
+        Value<native><public>: logic = external {}
+
+        @editable
+        Variable<native><public>: camera_variable_logic = external {}
+      }
+
+      camera_parameter_rotation<native><epic_internal> := class {
+        @editable
+        Value<native><public>: rotation = external {}
+
+        @editable
+        Variable<native><public>: camera_variable_rotation = external {}
+      }
+
+      camera_parameter_transform<native><epic_internal> := class {
+        @editable
+        Value<native><public>: transform = external {}
+
+        @editable
+        Variable<native><public>: camera_variable_transform = external {}
+      }
+
+      camera_parameter_vector2<native><epic_internal> := class {
+        @editable
+        Value<native><public>: vector2 = external {}
+
+        @editable
+        Variable<native><public>: camera_variable_vector2 = external {}
+      }
+
+      camera_parameter_vector3<native><epic_internal> := class {
+        @editable
+        Value<native><public>: vector3 = external {}
+
+        @editable
+        Variable<native><public>: camera_variable_vector3 = external {}
+      }
+
+      # Camera evaluation context for scene graph entities.
+      # Allows users of camera modes to supply a context object that provides more information about the context in whichthe camera mode is being used (for example, initial camera position)
+      entity_camera_evaluation_context<native><epic_internal> := class<final>(camera_evaluation_context) {
+        Update<native><override>(
+          InputParameters: camera_evaluation_context_input_parameters,
+          OutputParameters: camera_evaluation_context_output_parameters
+        )<transacts><decides>: void
+
+        @replicated("")
+        # For cameras that are fixed in the world. This entity is used as a reference point for the initial world transform of the fixed camera.
+        # Leave this unset for cameras that should follow another entity around
+        var FixedWorldCameraEntity<native><public>: ?entity = external {}
+
+        @replicated("")
+        # Entity the camera is targeting. Used to provide an initial look-at rotation for the camera
+        var TargetEntity<native><public>: ?entity = external {}
+      }
+
+      # Component used to associate a camera behavior component with a player
+      player_camera_view<native><epic_internal> := class(player_camera_view_base) {
+        ClearActiveCameraBehavior<native><public>()<transacts><decides>: void
+
+        GetActiveCameraBehavior<native><public>()<transacts><decides>: camera_behavior_component
+
+        SetActiveCameraBehavior<native><public>(CameraBehaviorIn: camera_behavior_component)<transacts><decides>: void
+      }
+
+      @import_as("/Script/VerseCamera.UVersePlayerCameraViewComponent")
+      player_camera_view_base<native><epic_internal> := class<abstract> {}
+
+      verse_camera_mode_tag<native><epic_internal> := class(tag) {}
+    }
+
+    using { /UnrealEngine.com/Temporary/UI }
     using { /Verse.org/Colors }
     attachment_component<native><epic_internal> := class(component) {
       # Attaches the owner entity to the specified entity. This method will compute relative transform from the current world transform of both entity
@@ -831,8 +1133,6 @@ Temporary<public> := module {
       var RelativeTransform<native><public>: ?transform = external {}
     }
 
-    using { /UnrealEngine.com/Temporary/SpatialMath }
-    using { /Verse.org/Simulation/Tags }
     # Axis aligned box volume
     axis_aligned_box3<native><epic_internal> := class<final><concrete>(convex_hull3) {
       Center<native><public>: vector3 = external {}
@@ -845,6 +1145,7 @@ Temporary<public> := module {
     @import_as("/Script/Entity.UBaseEntity")
     base_entity<native><public> := class<abstract> {}
 
+    @hide_in_editor
     basic_camera_component<native><epic_internal> := class(component) {
       GetFieldOfView<public>(): float = external {}
 
@@ -894,7 +1195,6 @@ Temporary<public> := module {
 
     collision_override<native><epic_internal> := class<abstract><epic_internal> {}
 
-    using { /Verse.org/Native }
     component<native><epic_internal> := class<abstract><unique>(disposable) {
       Dispose<native><override><final>(): void
 
@@ -933,7 +1233,7 @@ Temporary<public> := module {
       # The component is being uninitialized, called when it is about to be detached from an entity
       OnUninitializing<native><native_callable><protected>(): void
 
-      var<private> Entity<public>: entity = external {}
+      var<private> Entity<public>: entity
 
       var<private> TickEvents<protected>: tick_events = external {}
     }
@@ -1016,9 +1316,11 @@ Temporary<public> := module {
       ThisEntity<native><public>: ?entity
     }
 
-    using { /Verse.org/Simulation }
     # Used to handle general interaction.
     interact_component<native><epic_internal> := class(component, enableable) {
+      # The text to display to the user. Used only during initialization of the component and not modified by SetText.
+      DefaultCoolDownText<localizes><native><public>: message = external {}
+
       # The text to display to the user. Used only during initialization of the component and not modified by SetText.
       DefaultInteractText<localizes><native><public>: message = external {}
 
@@ -1027,6 +1329,9 @@ Temporary<public> := module {
 
       # Enable this object.
       Enable<native><override>(): void
+
+      # Gets the CoolDown text.
+      GetCoolDownText<native><public>(): string
 
       # Gets the interact text.
       GetInteractText<native><public>(): string
@@ -1039,10 +1344,16 @@ Temporary<public> := module {
       # Succeeds if the component is enabled, fails if it’s disabled.
       IsEnabled<native><override>()<transacts><decides>: void
 
+      # Sets the CoolDown text.
+      SetCoolDownText<native><public>(InText: message): void
+
       # Sets the interact text.
       SetInteractText<native><public>(InText: message): void
 
       SuccessfullyInteract<native><public>(): void
+
+      @editable
+      var CoolDownTime<native><public>: float = external {}
 
       @editable
       var InteractDistance<native><public>: float = external {}
@@ -1051,7 +1362,7 @@ Temporary<public> := module {
       var InteractTime<native><public>: float = external {}
 
       @editable
-      var TimesCanTrigger<native><public>: float = external {}
+      var TimesCanTrigger<native><public>: ?int = external {}
     }
 
     @hide_in_editor
@@ -1372,6 +1683,9 @@ Temporary<public> := module {
       DebugDraw<native><public>()<computes><reads>: void
     }
 
+    @hide_in_editor
+    simulation_entity<native><epic_internal> := class<concrete><unique><transacts>(entity) {}
+
     slow_component_array_copy_query_iterator<native><epic_internal> := class<epic_internal>(component_query_iterator_interface) {
       NextValue<native><override>()<transacts><decides>: component
     }
@@ -1505,7 +1819,7 @@ Temporary<public> := module {
       RemoveTag<native><epic_internal>(TagToRemove: tag)<transacts>: logic
     }
 
-    text_display_component<native><epic_internal> := class<concrete><final>(component) {
+    text_display_component<native><epic_internal> := class<final>(component) {
       # Internal epic method to know if this component is allowed on client
       IsAllowedOnClient<override>(): logic = external {}
 
@@ -1601,11 +1915,11 @@ Temporary<public> := module {
     (InitialRotation: rotation).UnrotateBy<native><public>(RotationToRemove: rotation)<transacts>: rotation
 
     # Returns the radians of `rotation` around the axis of `rotation`. See also `GetAxis`.
-    (Rotation: rotation).GetAngle<native><public>()<varies>: float
+    (Rotation: rotation).GetAngle<native><public>()<computes><reads>: float
 
     # Makes a `vector3` from the axis of `rotation`.
     # If `rotation` is nearly identity, this will return the +X axis. See also `GetAngle`.
-    (Rotation: rotation).GetAxis<native><public>()<varies>: vector3
+    (Rotation: rotation).GetAxis<native><public>()<computes><reads>: vector3
 
     # Makes a unit `vector3` pointing in the local space *forward* direction in world space coordinates.
     # This is equivalent to: `RotateVector(Rotation, vector3{X:=1.0, Y:=0.0, Z:=0.0})`.
@@ -1624,7 +1938,7 @@ Temporary<public> := module {
     #  * *pitch* degrees of `rotation`
     #  * *roll* degrees of `rotation`
     # using the conventions of `MakeRotationFromYawPitchRollDegrees`.
-    (Rotation: rotation).GetYawPitchRollDegrees<native><public>()<varies>: []float
+    (Rotation: rotation).GetYawPitchRollDegrees<native><public>()<computes><reads>: []float
 
     # Makes a `rotation` by inverting `Rotation` such that `ApplyRotation(Rotation, Rotation.Invert())) = IdentityRotation`.
     (Rotation: rotation).Invert<native><public>()<transacts>: rotation
@@ -1646,14 +1960,14 @@ Temporary<public> := module {
     (V: vector2).IsFinite<public>()<computes><decides>: vector2 = external {}
 
     # Returns the length of `V`.
-    (V: vector2).Length<public>()<varies>: float = external {}
+    (V: vector2).Length<public>()<computes><reads>: float = external {}
 
     # Returns the squared length of `V`.
-    (V: vector2).LengthSquared<public>()<varies>: float = external {}
+    (V: vector2).LengthSquared<public>()<computes><reads>: float = external {}
 
     # Makes a unit length `vector3` pointing in the same direction of `V`.
     # Fails if `V.IsAlmostZero[] or not V.IsFinite[]`.
-    (V: vector2).MakeUnitVector<native><public>()<varies><decides>: vector2
+    (V: vector2).MakeUnitVector<native><public>()<computes><decides><reads>: vector2
 
     # Succeeds when each component of `V` is within `AbsoluteTolerance` of `0.0`.
     (V: vector3).IsAlmostZero<public>(AbsoluteTolerance: float)<computes><decides>: void = external {}
@@ -1663,58 +1977,58 @@ Temporary<public> := module {
     (V: vector3).IsFinite<public>()<computes><decides>: vector3 = external {}
 
     # Returns the length of `V`.
-    (V: vector3).Length<public>()<varies>: float = external {}
+    (V: vector3).Length<public>()<computes><reads>: float = external {}
 
     # Returns the squared length of `V`.
     (V: vector3).LengthSquared<public>()<computes>: float = external {}
 
     # Returns the squared length of `V` as if `V.Z = 0.0`.
-    (V: vector3).LengthSquaredXY<public>()<varies>: float = external {}
+    (V: vector3).LengthSquaredXY<public>()<computes><reads>: float = external {}
 
     # Returns the length of `V` as if `V.Z = 0.0`.
-    (V: vector3).LengthXY<public>()<varies>: float = external {}
+    (V: vector3).LengthXY<public>()<computes><reads>: float = external {}
 
     # Makes a unit length `vector3` pointing in the same direction of `V`.
     # Fails if `V.IsAlmostZero[] or not V.IsFinite[]`.
-    (V: vector3).MakeUnitVector<native><public>()<varies><decides>: vector3
+    (V: vector3).MakeUnitVector<native><public>()<computes><decides><reads>: vector3
 
     # Returns the 'smallest angular distance' between `Rotation1` and `Rotation2` in radians.
-    AngularDistance<native><public>(Rotation1: rotation, Rotation2: rotation)<varies>: float
+    AngularDistance<native><public>(Rotation1: rotation, Rotation2: rotation)<computes><reads>: float
 
     # Returns the cross product of `V1` and `V2`.
-    CrossProduct<native><public>(V1: vector3, V2: vector3)<varies>: vector3
+    CrossProduct<native><public>(V1: vector3, V2: vector3)<computes><reads>: vector3
 
     # Returns radians from `Degrees`.
-    DegreesToRadians<public>(Degrees: float)<varies>: float = external {}
+    DegreesToRadians<public>(Degrees: float)<computes><reads>: float = external {}
 
     # Returns the 'distance' between `Rotation1` and `Rotation2`. The result will be between:
     #  * `0.0`, representing equivalent rotations and
     #  * `1.0` representing rotations which are 180 degrees apart (i.e., the shortest rotation between them is 180 degrees around some axis).
-    Distance<native><public>(Rotation1: rotation, Rotation2: rotation)<varies>: float
+    Distance<native><public>(Rotation1: rotation, Rotation2: rotation)<computes><reads>: float
 
     # Returns the Euclidean distance between `V1` and `V2`.
-    Distance<native><public>(V1: vector2, V2: vector2)<varies>: float
+    Distance<native><public>(V1: vector2, V2: vector2)<computes><reads>: float
 
     # Returns the Euclidean distance between `V1` and `V2`.
-    Distance<native><public>(V1: vector3, V2: vector3)<varies>: float
+    Distance<native><public>(V1: vector3, V2: vector3)<computes><reads>: float
 
     # Returns the squared Euclidean distance between `V1` and `V2`.
-    DistanceSquared<native><public>(V1: vector2, V2: vector2)<varies>: float
+    DistanceSquared<native><public>(V1: vector2, V2: vector2)<computes><reads>: float
 
     # Returns the squared Euclidean distance between `V1` and `V2`.
-    DistanceSquared<native><public>(V1: vector3, V2: vector3)<varies>: float
+    DistanceSquared<native><public>(V1: vector3, V2: vector3)<computes><reads>: float
 
     # Returns the squared 2-D Euclidean distance between `V1` and `V2` by ignoring their difference in `Z`.
-    DistanceSquaredXY<native><public>(V1: vector3, V2: vector3)<varies>: float
+    DistanceSquaredXY<native><public>(V1: vector3, V2: vector3)<computes><reads>: float
 
     # Returns the 2-D Euclidean distance between `V1` and `V2` by ignoring the difference in `Z`.
-    DistanceXY<native><public>(V1: vector3, V2: vector3)<varies>: float
+    DistanceXY<native><public>(V1: vector3, V2: vector3)<computes><reads>: float
 
     # Returns the dot product of `V1` and `V2`.
-    DotProduct<native><public>(V1: vector2, V2: vector2)<varies>: float
+    DotProduct<native><public>(V1: vector2, V2: vector2)<computes><reads>: float
 
     # Returns the dot product of `V1` and `V2`.
-    DotProduct<native><public>(V1: vector3, V2: vector3)<varies>: float
+    DotProduct<native><public>(V1: vector3, V2: vector3)<computes><reads>: float
 
     # Returns the dot product of `V1` and `V2`.
     DotProduct<public>(V1: vector2i, V2: vector2i)<computes>: int = external {}
@@ -1734,18 +2048,18 @@ Temporary<public> := module {
 
     # Used to linearly interpolate/extrapolate between `From` (when `Parameter = 0.0`) and `To` (when `Parameter = 1.0`). Expects that all arguments are finite.
     # Returns `From*(1 - Parameter) + To*Parameter`.
-    Lerp<public>(From: vector2, To: vector2, Parameter: float)<varies>: vector2 = external {}
+    Lerp<public>(From: vector2, To: vector2, Parameter: float)<computes><reads>: vector2 = external {}
 
     # Used to linearly interpolate/extrapolate between `From` (when `Parameter = 0.0`) and `To` (when `Parameter = 1.0`). Expects that all arguments are finite.
     # Returns `From*(1 - Parameter) + To*Parameter`.
-    Lerp<public>(From: vector3, To: vector3, Parameter: float)<varies>: vector3 = external {}
+    Lerp<public>(From: vector3, To: vector3, Parameter: float)<computes><reads>: vector3 = external {}
 
     # Makes a new `rotation` from the component wise subtraction of the Euler angle components in `RotationA` by
     # the Euler angle components in `RotationB` and ensures the returned value is normalized.
     MakeComponentWiseDeltaRotation<native><public>(RotationA: rotation, RotationB: rotation)<transacts>: rotation
 
     # Makes a `rotation` from `Axis` and `AngleRadians` using a left-handed sign convention (e.g. a positive rotation around +Z takes +X to +Y). If `Axis.IsAlmostZero[]`, make the identity rotation.
-    MakeRotation<native><public>(Axis: vector3, AngleRadians: float)<varies>: rotation
+    MakeRotation<native><public>(Axis: vector3, AngleRadians: float)<computes><reads>: rotation
 
     # Makes a `rotation` by applying `YawRightDegrees`, `PitchUpDegrees`, and `RollClockwiseDegrees`, in that order:
     #  * first a *yaw* about the Z axis with a positive angle indicating a clockwise rotation when viewed from above,
@@ -1756,7 +2070,7 @@ Temporary<public> := module {
       YawRightDegrees: float,
       PitchUpDegrees: float,
       RollClockwiseDegrees: float
-    )<varies>: rotation
+    )<computes><reads>: rotation
 
     # Makes the smallest angular `rotation` from `InitialRotation` to `FinalRotation` such that:
     # `InitialRotation.RotateBy(MakeShortestRotationBetween(InitialRotation, FinalRotation)) = FinalRotation` and
@@ -1772,15 +2086,15 @@ Temporary<public> := module {
     Ones<epic_internal>()<computes>: vector3 = external {}
 
     # Returns degrees from `Radians`.
-    RadiansToDegrees<public>(Radians: float)<varies>: float = external {}
+    RadiansToDegrees<public>(Radians: float)<computes><reads>: float = external {}
 
     # Makes a `vector2` by inverting the `SurfaceNormal` component of `Direction`.
     # Fails if `not SurfaceNormal.MakeUnitVector[]`.
-    ReflectVector<native><public>(Direction: vector2, SurfaceNormal: vector2)<varies><decides>: vector2
+    ReflectVector<native><public>(Direction: vector2, SurfaceNormal: vector2)<computes><decides><reads>: vector2
 
     # Makes a `vector3` by inverting the `SurfaceNormal` component of `Direction`.
     # Fails if `not SurfaceNormal.MakeUnitVector[]`.
-    ReflectVector<native><public>(Direction: vector3, SurfaceNormal: vector3)<varies><decides>: vector3
+    ReflectVector<native><public>(Direction: vector3, SurfaceNormal: vector3)<computes><decides><reads>: vector3
 
     # Used to perform spherical linear interpolation between `From` (when `Parameter = 0.0`) and `To` (when `Parameter = 1.0`). Expects that `0.0 <= Parameter <= 1.0`.
     Slerp<native><public>(
@@ -1791,32 +2105,32 @@ Temporary<public> := module {
 
     # Makes a `string` representation of `InTransform` where the result is on the form.
     # `"Scale: {ToString(`InTransform.Scale`)} Rotation: {ToString(`InTransform.Rotation`)} Translation: {ToString(`InTransform.Translation`)}.
-    ToString<native><epic_internal>(InTransform: transform)<varies>: string
+    ToString<native><epic_internal>(InTransform: transform)<computes><reads>: string
 
     # Makes a `string` representation of `rotation` in axis/degrees format with a left-handed sign convention.
     # `ToString(MakeRotation(vector3{X:=1.0, Y:=0.0, Z:=0.0}, PiFloat/2.0))` produces the string: `"Axis: {x=1.000000,y=0.000000,z=0.000000} Angle: 90.000000"`.
-    ToString<native><public>(Rotation: rotation)<varies>: string
+    ToString<native><public>(Rotation: rotation)<computes><reads>: string
 
     # Makes a `string` representation of `V`.
-    ToString<native><public>(V: vector2)<varies>: string
+    ToString<native><public>(V: vector2)<computes><reads>: string
 
     # Makes a `string` representation of `V`.
     ToString<native><public>(V: vector2i)<computes>: string
 
     # Makes a `string` representation of `V`.
-    ToString<native><public>(V: vector3)<varies>: string
+    ToString<native><public>(V: vector3)<computes><reads>: string
 
     # Makes a `vector2` by converting the components of `V` to `float`s.
     ToVector2<public>(V: vector2i)<transacts>: vector2 = external {}
 
     # Makes a `vector2i` by component-wise truncation of `V` to `ints`s.
-    ToVector2i<public>(V: vector2)<varies><decides>: vector2i = external {}
+    ToVector2i<public>(V: vector2)<computes><decides><reads>: vector2i = external {}
 
     # Makes a `vector3` by applying `InTransform` to `InVector`.
-    TransformVector<native><public>(InTransform: transform, InVector: vector3)<varies>: vector3
+    TransformVector<native><public>(InTransform: transform, InVector: vector3)<computes><reads>: vector3
 
     # Makes a `vector3` by applying `InTransform` to `InVector` without applying `InTransform.Scale`.
-    TransformVectorNoScale<native><public>(InTransform: transform, InVector: vector3)<varies>: vector3
+    TransformVectorNoScale<native><public>(InTransform: transform, InVector: vector3)<computes><reads>: vector3
 
     # Makes a unit `vector3` pointing in the positive X axis (forward)
     XAxis<epic_internal>()<computes>: vector3 = external {}
@@ -2358,6 +2672,30 @@ Temporary<public> := module {
     umg_widget<native><epic_internal> := class<epic_internal>(widget) {
       # The widget_blueprint asset to create.
       Asset<native><epic_internal>: umg_widget_class_asset
+
+      GetNamedSlotOptional_<native><epic_internal>(NamedSlotName: []char)<transacts>: ?widget
+
+      GetNamedSlot_<native><epic_internal>(NamedSlotName: []char)<transacts>: widget
+
+      GetViewmodelOptional_<native><epic_internal>(ViewmodelType: type, ViewmodelName: []char)<transacts>: ViewmodelType
+
+      GetViewmodel_<native><epic_internal>(ViewmodelType: type, ViewmodelName: []char)<transacts>: ViewmodelType
+
+      SetNamedSlotOptional_<native><epic_internal>(NamedSlotName: []char, NamedSlotInstance: ?widget)<transacts>: void
+
+      SetNamedSlot_<native><epic_internal>(NamedSlotName: []char, NamedSlotInstance: widget)<transacts>: void
+
+      SetViewmodelOptional_<native><epic_internal>(
+        ViewmodelType: type,
+        ViewmodelName: []char,
+        ViewmodelInstance: ViewmodelType
+      )<transacts>: void
+
+      SetViewmodel_<native><epic_internal>(
+        ViewmodelType: type,
+        ViewmodelName: []char,
+        ViewmodelInstance: ViewmodelType
+      )<transacts>: void
     }
 
     # Verse interface to native `umg asset`.
@@ -2767,9 +3105,6 @@ VGameplayRst<public> := module {
 
     datastore_component<native><public> := class<final>(vk_component) {}
   }
-
-  # Module import path: /UnrealEngine.com/VGameplayRst/DebugDraw
-  DebugDraw<public> := module {}
 
   # Module import path: /UnrealEngine.com/VGameplayRst/EntityUtil
   EntityUtil<public> := module {
@@ -3320,346 +3655,8 @@ VGameplayRst<public> := module {
   }
 }
 
-using { /UnrealEngine.com/EpicGamesRestricted/Network }
 using { /UnrealEngine.com/Temporary/SceneGraph }
-using { /Verse.org/Native }
-using { /Verse.org/Simulation }
 using { /Verse.org/Simulation/Tags }
-# Module import path: /UnrealEngine.com/VerseCamera
-VerseCamera<public> := module {
-  GetPlayerCameraView<native><epic_internal>(Player: player)<transacts><decides>: player_camera_view
-
-  GetPlayerCameraViewByIndex<native><epic_internal>(PlayerIndex: int)<transacts><decides>: player_camera_view
-
-  camera_behavior_component<native><epic_internal> := class(component) {
-    # Internal epic method to know if this component is allowed on client
-    IsAllowedOnClient<override>(): logic = external {}
-
-    @replicated("")
-    var CameraDirector<native><public>: camera_director_interface = external {}
-
-    @replicated("")
-    var DefaultEvaluatorContext<native><public>: ?camera_evaluator_context = external {}
-  }
-
-  camera_blend_mode<native><epic_internal> := enum {
-    Cubic
-
-    EaseIn
-
-    EaseInOut
-
-    EaseOut
-
-    Linear
-  }
-
-  camera_boom_collision_type<native><epic_internal> := enum {
-    Instant
-
-    Predictive
-  }
-
-  camera_component<native><epic_internal> := class(basic_camera_component) {
-    # Internal epic method to know if this component is allowed on client
-    IsAllowedOnClient<override>(): logic = external {}
-  }
-
-  camera_dead_zone_shape<native><epic_internal> := enum {
-    Cylinder
-
-    Rectangle
-
-    Sphere
-  }
-
-  camera_director_default<native><epic_internal> := class(camera_director_interface) {
-    AddCameraMode<native><override>(CameraMode: camera_mode): void
-
-    AddSubDirector<native><override>(Director: camera_director_interface): void
-
-    DetermineActiveCameraMode<native><override>(CameraStackLayer: tag): ?camera_mode
-
-    RemoveCameraMode<native><override>(CameraMode: camera_mode): void
-
-    RemoveSubDirector<native><override>(Director: camera_director_interface): void
-  }
-
-  camera_director_interface<native><epic_internal> := interface {
-    AddCameraMode<native_callable><public>(CameraMode: camera_mode): void
-
-    AddSubDirector<native_callable><public>(Director: camera_director_interface): void
-
-    DetermineActiveCameraMode<native_callable><public>(CameraStackLayer: tag): ?camera_mode
-
-    RemoveCameraMode<native_callable><public>(CameraMode: camera_mode): void
-
-    RemoveSubDirector<native_callable><public>(Director: camera_director_interface): void
-  }
-
-  camera_evaluator_context<native><epic_internal> := class<unique>(camera_evaluator_context_base) {}
-
-  @import_as("/Script/VerseCamera.UVerseCameraEvaluatorContext")
-  camera_evaluator_context_base<native><epic_internal> := class<abstract> {}
-
-  camera_fixed_angle_follow_type<native><epic_internal> := enum {
-    InterpolationFollow
-
-    SpringFollow
-  }
-
-  camera_layer_gameplay_tag<native><epic_internal> := class(camera_layer_tag) {}
-
-  camera_layer_tag<native><epic_internal> := class(tag) {}
-
-  camera_mode<native><epic_internal> := class<concrete><unique> {
-    ClearEvaluatorContext<native><public>(): void
-
-    SetEvaluatorContext<native><public>(OverriddenEvaluatorContext: camera_evaluator_context): void
-
-    UpdateCameraModeParameters<native><public>(): void
-
-    @editable
-    @replicated("")
-    var BlendInParams<native><public>: camera_mode_blend_params = external {}
-
-    @editable
-    @replicated("")
-    var BlendOutParams<native><public>: camera_mode_blend_params = external {}
-
-    var CameraModeTag<native><public>: tag = external {}
-
-    @editable
-    @replicated("")
-    var Priority<native><public>: float = external {}
-  }
-
-  @import_as("/Script/VerseCamera.UVerseCameraMode")
-  camera_mode_base<native><epic_internal> := class<abstract> {}
-
-  camera_mode_blend_params<native><epic_internal> := struct<concrete> {
-    @editable
-    BlendExponent<native><epic_internal>: float = external {}
-
-    @editable
-    BlendFunction<native><epic_internal>: camera_blend_mode = external {}
-
-    @editable
-    BlendPriority<native><epic_internal>: float = external {}
-
-    @editable
-    BlendTime<native><epic_internal>: float = external {}
-  }
-
-  camera_mode_default_tag<native><epic_internal> := class(tag) {}
-
-  camera_mode_fixed_angle<native><epic_internal> := class<unique>(camera_mode) {
-    @editable
-    var CameraAnglePitch<native><public>: float = external {}
-
-    @editable
-    var CameraAngleYaw<native><public>: float = external {}
-
-    @editable
-    var CameraDistance<native><public>: float = external {}
-
-    var CameraModeTag<override>: tag = external {}
-
-    @editable
-    var CollisionCutoutSize<native><public>: float = external {}
-
-    @editable
-    var CollisionInTime<native><public>: float = external {}
-
-    @editable
-    var CollisionOutTime<native><public>: float = external {}
-
-    @editable
-    var CollisionSize<native><public>: float = external {}
-
-    @editable
-    var CollisionType<native><public>: camera_boom_collision_type = external {}
-
-    @editable
-    var DeadZoneEnabled<native><public>: logic = external {}
-
-    @editable
-    var DeadzoneDiameter<native><public>: float = external {}
-
-    @editable
-    var DeadzoneHeight<native><public>: float = external {}
-
-    @editable
-    var DeadzoneType<native><public>: camera_dead_zone_shape = external {}
-
-    @editable
-    var DeadzoneWidth<native><public>: float = external {}
-
-    @editable
-    var FieldOfViewDegrees<native><public>: float = external {}
-
-    @editable
-    var FollowType<native><public>: camera_fixed_angle_follow_type = external {}
-
-    @editable
-    var InterpolationFollowMaxDistance<native><public>: float = external {}
-
-    @editable
-    var InterpolationFollowSpeed<native><public>: float = external {}
-
-    @editable
-    var OffsetHorizontal<native><public>: float = external {}
-
-    var OffsetSpace<native><public>: camera_offset_space = external {}
-
-    @editable
-    var OffsetVertical<native><public>: float = external {}
-
-    @editable
-    var SpringFollowMaxDistance<native><public>: float = external {}
-
-    @editable
-    var SpringFollowStiffness<native><public>: float = external {}
-  }
-
-  camera_mode_fixed_angle_tag<native><epic_internal> := class(camera_mode_tag) {}
-
-  camera_mode_fixed_point<native><epic_internal> := class<unique>(camera_mode) {
-    var CameraModeTag<override>: tag = external {}
-
-    @editable
-    var ClampEnabled<native><public>: logic = external {}
-
-    @editable
-    var ClampPitchMax<native><public>: float = external {}
-
-    @editable
-    var ClampPitchMin<native><public>: float = external {}
-
-    @editable
-    var ClampYawMax<native><public>: float = external {}
-
-    @editable
-    var ClampYawMin<native><public>: float = external {}
-
-    @editable
-    var DeadzoneEnabled<native><public>: logic = external {}
-
-    @editable
-    var DeadzonePitch<native><public>: float = external {}
-
-    @editable
-    var DeadzonePitchOffset<native><public>: float = external {}
-
-    @editable
-    var DeadzoneYaw<native><public>: float = external {}
-
-    @editable
-    var DeadzoneYawOffset<native><public>: float = external {}
-
-    @editable
-    var FieldOfViewDegrees<native><public>: float = external {}
-
-    @editable
-    var LookAtOffsetSpace<native><public>: camera_offset_space = external {}
-
-    @editable
-    var LookAtTargetEnabled<native><public>: logic = external {}
-
-    @editable
-    var LookAtTargetOffsetDistance<native><public>: float = external {}
-
-    @editable
-    var LookAtTargetOffsetHorizontal<native><public>: float = external {}
-
-    @editable
-    var LookAtTargetOffsetVertical<native><public>: float = external {}
-  }
-
-  camera_mode_fixed_point_tag<native><epic_internal> := class(camera_mode_tag) {}
-
-  camera_mode_tag<native><epic_internal> := class(tag) {}
-
-  camera_mode_third_person<native><epic_internal> := class<unique>(camera_mode) {
-    UpdateCameraModeParameters<override><native>(): void
-
-    @editable
-    var CameraDistance<native><public>: float = external {}
-
-    var CameraModeTag<override>: tag = external {}
-
-    @editable
-    var CameraOffsetHorizontal<native><public>: float = external {}
-
-    @editable
-    var CameraOffsetSpace<native><public>: camera_offset_space = external {}
-
-    @editable
-    var CameraOffsetVertical<native><public>: float = external {}
-
-    var CollisionCutoutSize<native><public>: float = external {}
-
-    var CollisionInTime<native><public>: float = external {}
-
-    var CollisionOutTime<native><public>: float = external {}
-
-    var CollisionSize<native><public>: float = external {}
-
-    var CollisionType<native><public>: camera_boom_collision_type = external {}
-
-    @editable
-    var FieldOfViewDegrees<native><public>: float = external {}
-
-    @editable
-    var IsSpringFollowEnabled<native><public>: logic = external {}
-
-    @editable
-    var LookAtOffsetSpace<native><public>: camera_offset_space = external {}
-
-    @editable
-    var LookAtTargetOffsetDistance<native><public>: float = external {}
-
-    @editable
-    var LookAtTargetOffsetHorizontal<native><public>: float = external {}
-
-    @editable
-    var LookAtTargetOffsetVertical<native><public>: float = external {}
-
-    @editable
-    var SpringFollowMaxDistance<native><public>: float = external {}
-
-    @editable
-    var SpringFollowStiffness<native><public>: float = external {}
-  }
-
-  camera_mode_third_person_tag<native><epic_internal> := class(camera_mode_tag) {}
-
-  camera_offset_space<native><epic_internal> := enum {
-    CameraSpace
-
-    TargetSpace
-
-    WorldSpace
-  }
-
-  entity_camera_evaluator_context<native><epic_internal> := class<unique>(camera_evaluator_context) {
-    @replicated("")
-    var CameraEntity<native><public>: ?entity = external {}
-
-    @replicated("")
-    var TargetEntity<native><public>: ?entity = external {}
-  }
-
-  player_camera_view<native><epic_internal> := class(player_camera_view_base) {
-    GetCameraBehavior<native><epic_internal>(): ?camera_behavior_component
-
-    SetCameraBehavior<native><epic_internal>(CameraBehavior: camera_behavior_component): void
-  }
-
-  @import_as("/Script/VerseCamera.UVersePlayerCameraViewComponent")
-  player_camera_view_base<native><epic_internal> := class<abstract> {}
-}
-
 # Module import path: /UnrealEngine.com/VerseQueryTestSuite
 VerseQueryTestSuite<public> := module {
   @hide_in_editor
