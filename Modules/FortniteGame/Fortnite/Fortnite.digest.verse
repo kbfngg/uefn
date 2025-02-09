@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-26.10-CL-27681420
+# Generated from build: ++Fortnite+Release-26.20-CL-28096793
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -177,7 +177,7 @@ Characters<public> := module {
     #  - 1: `true` if the character is sprinting. `false` if the character stopped sprinting.
     SprintedEvent<public>(): listenable(tuple(fort_character, logic))
 
-    # Teleports this `fort_character` to the provided `Position` and applies the yaw of `Rotation`.
+    # Teleports this `fort_character` to the provided `Position` and applies the yaw of `Rotation`. Will fail if the `Position` specified is e.g. outside of the playspace or specifies a place where the character cannot fit.
     TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void
   }
 
@@ -400,7 +400,23 @@ Devices<public> := module {
   }
 
   # Used in conjunction with `advanced_storm_controller_device` to customize individual storm phases.
-  advanced_storm_beacon_device<public> := class<concrete><final>(creative_device_base) {}
+  advanced_storm_beacon_device<public> := class<concrete><final>(creative_device_base) {
+    # Moves the `advanced_storm_beacon_device` to the specified `Position` and `Rotation` over the specified time.
+    # Existing storms will not target the new location, but newly generated storms will.
+    MoveTo<override>(Position: vector3, Rotation: rotation, OverTime: float)<suspends>: move_to_result = external {}
+
+    # Moves the `advanced_storm_beacon_device` to the specified `Transform` over the specified time.
+    # Existing storms will not target the new location, but newly generated storms will.
+    MoveTo<override>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
+
+    # Teleports the `advanced_storm_beacon_device` to the specified `Position` and `Rotation`.
+    # Existing storms will not target the new location, but newly generated storms will.
+    TeleportTo<override>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
+
+    # Teleports the `advanced_storm_beacon_device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
+    # Existing storms will not target the new location, but newly generated storms will.
+    TeleportTo<override>(Transform: transform)<transacts><decides>: void = external {}
+  }
 
   # Used to control a Battle Royale-style storm with up to 50 phases.
   #
@@ -444,12 +460,6 @@ Devices<public> := module {
 
     # Enables this device.
     Enable<public>(): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used to track `agent` events used to generate analytics.
@@ -526,6 +536,39 @@ Devices<public> := module {
     UnregisterAll<public>(): void = external {}
   }
 
+  # Used to create a customizable turret that can search for nearby targets.
+  automated_turret_device<public> := class<concrete><final>(creative_device_base) {
+    # Triggers when someone enters the activation radius while nobody else is there.
+    # Sends the activating `agent`. If the activator is a non-agent then `false` is returned.
+    ActivatedEvent<public>: listenable(?agent) = external {}
+
+    # Triggers when the turret is damaged.
+    # Sends the triggering `agent`. If the activator is a non-agent then `false` is returned.
+    DamagedEvent<public>: listenable(?agent) = external {}
+
+    # Triggers when the turret is destroyed.
+    # Sends the triggering `agent`. If the activator is a non-agent then `false` is returned.
+    DestroyedEvent<public>: listenable(?agent) = external {}
+
+    # Disables the turret, causing it to close and ignore its activation radius.
+    Disable<public>(): void = external {}
+
+    # Enables the turret to rotate, target, and track.
+    Enable<public>(): void = external {}
+
+    # Set the turret to the same team as the supplied `Agent`.
+    #  * Only usable if `Possible Targets` is not set to `Everyone`.
+    SetTeam<public>(Agent: agent): void = external {}
+
+    # Set the turret to the Default Team.
+    #  * Only usable if `Possible Targets` is not set to `Everyone`.
+    UseDefaultTeam<public>(): void = external {}
+
+    # Set the turret to the Wildlife & Creatures team.
+    #  * Only usable if `Possible Targets` is not set to `Everyone`.
+    UseTeamWildlifeAndCreatures<public>(): void = external {}
+  }
+
   # Used to spawn various types of balls. Can be used to control HUD elements related to the spawned balls.
   ball_spawner_device<public> := class<concrete><final>(creative_device_base) {
     # Hides the floating HUD Icons from players, if these have been configured by the device.
@@ -551,12 +594,6 @@ Devices<public> := module {
 
     # Removes the specified `agent` from the ignore list. The `agent` will still be ignored if they are on an ignored team or of an ignored class.
     RemoveFromIgnoreList<public>(Agent: agent): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Base class for devices that spawn items.
@@ -617,12 +654,6 @@ Devices<public> := module {
     # Shows the billboard text.
     ShowText<public>(): void = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
-
     # Updates the device display to show the current *Text*.
     UpdateDisplay<public>(): void = external {}
   }
@@ -680,12 +711,6 @@ Devices<public> := module {
     #  * `MaxCount` must be between `0` and `10`.
     #  * `0` indicates no limit on trigger count.
     SetMaxTriggerCount<public>(MaxCount: int): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used to place a campfire in the world that an `agent` can use to heal themselves.
@@ -733,12 +758,6 @@ Devices<public> := module {
     # Signaled when this device is lit by an `agent`.
     # Sends the lighting `agent`.
     LitEvent<public>: listenable(agent) = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used to create a zone that can trigger effects once players enter it. Can be set up to be capturable by a team, to provide a score while held, or to require a specific item as a drop-off.
@@ -822,12 +841,6 @@ Devices<public> := module {
     # Sets the *Capture Radius* (in meters) of the capture area.
     SetRadius<public>(Radius: float): void = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
-
     # Toggles between `AllowCapture` and `DisallowCapture`.
     ToggleCaptureAllowed<public>(): void = external {}
 
@@ -858,22 +871,53 @@ Devices<public> := module {
     # Signaled when spawned item is returned.
     # Sends the `agent` that returned the item.
     ItemReturnedEvent<public>: listenable(agent) = external {}
+  }
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
+  # Creates a chair where `Agent`s can sit.
+  chair_device<public> := class<concrete><final>(creative_device_base) {
+    # Disables this device.
+    # A disabled chair cannot be interacted with,
+    # and any `Agent` currently occupying the chair will be ejected.
+    Disable<public>(): void = external {}
 
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
+    # Prevents `Agent` from leaving the chair, if `Agent` passes the tests.
+    # Agents will then be trapped in the chair until released.
+    DisableExit<public>(Agent: agent): void = external {}
+
+    # Makes `Agent` exit this chair if they are currently in the chair.
+    Eject<public>(Agent: agent): void = external {}
+
+    # Enables this device.
+    # An enabled chair can be interacted with and occupied
+    # by any valid `agent`.
+    Enable<public>(): void = external {}
+
+    # Allows `Agent` to leave the chair, if `Agent` passes the tests.
+    EnableExit<public>(Agent: agent): void = external {}
+
+    # Signaled when an `Agent` stops sitting on this device.
+    # Sends the standing `Agent`.
+    ExitedEvent<public>: listenable(agent) = external {}
+
+    # Returns the `agent` currently occupying the chair.
+    GetSeatedAgent<public>(): ?agent = external {}
+
+    # Returns true if the chair is currently occupied.
+    IsOccupied<public>()<transacts><decides>: void = external {}
+
+    # Returns true if `Agent` is currently in the chair .
+    IsSeated<public>(Agent: agent)<transacts><decides>: void = external {}
+
+    # Makes `Agent` sit on this chair.
+    Seat<public>(Agent: agent): void = external {}
+
+    # Signaled when an `Agent` sits on this device.
+    # Sends the sitting `agent`.
+    SeatedEvent<public>: listenable(agent) = external {}
   }
 
   # Allows players to change their outfit in game!
-  changing_booth_device<public> := class<concrete><final>(creative_device_base) {
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
-  }
+  changing_booth_device<public> := class<concrete><final>(creative_device_base) {}
 
   # Used to configure a single interactive mannequin, that can visualize characters, clothing, and perform emotes.
   character_device<public> := class<concrete>(creative_device_base) {
@@ -895,12 +939,6 @@ Devices<public> := module {
 
     # Shows this device.
     Show<public>(): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used to trigger level sequences that allow coordination of cinematic animation, transformation, and audio tracks.
@@ -931,12 +969,6 @@ Devices<public> := module {
 
     # Signaled when the sequence is stopped.
     StoppedEvent<public>: listenable(tuple()) = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
 
     # Toggles between `Play` and `Stop`.
     TogglePause<public>(): void = external {}
@@ -972,22 +1004,10 @@ Devices<public> := module {
     # Signaled when an `agent` changes teams.
     # Sends the `agent` whose team changed.
     TeamSwitchedEvent<public>: listenable(agent) = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used together with `class_selector_device` to create class based gameplay. Defines custom class attributes and inventory loadouts.
-  class_designer_device<public> := class<concrete><final>(creative_device_base) {
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
-  }
+  class_designer_device<public> := class<concrete><final>(creative_device_base) {}
 
   # Used to allow players to select their *Class* from a *Class Selector UI*.
   class_selector_ui_device<public> := class<concrete><final>(creative_device_base) {
@@ -1031,12 +1051,6 @@ Devices<public> := module {
 
     # Makes the collectible visible.
     Show<public>(): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used to create a tile that changes colors when `agent`s interact with it.
@@ -1062,12 +1076,6 @@ Devices<public> := module {
 
     # Shows this device in the world.
     Show<public>(): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used to create a specialized button which can only be activated when `agent`s are carrying specific items.
@@ -1129,12 +1137,6 @@ Devices<public> := module {
     # Sets the score to be awarded for a key item. `KeyItemIndex` ranges from `0` to number of key item types - 1.
     SetItemScore<public>(KeyItemIndex: int, Score: int): void = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
-
     # Toggles the conditional button state. `Agent` is used as the instigator of the action.
     Toggle<public>(Agent: agent): void = external {}
   }
@@ -1150,12 +1152,6 @@ Devices<public> := module {
     # Signaled when an `agent` is launched by this device.
     # Sends the launched `agent`.
     LaunchedEvent<public>: listenable(agent) = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Inherit from this to create a custom creative device. Inherited classes will appear in the UEFN content browser the next time Verse compiles. Instances of your derived `creative_device` can then be placed in the island by dragging them from the content browser into the scene.
@@ -1199,6 +1195,18 @@ Devices<public> := module {
     # Returns the transform of the `creative_object` with units in cm. You must check `creative_object.IsValid` before calling this if there is a possibility the object has been disposed or destroyed by gameplay.
     # Otherwise a runtime error will result.
     GetTransform<override>()<transacts>: transform = external {}
+
+    # Moves the `creative_object` to the specified `Position` and `Rotation` over the specified time. If an animation is currently playing on the `creative_object` it will be stopped and put into the `AnimationNotSet` state.
+    MoveTo<public>(Position: vector3, Rotation: rotation, OverTime: float)<suspends>: move_to_result = external {}
+
+    # Moves the `creative_object` to the specified `Transform` over the specified time. If an animation is currently playing on the `creative_object` it will be stopped and put into the `AnimationNotSet` state.
+    MoveTo<public>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
+
+    # Teleports the `creative_object` to the specified `Position` and `Rotation`.
+    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
+
+    # Teleports the `creative_object` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
+    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   creative_object_interface<native><public> := interface<epic_internal>(positional) {}
@@ -1214,12 +1222,6 @@ Devices<public> := module {
     # Succeeds if this object has not been disposed of either via `Dispose()` or through an external system.
     IsValid<native><override>()<transacts><decides>: void
 
-    # Moves the `creative_prop` to the specified `Position` and `Rotation` over the specified time. If an animation is currently playing on the `creative_prop` it will be stopped and put into the `AnimationNotSet` state.
-    MoveTo<public>(Position: vector3, Rotation: rotation, OverTime: float)<suspends>: move_to_result = external {}
-
-    # Moves the `creative_prop` to the specified `Transform` over the specified time. If an animation is currently playing on the `creative_prop` it will be stopped and put into the `AnimationNotSet` state.
-    MoveTo<public>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
-
     # Changes the Material of the Mesh used by this instance. Optionally can specify which Mesh element index to apply the material to, otherwise defaults to the 0 (default) Mesh element
     SetMaterial<native><public>(Material: material, ?Index: int = external {})<transacts>: void
 
@@ -1228,12 +1230,6 @@ Devices<public> := module {
 
     # Shows the `creative_prop` in the world and enable collisions.
     Show<native><public>()<transacts>: void
-
-    # Teleports the `creative_prop` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `creative_prop` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Asset used to spawn `creative_prop` instances.
@@ -1268,12 +1264,6 @@ Devices<public> := module {
     # Signaled when a creature is spawned.
     # Sends the `agent` creature who was spawned.
     SpawnedEvent<public>: listenable(agent) = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used to spawn one or more waves of creatures of customizable types at selected time intervals.
@@ -1325,12 +1315,6 @@ Devices<public> := module {
 
     # Resets the light to its initial state.
     Reset<public>(): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
 
     # Toggles between `TurnOn` and `TurnOff`.
     Toggle<public>(): void = external {}
@@ -1405,12 +1389,6 @@ Devices<public> := module {
 
     # Enables this device.
     Enable<public>(): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Payload of `device_event_ai_interaction`.
@@ -1472,12 +1450,6 @@ Devices<public> := module {
 
     # Enables this device.
     Enable<public>(): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used to send custom messages to the elimination feed.
@@ -1513,12 +1485,6 @@ Devices<public> := module {
 
     # Enables this device.
     Enable<public>(): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used to customize high level properties of the game mode.
@@ -1541,12 +1507,6 @@ Devices<public> := module {
 
     # Shows this device in the world.
     Show<public>(): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used to specify an area which allows (or prevents) various objects, terrain, or buildings from being set on fire.
@@ -1620,12 +1580,6 @@ Devices<public> := module {
 
     # Resets fuel stock to *Fuel Capacity* value.
     Reset<public>(): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used to let `agent`s slide on any surface with accompanying visual and audio effects.
@@ -1748,12 +1702,6 @@ Devices<public> := module {
     # `Target` is the `agent` no longer targeted by the guard.
     TargetLostEvent<public>: listenable(device_ai_interaction_result) = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
-
     # Signaled when a guard becomes unaware.
     # Sends the `agent` guard who is unaware.
     UnawareEvent<public>: listenable(agent) = external {}
@@ -1772,13 +1720,7 @@ Devices<public> := module {
   }
 
   # Used to create a holographic screen that displays a clock or other curated images.
-  holoscreen_device<public> := class<concrete><final>(creative_device_base) {
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
-  }
+  holoscreen_device<public> := class<concrete><final>(creative_device_base) {}
 
   # Used to show or hide parts of the HUD for players or teams. Use this with other devices such as the `hud_message_device`, `map_indicator_device`, and `billboard_device` to control exactly how much information players can see during a game, as well as how and when they see that information.
   hud_controller_device<public> := class<concrete><final>(creative_device_base) {
@@ -1927,12 +1869,6 @@ Devices<public> := module {
     # Opens the door. `Agent` is the instigator of the action.
     Open<public>(Agent: agent): void = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
-
     # Toggles between `Lock` and `Unlock`. `Agent` is the instigator of the action.
     ToggleLocked<public>(Agent: agent): void = external {}
 
@@ -1956,12 +1892,6 @@ Devices<public> := module {
 
     # Enables this device.
     Enable<public>(): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used to take players to different islands and to link experiences together.
@@ -2046,12 +1976,6 @@ Devices<public> := module {
 
     # Shows this device in the world.
     Show<public>(): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Specialized `trigger_base_device` that will fire output events based on line of sight between `agent`s and the device.
@@ -2138,12 +2062,6 @@ Devices<public> := module {
 
     # Enables this device.
     Enable<public>(): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used to move, damage, and give scores to players that interact with it. By default, it is activated by any player touching its front face, which rotates it counterclockwise and knocks those players away from it and slightly upward.
@@ -2160,12 +2078,6 @@ Devices<public> := module {
 
     # Enables this device.
     Enable<public>(): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used to set an `agent`'s spawn point when activated. This can also clear the `agent`'s inventory.
@@ -2186,12 +2098,6 @@ Devices<public> := module {
 
     # Registers this checkpoint for `Agent`. This sets the respawn point and can clear `Agent`'s inventory depending on this device's settings. Multiple `agent`s can be registered to this device at one time.
     Register<public>(Agent: agent): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used to track and react to how many players are in a particular area, and optionally display that information in game.
@@ -2255,12 +2161,6 @@ Devices<public> := module {
 
     # Show this device in the world as an info panel showing Current + Required player counts.
     ShowInfoPanel<public>(): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
 
     # Triggers `CountedEvent` for all `agent`s currently being counted.
     TransmitForAllCounted<public>(): void = external {}
@@ -2374,12 +2274,6 @@ Devices<public> := module {
     # Signaled when an `agent` is spawned from this device.
     # Sends the `agent` that spawned.
     SpawnedEvent<public>: listenable(agent) = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used to create HUD text boxes that give players information, and allows responses to be customized to player choices.
@@ -2478,12 +2372,6 @@ Devices<public> := module {
 
     # Spawns the powerup into the experience so users can interact with it.
     Spawn<public>(): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used to manipulate the properties of one or more props in a specified area (e.g. Visibility/Destructibility).
@@ -2757,12 +2645,6 @@ Devices<public> := module {
     # Stops playing audio from this device.
     Stop<public>(): void = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
-
     # Removes the specified agent as a target for the Radio to play audio from if previously Registered
     Unregister<public>(Agent: agent): void = external {}
 
@@ -2786,12 +2668,6 @@ Devices<public> := module {
 
     # Signaled when this device is enabled before the target time has been reached.
     EnablingBeforeTimeReachedEvent<public>: listenable(tuple()) = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
 
     # Signaled when the target time is reached.
     TimeReachedEvent<public>: listenable(tuple()) = external {}
@@ -2861,12 +2737,6 @@ Devices<public> := module {
     # Signaled when a game round starts.
     RoundBeginEvent<public>: listenable(tuple()) = external {}
 
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
-
     # Toggles between `EnableMatchmaking` and `DisableMatchmaking`.
     ToggleMatchmaking<public>(): void = external {}
   }
@@ -2928,12 +2798,6 @@ Devices<public> := module {
 
     # Sets the score to be awarded by the next activation to `Agent`'s current score.
     SetToAgentScore<public>(Agent: agent): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Generates an AI bot that spawns in a location and usually attacks players when they come in range.
@@ -2992,12 +2856,6 @@ Devices<public> := module {
 
     # Sets the sentry to target `Agent`. The sentry will not target agents on the same team as the sentry.
     Target<public>(Agent: agent): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # A single customizable pop up target that can be hit by `agent`s to trigger various events.
@@ -3191,8 +3049,24 @@ Devices<public> := module {
     # Generates the storm. *Generate Storm On Game Start* must be set to *No* if you choose to use `GenerateStorm`.
     GenerateStorm<public>(): void = external {}
 
+    # Moves the `storm_controller_device` to the specified `Position` and `Rotation` over the specified time.
+    # Existing storms will not target the new location, but newly generated storms will.
+    MoveTo<override>(Position: vector3, Rotation: rotation, OverTime: float)<suspends>: move_to_result = external {}
+
+    # Moves the `storm_controller_device` to the specified `Transform` over the specified time.
+    # Existing storms will not target the new location, but newly generated storms will.
+    MoveTo<override>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
+
     # Signaled when storm resizing ends. Use this with the *On Finish Behavior* option for better controls.
     PhaseEndedEvent<public>: listenable(tuple()) = external {}
+
+    # Teleports the `storm_controller_device` to the specified `Position` and `Rotation`.
+    # Existing storms will not target the new location, but newly generated storms will.
+    TeleportTo<override>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
+
+    # Teleports the `storm_controller_device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
+    # Existing storms will not target the new location, but newly generated storms will.
+    TeleportTo<override>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used to spawn and configure an aerial supply drop that can provide players with customized weapons/supplies.
@@ -3251,6 +3125,14 @@ Devices<public> := module {
     # Enables this device.
     Enable<public>(): void = external {}
 
+    # Returns the time before the switch will reset itself to default.
+    #  Returns -1.0 if *Store State Per Player* is *Yes* or if  there is no active reset timer.
+    GetCurrentResetTime<public>(): float = external {}
+
+    # Returns the time before the switch will reset itself to default for *Agent*.
+    #  Returns -1.0 if there is no active reset timer.
+    GetCurrentResetTime<public>(Agent: agent): float = external {}
+
     # Returns the current state of this switch: true (on) or false (off). Use this overload  of `GetCurrentState` when this device has *Store State Per Player* set to *No*.
     GetCurrentState<public>()<transacts><decides>: void = external {}
 
@@ -3259,6 +3141,12 @@ Devices<public> := module {
 
     # Returns the *Interaction Time* required to activate this device (in seconds).
     GetInteractionTime<public>()<transacts>: float = external {}
+
+    # Returns the value of *State Reset Time* for the device. Returns -1.0 if *State Reset Time* is not used.
+    GetStateResetTime<public>()<transacts>: float = external {}
+
+    # Returns the value of *State Reset Time* for the device, for a specific player. Returns -1.0 if *State Reset Time* is not used.
+    GetStateResetTime<public>(Agent: agent)<transacts>: float = external {}
 
     # Signaled if the switch is off when the state is checked.
     IfOffWhenCheckedEvent<public>: listenable(tuple()) = external {}
@@ -3284,6 +3172,24 @@ Devices<public> := module {
     # Sets the *Interaction Time* required to activate this device (in seconds).
     SetInteractionTime<public>(Time: float): void = external {}
 
+    # Sets the state of the switch to a specific value for a specific `Agent`.
+    #  Use when the device has *Store State Per Player* set to *Yes*.
+    SetState<public>(Agent: agent, State: logic): void = external {}
+
+    # Sets the state of the switch to a specific value.
+    #  Use when the device has *Store State Per Player* set to *No*.
+    SetState<public>(State: logic): void = external {}
+
+    # Updates the *State Reset Time* for the device, for a specific player (if *Store State Per Player* is *Yes*), clamped to the Min and Max defined in the device.
+    #  This will not apply to any state reset timers currently in effect.
+    #  Set to 0.0 to disable the State Reset Time. Set to less than 0.0 to reset to default.
+    SetStateResetTime<public>(Agent: agent, Time: float): void = external {}
+
+    # Updates the *State Reset Time* for the device, clamped to the Min and Max defined in the device.
+    #  This will not apply to any state reset timers currently in effect.
+    #  Set to 0.0 to disable the State Reset Time. Set to less than 0.0 to reset to default.
+    SetStateResetTime<public>(Time: float): void = external {}
+
     # Sets the *Turn Off Text* to be displayed to a user when the switch is currently on, and offers an interaction to switch it off. Clamped to 150 characters.
     SetTurnOffInteractionText<public>(Text: message): void = external {}
 
@@ -3299,12 +3205,6 @@ Devices<public> := module {
 
     # Signaled when the switch state is saved.
     StateSaveEvent<public>: listenable(tuple()) = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
 
     # Toggles between `TurnOn` and `TurnOff` with `Agent` acting as the instigator of the action.
     ToggleState<public>(Agent: agent): void = external {}
@@ -3438,12 +3338,6 @@ Devices<public> := module {
 
     # Makes this device visible.
     Show<public>(): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Provides a way to keep track of the time something has taken, either for scoreboard purposes, or to trigger actions. It can be configured in several ways, either acting as a countdown to an event that is triggered at the end, or as a stopwatch for an action that needs to be completed before a set time runs out.
@@ -3576,12 +3470,6 @@ Devices<public> := module {
     # Signaled when the timer completes or ends with success.
     # Sends the `agent` that activated the timer, if any.
     SuccessEvent<public>: listenable(?agent) = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Allows creation and HUD tracking of custom objectives for `agent`s to complete.
@@ -3695,8 +3583,24 @@ Devices<public> := module {
     # Enables this device to trigger when an `agent` makes contact with the device.
     EnableAgentContactTrigger<public>(): void = external {}
 
+    # Moves the `trick_tile_device` to the specified `Position` and `Rotation` over the specified time.
+    # Only the trigger will move, the target buildings will not change.
+    MoveTo<override>(Position: vector3, Rotation: rotation, OverTime: float)<suspends>: move_to_result = external {}
+
+    # Moves the `trick_tile_device` to the specified `Transform` over the specified time.
+    # Only the trigger will move, the target buildings will not change.
+    MoveTo<override>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
+
     # Restores the tile removed when this device was triggered.
     Reset<public>(): void = external {}
+
+    # Teleports the `trick_tile_device` to the specified `Position` and `Rotation`.
+    # Only the trigger will teleport, the target buildings will not change.
+    TeleportTo<override>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
+
+    # Teleports the `trick_tile_device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
+    # Only the trigger will teleport, the target buildings will not change.
+    TeleportTo<override>(Transform: transform)<transacts><decides>: void = external {}
 
     # Flips the device between `EnableAgentContactTrigger` and `DisableAgentContactTrigger.
     ToggleAgentContactTrigger<public>(): void = external {}
@@ -3747,12 +3651,6 @@ Devices<public> := module {
 
     # Sets the time (in seconds) which must pass after triggering, before this device informs other external devices that it has been triggered.
     SetTransmitDelay<public>(Time: float): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used to relay events to other linked devices.
@@ -3841,6 +3739,9 @@ Devices<public> := module {
 
   # Specialized `vehicle_spawner_device` that allows a Driftboard to be configured and spawned.
   vehicle_spawner_driftboard_device<public> := class<concrete><final>(vehicle_spawner_device) {}
+
+  # Specialized `vehicle_spawner_device` that allows a GetAway Car to be configured and spawned.
+  vehicle_spawner_getaway_device<public> := class<concrete><final>(vehicle_spawner_device) {}
 
   # Specialized `vehicle_spawner_device` that allows an anti-vehicle turret to be configured and spawned.
   vehicle_spawner_heavy_turret_device<public> := class<concrete><final>(vehicle_spawner_device) {}
@@ -3979,12 +3880,6 @@ Devices<public> := module {
 
     # Enables this device.
     Enable<public>(): void = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
   }
 
   # Used to display curated videos onto in-game screens or player HUDs.
@@ -4188,12 +4083,6 @@ Devices<public> := module {
     # `Source` is the `agent` that tamed the wildlife.
     # `Target` is the wildlife that was tamed.
     TamedEvent<public>: listenable(device_ai_interaction_result) = external {}
-
-    # Teleports the `device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
-
-    # Teleports the `device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
 
     # Untames any tamed wildlife that belong to `Agent`.
     Untame<public>(Agent: agent): void = external {}

@@ -376,7 +376,8 @@
 			"/CRD_VolumetricRegion/SetupAssets/TID/FireVolume/FireVolumeGameplayVolume.FireVolumeGameplayVolume_C":		{  },
 			"/CRD_VolumetricRegion/SetupAssets/Volumes/BP_Device_EffectVolume_V2.BP_Device_EffectVolume_V2_C":			{  },
 			"/CRD_Water/Blueprints/BP_FortWaterBodyCubeVolume.BP_FortWaterBodyCubeVolume_C":							{  },
-			"/CRD_WildlifeSpawner/CreatureTypes/WildlifeSpawner_CreatureTypeDefinition.WildlifeSpawner_CreatureTypeDefinition_C":{  },
+			"/CRD_WildlifeSpawner/CreatureTypes/WildlifeSpawner_CreatureTypeDefinition.WildlifeSpawner_CreatureTypeDefinition_C": {},
+			"/CRD_Zipline/CRD_ZiplineSplineMeshComponent.CRD_ZiplineSplineMeshComponent_C":								{  },
 			"/CreativeCoreDevices/Device_ItemSpawner_Parent_V2.Device_ItemSpawner_Parent_V2_C":							{  },
 			"/CreativeCoreDevices/Device_Trigger_Parent_V2.Device_Trigger_Parent_V2_C":									{  },
 			"/CreativeCoreDevices/HUDMessage/MVVM_UEFN_HUDMessage.MVVM_UEFN_HUDMessage_C":								{ "Visible": true },
@@ -752,6 +753,7 @@
 			"/Script/Foliage.FoliageInstancedStaticMeshComponent":				{  },
 			"/Script/Foliage.FoliageType_InstancedStaticMesh":					{  },
 			"/Script/Foliage.InstancedFoliageActor":							{  },
+			"/Script/FortniteAI.AthenaAIPerceptionStimuliSourceComponent":		{  },
 			"/Script/FortniteAI.AthenaNavPresenceDetectorComponent":			{  },
 			"/Script/FortniteAI.AthenaNavSystemConfig":							{  },
 			"/Script/FortniteAI.AthenaTrapAIPerceptionStimuliSourceComponent":	{  },
@@ -792,6 +794,7 @@
 			"/Script/FortniteGame.CreativeProxyManagerComponent":				{  },
 			"/Script/FortniteGame.CreativeQuestComponent":						{  },
 			"/Script/FortniteGame.CreativeRegisteredPlayersManagerComponent":	{  },
+			"/Script/FortniteGame.FortActorComponent_Affiliation":				{  },
 			"/Script/FortniteGame.FortActorMetadataComponent":					{  },
 			"/Script/FortniteGame.FortActorTemplatesComponent":					{  },
 			"/Script/FortniteGame.FortBuildingAddStructuralSupportComponent":	{  },
@@ -1378,7 +1381,7 @@
 				"AllowList": [ "DaySequencePreviewTime" ]
 			},
 			"LevelEditor.ActorContextMenu": {
-				"AllowList": [ "FindInContentBrowser", "OpenSelectionInPropertyMatrix", "BulkEditComponentsSubmenu", "FocusViewportToSelection", "GoHere", "SnapCameraToObject", "SnapObjectToCamera", "SnapAlignSubMenu", "SelectSubMenu", "EditSubMenu", "VisibilitySubMenu", "AddActor", "ReplaceActor", "ActorAttachToSubMenu", "DetachFromParent", "ValidateActors", "TransformSubMenu", "PivotSubMenu", "GroupMenu", "meshPerfEntry", "DeviceScriptsCopyReference", "OpenUVEditor", "CopyActorFilePathtoClipboard", "SaveActor" ]
+				"AllowList": [ "FindInContentBrowser", "OpenSelectionInPropertyMatrix", "BulkEditComponentsSubmenu", "FocusViewportToSelection", "GoHere", "SnapCameraToObject", "SnapObjectToCamera", "SnapAlignSubMenu", "SelectSubMenu", "EditSubMenu", "VisibilitySubMenu", "AddActor", "ReplaceActor", "ActorAttachToSubMenu", "DetachFromParent", "ValidateActors", "TransformSubMenu", "PivotSubMenu", "GroupMenu", "meshPerfEntry", "DeviceScriptsCopyReference", "OpenUVEditor", "CopyActorFilePathtoClipboard", "SaveActor", "Teleport" ]
 			},
 			"LevelEditor.ActorContextMenu.AddActor": {
 				"DenyList": [ "RectLight", "PlayerStart", "Trigger", "RuntimeVirtualTextureVolume", "CameraActor" ]
@@ -2215,7 +2218,7 @@
 			},
 			{
 				"Type": "/Script/ValkyrieEditor.ValkyrieEditorConfig",
-				"AllowList": [ "DefaultProjectName", "DefaultProjectVersionSuffix", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "EnabledPermissions", "EffectivePermissions", "EntitledPermissions" ]
+				"AllowList": [ "DefaultProjectName", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "ReferencedContentCacheSizeGB", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "EnabledPermissions", "EffectivePermissions", "EntitledPermissions" ]
 			},
 			{
 				"Type": "/Script/CinematicCamera.CineCameraActor",
