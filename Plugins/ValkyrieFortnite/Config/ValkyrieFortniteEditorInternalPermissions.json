@@ -951,7 +951,11 @@
 			"/Script/FortniteGame.BaseUEFNAnimInstance":				{ "Visible": true },
 			"/Script/FortniteGame.UEFNCustomAgentAnimInstance":			{ "Visible": true },
 			"/Script/UnrealEd.EdGraphNode_Comment":						{ "Visible": true },
-			"/Script/ValkyrieCommon.ValkyrieContentWorkerDebugManager":	{ "Visible": true }
+			"/Script/ValkyrieCommon.ValkyrieContentWorkerDebugManager":	{ "Visible": true },
+			"/Script/VerseQuery.EntityQueryManager":					{ },
+			"/Script/VerseQuery.EntityTypeQueryContainer":				{ },
+			"/Script/VerseQuery.GlobalEntityQueryManagerComponent":		{ },
+			"/Script/VerseQuery.TaggedObjectQueryContainer":			{ }
 		},
 		"AllowedMenus": {
 			"SkeletonTree.BlendProfilesMenu": {

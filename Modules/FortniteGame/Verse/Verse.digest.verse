@@ -2,11 +2,13 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-28.01-CL-30106568
+# Generated from build: ++Fortnite+Release-28.10-CL-30676362
 #################################################
 
 # Module import path: /Verse.org/Assets
 Assets<public> := module {
+  animation_sequence<native><public> := class<computes><final><epic_internal> {}
+
   material<native><public> := class<computes><epic_internal> {}
 
   mesh<native><public> := class<computes><final><epic_internal> {}
@@ -430,6 +432,7 @@ Random<public> := module {
   Shuffle<public>(Input: []t where t: type)<transacts>: []t = external {}
 }
 
+# Module import path: /Verse.org/Simulation
 Simulation<public> := module {
   # Returns the `session` corresponding to the current round.  The result can be used with `weak_map` to implement global variables.
   # Note: may be changed in a future release to return a single instance per game. Round-local behavior should not be relied upon.
