@@ -4,8 +4,12 @@
 
 	"ValkyrieProjectSettings": {
 		"bMultiProjectAllowed": true,
+		"bModuleIdNamedPlugins": true,
 		"bWorkspaceAllowed": true,
-		"bProjectRenameAllowed": true
+		"bProjectRenameAllowed": true,
+		"AllowedVerseScopes": {
+			"+": ["InternalAPI"]
+		} 
 	},
 	"ValkyrieBlueprintsSettings": {
 		"bEnableBlueprintGraph": true,
@@ -1036,7 +1040,8 @@
 		"AllowedImportExtensions": {
 			"+": [
 			]
-		}
+		},
+		"VerseScopesToShowAssetsFor": { "+": ["InternalAPI"] }
 	},
 	"PropertyEditorClassPermissionList": {
 		"+": [

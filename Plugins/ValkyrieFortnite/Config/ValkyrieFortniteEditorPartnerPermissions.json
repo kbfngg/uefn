@@ -1,6 +1,7 @@
 {
 	"ValkyrieEditorSettings": {
 		"bShowConsole": true,
+		"bShowValidateProjectMenuEntry": true,
 		"AllowedClasses": {
 			"/Script/FortniteGame.BuildingActor": { "Visible": true },
 			"/Script/FortniteGame.BuildingActorClassData": {},

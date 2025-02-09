@@ -19,6 +19,7 @@
 		"bAddProjectExternalContentAllowed": false,
 		"bMultiPluginProjectAllowed": false,
 		"bMultiProjectAllowed": false,
+		"bModuleIdNamedPlugins": false,
 		"bWorkspaceAllowed": false,
 		"bProjectRenameAllowed": false,
 		"bProjectKindExposed": false,
@@ -2579,8 +2580,20 @@
 				"Sphere",
 				"WindDirectionalSource"
 			]
-		}
-
+		},
+		"VerseScopesToShowAssetsFor": ["PublicAPI"],
+		"DefaultLogCategories": [
+			"LogValkyrie",
+			"LogValkyrieOnline",
+			"LogValkyrieValidation",
+			"LogReferencedContentLoader",
+			"LogVerse",
+			"Cmd",
+			"LogConsoleResponse",
+			"LogUGCLocalization",
+			"LogValkyrieSummary",
+			"LogValkyrieAccount"
+		]
 	},
 	"ValkyrieAnalyticsSettings": {
 		"AllowedProjectTemplateNames": [
@@ -3203,7 +3216,7 @@
 			},
 			{
 				"Type": "/Script/ValkyrieEditor.ValkyrieEditorConfig",
-				"AllowList": [ "DefaultProjectName", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "bAssignProjectVersePathAutomatically", "bModuleIdNamedPlugins", "bModalProjectBrowser", "ReferencedContentCacheSizeGB", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "bEnableIterativeValidation", "bLoadAssetsForValidation", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "EnabledPermissions", "EffectivePermissions", "EntitledPermissions", "bDevBuildGivesAllEntitlements" ]
+				"AllowList": [ "DefaultProjectName", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "bAssignProjectVersePathAutomatically", "bModalProjectBrowser", "ReferencedContentCacheSizeGB", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "bEnableIterativeValidation", "bLoadAssetsForValidation", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "EnabledPermissions", "EffectivePermissions", "EntitledPermissions", "bDevBuildGivesAllEntitlements" ]
 			},
 			{
 				"Type": "/Script/CinematicCamera.CineCameraActor",
@@ -3701,7 +3714,7 @@
 			{
 				"Type": "/Script/Engine.StaticMeshComponent",
 				"AllowList": ["StaticMeshImportVersion", "ForcedLodModel", "StaticMeshDerivedDataKey", "MaterialStreamingRelativeBoxes", "bEvaluateWorldPositionOffsetInRayTracing", "StreamingTextureData", "bOverrideLightMapRes", "OverriddenLightMapRes", "bUseAsOccluder",
-					"LightmassSettings", "bUseDefaultCollision", "bOverrideDistanceFieldSelfShadowBias", "DistanceFieldSelfShadowBias"],
+					"LightmassSettings", "bUseDefaultCollision", "bOverrideDistanceFieldSelfShadowBias", "DistanceFieldSelfShadowBias", "bReverseCulling"],
 				"bAllowListAllSubclassProperties": true
 			},
 			{
