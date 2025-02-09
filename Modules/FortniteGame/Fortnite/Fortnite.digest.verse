@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-25.20-CL-26474516
+# Generated from build: ++Fortnite+Release-25.30-CL-26867995
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -176,6 +176,9 @@ Characters<public> := module {
     #  - 0: the `fort_character` that changed sprint state.
     #  - 1: `true` if the character is sprinting. `false` if the character stopped sprinting.
     SprintedEvent<public>(): listenable(tuple(fort_character, logic))
+
+    # Teleports this `fort_character` to the provided `Position` and applies the yaw of `Rotation`.
+    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void
   }
 
   # Parameters for `fort_character.PutInStasis` function.
@@ -247,10 +250,10 @@ Devices<public> := module {
       IsValid<native><public>()<transacts><decides>: void
 
       # Signaled each time a keyframe is reached. Callback(KeyframeIndex:int, InReverse:logic). Note that the KeyframeIndex in the callback is generally in [1, NumDeltaKeyframes] except that in a PingPong animation the final keyframe played in reverse is identified as index 0. This is because SetAnimation takes *delta* keyframes whereas this event notifies the listener that a specific keyframe has been reached.
-      KeyframeReachedEvent<native><public>: subscribable(tuple(int, logic)) = external {}
+      KeyframeReachedEvent<native><public>: listenable(tuple(int, logic)) = external {}
 
       # Signaled when the entire animation is complete. This will only fire for `OneShot` animations.
-      MovementCompleteEvent<native><public>: subscribable(tuple()) = external {}
+      MovementCompleteEvent<native><public>: listenable(tuple()) = external {}
 
       # Pauses the animation if it is already playing.
       Pause<public>(): void = external {}
@@ -262,7 +265,7 @@ Devices<public> := module {
       SetAnimation<public>(Keyframes: []keyframe_delta, ?Mode: animation_mode): void = external {}
 
       # Signaled when the state has changed. Use `GetState` to get the new state.
-      StateChangedEvent<native><public>: subscribable(tuple()) = external {}
+      StateChangedEvent<native><public>: listenable(tuple()) = external {}
 
       # Stops playback and resets the animation to the first keyframe. Also resets the prop transform. Calling this method is valid while the animation is in the `Playing` or `Paused` states.
       Stop<public>(): void = external {}
@@ -1603,8 +1606,20 @@ Devices<public> := module {
     # Enables this device, letting players grind on the rail.
     Enable<public>(): void = external {}
 
+    # Signaled when an `agent` starts grinding on this `grind_rail_device`.
+    EndedGrindingEvent<public>: listenable(agent) = external {}
+
+    # Hides the track. Players can still grind on the track if it is enabled.
+    Hide<public>(): void = external {}
+
     # Sets the color of the Grind Rail.
     SetRailColor<public>(Color: color): void = external {}
+
+    # Make this track visible.
+    Show<public>(): void = external {}
+
+    # Signaled when an `agent` starts grinding on this `grind_rail_device`.
+    StartedGrindingEvent<public>: listenable(agent) = external {}
   }
 
   # Used to spawn guards that can patrol and attack other `agent`s.
@@ -1821,6 +1836,15 @@ Devices<public> := module {
 
     # Remove items from `Agent`s inventory. The items that are removed can be configured using *Affected Items*.
     Remove<public>(Agent: agent): void = external {}
+  }
+
+  # Allows the item shop to be opened when activated
+  item_shop_device<public> := class<concrete><final>(creative_device_base) {
+    # Disables this device.
+    Disable<public>(): void = external {}
+
+    # Enables this device.
+    Enable<public>(): void = external {}
   }
 
   # Used to configuration and spawn items that players can pick up and use.
@@ -2249,6 +2273,15 @@ Devices<public> := module {
 
     # Enables this device.
     Enable<public>(): void = external {}
+
+    # Returns the `agent` currently referenced by the device.
+    GetAgent<public>(): ?agent = external {}
+
+    # Returns the stat value that this device is currently tracking
+    GetStatValue<public>(): int = external {}
+
+    # Is true when `Agent` is the player being referenced by the device.
+    IsReferenced<public>(Agent: agent)<transacts><decides>: void = external {}
 
     # Registers `Agent` as the `agent` being tracked by this device.
     Register<public>(Agent: agent): void = external {}
@@ -3842,11 +3875,23 @@ Devices<public> := module {
   using { /Verse.org/Colors }
   # Used to create a customizable vine version of the Grind Rails.
   vine_rail_device<public> := class<concrete><final>(creative_device_base) {
-    # Disables this device, preventing players from grinding on the rail.
+    # Disables this device, preventing players from grinding on the vines.
     Disable<public>(): void = external {}
 
-    # Enables this device, letting players grind on the rail.
+    # Enables this device, letting players grind on the vines.
     Enable<public>(): void = external {}
+
+    # Signaled when an `agent` starts grinding on this `vine_rail_device`.
+    EndedGrindingEvent<public>: listenable(agent) = external {}
+
+    # Hides the track. Players can still grind on the track if it is enabled.
+    Hide<public>(): void = external {}
+
+    # Make this track visible.
+    Show<public>(): void = external {}
+
+    # Signaled when an `agent` starts grinding on this `vine_rail_device`.
+    StartedGrindingEvent<public>: listenable(agent) = external {}
   }
 
   using { /UnrealEngine.com/Temporary/SpatialMath }
@@ -4038,7 +4083,7 @@ Devices<public> := module {
 
 # Module import path: /Fortnite.com/FortPlayerUtilities
 FortPlayerUtilities<public> := module {
-  # Respawns the character for `InAgent` at the provided `RespawnPosition` and `RespawnRotation`.
+  # Respawns the character for `InAgent` at the provided `RespawnPosition` and applies the yaw of `RespawnRotation`.
   (InAgent: agent).Respawn<native><public>(RespawnPosition: vector3, RespawnRotation: rotation)<transacts>: void
 
   # Returns an `[]player`s currently spectating `InPlayer`.
@@ -4216,10 +4261,10 @@ Playspaces<public> := module {
     GetTeamCollection<public>()<transacts>: fort_team_collection
 
     # Signaled when a `player` joins the `fort_playspace`. Returns a subscribable with a payload of the`fort_character` that entered the `fort_playspace`.
-    PlayerAddedEvent<public>(): subscribable(player)
+    PlayerAddedEvent<public>(): listenable(player)
 
     # Signaled when a `player` leaves the `fort_playspace`. Returns a subscribable with a payload of the`fort_character` that left the `fort_playspace`.
-    PlayerRemovedEvent<public>(): subscribable(player)
+    PlayerRemovedEvent<public>(): listenable(player)
   }
 }
 

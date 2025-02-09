@@ -949,26 +949,34 @@
 			"/Script/LevelSequence.LevelSequenceActor":					{ "Visible": true },
 			"/Script/UnrealEd.EdGraphNode_Comment":						{ "Visible": true },
 			"/Script/ValkyrieCommon.ValkyrieContentWorkerDebugManager":	{ "Visible": true }
+		},
+		"AllowedMenus": {
+			"SkeletonTree.BlendProfilesMenu": {
+				"AllowList": [ "CreateTimeBlendProfile", "CreateWeightBlendProfile", "CreateBlendMask" ]
+			},
+			"SkeletonTree.FilterMenu": {
+				"AllowList": [ "ShowRetargeting", "FilteringFlattensHierarchy", "HideParentsWhenFiltering", "ShowDebugVisualization", "ShowAllBones", "ShowMeshBones", "ShowLODBones", "ShowWeightedBones", "HideBones", "ShowActiveSockets", "ShowMeshSockets", "ShowSkeletonSockets", "ShowAllSockets", "HideSockets", "BlendProfiles" ]
+			},
+			"SkeletonTree.NewMenu": {
+				"AllowList": [ "AddSocket", "VirtualBones", "CreateTimeBlendProfile", "CreateWeightBlendProfile", "CreateBlendMask" ]
+			}
 		}
 	},
 	"PropertyEditorClassPermissionList": {
 		"+": [
 			{
-				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/CoreUObject.Vector",
 				"AllowList": [
 					"X", "Y", "Z"
 				]
 			},
 			{
-				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/CoreUObject.Rotator",
 				"AllowList": [
 					"Pitch", "Yaw", "Roll"
 				]
 			},
 			{
-				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Engine.AnalysisProperties",
 				"AllowList": [
 					"AnalysisProperties",
@@ -976,7 +984,6 @@
 				]
 			},
 			{
-				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Persona.LinearAnalysisProperties",
 				"AllowList": [
 					"AnalysisProperties",
@@ -990,7 +997,6 @@
 				]
 			},
 			{
-				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Persona.EulerAnalysisProperties",
 				"AllowList": [
 					"AnalysisProperties",
@@ -1008,7 +1014,6 @@
 				]
 			},
 			{
-				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Engine.BlendSpace",
 				"AllowList": [
 					"bInterpolateUsingGrid",
@@ -1034,7 +1039,6 @@
 				]
 			},
 			{
-				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Engine.PoseAsset",
 				"AllowList": [
 					"SourceAnimation",
@@ -1042,7 +1046,6 @@
 				]
 			},
 			{
-				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Engine.AnimComposite",
 				"AllowList": [
 					"RateScale",
@@ -1053,38 +1056,31 @@
 				]
 			},
 			{
-				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Engine.SkeletalMesh",
 				"AllowList": [ "MaterialSlots", "MaterialList", "Material", "Mesh", "Transform", "Miscellaneous", "File Path", "Skeleton", "PositiveBoundsExtension", "NegativeBoundsExtension", "MeshReductionSettings", "PercentTriangles", "SelectLOD", "ScreenSize", "MinLOD", "QualityLevelMinLOD", "LODForCollision", "SkeletalMeshSectionListNameLOD_0", "SkeletalMeshSectionListNameLOD_1", "SkeletalMeshSectionListNameLOD_2", "SkeletalMeshSectionListNameLOD_3", "SkeletalMeshSectionListNameLOD_4", "SkeletalMeshSectionListNameLOD_5", "SkeletalMeshSectionListNameLOD_6", "SkeletalMeshSectionListNameLOD_7", "SkeletalMeshOptimizationSettings", "LODGroup", "LODImport", "QualityLevelMinLOD", "AutoComputeLOD", "NumberOfLODs", "ApplyChanges", "LODButtons", "DefaultAnimatingRig", "PostProcessAnimBlueprint" ]
 			},
 			{
-				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Engine.SkeletalMeshComponent",
 				"AllowList": [ "SkeletalMesh", "AnimationData", "SkeletalMeshAsset", "AnimationMode", "AnimClass", "bDisablePostProcessBlueprint" ]
 			},
 			{
-				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Engine.AnimBlueprint",
 				"DenyList": [ "bRunConstructionScriptOnDrag", "bRunConstructionScriptInSequencer" ]
 			},
 			{
-				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Engine.AnimNode_LinkedAnimGraph",
 				"DenyList": [ "bReceiveNotifiesFromLinkedInstances", "bPropagateNotifiesToLinkedInstances" ]
 			},
 			{
-				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Engine.AnimInstance",
 				"AllowList": [ "RootMotionMode", "bUseMainInstanceMontageEvaluationData" ],
 				"bAllowListAllSubclassProperties": true
 			},
 			{
-				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/FortniteGame.BaseUEFNAnimInstance",
 				"bAllowListAllProperties": true
 			},
 			{
-				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/ValkyrieCommon.ValkyrieContentWorkerDebugManager",
 				"AllowList": [ "bCrashContentWorker", "bEmitErrorFromContentWorker" ]
 			}
@@ -1092,25 +1088,6 @@
 	},
 	"PropertyEditorStructPermissionList": {
 		"+": [
-		]
-	},
-	"MenuRules": {
-		"+": [
-			{
-				"$type": "ValkyrieMenuRules",
-				"MenuName": "SkeletonTree.NewMenu",
-				"AllowList": [ "AddSocket", "VirtualBones", "CreateTimeBlendProfile", "CreateWeightBlendProfile", "CreateBlendMask" ]
-			},
-			{
-				"$type": "ValkyrieMenuRules",
-				"MenuName": "SkeletonTree.FilterMenu",
-				"AllowList": [ "ShowRetargeting", "FilteringFlattensHierarchy", "HideParentsWhenFiltering", "ShowDebugVisualization", "ShowAllBones", "ShowMeshBones", "ShowLODBones", "ShowWeightedBones", "HideBones", "ShowActiveSockets", "ShowMeshSockets", "ShowSkeletonSockets", "ShowAllSockets", "HideSockets", "BlendProfiles" ]
-			},
-			{
-				"$type": "ValkyrieMenuRules",
-				"MenuName": "SkeletonTree.BlendProfilesMenu",
-				"AllowList": [ "CreateTimeBlendProfile", "CreateWeightBlendProfile", "CreateBlendMask" ]
-			}
 		]
 	}
 }
