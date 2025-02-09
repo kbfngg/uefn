@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-31.41-CL-37324991
+# Generated from build: ++Fortnite+Release-32.00-CL-37505882
 #################################################
 
 using { /UnrealEngine.com/Temporary/SpatialMath }
@@ -151,7 +151,10 @@ Temporary<public> := module {
     # log class to send messages to the default log
     log<native><public> := class {
       # Print message using the given log level
-      (log:)Print<native><public>(Message: string, ?Level: log_level = external {})<computes>: void
+      (/UnrealEngine.com/Temporary/Diagnostics/log:)Print<native><public>(
+        Message: string,
+        ?Level: log_level = external {}
+      )<computes>: void
 
       # Channel class name will be added as a prefix used when printing the message e.g. '[log_channel]: #Message
       Channel<native><public>: subtype(log_channel)
@@ -182,52 +185,64 @@ Temporary<public> := module {
 
   SceneGraph<public> := module {
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all components attached to entities below and including `InEntity` of type `ComponentType`.When querying from the simulation entity, the simulation entity itself is not included in the results.The order of the returned components is unspecified and subject to change.
-    (InEntity: entity).FindComponents<native><public>(ComponentType: subtype(component))<transacts>: []ComponentType
+    (InEntity: entity).FindComponents<native><public>(ComponentType: subtype(component))<transacts>: generator(ComponentType)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all entities below and including `InEntity` of type `EntityType`.When querying from the simulation entity, the simulation entity itself is not included in the results.The order of the returned entities is unspecified and subject to change.
-    (InEntity: entity).FindEntities<native><public>(EntityType: subtype(entity))<transacts>: []EntityType
+    (InEntity: entity).FindEntities<native><public>(EntityType: subtype(entity))<transacts>: generator(EntityType)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all entities below and including `InEntity` whose `transform_component.Translation` is inside `Shape`.When querying from the simulation entity, the simulation entity itself is not included in the results.The order of the returned entities is unspecified and subject to change.
-    (InEntity: entity).FindEntitiesOriginInside<native><public>(Shape: convex_volume3)<transacts>: []entity
+    (InEntity: entity).FindEntitiesOriginInside<native><public>(Shape: convex_volume3)<transacts>: generator(entity)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all entities below and including `InEntity` whose `collision_component` shape overlaps with `Shape`.When querying from the simulation entity, the simulation entity itself is not included in the results.The order of the returned entities is unspecified and subject to change.
-    (InEntity: entity).FindEntitiesOverlapping<native><public>(Shape: convex_volume3)<transacts>: []entity
+    (InEntity: entity).FindEntitiesOverlapping<native><public>(Shape: convex_volume3)<transacts>: generator(entity)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all entities below and including `InEntity` containing a component of type `ComponentType`.When querying from the simulation entity, the simulation entity itself is not included in the results.The order of the returned entities is unspecified and subject to change.
-    (InEntity: entity).FindEntitiesWithComponent<native><public>(ComponentType: subtype(component))<transacts>: []entity
+    (InEntity: entity).FindEntitiesWithComponent<native><public>(ComponentType: subtype(component))<transacts>: generator(entity)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all entities below and including `InEntity` with `Tag` present in their `tag_component`.When querying from the simulation entity, the simulation entity itself is not included in the results.The order of the returned entities is unspecified and subject to change.
-    (InEntity: entity).FindEntitiesWithTag<native><public>(Tag: tag)<transacts>: []entity
+    (InEntity: entity).FindEntitiesWithTag<native><public>(Tag: tag)<transacts>: generator(entity)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all components attached to parent entities above `InEntity` of type `ComponentType`.The order of the returned components is unspecified and subject to change.
-    (InEntity: entity).FindParentComponents<native><public>(ComponentType: subtype(component))<transacts>: []ComponentType
+    (InEntity: entity).FindParentComponents<native><public>(ComponentType: subtype(component))<transacts>: generator(ComponentType)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all parent entities above `InEntity` of type `EntityType`.The order of the returned entities is unspecified and subject to change.
-    (InEntity: entity).FindParentEntities<native><public>(EntityType: subtype(entity))<transacts>: []EntityType
+    (InEntity: entity).FindParentEntities<native><public>(EntityType: subtype(entity))<transacts>: generator(EntityType)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all parent entities above `InEntity` whose `transform_component.Translation` is inside `Shape`.The order of the returned components is unspecified and subject to change.
-    (InEntity: entity).FindParentEntitiesOriginInside<native><public>(Shape: convex_volume3)<transacts>: []entity
+    (InEntity: entity).FindParentEntitiesOriginInside<native><public>(Shape: convex_volume3)<transacts>: generator(entity)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all parent entities above `InEntity` whose `collision_component` shape overlaps with `Shape`.The order of the returned components is unspecified and subject to change.
-    (InEntity: entity).FindParentEntitiesOverlapping<native><public>(Shape: convex_volume3)<transacts>: []entity
+    (InEntity: entity).FindParentEntitiesOverlapping<native><public>(Shape: convex_volume3)<transacts>: generator(entity)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all parent entities above `InEntity` containing a component of type `ComponentType`.The order of the returned entities is unspecified and subject to change.
-    (InEntity: entity).FindParentEntitiesWithComponent<native><public>(ComponentType: subtype(component))<transacts>: []entity
+    (InEntity: entity).FindParentEntitiesWithComponent<native><public>(ComponentType: subtype(component))<transacts>: generator(entity)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all parent entities above `InEntity` with `Tag` present in their `tag_component`.The order of the returned entities is unspecified and subject to change.
-    (InEntity: entity).FindParentEntitiesWithTag<native><public>(Tag: tag)<transacts>: []entity
+    (InEntity: entity).FindParentEntitiesWithTag<native><public>(Tag: tag)<transacts>: generator(entity)
 
     @experimental
     # Returns the simulation entity parent for this entity.  * The simulation entity is the rootmost entity in an experience.  * Fails if this entity is not currently in the scene.
@@ -261,6 +276,7 @@ Temporary<public> := module {
     }
 
     using { /UnrealEngine.com/Temporary/SpatialMath }
+    using { /Verse.org/Native }
     using { /Verse.org/Simulation/Tags }
     @experimental
     # Axis aligned box volume.
@@ -273,7 +289,9 @@ Temporary<public> := module {
     }
 
     @experimental
-    collision_channel<native><public> := struct<concrete><computes><epic_internal> {}
+    collision_channel<native><public> := struct<concrete><computes><epic_internal> {
+      ChannelIndex: int = external {}
+    }
 
     @experimental
     collision_channel_response<native><public> := enum {
@@ -460,8 +478,22 @@ Temporary<public> := module {
     entity_prefab<native><public> := class<computes><epic_internal> {}
 
     @experimental
-    # Used to subscribe a callback to a DeltaTime based callback from one of the phases in a component's `TickEvents` object.'IMPORTANT: You must keep a pointer on your component to the returned `cancelable`. Otherwise the GC will eventuallyclean up your subscription and your callback will stop being invoked.
-    execution_subscribable<native><public> := class<epic_internal>(subscribable(float)) {
+    # Used to subscribe a callback or await an event based callback 'IMPORTANT: You must keep a pointer on your component to the returned `cancelable`. Otherwise the GC will eventuallyclean up your subscription and your callback will stop being invoked.
+    execution_event<native><public> := class<epic_internal>(listenable(tuple())) {
+      # Suspends the current task until resumed by a matching call to `signalable.Signal`.
+      Await<native><override>()<suspends>: tuple()
+
+      @experimental
+      # Subscribe a callback function to this event.
+      Subscribe<native><override>(Callback: type { __(): void })<transacts>: cancelable
+    }
+
+    @experimental
+    # Users to subscribe to, or await on, a DeltaTime based callback from one of the phases in a component's `TickEvents` object.'IMPORTANT: You must keep a pointer on your component to the returned `cancelable`. Otherwise the GC will eventuallyclean up your subscription and your callback will stop being invoked.
+    execution_listenable<native><public> := class<epic_internal>(listenable(float)) {
+      # Suspends the current task until resumed by a matching call to `signalable.Signal`. Returns the event `payload`.
+      Await<native><override>()<suspends>: float
+
       @experimental
       # Subscribe a callback function to this TickEvent phase. The input parameter to your function (DeltaTime) is the time that haspassed between the last update and the current update.
       Subscribe<native><override>(Callback: type { __(: float): void })<transacts>: cancelable
@@ -504,6 +536,10 @@ Temporary<public> := module {
       var CastVolumetricShadow<public>: logic = external {}
 
       @experimental
+      # The color of the light. Note that this can change the light’s effective intensity.
+      var Color<public>: color = external {}
+
+      @experimental
       # The total energy the light emits in candela. The renderer clamps between 0.0 and 20.0.
       var Intensity<public>: float = external {}
     }
@@ -530,13 +566,21 @@ Temporary<public> := module {
       OnRemovingFromScene<native><override>(): void
 
       @experimental
-      # A material to be applied to this mesh. If this is set to `false` the base material on the mesh asset will be used.
-      var Material<native><public>: ?material = external {}
+      # Sets the `material` to be applied to the `mesh`.
+      SetMaterial<native><public>(InMaterial: ?material): void
 
-      @editable
       @experimental
+      # Sets the `mesh` to be rendered.
+      SetMesh<native><public>(InMesh: mesh): void
+
+      @experimental
+      # A material to be applied to this mesh. If this is set to `false` the base material on the mesh asset will be used.
+      var<private> Material<native><public>: ?material = external {}
+
+      @experimental
+      @editable
       # The `mesh` to be rendered by this `mesh_component`.
-      var Mesh<native><public>: mesh = external {}
+      var<private> Mesh<native><public>: mesh = external {}
     }
 
     @experimental
@@ -651,18 +695,24 @@ Temporary<public> := module {
 
     @experimental
     # Used to add tags to an entity. Tagged entities can then be queried using `entity.FindEntitiesWithTag` and `entity.FindParentEntitiesWithTag`.  * Finding entities from the simulation entity for tagged entities only considers any `tag_component` that has run `OnAddedToScene`.
-    tag_component<native><public> := class<final>(component) {
-      # Adds a tag to this component.
-      AddTag<native><public>(TagToAdd: tag)<transacts>: void
+    tag_component<native><public> := class<final>(component, tag_view) {
+      # Adds a tag to this component. Returns `true` if the tag was not present before being added.
+      AddTag<native><public>(TagToAdd: tag)<transacts>: logic
 
-      # Returns the tags associated with this component. These may be specified in the editor.
-      GetTags<native><public>()<transacts>: tag_view
+      # Determine if TagToCheck is present in this container, also checking against parent tags {"A.1"}.Has("A") will return True, {"A"}.Has("A.1") will return False If TagToCheck is not Valid it will always return False.
+      Has<native><override>(TagToCheck: tag)<computes><decides><reads>: void
+
+      # Checks if this container contains ALL of the tags in the specified container, also checks against parent tags {"A.1","B.1"}.HasAll({"A","B"}) will return True, {"A","B"}.HasAll({"A.1","B.1"}) will return False If InTags is empty/invalid it will always return True, because there were no failed checks.
+      HasAll<native><override>(InTags: []tag)<computes><decides><reads>: void
+
+      # Checks if this container contains ANY of the tags in the specified container, also checks against parent tags {"A.1"}.HasAny({"A","B"}) will return True, {"A"}.HasAny({"A.1","B"}) will return False If InTags is empty/invalid it will always return False.
+      HasAny<native><override>(InTags: []tag)<computes><decides><reads>: void
 
       OnAddedToScene<native><override>(): void
 
       OnRemovingFromScene<native><override>(): void
 
-      # Removes a tag from this component. Returns `true` if the tag was present.
+      # Removes a tag from this component. Returns `true` if the tag was present before being removed.
       RemoveTag<native><public>(TagToRemove: tag)<transacts>: logic
     }
 
@@ -701,11 +751,11 @@ Temporary<public> := module {
     @experimental
     # Describes discrete phases of a frame update. Subscribe to members of the tick_events object to run codebefore or after the physics system has updated your object, allowing you to affect or react to these updates.
     tick_events<native><public> := class<epic_internal> {
-      # Subscribe callbacks to `PostPhysics` to run your code after the physics system has updated your object this frame.
-      PostPhysics<native><public>: execution_subscribable = external {}
+      # Listen `PostPhysics` to run your code after the physics system has updated your object this frame.
+      PostPhysics<native><public>: execution_listenable = external {}
 
-      # Subscribe callbacks to `PrePhysics` to run your code before the physics system has updated your object this frame.
-      PrePhysics<native><public>: execution_subscribable = external {}
+      # Listen `PrePhysics` to run your code before the physics system has updated your object this frame.
+      PrePhysics<native><public>: execution_listenable = external {}
     }
 
     @experimental
@@ -740,7 +790,6 @@ Temporary<public> := module {
     @experimental
     # Stores the world transform for an entity, which is used to position the entity.  * If you wish for an entity to update its transform when its parent entity transform changes then    you must also add a `parent_constraint_component` to the entity.
     transform_component<native><public> := class<final>(component) {
-      @experimental
       # Returns the world transform of the entity.
       GetTransform<native><public>()<transacts>: transform
 
@@ -748,14 +797,12 @@ Temporary<public> := module {
 
       OnUninitializing<native><override>(): void
 
-      @experimental
       # Sets the world transform of the entity.
       SetTransform<native><public>(NewTransform: transform): void
 
       @editable
-      @experimental
-      # The value of `InitialRelativeTransform` is used when spawning an entity into the scene.  * When spawning an entity with a `transform_component`, the entity is offset by `InitialRelativeOffset` from the new parent entity's transform.  * When spawning an entity with a `transform_component` as a child of the simulation entity the entity is offset by `InitialRelativeOffset` from the simulation entity's transform.  * When spawning a prefab each sub-entity with a `transform_component` is offset by `InitialRelativeTransform` from its parent entities transform.
-      var InitialRelativeTransform<native><public>: transform = external {}
+      # The value of `LocalTransform` is used when spawning an entity into the scene.  * When spawning an entity with a `transform_component`, the entity is offset by `LocalTransform` from the new parent entity's transform.  * When spawning an entity with a `transform_component` as a child of the simulation entity the entity is offset by `LocalTransform` from the simulation entity's transform.  * When spawning a prefab each sub-entity with a `transform_component` is offset by `LocalTransform` from its parent entities transform.
+      var LocalTransform<native><public>: transform = external {}
     }
 
     @experimental

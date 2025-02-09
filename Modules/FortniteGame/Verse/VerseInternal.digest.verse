@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-31.41-CL-37324991
+# Generated from build: ++Fortnite+Release-32.00-CL-37505882
 #################################################
 
 using { /Verse.org/ParameterCollections }
@@ -50,11 +50,13 @@ Assets<public> := module {
 
   client_asset<native><epic_internal> := class<abstract><computes><epic_internal>(asset) {}
 
-  enhanced_input_action<native><epic_internal> := class<computes><concrete>(asset) {}
-
-  enhanced_input_context<native><epic_internal> := class<computes><concrete>(asset) {}
-
   font<native><epic_internal> := class<computes><concrete><final><epic_internal>(client_asset) {}
+
+  input_action<native><epic_internal>(t: type) := class<computes><concrete><epic_internal>(asset) {
+    Path<native><public>: string = external {}
+  }
+
+  input_mapping<native><epic_internal> := class<computes><concrete><epic_internal>(asset) {}
 
   level<native><epic_internal> := class<computes><final><epic_internal>(asset) {}
 
@@ -84,7 +86,7 @@ Assets<public> := module {
   }
 
   # parameter_collection that will be generated in the digest from the Editable
-  parameterized_parameter_collection<native><epic_internal> := class(parameter_collection) {
+  parameterized_parameter_collection<native><epic_internal> := class<unique>(parameter_collection) {
     UE5Class<native><epic_internal>: parameter_collection_UE5_definition
   }
 
@@ -143,7 +145,7 @@ Colors<public> := module {
   # Module import path: /Verse.org/Colors/NamedColors
   # Color presets from CSS Color Module 3 Extended color keywords.
   NamedColors<public> := module {
-    (NamedColors:)Tan<public>: color = external {}
+    (/Verse.org/Colors/NamedColors:)Tan<public>: color = external {}
 
     AliceBlue<public>: color = external {}
 
@@ -552,7 +554,9 @@ ControlInput<public> := module {
     Use<epic_internal>: verb = external {}
   }
 
-  @import_as("/Script/VerseInput.UVerseInputClientActionBase")
+  MakeInputAsset<native><epic_internal>(t: type, InputAction: input_action(t), Path: string)<converges>: input_action(t)
+
+  @import_as("/Script/VerseInput.UVerseInputClientActionVerbBase")
   action<native><epic_internal> := class<computes><abstract> {}
 
   apply_impulse_action<native><epic_internal> := class(action) {
@@ -599,7 +603,7 @@ ControlInput<public> := module {
     HoldTimeThreshold<native><epic_internal>: float = external {}
   }
 
-  input_action<native><epic_internal> := class<computes> {
+  input_action_verb<native><epic_internal> := class<computes> {
     Actions<native><epic_internal>: []action
 
     ConsumeInput<native><epic_internal>: logic = external {}
@@ -609,6 +613,18 @@ ControlInput<public> := module {
     Triggers<native><epic_internal>: []trigger
 
     Verb<native><epic_internal>: verb
+  }
+
+  input_events<native><public>(t: type) := class {
+    ActivationCanceledEvent<native><public>: listenable(tuple(player, t, float)) = external {}
+
+    ActivationTriggeredEvent<native><public>: listenable(tuple(player, t)) = external {}
+
+    DetectionBeginEvent<native><public>: listenable(tuple(player, t)) = external {}
+
+    DetectionEndEvent<native><public>: listenable(tuple(player, float)) = external {}
+
+    DetectionOngoingEvent<native><public>: listenable(tuple(player, t, float)) = external {}
   }
 
   launch_action<native><epic_internal> := class(action) {
@@ -630,13 +646,23 @@ ControlInput<public> := module {
   }
 
   player_input<native><epic_internal> := class {
-    AddInputAction<native><epic_internal>(InputAction: input_action): void
+    AddInputActionVerb<native><epic_internal>(InputActionVerb: input_action_verb): void
 
-    AddInputActions<epic_internal>(InputActions: []input_action): void = external {}
+    AddInputMapping<native><public>(InputMapping: input_mapping): void
 
-    RemoveInputAction<native><epic_internal>(InputAction: input_action): void
+    GetInputEvents<native><public>(t: type, ActionToBind: input_action(t)): input_events(t)
 
-    RemoveInputActions<epic_internal>(InputActions: []input_action): void = external {}
+    MakeFloatInputEvents<native_callable><epic_internal>(): input_events(float) = external {}
+
+    MakeLogicInputEvents<native_callable><epic_internal>(): input_events(logic) = external {}
+
+    MakeVector2InputEvents<native_callable><epic_internal>(): input_events(vector2) = external {}
+
+    MakeVector3InputEvents<native_callable><epic_internal>(): input_events(vector3) = external {}
+
+    RemoveInputActionVerb<native><epic_internal>(InputActionVerb: input_action_verb): void
+
+    RemoveInputMapping<native><public>(InputMapping: input_mapping): void
   }
 
   pressed<native><epic_internal> := class<computes>(trigger) {
@@ -692,19 +718,7 @@ ControlInput<public> := module {
 
 # Module import path: /Verse.org/Native
 Native<public> := module {
-  @attribscope_class
-  @attribscope_data
-  @attribscope_enum
-  @attribscope_enumerator
-  @attribscope_function
-  @attribscope_interface
-  @attribscope_module
-  @attribscope_struct
-  available<epic_internal> := class<final>(attribute) {
-    MinUploadedAtFNVersion<public>: int = external {}
-  }
-
-  doc<epic_internal>(documentationString: string)<computes>: doc_attribute
+  doc<constructor><epic_internal>(DocumentationString: string)<computes>: doc_attribute = external {}
 
   @attribscope_module
   @attribscope_class
@@ -715,19 +729,19 @@ Native<public> := module {
   @attribscope_enumerator
   @attribscope_interface
   @attribscope_typedefinition
-  doc_attribute<epic_internal> := class(attribute) {}
+  doc_attribute<epic_internal> := class<computes><internal>(attribute) {}
 
-  import_as<epic_internal>(importName: string)<computes>: import_as_attribute
+  import_as<constructor><epic_internal>(ImportName: string)<computes>: import_as_attribute = external {}
 
   @attribscope_class
   @attribscope_struct
-  import_as_attribute<epic_internal> := class(attribute) {}
+  import_as_attribute<epic_internal> := class<computes><internal>(attribute) {}
 
-  validate_asset_path<epic_internal>(Modifiers: string)<computes>: validate_asset_path_attribute
+  validate_asset_path<constructor><epic_internal>(Modifiers: string)<computes>: validate_asset_path_attribute = external {}
 
   @attribscope_function
   @attribscope_data
-  validate_asset_path_attribute<epic_internal> := class(attribute) {}
+  validate_asset_path_attribute<epic_internal> := class<computes><internal>(attribute) {}
 }
 
 # Module import path: /Verse.org/ParameterCollections
@@ -761,7 +775,7 @@ Restricted<public> := module {
 
     IsSignaled<native><public>()<decides>: void
 
-    Signal<native><override>(__dupe___unnamed_parameter_29: t): void
+    Signal<native><override>(__dupe___unnamed_parameter_15: t): void
   }
 
   sticky_event<public>() := sticky_event(void)
@@ -822,22 +836,22 @@ Simulation<public> := module {
     FindObjectsWithTags<native><epic_internal>(SearchCriteria: tag_search_criteria): []vk_component
 
     # Utility function to allow for easy construction from editor exposable tag_selector
-    MakeGameplayTag<native><epic_internal>(Selector: tag_selector)<transacts><decides>: tag
-
-    # Utility function to allow for easy construction from subclass
-    MakeGameplayTagFromSubClass<native><epic_internal>(Type: subtype(tag))<transacts><decides>: tag
+    MakeTag<native><epic_internal>(Selector: tag_selector)<transacts><decides>: tag
 
     # Create a tag container from an array of gameplay_tag.
-    MakeTagContainer<native><constructor><epic_internal>(InTags: []tag): tag_container
+    MakeTagContainer<native><constructor><epic_internal>(InTags: []tag)<transacts>: tag_container
 
     # Utility function to allow for easy construction from editor exposable tag_selector_container
     MakeTagContainer<native><epic_internal>(Selector: tag_selector_container)<transacts><decides>: tag_container
 
+    # Utility function to allow for easy construction from subclass
+    MakeTagFromSubClass<native><epic_internal>(Type: subtype(tag))<transacts><decides>: tag
+
     # Get a string representation of the gameplay tag. Useful for debugging.
-    ToString<native><epic_internal>(__dupe___unnamed_parameter_46: tag)<computes>: string
+    ToString<native><epic_internal>(__dupe___unnamed_parameter_32: tag)<computes>: string
 
     # Returns abbreviated human readable Tag list. Useful for debugging.
-    ToString<native><epic_internal>(__dupe___unnamed_parameter_49: tag_container)<computes>: string
+    ToString<native><epic_internal>(__dupe___unnamed_parameter_35: tag_container)<computes>: string
 
     # A single gameplay tag, which represents a hierarchical name of the form x.y that is registered in the GameplayTagsManager You can filter the gameplay tags displayed in the editor.
     tag<native><public> := class<abstract> {}
@@ -853,17 +867,27 @@ Simulation<public> := module {
       # Adds all the tags from one container to this container NOTE: From set theory, this effectively is the union of the container this is called on with TagsToAdd.
       Add<native><epic_internal>(TagsToAdd: tag_container): void
 
+      @available { MinUploadedAtFNVersion := 2930 }
+      # Returns a generator for the tags in this container. This is an expensive operation since it will create new tag instances for all tags in the container. Do preferably not use this function for anything else than debugging.
+      GetTags<native><epic_internal>()<transacts>: generator(tag)
+
       # Determine if TagToCheck is present in this container, also checking against parent tags {"A.1"}.Has("A") will return True, {"A"}.Has("A.1") will return False If TagToCheck is not Valid it will always return False.
-      Has<native><override>(TagToCheck: tag)<transacts><decides>: void
+      Has<native><override>(TagToCheck: tag)<computes><decides><reads>: void
 
       # Checks if this container contains ALL of the tags in the specified container, also checks against parent tags {"A.1","B.1"}.HasAll({"A","B"}) will return True, {"A","B"}.HasAll({"A.1","B.1"}) will return False If InTags is empty/invalid it will always return True, because there were no failed checks.
-      HasAll<native><override>(InTags: []tag)<transacts><decides>: void
+      HasAll<native><epic_internal>(InTags: tag_container)<computes><decides><reads>: void
+
+      # Checks if this container contains ALL of the tags in the specified container, also checks against parent tags {"A.1","B.1"}.HasAll({"A","B"}) will return True, {"A","B"}.HasAll({"A.1","B.1"}) will return False If InTags is empty/invalid it will always return True, because there were no failed checks.
+      HasAll<native><override>(InTags: []tag)<computes><decides><reads>: void
 
       # Checks if this container contains ANY of the tags in the specified container, also checks against parent tags {"A.1"}.HasAny({"A","B"}) will return True, {"A"}.HasAny({"A.1","B"}) will return False If InTags is empty/invalid it will always return False.
-      HasAny<native><override>(InTags: []tag)<transacts><decides>: void
+      HasAny<native><epic_internal>(InTags: tag_container)<computes><decides><reads>: void
+
+      # Checks if this container contains ANY of the tags in the specified container, also checks against parent tags {"A.1"}.HasAny({"A","B"}) will return True, {"A"}.HasAny({"A.1","B"}) will return False If InTags is empty/invalid it will always return False.
+      HasAny<native><override>(InTags: []tag)<computes><decides><reads>: void
 
       # Returns the number of explicitly added tags.
-      Num<native><epic_internal>()<transacts>: int
+      Num<native><epic_internal>()<computes><reads>: int
 
       # Remove the specified tag from the container.
       Remove<native><epic_internal>(Tag: tag)<decides>: void
@@ -913,13 +937,13 @@ Simulation<public> := module {
     # A queryable collection of gameplay tags.
     tag_view<native><public> := interface<epic_internal> {
       # Determine if TagToCheck is present in this container, also checking against parent tags {"A.1"}.Has("A") will return True, {"A"}.Has("A.1") will return False If TagToCheck is not Valid it will always return False.
-      Has<public>(TagToCheck: tag)<transacts><decides>: void
+      Has<public>(TagToCheck: tag)<computes><decides><reads>: void
 
       # Checks if this container contains ALL of the tags in the specified container, also checks against parent tags {"A.1","B.1"}.HasAll({"A","B"}) will return True, {"A","B"}.HasAll({"A.1","B.1"}) will return False If InTags is empty/invalid it will always return True, because there were no failed checks.
-      HasAll<public>(InTags: []tag)<transacts><decides>: void
+      HasAll<public>(InTags: []tag)<computes><decides><reads>: void
 
       # Checks if this container contains ANY of the tags in the specified container, also checks against parent tags {"A.1"}.HasAny({"A","B"}) will return True, {"A"}.HasAny({"A.1","B"}) will return False If InTags is empty/invalid it will always return False.
-      HasAny<public>(InTags: []tag)<transacts><decides>: void
+      HasAny<public>(InTags: []tag)<computes><decides><reads>: void
     }
 
     # Component used for tagging objects for retrieval later. Useful when connecting runtime scripts with editor placed objects.
@@ -943,49 +967,49 @@ Simulation<public> := module {
   @attribscope_class
   @attribscope_data
   @customattribhandler
-  allow_self_reference<epic_internal> := class(attribute) {}
+  allow_self_reference<epic_internal> := class<computes>(attribute) {}
 
-  category<epic_internal>(Category: string)<computes>: category_attribute
-
-  @attribscope_class
-  @attribscope_data
-  @attribscope_function
-  @customattribhandler
-  category_attribute<epic_internal> := class(attribute) {}
-
-  clamp_max<epic_internal>(ClampMax: string)<computes>: clamp_max_attribute
-
-  @attribscope_data
-  @customattribhandler
-  clamp_max_attribute<epic_internal> := class(attribute) {}
-
-  clamp_min<epic_internal>(ClampMin: string)<computes>: clamp_min_attribute
-
-  @attribscope_data
-  @customattribhandler
-  clamp_min_attribute<epic_internal> := class(attribute) {}
-
-  display_name<epic_internal>(DisplayName: string)<computes>: display_name_attribute
+  category<constructor><epic_internal>(Category: string)<computes>: category_attribute = external {}
 
   @attribscope_class
   @attribscope_data
   @attribscope_function
   @customattribhandler
-  display_name_attribute<epic_internal> := class(attribute) {}
+  category_attribute<epic_internal> := class<computes><internal>(attribute) {}
 
-  display_priority<epic_internal>(DisplayPriority: string)<computes>: display_priority_attribute
+  clamp_max<constructor><epic_internal>(ClampMax: string)<computes>: clamp_max_attribute = external {}
+
+  @attribscope_data
+  @customattribhandler
+  clamp_max_attribute<epic_internal> := class<computes><internal>(attribute) {}
+
+  clamp_min<constructor><epic_internal>(ClampMin: string)<computes>: clamp_min_attribute = external {}
+
+  @attribscope_data
+  @customattribhandler
+  clamp_min_attribute<epic_internal> := class<computes><internal>(attribute) {}
+
+  display_name<constructor><epic_internal>(DisplayName: string)<computes>: display_name_attribute = external {}
 
   @attribscope_class
   @attribscope_data
   @attribscope_function
   @customattribhandler
-  display_priority_attribute<epic_internal> := class(attribute) {}
+  display_name_attribute<epic_internal> := class<computes><internal>(attribute) {}
+
+  display_priority<constructor><epic_internal>(DisplayPriority: string)<computes>: display_priority_attribute = external {}
+
+  @attribscope_class
+  @attribscope_data
+  @attribscope_function
+  @customattribhandler
+  display_priority_attribute<epic_internal> := class<computes><internal>(attribute) {}
 
   @attribscope_class
   @attribscope_struct
   @attribscope_data
   @customattribhandler
-  editable<public> := class(attribute) {
+  editable<public> := class<computes>(attribute) {
     # The categories displayed in the editor.
     Categories<public>: []message = external {}
 
@@ -1005,7 +1029,7 @@ Simulation<public> := module {
   @attribscope_struct
   @attribscope_data
   @customattribhandler
-  editable_container<public> := class<final>(editable) {
+  editable_container<public> := class<final><computes>(editable) {
     # If true, allows reordering of the container elements in the editor.
     AllowReordering<public>: logic = external {}
   }
@@ -1016,7 +1040,7 @@ Simulation<public> := module {
   @attribscope_struct
   @attribscope_data
   @customattribhandler
-  editable_non_concrete<epic_internal> := class(attribute) {
+  editable_non_concrete<epic_internal> := class<computes>(attribute) {
     EditInline<epic_internal>: logic = external {}
   }
 
@@ -1024,7 +1048,7 @@ Simulation<public> := module {
   @attribscope_struct
   @attribscope_data
   @customattribhandler
-  editable_number<public>(t: type) := class<final>(editable) {
+  editable_number<public>(t: type) := class<final><computes>(editable) {
     # The maximum value the editor allows.
     MaxValue<public>: ?t = external {}
 
@@ -1039,7 +1063,7 @@ Simulation<public> := module {
   @attribscope_struct
   @attribscope_data
   @customattribhandler
-  editable_slider<public>(t: type) := class<final>(editable) {
+  editable_slider<public>(t: type) := class<final><computes>(editable) {
     # The maximum value of the editor slider.
     MaxValue<public>: ?t = external {}
 
@@ -1059,10 +1083,14 @@ Simulation<public> := module {
   }
 
   @attribscope_class
+  @customattribhandler
+  editable_subclass<epic_internal> := class<computes>(attribute) {}
+
+  @attribscope_class
   @attribscope_struct
   @attribscope_data
   @customattribhandler
-  editable_text_box<public> := class<final>(editable) {
+  editable_text_box<public> := class<final><computes>(editable) {
     # The maximum length of the text.
     MaxLength<public>: int = external {}
 
@@ -1074,7 +1102,7 @@ Simulation<public> := module {
   @attribscope_struct
   @attribscope_data
   @customattribhandler
-  editable_vector_number<public>(t: type) := class<final>(editable) {
+  editable_vector_number<public>(t: type) := class<final><computes>(editable) {
     # The maximum value allowed for each vector element.
     MaxComponentValue<public>: ?t = external {}
 
@@ -1095,7 +1123,7 @@ Simulation<public> := module {
   @attribscope_struct
   @attribscope_data
   @customattribhandler
-  editable_vector_slider<public>(t: type) := class<final>(editable) {
+  editable_vector_slider<public>(t: type) := class<final><computes>(editable) {
     # The maximum value allowed for each vector element.
     MaxComponentValue<public>: ?t = external {}
 
@@ -1123,17 +1151,18 @@ Simulation<public> := module {
   @attribscope_class
   @attribscope_data
   @customattribhandler
-  experimental_always_overridden<epic_internal> := class(attribute) {}
+  experimental_always_overridden<epic_internal> := class<computes>(attribute) {}
 
   @attribscope_class
   @customattribhandler
-  hide_in_editor<epic_internal> := class(attribute) {}
+  hide_in_editor<epic_internal> := class<computes>(attribute) {}
 
   localizable_agent<native><epic_internal> := class(localizable_value) {
     Value<native><epic_internal>: agent
   }
 
   player<native><public> := class<unique><persistent><module_scoped_var_weak_map_key><epic_internal>(agent) {
+    # Succeeds when this `player` may be used as a module-scoped `var` `weak_map` key. This coincides with the corresponding player having joined the game and not yet left. Using a `player` as a module-scope `var` `weak_map` key when this method fails results in a runtime error.
     IsActive<native><public>()<computes><decides><reads>: void
   }
 
@@ -1152,35 +1181,35 @@ Simulation<public> := module {
   # Note: may be changed in a future release to a single instance per game. Round-local behavior should not be relied upon.
   session<native><public> := class<unique><module_scoped_var_weak_map_key><epic_internal> {}
 
-  short_tool_tip<epic_internal>(ShortToolTip: string)<computes>: short_tool_tip_attribute
+  short_tool_tip<constructor><epic_internal>(ShortToolTip: string)<computes>: short_tool_tip_attribute = external {}
 
   @attribscope_class
   @attribscope_data
   @attribscope_function
   @customattribhandler
-  short_tool_tip_attribute<epic_internal> := class(attribute) {}
+  short_tool_tip_attribute<epic_internal> := class<computes><internal>(attribute) {}
 
   team<native><public> := class<unique><epic_internal> {}
 
-  tool_tip<epic_internal>(ToolTip: string)<computes>: tool_tip_attribute
+  tool_tip<constructor><epic_internal>(ToolTip: string)<computes>: tool_tip_attribute = external {}
 
   @attribscope_class
   @attribscope_data
   @attribscope_function
   @customattribhandler
-  tool_tip_attribute<epic_internal> := class(attribute) {}
+  tool_tip_attribute<epic_internal> := class<computes><internal>(attribute) {}
 
-  ui_max<epic_internal>(UIMax: string)<computes>: ui_max_attribute
-
-  @attribscope_data
-  @customattribhandler
-  ui_max_attribute<epic_internal> := class(attribute) {}
-
-  ui_min<epic_internal>(UIMin: string)<computes>: ui_min_attribute
+  ui_max<constructor><epic_internal>(UIMax: string)<computes>: ui_max_attribute = external {}
 
   @attribscope_data
   @customattribhandler
-  ui_min_attribute<epic_internal> := class(attribute) {}
+  ui_max_attribute<epic_internal> := class<computes><internal>(attribute) {}
+
+  ui_min<constructor><epic_internal>(UIMin: string)<computes>: ui_min_attribute = external {}
+
+  @attribscope_data
+  @customattribhandler
+  ui_min_attribute<epic_internal> := class<computes><internal>(attribute) {}
 }
 
 Verse<public> := module {
@@ -1520,7 +1549,7 @@ Verse<public> := module {
   # Can be used with `awaitable`, `subscribable`, or both (see: `listenable`).
   signalable<public>(payload: type) := interface {
     # Concurrently resumes the tasks waiting for this event in `awaitable.Await` and synchronously invokes any callbacks added to this event by `subscribable.Subscribe`.
-    Signal<public>(Val: payload): void
+    Signal<native_callable><public>(Val: payload): void
   }
 
   # A parameterless interface implemented by events that can be subscribed to.
@@ -1548,13 +1577,13 @@ VerseEngine<public> := module {
     # Module import path: /Verse.org/VerseEngine/Entity/EntityHelpers
     EntityHelpers<public> := module {
       # Destroy the vk_entity the vk_component is attached to
-      DestroyObject<native><public>(__dupe___unnamed_parameter_43: vk_component): logic
+      DestroyObject<native><public>(__dupe___unnamed_parameter_29: vk_component): logic
 
       # Get a vk_component from the vk_entity of the specified type
       GetComponentOfTypeC<native><public>(InComponent: vk_component, Type: type)<transacts><decides>: vk_component
 
       # Gets the vk_entity associated with the parameter provided vk_component
-      GetEntityFromComponent<native><public>(__dupe___unnamed_parameter_44: vk_component)<transacts><decides>: vk_entity
+      GetEntityFromComponent<native><public>(__dupe___unnamed_parameter_30: vk_component)<transacts><decides>: vk_entity
     }
 
     vk_entity<native><public> := class<final> {
@@ -1587,7 +1616,7 @@ VerseEngine<public> := module {
       IsEqual<native><public>(OtherEntity: vk_entity)<transacts>: logic
 
       # Remove a vk_component from the vk_entity
-      RemoveComponent<native><public>(__dupe___unnamed_parameter_34: vk_component): logic
+      RemoveComponent<native><public>(__dupe___unnamed_parameter_20: vk_component): logic
     }
   }
 
@@ -1598,7 +1627,7 @@ VerseEngine<public> := module {
   logic_param_delegate_signature<public> := type { __(: logic): void }
 
   multicast_delegate<native><public>(t: type) := class(multicast_delegate_base, subscribable(t)) {
-    Broadcast<native><public>(__dupe___unnamed_parameter_46: t): void
+    Broadcast<native><public>(__dupe___unnamed_parameter_32: t): void
 
     Empty<native><public>(): void
 
@@ -1617,6 +1646,8 @@ VerseEngine<public> := module {
 
   subscribable_event<native><epic_internal>(t: type) := class(multicast_delegate(t), listenable(t)) {
     Await<native><override>()<suspends>: t
+
+    Broadcast<native><override>(__dupe___unnamed_parameter_33: t): void
   }
 }
 
@@ -1741,7 +1772,13 @@ VerseExperimental<public> := module {
     Millisecond: int
   ): logic
 
-  date_parts<native><public> := struct<internal> {}
+  date_parts<native><public> := struct<internal> {
+    Day<native>: int
+
+    Month<native>: int
+
+    Year<native>: int
+  }
 
   date_time<native><public> := struct {
     Ticks<native><public>: int = external {}
@@ -1809,7 +1846,19 @@ VerseExperimental<public> := module {
 
   operator'/'<public>(Left: time_span, Right: float): time_span = external {}
 
-  time_of_day_parts<native><public> := struct<internal> {}
+  time_of_day_parts<native><public> := struct<internal> {
+    Hours<native>: int
+
+    Microseconds<native>: int
+
+    Milliseconds<native>: int
+
+    Minutes<native>: int
+
+    Nanoseconds<native>: int
+
+    Seconds<native>: int
+  }
 
   time_span<native><public> := struct {
     Ticks<public>: int = external {}

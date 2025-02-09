@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-31.41-CL-37324991
+# Generated from build: ++Fortnite+Release-32.00-CL-37505882
 #################################################
 
 AINavigation<public> := module {
@@ -53,7 +53,7 @@ Abilities<public> := module {
 
   @attribscope_data
   @customattribhandler
-  ability_link<epic_internal> := class(attribute) {
+  ability_link<epic_internal> := class<computes>(attribute) {
     Name<epic_internal>: string = external {}
   }
 }
@@ -523,84 +523,25 @@ EpicGames<public> := module {
 EpicGamesRestricted<public> := module {
   # Module import path: /UnrealEngine.com/EpicGamesRestricted/Network
   Network<public> := module {
-    replicated<epic_internal>(ReplicationArgs: string)<computes>: replicated_attribute
+    replicated<constructor><epic_internal>(ReplicationArgs: string)<computes>: replicated_attribute = external {}
 
     @attribscope_data
     @customattribhandler
-    replicated_attribute<epic_internal> := class(attribute) {}
-  }
-
-  # Module import path: /UnrealEngine.com/EpicGamesRestricted/Spline
-  Spline<public> := module {
-    spline_component<native><public> := class<final>(vk_component) {
-      # Given a world position, find the closest spline input key
-      FindClosestInputKeyToWorldPosition<native><public>(Position: vector3)<transacts><decides>: float
-
-      # Given a spline input key, find the spline distance
-      FindDistanceAlongSplineAtInputKey<native><public>(InputKey: float)<transacts><decides>: float
-
-      # Given a spline input key, find the spline distance
-      GetInputKeyAtDistanceAlongSpline<native><public>(DistanceAlongSpline: float)<transacts><decides>: float
-
-      # Returns the length of the spline
-      GetSplineLength<native><public>(): float
-
-      # Given a distance along the length of this spline, return the associated data values at that point
-      QueryAtDistanceAlongSpline<native><public>(
-        DistanceAlongSpline: float,
-        bIsWorldSpace: logic
-      )<transacts><decides>: spline_query_result
-
-      # Given a time from 0 to the spline duration, return the corresponding data values at that point
-      QueryAtTime<native><public>(Time: float, bIsWorldSpace: logic)<transacts><decides>: spline_query_result
-    }
-
-    spline_query_result<native><public> := struct {
-      out_transform<native><public>: transform
-
-      tangent<native><public>: vector3
-    }
+    replicated_attribute<epic_internal> := class<computes><internal>(attribute) {}
   }
 }
 
 # Module import path: /UnrealEngine.com/Playspace
 Playspace<public> := module {
-  PlayerType<native><epic_internal> := enum {
-    ActivePlayer
-
-    All
-
-    Spectator
-  }
-
   @hide_in_editor
   @experimental
   playspace_association_component<native><epic_internal> := class<epic_internal>(component) {
     IsAllowedOnClient<override>(): logic = external {}
   }
-
-  playspace_component<native><epic_internal> := class(vk_component) {
-    SetPlayerComponentClass<native><public>(ComponentType: type): void
-
-    _WaitForMatchBegin<native><public>()<suspends>: void
-
-    _WaitForMatchEnd<native><public>()<suspends>: void
-
-    _WaitForPlayerAdded<native><public>()<suspends>: player_component
-
-    _WaitForPlayerRemoved<native><public>()<suspends>: player_component
-
-    _WaitForSetupComplete<native><public>()<suspends>: void
-
-    getPlayerCount<native><public>(Type: PlayerType)<transacts>: int
-
-    getPlayers<native><public>(Type: PlayerType)<transacts>: []player_component
-
-    setQueueUserForRespawnWhenAdded<native><public>(spawnWhenAdded: logic): void
-  }
 }
 
 Temporary<public> := module {
+  using { /UnrealEngine.com/Temporary/Diagnostics }
   # Module import path: /UnrealEngine.com/Temporary/Curves
   Curves<public> := module {
     editable_curve<native><public> := class<final><concrete> {
@@ -734,7 +675,10 @@ Temporary<public> := module {
     # log class to send messages to the default log
     log<native><public> := class {
       # Print message using the given log level
-      (log:)Print<native><public>(Message: string, ?Level: log_level = external {})<computes>: void
+      (/UnrealEngine.com/Temporary/Diagnostics/log:)Print<native><public>(
+        Message: string,
+        ?Level: log_level = external {}
+      )<computes>: void
 
       # Channel class name will be added as a prefix used when printing the message e.g. '[log_channel]: #Message
       Channel<native><public>: subtype(log_channel)
@@ -768,67 +712,80 @@ Temporary<public> := module {
     (Entity: entity).GetPhysicsScene<epic_internal>()<transacts><decides>: physics_scene_component = external {}
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all components attached to entities below and including `InEntity` of type `ComponentType`.When querying from the simulation entity, the simulation entity itself is not included in the results.The order of the returned components is unspecified and subject to change.
-    (InEntity: entity).FindComponents<native><public>(ComponentType: subtype(component))<transacts>: []ComponentType
+    (InEntity: entity).FindComponents<native><public>(ComponentType: subtype(component))<transacts>: generator(ComponentType)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all entities below and including `InEntity` of type `EntityType`.When querying from the simulation entity, the simulation entity itself is not included in the results.The order of the returned entities is unspecified and subject to change.
-    (InEntity: entity).FindEntities<native><public>(EntityType: subtype(entity))<transacts>: []EntityType
+    (InEntity: entity).FindEntities<native><public>(EntityType: subtype(entity))<transacts>: generator(EntityType)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all entities below and including `InEntity` whose `collision_component` shape is inside `Shape`.When querying from the simulation entity, the simulation entity itself is not included in the results.The order of the returned entities is unspecified and subject to change.
-    (InEntity: entity).FindEntitiesInside<native><epic_internal>(Shape: convex_volume3)<transacts>: []entity
+    (InEntity: entity).FindEntitiesInside<native><epic_internal>(Shape: convex_volume3)<transacts>: generator(entity)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all entities below and including `InEntity` whose `transform_component.Translation` is inside `Shape`.When querying from the simulation entity, the simulation entity itself is not included in the results.The order of the returned entities is unspecified and subject to change.
-    (InEntity: entity).FindEntitiesOriginInside<native><public>(Shape: convex_volume3)<transacts>: []entity
+    (InEntity: entity).FindEntitiesOriginInside<native><public>(Shape: convex_volume3)<transacts>: generator(entity)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all entities below and including `InEntity` whose `collision_component` shape overlaps with `Shape`.When querying from the simulation entity, the simulation entity itself is not included in the results.The order of the returned entities is unspecified and subject to change.
-    (InEntity: entity).FindEntitiesOverlapping<native><public>(Shape: convex_volume3)<transacts>: []entity
+    (InEntity: entity).FindEntitiesOverlapping<native><public>(Shape: convex_volume3)<transacts>: generator(entity)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all entities below and including `InEntity` containing a component of type `ComponentType`.When querying from the simulation entity, the simulation entity itself is not included in the results.The order of the returned entities is unspecified and subject to change.
-    (InEntity: entity).FindEntitiesWithComponent<native><public>(ComponentType: subtype(component))<transacts>: []entity
+    (InEntity: entity).FindEntitiesWithComponent<native><public>(ComponentType: subtype(component))<transacts>: generator(entity)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all entities below and including `InEntity` with `Tag` present in their `tag_component`.When querying from the simulation entity, the simulation entity itself is not included in the results.The order of the returned entities is unspecified and subject to change.
-    (InEntity: entity).FindEntitiesWithTag<native><public>(Tag: tag)<transacts>: []entity
+    (InEntity: entity).FindEntitiesWithTag<native><public>(Tag: tag)<transacts>: generator(entity)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all components attached to parent entities above `InEntity` of type `ComponentType`.The order of the returned components is unspecified and subject to change.
-    (InEntity: entity).FindParentComponents<native><public>(ComponentType: subtype(component))<transacts>: []ComponentType
+    (InEntity: entity).FindParentComponents<native><public>(ComponentType: subtype(component))<transacts>: generator(ComponentType)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all parent entities above `InEntity` of type `EntityType`.The order of the returned entities is unspecified and subject to change.
-    (InEntity: entity).FindParentEntities<native><public>(EntityType: subtype(entity))<transacts>: []EntityType
+    (InEntity: entity).FindParentEntities<native><public>(EntityType: subtype(entity))<transacts>: generator(EntityType)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all parent entities above `InEntity` whose `collision_component` shape is inside `Shape`.The order of the returned components is unspecified and subject to change.
-    (InEntity: entity).FindParentEntitiesInside<native><epic_internal>(Shape: convex_volume3)<transacts>: []entity
+    (InEntity: entity).FindParentEntitiesInside<native><epic_internal>(Shape: convex_volume3)<transacts>: generator(entity)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all parent entities above `InEntity` whose `transform_component.Translation` is inside `Shape`.The order of the returned components is unspecified and subject to change.
-    (InEntity: entity).FindParentEntitiesOriginInside<native><public>(Shape: convex_volume3)<transacts>: []entity
+    (InEntity: entity).FindParentEntitiesOriginInside<native><public>(Shape: convex_volume3)<transacts>: generator(entity)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all parent entities above `InEntity` whose `collision_component` shape overlaps with `Shape`.The order of the returned components is unspecified and subject to change.
-    (InEntity: entity).FindParentEntitiesOverlapping<native><public>(Shape: convex_volume3)<transacts>: []entity
+    (InEntity: entity).FindParentEntitiesOverlapping<native><public>(Shape: convex_volume3)<transacts>: generator(entity)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all parent entities above `InEntity` containing a component of type `ComponentType`.The order of the returned entities is unspecified and subject to change.
-    (InEntity: entity).FindParentEntitiesWithComponent<native><public>(ComponentType: subtype(component))<transacts>: []entity
+    (InEntity: entity).FindParentEntitiesWithComponent<native><public>(ComponentType: subtype(component))<transacts>: generator(entity)
 
     @experimental
+    @available { MinUploadedAtFNVersion := 2930 }
     # Finds all parent entities above `InEntity` with `Tag` present in their `tag_component`.The order of the returned entities is unspecified and subject to change.
-    (InEntity: entity).FindParentEntitiesWithTag<native><public>(Tag: tag)<transacts>: []entity
+    (InEntity: entity).FindParentEntitiesWithTag<native><public>(Tag: tag)<transacts>: generator(entity)
 
     @experimental
     # Returns the simulation entity parent for this entity.  * The simulation entity is the rootmost entity in an experience.  * Fails if this entity is not currently in the scene.
     (InEntity: entity).GetSimulationEntity<native><public>()<transacts><decides>: entity
 
     using { /Verse.org/Assets }
-    using { /Verse.org/Simulation }
     # Module import path: /UnrealEngine.com/Temporary/SceneGraph/FNECon
     FNECon<public> := module {
       @experimental
@@ -917,6 +874,7 @@ Temporary<public> := module {
     using { /UnrealEngine.com/EpicGamesRestricted/Network }
     using { /UnrealEngine.com/Temporary/SpatialMath }
     using { /Verse.org/Native }
+    using { /Verse.org/ParameterCollections }
     using { /Verse.org/Simulation/Tags }
     # Module import path: /UnrealEngine.com/Temporary/SceneGraph/VerseCamera
     VerseCamera<public> := module {
@@ -925,12 +883,20 @@ Temporary<public> := module {
       # Owns a CameraDirector, which is responsible for selecting the best camera mode every update.
       # Owns a default EvaluationContext, which is responsible for setting the default camera transform, before camera logic is applied
       camera_behavior_component<native><epic_internal> := class(component) {
+        # Get camera parameters for a specific player
+        GetCameraParametersForPlayer<native><epic_internal>(Player: player)<transacts><decides>: []parameter_collection
+
         # Internal epic method to know if this component is allowed on client
         IsAllowedOnClient<override>(): logic = external {}
 
         @experimental
         # Reponsible for deciding which camera modes should be active on each layer
         var CameraDirector<public>: camera_director = external {}
+
+        @replicated("")
+        @experimental
+        # Parameters that can be used as input to all camera modes being run by this camera behavior component
+        var<private> CameraParameters<native><epic_internal>: []parameter_collection = external {}
       }
 
       @experimental
@@ -974,7 +940,17 @@ Temporary<public> := module {
         @display_name("CameraRigAsset")
         @replicated("")
         @experimental
-        CameraRigAsset<native><public>: camera_rig_asset = external {}
+        CameraRigAsset<native><epic_internal>: camera_rig_asset = external {}
+
+        @experimental
+        @editable
+        # Transitions to use when entering this camera mode. Controls how this camera mode blends when blending in.  Enter transitions on this camera mode will be favoured over the outgoing camera mode's exit transition, unless the exit transition has a higher priority.  The camera mode will use the first transition it finds in this array that succeeds.
+        EnterTransitions<native><public>: []camera_mode_transition = external {}
+
+        @experimental
+        @editable
+        # Transitions to use when exiting this camera mode. Controls how this camera mode blends when blending out  Enter transitions from the camera mode we're transitioning to will be favoured over the this camera mode's exit transition, unless the exit transition has a higher priority.  The camera mode will use the first transition it finds in this array that succeeds.
+        ExitTransitions<native><public>: []camera_mode_transition = external {}
 
         @experimental
         GetCameraModeTag<native><public>()<transacts><decides>: verse_camera_mode_tag
@@ -995,6 +971,36 @@ Temporary<public> := module {
       camera_mode_base<native><epic_internal> := class<abstract> {}
 
       @experimental
+      @hide_in_editor
+      # Configurable blend between two camera modes
+      camera_mode_blend<native><epic_internal> := class<concrete> {}
+
+      @experimental
+      # Linear blend between camera modes
+      camera_mode_blend_linear<native><epic_internal> := class<concrete>(camera_mode_blend_with_duration) {}
+
+      @experimental
+      # Instantly snap to target mode
+      camera_mode_blend_pop<native><epic_internal> := class<concrete>(camera_mode_blend) {}
+
+      @experimental
+      # Camera mode blend that uses the smootherstep function to blend between the two camera modes
+      camera_mode_blend_smootherstep<native><epic_internal> := class<concrete>(camera_mode_blend_with_duration) {}
+
+      @experimental
+      # Camera mode blend that uses the smoothstep function to blend between the two camera modes
+      camera_mode_blend_smoothstep<native><epic_internal> := class<concrete>(camera_mode_blend_with_duration) {}
+
+      @experimental
+      @hide_in_editor
+      # Base class for camera mode blends that have a duration
+      camera_mode_blend_with_duration<native><epic_internal> := class<concrete>(camera_mode_blend) {
+        @editable
+        # Sets the duration of the camera blend
+        Duration<native><public>: float = external {}
+      }
+
+      @experimental
       # A camera mode, camera component pair used to give all the context required to execute a camera mode
       camera_mode_context<native><epic_internal> := struct {
         # Camera component this camera mode should run on
@@ -1002,6 +1008,40 @@ Temporary<public> := module {
 
         # Camera mode this camera mode context refers to
         CameraMode<native><public>: camera_mode
+      }
+
+      @experimental
+      # Controls how a camera mode transitions to another
+      camera_mode_transition<native><epic_internal> := class<concrete> {
+        @editable
+        # Blend settings for this transition
+        Blend<native><public>: camera_mode_blend = external {}
+
+        # Transition will be taken if this function succeeds
+        CanTransition<native_callable><public>(
+          SourceCameraMode: camera_mode,
+          DestinationCameraMode: camera_mode
+        )<transacts><decides>: void = external {}
+
+        @editable
+        # Priority of this transition. System will default to using enter transition from new camera mode. This priority can be set to force the exit transition of the outgoing camera mode to be chosen
+        Priority<native><public>: ?float = external {}
+      }
+
+      @experimental
+      # Transition that will only be chosen if the CameraModeTag of the source and destination camera modes match the specified tag query
+      camera_mode_transition_if_tags_match<native><epic_internal> := class<concrete>(camera_mode_transition) {
+        # Transition will be taken if this function succeeds
+        CanTransition<native><override>(
+          SourceCameraMode: camera_mode,
+          DestinationCameraMode: camera_mode
+        )<transacts><decides>: void
+
+        # Destination camera mode's tag must pass this search criteria
+        DestinationCameraModeTags<native><public>: tag_search_criteria = external {}
+
+        # Source camera mode's tag must pass this search criteria
+        SourceCameraModeTags<native><public>: tag_search_criteria = external {}
       }
 
       @experimental
@@ -1259,8 +1299,67 @@ Temporary<public> := module {
       SetFieldOfView<public>(InFieldOfView: float): void = external {}
     }
 
+    using { /Verse.org/Simulation }
     @experimental
-    collision_channel<native><public> := struct<concrete><computes><epic_internal> {}
+    # An interactable component with a composable feature set.
+    basic_interactable_component<native><public> := class(interactable_component) {
+      @experimental
+      # Attempt to cancel an interaction. Fails if the supplied agent is not currently interacting with the component.
+      Cancel<native><public>(Agent: agent)<transacts><decides>: void
+
+      @editable
+      @experimental
+      # Cooldowns begin elapsing on successful interactions. A cooldown which applies for all attempts to interact on this component.
+      Cooldown<native><public>: ?interactable_cooldown = external {}
+
+      @editable
+      @experimental
+      # Cooldowns begin elapsing on successful interactions. A cooldown which applies for future attempts to interact on this component by the agent which succeeded.
+      CooldownPerAgent<native><public>: ?interactable_cooldown_per_agent = external {}
+
+      @experimental
+      # The text to display to the user within the interaction range of the entity with a interact component that CannotInteract. Used only during initialization of the component and not modified by SetText.
+      DefaultCannotInteractText<localizes><native><public>: message = external {}
+
+      @experimental
+      # The text to display when within the interaction range of the entity with a coolingdown interact component. Used only during initialization of the component and not modified by SetText.
+      DefaultCoolDownText<localizes><native><public>: message = external {}
+
+      @experimental
+      # The text displayed when within the interaction range of the entity with an interactable interact component. Used only during initialization of the component and not modified by SetText.
+      DefaultInteractText<localizes><native><public>: message = external {}
+
+      @experimental
+      # Get the remaining cooldown of the interactable for the supplied agent. This returns the duration left in seconds of either the shared or per agent cooldown, whichever is greater. Returns the same value when called multiple times within a transaction.
+      GetRemainingCooldownDurationAffectingAgent<native><public>(Agent: agent): float
+
+      @editable
+      @experimental
+      # An interaction with a duration does not succeed until the duration has elapsed, and success is not guaranteed as it can be canceled while the duration is active.
+      InteractableDuration<native><public>: ?interactable_duration = external {}
+
+      @experimental
+      # Sets the text displayed when within the interaction range of the entity with an interactable interact component.
+      SetInteractText<native><epic_internal>(InText: message): void
+
+      @experimental
+      # Attempt to succeed at an interaction. Success will also happen automatically after InteractDuration has elapsed after starting an interaction. Fails if the supplied agent is not currently interacting with the component.
+      Succeed<native><public>(Agent: agent)<transacts><decides>: void
+
+      @editable
+      @experimental
+      # Success limits prevent new interactions once the component has been successfully interacted with a specified number of times.
+      SuccessLimit<native><public>: ?interactable_success_limit = external {}
+
+      @experimental
+      # The agents which are currently interacting with this interactable.
+      var<private> InteractingAgents<native><public>: []agent
+    }
+
+    @experimental
+    collision_channel<native><public> := struct<concrete><computes><epic_internal> {
+      ChannelIndex: int = external {}
+    }
 
     @experimental
     collision_channel_response<native><public> := enum {
@@ -1509,8 +1608,22 @@ Temporary<public> := module {
     }
 
     @experimental
-    # Used to subscribe a callback to a DeltaTime based callback from one of the phases in a component's `TickEvents` object.'IMPORTANT: You must keep a pointer on your component to the returned `cancelable`. Otherwise the GC will eventuallyclean up your subscription and your callback will stop being invoked.
-    execution_subscribable<native><public> := class<epic_internal>(subscribable(float)) {
+    # Used to subscribe a callback or await an event based callback 'IMPORTANT: You must keep a pointer on your component to the returned `cancelable`. Otherwise the GC will eventuallyclean up your subscription and your callback will stop being invoked.
+    execution_event<native><public> := class<epic_internal>(listenable(tuple())) {
+      # Suspends the current task until resumed by a matching call to `signalable.Signal`.
+      Await<native><override>()<suspends>: tuple()
+
+      @experimental
+      # Subscribe a callback function to this event.
+      Subscribe<native><override>(Callback: type { __(): void })<transacts>: cancelable
+    }
+
+    @experimental
+    # Users to subscribe to, or await on, a DeltaTime based callback from one of the phases in a component's `TickEvents` object.'IMPORTANT: You must keep a pointer on your component to the returned `cancelable`. Otherwise the GC will eventuallyclean up your subscription and your callback will stop being invoked.
+    execution_listenable<native><public> := class<epic_internal>(listenable(float)) {
+      # Suspends the current task until resumed by a matching call to `signalable.Signal`. Returns the event `payload`.
+      Await<native><override>()<suspends>: float
+
       @experimental
       # Subscribe a callback function to this TickEvent phase. The input parameter to your function (DeltaTime) is the time that haspassed between the last update and the current update.
       Subscribe<native><override>(Callback: type { __(: float): void })<transacts>: cancelable
@@ -1518,14 +1631,11 @@ Temporary<public> := module {
 
     @experimental
     execution_subscription<native><epic_internal> := class(cancelable) {
-      @experimental
       Cancel<native><override>()<transacts>: void
 
-      @experimental
-      RunAfter<native><epic_internal>(__dupe___unnamed_parameter_46: execution_subscription): void
+      RunAfter<native><epic_internal>(__dupe___unnamed_parameter_32: execution_subscription): void
 
-      @experimental
-      RunBefore<native><epic_internal>(__dupe___unnamed_parameter_47: execution_subscription): void
+      RunBefore<native><epic_internal>(__dupe___unnamed_parameter_33: execution_subscription): void
     }
 
     @experimental
@@ -1560,162 +1670,155 @@ Temporary<public> := module {
 
     @experimental
     # Used to handle general interaction.
-    interact_component<native><epic_internal> := class(component, enableable) {
+    interactable_component<native><public> := class(component, enableable) {
       # Returns whether the specified agent can interact.
       CanInteract<native><public>(Agent: agent)<computes><decides><reads>: void
 
-      @experimental
-      # Attempt to cancel an interaction. Fails if the supplied agent is not currently interacting with the component.
-      Cancel<native><public>(Agent: agent)<transacts><decides>: void
+      # Event fires when an interaction has ended before completing successfully. Sends the formerly interacting agent.  This event is called on all interacting agents when Disable() is called on the component.
+      CanceledEvent<native><public>: listenable(agent) = external {}
 
-      # The text to display to the user within the interaction range of the entity with a interact component that CannotInteract. Used only during initialization of the component and not modified by SetText.
-      DefaultCannotInteractText<localizes><native><public>: message = external {}
-
-      # The text to display when within the interaction range of the entity with a coolingdown interact component. Used only during initialization of the component and not modified by SetText.
-      DefaultCoolDownText<localizes><native><public>: message = external {}
-
-      @experimental
-      # The text displayed when within the interaction range of the entity with an interactable interact component. Used only during initialization of the component and not modified by SetText.
-      DefaultInteractText<localizes><native><public>: message = external {}
-
-      @experimental
       # Disable interaction with the component. Disabled components do not provide interaction prompts.
       Disable<native><override>(): void
 
-      @experimental
       # Enable interaction with the component.
       Enable<native><override>(): void
 
-      # Gets the current text to display to the user within the interaction range of the entity with a interact component that CannotInteract.
-      GetCannotInteractText<native><public>(): string
-
-      # Gets the current text to display when within the interaction range of the entity with a coolingdown interact component.
-      GetCoolDownText<native><public>(): string
-
-      @experimental
-      # Gets the current text displayed when within the interaction range of the entity with an interactable interact component.
-      GetInteractText<native><public>(): string
-
-      @experimental
-      # Returns the interacting agents for this interactable.
-      GetInteractingAgents<native><final><public>(): []agent
-
-      # Returns the max number of times this component can have a successful interaction, false is unlimited.
-      GetMaxSuccessfulInteractions<native><final><public>(): ?int
-
-      # Get the remaining cooldown of the interactable for the supplied agent. This returns the duration left in seconds of either the shared or per agent cooldown, whichever is greater. Returns the same value when called multiple times within a transaction.
-      GetRemainingCooldownDurationAffectingAgent<native><public>(Agent: agent): float
-
-      # Returns the remaining duration, in seconds, to interact for an agent. Fails if the agent is not interacting with this component. Returns the same value when called multiple times within a transaction.
-      GetRemainingInteractDuration<native><final><public>(InteractingAgent: agent)<transacts><decides>: float
-
-      @experimental
-      # Get the remaining per-agent cooldown duration, for the supplied agent. This returns the duration left in seconds, for that agent. Returns the same value when called multiple times within a transaction.
-      GetRemainingPerAgentCooldownDuration<native><final><public>(Agent: agent): float
-
-      @experimental
-      # Get the remaining shared cooldown duration. This returns the duration left in seconds, not specific to any Agent. Returns the same value when called multiple times within a transaction.
-      GetRemainingSharedCooldownDuration<native><final><public>(): float
-
-      # Returns the number of times this component has had a successful interaction.
-      GetSuccessfulIteractionCount<native><final><public>(): int
-
-      @experimental
-      # Event fires when an interaction has ended before completing successfully. Sends the formerly interacting agent.  This event is called on all interacting agents when Disable() is called on the component.
-      InteractCanceledEvent<native><public>: listenable(agent) = external {}
-
       InteractFinishedEvent<native><public>: listenable(agent) = external {}
 
-      # Event fires when an a successful interaction starts. Sends the interacting agent. InteractDuration at or below 0 makes this event identical to InteractSucceededEvent.
-      InteractStartedEvent<native><public>: listenable(agent) = external {}
-
-      # Event fires when an interaction has completed successfully. Sends the formerly interacting agent. InteractDuration at or below 0 makes this event identical to InteractStartedEvent.
-      InteractSucceededEvent<native><public>: listenable(agent) = external {}
-
-      # Returns whether the specified agent is currently interacting.
-      IsAgentInteracting<native><final><public>(Agent: agent)<computes><decides><reads>: void
+      # Returns an appropriate message to display to players to communicate the current state of the interactable.
+      InteractMessage<native><public>(Agent: agent)<computes><decides><reads>: message
 
       # Internal epic method to know if this component is allowed on client
       IsAllowedOnClient<override>(): logic = external {}
 
-      @experimental
       # Succeeds if the component is enabled, fails if it’s disabled.
       IsEnabled<native><override>()<transacts><decides>: void
 
-      @experimental
-      # Event fires when the remaining duration of the per agent cooldown becomes 0. Sends the affected agent. This does not indicate whether or not the agent is currently affected by the shared cooldown.
-      PerAgentCooldownExpiredEvent<native><public>: listenable(agent) = external {}
-
-      @experimental
-      # Event fires when a new per agent cooldown starts or if the remaining duration is modified to something greater than 0. Sends the affected agent and new duration of the per agent cooldown.
-      PerAgentCooldownTriggeredEvent<native><public>: listenable(tuple(agent, float)) = external {}
-
-      # Resets the counter for the times this component has had a successful interaction.
-      ResetSuccessfulIteractionCount<native><final><public>(): void
-
-      # Sets the text to display to the user within the interaction range of the entity with a interact component that CannotInteract.
-      SetCannotInteractText<native><public>(InText: message): void
-
-      # Sets the text to display when within the interaction range of the entity with a coolingdown interact component.
-      SetCoolDownText<native><public>(InText: message): void
-
-      @experimental
-      # Sets the text displayed when within the interaction range of the entity with an interactable interact component.
-      SetInteractText<native><public>(InText: message): void
-
-      # Update the maximum number of successful interactions possible, a value of false is unlimited. If the current number of tracked interactions is greater than the value specified here, all current interactions will be canceled.
-      SetMaxSuccessfulInteractions<native><final><public>(NewMaxSuccessfulInteractions: ?int): void
-
-      # Sets the remaining duration, in seconds, to interact for an agent. Fails if the agent is not interacting with this component.
-      SetRemainingInteractDuration<native><final><public>(Agent: agent, NewInteractDuration: float)<transacts><decides>: void
-
-      @experimental
-      # Set the remaining per agent cooldown duration in seconds, for each agent supplied. The supplied agents will be subject to the greater of the remaining shared cooldown duration or their remaining per agent cooldown duration.
-      SetRemainingPerAgentCooldownDuration<native><final><public>(Agents: []agent, NewCooldownTime: float): void
-
-      @experimental
-      # Set the remaining shared cooldown duration in seconds, affecting all agents. An individual agent will be subject to the greater of the remaining shared cooldown duration or their remaining per agent cooldown duration.
-      SetRemainingSharedCooldownDuration<native><final><public>(NewCooldownTime: float): void
-
-      @experimental
-      # Event fires when the remaining duration of the shared cooldown becomes 0.
-      SharedCooldownExpiredEvent<native><public>: listenable(tuple()) = external {}
-
-      @experimental
-      # Event fires when a new shared cooldown starts or if the remaining duration is modified to something greater than 0. Sends the new duration of the shared cooldown.
-      SharedCooldownTriggeredEvent<native><public>: listenable(float) = external {}
-
-      @experimental
       # Attempt to start an interaction. Fails if the agent does not pass the CanInteract function.
       Start<native><public>(Agent: agent)<transacts><decides>: void
 
+      # Event fires when an a successful interaction starts. Sends the interacting agent. InteractDuration at or below 0 makes this event identical to InteractSucceededEvent.
+      StartedEvent<native><public>: listenable(agent) = external {}
+
+      # Event fires when an interaction has completed successfully. Sends the formerly interacting agent. InteractDuration at or below 0 makes this event identical to InteractStartedEvent.
+      SucceededEvent<native><public>: listenable(agent) = external {}
+    }
+
+    @experimental
+    # Used to set a cooldown when interacted.
+    interactable_cooldown<native><public> := class<concrete> {
       @experimental
-      # Attempt to succeed at an interaction. Success will also happen automatically after InteractDuration has elapsed after starting an interaction. Fails if the supplied agent is not currently interacting with the component.
-      Succeed<native><public>(Agent: agent)<transacts><decides>: void
+      # Event which fires when the shared cooldown expires.
+      ExpiredEvent<native><public>: listenable(tuple()) = external {}
+
+      @experimental
+      # Get the remaining shared cooldown duration in seconds, affecting all agents.
+      GetRemainingDuration<native><epic_internal>(__dupe___unnamed_parameter_82: accessor)<transacts>: float
+
+      @experimental
+      # Set the remaining shared cooldown duration in seconds, affecting all agents.
+      SetRemainingDuration<native><epic_internal>(
+        __dupe___unnamed_parameter_81: accessor,
+        InRemainingDuration: float
+      )<transacts>: void
+
+      @experimental
+      # Event which fires when the shared cooldown triggers.
+      TriggeredEvent<native><public>: listenable(float) = external {}
 
       @editable
       @experimental
-      var InteractDistance<native><public>: float = external {}
+      # The number of seconds after a successful interaction, before being able to initiate a subsequent interaction for anyone.This is only used if duration is greater than 0.0. Modifying this does not affect the RemainingDuration.When a cooldown starts on the component all other interactions are canceled.
+      var Duration<native><public>: float = external {}
+
+      @experimental
+      # The remaining cooldown, in seconds, before new interactions can be initiated on this component.
+      var<private> RemainingDuration<public>: float = external {}
+    }
+
+    @experimental
+    # Used to set a cooldown per agent when interacted.
+    interactable_cooldown_per_agent<native><public> := class<concrete> {
+      @experimental
+      # Event which fires when the per agent cooldown expires. Sends the agent which was previously affected by the cooldown.
+      ExpiredEvent<native><public>: listenable(tuple()) = external {}
+
+      @experimental
+      # Get the remaining shared cooldown duration in seconds, affecting all agents.
+      GetRemainingDurationForAgent<native><epic_internal>(
+        __dupe___unnamed_parameter_84: accessor,
+        Agent: agent
+      )<transacts>: float
+
+      @experimental
+      # Set the remaining shared cooldown duration in seconds, affecting all agents.
+      SetRemainingDurationForAgent<native><epic_internal>(
+        __dupe___unnamed_parameter_83: accessor,
+        Agent: agent,
+        InRemainingDuration: float
+      )<transacts>: void
+
+      @experimental
+      # Event which fires when the per agent cooldown triggers. Sends the agent which was previously affected by the cooldown.
+      TriggeredEvent<native><public>: listenable(float) = external {}
 
       @editable
       @experimental
-      # The number of seconds an agent must spend interacting with the object to complete an interaction. 0 is immediate.
+      # The duration in seconds after a successful interaction, before the interacting agent can initiate a subsequent interaction.This is only used if the duration is greater than 0.0. Modifying this does not affect any RemainingPerAgentCooldownDuration.This property gives other agents time to interact, when there is a limited number of Simultaneous Interators.
+      var Duration<native><public>: float = external {}
+
+      @experimental
+      # The cooldown remaining, in seconds, before a particular agent is able to initiate an interaction on this component.
+      var<private> RemainingDuration<native><public>: [agent]float = external {}
+    }
+
+    @experimental
+    # Used to set an interaction duration.
+    interactable_duration<native><public> := class<concrete> {
+      @experimental
+      # Returns an agent’s remaining duration, in seconds, for interaction. Fails if the agent is not interacting with this component.Returns the same value when called multiple times within a transaction.
+      GetRemainingInteractDurationForAgent<final><native><public>(Agent: agent)<computes><decides><reads>: float
+
+      @experimental
+      # Sets an agent’s remaining duration, in seconds, for interaction. Fails if the agent is not interacting with this component.
+      SetRemainingInteractDurationForAgent<final><native><public>(Agent: agent, RemainingDuration: float)<transacts>: void
+
+      @editable
+      @experimental
+      # The number of seconds an agent must spend interacting with the object to successfully complete an interaction.0.0 or less results in an immediate successful interaction.
       var InteractDuration<native><public>: float = external {}
 
       @editable
       @experimental
-      # The max number of simultaneous interactors. A value of false is unlimited.  This value represents how many agents may have active interactions. If this changes to a value less than the current number of active interactions, those interactions are not canceled.
+      # The max number of simultaneous interactors. A value of false is unlimited.  This value represents how many agents may have active interactions.If this changes to a value less than the current number of active interactions, those interactions are not canceled but new interactions will not start.
       var MaxSimultaneousInteractors<native><public>: ?int = external {}
+    }
 
-      @editable
+    @experimental
+    # Used to set a limit of times to interact.
+    interactable_success_limit<native><public> := class<concrete> {
       @experimental
-      # The duration in seconds after a successful interaction, before the same agent can initiate a subsequent interaction. This is only used if the duration is greater than 0.0. An agent’s actualized cooldown is the greater of the remaining SharedCooldownDuration and the agent’s remaining PerAgentCooldownDuration. Modifying this at runtime does not affect in-progress cooldowns. This property gives other agents time to interact, when there is a limited number of Simultaneous Interators.
-      var PerAgentCooldownDuration<native><public>: float = external {}
+      # Resets the counter for the times this component has had a successful interaction.
+      ClearSuccessfulInteractionCount<native><public>()<transacts>: void
 
-      @editable
       @experimental
-      # The number of seconds after a successful interaction, before being able to initiate a subsequent interaction for anyone. This is only used if duration is greater than 0.0. An agent’s actualized cooldown is the greater of the remaining SharedCooldownDuration and the agent’s remaining PerAgentCooldownDuration. Modifying this at runtime does not affect the in-progress cooldown.
-      var SharedCooldownDuration<native><public>: float = external {}
+      # Get the maximum number of successful interactions possible.
+      GetMaxSuccessfulInteractions<native><epic_internal>(__dupe___unnamed_parameter_86: accessor)<transacts>: ?int
+
+      @experimental
+      # Update the maximum number of successful interactions possible, a value of false is unlimited.If the current number of tracked interactions is greater than the value specified here, all current interactions will be canceled.
+      SetMaxSuccessfulInteractions<native><epic_internal>(
+        __dupe___unnamed_parameter_85: accessor,
+        InMaxSuccessfulInteractions: ?int
+      )<transacts>: void
+
+      @experimental
+      # The number of times the component can be successfully interacted with. A value of false is unlimited.When SuccessfulInteractionCount reaches MaxSuccessfulInteractions all active interactions are canceled, and the component cannot be interacted with.
+      var MaxSuccessfulInteractions<public>: ?int = external {}
+
+      @experimental
+      # The number of times this component has had a successful interaction.
+      var SuccessfulInteractionCount<public>: int = external {}
     }
 
     @hide_in_editor
@@ -1754,7 +1857,7 @@ Temporary<public> := module {
 
       @experimental
       # The color of the light. Note that this can change the light’s effective intensity.
-      var Color<epic_internal>: color = external {}
+      var Color<public>: color = external {}
 
       @experimental
       # The total energy the light emits in candela. The renderer clamps between 0.0 and 20.0.
@@ -1804,16 +1907,24 @@ Temporary<public> := module {
 
       OnRemovingFromScene<native><override>(): void
 
-      @replicated("RepNotify")
       @experimental
-      # A material to be applied to this mesh. If this is set to `false` the base material on the mesh asset will be used.
-      var Material<native><public>: ?material = external {}
+      # Sets the `material` to be applied to the `mesh`.
+      SetMaterial<native><public>(InMaterial: ?material): void
 
+      @experimental
+      # Sets the `mesh` to be rendered.
+      SetMesh<native><public>(InMesh: mesh): void
+
+      @experimental
+      @replicated("RepNotify")
+      # A material to be applied to this mesh. If this is set to `false` the base material on the mesh asset will be used.
+      var<private> Material<native><public>: ?material = external {}
+
+      @experimental
       @editable
       @replicated("RepNotify")
-      @experimental
       # The `mesh` to be rendered by this `mesh_component`.
-      var Mesh<native><public>: mesh = external {}
+      var<private> Mesh<native><public>: mesh = external {}
     }
 
     @experimental
@@ -2055,20 +2166,20 @@ Temporary<public> := module {
     @hide_in_editor
     @experimental
     point_light_component_base<native><epic_internal> := class<epic_internal>(light_component) {
-      GetAttenuationRadius<native><protected>(__dupe___unnamed_parameter_130: accessor)<transacts>: float
+      GetAttenuationRadius<native><protected>(__dupe___unnamed_parameter_85: accessor)<transacts>: float
 
-      GetSourceLength<native><protected>(__dupe___unnamed_parameter_134: accessor)<transacts>: float
+      GetSourceLength<native><protected>(__dupe___unnamed_parameter_89: accessor)<transacts>: float
 
-      GetSourceRadius<native><protected>(__dupe___unnamed_parameter_132: accessor)<transacts>: float
+      GetSourceRadius<native><protected>(__dupe___unnamed_parameter_87: accessor)<transacts>: float
 
       SetAttenuationRadius<native><protected>(
-        __dupe___unnamed_parameter_131: accessor,
+        __dupe___unnamed_parameter_86: accessor,
         InAttenuationRadius: float
       )<transacts>: void
 
-      SetSourceLength<native><protected>(__dupe___unnamed_parameter_135: accessor, InSourceLength: float)<transacts>: void
+      SetSourceLength<native><protected>(__dupe___unnamed_parameter_90: accessor, InSourceLength: float)<transacts>: void
 
-      SetSourceRadius<native><protected>(__dupe___unnamed_parameter_133: accessor, InSourceRadius: float)<transacts>: void
+      SetSourceRadius<native><protected>(__dupe___unnamed_parameter_88: accessor, InSourceRadius: float)<transacts>: void
 
       @experimental
       # The bounds of the light’s visible influence. This clamping of the light's influence is not physically correct but very important for performance, larger lights cost more.This clamping of the light's influence is not physically correct but very important for performance. Larger lights cost more. Clamped between 8.0 and 16384.0.
@@ -2195,12 +2306,18 @@ Temporary<public> := module {
 
     @experimental
     # Used to add tags to an entity. Tagged entities can then be queried using `entity.FindEntitiesWithTag` and `entity.FindParentEntitiesWithTag`.  * Finding entities from the simulation entity for tagged entities only considers any `tag_component` that has run `OnAddedToScene`.
-    tag_component<native><public> := class<final>(component) {
-      # Adds a tag to this component.
-      AddTag<native><public>(TagToAdd: tag)<transacts>: void
+    tag_component<native><public> := class<final>(component, tag_view) {
+      # Adds a tag to this component. Returns `true` if the tag was not present before being added.
+      AddTag<native><public>(TagToAdd: tag)<transacts>: logic
 
-      # Returns the tags associated with this component. These may be specified in the editor.
-      GetTags<native><public>()<transacts>: tag_view
+      # Determine if TagToCheck is present in this container, also checking against parent tags {"A.1"}.Has("A") will return True, {"A"}.Has("A.1") will return False If TagToCheck is not Valid it will always return False.
+      Has<native><override>(TagToCheck: tag)<computes><decides><reads>: void
+
+      # Checks if this container contains ALL of the tags in the specified container, also checks against parent tags {"A.1","B.1"}.HasAll({"A","B"}) will return True, {"A","B"}.HasAll({"A.1","B.1"}) will return False If InTags is empty/invalid it will always return True, because there were no failed checks.
+      HasAll<native><override>(InTags: []tag)<computes><decides><reads>: void
+
+      # Checks if this container contains ANY of the tags in the specified container, also checks against parent tags {"A.1"}.HasAny({"A","B"}) will return True, {"A"}.HasAny({"A.1","B"}) will return False If InTags is empty/invalid it will always return False.
+      HasAny<native><override>(InTags: []tag)<computes><decides><reads>: void
 
       IsAllowedOnClient<override>(): logic = external {}
 
@@ -2208,7 +2325,7 @@ Temporary<public> := module {
 
       OnRemovingFromScene<native><override>(): void
 
-      # Removes a tag from this component. Returns `true` if the tag was present.
+      # Removes a tag from this component. Returns `true` if the tag was present before being removed.
       RemoveTag<native><public>(TagToRemove: tag)<transacts>: logic
     }
 
@@ -2262,19 +2379,19 @@ Temporary<public> := module {
     @experimental
     # Describes discrete phases of a frame update. Subscribe to members of the tick_events object to run codebefore or after the physics system has updated your object, allowing you to affect or react to these updates.
     tick_events<native><public> := class<epic_internal> {
-      DuringPhysics<native><epic_internal>: execution_subscribable = external {}
+      DuringPhysics<native><epic_internal>: execution_listenable = external {}
 
-      EndFrame<native><epic_internal>: execution_subscribable = external {}
+      EndFrame<native><epic_internal>: execution_listenable = external {}
 
-      EndPhysics<native><epic_internal>: execution_subscribable = external {}
+      EndPhysics<native><epic_internal>: execution_listenable = external {}
 
-      # Subscribe callbacks to `PostPhysics` to run your code after the physics system has updated your object this frame.
-      PostPhysics<native><public>: execution_subscribable = external {}
+      # Listen `PostPhysics` to run your code after the physics system has updated your object this frame.
+      PostPhysics<native><public>: execution_listenable = external {}
 
-      # Subscribe callbacks to `PrePhysics` to run your code before the physics system has updated your object this frame.
-      PrePhysics<native><public>: execution_subscribable = external {}
+      # Listen `PrePhysics` to run your code before the physics system has updated your object this frame.
+      PrePhysics<native><public>: execution_listenable = external {}
 
-      StartPhysics<native><epic_internal>: execution_subscribable = external {}
+      StartPhysics<native><epic_internal>: execution_listenable = external {}
     }
 
     @experimental
@@ -2309,7 +2426,6 @@ Temporary<public> := module {
     @experimental
     # Stores the world transform for an entity, which is used to position the entity.  * If you wish for an entity to update its transform when its parent entity transform changes then    you must also add a `parent_constraint_component` to the entity.
     transform_component<native><public> := class<final>(component) {
-      @experimental
       # Returns the world transform of the entity.
       GetTransform<native><public>()<transacts>: transform
 
@@ -2320,14 +2436,12 @@ Temporary<public> := module {
 
       OnUninitializing<native><override>(): void
 
-      @experimental
       # Sets the world transform of the entity.
       SetTransform<native><public>(NewTransform: transform): void
 
       @editable
-      @experimental
-      # The value of `InitialRelativeTransform` is used when spawning an entity into the scene.  * When spawning an entity with a `transform_component`, the entity is offset by `InitialRelativeOffset` from the new parent entity's transform.  * When spawning an entity with a `transform_component` as a child of the simulation entity the entity is offset by `InitialRelativeOffset` from the simulation entity's transform.  * When spawning a prefab each sub-entity with a `transform_component` is offset by `InitialRelativeTransform` from its parent entities transform.
-      var InitialRelativeTransform<native><public>: transform = external {}
+      # The value of `LocalTransform` is used when spawning an entity into the scene.  * When spawning an entity with a `transform_component`, the entity is offset by `LocalTransform` from the new parent entity's transform.  * When spawning an entity with a `transform_component` as a child of the simulation entity the entity is offset by `LocalTransform` from the simulation entity's transform.  * When spawning a prefab each sub-entity with a `transform_component` is offset by `LocalTransform` from its parent entities transform.
+      var LocalTransform<native><public>: transform = external {}
     }
 
     @hide_in_editor
@@ -2720,7 +2834,6 @@ Temporary<public> := module {
     }
   }
 
-  using { /UnrealEngine.com/Temporary/Diagnostics }
   # Module import path: /UnrealEngine.com/Temporary/Testing
   Testing<public> := module {
     # test_reporter is a test result aggregator that writes test results to a log stream and can compile and print a summary of test results.
@@ -2736,6 +2849,9 @@ Temporary<public> := module {
 
       # The name of this `test_reporter`. Used when displaying results summary.
       Name<native><epic_internal>: string = external {}
+
+      # Prints a report of Verse API that was called in runtime, resets the report count
+      PrintEpicAPICallSummary<native><epic_internal>(): void
 
       # Prints a summary of test results to the log stream and resets the test results.
       PrintSummary<native><epic_internal>(?Level: log_level = external {}): void
@@ -2783,8 +2899,10 @@ Temporary<public> := module {
     }
   }
 
+  using { /UnrealEngine.com/Temporary/SpatialMath }
   using { /Verse.org/Assets }
   using { /Verse.org/Colors }
+  using { /Verse.org/Simulation }
   using { /Verse.org/VerseEngine/Component }
   # Module import path: /UnrealEngine.com/Temporary/UI
   UI<public> := module {
@@ -3290,39 +3408,17 @@ Temporary<public> := module {
       Visible
     }
   }
-
-  using { /UnrealEngine.com/Temporary/SpatialMath }
-  using { /Verse.org/Simulation }
-  # Module import path: /UnrealEngine.com/Temporary/VerseBasicGameplay
-  VerseBasicGameplay<public> := module {
-    # Module import path: /UnrealEngine.com/Temporary/VerseBasicGameplay/PlayerManager
-    PlayerManager<public> := module {
-      GetPlayerManagerForLocation<public>(Location: vector3): ?basic_player_manager = external {}
-
-      basic_player_manager<public> := class<internal> {
-        GetPlayerCount<public>()<transacts>: int = external {}
-
-        GetPlayers<public>()<transacts>: []player = external {}
-
-        PlayerAddedEvent<public>: subscribable(player)
-
-        PlayerRemovedEvent<public>: subscribable(player)
-      }
-    }
-  }
 }
 
 Tests<public> := module {
+  # Module import path: /UnrealEngine.com/Tests/NexusUtils
+  NexusUtils<public> := module {
+    nexus_utils<native><epic_internal> := class {
+      HelloWorld<native><public>(): void
+    }
+  }
+
   using { /UnrealEngine.com/Temporary/SpatialMath }
-  using { /UnrealEngine.com/VGameplayRst/Components }
-  using { /UnrealEngine.com/VGameplayRst/GameObjects }
-  using { /UnrealEngine.com/VGameplayRst/Geometry }
-  using { /UnrealEngine.com/VGameplayRst/Physics }
-  using { /UnrealEngine.com/VGameplayRst/Transform }
-  using { /Verse.org/Assets }
-  using { /Verse.org/Simulation/Tags }
-  using { /Verse.org/VerseEngine/Component }
-  using { /Verse.org/VerseEngine/Entity }
   # Module import path: /UnrealEngine.com/Tests/VersePrototypeGameplay
   VersePrototypeGameplay<public> := module {
     # Build a path from the StartLocation to the EndLocation using GridSize, GridOccupany, and navigation cost hueristics. Pop from the returned object_stack like so: "{if (Node:= i_nav_grid_node_2d[ReturnedPath.Pop[]]) #Use Node.GetLocation() }"
@@ -3335,73 +3431,6 @@ Tests<public> := module {
       StartLocation: vector2i,
       EndLocation: vector2i
     )<transacts><decides>: []vector2i = external {}
-
-    CreateModelAdvanced<epic_internal>(
-      AddComponentClasses: []subtype(vk_component),
-      InPosition: vector3,
-      InRotation: rotation,
-      InScale: vector3,
-      Name: string,
-      Mesh: mesh,
-      Material: material
-    ): ?model_advanced = external {}
-
-    CreateModelAdvanced<epic_internal>(
-      AddComponentClasses: []subtype(vk_component),
-      InTransform: transform,
-      Name: string,
-      Mesh: mesh
-    ): ?model_advanced = external {}
-
-    CreateModelAdvanced<epic_internal>(
-      AddComponentClasses: []subtype(vk_component),
-      InTransform: transform,
-      Name: string,
-      Mesh: mesh,
-      Material: material
-    ): ?model_advanced = external {}
-
-    CreateModelAdvanced<epic_internal>(
-      InPosition: vector3,
-      InRotation: rotation,
-      InScale: vector3,
-      Name: string,
-      Mesh: mesh,
-      Material: material
-    ): ?model_advanced = external {}
-
-    CreateModelAdvanced<epic_internal>(
-      InPosition: vector3,
-      InRotation: rotation,
-      Name: string,
-      Mesh: mesh,
-      Material: material
-    ): ?model_advanced = external {}
-
-    CreateModelAdvanced<epic_internal>(
-      InPosition: vector3,
-      Name: string,
-      Mesh: mesh,
-      Material: material
-    ): ?model_advanced = external {}
-
-    CreateModelAdvanced<epic_internal>(InTransform: transform, Name: string, Mesh: mesh): ?model_advanced = external {}
-
-    CreateModelAdvanced<epic_internal>(
-      InTransform: transform,
-      Name: string,
-      Mesh: mesh,
-      Material: material
-    ): ?model_advanced = external {}
-
-    CreateModelAdvanced<public>(Entity: vk_entity): ?model_advanced = external {}
-
-    CreateModelAdvanced<public>(
-      InEntity: vk_entity,
-      AddComponentClasses: []subtype(vk_component)
-    ): ?model_advanced = external {}
-
-    CreateModelAdvanced<public>(TagToFind: tag): ?model_advanced = external {}
 
     SimpleDistanceNavCost<public>(NodePosition: vector2i, NeighborPosition: vector2i)<transacts>: float = external {}
 
@@ -3427,108 +3456,8 @@ Tests<public> := module {
       IsOccupied<public>(Location: vector2i)<transacts><decides>: void
     }
 
-    model_advanced<public> := class<internal>(mutable_model_interface) {
-      ApplyAdditionalRotation<override>(r: rotation): void = external {}
-
-      Destroy<public>(): void = external {}
-
-      DisableCollision<public>(): void = external {}
-
-      EnableCollision<public>(): void = external {}
-
-      ForwardVector<override>()<transacts>: vector3 = external {}
-
-      GetCollisionComponent<public>(): vk_collision_component = external {}
-
-      GetEntity<public>(): vk_entity = external {}
-
-      GetMeshComponent<public>(): fixed_mesh_component = external {}
-
-      GetPosition<override>()<transacts>: vector3 = external {}
-
-      GetPositionComponent<public>(): position_component = external {}
-
-      GetRotationComponent<public>(): rotation_component = external {}
-
-      GetScale<override>()<transacts>: vector3 = external {}
-
-      GetTransform<public>(): transform = external {}
-
-      Hide<public>(): void = external {}
-
-      IsVisible<public>(): logic = external {}
-
-      RightVector<override>()<transacts>: vector3 = external {}
-
-      Rotation<override>()<transacts>: rotation = external {}
-
-      SetForwardVectorFromXY<override>(x: vector3, y: vector3): void = external {}
-
-      SetPosition<override>(NewPosition: vector3)<transacts>: void = external {}
-
-      SetRotation<override>(r: rotation)<transacts>: void = external {}
-
-      SetScale<override>(NewScale: vector3)<transacts>: void = external {}
-
-      SetTransform<public>(NewTransform: transform): void = external {}
-
-      Show<public>(): void = external {}
-
-      UpVector<override>()<transacts>: vector3 = external {}
-    }
-
     # This method is used for calculating the cost from the specified node to the target position. See SimpleManhattanDistance2D for an example.
     navigation_cost_delegate<public> := type { __(: vector2i, : vector2i)<transacts>: float }
-
-    simple_gameplay_script_component<public> := class(script_component) {
-      AddToPosition<public>(NewPosition: vector3): void = external {}
-
-      ApplyAdditionalRotation<public>(RotationToAdd: rotation): void = external {}
-
-      DisableCollision<public>(): void = external {}
-
-      EnableCollision<public>(): void = external {}
-
-      GetPosition<public>()<transacts>: vector3 = external {}
-
-      GetRotation<public>(): rotation = external {}
-
-      GetScale<public>()<transacts>: vector3 = external {}
-
-      GetTransform<public>(): transform = external {}
-
-      HandleOnBegin<protected>(): void = external {}
-
-      HandleOnCreate<protected>(): void = external {}
-
-      HandleOnPostCreate<protected>(): void = external {}
-
-      Hide<public>(): void = external {}
-
-      IsVisible<public>(): logic = external {}
-
-      OnBegin<final><override>(): void = external {}
-
-      OnCreate<final><override>(): void = external {}
-
-      OnPostCreate<final><override>(): void = external {}
-
-      SetDefaultMesh<public>(DefaultMesh: default_mesh_type): void = external {}
-
-      SetMaterial<epic_internal>(NewMaterial: material): void = external {}
-
-      SetMesh<epic_internal>(Mesh: mesh): void = external {}
-
-      SetPosition<public>(NewPosition: vector3)<transacts>: void = external {}
-
-      SetRotation<public>(NewRotation: rotation)<transacts>: void = external {}
-
-      SetScale<public>(NewScale: vector3): void = external {}
-
-      SetTransform<public>(NewTransform: transform): void = external {}
-
-      Show<public>(): void = external {}
-    }
 
     simple_grid_occupancy<public> := class(i_grid_occupancy) {
       Init<public>(InGridSize: int): void = external {}
@@ -3585,9 +3514,9 @@ VGameplayRst<public> := module {
     }
 
     script_component<native><public> := class<abstract><unique>(vk_component) {
-      AddToCreateComponentList<native><public>(__dupe___unnamed_parameter_108: []subtype(vk_component)): void
+      AddToCreateComponentList<native><public>(__dupe___unnamed_parameter_58: []subtype(vk_component)): void
 
-      AddToRequiredComponentList<native><public>(__dupe___unnamed_parameter_109: []subtype(vk_component)): void
+      AddToRequiredComponentList<native><public>(__dupe___unnamed_parameter_59: []subtype(vk_component)): void
 
       GetAllComponentsOfType<native><public>(componentType: type)<transacts>: []vk_component
 
@@ -3668,33 +3597,6 @@ VGameplayRst<public> := module {
 
   # Module import path: /UnrealEngine.com/VGameplayRst/GameObjects
   GameObjects<public> := module {
-    CreateImmutableModel<public>(TagToFind: tag): ?immutable_model = external {}
-
-    CreateModel<epic_internal>(
-      InPosition: vector3,
-      InRotation: rotation,
-      InScale: vector3,
-      Name: string,
-      Mesh: mesh,
-      Material: material
-    ): ?model = external {}
-
-    CreateModel<epic_internal>(
-      InPosition: vector3,
-      InRotation: rotation,
-      Name: string,
-      Mesh: mesh,
-      Material: material
-    ): ?model = external {}
-
-    CreateModel<epic_internal>(InPosition: vector3, Name: string, Mesh: mesh, Material: material): ?model = external {}
-
-    CreateModel<epic_internal>(InTransform: transform, Name: string, Mesh: mesh): ?model = external {}
-
-    CreateModel<epic_internal>(InTransform: transform, Name: string, Mesh: mesh, Material: material): ?model = external {}
-
-    CreateModel<public>(TagToFind: tag): ?model = external {}
-
     CreateWorldAnchor<public>(Entity: vk_entity): ?world_anchor = external {}
 
     CreateWorldAnchor<public>(TagToFind: tag): ?world_anchor = external {}
@@ -3702,70 +3604,6 @@ VGameplayRst<public> := module {
     CreateWorldAnchor<public>(WorldPosition: vector3): ?world_anchor = external {}
 
     CreateWorldAnchor<public>(WorldPosition: vector3, DebugName: string): ?world_anchor = external {}
-
-    # Model that can only be inspected, not modified.
-    immutable_model<public> := class<internal>(model_interface) {
-      ForwardVector<override>()<transacts>: vector3 = external {}
-
-      GetPosition<override>()<transacts>: vector3 = external {}
-
-      GetScale<override>()<transacts>: vector3 = external {}
-
-      GetTransform<public>(): transform = external {}
-
-      # Returns true if the model mesh is visible.
-      IsVisible<public>(): logic = external {}
-
-      RightVector<override>()<transacts>: vector3 = external {}
-
-      Rotation<override>()<transacts>: rotation = external {}
-
-      UpVector<override>()<transacts>: vector3 = external {}
-    }
-
-    model<public> := class<internal>(mutable_model_interface) {
-      ApplyAdditionalRotation<override>(r: rotation): void = external {}
-
-      Destroy<public>(): void = external {}
-
-      DisableCollision<public>(): void = external {}
-
-      EnableCollision<public>(): void = external {}
-
-      ForwardVector<override>()<transacts>: vector3 = external {}
-
-      GetPosition<override>()<transacts>: vector3 = external {}
-
-      GetScale<override>()<transacts>: vector3 = external {}
-
-      GetTransform<public>(): transform = external {}
-
-      Hide<public>(): void = external {}
-
-      IsVisible<public>(): logic = external {}
-
-      RightVector<override>()<transacts>: vector3 = external {}
-
-      Rotation<override>()<transacts>: rotation = external {}
-
-      SetForwardVectorFromXY<override>(x: vector3, y: vector3): void = external {}
-
-      SetPosition<override>(NewPosition: vector3)<transacts>: void = external {}
-
-      SetRotation<override>(r: rotation)<transacts>: void = external {}
-
-      SetScale<override>(NewScale: vector3)<transacts>: void = external {}
-
-      SetTransform<public>(NewTransform: transform): void = external {}
-
-      Show<public>(): void = external {}
-
-      UpVector<override>()<transacts>: vector3 = external {}
-    }
-
-    model_interface<public> := interface(positionable, rotatable, scalable) {}
-
-    mutable_model_interface<public> := interface(mutable_positionable, mutable_rotatable, mutable_scalable, model_interface) {}
 
     world_anchor<public> := class<internal>(mutable_positionable) {
       Destroy<public>(): void = external {}
@@ -3775,49 +3613,6 @@ VGameplayRst<public> := module {
       GetPosition<override>()<transacts>: vector3 = external {}
 
       SetPosition<override>(Position: vector3)<transacts>: void = external {}
-    }
-  }
-
-  # Module import path: /UnrealEngine.com/VGameplayRst/Geometry
-  Geometry<public> := module {
-    collision_type<native><public> := enum {
-      NoCollision
-
-      QueryAndSimulation
-
-      QueryOnly
-
-      SimulationOnly
-    }
-
-    default_mesh_type<native><public> := enum {
-      Cone
-
-      Cube
-
-      Cylinder
-
-      Plane
-
-      Sphere
-    }
-
-    fixed_mesh_component<native><public> := class<final>(vk_component) {
-      IsVisible<native><public>(): logic
-
-      SetAsRootComponent<native><public>(KeepExistingRootTransform: logic, DestroyOldRoot: logic)<transacts>: void
-
-      SetDefaultMesh<native><public>(DefaultMesh: default_mesh_type): void
-
-      SetEnableCollision<native><public>(EnabledCollision: collision_type)<transacts>: void
-
-      SetMaterial<native><epic_internal>(Material: material)<transacts>: void
-
-      SetMaterialAtIndex<native><epic_internal>(Material: material, Index: int): void
-
-      SetMesh<native><epic_internal>(Mesh: mesh)<transacts>: void
-
-      SetVisibility<native><public>(NewVisibility: logic)<transacts>: void
     }
   }
 
