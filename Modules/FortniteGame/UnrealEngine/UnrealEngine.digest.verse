@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-25.30-CL-26867995
+# Generated from build: ++Fortnite+Release-26.00-CL-27233190
 #################################################
 
 Temporary<public> := module {
@@ -279,6 +279,9 @@ Temporary<public> := module {
     # Fails if `V.IsAlmostZero[] or not V.IsFinite[]`.
     (V: vector3).MakeUnitVector<native><public>()<varies><decides>: vector3
 
+    # Returns the 'smallest angular distance' between `Rotation1` and `Rotation2` in radians.
+    AngularDistance<native><public>(Rotation1: rotation, Rotation2: rotation)<varies>: float
+
     # Returns the cross product of `V1` and `V2`.
     CrossProduct<native><public>(V1: vector3, V2: vector3)<varies>: vector3
 
@@ -516,6 +519,7 @@ Temporary<public> := module {
   }
 
   using { /UnrealEngine.com/Temporary/SpatialMath }
+  using { /Verse.org/Assets }
   using { /Verse.org/Colors }
   using { /Verse.org/Simulation }
   # Module import path: /UnrealEngine.com/Temporary/UI
@@ -648,6 +652,15 @@ Temporary<public> := module {
 
       # Align `widget` to the right of the slot.
       Right
+    }
+
+    # Tiling options values
+    image_tiling<native><public> := enum {
+      # Repeat/Wrap the image to fill the available space.
+      Repeat
+
+      # Stretch the image to fit the available space.
+      Stretch
     }
 
     # Specifies the gap outside each edge separating a `widget` from its neighbors.
@@ -811,12 +824,16 @@ Temporary<public> := module {
     }
 
     # Text justification values:
-    #   Left: Justify the text logically to the left.
+    #   Left: Justify the text logically to the left based on current culture.
     #   Center: Justify the text in the center.
-    #   Right: Justify the text logically to the right.
+    #   Right: Justify the text logically to the right based on current culture.
     # The Left and Right value will flip when the local culture is right-to-left.
     text_justification<native><public> := enum {
       Center
+
+      InvariantLeft
+
+      InvariantRight
 
       Left
 
@@ -830,6 +847,48 @@ Temporary<public> := module {
       Clip
 
       Ellipsis
+    }
+
+    # A widget to display a texture.
+    texture_block<native><public> := class(widget) {
+      # The size this widget desired to be displayed in. Used only during initialization of the widget and not modified by SetDesiredSize.
+      DefaultDesiredSize<native><public>: vector2 = external {}
+
+      # The horizontal tiling option. Used only during initialization of the widget and not modified by SetTiling.
+      DefaultHorizontalTiling<native><public>: image_tiling = external {}
+
+      # The image to render. Used only during initialization of the widget and not modified by SetImage.
+      DefaultImage<native><public>: texture
+
+      # Tinting applied to the image. Used only during initialization of the widget and not modified by SetTint.
+      DefaultTint<native><public>: color = external {}
+
+      # The vertical tiling option. Used only during initialization of the widget and not modified by SetTiling.
+      DefaultVerticalTiling<native><public>: image_tiling = external {}
+
+      # Gets the size this widget desired to be displayed in.
+      GetDesiredSize<native><public>(): vector2
+
+      # Gets the image to render.
+      GetImage<native><public>(): texture
+
+      # Gets the tiling option.
+      GetTiling<native><public>(): tuple(image_tiling, image_tiling)
+
+      # Gets the tint applied to the image.
+      GetTint<native><public>(): color
+
+      # Sets the size this widget desired to be displayed in.
+      SetDesiredSize<native><public>(InDesiredSize: vector2): void
+
+      # Sets the image to render.
+      SetImage<native><public>(InImage: texture): void
+
+      # Sets the tiling option when the image is smaller than the allocated size.
+      SetTiling<native><public>(InHorizontalTiling: image_tiling, InVerticalTiling: image_tiling): void
+
+      # Sets the tint applied to the image.
+      SetTint<native><public>(InColor: color): void
     }
 
     # `widget` input consumption mode.
@@ -879,9 +938,6 @@ Temporary<public> := module {
       # See `widget_visibility` for details.
       SetVisibility<native><public>(InVisibility: widget_visibility): void
     }
-
-    # Verse interface to native `widget_class`.
-    widget_class<native><public> := class<computes><final> {}
 
     # Parameters for `event`s signalled by a `widget`.
     widget_message<native><public> := struct {

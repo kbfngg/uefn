@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-25.30-CL-26867995
+# Generated from build: ++Fortnite+Release-26.00-CL-27233190
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -195,6 +195,7 @@ Characters<public> := module {
 }
 
 using { /Fortnite.com/Game }
+using { /Verse.org/Assets }
 using { /Verse.org/Simulation }
 using { /Verse.org/Simulation/Tags }
 # Module import path: /Fortnite.com/Devices
@@ -904,6 +905,12 @@ Devices<public> := module {
 
   # Used to trigger level sequences that allow coordination of cinematic animation, transformation, and audio tracks.
   cinematic_sequence_device<public> := class<concrete><final>(creative_device_base) {
+    # Go to the end and stop the sequence.
+    GoToEndAndStop<public>(): void = external {}
+
+    # Go to the end and stop the sequence. An instigating 'Agent' is required when the device is set to anything except *Everyone*.
+    GoToEndAndStop<public>(Agent: agent): void = external {}
+
     # Pauses the sequence.
     Pause<public>(): void = external {}
 
@@ -1213,6 +1220,9 @@ Devices<public> := module {
     # Moves the `creative_prop` to the specified `Transform` over the specified time. If an animation is currently playing on the `creative_prop` it will be stopped and put into the `AnimationNotSet` state.
     MoveTo<public>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
 
+    # Changes the Mesh used by this instance.
+    SetMesh<native><public>(Mesh: mesh)<transacts>: void
+
     # Shows the `creative_prop` in the world and enable collisions.
     Show<native><public>()<transacts>: void
 
@@ -1252,6 +1262,10 @@ Devices<public> := module {
     # Spawns the creature.
     Spawn<public>(): void = external {}
 
+    # Signaled when a creature is spawned.
+    # Sends the `agent` creature who was spawned.
+    SpawnedEvent<public>: listenable(agent) = external {}
+
     # Teleports the `device` to the specified `Position` and `Rotation`.
     TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
 
@@ -1280,6 +1294,10 @@ Devices<public> := module {
 
     # Returns the spawn limit of the device.
     GetSpawnLimit<public>()<transacts>: int = external {}
+
+    # Signaled when a creature is spawned.
+    # Sends the `agent` creature who was spawned.
+    SpawnedEvent<public>: listenable(agent) = external {}
   }
 
   # Spawns a crowd to cheer you on.
@@ -1325,7 +1343,16 @@ Devices<public> := module {
   }
 
   # Used to amplify an `agent`'s damage temporarily. This applies to any weapon the `agent` is using at the time of the powerup.
-  damage_amplifier_powerup_device<public> := class<concrete><final>(powerup_device) {}
+  damage_amplifier_powerup_device<public> := class<concrete><final>(powerup_device) {
+    # Returns the current *Magnitude* for the powerup.
+    # For the Damage Amplifier Powerup, this is the damage multiplier.
+    GetMagnitude<public>()<transacts>: float = external {}
+
+    # Sets the *Magnitude* for this powerup, clamped to the Min and Max defined in the device.
+    # Will not apply to any currently applied effects.
+    # For the Damage Amplifier Powerup, this is the damage multiplier.
+    SetMagnitude<public>(Magnitude: float): void = external {}
+  }
 
   # Used to specify an area volume which can damage `agent`s, vehicles, and creatures.
   damage_volume_device<public> := class<concrete><final>(effect_volume_device) {
@@ -1339,6 +1366,9 @@ Devices<public> := module {
 
     # Returns the damage to be applied each tick within the volume.
     GetDamage<public>()<transacts>: int = external {}
+
+    # Is true when `Agent` is in the zone.
+    IsInVolume<public>(Agent: agent)<transacts><decides>: void = external {}
 
     # Sets the damage to be applied each tick within the volume. `Damage` is clamped between `1` and `500`.
     SetDamage<public>(Damage: int): void = external {}
@@ -1727,7 +1757,16 @@ Devices<public> := module {
   }
 
   # Used to regenerate an `agent`'s health and/or shields.
-  health_powerup_device<public> := class<concrete><final>(powerup_device) {}
+  health_powerup_device<public> := class<concrete><final>(powerup_device) {
+    # Returns the current *Magnitude* for the powerup.
+    # For the Health Powerup, this is the amount of health or shield that the powerup will add or remove,
+    GetMagnitude<public>()<transacts>: float = external {}
+
+    # Sets the *Magnitude* for this powerup, clamped to the Min and Max defined in the device.
+    # Will not apply to any currently applied effects.
+    # For the Health Powerup, this is the amount of health or shield that the powerup will add or remove,
+    SetMagnitude<public>(Magnitude: float): void = external {}
+  }
 
   # Used to create a holographic screen that displays a clock or other curated images.
   holoscreen_device<public> := class<concrete><final>(creative_device_base) {
@@ -1779,6 +1818,12 @@ Devices<public> := module {
     # Shows the currently set HUD *Message* on `Agent`s screen. Will replace any previously active message.
     # Use this when the device is setup to target specific `agent`s.
     Show<public>(Agent: agent): void = external {}
+
+    # Displays a Custom message to a specific *Agent* that you define.Setting *DisplayTime* to `0.0` will display the HUD message persistently.If not defined, or less than `0.0` the message will show for the time set on the device.
+    Show<public>(Agent: agent, Message: message, ?DisplayTime: float = external {}): void = external {}
+
+    # Displays a Custom message that you define for all PlayersSetting *DisplayTime* to `0.0` will display the HUD message persistently.If not defined, or less than `0.0` the message will show for the time set on the device.
+    Show<public>(Message: message, ?DisplayTime: float = external {}): void = external {}
   }
 
   # Used to grant items to `agent`s. Items can either be dropped at the `agent`'s location or added directly to their inventory.
@@ -1967,6 +2012,9 @@ Devices<public> := module {
     # Signaled when an `agent` exits this zone.
     # Sends the `agent` exiting this zone.
     AgentExitsEvent<public>: listenable(agent) = external {}
+
+    # Is true when `Agent` is in the zone.
+    IsInVolume<public>(Agent: agent)<transacts><decides>: void = external {}
 
     # Updates *Selected Class* to `Agent`'s class.
     UpdateSelectedClass<public>(Agent: agent): void = external {}
@@ -2167,6 +2215,9 @@ Devices<public> := module {
     # Enables this device.
     Enable<public>(): void = external {}
 
+    # Returns the number of players currently counted by this device
+    GetCount<public>()<transacts>: int = external {}
+
     # Returns the number of players required for this counter to succeed.
     GetTargetCount<public>()<transacts>: int = external {}
 
@@ -2176,8 +2227,18 @@ Devices<public> := module {
     # Increments *Target Player Count* by `1`. Immediately triggers a new comparison.
     IncrementTargetCount<public>(): void = external {}
 
+    # Is true if `Agent` is currently counted by this device.
+    IsCounted<public>(Agent: agent)<transacts><decides>: void = external {}
+
+    # Is true if the device is currently succeeding in its comparison.
+    IsPassingTest<public>()<transacts><decides>: void = external {}
+
     # Returns whether this device is represented in the world as an info panel showing Current + Required player counts.
     IsShowingInfoPanel<public>()<transacts><decides>: void = external {}
+
+    # Adds the player to the registered player list.
+    # *Track Registered Players* determines how registered players are counted.
+    Register<public>(Agent: agent): void = external {}
 
     # Signaled when a player is no longer counted by this device, such as when they leave the zone, leave the game, or are assigned to a different `team` or class.
     # Sends the `agent` that is no longer being counted.
@@ -2200,6 +2261,14 @@ Devices<public> := module {
 
     # Triggers `CountedEvent` for all `agent`s currently being counted.
     TransmitForAllCounted<public>(): void = external {}
+
+    # Removes the player from the registered player list.
+    # *Track Registered Players* determines how registered players are counted.
+    Unregister<public>(Agent: agent): void = external {}
+
+    # Clears all players from the list of registered players.
+    # *Track Registered Players* determines how registered players are counted.
+    UnregisterAll<public>(): void = external {}
   }
 
   # Used to mark an `agent`'s position on the minimap and configure the information shown for marked `agent`s.
@@ -2378,12 +2447,31 @@ Devices<public> := module {
     # Despawns this powerup from the experience.
     Despawn<public>(): void = external {}
 
+    # Returns the *Duration* that this powerup will be active for on any player it is applied to.
+    GetDuration<public>()<transacts>: float = external {}
+
+    # If the `Agent` has the effect applied to them, this will return the remaining time the effect has.
+    # Returns -1.0 if the effect has an infinite duration.
+    # Returns 0 if the `Agent` does not have the effect applied.
+    GetRemainingTime<public>(Agent: agent)<transacts>: float = external {}
+
+    # Returns the `Agent` has the powerup's effect (or another of the same type) applied to them.
+    HasEffect<public>(Agent: agent)<transacts><decides>: void = external {}
+
     # Signaled when the powerup is picked up by an `agent`.
     # Sends the `agent` that picked up the powerup.
     ItemPickedUpEvent<public>: listenable(agent) = external {}
 
+    # Grants this powerup without an agent reference.
+    # Requires *Apply To* set to *All Players*.
+    Pickup<public>(): void = external {}
+
     # Grants this powerup to `Agent`.
     Pickup<public>(Agent: agent): void = external {}
+
+    # Updates the *Duration* for this powerup, clamped to the Min and Max defined in the device.
+    # Will not apply to any currently applied effects.
+    SetDuration<public>(Time: float): void = external {}
 
     # Spawns the powerup into the experience so users can interact with it.
     Spawn<public>(): void = external {}
@@ -2518,6 +2606,27 @@ Devices<public> := module {
     # Signaled when an `agent` finishes entering a disguise.
     # Sends the `agent` that finished entering the disguise.
     FinishEnteringDisguiseEvent<public>: listenable(agent) = external {}
+
+    # Returns whether a player is currently hiding or not.
+    IsPlayerProp<public>(Agent: agent)<transacts><decides>: void = external {}
+
+    # Manually ping a specific player if they are currently a prop.
+    PingPlayerProp<public>(Agent: agent): void = external {}
+
+    # Manually ping all players that are currently hiding as props.
+    PingPlayerProps<public>(): void = external {}
+
+    # Adjust the ping time.
+    SetPingFrequency<public>(Time: float): void = external {}
+
+    # Toggle Pinging props on/off.
+    SetPingProps<public>(On: logic): void = external {}
+
+    # Toggle showing the prop ping cooldown.
+    SetShowPropPingCooldown<public>(On: logic): void = external {}
+
+    # Toggle showing the props remaining on the UI.
+    SetShowPropsRemaining<public>(On: logic): void = external {}
   }
 
   # Base class for devices that spawn a prop object.
@@ -3029,6 +3138,9 @@ Devices<public> := module {
     # Enables volume locking which prevents users from leaving the volume once they've entered.
     EnableVolumeLocking<public>(): void = external {}
 
+    # Is true when `Agent` is in the volume.
+    IsInVolume<public>(Agent: agent)<transacts><decides>: void = external {}
+
     # Signaled when the zone changes from occupied to empty.
     # Sends the `agent` that last left the volume.
     ZoneEmptiedEvent<public>: listenable(agent) = external {}
@@ -3112,7 +3224,7 @@ Devices<public> := module {
     Unlock<public>(): void = external {}
   }
 
-  # Used to inform players of other content made by a creator using a Support-A-Creator code. When players activate the device, it will bring up the same Support-A-Creator dialog box they would see in the Creative hub. The Support-A-Creator information shows when the dialog box opens for the player.
+  # DEPRECATED This device is no longer supported.Used to inform players of other content made by a creator using a Support-A-Creator code. When players activate the device, it will bring up the same Support-A-Creator dialog box they would see in the Creative hub. The Support-A-Creator information shows when the dialog box opens for the player.
   support_a_creator_device<public> := class<concrete><final>(creative_device_base) {}
 
   # Used to allow agents to turn other linked devices on/off or other custom state changes.
@@ -3208,9 +3320,15 @@ Devices<public> := module {
     # Sends the `agent` team member who eliminated the enemy.
     EnemyEliminatedEvent<public>: listenable(agent) = external {}
 
+    # Is true if `Agent` is on *Team*.
+    IsOnTeam<public>(Agent: agent)<transacts><decides>: void = external {}
+
     # Signaled when a member of *Team* is eliminated.
     # Sends the `agent` that was eliminated.
     TeamMemberEliminatedEvent<public>: listenable(agent) = external {}
+
+    # Signaled when a member of *Team* is spawned.Sends the `agent` that has spawned.
+    TeamMemberSpawnedEvent<public>: listenable(agent) = external {}
 
     # Signaled when *Team* runs out of respawns.
     TeamOutOfRespawnsEvent<public>: listenable(tuple()) = external {}
@@ -3477,11 +3595,26 @@ Devices<public> := module {
     # Clamped to `0 <= GetTarget <= 10000`.
     GetTarget<public>()<transacts>: int = external {}
 
+    # Returns the current total tracked value for all players.
+    GetValue<public>()<transacts>: int = external {}
+
+    # Returns the current tracked value for `Agent`.
+    GetValue<public>(Agent: agent)<transacts>: int = external {}
+
+    # Returns the current total tracked value for the team at `TeamIndex`.
+    GetValue<public>(TeamIndex: int)<transacts>: int = external {}
+
+    # Is true if `Agent` has reached the *TargetValue* for the tracker.
+    HasReachedTarget<public>(Agent: agent)<transacts><decides>: void = external {}
+
     # Increases the target value for `Agent` by 1.
     IncreaseTargetValue<public>(Agent: agent): void = external {}
 
     # Increases the tracked value by *Amount to Change on Received Signal* for `Agent`.
     Increment<public>(Agent: agent): void = external {}
+
+    # Is true if `Agent` currently has the quest active.
+    IsActive<public>(Agent: agent)<transacts><decides>: void = external {}
 
     # Loads tracked progress for `Agent`. Only valid if *Use Persistence* is set to *Use*.
     Load<public>(Agent: agent): void = external {}
@@ -3512,6 +3645,19 @@ Devices<public> := module {
     # Sets the title for the `tracker_device`, which is displayed if *Show on HUD* is enabled.
     # `Text` has a 32 character limit.
     SetTitleText<public>(Text: message): void = external {}
+
+    # Sets the current tracked value for the device for a specific 'Agent'.
+    # If *Sharing* is set to *Team*, this will set the value for their team.
+    # If *Sharing* is set to *All*, this will set the value for everyone.
+    SetValue<public>(Agent: agent, Value: int): void = external {}
+
+    # Sets the current tracked value for the device for the Team at the `TeamIndex`.
+    # If *Sharing* is set to *Individual*, this will set the value for all team members.
+    # If *Sharing* is set to *All*, this will set the value for all players.
+    SetValue<public>(TeamIndex: int, Value: int): void = external {}
+
+    # Sets the current tracked value for the device for all active players.
+    SetValue<public>(Value: int): void = external {}
   }
 
   # A trap device that destroys the tile it's placed on when activated.

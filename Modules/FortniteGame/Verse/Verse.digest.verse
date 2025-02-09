@@ -2,11 +2,15 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-25.30-CL-26867995
+# Generated from build: ++Fortnite+Release-26.00-CL-27233190
 #################################################
 
 # Module import path: /Verse.org/Assets
-Assets<public> := module {}
+Assets<public> := module {
+  mesh<native><public> := class<computes><final><epic_internal> {}
+
+  texture<native><public> := class<computes><final><epic_internal> {}
+}
 
 # Module import path: /Verse.org/Colors
 Colors<public> := module {
