@@ -18,7 +18,8 @@
 		"bProjectExternalContentAllowed": true,
 		"bAddProjectExternalContentAllowed": false,
 		"bMultiPluginProjectAllowed": false,
-		"bMultiProjectAllowed" : false,
+		"bMultiProjectAllowed": false,
+		"bWorkspaceAllowed": false,
 		"bProjectRenameAllowed": false,
 		"bProjectKindExposed": false,
 		"DefaultProjectReferencedContent": []
@@ -27,6 +28,7 @@
 	"ValkyrieBlueprintsSettings": {
 		"bEnableBlueprintGraph": false,
 		"AllowedFunctions": [
+			"/Script/ModelViewViewModel.MVVMPanelWidgetViewExtension:BP_SetItems",
 			"/Script/UMG.UserWidget:QueuePauseAnimation",
 			"/Script/UMG.UserWidget:QueuePlayAnimation",
 			"/Script/UMG.UserWidget:QueuePlayAnimationForward",
@@ -448,7 +450,7 @@
 			"/Script/Engine.VolumeTexture":						{ "Rules": ["View","Create","Import","Export"] },
 			"/Script/Engine.World":								{ "Rules": ["View","Create","Import"] },
 			"/Script/Foliage.FoliageType_InstancedStaticMesh":	{ "Rules": ["View","Create"], "Subclasses": "All" },
-			"/Script/FortniteGame.BuildingTextureData":			{ "Rules": [ "View", "Public" ] },                 
+			"/Script/FortniteGame.BuildingTextureData":			{ "Rules": [ "View", "Public" ] },
 			"/Script/FortniteGame.FortGameFeatureData":			{ "Rules": ["View"] },
 			"/Script/FortniteGame.FortItemDefinition":			{ "Rules": ["View"], "Subclasses": "All" },
 			"/Script/FortniteGame.FortItemComponentData_LevelLimits":		{ "Rules": ["View","Create"] },
@@ -1530,11 +1532,14 @@
 			"/Script/MediaAssets.MediaSoundComponent":							{  },
 			"/Script/MediaAssets.MediaTexture":     							{  },
 			"/Script/ModelViewViewModel.MVVMSlateBrushConversionLibrary":		{  },
+			"/Script/ModelViewViewModel.MVVMPanelWidgetViewExtension":			{ "Visible": true },
 			"/Script/ModelViewViewModel.MVVMViewClass":							{  },
 			"/Script/ModelViewViewModel.MVVMViewModelBase":						{ "Visible": false },
 			"/Script/ModelViewViewModel.MVVMViewModelContextResolver":			{ "Visible": false },
+			"/Script/ModelViewViewModel.MVVMViewPanelWidgetClassExtension":		{ "Visible": false },
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintView":			{  },
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewEvent":{  },
+			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewExtension_PanelWidget":	{ "Visible": false },
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewConversionFunction":{  },
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewSettings":{  },
 			"/Script/ModelViewViewModelBlueprint.MVVMWidgetBlueprintExtension_View":{  },
@@ -2565,29 +2570,30 @@
 	},
 	"ValkyrieAnalyticsSettings": {
 		"AllowedProjectTemplateNames": [
+			"CE_CharacterCameraControl",
+			"CE_Greyboxing",
+			"CE_Landscape",
+			"CE_Materials",
+			"CE_Modeling",
+			"CE_UEFN",
 			"DaySequence_Starter",
+			"Deserted",
 			"Lighting_Starter",
-			"VKT_LavaCave",
-			"VerseDeviceStarterGames",
+			"PrefabExample",
+			"UEFNDesignASpeedwayRace",
 			"VKT_Animation101",
-			"VKT_Verse_Standup",
+			"VKT_LavaCave",
+			"VKT_Talisman_Bridge",
+			"VKT_Talisman_Template",
 			"VKT_Triad_Infiltration",
-			"VKT_Verse_Parkour",
+			"VKT_Verse_AI_Stronghold",
 			"VKT_Verse_Detonation",
 			"VKT_Verse_Elimination",
-			"VKT_Verse_AI_Stronghold",
+			"VKT_Verse_Parkour",
 			"VKT_Verse_PropHunt",
-			"Deserted",
-			"PrefabExample",
-			"VKT_Talisman_Template",
-			"VKT_Talisman_Bridge",
-			"UEFNDesignASpeedwayRace",
-			"CE_UEFN",
-			"CE_Modeling",
-			"CE_Materials",
-			"CE_Landscape",
-			"CE_Greyboxing",
-			"CE_CharacterCameraControl"
+			"VKT_Verse_Standup",
+			"VKT_Village",
+			"VerseDeviceStarterGames"
 		]
 	},
 	"PropertyEditorClassPermissionList": {
@@ -2840,6 +2846,10 @@
 			{
 				"Type": "/Script/UMG.SizeBox",
 				"AllowList": [ "WidthOverride", "HeightOverride", "MinDesiredWidth", "MinDesiredHeight", "MaxDesiredWidth", "MaxDesiredHeight" ]
+			},
+			{
+				"Type": "/Script/UMG.PanelWidget",
+				"AllowList": [ "ViewmodelExtension", "ViewmodelExtensionSlot" ]
 			},
 			{
 				"Type": "/Script/UMG.StackBox",

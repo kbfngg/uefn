@@ -4,6 +4,7 @@
 
 	"ValkyrieProjectSettings": {
 		"bMultiProjectAllowed": true,
+		"bWorkspaceAllowed": true,
 		"bProjectRenameAllowed": true
 	},
 	"ValkyrieBlueprintsSettings": {

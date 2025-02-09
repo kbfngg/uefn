@@ -304,7 +304,7 @@
 		"860A4F4F4E87FB68CE1397B7BAA859A7":
 		{
 			"FriendlyName": "AtomFramework",
-			"Version": 13
+			"Version": 14
 		},
 		"8652A554966A466C9FD71C6DD61B1ADB":
 		{
@@ -469,7 +469,7 @@
 		"C1270312AB730B1E0B1EC74571C70F73":
 		{
 			"FriendlyName": "CustomizableObjectVer",
-			"Version": 58
+			"Version": 59
 		},
 		"C1270312AB730B1E0B1EC790917A7105":
 		{
@@ -1590,13 +1590,16 @@
 			"/Script/MetaHumanSequencer.MetaHumanAudioTrack",
 			"/Script/MetaHumanSequencer.MetaHumanMovieSceneMediaTrack",
 			"/Script/MetaHumanUEFNRuntime.MetaHumanComponent",
+			"/Script/ModelViewViewModel.MVVMPanelWidgetViewExtension",
 			"/Script/ModelViewViewModel.MVVMSlateBrushConversionLibrary",
 			"/Script/ModelViewViewModel.MVVMViewClass",
 			"/Script/ModelViewViewModel.MVVMViewModelBase",
 			"/Script/ModelViewViewModel.MVVMViewModelContextResolver",
+			"/Script/ModelViewViewModel.MVVMViewPanelWidgetClassExtension",
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintView",
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewConversionFunction",
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewEvent",
+			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewExtension_PanelWidget",
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewSettings",
 			"/Script/ModelViewViewModelBlueprint.MVVMWidgetBlueprintExtension_View",
 			"/Script/MovieScene.MovieScene",
@@ -6626,6 +6629,7 @@
 			"/Game/Athena/Artemis/Environments/Landscape/LayerInfo/Sand_LayerInfo.Sand_LayerInfo",
 			"/Game/Athena/Artemis/Environments/Landscape/LayerInfo/Snow_LayerInfo.Snow_LayerInfo",
 			"/Game/Athena/Artemis/Environments/Landscape/LayerInfo/Swamp_LayerInfo.Swamp_LayerInfo",
+			"/Game/Athena/AthenaSearchSpeed.AthenaSearchSpeed",
 			"/Game/Athena/BuildingActors/Props/Building/ActorBlueprints/Containers/Athena_Prop_WildWest_SimpleBed_03_DataAsset.Athena_Prop_WildWest_SimpleBed_03_DataAsset",
 			"/Game/Athena/BuildingActors/TextureData/PropOverrides/Athena_Prop_Military_Crate_TextureOverride.Athena_Prop_Military_Crate_TextureOverride",
 			"/Game/Athena/Cosmetics/Sprays/M_SprayDecal_Master.M_SprayDecal_Master",
