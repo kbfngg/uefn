@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-33.00-CL-38324112
+# Generated from build: ++Fortnite+Release-33.10-CL-38630093
 #################################################
 
 AINavigation<public> := module {
@@ -3764,6 +3764,9 @@ Temporary<public> := module {
       # Fails if no parent exists, such as if this `widget` is not in the `player_ui` or is itself the root `widget`.
       GetParentWidget<native><public>()<transacts><decides>: widget
 
+      # Gets the render opacity of the widget.
+      GetRenderOpacity<native><epic_internal>(): float
+
       # Returns the `widget` that added this `widget` to the `player_ui`. The root `widget` will return itself.
       # Fails if this `widget` is not in the `player_ui`.
       GetRootWidget<native><public>()<transacts><decides>: widget
@@ -3782,6 +3785,9 @@ Temporary<public> := module {
 
       # Enables or disables whether this `widget` consumes input when `widget_visibility` is Visible.
       SetHitTestVisible<native><epic_internal>(InIsHitTestVisible: logic): void
+
+      # Sets the render opacity of the widget.
+      SetRenderOpacity<native><epic_internal>(InRenderOpacity: float): void
 
       # Shows or hides the `widget` without removing itself from the containing `player_ui`.
       # See `widget_visibility` for details.

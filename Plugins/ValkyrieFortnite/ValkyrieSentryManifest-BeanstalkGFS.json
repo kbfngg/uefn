@@ -581,6 +581,11 @@
 			"FriendlyName": "Dev-Niagara",
 			"Version": 1
 		},
+		"F3DF151C85A943078F5B9F5381209F33":
+		{
+			"FriendlyName": "BlueprintBaseEvaluatorVersion",
+			"Version": 1
+		},
 		"F6DFBB78BB50A0E44018B84D60CBAF23":
 		{
 			"FriendlyName": "Dev-IKRig",
@@ -648,6 +653,7 @@
 			"/Game/Creative/PostProcess/PP_70sPrint.PP_70sPrint_C",
 			"/Game/Creative/PostProcess/PP_80sCartoon.PP_80sCartoon_C",
 			"/Game/Creative/PostProcess/PP_ActionLines.PP_ActionLines_C",
+			"/Game/Creative/PostProcess/PP_Blackout.PP_Blackout_C",
 			"/Game/Creative/PostProcess/PP_CCTV.PP_CCTV_C",
 			"/Game/Creative/PostProcess/PP_Comic.PP_Comic_C",
 			"/Game/Creative/PostProcess/PP_ComicNoir.PP_ComicNoir_C",
@@ -802,6 +808,7 @@
 			"/Script/ControlRigDeveloper.ControlRigBlueprint",
 			"/Script/ControlRigDeveloper.ControlRigGraph",
 			"/Script/ControlRigDeveloper.ControlRigGraphNode",
+			"/Script/ControlRigEditor.AnimLayers",
 			"/Script/CoreUObject.MetaData",
 			"/Script/CoreUObject.ObjectRedirector",
 			"/Script/CRD_AudioMixerRuntime.CreativeAudioMixerDevice",
@@ -817,7 +824,9 @@
 			"/Script/CrowdVolume.CrowdSpawner",
 			"/Script/CurveEditor.CurveEditorBakeFilter",
 			"/Script/CurveEditor.CurveEditorEulerFilter",
+			"/Script/CurveEditor.CurveEditorGaussianFilter",
 			"/Script/CurveEditor.CurveEditorReduceFilter",
+			"/Script/CurveEditor.CurveEditorSmartReduceFilter",
 			"/Script/CurveEditorTools.CurveEditorFFTFilter",
 			"/Script/DaySequence.DaySequence",
 			"/Script/DaySequence.DaySequenceActor",
@@ -1244,6 +1253,7 @@
 			"/Script/FabricRuntime.FabricStepSequencerGridComponent",
 			"/Script/FabricRuntime.FabricTimelinePreviewComponent",
 			"/Script/FabricUI.FabricWidgetComponent",
+			"/Script/FeralCorgiGameplayRuntime.FortUserOptionComponent_TickRate",
 			"/Script/FieldSystemEngine.FieldSystemComponent",
 			"/Script/FMCoreRuntime.FMPlayspaceScopedSystemComponent",
 			"/Script/FMDeviceCablesRuntime.FMDeviceCableWildcardOrderingComponent",
@@ -1957,6 +1967,8 @@
 		"VKCreateUGCEarlyAccess": [],
 		"VKCreateUGCEpicDeveloper": [
 			"/Engine/EditorBlueprintResources/StandardMacros.StandardMacros_C",
+			"/FNE_UI/UILibrary/Buttons/UEFN_Button_Stylable.UEFN_Button_Stylable_C",
+			"/Game/Valkyrie/UMG/UEFN_InputModeWidgetSwitcher.UEFN_InputModeWidgetSwitcher_C",
 			"/Script/AmbientAudio.AmbientAudioComponent",
 			"/Script/AmbientAudio.AmbientAudioDataAsset",
 			"/Script/AnimGraph.AnimationGraph",
@@ -2151,6 +2163,7 @@
 			"/Script/FortniteGame.FortAmbientAudioVolume",
 			"/Script/FortniteGame.FortGameUserSettings",
 			"/Script/FortniteGame.UEFNCustomAgentAnimInstance",
+			"/Script/FortniteUI.HUDEquippedItemViewModel",
 			"/Script/GameplayCameras.ArrayCameraNode",
 			"/Script/GameplayCameras.AttachToPlayerPawnCameraNode",
 			"/Script/GameplayCameras.BaseFramingCameraNode",
@@ -8036,7 +8049,6 @@
 			"/Game/Creative/Materials/Landscape/Creative_Landscape_Asteria/Grass/LGT_JungleFloor_01.LGT_JungleFloor_01",
 			"/Game/Creative/Materials/Landscape/Creative_Landscape_Asteria/MaterialInstances/MI_Creative_Landscape_Asteria.MI_Creative_Landscape_Asteria",
 			"/Game/Creative/Materials/Landscape/Creative_Landscape_Asteria/MaterialInstances/MI_Landscape_Ch4_Jungle.MI_Landscape_Ch4_Jungle",
-			"/Game/Creative/Materials/MaterialFunctions/MF_CreativeFortniteGameplay.MF_CreativeFortniteGameplay",
 			"/Game/Creative/Materials/MI_CP_Grass_ColorPicker_01.MI_CP_Grass_ColorPicker_01",
 			"/Game/Creative/Materials/MI_CP_Ground_ColorPicker_01.MI_CP_Ground_ColorPicker_01",
 			"/Game/Creative/Materials/MI_CP_LeafPile_ColorPicker_01.MI_CP_LeafPile_ColorPicker_01",
@@ -16521,6 +16533,7 @@
 			"/CRP_VideoScreen/SetupAssets/Blueprints/B_VideoScreen_Parent.B_VideoScreen_Parent_C",
 			"/DirectionalLauncherGameplay/Items/BGA_Launcher_LowGravDirectional.BGA_Launcher_LowGravDirectional_C",
 			"/EnergyProps/BGAs/EnergyBarrel/BGA_Asteria_Prop_SlapsKeg.BGA_Asteria_Prop_SlapsKeg_C",
+			"/FeralCorgiGameplay/Components/BP_ServerConfig_Component.BP_ServerConfig_Component_C",
 			"/FMDeviceCables/Gameplay/BP_FMMusicManagerRandomizer.BP_FMMusicManagerRandomizer_C",
 			"/FMInWorldKnobs/Gameplay/Components/BP_FabricNoteLabelComponent.BP_FabricNoteLabelComponent_C",
 			"/FMInWorldKnobs/Gameplay/Components/BP_FabricPageInfoComponent.BP_FabricPageInfoComponent_C",
@@ -24079,6 +24092,7 @@
 			"/Game/Creative/PostProcess/PP_70sPrint.PP_70sPrint_C",
 			"/Game/Creative/PostProcess/PP_80sCartoon.PP_80sCartoon_C",
 			"/Game/Creative/PostProcess/PP_ActionLines.PP_ActionLines_C",
+			"/Game/Creative/PostProcess/PP_Blackout.PP_Blackout_C",
 			"/Game/Creative/PostProcess/PP_CCTV.PP_CCTV_C",
 			"/Game/Creative/PostProcess/PP_Comic.PP_Comic_C",
 			"/Game/Creative/PostProcess/PP_ComicNoir.PP_ComicNoir_C",
@@ -26978,7 +26992,10 @@
 		],
 		"VKCreateUGCEarlyAccess": [],
 		"VKCreateUGCEpicDeveloper": [
-			"/Engine/EditorBlueprintResources/StandardMacros.StandardMacros_C"
+			"/Engine/EditorBlueprintResources/StandardMacros.StandardMacros_C",
+			"/FNE_UI/Systems/Buttons/WBP_FNE_StylableButton_Base.WBP_FNE_StylableButton_Base_C",
+			"/FNE_UI/UILibrary/Buttons/UEFN_Button_Stylable.UEFN_Button_Stylable_C",
+			"/Game/Valkyrie/UMG/UEFN_InputModeWidgetSwitcher.UEFN_InputModeWidgetSwitcher_C"
 		],
 		"VKCreateUGCPartner": [
 			"/CRD_VideoPlayer/Device_VideoPlayer_V3.Device_VideoPlayer_V3_C"

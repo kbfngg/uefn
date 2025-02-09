@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-33.00-CL-38324112
+# Generated from build: ++Fortnite+Release-33.10-CL-38630093
 #################################################
 
 using { /Fortnite.com/Characters }
@@ -2244,7 +2244,6 @@ Devices<public> := module {
     RemoveFromAll<public>(): void = external {}
   }
 
-  @experimental
   # Used to update the camera's viewpoint from the perspective of the player character.
   gameplay_camera_first_person_device<public> := class<concrete><final>(gameplay_camera_device) {}
 

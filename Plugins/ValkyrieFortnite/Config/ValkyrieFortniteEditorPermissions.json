@@ -17,7 +17,6 @@
 		"bLocalizationEnabled": true,
 		"bAutoLocalizationEnabled": true,
 		"bManualLocalizationEnabled": false,
-		"bProjectExternalContentAllowed": true,
 		"bAddProjectExternalContentAllowed": false,
 		"bMultiPluginProjectAllowed": false,
 		"bMultiProjectAllowed": false,
@@ -315,7 +314,8 @@
 			"EM_ActorPicker",
 			"EM_SceneDepthPicker",
 			"SequencerToolsEditMode",
-			"PhysicsAssetEditor"
+			"PhysicsAssetEditor",
+			"EditMode.SubTrackEditMode"
 		],
 		"AllowedImportExtensions": [
 			"abc",
@@ -581,7 +581,8 @@
 			"/FMInWorldKnobs/Gameplay/Components/BP_FabricPipsComponent.BP_FabricPipsComponent_C":						{  },
 			"/FMInWorldKnobs/Gameplay/Components/BP_MojoInWorldKnobOptionsComponent.BP_MojoInWorldKnobOptionsComponent_C":	{  },
 			"/FMInWorldKnobs/Gameplay/UI/Widgets/WBP_FabricScreenWidgetParent.WBP_FabricScreenWidgetParent_C":			{  },
-			"/FMDeviceCables/Gameplay/BP_FMMusicManagerRandomizer.BP_FMMusicManagerRandomizer_C":						{  },
+			"/FMDeviceCables/Gameplay/BP_FMMusicManagerRandomizer.BP_FMMusicManagerRandomizer_C":						{  },			
+			"/FeralCorgiGameplay/Components/BP_ServerConfig_Component.BP_ServerConfig_Component_C":{  },
 			"/FortUILibrary/UGC/Widgets/Buttons/CTA/WBP_UEFN_ButtonCTA_Base.WBP_UEFN_ButtonCTA_Base_C":					{  },
 			"/FortWater/Blueprints/WaterBrushManager.WaterBrushManager_C":												{  },
 			"/Game/Athena/BuildingActors/ConsumableBGAs/CBGA_Parent.CBGA_Parent_C":										{  },
@@ -641,6 +642,7 @@
 			"/Game/Creative/PostProcess/PP_70sPrint.PP_70sPrint_C":														{ "Visible": true },
 			"/Game/Creative/PostProcess/PP_80sCartoon.PP_80sCartoon_C":													{ "Visible": true },
 			"/Game/Creative/PostProcess/PP_ActionLines.PP_ActionLines_C":												{ "Visible": true },
+			"/Game/Creative/PostProcess/PP_Blackout.PP_Blackout_C":														{ "Visible": true },
 			"/Game/Creative/PostProcess/PP_CCTV.PP_CCTV_C":																{ "Visible": true },
 			"/Game/Creative/PostProcess/PP_Comic.PP_Comic_C":															{ "Visible": true },
 			"/Game/Creative/PostProcess/PP_ComicNoir.PP_ComicNoir_C":													{ "Visible": true },
@@ -862,6 +864,7 @@
 			"/Script/ControlRigDeveloper.ControlRigGraph":						{  },
 			"/Script/ControlRigDeveloper.ControlRigGraphNode":					{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/ControlRigSpline.ControlRigSpline":						{  },
+			"/Script/ControlRigEditor.AnimLayers":								{  },
 			"/Script/OptimusCore.OptimusDeformer":                              { "Visible": true },
 			"/Script/OptimusCore.OptimusDeformerInstanceSettings":				{  },
 			"/Script/IKRig.IKRigSolver":										{  },
@@ -907,7 +910,9 @@
 			"/Script/CrowdVolume.CrowdSpawner":									{  },
 			"/Script/CurveEditor.CurveEditorBakeFilter":						{ "Visible": true },
 			"/Script/CurveEditor.CurveEditorEulerFilter":						{ "Visible": true },
+			"/Script/CurveEditor.CurveEditorGaussianFilter":					{ "Visible": true },
 			"/Script/CurveEditor.CurveEditorReduceFilter":						{ "Visible": true },
+			"/Script/CurveEditor.CurveEditorSmartReduceFilter":					{ "Visible": true },
 			"/Script/CurveEditorTools.CurveEditorFFTFilter":					{ "Visible": true },
 			"/Script/DaySequence.DaySequence":									{  },
 			"/Script/DaySequence.DaySequenceActor":								{ "Visible": true },
@@ -1969,7 +1974,8 @@
 			"/Script/Engine.QuaternionSpringState":								{  },
 			"/Script/VerseQuery.EntityQueryManager":							{  },
 			"/Script/VerseQuery.EntityTypeQueryContainer":						{  },
-			"/Script/VerseQuery.TaggedObjectQueryContainer": {}
+			"/Script/VerseQuery.TaggedObjectQueryContainer": {},
+			"/Script/FeralCorgiGameplayRuntime.FortUserOptionComponent_TickRate":{ }
 		},
 		"AllowedMenus": {
 			"AssetEditor.IKRetargetEditor.MainMenu.CreateMenu": {
@@ -2302,7 +2308,7 @@
 				"AllowExtenders": false
 			},
 			"Sequencer.MainToolBar": {
-				"AllowList": [ "Save", "FindInContentBrowser", "CreateCamera", "Actions", "ViewOptions", "PlaybackOptions", "KeyGroup", "AutoChange", "ToggleAutoKeyEnabled", "AllowEditsMode", "ToggleIsSnapEnabled", "SnapOptions", "PlayRate", "ToggleShowCurveEditor" ]
+				"AllowList": [ "Save", "FindInContentBrowser", "CreateCamera", "Actions", "ViewOptions", "PlaybackOptions", "KeyGroup", "AutoChange", "ToggleAutoKeyEnabled", "AllowEditsMode", "ToggleIsSnapEnabled", "SnapOptions", "PlayRate", "ToggleLimitViewportSelection", "ToggleShowCurveEditor" ]
 			},
 			"SkeletonTree.FilterMenu": {
 				"AllowList": [ "ShowRetargeting", "FilteringFlattensHierarchy", "HideParentsWhenFiltering", "ShowDebugVisualization", "ShowAllBones", "ShowMeshBones", "ShowLODBones", "ShowWeightedBones", "HideBones", "ShowActiveSockets", "ShowMeshSockets", "ShowSkeletonSockets", "ShowAllSockets", "HideSockets" ]
@@ -2447,6 +2453,7 @@
 					"ControlRigOutlinerTab",
 					"ControlRigDetailsTab",
 					"ControlRigSpacePicker",
+					"AnimLayerTab",
 					"SkeinSourceControlConflictResolution",
 					"SkeinSourceControlSnapshotHistory",
 					"NiagaraDebugger"
@@ -2947,6 +2954,10 @@
 				"AllowList": [ "MinWidth", "MinHeight", "bSelectable", "bShouldSelectUponReceivingFocus", "bInteractableWhenSelected", "ClickMethod", "TouchMethod", "PressMethod", "InputPriority", "Text", "TextSecondary", "BackgroundMaterial", "BorderMaterial", "IsBorderAdditive", "ClickEvent", "OnButtonBaseClicked", "OnButtonBaseHovered", "OnButtonBaseUnhovered"]
 			},
 			{
+				"Type": "/Script/UMG.GridPanel",
+				"AllowList": [ "ColumnFill", "RowFill" ]
+			},
+			{
 				"Type": "/Script/UMG.Image",
 				"AllowList": [ "Brush", "bFlipForRightToLeftFlowDirection" ]
 			},
@@ -3322,7 +3333,7 @@
 			},
 			{
 				"Type": "/Script/ValkyrieEditor.ValkyrieEditorConfig",
-				"AllowList": [ "DefaultProjectName", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "bAssignProjectVersePathAutomatically", "bModalProjectBrowser", "ReferencedContentCacheSizeGB", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "bEnableIterativeValidation", "bLoadAssetsForValidation", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "EnabledPermissions", "EffectivePermissions", "EntitledPermissions", "bDevBuildGivesAllEntitlements" ]
+				"AllowList": [ "DefaultProjectName", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "bAssignProjectVersePathAutomatically", "bModalProjectBrowser", "ReferencedContentCacheSizeGB", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "bEnableIterativeValidation", "bLoadAssetsForValidation", "bAutoSaveOnLaunch", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "EnabledPermissions", "EffectivePermissions", "EntitledPermissions", "bDevBuildGivesAllEntitlements" ]
 			},
 			{
 				"Type": "/Script/CinematicCamera.CineCameraActor",
@@ -3700,6 +3711,10 @@
 			{
 				"Type": "/CRD_ServiceStation/Device_ServiceStation.Device_ServiceStation_C",
 				"DenyList": [ "bNoCollision", "bAllowCustomMaterial", "ExplosiveDamageTag", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bIsNavigationIndestructible", "BuildingAttachmentPointOffset", "BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects", "bPlayerPlaced", "bForceDamagePing", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "InteractionSpeed", "bAllowTeamDamage", "bHidden", "bEnableAutoLODGeneration", "bShouldSpawnMapIconActor", "MapIconActorSpawnOffset", "DamageStateParticleSystems", "KnockbackAmount", "bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "SavedHealthPct", "DynamicBuildingPlacementType", "bIsSpatiallyLoaded", "bCanBeDamaged", "Team" ]
+			},
+			{
+				"Type": "/Script/FeralCorgiGameplayRuntime.FortUserOptionComponent_TickRate",
+				"DenyList": [ "DesiredTickRate" ]
 			}
 		]
 	},
