@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.10-CL-32391220
+# Generated from build: ++Fortnite+Release-29.20-CL-32716692
 #################################################
 
 Abilities<public> := module {
@@ -15,15 +15,7 @@ Abilities<public> := module {
     PropertyLinks<native><epic_internal>: []ability_property_link = external {}
   }
 
-  ability_component<native><public> := class(component) {
-    ActivateAbility<native><epic_internal>(Ability: ability): void
-
-    ActivateAbility<native><public>(Ability: subtype(ability)): void
-
-    GiveAbility<native><epic_internal>(Ability: ability)<transacts><decides>: void
-
-    GiveAbility<native><public>(Ability: subtype(ability))<transacts><decides>: void
-  }
+  ability_component<native><public> := class(component) {}
 
   ability_property_link<native><epic_internal> := struct {
     NativePropertyName<native><epic_internal>: string
@@ -728,12 +720,38 @@ Temporary<public> := module {
   }
 
   SceneGraph<public> := module {
+    (InEntity: entity).FindComponents<native><epic_internal>(ComponentType: subtype(component))<transacts>: component_query_iterator_interface
+
+    (InEntity: entity).FindEntities<native><epic_internal>(EntityType: subtype(entity))<transacts>: entity_query_iterator_interface
+
+    (InEntity: entity).FindEntitiesInside<native><epic_internal>(Shape: convex_hull3)<transacts>: entity_query_iterator_interface
+
+    (InEntity: entity).FindEntitiesOriginInside<native><epic_internal>(Shape: convex_hull3)<transacts>: entity_query_iterator_interface
+
+    (InEntity: entity).FindEntitiesOverlapping<native><epic_internal>(Shape: convex_hull3)<transacts>: entity_query_iterator_interface
+
+    (InEntity: entity).FindEntitiesWithComponent<native><epic_internal>(ComponentType: subtype(component))<transacts>: entity_query_iterator_interface
+
+    (InEntity: entity).FindEntitiesWithTag<native><epic_internal>(Tag: tag)<transacts>: entity_query_iterator_interface
+
+    (InEntity: entity).FindParentComponents<native><epic_internal>(ComponentType: subtype(component))<transacts>: component_query_iterator_interface
+
+    (InEntity: entity).FindParentEntities<native><epic_internal>(EntityType: subtype(entity))<transacts>: entity_query_iterator_interface
+
+    (InEntity: entity).FindParentEntitiesInside<native><epic_internal>(Shape: convex_hull3)<transacts>: entity_query_iterator_interface
+
+    (InEntity: entity).FindParentEntitiesOriginInside<native><epic_internal>(Shape: convex_hull3)<transacts>: entity_query_iterator_interface
+
+    (InEntity: entity).FindParentEntitiesOverlapping<native><epic_internal>(Shape: convex_hull3)<transacts>: entity_query_iterator_interface
+
+    (InEntity: entity).FindParentEntitiesWithComponent<native><epic_internal>(ComponentType: subtype(component))<transacts>: entity_query_iterator_interface
+
+    (InEntity: entity).FindParentEntitiesWithTag<native><epic_internal>(Tag: tag)<transacts>: entity_query_iterator_interface
+
     using { /UnrealEngine.com/EpicGamesRestricted/Network }
-    using { /UnrealEngine.com/Temporary/SpatialMath }
     using { /UnrealEngine.com/Temporary/UI }
     using { /Verse.org/Assets }
     using { /Verse.org/Colors }
-    using { /Verse.org/Simulation }
     attachment_component<native><epic_internal> := class(component) {
       # Attaches the owner entity to the specified entity. This method will compute relative transform from the current world transform of both entity
       AttachTo<native><public>(InParentEntity: entity)<transacts><decides>: void
@@ -772,6 +790,18 @@ Temporary<public> := module {
       var RelativeTransform<native><public>: ?transform = external {}
     }
 
+    using { /UnrealEngine.com/Temporary/SpatialMath }
+    using { /Verse.org/Simulation }
+    using { /Verse.org/Simulation/Tags }
+    # Axis aligned box volume
+    axis_aligned_box3<native><epic_internal> := class<final><concrete>(convex_hull3) {
+      Center<native><public>: vector3 = external {}
+
+      DebugDraw<native><override>()<computes><reads>: void
+
+      Extent<native><public>: vector3 = external {}
+    }
+
     @import_as("/Script/Entity.UBaseEntity")
     base_entity<native><public> := class<abstract> {}
 
@@ -797,13 +827,42 @@ Temporary<public> := module {
       SetFieldOfView<public>(InFieldOfView: float): void = external {}
     }
 
+    collision_component<native><epic_internal> := class<final>(component, enableable) {
+      BeginOverlap<native><final><public>: listenable(overlap_result) = external {}
+
+      Disable<native><override>(): void
+
+      Enable<native><override>(): void
+
+      EndOverlap<native><final><public>: listenable(overlap_result) = external {}
+
+      IsEnabled<native><override>()<transacts><decides>: void
+
+      var CollisionOverride<public>: collision_override = external {}
+
+      @editable
+      var SendOverlapEvents<native><public>: logic = external {}
+    }
+
+    collision_override<native><epic_internal> := class<abstract><epic_internal> {}
+
     using { /Verse.org/Native }
     component<native><epic_internal> := class<abstract><unique>(disposable) {
       Dispose<native><override><final>(): void
 
       IsAllowedOnClient<native_callable><epic_internal>(): logic = external {}
 
-      IsDisposed<native><final><public>()<decides>: void
+      # Determines if the component has been Disposed.
+      IsDisposed<native><final><public>()<transacts><decides>: void
+
+      # Determines if the component has been placed in the scene.
+      IsInScene<native><final><public>()<transacts><decides>: void
+
+      # Determines if the component has been Initialized.
+      IsInitialized<native><final><public>()<transacts><decides>: void
+
+      # Determines if the component is currently simulating.
+      IsSimulating<native><final><public>()<transacts><decides>: void
 
       # Notification called then the component owner entity was added to a scene
       OnAddedToScene<native><native_callable><protected>(): void
@@ -827,47 +886,40 @@ Temporary<public> := module {
       OnUninitializing<native><native_callable><protected>(): void
 
       var<private> Entity<public>: entity = external {}
+
+      var<private> TickEvents<protected>: tick_events = external {}
     }
 
-    damage_component<native><epic_internal> := class(component) {
+    component_query_iterator_interface<native><epic_internal> := interface<epic_internal> {
+      NextValue<native_callable><public>()<transacts><decides>: component
+    }
+
+    convex_hull3<native><epic_internal> := class<epic_internal>(volume3) {
+      Contains<native><public>(Point: vector3)<computes><decides><reads>: void
+    }
+
+    damageable_component<native><epic_internal> := class(component) {
       Damage<native><public>(Amount: float): void
-    }
 
-    # Module import path: /UnrealEngine.com/Temporary/SceneGraph/engine_execution
-    engine_execution<public> := module {
-      GetSubscribables<native><epic_internal>(ForEntity: entity): engine_execution_subscribables
-    }
-
-    engine_execution_subscribables<native><public> := class {
-      DuringPhysics<native><public>: execution_subscribable = external {}
-
-      EndFrame<native><public>: execution_subscribable = external {}
-
-      EndPhysics<native><public>: execution_subscribable = external {}
-
-      PostPhysics<native><public>: execution_subscribable = external {}
-
-      PrePhysics<native><public>: execution_subscribable = external {}
-
-      StartPhysics<native><public>: execution_subscribable = external {}
+      DamagedEvent<native><public>: listenable(float) = external {}
     }
 
     entity<native><epic_internal> := class<concrete><unique><transacts>(base_entity, disposable) {
-      AttachComponents<native><final><public>(Components: []component)<transacts>: void
+      AttachComponents<native><final><public>(Components: []component): void
 
-      AttachEntities<native><final><public>(NewChildEntities: []entity)<transacts>: void
+      AttachEntities<native><final><public>(NewChildEntities: []entity): void
 
       Dispose<native><override><final>(): void
 
-      GetComponents<native><final><public>(ComponentType: subtype(component))<varies>: []ComponentType
+      GetComponents<native><final><public>(ComponentType: subtype(component))<transacts>: []ComponentType
 
       GetEntities<native><final><public>()<transacts>: []entity
 
-      GetParent<native><final><public>()<varies><decides>: entity
+      GetParent<native><final><public>()<transacts><decides>: entity
 
       IsDisposed<native><final><public>()<decides>: void
 
-      UnsetParent<native><final><public>()<transacts>: void
+      UnsetParent<native><final><public>(): void
     }
 
     # Module import path: /UnrealEngine.com/Temporary/SceneGraph/entity_initializer
@@ -888,18 +940,24 @@ Temporary<public> := module {
 
     entity_prefab<native><epic_internal> := class<computes>(asset) {}
 
-    execution_subscribable<native><public> := class {
-      Subscribe<native><public>(Callback: type { __(): void }, ?Interval: float = external {})<transacts>: execution_subscription
-
-      SubscribeWithTime<native><public>(Callback: type { __(: float): void }, ?Interval: float = external {})<transacts>: execution_subscription
+    entity_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface) {
+      NextValue<native><override>()<transacts><decides>: entity
     }
 
-    execution_subscription<native><public> := class(cancelable) {
+    entity_query_iterator_interface<native><epic_internal> := interface<epic_internal> {
+      NextValue<native_callable><public>()<transacts><decides>: entity
+    }
+
+    execution_subscribable<native><epic_internal> := class(subscribable(float)) {
+      Subscribe<native><override>(Callback: type { __(: float): void })<transacts>: cancelable
+    }
+
+    execution_subscription<native><epic_internal> := class(cancelable) {
       Cancel<native><override>()<transacts>: void
 
-      RunAfter<native><public>(__dupe___unnamed_parameter_46: execution_subscription)<transacts>: void
+      RunAfter<native><epic_internal>(__dupe___unnamed_parameter_46: execution_subscription): void
 
-      RunBefore<native><public>(__dupe___unnamed_parameter_47: execution_subscription)<transacts>: void
+      RunBefore<native><epic_internal>(__dupe___unnamed_parameter_47: execution_subscription): void
     }
 
     hit_result<native><epic_internal> := struct {
@@ -950,15 +1008,40 @@ Temporary<public> := module {
       IsAllowedOnClient<override>(): logic = external {}
     }
 
-    particle_system_component<native><epic_internal> := class<final>(component) {
+    no_collision_override<native><epic_internal> := class<concrete><final><epic_internal>(collision_override) {}
+
+    null_component_query_iterator<native><epic_internal> := class<epic_internal>(component_query_iterator_interface) {
+      NextValue<native><override>()<transacts><decides>: component
+    }
+
+    null_entity_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface) {
+      NextValue<native><override>()<transacts><decides>: entity
+    }
+
+    overlap_result<native><epic_internal> := struct {
+      CollisionComponent<native><public>: ?collision_component
+
+      Entities<native><public>: []entity
+    }
+
+    particle_system_component<native><epic_internal> := class<final>(component, enableable) {
       # Activate the particle system
       Activate<native><public>(): void
 
       # Deactivate the particle system
       Deactivate<native><public>(): void
 
+      # Disable the particle system
+      Disable<override>(): void = external {}
+
+      # Enable the particle system
+      Enable<override>(): void = external {}
+
       # Internal epic method to know if this component is allowed on client
       IsAllowedOnClient<override>(): logic = external {}
+
+      # Internal epic method to know if this component is allowed on client
+      IsEnabled<override>()<transacts><decides>: void = external {}
 
       # Notification called then the component owner entity was added to a world
       OnAddedToScene<native><override>(): void
@@ -987,12 +1070,21 @@ Temporary<public> := module {
       var ParticleSystem<native><public>: particle_system = external {}
     }
 
-    physics_component<native><epic_internal> := class(component) {
+    physics_component<native><epic_internal> := class<final>(component, enableable) {
+      # Disable this object.
+      Disable<native><override>(): void
+
+      # Enable this object.
+      Enable<native><override>(): void
+
       # Event signaled when the component experiences a blocking hit
       HitEvent<native><public>: listenable(hit_result) = external {}
 
       # Internal epic method to know if this component is allowed on client
       IsAllowedOnClient<override>(): logic = external {}
+
+      # Succeeds if the component is enabled, fails if it’s disabled.
+      IsEnabled<native><override>()<transacts><decides>: void
 
       # Notification called then the component owner entity was added to a world
       OnAddedToScene<native><override>(): void
@@ -1006,6 +1098,9 @@ Temporary<public> := module {
       # The component is being uninitialized, called when it is about to be detached from an entity
       OnUninitializing<native><override>(): void
     }
+
+    @hide_in_editor
+    playspace_association_component<native><epic_internal> := class<epic_internal>(component) {}
 
     point_light_entity_component<native><public> := class<final>(light_entity_component) {
       GetAttenuationRadius<public>(): float = external {}
@@ -1040,6 +1135,20 @@ Temporary<public> := module {
       OnRemovingFromScene<native><override>(): void
     }
 
+    shape2<native><epic_internal> := class<epic_internal> {}
+
+    shape3<native><epic_internal> := class<epic_internal> {
+      DebugDraw<native><public>()<computes><reads>: void
+    }
+
+    slow_component_array_copy_query_iterator<native><epic_internal> := class<epic_internal>(component_query_iterator_interface) {
+      NextValue<native><override>()<transacts><decides>: component
+    }
+
+    slow_entity_array_copy_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface) {
+      NextValue<native><override>()<transacts><decides>: entity
+    }
+
     sound_component<native><epic_internal> := class(component) {
       # Internal epic method to know if this component is allowed on client
       IsAllowedOnClient<override>(): logic = external {}
@@ -1059,6 +1168,14 @@ Temporary<public> := module {
       @replicated("RepNotify")
       # The path to the sound asset
       var Sound<native><public>: sound = external {}
+    }
+
+    sphere3<native><epic_internal> := class<final><concrete>(convex_hull3) {
+      Center<native><public>: vector3 = external {}
+
+      DebugDraw<native><override>()<computes><reads>: void
+
+      Radius<native><public>: float = external {}
     }
 
     spot_light_entity_component<native><public> := class<final>(light_entity_component) {
@@ -1091,9 +1208,18 @@ Temporary<public> := module {
       SetSourceRadius<public>(NewRadius: float): void = external {}
     }
 
-    static_mesh_component<native><epic_internal> := class(mesh_component) {
+    static_mesh_component<native><epic_internal> := class<final>(mesh_component, enableable) {
+      # Disable this object.
+      Disable<native><override>(): void
+
+      # Enable this object.
+      Enable<native><override>(): void
+
       # Internal epic method to know if this component is allowed on client
       IsAllowedOnClient<override>(): logic = external {}
+
+      # Succeeds if the component is enabled, fails if it’s disabled.
+      IsEnabled<native><override>()<transacts><decides>: void
 
       OnAddedToScene<native><override>(): void
 
@@ -1110,7 +1236,55 @@ Temporary<public> := module {
       var Mesh<native><public>: mesh = external {}
     }
 
-    transform_component<native><epic_internal> := class(component) {
+    # Component used for tagging objects for retrieval later. Useful when connecting runtime scripts with editor placed objects.
+    tag_component<native><epic_internal> := class<final>(component) {
+      # Add a single tag to this component.
+      AddTag<native><epic_internal>(TagToAdd: tag)<transacts>: void
+
+      # Get the tags associated with this component. These may be specified in the editor.
+      GetTags<native><epic_internal>()<transacts>: tag_view
+
+      # Notification called then the component owner entity was added to a Scene
+      OnAddedToScene<native><override>(): void
+
+      # Notification called when the component owner entity is about to be removed from Scene
+      OnRemovingFromScene<native><override>(): void
+
+      # Remove a single tag from this component.
+      RemoveTag<native><epic_internal>(TagToRemove: tag)<transacts>: logic
+    }
+
+    text_display_component<native><epic_internal> := class<concrete><final>(component) {
+      # Internal epic method to know if this component is allowed on client
+      IsAllowedOnClient<override>(): logic = external {}
+
+      OnAddedToScene<native><override>(): void
+
+      OnInitialized<native><override>(): void
+
+      OnRemovingFromScene<native><override>(): void
+
+      @editable
+      @replicated("RepNotify")
+      # The text to display.
+      var Text<native><public>: string = external {}
+    }
+
+    tick_events<native><epic_internal> := class {
+      DuringPhysics<native><epic_internal>: execution_subscribable = external {}
+
+      EndFrame<native><epic_internal>: execution_subscribable = external {}
+
+      EndPhysics<native><epic_internal>: execution_subscribable = external {}
+
+      PostPhysics<native><public>: execution_subscribable = external {}
+
+      PrePhysics<native><public>: execution_subscribable = external {}
+
+      StartPhysics<native><epic_internal>: execution_subscribable = external {}
+    }
+
+    transform_component<native><epic_internal> := class<final>(component) {
       # Internal epic method to know if this component is allowed on client
       IsAllowedOnClient<override>(): logic = external {}
 
@@ -1134,6 +1308,12 @@ Temporary<public> := module {
 
     @hide_in_editor
     typed_element_component<native><epic_internal> := class(component) {}
+
+    volume3<native><epic_internal> := class<epic_internal>(shape3) {}
+
+    volume_collision_override<native><epic_internal> := class<concrete><final><epic_internal>(collision_override) {
+      CollisionVolume<native><public>: convex_hull3 = external {}
+    }
   }
 
   using { /Verse.org/Native }
@@ -2681,18 +2861,6 @@ VGameplayRst<public> := module {
       OtherEntityID<native><public>: int
     }
 
-    overlap_result<native><public> := class {
-      FromSweep<native><public>: logic
-
-      OtherComponent<native><public>: vk_collision_component
-
-      OtherEntityID<native><public>: int
-
-      SweepHitLocation<native><public>: vector3
-
-      SweepHitNormal<native><public>: vector3
-    }
-
     physics_trace<native><public> := class {
       InitPhysicsTrace<native><public>(
         ContextObject: vk_component,
@@ -2811,11 +2979,23 @@ VGameplayRst<public> := module {
 
       SetUseContinuousCollisionDetection<native><public>(UseCCD: logic): void
 
-      WaitBeginOverlap<native><public>()<suspends>: overlap_result
+      WaitBeginOverlap<native><public>()<suspends>: vk_overlap_result
 
-      WaitEndOverlap<native><public>()<suspends>: overlap_result
+      WaitEndOverlap<native><public>()<suspends>: vk_overlap_result
 
       WaitHit<native><public>()<suspends>: hit_result_legacy
+    }
+
+    vk_overlap_result<native><public> := class {
+      FromSweep<native><public>: logic
+
+      OtherComponent<native><public>: vk_collision_component
+
+      OtherEntityID<native><public>: int
+
+      SweepHitLocation<native><public>: vector3
+
+      SweepHitNormal<native><public>: vector3
     }
   }
 
@@ -2901,6 +3081,9 @@ VerseCamera<public> := module {
   GetPlayerCameraViewByIndex<native><epic_internal>(PlayerIndex: int)<transacts><decides>: player_camera_view
 
   camera_behavior_component<native><epic_internal> := class(component) {
+    # Internal epic method to know if this component is allowed on client
+    IsAllowedOnClient<override>(): logic = external {}
+
     @replicated("")
     var CameraDirector<native><public>: camera_director_interface = external {}
 
@@ -2926,7 +3109,10 @@ VerseCamera<public> := module {
     Predictive
   }
 
-  camera_component<native><epic_internal> := class(basic_camera_component) {}
+  camera_component<native><epic_internal> := class(basic_camera_component) {
+    # Internal epic method to know if this component is allowed on client
+    IsAllowedOnClient<override>(): logic = external {}
+  }
 
   camera_dead_zone_shape<native><epic_internal> := enum {
     Cylinder
@@ -3221,122 +3407,6 @@ VerseCamera<public> := module {
 
   @import_as("/Script/VerseCamera.UVersePlayerCameraViewComponent")
   player_camera_view_base<native><epic_internal> := class<abstract> {}
-}
-
-# Module import path: /UnrealEngine.com/VerseQuery
-VerseQuery<public> := module {
-  (InEntity: entity).FindChildComponents<native><epic_internal>(ComponentType: subtype(component))<varies>: component_query_iterator_interface
-
-  (InEntity: entity).FindChildEntities<native><epic_internal>(EntityType: subtype(entity))<varies>: entity_query_iterator_interface
-
-  (InEntity: entity).FindChildEntitiesInside<native><epic_internal>(Shape: volume3): entity_query_iterator_interface
-
-  (InEntity: entity).FindChildEntitiesOriginInside<native><epic_internal>(Shape: volume3): entity_query_iterator_interface
-
-  (InEntity: entity).FindChildEntitiesOverlapping<native><epic_internal>(Shape: shape3): entity_query_iterator_interface
-
-  (InEntity: entity).FindChildEntitiesWithComponent<native><epic_internal>(ComponentType: subtype(component))<varies>: entity_query_iterator_interface
-
-  (InEntity: entity).FindChildEntitiesWithTag<native><epic_internal>(Tag: tag)<varies>: entity_query_iterator_interface
-
-  (InEntity: entity).FindParentComponents<native><epic_internal>(ComponentType: subtype(component))<varies>: component_query_iterator_interface
-
-  (InEntity: entity).FindParentEntities<native><epic_internal>(EntityType: subtype(entity))<varies>: entity_query_iterator_interface
-
-  (InEntity: entity).FindParentEntitiesInside<native><epic_internal>(Shape: volume3): entity_query_iterator_interface
-
-  (InEntity: entity).FindParentEntitiesOriginInside<native><epic_internal>(Shape: volume3): entity_query_iterator_interface
-
-  (InEntity: entity).FindParentEntitiesOverlapping<native><epic_internal>(Shape: shape3): entity_query_iterator_interface
-
-  (InEntity: entity).FindParentEntitiesWithComponent<native><epic_internal>(ComponentType: subtype(component))<varies>: entity_query_iterator_interface
-
-  (InEntity: entity).FindParentEntitiesWithTag<native><epic_internal>(Tag: tag)<varies>: entity_query_iterator_interface
-
-  # Axis aligned box volume
-  axis_aligned_box3<native><epic_internal> := class<final><concrete>(volume3) {
-    Extent<native><public>: vector3 = external {}
-
-    Origin<native><public>: vector3 = external {}
-  }
-
-  component_query_iterator_interface<native><epic_internal> := interface<epic_internal> {
-    NextValue<native_callable><public>()<transacts><decides>: component
-  }
-
-  entity_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface) {
-    NextValue<native><override>()<transacts><decides>: entity
-  }
-
-  entity_query_iterator_interface<native><epic_internal> := interface<epic_internal> {
-    NextValue<native_callable><public>()<transacts><decides>: entity
-  }
-
-  @import_as("/Script/VerseQuery.UEntityQueryManager")
-  entity_query_manager<native><epic_internal> := class {}
-
-  null_component_query_iterator<native><epic_internal> := class<epic_internal>(component_query_iterator_interface) {
-    NextValue<native><override>()<transacts><decides>: component
-  }
-
-  null_entity_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface) {
-    NextValue<native><override>()<transacts><decides>: entity
-  }
-
-  @hide_in_editor
-  playspace_association_component<native><epic_internal> := class(component) {}
-
-  shape2<native><epic_internal> := class<epic_internal> {}
-
-  shape3<native><epic_internal> := class<epic_internal> {}
-
-  slow_component_array_copy_query_iterator<native><epic_internal> := class<epic_internal>(component_query_iterator_interface) {
-    NextValue<native><override>()<transacts><decides>: component
-  }
-
-  slow_entity_array_copy_query_iterator<native><epic_internal> := class<epic_internal>(entity_query_iterator_interface) {
-    NextValue<native><override>()<transacts><decides>: entity
-  }
-
-  # Component used for tagging objects for retrieval later. Useful when connecting runtime scripts with editor placed objects.
-  tag_component<native><epic_internal> := class<final>(tag_component_base) {
-    # Add a single tag to this component.
-    AddTag<native><override>(TagToAdd: tag): void
-
-    # Notification called then the component owner entity was added to a Scene
-    OnAddedToScene<native><override>(): void
-
-    # Notification called when the component owner entity is about to be removed from Scene
-    OnRemovingFromScene<native><override>(): void
-
-    # Remove a single tag from this component.
-    RemoveTag<native><override>(TagToRemove: tag): logic
-
-    # Set the tags associated with this component.
-    SetTags<native><override>(InTags: tag_container): void
-  }
-
-  tag_component_base<native><epic_internal> := class<abstract>(component) {
-    # Add a single tag to this component.
-    AddTag<native><epic_internal>(TagToAdd: tag): void
-
-    # Get the tags associated with this component. These may be specified in the editor.
-    GetTags<native><epic_internal>(): tag_container
-
-    # Notification called then the component owner entity was added to a Scene
-    OnAddedToScene<native><override>(): void
-
-    # Notification called when the component owner entity is about to be removed from Scene
-    OnRemovingFromScene<native><override>(): void
-
-    # Remove a single tag from this component.
-    RemoveTag<native><epic_internal>(TagToRemove: tag): logic
-
-    # Set the tags associated with this component.
-    SetTags<native><epic_internal>(InTags: tag_container): void
-  }
-
-  volume3<native><epic_internal> := class<epic_internal>(shape3) {}
 }
 
 # Module import path: /UnrealEngine.com/VerseQueryTestSuite

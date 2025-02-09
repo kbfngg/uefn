@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.10-CL-32391220
+# Generated from build: ++Fortnite+Release-29.20-CL-32716692
 #################################################
 
 AI<public> := module {
@@ -99,12 +99,6 @@ AI<public> := module {
       OnBegin<override>()<suspends>: void = external {}
     }
 
-    companion_creature<epic_internal> := class(npc_behavior) {
-      EngageThreatsWithinDistance<public>: float = external {}
-
-      OnBegin<override>()<suspends>: void = external {}
-    }
-
     default_npc_behavior<epic_internal> := class(npc_behavior) {
       OnBegin<override>()<suspends>: void = external {}
     }
@@ -121,17 +115,20 @@ AI<public> := module {
       RunDefaultBehavior<epic_internal>()<suspends>: action_result
     }
 
-    # Fortnite Creature AI Management
-    fort_creature_component<native><epic_internal> := class(creature_component, fort_br_creature_actions_interface) {
-      # Run the Creature default behavior
-      RunDefaultBehavior<native><override>()<suspends>: action_result
-    }
-
     # Fortnite NPC AI Management
-    fort_npc_component<native><epic_internal> := class(npc_component, fort_br_character_actions_interface) {
+    fort_guard_actions_component<native><epic_internal> := class(
+      guard_actions_component,
+      fort_br_character_actions_interface
+    ) {
       IsFollowingBehaviorEnabled<native><override>()<transacts>: logic
 
       # Run the NPC default behavior
+      RunDefaultBehavior<native><override>()<suspends>: action_result
+    }
+
+    # Fortnite Creature AI Management
+    fort_npc_actions_component<native><epic_internal> := class(npc_actions_component, fort_br_creature_actions_interface) {
+      # Run the Creature default behavior
       RunDefaultBehavior<native><override>()<suspends>: action_result
     }
 
@@ -195,18 +192,14 @@ AI<public> := module {
   }
 
   # Create a `navigation_target` from a `target_info`.
-  MakeNavigationTarget<constructor><native><epic_internal>(TargetInfo: target_info): navigation_target
+  MakeNavigationTarget<native><epic_internal>(TargetInfo: target_info): navigation_target
 
   # Generate a navigation_target from any position
-  MakeNavigationTarget<constructor><native><public>(Position: vector3): navigation_target
+  MakeNavigationTarget<native><public>(Position: vector3): navigation_target
 
   # Generate a navigation_target from an agent
-  MakeNavigationTarget<constructor><native><public>(Target: agent): navigation_target
+  MakeNavigationTarget<native><public>(Target: agent): navigation_target
 
-  using { /Fortnite.com/Game/Abilities }
-  using { /Verse.org/Assets }
-  using { /Verse.org/Simulation/Tags }
-  using { /Verse.org/VerseEngine/Entity }
   # Module import path: /Fortnite.com/AI/VerseAIBase
   VerseAIBase<public> := module {
     # Get the current fort_character_actions_interface for the specified character
@@ -218,27 +211,11 @@ AI<public> := module {
     # Get the current fort_br_creature_actions_interface for the specified character
     (InCharacter: fort_character).GetFortCreatureActions<native><epic_internal>()<transacts><decides>: fort_creature_actions_interface
 
-    # Get the current fort_inventory_interface for the specified character
-    (InCharacter: fort_character).GetFortInventory<native><epic_internal>()<transacts><decides>: fort_inventory_interface
-
-    # Get the current fort_loot_perception_interface for the specified character
-    (InCharacter: fort_character).GetFortLootPerception<native><epic_internal>()<transacts><decides>: fort_loot_perception_interface
-
     # Get the fort_navigatable interface for the specified character
     (InCharacter: fort_character).GetFortNavigatable<native><epic_internal>()<transacts><decides>: fort_navigatable
 
     # Get the current fort_obstacle_perception_interface for the specified character
     (InCharacter: fort_character).GetFortObstaclePerception<native><epic_internal>()<transacts><decides>: fort_obstacle_perception_interface
-
-    # Get the current fort_weapon_actions_interface for the specified character
-    (InCharacter: fort_character).GetFortWeaponActions<native><epic_internal>()<transacts><decides>: fort_weapon_actions_interface
-
-    # Module import path: /Fortnite.com/AI/VerseAIBase/FortCreatureActionsModule
-    FortCreatureActionsModule<public> := module {
-      GetGameplayAbility<public>(path: string)<transacts>: gameplay_ability_asset = external {}
-    }
-
-    MakeNavigationTarget<constructor><native><epic_internal>(LootInfo: fort_loot_info): navigation_target
 
     # Result of an action that cannot fail
     action_result<native><public> := enum {
@@ -267,20 +244,12 @@ AI<public> := module {
       Success
     }
 
-    fort_LMG_tag<native><public> := class(fort_range_weapon_tag) {}
-
-    fort_SMG_tag<native><public> := class(fort_range_weapon_tag) {}
-
-    fort_biplane_gun_tag<native><public> := class(fort_range_weapon_tag) {}
-
-    fort_bow_tag<native><public> := class(fort_range_weapon_tag) {}
-
     fort_character_actions_interface<native><epic_internal> := interface(emote_interface) {
       # Start attacking the specified target
-      Attack<epic_internal>(Target: entity)<suspends>: action_result
+      Attack<epic_internal>(Target: fort_obstacle_info)<suspends>: action_result
 
-      # Navigate to and loot the specified object
-      LootObject<epic_internal>(ObjectInfo: fort_loot_info)<suspends>: action_result
+      # Start attacking the specified target
+      Attack<epic_internal>(Target: target_info)<suspends>: action_result
 
       # Revive the specified target
       Revive<public>(Target: agent)<suspends>: fallible_action_result
@@ -310,76 +279,6 @@ AI<public> := module {
     }
 
     fort_creature_actions_interface<native><epic_internal> := interface<epic_internal> {}
-
-    fort_grenade_launcher_tag<native><public> := class(fort_range_weapon_tag) {}
-
-    fort_inventory_interface<native><epic_internal> := interface<epic_internal> {
-      AddItemToInventory<epic_internal>(
-        InventoryAsset: fort_inventory_item_asset,
-        Count: int
-      )<transacts><decides>: fort_item_descriptor
-
-      DropItem<public>(Item: fort_item_descriptor): logic
-
-      EquipWeapon<public>(Weapon: fort_item_descriptor)<transacts><decides>: void
-
-      GetAllItems<public>()<transacts>: []fort_item_descriptor
-
-      GetCurrentWeapon<public>()<transacts><decides>: fort_item_descriptor
-
-      GetWeaponDescriptor<public>(Weapon: fort_item_descriptor)<transacts><decides>: fort_weapon_descriptor
-
-      IsWeaponEquipped<public>(Weapon: fort_item_descriptor)<transacts>: logic
-
-      RegisterUseSuggestedWeaponCallback<public>(Callback: type { __(: fort_item_descriptor): logic }): int
-
-      UnregisterUseSuggestedWeaponCallback<public>(CallbackID: int): void
-    }
-
-    fort_inventory_item_asset<native><epic_internal> := class<computes><final>(asset) {}
-
-    fort_item_descriptor<native><epic_internal> := struct<epic_internal> {
-      ItemType<native><public>: fort_item_tag
-    }
-
-    # Module import path: /Fortnite.com/AI/VerseAIBase/fort_item_interface
-    fort_item_interface<epic_internal> := module {
-      HasTag<native><public>(Item: fort_item_descriptor, Tag: fort_item_tag)<transacts>: logic
-    }
-
-    fort_item_tag<native><public> := class(tag) {}
-
-    fort_loot_info<native><epic_internal> := struct<epic_internal> {
-      Location<native><public>: vector3
-
-      Loot<native><epic_internal>: vk_entity
-
-      Type<native><public>: fort_loot_type
-    }
-
-    fort_loot_perception_interface<native><epic_internal> := interface<epic_internal> {
-      # Event when a new best object to loot is detected
-      BestObjectToLootChangedEvent<public>(): listenable(fort_loot_info)
-
-      # Get information about the potential best loot object
-      GetBestObjectToLoot<public>()<transacts><decides>: fort_loot_info
-    }
-
-    fort_loot_type<native><epic_internal> := enum {
-      chest
-
-      pickup
-
-      supply_drop
-
-      unknown
-    }
-
-    fort_melee_weapon_tag<native><public> := class<epic_internal>(fort_weapon_tag) {}
-
-    fort_metal_tag<native><public> := class(fort_resource_tag) {}
-
-    fort_mini_gun_tag<native><public> := class(fort_range_weapon_tag) {}
 
     fort_navigatable<native><epic_internal> := interface(navigatable) {
       # Move in range to attack the current target
@@ -412,47 +311,6 @@ AI<public> := module {
 
       trap_obstacle
     }
-
-    fort_pickaxe_tag<native><public> := class(fort_melee_weapon_tag) {}
-
-    fort_pistol_tag<native><public> := class(fort_range_weapon_tag) {}
-
-    fort_range_weapon_tag<native><public> := class<epic_internal>(fort_weapon_tag) {}
-
-    fort_resource_tag<native><public> := class<epic_internal>(fort_item_tag) {}
-
-    fort_rifle_tag<native><public> := class(fort_range_weapon_tag) {}
-
-    fort_rocket_launcher_tag<native><public> := class(fort_range_weapon_tag) {}
-
-    fort_shotgun_tag<native><public> := class(fort_range_weapon_tag) {}
-
-    fort_sniper_tag<native><public> := class(fort_range_weapon_tag) {}
-
-    fort_stone_tag<native><public> := class(fort_resource_tag) {}
-
-    fort_weapon_actions_interface<native><epic_internal> := interface<epic_internal> {
-      # Fire weapon
-      Fire<public>(): logic
-
-      # Throw a melee attack
-      MeleeAttack<public>(): logic
-
-      # Reload current weapon
-      Reload<public>(): logic
-    }
-
-    fort_weapon_descriptor<native><epic_internal> := struct<epic_internal> {
-      LoadedAmmo<native><public>: int = external {}
-
-      MaxRange<native><public>: float = external {}
-
-      TotalAmmo<native><public>: int = external {}
-    }
-
-    fort_weapon_tag<native><public> := class<epic_internal>(fort_item_tag) {}
-
-    fort_wood_tag<native><public> := class(fort_resource_tag) {}
   }
 
   using { /Fortnite.com/Game }
@@ -460,32 +318,6 @@ AI<public> := module {
   using { /Verse.org/VerseEngine }
   # Module import path: /Fortnite.com/AI/VerseCreature
   VerseCreature<public> := module {
-    # Fortnite Creature AI Management
-    creature_component<native><epic_internal> := class(ai_actions_component, fort_navigatable, focus_interface) {
-      GetCurrentDestination<native><override>()<transacts><decides>: vector3
-
-      MaintainFocus<native><override>(Agent: agent)<suspends>: void
-
-      MaintainFocus<native><override>(Location: vector3)<suspends>: void
-
-      MoveInRangeToAttack<native><override>()<suspends>: action_result
-
-      NavigateTo<native><override>(
-        Target: navigation_target,
-        ?MovementType: movement_type = external {},
-        ?ReachRadius: float = external {},
-        ?AllowPartialPath: logic = external {}
-      )<suspends>: navigation_result
-
-      RoamAround<native><override>()<suspends>: navigation_result
-
-      SetMovementSpeedMultiplier<native><override>(Multiplier: float): void
-
-      StopNavigation<native><override>(): void
-
-      Wait<native><override>(?Duration: float = external {})<suspends>: void
-    }
-
     creature_perception_component<native><epic_internal> := class(creature_perception_component_base, perception_interface) {
       GetDamageSettings<native><override>()<transacts>: damage_perception_settings
 
@@ -534,38 +366,38 @@ AI<public> := module {
 
     @import_as("/Script/VerseCreature.UCreaturePerceptionComponentBase")
     creature_perception_component_base<native><epic_internal> := class(vk_component) {}
+
+    # Fortnite NPC AI Management
+    npc_actions_component<native><epic_internal> := class(ai_actions_component, fort_navigatable, focus_interface) {
+      GetCurrentDestination<native><override>()<transacts><decides>: vector3
+
+      MaintainFocus<native><override>(Agent: agent)<suspends>: void
+
+      MaintainFocus<native><override>(Location: vector3)<suspends>: void
+
+      MoveInRangeToAttack<native><override>()<suspends>: action_result
+
+      NavigateTo<native><override>(
+        Target: navigation_target,
+        ?MovementType: movement_type = external {},
+        ?ReachRadius: float = external {},
+        ?AllowPartialPath: logic = external {}
+      )<suspends>: navigation_result
+
+      RoamAround<native><override>()<suspends>: navigation_result
+
+      SetMovementSpeedMultiplier<native><override>(Multiplier: float): void
+
+      StopNavigation<native><override>(): void
+
+      Wait<native><override>(?Duration: float = external {})<suspends>: void
+    }
   }
 
   using { /Fortnite.com/Assets }
   # Module import path: /Fortnite.com/AI/VerseNPC
   VerseNPC<public> := module {
-    inventory_component<native><epic_internal> := class(inventory_component_base, fort_inventory_interface) {
-      AddItemToInventory<native><override>(
-        InventoryAsset: fort_inventory_item_asset,
-        Count: int
-      )<transacts><decides>: fort_item_descriptor
-
-      DropItem<native><override>(Item: fort_item_descriptor): logic
-
-      EquipWeapon<native><override>(Weapon: fort_item_descriptor)<transacts><decides>: void
-
-      GetAllItems<native><override>()<transacts>: []fort_item_descriptor
-
-      GetCurrentWeapon<native><override>()<transacts><decides>: fort_item_descriptor
-
-      GetWeaponDescriptor<native><override>(Weapon: fort_item_descriptor)<transacts><decides>: fort_weapon_descriptor
-
-      IsWeaponEquipped<native><override>(Weapon: fort_item_descriptor)<transacts>: logic
-
-      RegisterUseSuggestedWeaponCallback<native><override>(Callback: type { __(: fort_item_descriptor): logic }): int
-
-      UnregisterUseSuggestedWeaponCallback<native><override>(CallbackID: int): void
-    }
-
-    @import_as("/Script/VerseNPC.UInventoryComponentBase")
-    inventory_component_base<native><epic_internal> := class(vk_component) {}
-
-    leash_component<native><epic_internal> := class(leash_component_base, fort_leashable) {
+    fort_leashable_component<native><epic_internal> := class<epic_internal>(ai_component, fort_leashable) {
       ClearLeash<native><override>(): void
 
       SetLeashAgent<native><override>(Agent: agent, InnerRadius: float, OuterRadius: float): void
@@ -573,35 +405,27 @@ AI<public> := module {
       SetLeashPosition<native><override>(Location: vector3, InnerRadius: float, OuterRadius: float): void
     }
 
-    @import_as("/Script/VerseNPC.ULeashComponentBase")
-    leash_component_base<native><epic_internal> := class(vk_component) {}
-
     # Fortnite NPC AI Management
-    npc_component<native><epic_internal> := class(
+    guard_actions_component<native><epic_internal> := class(
       ai_actions_component,
       fort_navigatable,
       fort_character_movement_interface,
       fort_character_actions_interface,
-      focus_interface,
-      fort_weapon_actions_interface
+      focus_interface
     ) {
-      Attack<native><override>(Target: entity)<suspends>: action_result
+      Attack<native><override>(Target: fort_obstacle_info)<suspends>: action_result
+
+      Attack<native><override>(Target: target_info)<suspends>: action_result
 
       Crouch<native><override>()<suspends>: fallible_action_result
-
-      Fire<native><override>(): logic
 
       GetCurrentDestination<native><override>()<transacts><decides>: vector3
 
       Jump<native><override>()<suspends>: action_result
 
-      LootObject<native><override>(ObjectInfo: fort_loot_info)<suspends>: action_result
-
       MaintainFocus<native><override>(Location: vector3)<suspends>: void
 
       MaintainFocus<native><override>(Target: agent)<suspends>: void
-
-      MeleeAttack<native><override>(): logic
 
       MoveInRangeToAttack<native><override>()<suspends>: action_result
 
@@ -615,8 +439,6 @@ AI<public> := module {
       PlayEmote<native><override>(Emote: emote)<suspends>: play_emote_result
 
       PlayRandomEmote<native><override>()<suspends>: play_emote_result
-
-      Reload<native><override>(): logic
 
       Revive<native><override>(Target: agent)<suspends>: fallible_action_result
 
@@ -642,16 +464,11 @@ AI<public> := module {
     npc_perception_component<native><epic_internal> := class(
       npc_perception_component_base,
       guard_perception_interface,
-      fort_obstacle_perception_interface,
-      fort_loot_perception_interface
+      fort_obstacle_perception_interface
     ) {
       AlertLevelChangedEvent<override>(): listenable(guard_alert_level) = external {}
 
       AlertLevelChangedEventInternal<native><epic_internal>: subscribable_event(guard_alert_level) = external {}
-
-      BestObjectToLootChangedEvent<override>(): listenable(fort_loot_info) = external {}
-
-      BestObjectToLootChangedEventInternal<native><epic_internal>: subscribable_event(fort_loot_info) = external {}
 
       CurrentTargetChangedEvent<override>(): listenable(target_info) = external {}
 
@@ -660,8 +477,6 @@ AI<public> := module {
       GetAlertLevel<native><override>()<transacts>: guard_alert_level
 
       GetAlertLevel<native><override>(TargetInfo: target_info)<transacts>: guard_alert_level
-
-      GetBestObjectToLoot<native><override>()<transacts><decides>: fort_loot_info
 
       GetCurrentTargetInfo<native><override>()<transacts><decides>: target_info
 
@@ -742,8 +557,14 @@ AI<public> := module {
     npc_perception_component_base<native><epic_internal> := class(vk_component) {}
   }
 
-  @import_as("/Script/VerseFortnite.UAIActionsComponent")
-  ai_actions_component<native><epic_internal> := class<abstract> {}
+  ai_actions_component<native><epic_internal> := class<abstract>(ai_component) {}
+
+  ai_component<native><epic_internal> := class<abstract>(component) {}
+
+  ai_target_component<native><epic_internal> := class<final>(component) {
+    # Internal epic method to know if this component is allowed on client
+    IsAllowedOnClient<override>(): logic = external {}
+  }
 
   # Perception settings for damage.
   damage_perception_settings<native><epic_internal> := class<final><concrete> {
@@ -1169,10 +990,9 @@ Animation<public> := module {
     }
   }
 
-  @import_as("/Script/VerseFortnite.UAIAnimationComponent")
-  ai_animation_component<native><epic_internal> := class<abstract>(ai_actions_component) {}
+  play_animation_component<native><epic_internal> := class<epic_internal>(ai_actions_component, play_animation_controller) {
+    CanPlayAnimation<native><epic_internal>(AnimationSequence: animation_sequence)<transacts><decides>: void
 
-  play_animation_controller_impl<native><epic_internal> := class(ai_animation_component, play_animation_controller) {
     Play<override>(
       AnimationSequence: animation_sequence,
       ?PlayRate: float = external {},
@@ -1188,6 +1008,16 @@ Animation<public> := module {
       ?BlendInTime: float = external {},
       ?BlendOutTime: float = external {}
     )<suspends>: play_animation_result = external {}
+
+    PlayAnimationInternal<native><epic_internal>(
+      AnimationSequence: animation_sequence,
+      PlayAnimationInstance: play_animation_instance,
+      EndsOnBlendOut: logic,
+      PlayRate: float,
+      StartPositionSeconds: float,
+      BlendInTime: float,
+      BlendOutTime: float
+    )<suspends>: play_animation_result
   }
 }
 
@@ -1205,10 +1035,16 @@ AutomatedTests<public> := module {
 
 # Module import path: /Fortnite.com/Building
 Building<public> := module {
-  building_component<native><epic_internal> := class(component) {
+  building_component<native><epic_internal> := class<final>(component) {
     Damage<native><public>(Amount: float): void
 
     IsAllowedOnClient<override>(): logic = external {}
+
+    IsPlayerBuilt<native><public>()<decides>: void
+
+    var CanBeDamaged<public>: logic = external {}
+
+    var CanBeReplaced<public>: logic = external {}
   }
 }
 
@@ -1876,6 +1712,11 @@ Devices<public> := module {
     # Sends the activating `agent`. If the activator is a non-agent then `false` is returned.
     ActivatedEvent<public>: listenable(?agent) = external {}
 
+    # Clears the turret's current target and returns the turret to searching for targets.
+    #  * If the current target is still in range, it'll likely be the best target, and will be reacquired.
+    #  * Combine with disabled targeting for best results.
+    ClearTarget<epic_internal>(): void = external {}
+
     # Triggers when the turret is damaged.
     # Sends the triggering `agent`. If the activator is a non-agent then `false` is returned.
     DamagedEvent<public>: listenable(?agent) = external {}
@@ -1890,15 +1731,29 @@ Devices<public> := module {
     # Enables the turret to rotate, target, and track.
     Enable<public>(): void = external {}
 
+    # Returns the `agent` currently targeted by the device.
+    GetTarget<epic_internal>(): ?agent = external {}
+
+    # Sets the range in meters at which the turret will activate to `Range`.
+    # This is clamped between `2.0` and `100.0` meters.
+    SetActivationRange<epic_internal>(Range: float): void = external {}
+
+    # Sets the amount of damage the turret will do per shot to targets to `Damage`.
+    SetDamage<epic_internal>(Damage: float): void = external {}
+
     # Set the supplied `Agent` as the turret's target.
     #  * The target will only change if `Agent` is within the activation radius, has direct line-of-sight to the turret,
     # is on a targetable team as determined by `Possible Targets`, and is not Down But Not Out.
     SetTarget<public>(Agent: agent): void = external {}
 
+    # Sets the range in meters at which the turret will target to `Range`.
+    # This is clamped between `2.0` and `100.0` meters. Setting it lower than 2m will disable Targeting.
+    SetTargetRange<epic_internal>(Range: float): void = external {}
+
     # Set the turret to the team with the chosen index number.
     #  * `TeamIndex` is clamped to valid team values, with a minimum of `1`.
     #  * Only usable if `Possible Targets` is not set to `Everyone`.
-    SetTeam<epic_internal>(TeamIndex: int): void = external {}
+    SetTeam<override>(TeamIndex: int): void = external {}
 
     # Set the turret to the same team as the supplied `Agent`.
     #  * Only usable if `Possible Targets` is not set to `Everyone`.
@@ -2465,6 +2320,10 @@ Devices<public> := module {
 
   # Used to allow players to select their *Class* from a *Class Selector UI*.
   class_selector_ui_device<public> := class<concrete><final>(creative_device_base) {
+    # Signaled when an `agent` changes a class.
+    # Sends the `agent` that selected a class and the `int` class that the player has changed to.
+    ClassChangedEvent<epic_internal>: listenable(tuple(agent, int)) = external {}
+
     # Signaled when an `agent` selects a class.
     # Sends the `agent` that selected a class.
     ClassSelectedEvent<public>: listenable(agent) = external {}
@@ -2676,6 +2535,9 @@ Devices<public> := module {
     # Moves the `creative_object` to the specified `Transform` over the specified time, in seconds. If an animation is currently playing on the `creative_object` it will be stopped and put into the `AnimationNotSet` state.
     MoveTo<public>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
 
+    # Sets the team to a specific user. 0 is no team.
+    SetTeam<native><epic_internal>(TeamIndex: type { _X: int where 0 <= _X, _X <= 255 }): void
+
     # Teleports the `creative_object` to the specified `Position` and `Rotation`.
     TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
 
@@ -2695,6 +2557,9 @@ Devices<public> := module {
 
     # Hides the `creative_prop` in the world and disable collisions.
     Hide<native><public>()<transacts>: void
+
+    # Succeeds if this object has been disposed of either via `Dispose()` or through an external system.
+    IsDisposed<native><final><public>()<decides>: void
 
     # Returns true if the `creative_prop` is hidden in the world.
     IsHidden<native><epic_internal>()<transacts>: logic
@@ -3636,8 +3501,22 @@ Devices<public> := module {
     # Enables this device.
     Enable<public>(): void = external {}
 
+    # Returns the current Item Index that this device will grant when activated
+    GetItemIndex<epic_internal>()<transacts>: int = external {}
+
     # Grants an item to `Agent`.
     GrantItem<public>(Agent: agent): void = external {}
+
+    # Grants an item without requiring an agent reference.
+    #  This only works when *Receiving Players* is set to *All* or *Team Index*
+    GrantItemTemp<epic_internal>(): void = external {}
+
+    # Grants an item at a specific `ItemIndex` to an `Agent`.
+    GrantItemTemp<epic_internal>(Agent: agent, ItemIndex: int): void = external {}
+
+    # Grants an item at a specific `ItemIndex` to all players.
+    #  Only functions when *Receiving Players* is set to *All* or *Team Index*
+    GrantItemTemp<epic_internal>(ItemIndex: int): void = external {}
 
     # Signaled when an item is granted to an `agent`.
     # Sends the `agent` that was granted the item.
@@ -3920,6 +3799,9 @@ Devices<public> := module {
 
     # Hides this device from the world.
     Hide<public>(): void = external {}
+
+    # Sets the device either invulnerable or damageable
+    SetInvulnerable<epic_internal>(Invulnerable: logic): void = external {}
 
     # Shows this device in the world.
     Show<public>(): void = external {}
@@ -4364,6 +4246,9 @@ Devices<public> := module {
 
     # Returns the `Agent` has the powerup's effect (or another of the same type) applied to them.
     HasEffect<public>(Agent: agent)<transacts><decides>: void = external {}
+
+    # Succeeds if the powerup is currently spawned.
+    IsSpawned<epic_internal>()<transacts><decides>: void = external {}
 
     # Signaled when the powerup is picked up by an `agent`.
     # Sends the `agent` that picked up the powerup.
@@ -6430,9 +6315,9 @@ Game<public> := module {
   Abilities<public> := module {
     # Module import path: /Fortnite.com/Game/Abilities/AbilityComponent
     AbilityComponent<public> := module {
-      GetAbilityComponentForCharacter<native><public>(__dupe___unnamed_parameter_174: fort_character)<transacts><decides>: fort_ability_component
+      GetAbilityComponentForCharacter<native><public>(__dupe___unnamed_parameter_170: fort_character)<transacts><decides>: vk_fort_ability_component
 
-      GetAbilityComponentForPlayer<native><epic_internal>(__dupe___unnamed_parameter_173: player_component)<transacts><decides>: fort_ability_component
+      GetAbilityComponentForPlayer<native><epic_internal>(__dupe___unnamed_parameter_169: player_component)<transacts><decides>: vk_fort_ability_component
     }
 
     activate_ability_result<native><public> := enum {
@@ -6466,19 +6351,6 @@ Game<public> := module {
       Invalid
     }
 
-    fort_ability_component<native><public> := class<final>(vk_component) {
-      ActivateAbility<native><public>(
-        AbilityAsset: gameplay_ability_asset,
-        ?Target: ?agent = external {}
-      )<suspends>: activate_ability_result
-
-      AddAbility<native><public>(AbilityAsset: gameplay_ability_asset): add_ability_result
-
-      ApplyGameplayEffect<native><public>(EffectAsset: gameplay_effect_asset, Magnitude: float): void
-
-      RemoveAbility<native><public>(AbilityAsset: gameplay_ability_asset): remove_ability_result
-    }
-
     gameplay_ability_asset<native><public> := class<computes><final>(asset) {}
 
     gameplay_effect_asset<native><public> := class<computes><final>(asset) {}
@@ -6492,6 +6364,19 @@ Game<public> := module {
 
       # Ability was successfully removed
       Removed
+    }
+
+    vk_fort_ability_component<native><public> := class<final>(vk_component) {
+      ActivateAbility<native><public>(
+        AbilityAsset: gameplay_ability_asset,
+        ?Target: ?agent = external {}
+      )<suspends>: activate_ability_result
+
+      AddAbility<native><public>(AbilityAsset: gameplay_ability_asset): add_ability_result
+
+      ApplyGameplayEffect<native><public>(EffectAsset: gameplay_effect_asset, Magnitude: float): void
+
+      RemoveAbility<native><public>(AbilityAsset: gameplay_ability_asset): remove_ability_result
     }
   }
 
@@ -6753,10 +6638,12 @@ Game<public> := module {
     }
 
     player_start_component<native><public> := class<final>(vk_component) {
-      @editable var tags<native><public>:[]string
       addTags<native><public>(newTags: []string): void
 
       getPosition<native><public>(): vector3
+
+      @editable
+      var tags<native><public>: []string
     }
 
     player_status_type<native><epic_internal> := enum {
@@ -6836,7 +6723,7 @@ Game<public> := module {
 
   # Module import path: /Fortnite.com/Game/VerseFortniteHacks
   VerseFortniteHacks<epic_internal> := module {
-    GetPawnCollisionEntityID<native><public>(__dupe___unnamed_parameter_173: player_component): int
+    GetPawnCollisionEntityID<native><public>(__dupe___unnamed_parameter_169: player_component): int
 
     getAllComponentsOfType<native><epic_internal>(contextObject: vk_component, Type: subtype(vk_component)): []vk_component
 
@@ -6899,6 +6786,8 @@ Game<public> := module {
     EliminatingCharacter<native><public>: ?fort_character
   }
 
+  fort_ability_component<native><epic_internal> := class(ability_component) {}
+
   fort_building_settings_component<native><public> := class<final>(vk_component) {
     setBuilding<native><public>(state: PlayerSettingState): void
 
@@ -6909,6 +6798,10 @@ Game<public> := module {
     setEditingHostile<native><public>(state: PlayerSettingState): void
 
     setTrapPlacement<native><public>(state: PlayerSettingState): void
+  }
+
+  fort_damageable_component<native><epic_internal> := class(damageable_component) {
+    var<private> Health<native><public>: float = external {}
   }
 
   fort_item_definition<native><public> := class<computes>(asset) {}
@@ -7095,19 +6988,19 @@ Playspaces<public> := module {
   #
   # To access the `fort_playspace` for a `creative_device` use `creative_device.GetPlayspace`.
   fort_playspace<native><public> := interface<epic_internal> {
-    FindComponents<epic_internal>(ComponentType: subtype(component))<varies>: component_query_iterator_interface
+    FindComponentsInScene<epic_internal>(ComponentType: subtype(component))<varies>: component_query_iterator_interface
 
-    FindEntities<epic_internal>(EntityType: subtype(entity))<varies>: entity_query_iterator_interface
+    FindEntitiesInScene<epic_internal>(EntityType: subtype(entity))<varies>: entity_query_iterator_interface
 
-    FindEntitiesInside<epic_internal>(Shape: volume3): entity_query_iterator_interface
+    FindEntitiesInSceneInside<epic_internal>(Shape: convex_hull3): entity_query_iterator_interface
 
-    FindEntitiesOriginInside<epic_internal>(Shape: volume3): entity_query_iterator_interface
+    FindEntitiesInSceneOriginInside<epic_internal>(Shape: convex_hull3): entity_query_iterator_interface
 
-    FindEntitiesOverlapping<epic_internal>(Shape: shape3): entity_query_iterator_interface
+    FindEntitiesInSceneOverlapping<epic_internal>(Shape: convex_hull3): entity_query_iterator_interface
 
-    FindEntitiesWithComponent<epic_internal>(ComponentType: subtype(component))<varies>: entity_query_iterator_interface
+    FindEntitiesInSceneWithComponent<epic_internal>(ComponentType: subtype(component))<varies>: entity_query_iterator_interface
 
-    FindEntitiesWithTag<epic_internal>(Tag: tag)<varies>: entity_query_iterator_interface
+    FindEntitiesInSceneWithTag<epic_internal>(Tag: tag)<varies>: entity_query_iterator_interface
 
     # Get an `[]player`s in the current `fort_playspace`.
     GetPlayers<public>()<transacts>: []player
@@ -7128,6 +7021,10 @@ Teams<public> := module {
   # Collection used to manage `team`s and `agent`s on those teams.
   # Use `fort_playspace.GetTeamCollection()` to get the `team_collection` for the active experience.
   fort_team_collection<native><public> := interface<epic_internal> {
+    # Adds `InEntity` to the team that matches `InTeamTag`.
+    # Fails if `InTeamTag` is not a registered team in the `fort_team_collection`.
+    AddToTeam<native_callable><epic_internal>(InEntity: entity, InTeamTag: team_tag)<transacts><decides>: void
+
     # Adds `InAgent` to `InTeam`.
     # Fails if `InTeam` is not part of the `fort_team_collection`.
     AddToTeam<public>(InAgent: agent, InTeam: team)<transacts><decides>: void
@@ -7136,9 +7033,29 @@ Teams<public> := module {
     # Fails if `InTeam` is not part of the `fort_team_collection`.
     GetAgents<public>(InTeam: team)<transacts><decides>: []agent
 
+    # Returns an array of all `entities on `InTeam`.
+    # Fails if `InTeam` is not part of the `fort_team_collection`.
+    GetEntities<epic_internal>(InTeam: team)<transacts><decides>: []entity
+
+    # Get the `team` that `InEntity` is on.
+    # Fails if `InEntity` is not on a team in this `fort_team_collection`.
+    GetTeam<epic_internal>(InEntity: entity)<transacts><decides>: team
+
     # Get the `team` that `InAgent` is on.
     # Fails if `InAgent` is not on a team in this `fort_team_collection`.
     GetTeam<public>(InAgent: agent)<transacts><decides>: team
+
+    # Returns the `team_attitude` between `Agent` and `Entity`.
+    # Fails if:
+    #  * `Agent` is not on a team in this `fort_team_collection`.
+    #  * `Entity` is not on a team in this `fort_team_collection`.
+    GetTeamAttitude<epic_internal>(Agent: agent, Entity: entity)<transacts><decides>: team_attitude
+
+    # Returns the `team_attitude` between `Entity1` and `Entity2`.
+    # Fails if:
+    #  * `Entity1` is not on a team in this `fort_team_collection`.
+    #  * `Entity2` is not on a team in this `fort_team_collection`.
+    GetTeamAttitude<epic_internal>(Entity1: entity, Entity2: entity)<transacts><decides>: team_attitude
 
     # Returns the `team_attitude` between `Agent1` and `Agent2`.
     # Fails if:
@@ -7152,14 +7069,39 @@ Teams<public> := module {
     #  * `Team2` is not in this `fort_team_collection`.
     GetTeamAttitude<public>(Team1: team, Team2: team)<transacts><decides>: team_attitude
 
+    # Get the team associated with the tag `InTag`. Fails if no such team is associated with `InTag`
+    GetTeamByTag<epic_internal>(InTeamTag: team_tag)<transacts><decides>: team
+
+    # Get all of the tags associated with the team `InTeam`. Fails if `InTeam` is not a valid team within the team collection
+    GetTeamTags<epic_internal>(InTeam: team)<transacts><decides>: tag_container
+
     # Returns an array of all the `team`s known to this `fort_team_collection`
     GetTeams<public>()<transacts>: []team
+
+    # Succeeds if `InEntity` is on `InTeam`.
+    # Fails if:
+    #  * `InEntity` is not on `InTeam`.
+    #  * `InTeam` is not part of the `fort_team_collection`.
+    IsOnTeam<epic_internal>(InEntity: entity, InTeam: team)<transacts><decides>: void
 
     # Succeeds if `InAgent` is on `InTeam`.
     # Fails if:
     #  * `InAgent` is not on `InTeam`.
     #  * `InTeam` is not part of the `fort_team_collection`.
     IsOnTeam<public>(InAgent: agent, InTeam: team)<transacts><decides>: void
+
+    # Register a team component with the team collection, so that its team can automatically be changed as teams are associated with its tag.
+    # Fails if:
+    #  * The team component's tag is not set
+    #  * The team component is not attached to an entity
+    #  * The owning entity of the team component is already registered.
+    RegisterTeamComponent<native_callable><epic_internal>(InTeamComponent: team_component)<transacts><decides>: void
+
+    # Associate the team `InTeam` with the tag `InTeamTag`, so that it can be accessed by team_component. Fails if `InTeam` is not a valid team within the team collection
+    SetTaggedTeam<epic_internal>(InTeamTag: team_tag, InTeam: team)<transacts><decides>: void
+
+    # Unregister a team component from the team collection. Fails if the team component is not registered with the team collection
+    UnregisterTeamComponent<native_callable><epic_internal>(InTeamComponent: team_component)<transacts><decides>: void
   }
 
   # A generic set of team attitudes. Use this enum to model relationship behavior between your experience's agents/teams.
@@ -7173,6 +7115,24 @@ Teams<public> := module {
     # Agents/teams are neutral. In Fortnite games items and AI not belonging to a `friendly` or `hostile` team are `neutral`.
     Neutral
   }
+
+  team_component<native><epic_internal> := class<final>(component) {
+    # Get the team object for the team this entity is on - Fails if team is not registered. team_pvp_01_tag, team_pvp_02_tag and team_monster_tag are registered already by default
+    GetTeam<native><public>()<transacts><decides>: team
+
+    OnSimulate<override>()<suspends>: void = external {}
+
+    # Tag that uniquely identifies the team this entity is on
+    var TeamTag<public>: team_tag = external {}
+  }
+
+  team_monster_tag<native><epic_internal> := class<concrete>(team_tag) {}
+
+  team_pvp_01_tag<native><epic_internal> := class<concrete>(team_tag) {}
+
+  team_pvp_02_tag<native><epic_internal> := class<concrete>(team_tag) {}
+
+  team_tag<native><epic_internal> := class<concrete>(tag) {}
 }
 
 TestDevices<public> := module {
@@ -7623,7 +7583,7 @@ using { /Fortnite.com/AI }
 using { /Fortnite.com/Animation/PlayAnimation }
 using { /Fortnite.com/Assets }
 using { /Fortnite.com/Teams }
-using { /UnrealEngine.com/VerseQuery }
+using { /UnrealEngine.com/Abilities }
 # Module import path: /Fortnite.com/Vehicles
 Vehicles<public> := module {
   # Returns the `fort_vehicle` for `InCharacter`.
@@ -7704,9 +7664,9 @@ VerseFortniteGameScript<public> := module {
 
     OnPlayerEliminated<protected>(ElimResult: player_eliminated_result): void = external {}
 
-    OnPlayerJoined<protected>(__dupe___unnamed_parameter_206: player_component): void = external {}
+    OnPlayerJoined<protected>(__dupe___unnamed_parameter_202: player_component): void = external {}
 
-    OnPlayerLeft<protected>(__dupe___unnamed_parameter_207: player_component): void = external {}
+    OnPlayerLeft<protected>(__dupe___unnamed_parameter_203: player_component): void = external {}
 
     OnPostCreate<override>(): void = external {}
 

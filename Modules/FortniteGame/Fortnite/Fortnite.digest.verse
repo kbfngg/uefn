@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.10-CL-32391220
+# Generated from build: ++Fortnite+Release-29.20-CL-32716692
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -20,10 +20,10 @@ AI<public> := module {
   (InCharacter: fort_character).GetNavigatable<native><public>()<transacts><decides>: navigatable
 
   # Generate a navigation_target from any position
-  MakeNavigationTarget<constructor><native><public>(Position: vector3): navigation_target
+  MakeNavigationTarget<native><public>(Position: vector3): navigation_target
 
   # Generate a navigation_target from an agent
-  MakeNavigationTarget<constructor><native><public>(Target: agent): navigation_target
+  MakeNavigationTarget<native><public>(Target: agent): navigation_target
 
   focus_interface<native><public> := interface<epic_internal> {
     # Look At specified Agent. Will never complete unless interrupted.
@@ -1457,6 +1457,9 @@ Devices<public> := module {
 
     # Hides the `creative_prop` in the world and disable collisions.
     Hide<native><public>()<transacts>: void
+
+    # Succeeds if this object has been disposed of either via `Dispose()` or through an external system.
+    IsDisposed<native><final><public>()<decides>: void
 
     # Succeeds if this object has not been disposed of either via `Dispose()` or through an external system.
     IsValid<native><override>()<transacts><decides>: void

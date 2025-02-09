@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.10-CL-32391220
+# Generated from build: ++Fortnite+Release-29.20-CL-32716692
 #################################################
 
 # Module import path: /Verse.org/Assets
@@ -854,6 +854,18 @@ Verse<public> := module {
   disposable<native><public> := interface {
     # Cleans up this object.
     Dispose<public>(): void
+  }
+
+  # Implemented by classes whose instances can be enabled and disabled.
+  enableable<native><public> := interface<epic_internal> {
+    # Disable this object.
+    Disable<public>(): void
+
+    # Enable this object.
+    Enable<public>(): void
+
+    # Succeeds if the object is enabled, fails if it’s disabled.
+    IsEnabled<public>()<transacts><decides>: void
   }
 
   # A *recurring*, successively signaled parametric `event` with a `payload` allowing a simple mechanism to coordinate between concurrent tasks:

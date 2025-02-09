@@ -1,0 +1,103 @@
+{
+	"ValkyrieEditorSettings": {
+		"AllowedAssetTypes": {
+			"/Script/MetaHumanConfig.MetaHumanConfig":									{ "Rules": ["View","Create"] },
+			"/Script/MetaHumanCore.MetaHumanCameraCalibration":							{ "Rules": ["View","Create"] },
+			"/Script/MetaHumanCaptureData.MeshCaptureData":								{ "Rules": ["View","Create"] },
+			"/Script/MetaHumanCaptureData.FootageCaptureData":							{ "Rules": ["View","Create"] },
+			"/Script/MetaHumanCaptureSource.MetaHumanCaptureSource":					{ "Rules": ["View","Create"] },
+			"/Script/MetaHumanIdentity.MetaHumanIdentity":								{ "Rules": ["View","Create"] },
+			"/Script/MetaHumanPerformance.MetaHumanPerformance":						{ "Rules": ["View","Create"] },
+			"/Script/MetaHumanFaceAnimationSolver.MetaHumanFaceAnimationSolver":		{ "Rules": ["View","Create"] },
+			"/Script/MetaHumanFaceContourTracker.MetaHumanFaceContourTrackerAsset":		{ "Rules": ["View","Create"] },
+			"/Script/MetaHumanFaceFittingSolver.MetaHumanFaceFittingSolver":			{ "Rules": ["View","Create"] },
+			"/Script/MetaHumanSequencer.MetaHumanMovieSceneMediaTrack":					{ "Rules": ["View","Create"], "Subclasses": "All" },
+			"/Script/MetaHumanSequencer.MetaHumanAudioTrack":							{ "Rules": ["View","Create"], "Subclasses": "All" }
+		},
+		"AllowedClasses": {
+			"/Script/MetaHumanUEFNRuntime.MetaHumanComponent":					{ "Visible": true },
+			"/MetaHumanUEFN/AnimBPs/MetaHuman_ControlRigRigidBody_Template.MetaHuman_ControlRigRigidBody_Template_C": {},
+			"/MetaHumanUEFN/AnimBPs/MetaHuman_ControlRig_Template.MetaHuman_ControlRig_Template_C": {},
+			"/MetaHumanUEFN/AnimBPs/MetaHuman_RigidBody_Template.MetaHuman_RigidBody_Template_C": {},
+			"/MetaHumanUEFN/Face/Face_AnimBP.Face_AnimBP_C": {},
+			"/MetaHumanUEFN/Face/Face_PostProcess_AnimBP.Face_PostProcess_AnimBP_C": {},
+			"/MetaHumanUEFN/Female/Medium/NormalWeight/Body/f_med_nrw_animbp.f_med_nrw_animbp_C": {},
+			"/MetaHumanUEFN/Female/Medium/OverWeight/Body/f_med_ovw_animbp.f_med_ovw_animbp_C": {},
+			"/MetaHumanUEFN/Female/Medium/UnderWeight/Body/f_med_unw_animbp.f_med_unw_animbp_C": {},
+			"/MetaHumanUEFN/Female/Short/NormalWeight/Body/f_srt_nrw_animbp.f_srt_nrw_animbp_C": {},
+			"/MetaHumanUEFN/Female/Short/OverWeight/Body/f_srt_ovw_animbp.f_srt_ovw_animbp_C": {},
+			"/MetaHumanUEFN/Female/Short/UnderWeight/Body/f_srt_unw_animbp.f_srt_unw_animbp_C": {},
+			"/MetaHumanUEFN/Female/Tall/NormalWeight/Body/f_tal_nrw_animbp.f_tal_nrw_animbp_C": {},
+			"/MetaHumanUEFN/Female/Tall/OverWeight/Body/f_tal_ovw_animbp.f_tal_ovw_animbp_C": {},
+			"/MetaHumanUEFN/Female/Tall/UnderWeight/Body/f_tall_unw_animbp.f_tall_unw_animbp_C": {},
+			"/MetaHumanUEFN/Male/Medium/NormalWeight/Body/m_med_nrw_animbp.m_med_nrw_animbp_C": {},
+			"/MetaHumanUEFN/Male/Medium/OverWeight/Body/m_med_ovw_animbp.m_med_ovw_animbp_C": {},
+			"/MetaHumanUEFN/Male/Medium/UnderWeight/Body/m_med_unw_animbp.m_med_unw_animbp_C": {},
+			"/MetaHumanUEFN/Male/Short/NormalWeight/Body/m_srt_nrw_animbp.m_srt_nrw_animbp_C": {},
+			"/MetaHumanUEFN/Male/Short/OverWeight/Body/m_srt_ovw_animbp.m_srt_ovw_animbp_C": {},
+			"/MetaHumanUEFN/Male/Short/UnderWeight/Body/m_srt_unw_animbp.m_srt_unw_animbp_C": {},
+			"/MetaHumanUEFN/Male/Tall/NormalWeight/Body/m_tal_nrw_animbp.m_tal_nrw_animbp_C": {},
+			"/MetaHumanUEFN/Male/Tall/OverWeight/Body/m_tal_ovw_animbp.m_tal_ovw_animbp_C": {},
+			"/MetaHumanUEFN/Male/Tall/UnderWeight/Body/m_tal_unw_animbp.m_tal_unw_animbp_C": {},
+			"/Script/MetaHumanConfig.MetaHumanConfig":							{  },
+			"/Script/MetaHumanCore.MetaHumanCameraCalibration":					{  },
+			"/Script/MetaHumanCaptureData.MeshCaptureData": 					{  },
+			"/Script/MetaHumanCaptureData.FootageCaptureData": 					{  },
+			"/Script/MetaHumanCaptureSource.MetaHumanCaptureSource": 			{  },
+			"/Script/MetaHumanIdentity.MetaHumanIdentity": 						{  },
+			"/Script/MetaHumanPerformance.MetaHumanPerformance": 				{  },
+			"/Script/MetaHumanFaceAnimationSolver.MetaHumanFaceAnimationSolver":{  },
+			"/Script/MetaHumanFaceContourTracker.MetaHumanFaceContourTrackerAsset": {  },
+			"/Script/MetaHumanFaceFittingSolver.MetaHumanFaceFittingSolver": 	{  },
+			"/Script/MetaHumanSequencer.MetaHumanMovieSceneMediaTrack": 		{ "Visible": true, "Subclasses": "All" },
+			"/Script/MetaHumanSequencer.MetaHumanAudioTrack": 					{ "Visible": true, "Subclasses": "All" }
+		},
+		"AllowedMenus": {
+			"LevelEditor.MainMenu.Window": {
+				"AllowList": {
+					"+": [ "OpenMetaHumanImportTab" ]
+				}
+			},
+			"AssetEditor.MetaHumanPerformanceEditor.ToolBar": {
+				"DenyList": {
+					"=": [ "ExportLevelSequence" ]
+				}
+			},
+			"ContentBrowser.AddNewContextMenu": {
+				"AllowList": {
+					"+": [ "OpenMetaHumanImportTab" ]
+				}
+			},
+			"ContentBrowser.FolderContextMenu.NewAsset": {
+				"AllowList": {
+					"+": [ "OpenMetaHumanImportTab" ]
+				}
+			}
+		},
+		"AllowedTabs": {
+			"Global": {
+				"AllowList": {
+					"+": [ "MetaHumanImportTab", "CaptureManager" ]
+				}
+			},
+			"LevelEditor": {
+				"AllowList": {
+					"+": [ "MetaHumanImportTab", "CaptureManager" ]
+				}
+			}			
+		},
+		"AllowedImportExtensions": {
+			"+": [ "mhaical" ]
+		}
+	},
+	"PropertyEditorClassPermissionList": {
+		"+": [
+			{
+				"Type": "/Script/MetaHumanUEFNRuntime.MetaHumanComponent",
+				"bAllowListAllProperties": true,
+				"bAllowListAllSubclassProperties": true,
+				"DenyList": [ "BodyType" ]
+			}
+		]
+	}
+}
