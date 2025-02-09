@@ -14,6 +14,7 @@
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/IKRig.IKRigDefinition", "Visible": false, "Edit": false, "Create": false, "Import": false, "Export": false, "SubClasses": false }
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/IKRig.IKRetargeter", "Visible": false, "Edit": false, "Create": false, "Import": false, "Export": false, "SubClasses": false }
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/CoreUObject.ObjectRedirector", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": true, "SubClasses": true }
+			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Engine.AnimationAsset", "Visible": true, "Edit": false, "Create": false, "Import": false, "Export": false, "SubClasses": false }			
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Engine.AnimSequence", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": true, "SubClasses": false }
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Engine.Blueprint", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": true, "SubClasses": false }
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Engine.BlueprintGeneratedClass", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": true, "SubClasses": false }
@@ -1430,7 +1431,7 @@
 			{
 				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/FortniteGame.FortCreativeDeviceProp",
-				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "Description", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "AutoReceiveInput", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct" ]
+				"DenyList": [ "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects","bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset",	"BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "StaticMesh",	"bNoPhysicsCollision", "bNoCameraCollision", "bNoPawnCollision", "bBlocksCeilingPlacement", "bBlocksAttachmentPlacement", "bUsePhysicalSurfaceForFootstep", "bRandomYawOnPlacement", "bRandomScaleOnPlacement", "RandomScaleRange", "bNoCollision", "bCameraOnlyCollision", "bNoWeaponCollision", "bNoRangedWeaponCollision", "bNoProjectileCollision", "bDoNotBlockInteract", "bAllowCustomMaterial", "BuildingPlacementDistance", "ResourceType", "bAllowResourceDrop", "BuildingResourceAmountOverride", "BreakEffect", "DeathParticles", "DeathNiagaraSystemAsset", "DeathParticleSocketName", "DeathSound", "ConstructedEffect", "PlayerGridSnapSize", "bHideOnDeath", "bSuppressSimpleInteractionWidgetForTouch", "bCanBeMarked", "bBlockMarking", "MarkerDisplay", "MarkerPositionOffset", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "bCanBeDamaged", "DynamicBuildingPlacementType", "IncomingDamageFilterQuery", "bPlayerPlaced", "bForceDamagePing", "bIsNavigationIndestructible", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "DisplayName", "InteractionText", "InteractionSpeed", "Definitions", "Team", "bAllowTeamDamage", "bSuppressInteractionWidget", "bShouldClearMarkerOnInteract", "bIsPlayerBuildable", "PlayHitSound", "bSurpressHealthBar", "PrimarySurfaceType", "WeaponResponseType", "HealthBarIndicatorWidth", "HealthBarIndicatorVerticalOffset", "HealthBarIndicatorSocketName", "bUseFortHealthBarIndicator", "bDestroyOnPlayerBuildingPlacement", "bUseCentroidForBlockBuildingsCheck", "bIgnoreCollisionWithCriticalActors", "bDoNotBlockBuildings", "bForceBlockBuildings", "BuildingType", "bStructurallySupportOverlappingActors", "bDestroyFoliageWhenPlaced", "AttributeInitKeys", "AttributeInitLevelSource", "bActorHiddenInGame", "AutoReceiveInput", "NetCullDistanceSquared", "bActorEnableCollision", "bIsSpatiallyLoaded", "bEnableAutoLODGeneration", "LODSyncComponent", "bHidden", "SavedHealthPct" ]
 			},
 			{
 				"$type": "ValkyrieClassPropertyPermissionList",
@@ -1630,7 +1631,7 @@
 			{
 				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/ValkyrieEditor.ValkyrieEditorConfig",
-				"AllowList": [ "DefaultProjectName", "DefaultProjectVersionSuffix", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "SimulatedPermissions", "EffectivePermissions" ]
+				"AllowList": [ "DefaultProjectName", "DefaultProjectVersionSuffix", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "SimulatedPermissions", "EffectivePermissions", "EntitledPermissions" ]
 			},
 			{
 				"$type": "ValkyrieClassPropertyPermissionList",
@@ -1790,10 +1791,20 @@
 				"Type": "/Script/AudioModulation.SoundControlBusMix",
 				"AllowList": [ "MixStages" ]
 			},
-			{ 
+			{
 				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Engine.SoundCue",
 				"AllowList": [ "SoundCueGraph" ]
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Niagara.NiagaraDataInterfaceAudioPlayer",
+				"AllowList": [ "SoundToPlay" ]
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList", 
+				"Type": "/Script/MovieSceneTracks.MovieSceneAudioSection",
+				"DenyList": [ "bSuppressSubtitles", "bOverrideAttenuation", "AttenuationSettings" ]
 			}
 		]
 	},
@@ -1870,6 +1881,12 @@
 	"PropertySaveStructPermissionList" : {
 		"=": []
 	},
+	"HiddenPropertyClassPermissionList" : {
+		"=": []
+	},
+	"HiddenPropertyStructPermissionList" : {
+		"=": []
+	},
 	"AssetAliases": {
 		"=": [
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Athena/Environments/Blueprints/SkyTube/BP_Athena_SkyTube.BP_Athena_SkyTube_C", "Alias": "/Fortnite/Environment/Traversal/SkyTube_01" },
@@ -1944,6 +1961,21 @@
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Athena/Apollo/Environments/Blueprints/T_TwistyClouds_01.T_TwistyClouds_01", "Alias": "/FortniteVKCreateUGC/Game/Athena/Apollo/Environments/Blueprints/T_TwistyClouds_01" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Athena/Apollo/Environments/Blueprints/T_TwistyClouds_N.T_TwistyClouds_N", "Alias": "/FortniteVKCreateUGC/Game/Athena/Apollo/Environments/Blueprints/T_TwistyClouds_N" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Devices/RandomNumberGenerator/M_RNGZone_Inst.M_RNGZone_Inst", "Alias": "/FortniteVKCreateUGC/Game/Creative/Devices/RandomNumberGenerator/M_RNGZone_Inst" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Building/ActorBlueprints/Prop/Parent_Tree.Parent_Tree_C", "Alias": "/FortniteVKCreateUGC/Game/Building/ActorBlueprints/Prop/Parent_Tree" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Environments/ApolloTrees/Materials/CP_MI_Apollo_ColorTree_Medium_Tree2.CP_MI_Apollo_ColorTree_Medium_Tree2", "Alias": "/FortniteVKCreateUGC/Game/Creative/Environments/ApolloTrees/Materials/CP_MI_Apollo_ColorTree_Medium_Tree2" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Environments/ApolloTrees/Materials/CP_MI_Apollo_ColorTree_Medium_Tree_Leaves_2.CP_MI_Apollo_ColorTree_Medium_Tree_Leaves_2", "Alias": "/FortniteVKCreateUGC/Game/Creative/Environments/ApolloTrees/Materials/CP_MI_Apollo_ColorTree_Medium_Tree_Leaves_2" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Environments/ApolloTrees/Materials/CP_MI_Apollo_ColorTree_Medium_Tree_Trunk_2.CP_MI_Apollo_ColorTree_Medium_Tree_Trunk_2", "Alias": "/FortniteVKCreateUGC/Game/Creative/Environments/ApolloTrees/Materials/CP_MI_Apollo_ColorTree_Medium_Tree_Trunk_2" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Environments/ApolloTrees/Materials/CP_MI_Apollo_ColorTree_RedAlder2.CP_MI_Apollo_ColorTree_RedAlder2", "Alias": "/FortniteVKCreateUGC/Game/Creative/Environments/ApolloTrees/Materials/CP_MI_Apollo_ColorTree_RedAlder2" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Environments/ApolloTrees/Materials/CP_MI_Apollo_ColorTree_RedAlder2Mobile_b.CP_MI_Apollo_ColorTree_RedAlder2Mobile_b", "Alias": "/FortniteVKCreateUGC/Game/Creative/Environments/ApolloTrees/Materials/CP_MI_Apollo_ColorTree_RedAlder2Mobile_b" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Environments/ApolloTrees/Materials/CP_MI_Apollo_ColorTree_RedAlder2_Trunk.CP_MI_Apollo_ColorTree_RedAlder2_Trunk", "Alias": "/FortniteVKCreateUGC/Game/Creative/Environments/ApolloTrees/Materials/CP_MI_Apollo_ColorTree_RedAlder2_Trunk" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Environments/ApolloTrees/Materials/CP_MI_Apollo_ColorTree_RedAlder2_TrunkMobile_b.CP_MI_Apollo_ColorTree_RedAlder2_TrunkMobile_b", "Alias": "/FortniteVKCreateUGC/Game/Creative/Environments/ApolloTrees/Materials/CP_MI_Apollo_ColorTree_RedAlder2_TrunkMobile_b" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Environments/ApolloTrees/Materials/CP_MI_ColorTree_RedAlder2_02.CP_MI_ColorTree_RedAlder2_02", "Alias": "/FortniteVKCreateUGC/Game/Creative/Environments/ApolloTrees/Materials/CP_MI_ColorTree_RedAlder2_02" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Materials/MI_CP_LeafPile_ColorPicker_01.MI_CP_LeafPile_ColorPicker_01", "Alias": "/FortniteVKCreateUGC/Game/Creative/Materials/MI_CP_LeafPile_ColorPicker_01" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Materials/MI_CP_NightmareIvy_ColorPicker_01.MI_CP_NightmareIvy_ColorPicker_01", "Alias": "/FortniteVKCreateUGC/Game/Creative/Materials/MI_CP_NightmareIvy_ColorPicker_01" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/GrindRail/Blueprints/GrindRail_TipComponent.GrindRail_TipComponent_C", "Alias": "/FortniteVKCreateUGC/GrindRail/Blueprints/GrindRail_TipComponent" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/GrindRail/Materials/MI_Asteria_cyberRailing_Emissive_Master.MI_Asteria_cyberRailing_Emissive_Master", "Alias": "/FortniteVKCreateUGC/GrindRail/Materials/MI_Asteria_cyberRailing_Emissive_Master" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/GrindRail/Meshes/SM_GrindRail_A.SM_GrindRail_A", "Alias": "/FortniteVKCreateUGC/GrindRail/Meshes/SM_GrindRail_A" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/GrindRail/Meshes/SM_GrindRail_A_Big.SM_GrindRail_A_Big", "Alias": "/FortniteVKCreateUGC/GrindRail/Meshes/SM_GrindRail_A_Big" },
 
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_AudioPlayer/M_AudioPlayer.M_AudioPlayer", "Alias": "/FortniteVKCreateUGC/CRD_AudioPlayer/M_AudioPlayer" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Devices/MusicDevice/Meshes/CP_Device_MusicDevice_Skin_01.CP_Device_MusicDevice_Skin_01", "Alias": "/FortniteVKCreateUGC/Game/Creative/Devices/MusicDevice/Meshes/CP_Device_MusicDevice_Skin_01" },
@@ -3038,7 +3070,6 @@
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/ShielderGameplay/Gameplay/Collision/BGA_Shielder_Collision_Held.BGA_Shielder_Collision_Held_C", "Alias": "/FortniteVKCreateUGC/ShielderGameplay/Gameplay/Collision/BGA_Shielder_Collision_Held" },
 
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_VerseDevices/VerseDevice.VerseDevice_C", "Alias": "/FortniteVKCreateUGC/CRD_VerseDevices/VerseDevice" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_EmoteController/Device_EmoteController_V2.Device_EmoteController_V2_C", "Alias": "/FortniteVKCreateUGC/CRD_EmoteController/Device_EmoteController_V2" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Engine/Functions/Engine_MaterialFunctions02/Gradients/StretchGradient.StretchGradient", "Alias": "/FortniteVKCreateUGC/Engine/Functions/Engine_MaterialFunctions02/Gradients/StretchGradient" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Athena/Items/Traps/MinigameSpawner/TID_Floor_Minigame_Spawner.TID_Floor_Minigame_Spawner", "Alias": "/FortniteVKCreateUGC/Game/Athena/Items/Traps/MinigameSpawner/TID_Floor_Minigame_Spawner" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Athena/Items/Traps/TID_Floor_Player_Start_Plate_VR_T01.TID_Floor_Player_Start_Plate_VR_T01", "Alias": "/FortniteVKCreateUGC/Game/Athena/Items/Traps/TID_Floor_Player_Start_Plate_VR_T01" },
@@ -3093,7 +3124,6 @@
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/BattlePassS21/QuestActors/Parents/BP_S21_GenericQuestActor_Parent.BP_S21_GenericQuestActor_Parent_C", "Alias": "/FortniteVKCreateUGC/BattlePassS21/QuestActors/Parents/BP_S21_GenericQuestActor_Parent" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Athena/Items/Consumables/SpicySoda/WID_Athena_SpicySoda.WID_Athena_SpicySoda", "Alias": "/FortniteVKCreateUGC/Game/Athena/Items/Consumables/SpicySoda/WID_Athena_SpicySoda" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CorruptionItems/Gameplay/Items/ReinforcedTrap/Actors/B_Wall_Reinforced_Athena.B_Wall_Reinforced_Athena_C", "Alias": "/FortniteVKCreateUGC/CorruptionItems/Gameplay/Items/ReinforcedTrap/Actors/B_Wall_Reinforced_Athena" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_Mannequin/Creative_Device_Mannequin_Store_V2.Creative_Device_Mannequin_Store_V2_C", "Alias": "/FortniteVKCreateUGC/CRD_Mannequin/Creative_Device_Mannequin_Store_V2" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_RebootVan/SetupAssets/Creative_RebootVan.Creative_RebootVan_C", "Alias": "/FortniteVKCreateUGC/CRD_RebootVan/SetupAssets/Creative_RebootVan" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_RockBoostPickup/Meshes/BoostPad_Large_Glow_SM.BoostPad_Large_Glow_SM", "Alias": "/FortniteVKCreateUGC/CRD_RockBoostPickup/Meshes/BoostPad_Large_Glow_SM" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_RockBoostPickup/Meshes/BoostPad_Large_SM.BoostPad_Large_SM", "Alias": "/FortniteVKCreateUGC/CRD_RockBoostPickup/Meshes/BoostPad_Large_SM" },
@@ -3397,6 +3427,87 @@
 			"real",
 			"struct",
 			"wildcard"
+		]
+	},
+	"MenuRules": {
+		"=": [
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.LevelEditorToolBar.AssetsToolBar", 
+				"AllowList": [ "SaveAllLevels", "Create", "Content", "AddContent", "ValkyrieProjectMenu", "OpenVsCodeButton" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.LevelEditorToolBar.PlayToolBar", 
+				"AllowList": [ "ValkyriePlay" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.StatusBar.ToolBar", 
+				"AllowList": [ "SourceControl", "ActivityTrackerStatus" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "StatusBar.ToolBar.DDC", 
+				"DenyList": [ "ChangeSettings" ]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.LevelViewportToolBar.Options", 
+				"AllowList": [
+					"ToggleRealTime",
+					"DisableRealtimeOverride",
+					"DisableRealtimeOverrideSeparator",
+					"ToggleStats",
+					"ToggleFPS",
+					"ToggleViewportToolbar",
+					"FOVAngle",
+					"FarViewPlane",
+					"ScreenPercentage",
+					"ToggleCinematicPreview",
+					"ToggleGameView",
+					"ToggleImmersive",
+					"Bookmark",
+					"Configs"
+				]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "UnrealEd.ViewportToolbar.View", 
+				"AllowList": [
+					"LitMode",
+					"UnlitMode",
+					"WireframeMode",
+					"DetailLightingMode",
+					"LightingOnlyMode",
+					"ReflectionOverrideMode",
+					"CollisionPawn",
+					"CollisionVisibility",
+					"VisualizeNaniteViewMode",
+					"VisualizeLumenViewMode"
+				]
+			},
+			{
+				"$type": "ValkyrieMenuRules",
+				"MenuName": "LevelEditor.LevelViewportToolbar.Show", 
+				"AllowList": [ 
+					"UseDefaultShowFlags",
+					"Common_AntiAliasing",
+					"Common_Atmosphere",
+					"Common_BSP",
+					"Common_Collision",
+					"Common_Decals",
+					"Common_Fog",
+					"Common_Grid",
+					"Common_Landscape",
+					"Common_MediaPlanes",
+					"Common_Navigation",
+					"Common_Particles",
+					"Common_SkeletalMeshes",
+					"Common_StaticMeshes",
+					"Common_Translucency"
+				]
+			}
 		]
 	}
 }

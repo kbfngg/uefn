@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-24.01-CL-24672685
+# Generated from build: ++Fortnite+Release-24.10-CL-24770548
 #################################################
 
 # Module import path: /Verse.org/Assets
@@ -10,29 +10,45 @@ Assets<public> := module {}
 
 # Module import path: /Verse.org/Colors
 Colors<public> := module {
-  # Create a color from the provided float HSV values, in sRGB colorspace. Expects Hue [0..360], Saturation [0.0.. 1.0], Value [0.0.. 1.0], but will accept any parameters and do the appropriate range reduction and conversion.
+  # Makes an ACES 2065-1 `color` from `Hue`, `Saturation`, and `Value` components.
+  # Components use the HSV color model in the sRGB color space. Expected ranges:
+  #  * `0.0 <= Hue <= 360.0`
+  #  * `0.0 <= Saturation <= 1.0`
+  #  * `0.0 <= Value <= 1.0`
+  # Values out of expected ranges will undergo range reduction and conversion.
   MakeColorFromHSV<native><public>(Hue: float, Saturation: float, Value: float)<converges>: color
 
-  # Create a color from the provided hex string value which represents a sRGB color. Supported formats are: RGB, RRGGBB, RRGGBBAA, #RGB, #RRGGBB, #RRGGBBAA. An invalid hex string will return Black #000000
+  # Makes an ACES 2065-1 `color` from a CSS-style sRGB `hexString`. Supported formats are:
+  #  * RGB
+  #  * RRGGBB
+  #  * RRGGBBAA
+  #  * #RGB
+  #  * #RRGGBB
+  #  * #RRGGBBAA
+  # An invalid hex string will return `Black`.
   MakeColorFromHex<native><public>(hexString: []char)<converges>: color
 
-  # Create a ACES 2065-1 color from the provided sRGB values. Valid source RGB values are in the range of [0.0..1.0].
+  # Makes an ACES 2065-1 `color` from sRGB components `Red`, `Green`, and `Blue`.
+  # Normal sRGB component values are between `0.0` and `1.0`, but this can handle
+  # larger values.
   MakeColorFromSRGB<native><public>(Red: float, Green: float, Blue: float)<converges>: color
 
-  # Create a color from the provided integer sRGB values. Values provided must be in the range of [0..255].
+  # Makes an ACES 2065-1 `color` from the integer sRGB components `Red`, `Green`, and `Blue`.
+  # Valid sRGB component values are between '0' and '255', inclusive.
   MakeColorFromSRGBValues<native><public>(Red: int, Green: int, Blue: int)<converges>: color
 
-  # Converts temperature in Kelvins of a black body radiator to RGB chromaticity. Clamps temperature to >= 0.
+  # Makes an ACES 2065-1 `color` from the chromaticty of a blackbody radiator at `Temperature` Kelvin.
+  # `Temperature` is clamped such that `0 <= Temperature`.
   MakeColorFromTemperature<native><public>(Temperature: float)<converges>: color
 
-  # Create a sRGB color from a ACES 2065-1 color, given as HSV values.
+  # Makes an HSV `tuple` by converting `InColor` from an ACES 2065-1 `color` to sRGB and applying the HSV color model.
   MakeHSVFromColor<native><public>(InColor: color): tuple(float, float, float)
 
-  # Create a sRGB color from a ACES 2065-1 color.
+  # Makes an sRGB `tuple` by converting `InColor` from an ACES 2065-1 `color` to sRGB.
   MakeSRGBFromColor<native><public>(InColor: color)<converges>: tuple(float, float, float)
 
   # Module import path: /Verse.org/Colors/NamedColors
-  # Color presets. Taken from CSS Color Module 3 Extended color keywords.
+  # Color presets from CSS Color Module 3 Extended color keywords.
   NamedColors<public> := module {
     (NamedColors:)Tan<public>: color = external {}
 
@@ -329,43 +345,44 @@ Colors<public> := module {
     YellowGreen<public>: color = external {}
   }
 
-  # This is a ACES 2065-1 color.
+  # Represents colors as RGB triples in the ACES 2065-1 color space.
+  # Component values are linear (i.e. `*gamma* = 1.0`).
   color<native><public> := struct<computes> {
-    # Blue component of this color
+    # Blue component of this `color`.
     B<native><public>: float = external {}
 
-    # Green component of this color
+    # Green component of this `color`.
     G<native><public>: float = external {}
 
-    # Red component of this color
+    # Red component of this `color`.
     R<native><public>: float = external {}
   }
 
-  # Multiplies the RGB components of one ACES 2065-1 color with the other.
+  # Makes an ACES 2065-1 `color` from the component-wise product of `c0` and `c1`.
   operator'*'<native><public>(c0: color, c1: color)<converges>: color
 
-  # Scalar multiplication of all components of a ACES 2065-1 color by a given factor.
+  # Makes an ACES 2065-1 `color` from each component of `c` scaled by `factor`.
   operator'*'<native><public>(c: color, factor: float)<converges>: color
 
-  # Scalar multiplication of all components of a ACES 2065-1 color by a given factor.
+  # Makes an ACES 2065-1 `color` from each component of `c` scaled by `factor`.
   operator'*'<native><public>(c: color, factor: int)<converges>: color
 
-  # Scalar multiplication of all components of a ACES 2065-1 color by a given factor.
+  # Makes an ACES 2065-1 `color` from each component of `c` scaled by `factor`.
   operator'*'<native><public>(factor: float, c: color)<converges>: color
 
-  # Scalar multiplication of all components of a ACES 2065-1 color by a given factor.
+  # Makes an ACES 2065-1 `color` from each component of `c` scaled by `factor`.
   operator'*'<native><public>(factor: int, c: color)<converges>: color
 
-  # Adds the RGB components of one ACES 2065-1 color to the other.
+  # Makes an ACES 2065-1 `color` from the component-wise sum of `c0` and `c1`.
   operator'+'<native><public>(c0: color, c1: color)<converges>: color
 
-  # Subtracts the RGB components of one ACES 2065-1 color from the other.
+  # Makes an ACES 2065-1 `color` from the component-wise difference of `c0` and `c1`.
   operator'-'<native><public>(c0: color, c1: color)<converges>: color
 
-  # Scalar division of all components of a ACES 2065-1 color, by a given factor.
+  # Makes an ACES 2065-1 `color` from each component of `c` divided by `factor`.
   operator'/'<native><public>(c: color, factor: float)<computes><decides>: color
 
-  # Scalar division of all components of a ACES 2065-1 color, by a given factor.
+  # Makes an ACES 2065-1 `color` from each component of `c` divided by `factor`.
   operator'/'<native><public>(c: color, factor: int)<computes><decides>: color
 }
 
@@ -395,13 +412,13 @@ Native<public> := module {
 
 # Module import path: /Verse.org/Random
 Random<public> := module {
-  # Generate a random float in the specified range.
+  # Returns a random `float` between `Low` and `High`, inclusive.
   GetRandomFloat<native><public>(Low: float, High: float)<varies>: float
 
-  # Generate a random int within the available range for integers [Low..High].
+  # Returns a random `int` between `Low` and `High`, inclusive.
   GetRandomInt<native><public>(Low: int, High: int)<varies>: int
 
-  # Shuffle the Input array into a random order.
+  # Makes an `array` with the same elements as `Input` shuffled in a random order.
   Shuffle<public>(Input: []t where t: type)<transacts>: []t = external {}
 }
 
@@ -532,80 +549,95 @@ Verse<public> := module {
   # Fails unless `0 <= StartIndex <= StopIndex <= Input.Length`.
   (Input: []t where t: type).Slice<public>(StartIndex: int, StopIndex: int)<computes><decides>: []t = external {}
 
-  # Succeeds if Val is within AbsoluteTolerance of zero. Fails otherwise.
+  # Succeeds if `Val` is within `AbsoluteTolerance` of `0.0`.
   (Val: float).IsAlmostZero<public>(AbsoluteTolerance: float)<computes><decides>: void = external {}
 
-  # Returns X if X is finite (i.e., X is not +Inf, -Inf, or NaN), fail otherwise
+  # Returns `X` if `X` is finite.
+  # Fails if `X` is one of:`
+  #  * `+Inf`
+  #  * `-Inf`
+  #  * `NaN`
   (X: float).IsFinite<public>()<computes><decides>: float = external {}
 
-  # Returns the inverse hyperbolic cosine, a.k.a. area hyperbolic cosine.
+  # Returns the inverse hyperbolic cosine of `X` if `1.0 <= X`.
   ArCosh<native><public>(X: float)<varies>: float
 
-  # Returns the inverse hyperbolic sine, a.k.a. area hyperbolic sine.
+  # Returns the inverse hyperbolic sine of `X` if `IsFinite(X)`.
   ArSinh<native><public>(X: float)<varies>: float
 
-  # Returns the inverse hyperbolic tangent, a.k.a. area hyperbolic tangent.
+  # Returns the inverse hyperbolic tangent of `X` if `IsFinite(X)`.
   ArTanh<native><public>(X: float)<varies>: float
 
-  # Returns the inverse cosine, or arccosine, of arc 'X' in radians.
+  # Returns the inverse cosine (arccosine) of `X` if `-1.0 <= X <= 1.0`.
   ArcCos<native><public>(X: float)<varies>: float
 
-  # Returns the inverse sine, or arcsine, of an arc 'X' radians.
+  # Returns the inverse sine (arcsine) of `X` if `-1.0 <= X <= 1.0`.
   ArcSin<native><public>(X: float)<varies>: float
 
-  # Returns the inverse tangent, or arctangent, of an arc 'X' in radians.
+  # Returns the inverse tangent (arctangent) of `X` such that:
+  # `-PiFloat/2.0 <= ArcTan(x) <= PiFloat/2.0`.
   ArcTan<native><public>(X: float)<varies>: float
 
-  # Returns the angle whose tangent is X / Y.
-  ArcTan<native><public>(X: float, Y: float)<varies>: float
+  # Returns the angle in radians at the origin between a ray pointing to `(X, Y)`
+  # and the positive `X` axis such that `-PiFloat < ArcTan(Y, X) <= PiFloat`.
+  # Returns 0.0 if `X=0.0 and Y=0.0`.
+  ArcTan<native><public>(Y: float, X: float)<varies>: float
 
-  # Rounds the specified float Val up to the nearest integer. Fails if Val is not finite.
+  # Returns the smallest `int` that is greater than or equal to `Val`.
+  # Fails if `not IsFinite(Val)`.
   Ceil<native><public>(Val: float)<varies><decides>: int
 
-  # Clamp the int Val to be in the range [min(A,B), max(A,B)].
+  # Constrains the value of `Val` between `A` and `B`. Robustly handles different argument orderings.
+  # Returns the median of `Val`, `A`, and `B`.
   Clamp<native><public>(Val: int, A: int, B: int)<computes>: int
 
-  # Clamp the float Val to be in the range [min(A,B), max(A,B)] by finding the median of Val, A, and B and treating NaN as > +Inf where required.
+  # Constrains the value of `Val` between `A` and `B`. Robustly handles different argument orderings.
+  # Returns the median of `Val`, `A`, and `B`, such that comparisons with `NaN` operate as if `NaN > +Inf`.
   Clamp<public>(Val: float, A: float, B: float)<computes>: float = external {}
 
   # Makes a flattened `array` by concatenating the elements of `Arrays`.
   Concatenate<public>(Arrays: [][]t where t: type)<computes>: []t = external {}
 
-  # Returns the cosine of an angle 'X' in radians.
+  # Returns the cosine of `X` if `IsFinite(X)`.
+  # Returns `NaN` if `not IsFinite(X)
   Cos<native><public>(X: float)<varies>: float
 
-  # Returns the hyperbolic cosine of the hyperbolic angle.
+  # Returns the hyperbolic cosine of `X`.
   Cosh<native><public>(X: float)<varies>: float
 
-  # Produce a runtime error with the given Message.
+  # Halts the Verse runtime with error `Message`.
   Err<native><public>(Message: []char)<computes>: false
 
-  # Returns the natural exponent of X or eX.
+  # Returns the natural exponent of `X`.
   Exp<native><public>(X: float)<varies>: float
 
-  # Rounds the specified float Val down to the nearest integer.  Fails if Val is not finite.
+  # Returns the largest `int` that is less than or equal to `Val`.
+  # Fails if `not IsFinite(Val)`.
   Floor<native><public>(Val: float)<varies><decides>: int
 
-  # Truncate the floating point part of Val and return the remaining integer.
+  # Returns the `int` that equals `Val` without the fractional part
+  # Fails if `not IsFinite(val)`.
   Int<native><public>(Val: float)<varies><decides>: int
 
-  # Succeeds if Val1 and Val2 are within AbsoluteTolerance of each other. Fails otherwise.
+  # Succeeds if `Val1` and `Val2` are within `AbsoluteTolerance` of each other.
   IsAlmostEqual<public>(Val1: float, Val2: float, AbsoluteTolerance: float)<computes><decides>: void = external {}
 
-  # Concatenate the array of provided strings, utilizing the provided string Separator between each concatenated string
+  # Makes a `string` by concatenating `Separator` between the elements of `Strings`.
   Join<native><public>(Strings: [][]char, Separator: []char)<computes>: []char
 
-  # Performs a linear interpolation between 'From' and 'To' by Parameter. I.e., Result = From + (To - From) * Parameter. Returns From if Parameter=0 and To if Parameter=1. The result is not clamped to [From, To].
+  # Used to linearly interpolate/extrapolate between `From` (when `Parameter = 0.0`)
+  # and `To` (when `Parameter = 1.0`). Expects that all arguments are finite.
+  # Returns `From*(1 - Parameter) + To*Parameter`.
   Lerp<native><public>(From: float, To: float, Parameter: float)<varies>: float
 
-  # Returns the natural logarithm of Val.
-  Ln<native><public>(Val: float)<varies>: float
+  # Returns the natural logarithm of `X`.
+  Ln<native><public>(X: float)<varies>: float
 
-  # Performs localization on `Message`. Returns a localized `string`.
+  # Makes a `string` by localizing `Message` based on the current `locale`.
   Localize<native_callable><public>(Message: message)<varies>: []char = external {}
 
-  # Returns the logarithm with base of Val.
-  Log<public>(Base: float, Val: float)<varies>: float = external {}
+  # Returns the base `B` logarithm of `X`.
+  Log<public>(B: float, X: float)<varies>: float = external {}
 
   MakeLocalizableValue<epic_internal>(V: []char)<computes>: localizable_string = external {}
 
@@ -615,67 +647,90 @@ Verse<public> := module {
 
   MakeMessageInternal<native><epic_internal>(K: []char, D: []char, S: [[]char]localizable_value)<converges>: message
 
-  # Returns the maximum of X and Y. If either value is NaN, the result will be NaN.
+  # Returns the maximum of `X` and `Y` unless either are `NaN`.
+  # Returns `NaN` if either `X` or `Y` are `NaN`.
   Max<public>(X: float, Y: float)<computes>: float = external {}
 
-  # Returns the maximum of X and Y.
+  # Returns the maximum of `X` and `Y`.
   Max<public>(X: int, Y: int)<computes>: int = external {}
 
-  # Returns the minimum of X and Y. If either value is NaN, the result will be NaN.
+  # Returns the minimum of `X` and `Y` unless either are `NaN`.
+  # Returns `NaN` if either `X` or `Y` are `NaN`.
   Min<public>(X: float, Y: float)<computes>: float = external {}
 
-  # Returns the minimum of X and Y.
+  # Returns the minimum of `X` and `Y`.
   Min<public>(X: int, Y: int)<computes>: int = external {}
 
-  # Returns the remainder of X / Y as defined by Euclidean division. I.e., Mod[X,Y] = X - Quotient(X/Y)*Y and 0 <= Mod[X,Y] < Abs(Y)
+  # Returns the remainder of `X/Y` as defined by Euclidean division, i.e.:
+  #  * `Mod[X,Y] = X - Quotient(X/Y)*Y`
+  #  * `0 <= Mod[X,Y] < Abs(Y)`
+  # Fails if `Y=0`.
   Mod<native><public>(X: int, Y: int)<computes><decides>: int
 
-  # Pi, the ratio of the circumference of a circle to the diameter.
+  # Pi, the ratio of the circumference of a circle to its diameter.
   PiFloat<public>: float = external {}
 
-  # Returns 'A' raised to the 'B' power.
+  # Returns `A` to the power of `B`.
   Pow<native><public>(A: float, B: float)<varies>: float
 
-  # Send messages to the default print log. Duration will determine how long the message will remain on the client screen, default 2.0 seconds. Color will determine the color of the message displayed on the client screen, default is White.
+  # Writes `Message` to a dedicated `Print` log while displaying it in `Color` on the
+  # client screen for `Duration` seconds. By default, `Color` is `NamedColors.White` and
+  # `Duration` is `2.0` seconds.
   Print<native><public>(Message: []char, ?Duration: float = external {}, ?Color: color = external {}): void
 
-  # The quotient of X/Y as defined by Euclidean division. Quotient[X/Y] = Floor[X/Y] where X/Y is a rational number and Y > 0. Quotient[X/Y] = Ceil[X/Y] where X/Y is a rational number and Y < 0. In both cases, Quotient[X/Y] * Y + Mod[X,Y] = X.
+  # Returns the quotient `X/Y` as defined by Euclidean division, i.e.:
+  #  * `Quotient[X/Y] = Floor[X/Y]` when `Y > 0`
+  #  * `Quotient[X/Y] = Ceil[X/Y]` when `Y < 0`
+  #  * `Quotient[X/Y] * Y + Mod[X,Y] = X`
+  # Fails if `Y = 0`.
   Quotient<native><public>(X: int, Y: int)<computes><decides>: int
 
-  # Rounds the specified float Val to the nearest integer, rounding halfway values to the nearest even number (per IEEE-754 default rounding mode). Fails if Val is not finite.
+  # Returns `Val` rounded to the nearest `int`. When the fractional part of `Val` is `0.5`,
+  # rounds to the nearest *even* `int` (per the IEEE-754 default rounding mode).
+  # Fails if `not IsFinite(Val)`.
   Round<native><public>(Val: float)<varies><decides>: int
 
-  # Returns the sign (+/-1f) of Val if Val is nonzero. Returns 0f if Val is zero. Returns NaN if Val is NaN.
+  # Returns the sign of `Val`:
+  #  * `1.0` if `Val > 0.0`
+  #  * `0.0` if `Val = 0.0`
+  #  * `-1.0` if `Val < 0.0`
+  #  * `NaN` if `Val = NaN`
   Sgn<public>(Val: float)<computes>: float = external {}
 
-  # Returns the sign (+/-1) of Val if Val is nonzero. Returns 0 otherwise.
+  # Returns the sign of `Val`:
+  #  * `1` if `Val > 0`
+  #  * `0` if `Val = 0`
+  #  * `-1` if `Val < 0`
   Sgn<public>(Val: int)<computes>: int = external {}
 
-  # Returns the sine of an angle 'X' in radians.
+  # Returns the sine of `X` if `IsFinite(X)`.
+  # Returns `NaN` if `not IsFinite(X)
   Sin<native><public>(X: float)<varies>: float
 
-  # Returns the hyperbolic sine of the hyperbolic angle.
+  # Returns the hyperbolic sine of `X`.
   Sinh<native><public>(X: float)<varies>: float
 
-  # Returns the square root of Val.
-  Sqrt<native><public>(Val: float)<varies>: float
+  # Returns the square root of `X` if `X >= 0.0`.
+  # Returns `NaN` if `X < 0.0`.
+  Sqrt<native><public>(X: float)<varies>: float
 
-  # Returns the tangent of an angle 'X' in radians.
+  # Returns the tangent of `X` if `IsFinite(X)`.
+  # Returns `NaN` if `not IsFinite(X).
   Tan<native><public>(X: float)<varies>: float
 
-  # Returns the hyperbolic tangent of the hyperbolic angle.
+  # Returns the hyperbolic tangent of `X`.
   Tanh<native><public>(X: float)<varies>: float
 
-  # Converts the provided Character to a string.
+  # Makes a `string` from `Character`.
   ToString<native><public>(Character: char)<computes>: []char
 
-  # Format a float as a string.
+  # Makes a `string` representation of `Val`.
   ToString<native><public>(Val: float)<varies>: []char
 
-  # Format an integer as a string.
+  # Makes a printable `string` representation of `Val`.
   ToString<native><public>(Val: int)<computes>: []char
 
-  # Returns the provided String without modification.
+  # Returns `String` without modification.
   ToString<public>(String: []char)<computes>: []char = external {}
 
   # Implemented by classes that allow users to cancel an operation. For example, calling
@@ -686,9 +741,9 @@ Verse<public> := module {
     Cancel<public>()<transacts>: void
   }
 
-  # Used for objects with a limited lifetime.
+  # Implemented by classes whose instances have limited lifetimes.
   disposable<native><public> := interface {
-    # Clean up the object.
+    # Cleans up this object.
     Dispose<public>(): void
   }
 
@@ -711,16 +766,16 @@ Verse<public> := module {
     #
     # Assertion fails if `Signal` is called in the middle of a `Signal` call
     # on the same `event`.
-    Signal<native><override>(__dupe___unnamed_parameter_20: t): void
+    Signal<native><override>(Val: t): void
   }
 
   # A *recurring*, successively signaled event allowing a simple mechanism to coordinate
   # between concurrent tasks.
   event<public>()<computes> := event(tuple())
 
-  # Used for objects that can become invalid at runtime.
+  # Implemented by classes whose instances can become invalid at runtime.
   invalidatable<native><public> := interface(disposable) {
-    # Succeeds if the object is still valid.
+    # Succeeds if this object is still valid.
     IsValid<public>()<transacts><decides>: void
   }
 
@@ -730,7 +785,7 @@ Verse<public> := module {
   # A parametric interface combining `awaitable` and `subscribable`.
   listenable<public>(payload: type)<computes> := interface(awaitable(payload), subscribable(payload)) {}
 
-  # `locale` is used for message localization.
+  # Used for message localization.
   locale<native><public> := struct<computes><epic_internal> {}
 
   localizable_float<epic_internal> := class<computes><internal>(localizable_value) {}
@@ -749,7 +804,7 @@ Verse<public> := module {
   signalable<public>(payload: type)<computes> := interface {
     # Concurrently resumes the tasks waiting for this event in `awaitable.Await` and
     # synchronously invokes any callbacks added to this event by `subscribable.Subscribe`.
-    Signal<public>(__dupe___unnamed_parameter_21: payload): void
+    Signal<public>(Val: payload): void
   }
 
   # A parameterless interface implemented by events that can be subscribed to.
