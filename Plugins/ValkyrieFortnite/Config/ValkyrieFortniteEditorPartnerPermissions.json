@@ -13,7 +13,7 @@
 			{
 				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/ValkyrieEditor.ValkyrieProjectSettingsEditorViewModel",
-				"AllowList": [ "Title", "Description", "DocsUrl", "Attributions", "Kind", "UGCLocDescriptor" ]
+				"AllowList": [ "Title", "Description", "DocsUrl", "Kind", "UGCLocDescriptor" ]
 			}
 		]
 	},

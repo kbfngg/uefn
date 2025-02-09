@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-26.00-CL-27233190
+# Generated from build: ++Fortnite+Release-26.10-CL-27681420
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -1219,6 +1219,9 @@ Devices<public> := module {
 
     # Moves the `creative_prop` to the specified `Transform` over the specified time. If an animation is currently playing on the `creative_prop` it will be stopped and put into the `AnimationNotSet` state.
     MoveTo<public>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
+
+    # Changes the Material of the Mesh used by this instance. Optionally can specify which Mesh element index to apply the material to, otherwise defaults to the 0 (default) Mesh element
+    SetMaterial<native><public>(Material: material, ?Index: int = external {})<transacts>: void
 
     # Changes the Mesh used by this instance.
     SetMesh<native><public>(Mesh: mesh)<transacts>: void
@@ -3235,6 +3238,10 @@ Devices<public> := module {
     # Clears persistence data for all `agent`s.
     ClearAllPersistenceData<public>(): void = external {}
 
+    # Signaled when the persistent data is cleared by the specified `agent`.
+    # Sends the `agent` that cleared persistent data on the device.
+    ClearEvent<public>: listenable(agent) = external {}
+
     # Clears persistence data for `Agent`.
     ClearPersistenceData<public>(Agent: agent): void = external {}
 
@@ -3265,8 +3272,14 @@ Devices<public> := module {
     # Loads the device state with `Agent` acting as the instigator of the action.
     LoadState<public>(Agent: agent): void = external {}
 
+    # Loads the device state for all players.
+    LoadStateForAll<public>(): void = external {}
+
     # Saves the device state with `Agent` acting as the instigator of the action.
     SaveState<public>(Agent: agent): void = external {}
+
+    # Saves the device state for all players
+    SaveStateForAll<public>(): void = external {}
 
     # Sets the *Interaction Time* required to activate this device (in seconds).
     SetInteractionTime<public>(Time: float): void = external {}
@@ -3279,6 +3292,10 @@ Devices<public> := module {
 
     # Signaled when the switch state changes.
     StateChangesEvent<public>: listenable(tuple()) = external {}
+
+    # Signaled when the switch state is loaded by the specified `agent`.
+    # Sends the `agent` that loaded the state on the device.
+    StateLoadEvent<public>: listenable(agent) = external {}
 
     # Signaled when the switch state is saved.
     StateSaveEvent<public>: listenable(tuple()) = external {}

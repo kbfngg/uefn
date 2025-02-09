@@ -805,6 +805,7 @@
 			"/Script/FortniteGame.FortCreativeLinearMoverComponent":			{  },
 			"/Script/FortniteGame.FortCreativePersistenceComponent":			{  },
 			"/Script/FortniteGame.FortCreativePersistenceComponentBase":		{  },
+			"/Script/FortniteGame.FortCreativePhotoModeCamera":					{  },
 			"/Script/FortniteGame.FortCreativeSplineModificationComponent":		{  },
 			"/Script/FortniteGame.FortCreativeVolumeLinkComponent":				{  },
 			"/Script/FortniteGame.FortDaySequenceActor":						{  },
@@ -950,6 +951,7 @@
 			"/Script/LevelSequence.LevelSequenceAnimSequenceLink":				{  },
 			"/Script/MannequinRuntime.MannequinAnalyticsComponent":				{  },
 			"/Script/MediaAssets.MediaSoundComponent":							{  },
+			"/Script/MediaAssets.MediaTexture":     							{  },
 			"/Script/ModelViewViewModel.MVVMViewClass":							{  },
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintView":			{  },
 			"/Script/ModelViewViewModelBlueprint.MVVMWidgetBlueprintExtension_View":{  },
@@ -1233,6 +1235,9 @@
 			"/Wind/Gameplay/WindFields/Parent/WindSpline_Parent.WindSpline_Parent_C":{  }
 		},
 		"AllowedMenus": {
+			"AssetEditor.IKRetargetEditor.MainMenu.CreateMenu": {
+				"DenyList": [ "ExportRetargetPose" ]
+			},
 			"AssetEditor.AnimationBlueprintEditor.MainMenu": {
 				"AllowList": [ "File", "Edit", "Asset", "Window", "Help" ]
 			},
@@ -1373,7 +1378,7 @@
 				"AllowList": [ "DaySequencePreviewTime" ]
 			},
 			"LevelEditor.ActorContextMenu": {
-				"AllowList": [ "FindInContentBrowser", "OpenSelectionInPropertyMatrix", "BulkEditComponentsSubmenu", "FocusViewportToSelection", "GoHere", "SnapCameraToObject", "SnapObjectToCamera", "SelectSubMenu", "EditSubMenu", "VisibilitySubMenu", "AddActor", "ReplaceActor", "ActorAttachToSubMenu", "DetachFromParent", "ValidateActors", "TransformSubMenu", "PivotSubMenu", "GroupMenu", "meshPerfEntry", "DeviceScriptsCopyReference", "OpenUVEditor", "CopyActorFilePathtoClipboard", "SaveActor" ]
+				"AllowList": [ "FindInContentBrowser", "OpenSelectionInPropertyMatrix", "BulkEditComponentsSubmenu", "FocusViewportToSelection", "GoHere", "SnapCameraToObject", "SnapObjectToCamera", "SnapAlignSubMenu", "SelectSubMenu", "EditSubMenu", "VisibilitySubMenu", "AddActor", "ReplaceActor", "ActorAttachToSubMenu", "DetachFromParent", "ValidateActors", "TransformSubMenu", "PivotSubMenu", "GroupMenu", "meshPerfEntry", "DeviceScriptsCopyReference", "OpenUVEditor", "CopyActorFilePathtoClipboard", "SaveActor" ]
 			},
 			"LevelEditor.ActorContextMenu.AddActor": {
 				"DenyList": [ "RectLight", "PlayerStart", "Trigger", "RuntimeVirtualTextureVolume", "CameraActor" ]
@@ -1854,7 +1859,7 @@
 			},
 			{
 				"Type": "/Script/Engine.SplineComponent",
-				"AllowList": [ "bClosedLoop" ]
+				"AllowList": [ "DefaultUpVector", "bClosedLoop", "SplinePointDetails", "SelectSplinePoints", "NoneSelected", "InputKey", "Location", "Rotation", "Scale", "ArriveTangent", "LeaveTangent" ]
 			},
 			{
 				"Type": "/Script/Engine.LightComponent",
@@ -2298,14 +2303,14 @@
 			},
 			{
 				"Type": "/Script/Engine.PostProcessVolume",
-				"AllowList": ["Settings", "Priority", "BlendRadius", "BlendWeight", "bEnabled", "bUnbound", "Lens|Bloom", "Lens|Chromatic Aberration", "Lens|Lens Flares", "Lens|Image Effects", "Color Grading|Global", "Color Grading|Temperature", "Lens|Exposure", "Color Grading|Misc",
-					"Global Illumination|Lumen Global Illumination","Global Illumination|Lumen Global IlluminationAdvanced","Lens|Exposure","Lens|ExposureAdvanced","Lens|Local Exposure","Lens|Camera", "Rendering Features|Motion Blur"
+				"AllowList": ["Settings", "Priority", "BlendRadius", "BlendWeight", "bEnabled", "bUnbound", "Lens|Bloom", "Lens|Chromatic Aberration", "Lens|Lens Flares", "Lens|Image Effects", "Color Grading|Global", "Color Grading|Shadows", "Color Grading|Highlights", "Color Grading|Midtones", "Color Grading|Temperature", "Lens|Exposure", "Color Grading|Misc",
+					"Global Illumination|Lumen Global Illumination","Global Illumination|Lumen Global IlluminationAdvanced","Lens|Exposure","Lens|ExposureAdvanced","Lens|Local Exposure","Lens|Camera", "Rendering Features|Motion Blur", "Lens|Dirt Mask"
 				]
 			},
 			{
 				"Type": "/Script/Engine.PostProcessComponent",
-				"AllowList": ["Settings", "Priority", "BlendRadius", "BlendWeight", "bEnabled", "bUnbound", "Lens|Bloom", "Lens|Chromatic Aberration", "Lens|Lens Flares", "Lens|Image Effects", "Color Grading|Global", "Color Grading|Temperature", "Lens|Exposure", "Color Grading|Misc",
-					"Global Illumination|Lumen Global Illumination","Global Illumination|Lumen Global IlluminationAdvanced","Lens|Exposure","Lens|ExposureAdvanced","Lens|Local Exposure","Lens|Camera", "Rendering Features|Motion Blur"
+				"AllowList": ["Settings", "Priority", "BlendRadius", "BlendWeight", "bEnabled", "bUnbound", "Lens|Bloom", "Lens|Chromatic Aberration", "Lens|Lens Flares", "Lens|Image Effects", "Color Grading|Global", "Color Grading|Shadows", "Color Grading|Highlights", "Color Grading|Midtones", "Color Grading|Temperature", "Lens|Exposure", "Color Grading|Misc",
+					"Global Illumination|Lumen Global Illumination","Global Illumination|Lumen Global IlluminationAdvanced","Lens|Exposure","Lens|ExposureAdvanced","Lens|Local Exposure","Lens|Camera", "Rendering Features|Motion Blur", "Lens|Dirt Mask"
 				]
 			},
 			{
@@ -2339,7 +2344,7 @@
 			},
 			{
 				"Type": "/Script/ValkyrieEditor.ValkyrieProjectSettingsEditorViewModel",
-				"AllowList": [ "Title", "Description", "DocsUrl", "Attributions", "UGCLocDescriptor" ]
+				"AllowList": [ "Title", "Description", "DocsUrl", "UGCLocDescriptor" ]
 			},
 			{
 				"Type": "/Script/Engine.LODSyncComponent",
@@ -2437,7 +2442,8 @@
 				"Type": "/Script/Engine.PostProcessSettings",
 				"AllowList": ["BloomIntensity", "BloomThreshold", "SceneFringeIntensity", "ChromaticAberrationStartOffset", "LensFlareIntensity", "VignetteIntensity", "ColorSaturation", "ColorContrast", "ColorGamma", "WeightedBlendables", "FilmGrainIntensity", "FilmGrainTexelSize", "TemperatureType", "WhiteTemp", "WhiteTint", "AutoExposureMethod", "AutoExposureBias", "AutoExposureApplyPhysicalCameraExposure", "AutoExposureBiasCurve", "AutoExposureMeterMask", "AutoExposureMinBrightness", "AutoExposureMaxBrightness", "AutoExposureSpeedUp", "AutoExposureSpeedDown", "SceneColorTint",
 					"LumenSkylightLeaking","LumenFullSkylightLeakingDistance", "LumenDiffuseColorBoost", "AutoExposureMethod","AutoExposureBias","AutoExposureApplyPhysicalCameraExposure","AutoExposureBiasCurve","AutoExposureMeterMask","AutoExposureMinBrightness","AutoExposureMaxBrightness","AutoExposureSpeedUp","AutoExposureSpeedDown","AutoExposureLowPercent","AutoExposureHighPercent","HistogramLogMin","HistogramLogMax","LocalExposureHighlightContrastScale","LocalExposureShadowContrastScale","LocalExposureDetailStrength","LocalExposureBlurredLuminanceBlend","LocalExposureBlurredLuminanceKernelSizePercent","LocalExposureMiddleGreyBias",
-					"CameraShutterSpeed", "CameraISO", "DepthOfFieldFstop", "DepthOfFieldMinFstop", "DepthOfFieldBladeCount", "MotionBlurAmount", "MotionBlurMax", "MotionBlurTargetFPS", "MotionBlurPerObjectSize", "Lens", "Color Grading", "Global Illumination", "Rendering Features", "Film Grain" 
+					"CameraShutterSpeed", "CameraISO", "DepthOfFieldFstop", "DepthOfFieldMinFstop", "DepthOfFieldBladeCount", "MotionBlurAmount", "MotionBlurMax", "MotionBlurTargetFPS", "MotionBlurPerObjectSize", "Lens", "Color Grading", "Global Illumination", "Rendering Features", "Film Grain", "Highlights", "Midtones", "Shadows", "ColorSaturationHighlights", "ColorContrastHighlights", "ColorGammaHighlights", "ColorGainHighlights", "ColorOffsetHighlights", "ColorCorrectionHighlightsMin", "ColorCorrectionHighlightsMax", "ColorSaturationMidtones", "ColorContrastMidtones", "ColorGammaMidtones", "ColorGainMidtones", "ColorOffsetMidtones", "ColorSaturationShadows",
+					"ColorContrastShadows", "ColorGammaShadows", "ColorGainShadows", "ColorOffsetShadows", "ColorCorrectionShadowsMax", "LensFlareTint", "LensFlareBokehSize", "LensFlareThreshold", "LensFlareBokehShape", "BloomDirtMask", "BloomDirtMaskIntensity", "BloomDirtMaskTint" 
 				]
 			},
 			{
@@ -2602,8 +2608,7 @@
 			},
 			{
 				"Type": "/Script/Water.WaterZone",
-				"AllowList": [ "WaterMesh", "CaptureZOffset", "bHalfPrecisionTexture", "TessellatedWaterMeshExtent", "NonTessellatedLODSectionScale",
-					"OverlapPriority", "bEnableNonTessellatedLODMesh" ],
+				"AllowList": [ "WaterMesh", "CaptureZOffset", "bHalfPrecisionTexture", "TessellatedWaterMeshExtent", "OverlapPriority", "LocalTessellationExtent" ],
 				"DenyList": [],
 				"bAllowListAllSubclassProperties": true
 			},
@@ -2612,11 +2617,208 @@
 				"AllowList": ["OnMeshNetEvent"]
 			},
 			{
-				"Type": "/Script/FortniteGame.FortCreativeDeviceProp",
+				"Type": "/Script/FortniteGame.BuildingGameplayActorConsumable",
+				"AllowList": ["FailedReason"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.BuildingProp_CaptureArea",
+				"AllowList": ["CaptureComponent","CaptureIconWidgetComponent"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.BuildingProp_CreatureManager",
+				"AllowList": ["CreatureAIDiedTriggerComponent","CreatureInfoComponent"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.BuildingProp_CreaturePlacer",
+				"AllowList": ["CreatureKilledTransmitComponent","CreatureSkeletalMeshComponent","TurnOffReceiverComponent","TurnOnReceiverComponent"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.BuildingProp_DeimosSpawner",
+				"AllowList": ["KillAllAIReceiverComponent","KillSpawnerReceiverComponent","OnKilledMessagerComponent","TurnOffReceiverComponent","TurnOnReceiverComponent"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.CaptureComponent",
+				"AllowList": ["OnCaptureProgressUpdate","OnCaptureStateChanged","OnOwningTeamChanged"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.CreativeEditOnlyMeshComponent",
 				"AllowList": [],
 				"DenyList": [],
-				"bAllowListAllProperties": true,
+				"bAllowListAllProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.CreativeMiniMapComponent",
+				"AllowList": [],
+				"DenyList": [],
+				"bAllowListAllProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.CreativeProxyManagerComponent",
+				"AllowList": ["OnProxyDataChangedDelegate"],
+				"DenyList": [],
 				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.CreativeQuestComponent",
+				"AllowList": [],
+				"DenyList": [],
+				"bAllowListAllProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortActorOptionsComponent",
+				"AllowList": ["OnAnyPropertyChanged","OnPreAnyPropertyChanged","OnPropertiesLoaded","PlayerOptionData"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortCreativeAccoladesComponent",
+				"AllowList": ["OnAccoladeWouldHaveGrantedDelegate"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortCreativeCostComponent",
+				"AllowList": [],
+				"DenyList": [],
+				"bAllowListAllProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortCreativeItemVariantNotifierComponent",
+				"AllowList": ["OnItemTemplateChanged","OnItemTemplateDisabled","OnItemTemplateEnabled"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortCreativeKeyLockComponent",
+				"AllowList": [],
+				"DenyList": ["EditorDisplayName","EditorDescription","FilterTags","RequiredFilterTagQuery"],
+				"bAllowListAllProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortCreativeLinearMoverComponent",
+				"AllowList": [],
+				"DenyList": [],
+				"bAllowListAllProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortCreativeLockDevice",
+				"AllowList": ["OnLocalPawnInventoryChanged"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortCreativePersistenceComponent",
+				"AllowList": ["OnPlayerDataLoaded","SaveEntrySettings"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortCreativePersistenceComponentBase",
+				"AllowList": ["bUniqueForOwner","OverridePersistenceID","PersistenceID"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortCreativeTeleporter",
+				"AllowList": ["TeleportToWhenReceived"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortCreativeTimerDevice",
+				"AllowList": ["bClientShowOnHud"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortGameplayMessageComponentBase",
+				"AllowList": ["ChannelIds","OnChannelIdsReplicated"],
+				"DenyList": [],
+				"bAllowListAllProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortMinigameItemListComponent",
+				"AllowList": ["BaseInstigatorData"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortMinigameLogicComponent",
+				"AllowList": [],
+				"DenyList": [],
+				"bAllowListAllProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortMinigameSettingsBuilding",
+				"AllowList": [],
+				"DenyList": [],
+				"bAllowListAllProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortMinigameSpawnerComponent",
+				"AllowList": [],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortPlayerStartCreative",
+				"AllowList": [],
+				"DenyList": [],
+				"bAllowListAllProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortPlaysetRoot",
+				"AllowList": ["SavedActorGuid"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortPortalComponent",
+				"AllowList": ["LinkCodeLockMode","OnLinkDataError","OnLinkDataLoaded","OnLinkThumbnailUpdated","OnPortalLinkCodeLockStatusChanged","OnPortalLinkLockExpired"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortVisibilityComponent",
+				"AllowList": ["bCheckFacing","bCheckLOS","bDistanceCheck2D","bObserver","bRegisterWithVisibilityManager","OnVisibilityChangedEvent","Radius","VisibilityBehavior"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortWaterBodyCubeVolume",
+				"AllowList": ["FortWaterBodyCubeVolumeComponent"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortWaterBodyCubeVolumeComponent",
+				"AllowList": ["bIsWaterCollisionEnabled","bIsWaterVisibiltyEnabled","VolumeExtent","WaterMeshCubeDefaultExtent","WaterMeshCubeDefaultOrigin","WaterMeshCubeDefaultScale","WaterOffsetRatio","WaterRatio"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortWaterBodyCustomComponent",
+				"AllowList": ["FortWaterBodyCommon"],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/Script/FortniteGame.FortWidgetComponent",
+				"AllowList": [],
+				"DenyList": [],
+				"bAllowListAllProperties": true
 			},
 			{
 				"Type": "/Game/Creative/Devices/Common/Components/Creative_DeviceComponent_Parent.Creative_DeviceComponent_Parent_C",
@@ -2626,19 +2828,7 @@
 				"bAllowListAllSubclassProperties": true
 			},
 			{
-				"Type": "/Script/FortniteGame.CreativeEditOnlyMeshComponent",
-				"AllowList": [],
-				"DenyList": [],
-				"bAllowListAllSubclassProperties": true
-			},
-			{
 				"Type": "/Game/Creative/BluePrints/BP_EnergyComponent.BP_EnergyComponent_C",
-				"AllowList": [],
-				"DenyList": [],
-				"bAllowListAllProperties": true
-			},
-			{
-				"Type": "/Game/Creative/Devices/CaptureArea/PickupItemListComponent.PickupItemListComponent_C",
 				"AllowList": [],
 				"DenyList": [],
 				"bAllowListAllProperties": true
@@ -2676,12 +2866,6 @@
 			},
 			{
 				"Type": "/Game/Creative/Devices/LockDevice/BP_InteractVisualizationComponent.BP_InteractVisualizationComponent_C",
-				"AllowList": [],
-				"DenyList": [],
-				"bAllowListAllProperties": true
-			},
-			{
-				"Type": "/Game/Creative/Devices/LockDevice/BP_KeyLockComponent.BP_KeyLockComponent_C",
 				"AllowList": [],
 				"DenyList": [],
 				"bAllowListAllProperties": true

@@ -858,6 +858,7 @@
 			"/Script/AnimGraphRuntime.SequencePlayerReference":			{  },
 			"/Script/AnimGraphRuntime.SkeletalControlLibrary":			{ "Visible": true },
 			"/Script/BlueprintGraph.K2Node":							{ "Visible": true },
+			"/Script/BlueprintGraph.K2Node_Event":						{ "Visible": true },
 			"/Script/BlueprintGraph.K2Node_BitmaskLiteral":				{ "Visible": true },
 			"/Script/BlueprintGraph.K2Node_BreakStruct":				{ "Visible": true },
 			"/Script/BlueprintGraph.K2Node_CallArrayFunction":			{ "Visible": true },
