@@ -37,6 +37,7 @@
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Engine.StaticMesh", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": true, "SubClasses": true }
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Engine.Texture2D", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": true, "SubClasses": false }
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Engine.TextureCube", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": true, "SubClasses": false }
+			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Engine.VolumeTexture", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": true, "SubClasses": false }
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/Engine.World", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": false, "SubClasses": false }
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/ModelViewViewModel.MVVMViewModelBlueprintGeneratedClass", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": true, "SubClasses": false }
 			,{ "$type": "ValkyrieEditorAssetClassRules", "ClassName": "/Script/UMGEditor.WidgetBlueprint", "Visible": true, "Edit": true, "Create": true, "Import": true, "Export": true, "SubClasses": false }
@@ -439,15 +440,11 @@
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Game/Playgrounds/Items/EQ/Blueprints/B_EQ_Landscape_Parent.B_EQ_Landscape_Parent_C" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Game/TimeOfDay/TODM/BR/s11/TODM_Creative.TODM_Creative_C" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Game/TimeOfDay/TODM_Sequence/Blueprint/UEFN_Ch4_DaySequence.UEFN_Ch4_DaySequence_C" },
-			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/SB_MusicTimelineManager/SetupAssets/MusicListenerComponent.MusicListenerComponent_C" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/AIModule.AISenseConfig_Sight" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/AnimationBudgetAllocator.SkeletalMeshComponentBudgeted" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/AudioEditor.SoundCueGraph" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/AudioEditor.SoundCueGraphNode" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/AudioEditor.SoundCueGraphNode_Root" },
-			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/BlueprintGraph.K2Node_CallParentFunction" },
-			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/BlueprintGraph.K2Node_Event" },
-			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/BlueprintGraph.K2Node_FunctionEntry" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/CableComponent.CableComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Constraints.TickableLookAtConstraint" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/Constraints.TickableParentConstraint" },
@@ -786,8 +783,6 @@
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/RigVMDeveloper.RigVMLink" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/RigVMDeveloper.RigVMPin" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/RigVMDeveloper.RigVMInjectionInfo" },
-			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/SBCrowdVolume.SBCrowdSpawner" },
-			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/SBMusicalTargets.SBMusicalTargetsTimerComponent" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/ShielderGameplayRuntime.ShielderCollisionHelperComponent" },	
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/SmartObjectsModule.SmartObjectCollection" },
 			{ "$type": "ValkyrieInternalAllowedClass", "ClassPath": "/Script/SmartObjectsModule.SmartObjectPersistentCollection" },
@@ -1668,7 +1663,13 @@
 			{
 				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/ValkyrieEditor.ValkyrieEditorConfig",
-				"AllowList": [ "DefaultProjectName", "DefaultProjectVersionSuffix", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "PreferredRegionSelection", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "SimulatedPermissions", "EffectivePermissions", "EntitledPermissions" ]
+				"AllowList": [ "DefaultProjectName", "DefaultProjectVersionSuffix", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "SimulatedPermissions", "EffectivePermissions", "EntitledPermissions" ]
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/CinematicCamera.CineCameraActor",
+				"AllowList": [ "LookatTrackingSettings" ],
+				"bAllowListAllSubclassProperties": true
 			},
 			{
 				"$type": "ValkyrieClassPropertyPermissionList",
@@ -1847,6 +1848,11 @@
 				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/CorruptionItems/Gameplay/Items/ReinforcedTrap/Actors/B_Wall_Reinforced_Athena.B_Wall_Reinforced_Athena_C",
 				"DenyList": [ "DoorOffset", "SlidingDoorOffset", "AutomaticSlidingDoorBoxExtent", "AutomaticSlidingDoorBoxOffset", "SlamOpenDoorBoxExtent", "SlidingTranslation", "SlidingOpenTime", "DoorOpeningSound", "DoorSlammedOpenSound", "DoorClosingSound", "DoorAnimatingMaterial", "DoorMesh", "bCreateDoorLink", "DoubleDoorMesh", "DoorLinkOffset", "bSwingingDoor", "bSlidingDoor", "bAutomaticSlidingDoor", "bDoubleDoor" ]
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/FortniteGame.FortLinkToActorComponent",
+				"AllowList": ["OnLinkedActorDestroyed"]
 			}
 		]
 	},
@@ -1863,6 +1869,10 @@
 			{
 				"$type": "ValkyrieStructPropertyPermissionList", "Type": "/Script/DataDrivenGameplayEventRouter.GameplayEventDescriptor",
 				"DenyList": [ "NetPolicy" ]
+			},
+			{
+				"$type": "ValkyrieStructPropertyPermissionList", "Type": "/Script/CinematicCamera.CameraLookatTrackingSettings",
+				"AllowList": [ "bEnableLookAtTracking", "bDrawDebugLookAtTrackingPosition", "LookAtTrackingInterpSpeed", "ActorToTrack", "RelativeOffset", "bAllowRoll" ]
 			},
 			{
 				"$type": "ValkyrieStructPropertyPermissionList", "Type": "/Script/CinematicCamera.CameraFilmbackSettings",
@@ -1943,7 +1953,7 @@
 				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Engine.SceneComponent",
 				"AllowList": [],
-				"DenyList": [],
+				"DenyList": [ "Mobility" ],
 				"bAllowListAllProperties": true
 			},
 			{
@@ -1990,6 +2000,55 @@
 			},
 			{
 				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Engine.SphereComponent",
+				"AllowList": [ "SphereRadius" ],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Engine.BoxComponent",
+				"AllowList": [ "BoxExtent", "LineThickness" ],
+				"DenyList": [],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Engine.ShapeComponent",
+				"AllowList": [ "AreaClass", "AreaClassOverride", "ShapeColor", "bDrawOnlyIfSelected", "bShouldCollideWhenPlacing", "bDynamicObstacle", "bUseSystemDefaultObstacleAreaClass" ],
+				"DenyList": [ ],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Engine.Character",
+				"AllowList": [ "ArrowComponent", "CapsuleComponent", "CharacterMovement", "Mesh" ],
+				"DenyList": [ ],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Engine.CharacterMovementComponent",
+				"AllowList": [ "bDeferUpdateMoveComponent", "bEnablePhysicsInteraction", "bTouchForceScaledToMass", "bPushForceScaledToMass", "bPushForceUsingZOffset", "bScalePushForceToVelocity", "DefaultLandMovementMode", "DefaultWaterMovementMode", "GravityScale", "NetworkSmoothingMode", "WalkableFloorZ" ],
+				"DenyList": [ ],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Engine.MovementComponent",
+				"AllowList": [ "bAutoRegisterUpdatedComponent", "bAutoUpdateTickRegistration", "bComponentShouldUpdatePhysicsVolume", "bTickBeforeOwner" ],
+				"DenyList": [ ],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/Engine.AbilitySystemComponent",
+				"AllowList": [ "ActiveGameplayCues", "MinimalReplicationGameplayCues" ],
+				"DenyList": [ ],
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
 				"Type": "/Script/Water.WaterBody",
 				"AllowList": [ "SplineComp", "WaterBodyComponent", "WaterSplineMetadata", "WaterBodyType" ],
 				"DenyList": [],
@@ -2020,6 +2079,11 @@
 					"OverlapPriority", "bEnableNonTessellatedLODMesh" ],
 				"DenyList": [],
 				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"$type": "ValkyrieClassPropertyPermissionList",
+				"Type": "/Script/FortniteGame.FortEventResponderComponent",
+				"AllowList": ["OnMeshNetEvent"]
 			}
 		]
 	},
@@ -2070,6 +2134,8 @@
 			
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_PlayerSpawn/Materials/PlayerSpawnerTeamDisplay.PlayerSpawnerTeamDisplay", "Alias": "/FortniteVKCreateUGC/CRD_PlayerSpawn/Materials/PlayerSpawnerTeamDisplay" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/FortWater/Materials/WaterSurface/M_Water_Ocean_02_NewModel_Far.M_Water_Ocean_02_NewModel_Far", "Alias": "/FortniteVKCreateUGC/FortWater/Materials/WaterSurface/M_Water_Ocean_02_NewModel_Far" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/FortWater/Materials/WaterSurface/M_Water_Ocean_02_NewModel_Lake_Inst_HLOD.M_Water_Ocean_02_NewModel_Lake_Inst_HLOD", "Alias": "/FortniteVKCreateUGC/FortWater/Materials/WaterSurface/M_Water_Ocean_02_NewModel_Lake_Inst_HLOD" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/FortWater/Materials/WaterSurface/M_Water_River_01_Inst_HLOD.M_Water_River_01_Inst_HLOD", "Alias": "/FortniteVKCreateUGC/FortWater/Materials/WaterSurface/M_Water_River_01_Inst_HLOD" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Balance/Physics/Materials/PhysData_Cloth.PhysData_Cloth", "Alias": "/FortniteVKCreateUGC/Game/Balance/Physics/Materials/PhysData_Cloth" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Balance/Physics/Materials/PhysData_Foliage.PhysData_Foliage", "Alias": "/FortniteVKCreateUGC/Game/Balance/Physics/Materials/PhysData_Foliage" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Balance/Physics/Materials/PhysData_Generic.PhysData_Generic", "Alias": "/FortniteVKCreateUGC/Game/Balance/Physics/Materials/PhysData_Generic" },
@@ -2958,20 +3024,6 @@
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Playgrounds/Items/EQ/Blueprints/B_EQ_Block_SimpleGlow128.B_EQ_Block_SimpleGlow128_C", "Alias": "/FortniteVKCreateUGC/Game/Playgrounds/Items/EQ/Blueprints/B_EQ_Block_SimpleGlow128" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Playgrounds/Items/EQ/Blueprints/B_EQ_Landscape_Parent.B_EQ_Landscape_Parent_C", "Alias": "/FortniteVKCreateUGC/Game/Playgrounds/Items/EQ/Blueprints/B_EQ_Landscape_Parent" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Playgrounds/Items/Props/Concert_Spotlights_x4_Parent.Concert_Spotlights_x4_Parent_C", "Alias": "/FortniteVKCreateUGC/Game/Playgrounds/Items/Props/Concert_Spotlights_x4_Parent" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRP_SBMusicalReactive/SetupAssets/Blueprints/B_MeshViz_Parent.B_MeshViz_Parent_C", "Alias": "/FortniteVKCreateUGC/CRP_SBMusicalReactive/SetupAssets/Blueprints/B_MeshViz_Parent" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRP_SBMusicalReactive/SetupAssets/Reactrim/EQTrim/Materials/MI_FFT_Bars_Centered_Trim_Cylinder_Small.MI_FFT_Bars_Centered_Trim_Cylinder_Small", "Alias": "/FortniteVKCreateUGC/CRP_SBMusicalReactive/SetupAssets/Reactrim/EQTrim/Materials/MI_FFT_Bars_Centered_Trim_Cylinder_Small" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRP_SBMusicalReactive/SetupAssets/Reactrim/EQTrim/Materials/MI_FFT_Bars_Centered_Trim_Plane.MI_FFT_Bars_Centered_Trim_Plane", "Alias": "/FortniteVKCreateUGC/CRP_SBMusicalReactive/SetupAssets/Reactrim/EQTrim/Materials/MI_FFT_Bars_Centered_Trim_Plane" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRP_SBMusicalReactive/SetupAssets/Reactrim/EQTrim/Materials/MI_FFT_Bars_Trim_Box_Small.MI_FFT_Bars_Trim_Box_Small", "Alias": "/FortniteVKCreateUGC/CRP_SBMusicalReactive/SetupAssets/Reactrim/EQTrim/Materials/MI_FFT_Bars_Trim_Box_Small" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRP_SBMusicalReactive/SetupAssets/Reactrim/Trim_Neon/Blueprints/B_TrimNeon_MatParent.B_TrimNeon_MatParent_C", "Alias": "/FortniteVKCreateUGC/CRP_SBMusicalReactive/SetupAssets/Reactrim/Trim_Neon/Blueprints/B_TrimNeon_MatParent" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRP_SBMusicalReactive/SetupAssets/Reactrim/Trim_Neon/Materials/M_NeonMusic.M_NeonMusic", "Alias": "/FortniteVKCreateUGC/CRP_SBMusicalReactive/SetupAssets/Reactrim/Trim_Neon/Materials/M_NeonMusic" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRP_SBMusicalReactive/SetupAssets/Reactrim/Trim_Neon/Materials/MI_NeonMusic.MI_NeonMusic", "Alias": "/FortniteVKCreateUGC/CRP_SBMusicalReactive/SetupAssets/Reactrim/Trim_Neon/Materials/MI_NeonMusic" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRP_SBMusicalReactive/SetupAssets/VideoScreen/Materials/M_Screen_Hologram.M_Screen_Hologram", "Alias": "/FortniteVKCreateUGC/CRP_SBMusicalReactive/SetupAssets/VideoScreen/Materials/M_Screen_Hologram" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRP_SBMusicalReactive/SetupAssets/VideoScreen/Materials/MI_Screen_Billboard.MI_Screen_Billboard", "Alias": "/FortniteVKCreateUGC/CRP_SBMusicalReactive/SetupAssets/VideoScreen/Materials/MI_Screen_Billboard" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRP_SBMusicalReactive/SetupAssets/VideoScreen/Materials/MI_Screen_Crop.MI_Screen_Crop", "Alias": "/FortniteVKCreateUGC/CRP_SBMusicalReactive/SetupAssets/VideoScreen/Materials/MI_Screen_Crop" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRP_SBMusicalReactive/SetupAssets/VideoScreen/Materials/MI_Screen_Cube_Construct_FlyIn.MI_Screen_Cube_Construct_FlyIn", "Alias": "/FortniteVKCreateUGC/CRP_SBMusicalReactive/SetupAssets/VideoScreen/Materials/MI_Screen_Cube_Construct_FlyIn" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRP_SBMusicalReactive/SetupAssets/VideoScreen/Materials/MI_Screen_Cube_Construct_Resize_WorldSpaceUV.MI_Screen_Cube_Construct_Resize_WorldSpaceUV", "Alias": "/FortniteVKCreateUGC/CRP_SBMusicalReactive/SetupAssets/VideoScreen/Materials/MI_Screen_Cube_Construct_Resize_WorldSpaceUV" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRP_SBMusicalReactive/SetupAssets/VideoScreen/Materials/MI_Screen_Cube_Single.MI_Screen_Cube_Single", "Alias": "/FortniteVKCreateUGC/CRP_SBMusicalReactive/SetupAssets/VideoScreen/Materials/MI_Screen_Cube_Single" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRP_SBMusicalReactive/SetupAssets/VideoScreen/Materials/MI_Screen_Cubes_Floating.MI_Screen_Cubes_Floating", "Alias": "/FortniteVKCreateUGC/CRP_SBMusicalReactive/SetupAssets/VideoScreen/Materials/MI_Screen_Cubes_Floating" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRP_Sunburst/SetupAssets/Materials/MI_CP_Sunburst_Streetlamp_Bulb_Lit.MI_CP_Sunburst_Streetlamp_Bulb_Lit", "Alias": "/FortniteVKCreateUGC/CRP_Sunburst/SetupAssets/Materials/MI_CP_Sunburst_Streetlamp_Bulb_Lit" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRP_Sunburst/SetupAssets/Materials/MI_CP_Sunburst_Streetlamp_Lit.MI_CP_Sunburst_Streetlamp_Lit", "Alias": "/FortniteVKCreateUGC/CRP_Sunburst/SetupAssets/Materials/MI_CP_Sunburst_Streetlamp_Lit" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRP_Sunburst/SetupAssets/Materials/MI_CP_Sunburst_Streetlamp_UnLit.MI_CP_Sunburst_Streetlamp_UnLit", "Alias": "/FortniteVKCreateUGC/CRP_Sunburst/SetupAssets/Materials/MI_CP_Sunburst_Streetlamp_UnLit" },
@@ -3026,7 +3078,6 @@
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Playgrounds/Items/MusicBlock/M_MusicBlock_SynthPad_01_Inst.M_MusicBlock_SynthPad_01_Inst", "Alias": "/FortniteVKCreateUGC/Game/Playgrounds/Items/MusicBlock/M_MusicBlock_SynthPad_01_Inst" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Playgrounds/Items/MusicBlock/M_MusicBlock_SynthPad_02_Inst.M_MusicBlock_SynthPad_02_Inst", "Alias": "/FortniteVKCreateUGC/Game/Playgrounds/Items/MusicBlock/M_MusicBlock_SynthPad_02_Inst" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Playgrounds/Items/MusicBlock/M_MusicBlock_SynthPluck_01_Inst.M_MusicBlock_SynthPluck_01_Inst", "Alias": "/FortniteVKCreateUGC/Game/Playgrounds/Items/MusicBlock/M_MusicBlock_SynthPluck_01_Inst" },
-
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CorruptionItems/Gameplay/Items/ReinforcedTrap/Actors/B_Floor_Reinforced_Athena.B_Floor_Reinforced_Athena_C", "Alias": "/FortniteVKCreateUGC/CorruptionItems/Gameplay/Items/ReinforcedTrap/Actors/B_Floor_Reinforced_Athena" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_DanceVolume/Materials/M_CP_DeviceZone_Frame_01_Dance.M_CP_DeviceZone_Frame_01_Dance", "Alias": "/FortniteVKCreateUGC/CRD_DanceVolume/Materials/M_CP_DeviceZone_Frame_01_Dance" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_DirectionalLauncher/GA_Launched_Device_Parent.GA_Launched_Device_Parent_C", "Alias": "/FortniteVKCreateUGC/CRD_DirectionalLauncher/GA_Launched_Device_Parent" },
@@ -3037,9 +3088,6 @@
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_Papaya_Dance_Mannequin/Assets/Art/Animations/Emote_Papaya_A1Dance_CMF_M_No_Audio.Emote_Papaya_A1Dance_CMF_M_No_Audio", "Alias": "/FortniteVKCreateUGC/CRD_Papaya_Dance_Mannequin/Assets/Art/Animations/Emote_Papaya_A1Dance_CMF_M_No_Audio" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_RockBoostPickup/Meshes/BoostPad_LightCone_03_Mat.BoostPad_LightCone_03_Mat", "Alias": "/FortniteVKCreateUGC/CRD_RockBoostPickup/Meshes/BoostPad_LightCone_03_Mat" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_RockBoostPickup/Meshes/BoostPad_Mat.BoostPad_Mat", "Alias": "/FortniteVKCreateUGC/CRD_RockBoostPickup/Meshes/BoostPad_Mat" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_SBCrowdVolume/SBCrowdVolumeGameplayVolume.SBCrowdVolumeGameplayVolume_C", "Alias": "/FortniteVKCreateUGC/CRD_SBCrowdVolume/SBCrowdVolumeGameplayVolume" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_SBMusicalCollectible/Materials/M_SB_MusicNote_Collectible.M_SB_MusicNote_Collectible", "Alias": "/FortniteVKCreateUGC/CRD_SBMusicalCollectible/Materials/M_SB_MusicNote_Collectible" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_SBMusicalCollectible/Meshes/SM_SB_MusicNote_Collectibe.SM_SB_MusicNote_Collectibe", "Alias": "/FortniteVKCreateUGC/CRD_SBMusicalCollectible/Meshes/SM_SB_MusicNote_Collectibe" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_VFX_Creator/Assets/NS_VFXcreator.NS_VFXcreator", "Alias": "/FortniteVKCreateUGC/CRD_VFX_Creator/Assets/NS_VFXcreator" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_VFX_Creator/Assets/Preview/M_VFXCreator_Preview.M_VFXCreator_Preview", "Alias": "/FortniteVKCreateUGC/CRD_VFX_Creator/Assets/Preview/M_VFXCreator_Preview" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRD_VFX_Creator/Assets/Preview/SM_VFXCreatorPreview_Sphere.SM_VFXCreatorPreview_Sphere", "Alias": "/FortniteVKCreateUGC/CRD_VFX_Creator/Assets/Preview/SM_VFXCreatorPreview_Sphere" },
@@ -3208,6 +3256,7 @@
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Effects/Niagara/FXTypes/FXType_Enviroment_Looping.FXType_Enviroment_Looping", "Alias": "/FortniteVKCreateUGC/Game/Effects/Niagara/FXTypes/FXType_Enviroment_Looping" },
 
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CreativeCoreDevices/Billboard/Widget3D_BillboardEdit.Widget3D_BillboardEdit", "Alias": "/FortniteVKCreateUGC/CreativeCoreDevices/Billboard/Widget3D_BillboardEdit" },
+			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Creative/Devices/Billboard/Materials/Widget3D_Masked_BillboardDisplay_TwoSided.Widget3D_Masked_BillboardDisplay_TwoSided", "Alias": "/FortniteVKCreateUGC/Game/Creative/Devices/Billboard/Materials/Widget3D_Masked_BillboardDisplay_TwoSided" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRG_Props/SetupAssets/FX/NS_Waterfall_Crash.NS_Waterfall_Crash", "Alias": "/FortniteVKCreateUGC/CRG_Props/SetupAssets/FX/NS_Waterfall_Crash" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRP_Sunburst/SetupAssets/Materials/MI_CP_Sunburst_Car_Future_White_01.MI_CP_Sunburst_Car_Future_White_01", "Alias": "/FortniteVKCreateUGC/CRP_Sunburst/SetupAssets/Materials/MI_CP_Sunburst_Car_Future_White_01" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Athena/Items/Consumables/Balloons/BGA_Balloons_Consumable_Rope.BGA_Balloons_Consumable_Rope_C", "Alias": "/FortniteVKCreateUGC/Game/Athena/Items/Consumables/Balloons/BGA_Balloons_Consumable_Rope" },
@@ -3219,9 +3268,7 @@
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Environments/Apollo/Sets/Quest/Props/Meshes/SM_Quest_XLBeachBall_01.SM_Quest_XLBeachBall_01", "Alias": "/FortniteVKCreateUGC/Game/Environments/Apollo/Sets/Quest/Props/Meshes/SM_Quest_XLBeachBall_01" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Environments/Props/Street/Meshes/StreetProp_FireHydrant08Broken.StreetProp_FireHydrant08Broken", "Alias": "/FortniteVKCreateUGC/Game/Environments/Props/Street/Meshes/StreetProp_FireHydrant08Broken" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/Game/Missions/Secondary/BluGlo/MI_Invisible.MI_Invisible", "Alias": "/FortniteVKCreateUGC/Game/Missions/Secondary/BluGlo/MI_Invisible" },
-			{ "$type": "ValkyrieAssetAlias", "Asset": "/SB_MusicTimelineManager/SetupAssets/CreativeMusicTimelineManager.CreativeMusicTimelineManager_C", "Alias": "/FortniteVKCreateUGC/SB_MusicTimelineManager/SetupAssets/CreativeMusicTimelineManager" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/ShielderGameplay/Gameplay/Collision/BGA_Shielder_Collision_Held.BGA_Shielder_Collision_Held_C", "Alias": "/FortniteVKCreateUGC/ShielderGameplay/Gameplay/Collision/BGA_Shielder_Collision_Held" },
-
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CreativeCoreDevices/HUDMessage/Widget_HUDMessage_Exclamation.Widget_HUDMessage_Exclamation_C", "Alias": "/FortniteVKCreateUGC/CreativeCoreDevices/HUDMessage/Widget_HUDMessage_Exclamation" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/CRG_Props/SetupAssets/FX/NS_Waterfall_Mist.NS_Waterfall_Mist", "Alias": "/FortniteVKCreateUGC/CRG_Props/SetupAssets/FX/NS_Waterfall_Mist" },
 			{ "$type": "ValkyrieAssetAlias", "Asset": "/FlipperGameplay/Building/Containers/Cooler_Container.Cooler_Container_C", "Alias": "/FortniteVKCreateUGC/FlipperGameplay/Building/Containers/Cooler_Container" },
@@ -4212,6 +4259,41 @@
 				"BindingContext": "PlayWorld",
 				"DenyList": [ "Simulate", "RepeatLastPlay" ]
 			}
+		]
+	},
+	"PlacementToolAllowedCategories": {
+		"=": [
+			"Geometry",
+			"RecentlyPlaced",
+			"Basic",
+			"Lights",
+			"Shapes",
+			"Volumes",
+			"Visual",
+			"Cinematic"
+		]
+	},
+	"PlacementToolAllowedActorClasses": {
+		"=": [
+			"CameraShakeSourceActor",
+			"CineCameraActor",
+			"PointLight",
+			"DirectionalLight",
+			"SkyLight",
+			"SkyAtmosphere",
+			"ExponentialHeightFog",
+			"SpotLight",
+			"RectLight",
+			"BlockingVolume",
+			"FortUndergroundVolume",
+			"FortWaterBodyExclusionVolume",
+			"PostProcessVolume",
+			"DecalActor",
+			"Cone",
+			"Cube",
+			"Cylinder",
+			"Plane",
+			"Sphere"
 		]
 	}
 }
