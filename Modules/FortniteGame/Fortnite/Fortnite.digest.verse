@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-26.20-CL-28096793
+# Generated from build: ++Fortnite+Release-26.30-CL-28509302
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -401,11 +401,11 @@ Devices<public> := module {
 
   # Used in conjunction with `advanced_storm_controller_device` to customize individual storm phases.
   advanced_storm_beacon_device<public> := class<concrete><final>(creative_device_base) {
-    # Moves the `advanced_storm_beacon_device` to the specified `Position` and `Rotation` over the specified time.
+    # Moves the `advanced_storm_beacon_device` to the specified `Position` and `Rotation` over the specified time, in seconds.
     # Existing storms will not target the new location, but newly generated storms will.
     MoveTo<override>(Position: vector3, Rotation: rotation, OverTime: float)<suspends>: move_to_result = external {}
 
-    # Moves the `advanced_storm_beacon_device` to the specified `Transform` over the specified time.
+    # Moves the `advanced_storm_beacon_device` to the specified `Transform` over the specified time, in seconds.
     # Existing storms will not target the new location, but newly generated storms will.
     MoveTo<override>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
 
@@ -498,6 +498,24 @@ Devices<public> := module {
     # Signaled when the `agent` from `EvaluateAgent` passes the requirements specified by this device.
     # Sends the `agent` originally passed to this device in `EvaluateAgent`.
     PassEvent<public>: listenable(agent) = external {}
+  }
+
+  # Used to manage sound buses via control bus mixes set on the Audio Mixer Device.
+  audio_mixer_device<public> := class<concrete><final>(creative_device_base) {
+    # Activates the mix set on the audio mixer.
+    ActivateMix<public>(): void = external {}
+
+    # Deactivates the mix set on the audio mixer.
+    DeactivateMix<public>(): void = external {}
+
+    # Adds `Agent` as a target when using the *CanBeHeardBy* Registered Players or NonRegisteredPlayers options.
+    Register<public>(Agent: agent): void = external {}
+
+    # Removes `Agent` as a target when using the *CanBeHeardBy* Registered Players or NonRegisteredPlayers options.
+    Unregister<public>(Agent: agent): void = external {}
+
+    # Removes all previously registered `agent`s when using the *CanBeHeardBy* Registered Players or NonRegisteredPlayers options.
+    UnregisterAll<public>(): void = external {}
   }
 
   # Used to configure and play audio from the device location or from registered `agent`s.
@@ -873,49 +891,6 @@ Devices<public> := module {
     ItemReturnedEvent<public>: listenable(agent) = external {}
   }
 
-  # Creates a chair where `Agent`s can sit.
-  chair_device<public> := class<concrete><final>(creative_device_base) {
-    # Disables this device.
-    # A disabled chair cannot be interacted with,
-    # and any `Agent` currently occupying the chair will be ejected.
-    Disable<public>(): void = external {}
-
-    # Prevents `Agent` from leaving the chair, if `Agent` passes the tests.
-    # Agents will then be trapped in the chair until released.
-    DisableExit<public>(Agent: agent): void = external {}
-
-    # Makes `Agent` exit this chair if they are currently in the chair.
-    Eject<public>(Agent: agent): void = external {}
-
-    # Enables this device.
-    # An enabled chair can be interacted with and occupied
-    # by any valid `agent`.
-    Enable<public>(): void = external {}
-
-    # Allows `Agent` to leave the chair, if `Agent` passes the tests.
-    EnableExit<public>(Agent: agent): void = external {}
-
-    # Signaled when an `Agent` stops sitting on this device.
-    # Sends the standing `Agent`.
-    ExitedEvent<public>: listenable(agent) = external {}
-
-    # Returns the `agent` currently occupying the chair.
-    GetSeatedAgent<public>(): ?agent = external {}
-
-    # Returns true if the chair is currently occupied.
-    IsOccupied<public>()<transacts><decides>: void = external {}
-
-    # Returns true if `Agent` is currently in the chair .
-    IsSeated<public>(Agent: agent)<transacts><decides>: void = external {}
-
-    # Makes `Agent` sit on this chair.
-    Seat<public>(Agent: agent): void = external {}
-
-    # Signaled when an `Agent` sits on this device.
-    # Sends the sitting `agent`.
-    SeatedEvent<public>: listenable(agent) = external {}
-  }
-
   # Allows players to change their outfit in game!
   changing_booth_device<public> := class<concrete><final>(creative_device_base) {}
 
@@ -943,6 +918,15 @@ Devices<public> := module {
 
   # Used to trigger level sequences that allow coordination of cinematic animation, transformation, and audio tracks.
   cinematic_sequence_device<public> := class<concrete><final>(creative_device_base) {
+    # Returns the playback rate of the sequence.
+    GetPlayRate<public>()<transacts>: float = external {}
+
+    # Returns the playback position (in frames) of the sequence.
+    GetPlaybackFrame<public>()<transacts>: int = external {}
+
+    # Returns the playback position (in time/seconds) of the sequence.
+    GetPlaybackTime<public>()<transacts>: float = external {}
+
     # Go to the end and stop the sequence.
     GoToEndAndStop<public>(): void = external {}
 
@@ -960,6 +944,15 @@ Devices<public> := module {
 
     # Plays the sequence. An instigating 'Agent' is required when the device is set to anything except *Everyone*.
     Play<public>(Agent: agent): void = external {}
+
+    # Set the playback rate of the sequence.
+    SetPlayRate<public>(PlayRate: float): void = external {}
+
+    # Set the playback position (in frames) of the sequence.
+    SetPlaybackFrame<public>(PlaybackFrame: int): void = external {}
+
+    # Set the playback position (in time/seconds) of the sequence.
+    SetPlaybackTime<public>(PlaybackTime: float): void = external {}
 
     # Stops the sequence.
     Stop<public>(): void = external {}
@@ -1162,10 +1155,10 @@ Devices<public> := module {
     # Hides this device in the world.
     Hide<native><public>()<transacts>: void
 
-    # Moves the `creative_device` to the specified `Position` and `Rotation` over the specified time. If an animation is currently playing on the `creative_device` it will be stopped and put into the `AnimationNotSet` state.
+    # Moves the `creative_device` to the specified `Position` and `Rotation` over the specified time, in seconds. If an animation is currently playing on the `creative_device` it will be stopped and put into the `AnimationNotSet` state.
     MoveTo<public>(Position: vector3, Rotation: rotation, OverTime: float)<suspends>: move_to_result = external {}
 
-    # Moves the `creative_device` to the specified `Transform` over the specified time. If an animation is currently playing on the `creative_device` it will be stopped and put into the `AnimationNotSet` state.
+    # Moves the `creative_device` to the specified `Transform` over the specified time, in seconds. If an animation is currently playing on the `creative_device` it will be stopped and put into the `AnimationNotSet` state.
     MoveTo<public>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
 
     # Override to add custom logic when the game experience begins.
@@ -1196,10 +1189,10 @@ Devices<public> := module {
     # Otherwise a runtime error will result.
     GetTransform<override>()<transacts>: transform = external {}
 
-    # Moves the `creative_object` to the specified `Position` and `Rotation` over the specified time. If an animation is currently playing on the `creative_object` it will be stopped and put into the `AnimationNotSet` state.
+    # Moves the `creative_object` to the specified `Position` and `Rotation` over the specified time, in seconds. If an animation is currently playing on the `creative_object` it will be stopped and put into the `AnimationNotSet` state.
     MoveTo<public>(Position: vector3, Rotation: rotation, OverTime: float)<suspends>: move_to_result = external {}
 
-    # Moves the `creative_object` to the specified `Transform` over the specified time. If an animation is currently playing on the `creative_object` it will be stopped and put into the `AnimationNotSet` state.
+    # Moves the `creative_object` to the specified `Transform` over the specified time, in seconds. If an animation is currently playing on the `creative_object` it will be stopped and put into the `AnimationNotSet` state.
     MoveTo<public>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
 
     # Teleports the `creative_object` to the specified `Position` and `Rotation`.
@@ -1454,6 +1447,10 @@ Devices<public> := module {
 
   # Used to send custom messages to the elimination feed.
   elimination_feed_device<public> := class<concrete><final>(creative_device_base) {
+    # Activates this device.
+    # Requires *Activated by Team / Class* be set to `All`.
+    Activate<public>(): void = external {}
+
     # Activates this device. `Agent` is used as the instigator of the action.
     Activate<public>(Agent: agent): void = external {}
 
@@ -3049,11 +3046,11 @@ Devices<public> := module {
     # Generates the storm. *Generate Storm On Game Start* must be set to *No* if you choose to use `GenerateStorm`.
     GenerateStorm<public>(): void = external {}
 
-    # Moves the `storm_controller_device` to the specified `Position` and `Rotation` over the specified time.
+    # Moves the `storm_controller_device` to the specified `Position` and `Rotation` over the specified time, in seconds.
     # Existing storms will not target the new location, but newly generated storms will.
     MoveTo<override>(Position: vector3, Rotation: rotation, OverTime: float)<suspends>: move_to_result = external {}
 
-    # Moves the `storm_controller_device` to the specified `Transform` over the specified time.
+    # Moves the `storm_controller_device` to the specified `Transform` over the specified time, in seconds.
     # Existing storms will not target the new location, but newly generated storms will.
     MoveTo<override>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
 
@@ -3125,11 +3122,11 @@ Devices<public> := module {
     # Enables this device.
     Enable<public>(): void = external {}
 
-    # Returns the time before the switch will reset itself to default.
+    # Returns the time, in seconds, before the switch will reset itself to default.
     #  Returns -1.0 if *Store State Per Player* is *Yes* or if  there is no active reset timer.
     GetCurrentResetTime<public>(): float = external {}
 
-    # Returns the time before the switch will reset itself to default for *Agent*.
+    # Returns the time, in seconds, before the switch will reset itself to default for *Agent*.
     #  Returns -1.0 if there is no active reset timer.
     GetCurrentResetTime<public>(Agent: agent): float = external {}
 
@@ -3142,10 +3139,10 @@ Devices<public> := module {
     # Returns the *Interaction Time* required to activate this device (in seconds).
     GetInteractionTime<public>()<transacts>: float = external {}
 
-    # Returns the value of *State Reset Time* for the device. Returns -1.0 if *State Reset Time* is not used.
+    # Returns the value of *State Reset Time*, in seconds, for the device. Returns -1.0 if *State Reset Time* is not used.
     GetStateResetTime<public>()<transacts>: float = external {}
 
-    # Returns the value of *State Reset Time* for the device, for a specific player. Returns -1.0 if *State Reset Time* is not used.
+    # Returns the value of *State Reset Time*, in seconds, for the device, for a specific player. Returns -1.0 if *State Reset Time* is not used.
     GetStateResetTime<public>(Agent: agent)<transacts>: float = external {}
 
     # Signaled if the switch is off when the state is checked.
@@ -3180,12 +3177,12 @@ Devices<public> := module {
     #  Use when the device has *Store State Per Player* set to *No*.
     SetState<public>(State: logic): void = external {}
 
-    # Updates the *State Reset Time* for the device, for a specific player (if *Store State Per Player* is *Yes*), clamped to the Min and Max defined in the device.
+    # Updates the *State Reset Time* for the device, in seconds,for a specific player (if *Store State Per Player* is *Yes*), clamped to the Min and Max defined in the device.
     #  This will not apply to any state reset timers currently in effect.
     #  Set to 0.0 to disable the State Reset Time. Set to less than 0.0 to reset to default.
     SetStateResetTime<public>(Agent: agent, Time: float): void = external {}
 
-    # Updates the *State Reset Time* for the device, clamped to the Min and Max defined in the device.
+    # Updates the *State Reset Time* for the device, in seconds, clamped to the Min and Max defined in the device.
     #  This will not apply to any state reset timers currently in effect.
     #  Set to 0.0 to disable the State Reset Time. Set to less than 0.0 to reset to default.
     SetStateResetTime<public>(Time: float): void = external {}
@@ -3583,11 +3580,11 @@ Devices<public> := module {
     # Enables this device to trigger when an `agent` makes contact with the device.
     EnableAgentContactTrigger<public>(): void = external {}
 
-    # Moves the `trick_tile_device` to the specified `Position` and `Rotation` over the specified time.
+    # Moves the `trick_tile_device` to the specified `Position` and `Rotation` over the specified time, in seconds.
     # Only the trigger will move, the target buildings will not change.
     MoveTo<override>(Position: vector3, Rotation: rotation, OverTime: float)<suspends>: move_to_result = external {}
 
-    # Moves the `trick_tile_device` to the specified `Transform` over the specified time.
+    # Moves the `trick_tile_device` to the specified `Transform` over the specified time, in seconds.
     # Only the trigger will move, the target buildings will not change.
     MoveTo<override>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
 
