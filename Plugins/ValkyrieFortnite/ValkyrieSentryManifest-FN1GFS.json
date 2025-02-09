@@ -2490,6 +2490,7 @@
 			"/BeanstalkLevelArt/Environments/Skybox/Textures/T_BS_Skybox_GeometricNoise_M.T_BS_Skybox_GeometricNoise_M",
 			"/BeanstalkLevelArt/VFX/Textures/T_BS_Noise_A_N.T_BS_Noise_A_N",
 			"/BigBushGrenade/Items/Athena_BushGrenade.Athena_BushGrenade",
+			"/BlastBerryMapContent/Game/Athena/Environments/Landscape/MPC/MPC_Landscape.MPC_Landscape",
 			"/BRCosmetics/Athena/Items/Cosmetics/Characters/Character_Alien_Robot.Character_Alien_Robot",
 			"/BRCosmetics/Athena/Items/Cosmetics/Characters/Character_AllKnowing.Character_AllKnowing",
 			"/BRCosmetics/Athena/Items/Cosmetics/Characters/Character_Amour.Character_Amour",
@@ -17306,7 +17307,6 @@
 			"/BlastBerryMapContent/Game/Athena/Environments/Landscape/Meshes/Water/S_Water_Shallow_Half_x_Half.S_Water_Shallow_Half_x_Half",
 			"/BlastBerryMapContent/Game/Athena/Environments/Landscape/Meshes/Water_Variants/SM_Rufus_Stream_2W_Cliff_05L_Arid_a.SM_Rufus_Stream_2W_Cliff_05L_Arid_a",
 			"/BlastBerryMapContent/Game/Athena/Environments/Landscape/Meshes/Water_Variants/SM_Rufus_Stream_2W_ToShoreline_1L_Arid_a.SM_Rufus_Stream_2W_ToShoreline_1L_Arid_a",
-			"/BlastBerryMapContent/Game/Athena/Environments/Landscape/MPC/MPC_Landscape.MPC_Landscape",
 			"/BlastBerryMapContent/Game/Athena/Environments/Landscape/Textures/Arid/T_Athena_Arid_RockErosion_01_M.T_Athena_Arid_RockErosion_01_M",
 			"/BlastBerryMapContent/Game/Athena/Environments/Landscape/Textures/Golf/T_Athena_SandBunker_01_D.T_Athena_SandBunker_01_D",
 			"/BlastBerryMapContent/Game/Athena/Environments/Landscape/Textures/Golf/T_Athena_SandBunker_01_M.T_Athena_SandBunker_01_M",
@@ -32449,6 +32449,7 @@
 		],
 		"VKCreateUGCEarlyAccess": [],
 		"VKCreateUGCEpicDeveloper": [
+			"/BlastBerry/Gameplay/B_SpecialSupplyDrop_Manager_BlastBerry.B_SpecialSupplyDrop_Manager_BlastBerry_C",
 			"/BlastBerryMapContent/Environments/Blueprints/BB_Tree_04.BB_Tree_04_C",
 			"/BlastBerryMapContent/Environments/Blueprints/BB_Tree_Pine_01_MT.BB_Tree_Pine_01_MT_C",
 			"/BlastBerryMapContent/Environments/Blueprints/BB_Tree_Pine_03_MT.BB_Tree_Pine_03_MT_C",
