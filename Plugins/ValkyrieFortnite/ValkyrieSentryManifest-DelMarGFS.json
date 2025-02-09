@@ -26,6 +26,11 @@
 			"FriendlyName": "Paper2DVer",
 			"Version": 17
 		},
+		"12345678123456781234567812345678":
+		{
+			"FriendlyName": "FHeightmapTextureEdgeSnapshotCustomVersion",
+			"Version": 5
+		},
 		"12F88B9F88754AFCA67CD90C383ABD29":
 		{
 			"FriendlyName": "Dev-Rendering",
@@ -44,6 +49,11 @@
 		"18E97F39468DE4194E9C488BB9C5F096":
 		{
 			"FriendlyName": "FortniteUI",
+			"Version": 1
+		},
+		"1BC859AECF88871FEC71AA516669112A":
+		{
+			"FriendlyName": "JunoBuildInstructionsItemDefinition",
 			"Version": 1
 		},
 		"1ED048F42F2E4C6889D053A4F18F102D":
@@ -129,7 +139,7 @@
 		"40D2FBA74B484CE5B0385A75884E499E":
 		{
 			"FriendlyName": "Water",
-			"Version": 7
+			"Version": 8
 		},
 		"4288211B454816C61A7667B2507A2A00":
 		{
@@ -194,7 +204,7 @@
 		"601D1886AC644F84AA16D3DE0DEAC7D6":
 		{
 			"FriendlyName": "FortniteMain",
-			"Version": 170
+			"Version": 172
 		},
 		"60C4F0DE8B264C34AA9372015DFF09CC":
 		{
@@ -489,7 +499,7 @@
 		"CDB409211590F339ECA16F61923EC589":
 		{
 			"FriendlyName": "FortQuestItemDefinitionVersion",
-			"Version": 0
+			"Version": 1
 		},
 		"CFFC743F43B04480939114DF171D2073":
 		{
@@ -519,7 +529,7 @@
 		"DC49959B53C04DE79156EA885E7C5D39":
 		{
 			"FriendlyName": "Dev-RigVM",
-			"Version": 15
+			"Version": 16
 		},
 		"DD09A19C88FE4EC2F7D9F60BC547C8BF":
 		{
@@ -630,8 +640,10 @@
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_WildlifeSpawn.CharacterModifier_WildlifeSpawn_C",
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_WildlifeVerseBehavior.CharacterModifier_WildlifeVerseBehavior_C",
 			"/CRD_SkilledInteractionDevice/UI/UEFN_SkilledInteraction_ViewModel.UEFN_SkilledInteraction_ViewModel_C",
+			"/CRD_StatManager/UI/MVVM_UEFN_Stat.MVVM_UEFN_Stat_C",
 			"/CreativeCoreDevices/Beacon/UEFN_BeaconBadge_ViewModel.UEFN_BeaconBadge_ViewModel_C",
 			"/CreativeCoreDevices/HUDMessage/MVVM_UEFN_HUDMessage.MVVM_UEFN_HUDMessage_C",
+			"/CreativeCoreDevices/Timer/CreativeTimerViewModel.CreativeTimerViewModel_C",
 			"/Game/Creative/Devices/Quests/MVVM_UEFN_Tracker.MVVM_UEFN_Tracker_C",
 			"/Game/Creative/PostProcess/PP_70sPrint.PP_70sPrint_C",
 			"/Game/Creative/PostProcess/PP_80sCartoon.PP_80sCartoon_C",
@@ -1225,7 +1237,7 @@
 			"/Script/EngineCameras.WaveOscillatorCameraShakePattern",
 			"/Script/Entity.EntityPrefab",
 			"/Script/EntityActor.SimObject",
-			"/Script/EntityLevel.EntityLevel",
+			"/Script/EntityLevel.LevelEntity",
 			"/Script/FabricEngineSequencer.FabricAudioSyncSection",
 			"/Script/FabricEngineSequencer.FabricAudioSyncTrack",
 			"/Script/FabricRuntime.FabricButtonComponentBase",
@@ -1515,6 +1527,7 @@
 			"/Script/Landscape.LandscapeGizmoRenderComponent",
 			"/Script/Landscape.LandscapeGrassType",
 			"/Script/Landscape.LandscapeHeightfieldCollisionComponent",
+			"/Script/Landscape.LandscapeHeightmapTextureEdgeFixup",
 			"/Script/Landscape.LandscapeLayerInfoObject",
 			"/Script/Landscape.LandscapeMaterialInstanceConstant",
 			"/Script/Landscape.LandscapeMeshCollisionComponent",
@@ -1526,6 +1539,7 @@
 			"/Script/Landscape.LandscapeSplinesComponent",
 			"/Script/Landscape.LandscapeSplineSegment",
 			"/Script/Landscape.LandscapeStreamingProxy",
+			"/Script/Landscape.LandscapeTextureMipEdgeOverrideFactory",
 			"/Script/Landscape.MaterialExpressionLandscapeGrassOutput",
 			"/Script/Landscape.MaterialExpressionLandscapeLayerBlend",
 			"/Script/Landscape.MaterialExpressionLandscapeLayerCoords",
@@ -1560,6 +1574,19 @@
 			"/Script/MetaHumanSequencer.MetaHumanAudioTrack",
 			"/Script/MetaHumanSequencer.MetaHumanMovieSceneMediaTrack",
 			"/Script/MetaHumanUEFNRuntime.MetaHumanComponent",
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultBool",
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultBoolArray",
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultFloat",
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultFloatArray",
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultInt",
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultIntArray",
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultLiteral",
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultObject",
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultObjectArray",
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultString",
+			"/Script/MetasoundEditor.MetasoundEditorGraphMemberDefaultStringArray",
+			"/Script/MetasoundEngine.MetaSoundPatch",
+			"/Script/MetasoundEngine.MetaSoundSource",
 			"/Script/ModelViewViewModel.MVVMPanelWidgetViewExtension",
 			"/Script/ModelViewViewModel.MVVMSlateBrushConversionLibrary",
 			"/Script/ModelViewViewModel.MVVMViewClass",
@@ -1717,6 +1744,7 @@
 			"/Script/Niagara.NiagaraDataInterfaceVectorCurve",
 			"/Script/Niagara.NiagaraDataInterfaceVectorField",
 			"/Script/Niagara.NiagaraDataInterfaceVolumeTexture",
+			"/Script/Niagara.NiagaraDecalRendererProperties",
 			"/Script/Niagara.NiagaraEffectType",
 			"/Script/Niagara.NiagaraEmitter",
 			"/Script/Niagara.NiagaraLightRendererProperties",
@@ -1867,6 +1895,8 @@
 			"/Script/UMG.WidgetAnimation",
 			"/Script/UMG.WidgetBlueprintGeneratedClass",
 			"/Script/UMG.WidgetComponent",
+			"/Script/UMG.WidgetSwitcher",
+			"/Script/UMG.WidgetSwitcherSlot",
 			"/Script/UMG.WidgetTree",
 			"/Script/UMGEditor.WidgetBlueprint",
 			"/Script/UnrealEd.CubeBuilder",
@@ -1915,6 +1945,7 @@
 		],
 		"VKCreateUGCEarlyAccess": [],
 		"VKCreateUGCEpicDeveloper": [
+			"/Engine/EditorBlueprintResources/StandardMacros.StandardMacros_C",
 			"/Script/AmbientAudio.AmbientAudioComponent",
 			"/Script/AmbientAudio.AmbientAudioDataAsset",
 			"/Script/AnimGraph.AnimationGraph",
@@ -2019,17 +2050,20 @@
 			"/Script/AnimGraphRuntime.SkeletalControlLibrary",
 			"/Script/AudioGameplay.AudioRequirementPreset",
 			"/Script/BlueprintGraph.K2Node",
+			"/Script/BlueprintGraph.K2Node_AddDelegate",
 			"/Script/BlueprintGraph.K2Node_BitmaskLiteral",
 			"/Script/BlueprintGraph.K2Node_BreakStruct",
 			"/Script/BlueprintGraph.K2Node_CallArrayFunction",
 			"/Script/BlueprintGraph.K2Node_CallFunction",
 			"/Script/BlueprintGraph.K2Node_CallFunctionOnMember",
+			"/Script/BlueprintGraph.K2Node_CallMaterialParameterCollectionFunction",
 			"/Script/BlueprintGraph.K2Node_CallParentFunction",
 			"/Script/BlueprintGraph.K2Node_CastByteToEnum",
 			"/Script/BlueprintGraph.K2Node_ClassDynamicCast",
 			"/Script/BlueprintGraph.K2Node_CommutativeAssociativeBinaryOperator",
 			"/Script/BlueprintGraph.K2Node_Composite",
 			"/Script/BlueprintGraph.K2Node_Copy",
+			"/Script/BlueprintGraph.K2Node_CustomEvent",
 			"/Script/BlueprintGraph.K2Node_DoOnceMultiInput",
 			"/Script/BlueprintGraph.K2Node_DynamicCast",
 			"/Script/BlueprintGraph.K2Node_EaseFunction",
@@ -2074,8 +2108,16 @@
 			"/Script/BlueprintGraph.K2Node_VariableGet",
 			"/Script/BlueprintGraph.K2Node_VariableSet",
 			"/Script/BlueprintGraph.K2Node_VariableSetRef",
+			"/Script/CommonUIExtensionsBP.MVVMBlueprintViewExtension_EnhancedInput",
+			"/Script/CommonUIMVVMExtensions.ActionWidget",
+			"/Script/CommonUIMVVMExtensions.MVVMViewEnhancedInputClassExtension",
+			"/Script/CommonUIMVVMExtensions.MVVMViewEnhancedInputExtension",
 			"/Script/CoreUObject.Function",
 			"/Script/CoreUObject.ScriptStruct",
+			"/Script/DaySequence.DaySequenceCollectionAsset",
+			"/Script/DaySequence.DaySequenceConditionTag",
+			"/Script/DaySequence.DaySequenceModifierVolume",
+			"/Script/DaySequence.DaySequencePlayer",
 			"/Script/Engine.AnalysisProperties",
 			"/Script/Engine.AnimBlueprint",
 			"/Script/Engine.AnimBlueprintGeneratedClass",
@@ -2085,14 +2127,18 @@
 			"/Script/Engine.AnimSequenceBase",
 			"/Script/Engine.BlendSpace",
 			"/Script/Engine.EdGraphNode",
+			"/Script/Engine.InheritableComponentHandler",
 			"/Script/Engine.KismetArrayLibrary",
 			"/Script/Engine.KismetMathLibrary",
 			"/Script/Engine.KismetSystemLibrary",
 			"/Script/Engine.PoseAsset",
 			"/Script/Engine.SoundConcurrency",
 			"/Script/Engine.UserDefinedEnum",
+			"/Script/EnhancedInput.InputAction",
+			"/Script/EnhancedInput.InputMappingContext",
 			"/Script/FortniteGame.BaseUEFNAnimInstance",
 			"/Script/FortniteGame.FortAmbientAudioVolume",
+			"/Script/FortniteGame.FortGameUserSettings",
 			"/Script/FortniteGame.UEFNCustomAgentAnimInstance",
 			"/Script/GameplayCameras.ArrayCameraNode",
 			"/Script/GameplayCameras.AttachToPlayerPawnCameraNode",
@@ -2107,8 +2153,8 @@
 			"/Script/GameplayCameras.OcclusionMaterialCameraNode",
 			"/Script/GameplayCameras.OffsetCameraNode",
 			"/Script/GameplayCameras.PanningFramingCameraNode",
-			"/Script/MetasoundEngine.MetaSoundPatch",
-			"/Script/MetasoundEngine.MetaSoundSource",
+			"/Script/MovieScene.MovieSceneBindingOverrides",
+			"/Script/NaniteDisplacedMesh.NaniteDisplacedMesh",
 			"/Script/ValkyrieCommon.ValkyrieContentWorkerDebugManager",
 			"/Script/VerseAssets.ParameterCollection",
 			"/Script/VerseAssets.ParameterCollectionGeneratedClass",
@@ -2142,13 +2188,12 @@
 			"/Script/FortniteGame.VkConversationNode_Repeat",
 			"/Script/FortniteGame.VkConversationNode_Restart",
 			"/Script/FortniteGame.VkConversationNode_Speech",
+			"/Script/MetasoundEngine.MetaSoundPatch",
+			"/Script/MetasoundEngine.MetaSoundSource",
 			"/Script/Niagara.NiagaraSystem"
 		],
 		"VKCreateUGCEarlyAccess": [],
-		"VKCreateUGCEpicDeveloper": [
-			"/Script/MetasoundEngine.MetaSoundPatch",
-			"/Script/MetasoundEngine.MetaSoundSource"
-		],
+		"VKCreateUGCEpicDeveloper": [],
 		"VKCreateUGCPartner": []
 	},
 	"StructAllowLists":
@@ -2298,6 +2343,7 @@
 		"VKCreateUGCEpicDeveloper": [
 			"/Script/AnimGraphRuntime.LinkedAnimGraphReference",
 			"/Script/AnimGraphRuntime.SequencePlayerReference",
+			"/Script/DaySequence.DaySequenceConditionSet",
 			"/Script/Engine.AnimBlueprintConstantData",
 			"/Script/Engine.AnimNode_AssetPlayerBase",
 			"/Script/Engine.AnimNode_AssetPlayerRelevancyBase",
@@ -13292,6 +13338,7 @@
 			"/CRD_PropManipulationDevice/CreativeResourceNodeComponent_V2.CreativeResourceNodeComponent_V2_C",
 			"/CRD_PropManipulationDevice/PropManipulationGameplayVolume.PropManipulationGameplayVolume_C",
 			"/CRD_SkilledInteractionDevice/UI/UEFN_SkilledInteraction_ViewModel.UEFN_SkilledInteraction_ViewModel_C",
+			"/CRD_StatManager/UI/MVVM_UEFN_Stat.MVVM_UEFN_Stat_C",
 			"/CRD_VehicleSpawners/Device_VehicleSpawnerParent_V2.Device_VehicleSpawnerParent_V2_C",
 			"/CRD_VerseDevices/VerseDevice.VerseDevice_C",
 			"/CRD_VFX_Creator/Assets/BP_Device_VFX_Creator.BP_Device_VFX_Creator_C",
@@ -13324,6 +13371,7 @@
 			"/CreativeCoreDevices/Device_Trigger_Parent_V2.Device_Trigger_Parent_V2_C",
 			"/CreativeCoreDevices/HUDMessage/MVVM_UEFN_HUDMessage.MVVM_UEFN_HUDMessage_C",
 			"/CreativeCoreDevices/PowerUp/LastActiveCustomPlayerFXComponent.LastActiveCustomPlayerFXComponent_C",
+			"/CreativeCoreDevices/Timer/CreativeTimerViewModel.CreativeTimerViewModel_C",
 			"/CRG_Background/SetupAssets/Blueprints/CP_BG_Dune_Sand_Group_Med_02.CP_BG_Dune_Sand_Group_Med_02_C",
 			"/CRG_Background/SetupAssets/Blueprints/CP_BG_Dune_Sand_Group_Med_03.CP_BG_Dune_Sand_Group_Med_03_C",
 			"/CRG_Background/SetupAssets/Blueprints/CP_BG_Dune_Sand_Group_Small_01.CP_BG_Dune_Sand_Group_Small_01_C",
@@ -14711,6 +14759,8 @@
 			"/CRP_Sunburst/SetupAssets/Blueprints/Signage/BP_Sunburst_Billboard_Star.BP_Sunburst_Billboard_Star_C",
 			"/CRP_Sunburst/SetupAssets/Blueprints/Signage/CP_CyberCity_Sign_Parent.CP_CyberCity_Sign_Parent_C",
 			"/CRP_TheUnderground/SetupAssets/Blueprints/CP_BFT_Rubble_01.CP_BFT_Rubble_01_C",
+			"/CRP_TheUnderground/SetupAssets/Blueprints/CP_BP_Blockout_Arch_B_A_A.CP_BP_Blockout_Arch_B_A_A_C",
+			"/CRP_TheUnderground/SetupAssets/Blueprints/CP_BP_Blockout_Wall_A_A.CP_BP_Blockout_Wall_A_A_C",
 			"/CRP_TheUnderground/SetupAssets/Blueprints/CP_BP_Transit_Car_Passenger_A.CP_BP_Transit_Car_Passenger_A_C",
 			"/CRP_TheUnderground/SetupAssets/Blueprints/CP_BP_Transit_Track_Straight.CP_BP_Transit_Track_Straight_C",
 			"/CRP_TheUnderground/SetupAssets/Blueprints/CP_BP_Transit_Tunnel_A.CP_BP_Transit_Tunnel_A_C",
@@ -17773,6 +17823,8 @@
 			"/Game/Athena/Playspace_GameMode.Playspace_GameMode_C",
 			"/Game/Athena/SupplyDrops/Llama/AthenaCreativeSpawnDrop.AthenaCreativeSpawnDrop_C",
 			"/Game/Athena/Valkyrie/Valkyrie_Creative_GameMode.Valkyrie_Creative_GameMode_C",
+			"/Game/Blueprints/Components/LumenEmissiveLightComponent/LumenEmissiveLight_Component.LumenEmissiveLight_Component_C",
+			"/Game/Blueprints/Components/LumenEmissiveLightComponent/LumenEmissiveLight_Component_Child.LumenEmissiveLight_Component_Child_C",
 			"/Game/Blueprints/Components/PersistentFXComponent/PersistentFXComponent.PersistentFXComponent_C",
 			"/Game/Blueprints/Components/ShadowProxy/ShadowProxyMeshComponent.ShadowProxyMeshComponent_C",
 			"/Game/Blueprints/Lighting/TimeOfDayLighting/BP_TODProp_Parent.BP_TODProp_Parent_C",
@@ -25445,7 +25497,9 @@
 			"/Wind/Gameplay/WindFields/Parent/WindSpline_Parent.WindSpline_Parent_C"
 		],
 		"VKCreateUGCEarlyAccess": [],
-		"VKCreateUGCEpicDeveloper": [],
+		"VKCreateUGCEpicDeveloper": [
+			"/Engine/EditorBlueprintResources/StandardMacros.StandardMacros_C"
+		],
 		"VKCreateUGCPartner": [
 			"/CRD_VFX_Spawner/Device_PointOfLight.Device_PointOfLight_C"
 		]

@@ -2,18 +2,20 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-32.11-CL-38202817
+# Generated from build: ++Fortnite+Release-33.00-CL-38324112
 #################################################
 
 # Module import path: /Verse.org/Assets
 Assets<public> := module {
-  animation_sequence<native><public> := class<computes><concrete><final><epic_internal> {}
+  animation_sequence<native><public> := class<computes><final><epic_internal> {}
 
-  material<native><public> := interface<epic_internal> {}
+  material<native><public> := class<epic_internal> {}
 
-  mesh<native><public> := class<computes><concrete><epic_internal> {}
+  mesh<native><public> := class<computes><epic_internal> {}
 
-  particle_system<native><public> := class<computes><concrete><final><epic_internal> {}
+  particle_system<native><public> := class<computes><final><epic_internal> {}
+
+  sound_wave<native><public> := class<computes><final><epic_internal> {}
 
   texture<native><public> := class<computes><final><epic_internal> {}
 }
@@ -429,7 +431,7 @@ Random<public> := module {
   # Returns a random `float` between `Low` and `High`, inclusive.
   GetRandomFloat<native><public>(Low: float, High: float)<transacts>: float
 
-  # Returns a random `int` between `Low` and `High`, inclusive.
+  # Returns a uniformly distributed, cryptographically-secure random `int` between `Low` and `High`, inclusive. (`Low` and `High` can be out of order.)
   GetRandomInt<native><public>(Low: int, High: int)<transacts>: int
 
   # Makes an `array` with the same elements as `Input` shuffled in a random order.
@@ -699,24 +701,31 @@ Verse<public> := module {
   #  * `NaN`
   (X: float).IsFinite<public>()<computes><decides>: float = external {}
 
+  @rtfm_always_open
   # Returns the inverse hyperbolic cosine of `X` if `1.0 <= X`.
   ArCosh<native><public>(X: float)<computes><reads>: float
 
+  @rtfm_always_open
   # Returns the inverse hyperbolic sine of `X` if `IsFinite(X)`.
   ArSinh<native><public>(X: float)<computes><reads>: float
 
+  @rtfm_always_open
   # Returns the inverse hyperbolic tangent of `X` if `IsFinite(X)`.
   ArTanh<native><public>(X: float)<computes><reads>: float
 
+  @rtfm_always_open
   # Returns the inverse cosine (arccosine) of `X` if `-1.0 <= X <= 1.0`.
   ArcCos<native><public>(X: float)<computes><reads>: float
 
+  @rtfm_always_open
   # Returns the inverse sine (arcsine) of `X` if `-1.0 <= X <= 1.0`.
   ArcSin<native><public>(X: float)<computes><reads>: float
 
+  @rtfm_always_open
   # Returns the inverse tangent (arctangent) of `X` such that:`-PiFloat/2.0 <= ArcTan(x) <= PiFloat/2.0`.
   ArcTan<native><public>(X: float)<computes><reads>: float
 
+  @rtfm_always_open
   # Returns the angle in radians at the origin between a ray pointing to `(X, Y)` and the positive `X` axis such that `-PiFloat < ArcTan(Y, X) <= PiFloat`.
   # Returns 0.0 if `X=0.0 and Y=0.0`.
   ArcTan<native><public>(Y: float, X: float)<computes><reads>: float
@@ -725,6 +734,7 @@ Verse<public> := module {
   # Fails if `not IsFinite(Val)`.
   Ceil<native><public>(Val: float)<computes><decides><reads>: int
 
+  @rtfm_always_open
   # Constrains the value of `Val` between `A` and `B`. Robustly handles different argument orderings.
   # Returns the median of `Val`, `A`, and `B`.
   Clamp<native><public>(Val: int, A: int, B: int)<computes>: int
@@ -736,16 +746,19 @@ Verse<public> := module {
   # Makes a flattened `array` by concatenating the elements of `Arrays`.
   Concatenate<public>(Arrays: [][]t where t: type)<computes>: []t = external {}
 
+  @rtfm_always_open
   # Returns the cosine of `X` if `IsFinite(X)`.
   # Returns `NaN` if `not IsFinite(X)
   Cos<native><public>(X: float)<computes><reads>: float
 
+  @rtfm_always_open
   # Returns the hyperbolic cosine of `X`.
   Cosh<native><public>(X: float)<computes><reads>: float
 
   # Halts the Verse runtime with error `Message`.
   Err<native><public>(Message: string)<computes>: false
 
+  @rtfm_always_open
   # Returns the natural exponent of `X`.
   Exp<native><public>(X: float)<computes><reads>: float
 
@@ -766,10 +779,12 @@ Verse<public> := module {
   # Makes a `string` by concatenating `Separator` between the elements of `Strings`.
   Join<native><public>(Strings: []string, Separator: string)<computes>: string
 
+  @rtfm_always_open
   # Used to linearly interpolate/extrapolate between `From` (when `Parameter = 0.0`) and `To` (when `Parameter = 1.0`). Expects that all arguments are finite.
   # Returns `From*(1 - Parameter) + To*Parameter`.
   Lerp<native><public>(From: float, To: float, Parameter: float)<computes><reads>: float
 
+  @rtfm_always_open
   # Returns the natural logarithm of `X`.
   Ln<native><public>(X: float)<computes><reads>: float
 
@@ -803,6 +818,7 @@ Verse<public> := module {
   # Returns the minimum of `X` and `Y`.
   Min<public>(X: int, Y: int)<computes>: int = external {}
 
+  @rtfm_always_open
   # Returns the remainder of `X/Y` as defined by Euclidean division, i.e.:
   #  * `Mod[X,Y] = X - Quotient(X/Y)*Y`
   #  * `0 <= Mod[X,Y] < Abs(Y)`
@@ -812,6 +828,7 @@ Verse<public> := module {
   # Pi, the ratio of the circumference of a circle to its diameter.
   PiFloat<public>: float = external {}
 
+  @rtfm_always_open
   # Returns `A` to the power of `B`.
   Pow<native><public>(A: float, B: float)<computes><reads>: float
 
@@ -822,6 +839,14 @@ Verse<public> := module {
   # Writes `Message` to a dedicated `Print` log while displaying it in `Color` on the client screen for `Duration` seconds. By default, `Color` is `NamedColors.White` and `Duration` is `2.0` seconds.
   Print<native><public>(Message: string, ?Duration: float = external {}, ?Color: color = external {})<transacts>: void
 
+  # Writes `Message` to a dedicated `Print` log while displaying it in `Color` on the client screen for `Duration` seconds. By default, `Color` is `NamedColors.White` and `Duration` is `2.0` seconds.
+  Print<public>(
+    Message: diagnostic,
+    ?Duration: float = external {},
+    ?Color: color = external {}
+  )<transacts>: void = external {}
+
+  @rtfm_always_open
   # Returns the quotient `X/Y` as defined by Euclidean division, i.e.:
   #  * `Quotient[X/Y] = Floor[X/Y]` when `Y > 0`
   #  * `Quotient[X/Y] = Ceil[X/Y]` when `Y < 0`
@@ -846,23 +871,31 @@ Verse<public> := module {
   #  * `-1` if `Val < 0`
   Sgn<public>(Val: int)<computes>: int = external {}
 
+  @rtfm_always_open
   # Returns the sine of `X` if `IsFinite(X)`.
   # Returns `NaN` if `not IsFinite(X)
   Sin<native><public>(X: float)<computes><reads>: float
 
+  @rtfm_always_open
   # Returns the hyperbolic sine of `X`.
   Sinh<native><public>(X: float)<computes><reads>: float
 
+  @rtfm_always_open
   # Returns the square root of `X` if `X >= 0.0`.
   # Returns `NaN` if `X < 0.0`.
   Sqrt<native><public>(X: float)<computes><reads>: float
 
+  @rtfm_always_open
   # Returns the tangent of `X` if `IsFinite(X)`.
   # Returns `NaN` if `not IsFinite(X).
   Tan<native><public>(X: float)<computes><reads>: float
 
+  @rtfm_always_open
   # Returns the hyperbolic tangent of `X`.
   Tanh<native><public>(X: float)<computes><reads>: float
+
+  # Converts any Verse value into an opaque diagnostic message.
+  ToDiagnostic<native><public>(Value: any)<computes><reads>: diagnostic
 
   # Makes a `string` from `Character`.
   ToString<native><public>(Character: char)<computes>: string
@@ -882,6 +915,9 @@ Verse<public> := module {
     Cancel<public>()<transacts>: void
   }
 
+  # An opaque diagnostic message that only shows up in diagnostic logs. The format of the diagnostic may change at any time without warning and may not be inspected by Verse code.
+  diagnostic<native><public> := class<computes><epic_internal> {}
+
   # Implemented by classes whose instances have limited lifetimes.
   disposable<native><public> := interface {
     # Cleans up this object.
@@ -889,7 +925,7 @@ Verse<public> := module {
   }
 
   # Implemented by classes whose instances can be enabled and disabled.
-  enableable<native><public> := interface<epic_internal> {
+  enableable<native><public> := interface<public> {
     # Disable this object.
     Disable<public>(): void
 
@@ -944,6 +980,15 @@ Verse<public> := module {
 
   # A localizable text message.
   message<native><public> := class<epic_internal> {}
+
+  # Concatenates two diagnostic messages.
+  operator'+'<public>(Lhs: diagnostic, Rhs: diagnostic)<computes>: diagnostic = external {}
+
+  # Concatenates a diagnostic message with a normal string, yielding a diagnostic message.
+  operator'+'<public>(Lhs: diagnostic, Rhs: string)<computes>: diagnostic = external {}
+
+  # Concatenates a normal string with a diagnostic message, yielding a diagnostic message.
+  operator'+'<public>(Lhs: string, Rhs: diagnostic)<computes>: diagnostic = external {}
 
   # A parametric interface implemented by events with a `payload` that can be signaled.
   # Can be used with `awaitable`, `subscribable`, or both (see: `listenable`).

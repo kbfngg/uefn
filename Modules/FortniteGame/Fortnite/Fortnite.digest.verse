@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-32.11-CL-38202817
+# Generated from build: ++Fortnite+Release-33.00-CL-38324112
 #################################################
 
 using { /Fortnite.com/Characters }
@@ -15,8 +15,16 @@ AI<public> := module {
   # Get the focus_interface interface for the specified character.
   (InCharacter: fort_character).GetFocusInterface<native><public>()<transacts><decides>: focus_interface
 
+  @experimental
+  # Get the current fort_guard_actions interface for the specified character.
+  (InCharacter: fort_character).GetFortGuardActions<native><public>()<transacts><decides>: fort_guard_actions
+
   # Get the current fort_leashable interface for the specified character.
   (InCharacter: fort_character).GetFortLeashable<native><public>()<transacts><decides>: fort_leashable
+
+  @experimental
+  # Get the current fort_npc_actions interface for the specified character.
+  (InCharacter: fort_character).GetFortNPCActions<native><public>()<transacts><decides>: fort_npc_actions
 
   # Get the navigatable interface for the specified character
   (InCharacter: fort_character).GetNavigatable<native><public>()<transacts><decides>: navigatable
@@ -36,8 +44,8 @@ AI<public> := module {
   MakeNavigationTarget<native><public>(Target: agent): navigation_target
 
   @experimental
-  # Create a `navigation_target` from a `target_info`.
-  MakeNavigationTarget<native><public>(TargetInfo: target_info): navigation_target
+  # Create a `navigation_target` from a `fort_target_info`.
+  MakeNavigationTarget<native><public>(TargetInfo: fort_target_info): navigation_target
 
   @experimental
   # Result of an AI action
@@ -65,26 +73,45 @@ AI<public> := module {
 
   @experimental
   # Fortnite Guards AI actions management
-  fort_guard_actions_component<native><public> := class<epic_internal>(fort_npc_actions_component) {
+  fort_guard_actions<native><public> := interface<epic_internal>(fort_npc_actions) {
+    # Attack the target
+    Attack<public>(Target: fort_target_info)<suspends>: ai_action_result
+
+    # Move in range to attack the current target
+    MoveInRangeToAttack<public>()<suspends>: ai_action_result
+
+    # Play a random emote from the character emotes bank
+    PlayRandomEmote<public>()<suspends>: ai_action_result
+
+    # Revive the specified target
+    Revive<public>(Target: agent)<suspends>: ai_action_result
+
+    # Roam around the current position. Use the fort_leashable_component to specify the radius, else will roam anywhere.
+    RoamAround<public>(?MovementType: movement_type = external {})<suspends>: navigation_result
+  }
+
+  @experimental
+  # Fortnite Guards AI actions management
+  fort_guard_actions_component<native><public> := class<epic_internal>(fort_npc_actions_component, fort_guard_actions) {
     @experimental
     # Attack the target
-    Attack<native><public>(Target: target_info)<suspends>: ai_action_result
+    Attack<native><override>(Target: fort_target_info)<suspends>: ai_action_result
 
     @experimental
     # Move in range to attack the current target
-    MoveInRangeToAttack<native><public>()<suspends>: ai_action_result
+    MoveInRangeToAttack<native><override>()<suspends>: ai_action_result
 
     @experimental
     # Play a random emote from the character emotes bank
-    PlayRandomEmote<native><public>()<suspends>: ai_action_result
+    PlayRandomEmote<native><override>()<suspends>: ai_action_result
 
     @experimental
     # Revive the specified target
-    Revive<native><public>(Target: agent)<suspends>: ai_action_result
+    Revive<native><override>(Target: agent)<suspends>: ai_action_result
 
     @experimental
     # Roam around the current position. Use the fort_leashable_component to specify the radius, else will roam anywhere.
-    RoamAround<native><public>(?MovementType: movement_type = external {})<suspends>: navigation_result
+    RoamAround<native><override>(?MovementType: movement_type = external {})<suspends>: navigation_result
   }
 
   @experimental
@@ -112,7 +139,7 @@ AI<public> := module {
 
     @experimental
     # Event when the current target has changed.
-    CurrentTargetChangedEvent<native><public>: listenable(target_info) = external {}
+    CurrentTargetChangedEvent<native><public>: listenable(fort_target_info) = external {}
 
     @experimental
     # Get the current alert level of the guard.
@@ -124,7 +151,7 @@ AI<public> := module {
 
     @experimental
     # Get information about the current target.
-    GetCurrentTargetInfo<native><public>()<computes><decides><reads>: target_info
+    GetCurrentTargetInfo<native><public>()<computes><decides><reads>: fort_target_info
   }
 
   fort_leashable<native><public> := interface<epic_internal> {
@@ -144,7 +171,7 @@ AI<public> := module {
 
   @experimental
   # Fortnite NPC leash management
-  fort_leashable_component<native><public> := class<epic_internal>(component, fort_leashable) {
+  fort_leashable_component<native><public> := class<final_super><epic_internal>(component, fort_leashable) {
     @experimental
     # Removes the current leash.
     ClearLeash<native><override>(): void
@@ -164,7 +191,11 @@ AI<public> := module {
 
   @experimental
   # Fortnite NPC AI actions management
-  fort_npc_actions_component<native><public> := class<epic_internal>(component, navigatable, focus_interface) {
+  fort_npc_actions<native><public> := interface<epic_internal>(navigatable, focus_interface) {}
+
+  @experimental
+  # Fortnite NPC AI actions management
+  fort_npc_actions_component<native><public> := class<final_super><epic_internal>(component, fort_npc_actions) {
     @experimental
     # Return the current destination of the character
     GetCurrentDestination<native><override>()<transacts><decides>: vector3
@@ -201,22 +232,22 @@ AI<public> := module {
 
   @experimental
   # Fortnite NPC perception management
-  fort_npc_perception_component<native><public> := class<epic_internal>(component) {
+  fort_npc_perception_component<native><public> := class<final_super><epic_internal>(component) {
     @experimental
     # Get the last known position of a target.
     GetLastKnownPosition<native><public>(Target: entity)<computes><decides><reads>: vector3
 
     @experimental
     # Event when a target is added.
-    TargetAddedEvent<native><public>: listenable(target_info) = external {}
+    TargetAddedEvent<native><public>: listenable(fort_target_info) = external {}
 
     @experimental
     # Event when a target is heard. Hearing sense must be active.
-    TargetHeardEvent<native><public>: listenable(target_info) = external {}
+    TargetHeardEvent<native><public>: listenable(fort_target_info) = external {}
 
     @experimental
     # Event when the info about a target has been updated.
-    TargetInfoUpdatedEvent<native><public>: listenable(target_info) = external {}
+    TargetInfoUpdatedEvent<native><public>: listenable(fort_target_info) = external {}
 
     @experimental
     # Event when a target was removed.
@@ -224,15 +255,31 @@ AI<public> := module {
 
     @experimental
     # Event when a target is seen. Sight sense must be active.
-    TargetSeenEvent<native><public>: listenable(target_info) = external {}
+    TargetSeenEvent<native><public>: listenable(fort_target_info) = external {}
 
     @experimental
     # Event when a target is touched. Touch sense must be active.
-    TargetTouchedEvent<native><public>: listenable(target_info) = external {}
+    TargetTouchedEvent<native><public>: listenable(fort_target_info) = external {}
 
     @experimental
     # Information about all detected targets.
-    var<private> DetectedTargets<native><public>: []target_info
+    var<private> DetectedTargets<native><public>: []fort_target_info
+  }
+
+  @experimental
+  # Information about a perceived target.
+  fort_target_info<native><public> := class<epic_internal> {
+    @experimental
+    # Attitude toward this target.
+    Attitude<native><public>: team_attitude
+
+    @experimental
+    # True if the target can be seen.
+    HasLineOfSight<native><public>: logic
+
+    @experimental
+    # The source of the detection stimuli.
+    Target<native><public>: entity
   }
 
   movement_type<native><public> := class<concrete><final><computes><epic_internal> {}
@@ -298,22 +345,6 @@ AI<public> := module {
     # This function is called when the NPC is removed from the simulation.
     OnEnd<native_callable><public>(): void = external {}
   }
-
-  @experimental
-  # Information about a perceived target.
-  target_info<native><public> := struct<epic_internal> {
-    @experimental
-    # Attitude toward this target.
-    Attitude<native><public>: team_attitude
-
-    @experimental
-    # True if the target can be seen.
-    HasLineOfSight<native><public>: logic
-
-    @experimental
-    # The source of the detection stimuli.
-    Target<native><public>: entity
-  }
 }
 
 # Module import path: /Fortnite.com/Animation
@@ -324,7 +355,10 @@ Animation<public> := module {
     (InCharacter: fort_character).GetPlayAnimationController<native><public>()<transacts><decides>: play_animation_controller
 
     @experimental
-    fort_npc_play_animation_component<native><public> := class<epic_internal>(component, play_animation_controller) {
+    fort_npc_play_animation_component<native><public> := class<final_super><epic_internal>(
+      component,
+      play_animation_controller
+    ) {
       Play<override>(
         AnimationSequence: animation_sequence,
         ?PlayRate: float = external {},
@@ -538,6 +572,7 @@ Characters<public> := module {
   }
 }
 
+using { /Fortnite.com/AI }
 using { /Fortnite.com/Game }
 using { /UnrealEngine.com/Temporary/SceneGraph }
 using { /Verse.org/Assets }
@@ -547,11 +582,15 @@ using { /Verse.org/Simulation/Tags }
 # Module import path: /Fortnite.com/Devices
 Devices<public> := module {
   @experimental
-  # Returns the simulation entity at the root of the experience this `creative_device` is operating within.  * The simulation entity is the rootmost entity in an experience.  * Fails if this `creative_device` is not operating in a context with a valid SimulationEntity.
+  # Returns the simulation entity at the root of the experience this `creative_device` is operating within.
+  #   * The simulation entity is the rootmost entity in an experience.
+  #   * Fails if this `creative_device` is not operating in a context with a valid SimulationEntity.
   (CreativeDevice: creative_device).GetSimulationEntity<native><public>()<transacts><decides>: entity
 
   @experimental
-  # Returns the simulation entity at the root of the experience this `creative_object` is operating within.  * The simulation entity is the rootmost entity in an experience.  * Fails if this `creative_object` is not operating in a context with a valid SimulationEntity.
+  # Returns the simulation entity at the root of the experience this `creative_object` is operating within.
+  #   * The simulation entity is the rootmost entity in an experience.
+  #   * Fails if this `creative_object` is not operating in a context with a valid SimulationEntity.
   (CreativeObject: creative_object).GetSimulationEntity<native><public>()<transacts><decides>: entity
 
   # Returns the `fort_playspace` that `CreativeObject` belongs to.
@@ -561,17 +600,21 @@ Devices<public> := module {
   (CreativeObject: creative_object_interface).GetTags<native><public>(): tag_view
 
   @available { MinUploadedAtFNVersion := 2930 }
-  # Generates a `creative_object_interface` for every creative object that has been marked with the specified `Tag`.
+  # Generates a `creative_object_interface` for every creative object that has been marked with the specified `Tag`. Will not find anything if called on a default constructed object.
   (InCreativeDevice: creative_device).FindCreativeObjectsWithTag<public>(Tag: tag)<transacts>: generator(creative_object_interface) = external {}
 
   @available { MinUploadedAtFNVersion := 2930 }
-  # Generates a `creative_object_interface` for every creative object that has been marked with the specified `Tag`.
+  # Generates a `creative_object_interface` for every creative object that has been marked with the specified `Tag`. Will not find anything if called on a default constructed object.
   (InCreativeDevice: creative_device_base).FindCreativeObjectsWithTag<public>(Tag: tag)<transacts>: generator(creative_object_interface) = external {}
 
   @experimental
   @available { MinUploadedAtFNVersion := 2930 }
-  # Generates a `creative_object_interface` for every creative object that has been marked with the specified `Tag`.
+  # Generates a `creative_object_interface` for every creative object that has been marked with the specified `Tag`. Will not find anything if called on an `entity` that is not in the scene.
   (InEntity: entity).FindCreativeObjectsWithTag<native><public>(Tag: tag)<transacts>: generator(creative_object_interface)
+
+  @available { MinUploadedAtFNVersion := 3300 }
+  # Generates a `creative_object_interface` for every creative object that has been marked with the specified `Tag`. Will not find anything if called on an `npc_behavior` that is not simulating.
+  (InNPCBehavior: npc_behavior).FindCreativeObjectsWithTag<native><public>(Tag: tag)<transacts>: generator(creative_object_interface)
 
   # Module import path: /Fortnite.com/Devices/CreativeAnimation
   CreativeAnimation<public> := module {
@@ -4012,6 +4055,67 @@ Devices<public> := module {
     SecondarySignalEvent<public>: listenable(agent) = external {}
   }
 
+  # Used to create a minigame which expects specific input timing from the player.
+  # Visuals may vary, but always feature a scrubber that moves from 0.0 to 1.0.
+  # Good and perfect zones are defined on the device, describing at what point the player must provide input to succeed.
+  skilled_interaction_device<public> := class<concrete><final>(creative_device_base, enableable) {
+    # Signaled when the `agent` provides a bad input.
+    # Bad input occurs when input is provided while the scrubber is outside the *Good Zone*.
+    # Sends the `agent` that provided the input.
+    # Sends the `float` position of the meter scrubber from `0.0` to `1.0`.
+    BadInputTriggeredEvent<public>: listenable(tuple(agent, float)) = external {}
+
+    # Begins the interaction for the provided `agent`.
+    # Will cancel any other interactions already in progress for the `agent`.
+    BeginInteraction<public>(Agent: agent)<transacts><decides>: void = external {}
+
+    # Disable this device.
+    Disable<override>(): void = external {}
+
+    # Enable this device.
+    Enable<override>(): void = external {}
+
+    # Cancels the interaction, if in progress, for the provided `agent`.
+    EndInteraction<public>(Agent: agent)<transacts><decides>: void = external {}
+
+    # Signaled when the `agent` provides a good input.
+    # Good input occurs when input is provided while the scrubber is within the *Good Zone* (excluding the *Perfect Zone*).
+    # Sends the `agent` that provided the input.
+    # Sends the `float` position of the meter scrubber from `0.0` to `1.0`.
+    GoodInputTriggeredEvent<public>: listenable(tuple(agent, float)) = external {}
+
+    # Signaled when the interaction is interrupted.
+    # The interaction can be interrupted in several ways.
+    # * If the participating `agent` is eliminated or enters a downed state.
+    # * If *Deactivate* is called while the interaction is in progress.* If *Disable* is called while the interaction is in progress.
+    InteractionCanceledEvent<public>: listenable(agent) = external {}
+
+    # Signaled when the `agent` fails the interaction.
+    # The interaction can be failed in several ways
+    # * If the number of bad inputs reaches the *Failure Limit*.
+    # * If the interaction has an *Interaction Time Limit* that expires.
+    InteractionFailedEvent<public>: listenable(agent) = external {}
+
+    # Signaled when the `agent` starts an interaction.
+    # Input is the `agent` which started interacting with the device.
+    InteractionStartedEvent<public>: listenable(agent) = external {}
+
+    # Signaled when the `agent` succeeds at the interaction.
+    # The interaction is completed depending on the device's configuration.
+    # * Once the device's *Success Target* is reached.
+    # * Upon a perfect input if using *Instant Success Perfect Behavior*.
+    InteractionSucceededEvent<public>: listenable(agent) = external {}
+
+    # Succeeds if the object is enabled, fails if it's disabled.
+    IsEnabled<override>()<transacts><decides>: void = external {}
+
+    # Signaled when the `agent` provides a perfect input.
+    # Perfect input occurs when input is provided while the scrubber is within the device's *Perfect Zone*.
+    # Sends the `agent` that provided the input.
+    # Sends the `float` position of the meter scrubber from `0.0` to `1.0`.
+    PerfectInputTriggeredEvent<public>: listenable(tuple(agent, float)) = external {}
+  }
+
   # Used to create a zone where players are put into a skydive state. Can customize the amount of force used to push the player, and how fast players are launched into the air. The direction of the push is in relation to the device, so you can rotate and overlap several devices, then use variable speeds to create pneumatic tubes that propel players in different directions. You can even create unique traversal (traveling) options, where players can use these zones to reach places on your island they couldn't reach any other way.
   skydive_volume_device<public> := class<concrete><final>(effect_volume_device) {
     # Signaled when an `agent` enters the volume.
@@ -4068,6 +4172,102 @@ Devices<public> := module {
 
     # An unknown error occurred. If this happens frequently, contact Epic support.
     UnknownError
+  }
+
+  # A device that generates a scoreboard stat that can be used by the game to determine Game End and Round End conditions.
+  # The stat can apply to individual players, teams, or everyone in the match. It can also generate a Level that will increment by 1 each time Value reaches *Max Value*, resetting Value to 0 when Level increments.
+  stat_creator_device<public> := class<concrete><final>(creative_device_base) {
+    # Returns stat Level for `Agent`.
+    # Succeeds if *Number of Levels* is set to greater than 0, *Scope* is set to *Player*
+    # and `Agent` passes the requirement checks on the device.
+    GetLevel<public>(Agent: agent)<transacts><decides>: int = external {}
+
+    # Returns stat Level for `Team`.
+    # Succeeds if *Number of Levels* is set to greater than 0, *Scope* is set to *Team*
+    # and the `Team` passes the requirement checks on the device.
+    GetLevel<public>(Team: team)<transacts><decides>: int = external {}
+
+    # Returns stat Level for the match.
+    # Succeeds if *Number of Levels* is set to greater than 0 and *Scope* is set to *Match*.
+    GetLevelForMatch<public>()<transacts><decides>: int = external {}
+
+    # Returns the name for the stat that is generated by this Stat Creator.
+    GetName<public>(): string = external {}
+
+    # Returns stat Value for `Agent`.
+    # Succeeds if *Scope* is set to *Player* and `Agent` passes the requirement checks on the device.
+    GetValue<public>(Agent: agent)<transacts><decides>: int = external {}
+
+    # Returns stat Value for `Team`.
+    # Succeeds if *Scope* is set to *Team* and `Team` passes the requirement checks on the device.
+    GetValue<public>(Team: team)<transacts><decides>: int = external {}
+
+    # Returns stat Value for the match.
+    # Succeeds if *Scope* is set to *Match*.
+    GetValueForMatch<public>()<transacts><decides>: int = external {}
+
+    # Signaled when the stat changes Level.
+    # Sends a tuple of the instigating `agent` (or `false` if none) and the new Level.
+    LevelChangedEvent<public>: listenable(tuple(?agent, int)) = external {}
+
+    # Signaled when an `agent` reaches the maximum stat value. This occurs when the stat reaches *Max Value* if the device has no levels, or *Max Level* if that option is set.
+    # Sends the `agent` that caused the stat event that changed the level and the new level as an `int` .
+    MaximumReachedEvent<public>: listenable(tuple(?agent, int)) = external {}
+
+    # Updates stat Level for `Agent`.
+    # Succeeds if *Number of Levels* is set to greater than 0 and *Scope* is set to *Agent*.
+    # Altering stat Level will set `Agent`'s stat Value to 0.
+    SetLevel<public>(Agent: agent, Level: int)<transacts><decides>: void = external {}
+
+    # Updates stat Level for `Team`.
+    # Succeeds if *Number of Levels* is set to greater than 0 and *Scope* is set to *Team*.
+    # Altering stat Level will set `Team`'s stat Value to 0.
+    SetLevel<public>(Team: team, Level: int)<transacts><decides>: void = external {}
+
+    # Updates stat Level for the match.
+    # Succeeds if *Number of Levels* is set to greater than 0 and *Scope* is set to *Match* .
+    # Altering stat Level will set the Match's stat Value to 0.
+    SetLevelForMatch<public>(Level: int)<transacts><decides>: void = external {}
+
+    # Updates stat Value for `Agent`.
+    # Succeeds if *Scope* is set to *Agent* and `Agent` passes the requirement checks on the device.
+    # If the stat does not have levels, `Value` is clamped between 0 and *Max Value*.
+    # If the stat does have levels, the Value is not clamped and setting a value below 0 or above *Max Value* will
+    # decrement or increment the level appropriately. e.g. if *Number of Levels* is 10, *Max Value is 100*
+    # and you are currently level 0, a `Value` of 550 will set you to Level 5 and Value 50.
+    SetValue<public>(Agent: agent, Value: int)<transacts><decides>: void = external {}
+
+    # Updates stat Value for `Team`.
+    # Succeeds if *Scope* is set to *Team* and `Team` passes the requirement checks on the device.
+    # If the stat does not have levels, `Value` is clamped between 0 and *Max Value*.
+    # If the stat does have levels, the Value is not clamped and setting a value below 0 or above *Max Value* will
+    # decrement or increment the level appropriately. e.g. if *Number of Levels* is 10, *Max Value is 100*
+    # and you are currently level 0, a `Value` of 550 will set you to Level 5 and Value 50.
+    SetValue<public>(Team: team, Value: int)<transacts><decides>: void = external {}
+
+    # Updates stat Value for the match.
+    # Succeeds if *Scope* is set to *Match*.
+    # If the stat does not have levels, `Value` is clamped between 0 and *Max Value*.
+    # If the stat does have levels, the Value is not clamped and setting a value below 0 or above *Max Value* will
+    # decrement or increment the level appropriately. e.g. if *Number of Levels* is 10, *Max Value is 100*
+    # and you are currently level 0, a `Value` of 550 will set you to Level 5 and Value 50.
+    SetValueForMatch<public>(Value: int)<transacts><decides>: void = external {}
+
+    # Signaled when the stat changes Value.
+    # Sends a tuple of the instigating `agent` (or `false` if none) and the new Value. Value increases to a maximum of *Max Value*. If the stat has not yet reached *Max Level* then Value will reset to 0 and Level will increment by 1.
+    ValueChangedEvent<public>: listenable(tuple(?agent, int)) = external {}
+  }
+
+  # Used to increase or decrease a stat for an `agent`.
+  stat_powerup_device<public> := class<concrete><final>(powerup_device) {
+    # Returns the current *Magnitude* for the powerup.
+    # For the Stat Powerup, this is the value of the stat that the powerup will add or remove to a player that picks up the powerup.
+    GetMagnitude<public>()<transacts>: float = external {}
+
+    # Sets the *Magnitude* for this powerup, clamped to the Min and Max defined in the device.
+    # Will not apply to any currently applied effects.
+    # For the Stat Powerup, this is the value of the stat that the powerup will add or remove to a player that picks up the powerup.
+    SetMagnitude<public>(Magnitude: float): void = external {}
   }
 
   # Base class for various specialized storm devices. See also: * `basic_storm_controller_device` * `advanced_storm_controller_device`
@@ -4547,7 +4747,7 @@ Devices<public> := module {
     # Increases the tracked value by *Amount to Change on Received Signal* for `Agent`.
     Increment<public>(Agent: agent): void = external {}
 
-    # Is true if `Agent` currently has the quest active.
+    # Is true if `Agent` currently has the tracker active.
     IsActive<public>(Agent: agent)<transacts><decides>: void = external {}
 
     # Loads tracked progress for `Agent`. Only valid if *Use Persistence* is set to *Use*.
@@ -4693,6 +4893,157 @@ Devices<public> := module {
     # Signaled when an `agent` triggers this device.
     # Sends the `agent` that used this device. Returns `false` if no `agent` triggered the action (ex: it was triggered through code).
     TriggeredEvent<public>: listenable(?agent) = external {}
+  }
+
+  # Used to spawn customizable boxes containing vehicle mods. Hit a box with a vehicle to apply the mod.
+  vehicle_mod_box_spawner_device<public> := class<concrete><final>(creative_device_base, enableable) {
+    # Triggers whenever the mod box is destroyed regardless of whether a mod was applied.
+    # Returns tuple:
+    #  * 0: The `agent` that triggered this event, if applicable.
+    #  * 1: The index `int` of the chosen mod in the device's list, starting with `0` for Custom List Mod 1.
+    # If *Possible Mods* is not set to `Custom List`, `int` will be `-1`.
+    BoxDestroyedEvent<public>: listenable(tuple(?agent, int)) = external {}
+
+    # Triggers whenever the mod box spawns.
+    #  * Returns the index `int` of the chosen mod in the device's list, starting with `0` for Custom List Mod 1.
+    # If *Possible Mods* is not set to `Custom List`, `int` will be `-1`.
+    BoxSpawnedEvent<public>: listenable(int) = external {}
+
+    # If the mod box is spawned, respawn it as the next valid entry in the list without triggering `BoxDestroyEvent`.
+    #  * If the mod box is not spawned, that will be the next mod box.
+    #  * The list wraps, which means the first index is considered directly after the last index.
+    #  * Does nothing if this device is disabled or *Possible Mods* is not set to `Custom List`.
+    CycleToNextValidIndex<public>(): void = external {}
+
+    # If the mod box is spawned, respawn it as the previous valid entry in the list without triggering `BoxDestroyEvent`.
+    #  * If the mod box is not spawned, that will be the next mod box.
+    #  * The list wraps, which means the last index is considered directly before the first index.
+    #  * Does nothing if this device is disabled or *Possible Mods* is not set to `Custom List`.
+    CycleToPreviousValidIndex<public>(): void = external {}
+
+    # Despawn the box and clear the spawn timer without triggering `BoxDestroyEvent`. The respawn hologram will be visible, but will not progress without `StartSpawnTimer`. The device must be enabled.
+    DespawnBox<public>(): void = external {}
+
+    # Disable the device and clear any active spawn timer. While disabled, it will be hidden and vehicle mod boxes will not spawn.
+    Disable<override>(): void = external {}
+
+    # Enable the device and start the spawn timer. While enabled, it can spawn vehicle mod boxes, and those boxes can be interacted with.
+    Enable<override>(): void = external {}
+
+    # Returns the remaining time (in seconds) of the device's active spawn timer.
+    #  * If there is no active timer, return `0.0`.
+    GetActiveTimerRemaining<public>()<transacts>: float = external {}
+
+    # Returns the current index `int` in the device's list of mod boxes. This value is set whenever the device spawns a new mod box.
+    #  * The device's list starts with `0` for Custom List Mod 1.
+    #  * If *Possible Mods* is not set to `Custom List` or the device has never spawned a mod box, `int` will be `-1`.
+    GetCurrentIndex<public>()<transacts>: int = external {}
+
+    # Returns the total length of the initial spawn timer in seconds, regardless of the timer's current state.
+    GetInitialSpawnTimerLength<public>()<transacts>: float = external {}
+
+    # Returns the total length of the respawn timer in seconds, regardless of the timer's current state.
+    GetRespawnTimerLength<public>()<transacts>: float = external {}
+
+    # Returns the number of times the device has spawned a mod box.
+    GetSpawnCount<public>()<transacts>: int = external {}
+
+    # Succeeds if the object is enabled, fails if it's disabled.
+    IsEnabled<override>()<transacts><decides>: void = external {}
+
+    # Check if this device currently has a spawned mod box.
+    IsSpawned<public>()<transacts><decides>: void = external {}
+
+    # Succeeds if `Index` is a valid entry in the device's list. Fails if `Index` is an invalid entry or *Possible Mods* is not set to `Custom List`.
+    IsValidIndex<public>(Index: int)<transacts><decides>: void = external {}
+
+    # Triggers whenever the mod is applied to a vehicle.
+    # Returns tuple:
+    #  * 0: The `agent` driving the vehicle, if applicable.
+    #  * 1: The `fort_vehicle` the mod applied to.
+    #  * 2: The index `int` of the chosen mod in the device's list, starting with `0` for Custom List Mod 1.
+    # If *Possible Mods* is not set to `Custom List`, `int` will be `-1`.
+    ModAppliedEvent<public>: listenable(tuple(?agent, fort_vehicle, int)) = external {}
+
+    # Triggers whenever the mod fails to apply to a vehicle.
+    # Returns tuple:
+    #  * 0: The `agent` driving the vehicle, if applicable.
+    #  * 1: The `fort_vehicle` the mod failed to apply to.
+    #  * 2: The index `int` of the chosen mod in the device's list, starting with `0` for Custom List Mod 1.
+    # If *Possible Mods* is not set to `Custom List`, `int` will be `-1`.
+    ModApplyFailedEvent<public>: listenable(tuple(?agent, fort_vehicle, int)) = external {}
+
+    # If ModApplyEvent is overridden (see `SetOverrideModApplyEvent`), breaking a mod box triggers this instead of `ModApplyEvent` or `ModApplyFailEvent`.
+    # Returns tuple:
+    #  * 0: The `agent` driving the vehicle, if applicable.
+    #  * 1: The `fort_vehicle` the mod would attempt to apply to.
+    #  * 2: The index `int` of the chosen mod in the device's list, starting with `0` for Custom List Mod 1.
+    # If *Possible Mods* is not set to `Custom List`, `int` will be `-1`.
+    ModApplyOverriddenEvent<public>: listenable(tuple(?agent, fort_vehicle, int)) = external {}
+
+    # Reset the names of this device's mod boxes, if the name has been customized.
+    ResetModBoxName<public>(): void = external {}
+
+    # Reset the text of the tooltip that appears when a player gets close to the mod box without a vehicle, if it's been customized.
+    ResetPlayerTooltip<public>(): void = external {}
+
+    # Set this device's mod boxes to use the name 'Name'
+    #  * The displayed name will not exceed 50 characters.
+    #  * The following characters are disallowed: {, }, <, >, \, /, and |.
+    SetCustomModBoxName<public>(Name: message): void = external {}
+
+    # Set the `Text` of the tooltip that appears when a player gets close to the mod box without a vehicle.
+    #  * The displayed text will not exceed 50 characters.
+    #  * The following characters are disallowed: {, }, <, >, \, /, and |.
+    SetCustomPlayerTooltipText<public>(Text: message): void = external {}
+
+    # Set the remaining time (in seconds) on the initial spawn timer (clamped to a minimum of `0.0`). The device must be enabled.
+    #  * Even if the initial spawn timer is not currently active, this sets its length.
+    SetInitialSpawnTimer<public>(Time: float): void = external {}
+
+    # Set the next mod box to spawn to be the one at `Index` in the device's list.
+    #  * The first index in the list is `0` for Custom List Mod 1.
+    #  * Does nothing if this device is disabled, *Possible Mods* is not set to `Custom List`, or `Index` is invalid.
+    SetNextModIndex<public>(Index: int): void = external {}
+
+    # If `Override` is `true`, destroying the mod box with a vehicle will trigger `ModApplyOverriddenEvent` and a mod will not be applied.
+    #  * In this case, destroying the mod box will not trigger `ModApplyEvent` or `ModApplyFailEvent`.
+    #  * The values returned by `ModApplyOverriddenEvent` can be used for `TryApplyModByAgent` and `TryApplyModByVehicle`, so the event can be handled manually.
+    #  * See `ModApplyOverriddenEvent` for more information.
+    SetOverrideModApplyEvent<public>(Override: logic): void = external {}
+
+    # Set the remaining time (in seconds) on the respawn timer (clamped to a minimum of `0.0`). The device must be enabled.
+    #  * This also sets the length of this device's future respawn timers.
+    SetRespawnTimer<public>(Time: float): void = external {}
+
+    # Spawn a mod box if the device is enabled. If one is already spawned, spawn a new one without triggering `BoxDestroyEvent`.
+    SpawnBox<public>(): void = external {}
+
+    # Spawn the same mod box this device spawned before the current one. If a mod box is already spawned, despawn that first without triggering `BoxDestroyEvent`.
+    #  * Does nothing if this device is disabled or has not spawned more than one mod box.
+    SpawnLastChosenMod<public>(): void = external {}
+
+    # Spawn the mod box at `Index` in the device's list. If a mod box is already spawned, despawn that first without triggering `BoxDestroyEvent`.
+    #  * The first index in the list is `0` for Custom List Mod 1.
+    #  * Does nothing if this device is disabled, *Possible Mods* is not set to `Custom List`, or `Index` is invalid.
+    SpawnModBoxByIndex<public>(Index: int): void = external {}
+
+    # Despawn the box if necessary without triggering `BoxDestroyEvent`, then start the spawn timer. The device must be enabled.
+    StartSpawnTimer<public>(): void = external {}
+
+    # Apply the mod at `Index` in the device's list to the vehicle that `Agent` is riding.
+    #  * The first index in the list is `0` for Custom List Mod 1.
+    #  * Triggers `ModApplyEvent` and `ModApplyFailEvent` as appropriate, regardless of `SetOverrideModApplyEvent`.
+    #  * Fails if this device is disabled, *Possible Mods* is not set to `Custom List`, `Index` or `Agent` is invalid, or `Agent` is not riding a vehicle.
+    TryApplyModByAgent<public>(Index: int, Agent: agent)<transacts><decides>: void = external {}
+
+    # Apply the mod at `Index` in the device's list to `Vehicle`.
+    #  * The first index in the list is `0` for Custom List Mod 1.
+    #  * Triggers `ModApplyEvent` and `ModApplyFailEvent` as appropriate, regardless of `SetOverrideModApplyEvent`.
+    #  * Fails if this device is disabled, *Possible Mods* is not set to `Custom List`, or `Index` or `Vehicle` is invalid.
+    #  * `Vehicle` must be an actual `fort_vehicle`. A vehicle spawner device will not be valid.
+    #  * `ModApplyOverriddenEvent`, `ModApplyEvent`, and `ModApplyFailEvent` are a few ways to get a `fort_vehicle` value.
+    TryApplyModByVehicle<public>(Index: int, Vehicle: fort_vehicle)<transacts><decides>: void = external {}
   }
 
   # Specialized `vehicle_spawner_device` that allows an armored battle bus to be configured and spawned.
@@ -5181,14 +5532,17 @@ Devices<public> := module {
 
 # Module import path: /Fortnite.com/FortPlayerUtilities
 FortPlayerUtilities<public> := module {
+  # Returns an `[]agent`s currently spectating `InAgent`.
+  (InAgent: agent).GetSpectators<native><public>()<transacts>: []agent
+
+  # Succeeds if `InAgent` is spectating the experience. Fails otherwise.
+  (InAgent: agent).IsSpectator<native><public>()<transacts><decides>: void
+
   # Respawns the character for `InAgent` at the provided `RespawnPosition` and applies the yaw of `RespawnRotation`.
   (InAgent: agent).Respawn<native><public>(RespawnPosition: vector3, RespawnRotation: rotation)<transacts>: void
 
   # Returns an `[]player`s currently spectating `InPlayer`.
   (InPlayer: player).GetPlayersSpectating<native><public>()<transacts>: []player
-
-  # Succeeds if `InPlayer` is spectating the experience. Fails otherwise.
-  (InPlayer: player).IsSpectator<native><public>()<transacts><decides>: void
 
   # Sends `InPlayer` back to the main game lobby.
   (InPlayer: player).SendToLobby<native><public>()<transacts>: void
@@ -5298,7 +5652,7 @@ Game<public> := module {
 
   # Implemented by Fortnite objects that have health state and can be eliminated.
   healthful<native><public> := interface<epic_internal> {
-    # Returns the health state of the object. This value will between 0.0 and `GetMaxHealth`
+    # Returns the health state of the object. This value will be between 0.0 and `GetMaxHealth`
     GetHealth<public>()<transacts>: float
 
     # Returns the maximum health of the object. This value will be between 1.0 and Inf.
@@ -5329,7 +5683,7 @@ Game<public> := module {
     # Returns the maximum shield state of the object. This value will be between 0.0 and Inf.
     GetMaxShield<public>()<transacts>: float
 
-    # Returns the shield state of the object. This value will between 0.0 and `MaxShield`
+    # Returns the shield state of the object. This value will be between 0.0 and `MaxShield`
     GetShield<public>()<transacts>: float
 
     # Signaled when the shield is healed.
@@ -5356,11 +5710,20 @@ Playspaces<public> := module {
   #
   # To access the `fort_playspace` for a `creative_device` use `creative_device.GetPlayspace`.
   fort_playspace<native><public> := interface<epic_internal> {
+    # Get all `agent`s that are participating in the current `fort_playspace` experience. Participants might be human players (of `player` type) or AI-controlled characters (of `agent` type) that are registered and affecting the participant's count.
+    GetParticipants<public>()<transacts>: []agent
+
     # Get all human `player`s that are in the current `fort_playspace`.
     GetPlayers<public>()<transacts>: []player
 
     # Get the `fort_team_collection` for the current `fort_playspace`.
     GetTeamCollection<public>()<transacts>: fort_team_collection
+
+    # Signaled when a participant `agent` joins the `fort_playspace`. Returns a subscribable with a payload of the`agent` that entered the `fort_playspace`.
+    ParticipantAddedEvent<public>(): listenable(agent)
+
+    # Signaled when a participant `agent` leaves the `fort_playspace`. Returns a subscribable with a payload of the`agent` that left the `fort_playspace`.
+    ParticipantRemovedEvent<public>(): listenable(agent)
 
     # Signaled when a human `player` joins the `fort_playspace`. Returns a subscribable with a payload of the`player` that entered the `fort_playspace`.
     PlayerAddedEvent<public>(): listenable(player)
