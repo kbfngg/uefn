@@ -494,6 +494,7 @@
 			"/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_WildlifeVerseBehavior.CharacterModifier_WildlifeVerseBehavior_C":	{ "Visible": true },
 			"/CRD_Analytic/BP_Creative_Analytic_Manager.BP_Creative_Analytic_Manager_C":								{  },
 			"/CRD_Bouncer/BouncerComponent.BouncerComponent_C":															{  },
+			"/CRD_CreatorProfile/CreatorProfile_WidgetComponent.CreatorProfile_WidgetComponent_C":						{  },
 			"/CRD_DrumSequencer/UI/WBP_FabricDrumSequencer_BasicScreen.WBP_FabricDrumSequencer_BasicScreen_C":			{  },
 			"/CRD_FabricStepModulator/UI/WBP_StepModulator_AdvancedScreen.WBP_StepModulator_AdvancedScreen_C":			{  },
 			"/CRD_FabricValueSetter/UI/WBP_ValueSetterBasicScreen.WBP_ValueSetterBasicScreen_C":						{  },
@@ -3124,7 +3125,7 @@
 			},
 			{
 				"Type": "/Script/ValkyrieEditor.ValkyrieEditorConfig",
-				"AllowList": [ "DefaultProjectName", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "bAssignProjectVersePathAutomatically", "bModuleIdNamedPlugins", "bModalProjectBrowser", "ReferencedContentCacheSizeGB", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "bEnableIterativeValidation", "bLoadAssetsForValidation", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "EnabledPermissions", "EffectivePermissions", "EntitledPermissions" ]
+				"AllowList": [ "DefaultProjectName", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "bAssignProjectVersePathAutomatically", "bModuleIdNamedPlugins", "bModalProjectBrowser", "ReferencedContentCacheSizeGB", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "bEnableIterativeValidation", "bLoadAssetsForValidation", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "EnabledPermissions", "EffectivePermissions", "EntitledPermissions", "bDevBuildGivesAllEntitlements" ]
 			},
 			{
 				"Type": "/Script/CinematicCamera.CineCameraActor",
@@ -3493,7 +3494,7 @@
 				"Type": "/Script/Engine.WindDirectionalSourceComponent",
 				"bAllowListAllProperties": true,
 				"bAllowListAllSubclassProperties": true
-			},
+			}
 		]
 	},
 	"PropertyEditorStructPermissionList": {
