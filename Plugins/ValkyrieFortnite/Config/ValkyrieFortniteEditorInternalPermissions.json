@@ -752,7 +752,8 @@
 			"/Script/Engine.LinearAnalysisProperties":	{ "Rules": ["View","Create"] },
 			"/Script/Engine.PoseAsset":					{ "Rules": ["View","Create"] },
 			"/Script/Engine.UserDefinedEnum":			{ "Rules": ["View","Create"], "Subclasses": "All"},
-			"/Script/Engine.UserDefinedStruct":			{ "Rules": ["View","Create"], "Subclasses": "All"}
+			"/Script/Engine.UserDefinedStruct":			{ "Rules": ["View","Create"], "Subclasses": "All"},
+			"/Script/Entity.CoreEntityPrefabBlueprint": { "Rules": ["View","Create"] }
 		},
 		"AllowedClasses": {
 			"/Script/AnimGraph.AnimBlueprintExtension_Attributes":		{  },
@@ -945,6 +946,8 @@
 			"/Script/Engine.KismetMathLibrary":							{ "Visible": true },
 			"/Script/Engine.KismetSystemLibrary":						{ "Visible": true },
 			"/Script/Engine.PoseLink":									{  },
+			"/Script/Entity.CoreEntityPrefabBlueprint":					{ "Visible": true },
+			"/Script/EntityLevel.CoreEntityLevel":						{ },
 			"/Script/FortniteGame.BaseUEFNAnimInstance":				{ "Visible": true },
 			"/Script/FortniteGame.UEFNCustomAgentAnimInstance":			{ "Visible": true },
 			"/Script/UnrealEd.EdGraphNode_Comment":						{ "Visible": true },
@@ -966,6 +969,11 @@
 						"SpatialMetricsViewer"
 					]
 				}
+			},
+			"LevelEditor.ActorContextMenu": {
+				"AllowList": {
+					"+": [ "AddEntityMenu", "SaveAsPrefab", "GroupEntities", "EditPrefab", "BrowseToPrefab", "PushPrefabOverrides" ]
+				}
 			}
 		},
 		"AllowedTabs": {
@@ -982,6 +990,23 @@
 						"SpatialMetricsViewer",
 					]
 				}
+			}
+		},
+		"AllowedPlacementToolEntries": {
+			"AllowedCategories": {
+				"+": [
+					"Entities"
+				]
+			},
+			"AllowedClasses": {
+				"+": [
+					"CoreEntity",
+					"CubeEntity",
+					"SphereEntity",
+					"CylinderEntity",
+					"ConeEntity",
+					"PlaneEntity"
+				]
 			}
 		}
 	},

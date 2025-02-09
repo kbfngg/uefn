@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-27.11-CL-29739262
+# Generated from build: ++Fortnite+Release-28.00-CL-29915848
 #################################################
 
 # Module import path: /Fortnite.com/AI
@@ -365,6 +365,59 @@ Devices<public> := module {
   # Returns an array containing creative objects which have tag(s) matching the specified `SearchCriteria`.
   GetCreativeObjectsWithTags<native><public>(SearchCriteria: tag_search_criteria)<transacts>: []creative_object_interface
 
+  Patchwork<public> := module {
+    # Apply a distortion effect to Patchwork audio inputs.
+    distortion_effect_device<public> := class<concrete><final>(patchwork_device) {}
+
+    # Turn Patchwork note inputs into audio using drum samples.
+    drum_player_device<public> := class<concrete><final>(patchwork_device) {}
+
+    # Create drum note patterns for Patchwork devices.
+    drum_sequencer_device<public> := class<concrete><final>(patchwork_device) {}
+
+    # Apply an echo effect to Patchwork audio inputs.
+    echo_effect_device<public> := class<concrete><final>(patchwork_device) {}
+
+    # Turn Patchwork note inputs into audio using instrument samples.
+    instrument_player_device<public> := class<concrete><final>(patchwork_device) {}
+
+    # Modify a setting on another Patchwork device in a regularly repeating pattern.
+    lfo_modulator_device<public> := class<concrete><final>(patchwork_device) {}
+
+    # Define shared settings for Patchwork devices.
+    music_manager_device<public> := class<concrete><final>(patchwork_device) {}
+
+    # Transpose Patchwork note inputs to follow a chord progression.
+    note_progressor_device<public> := class<concrete><final>(patchwork_device) {}
+
+    # Create melodic note patterns for Patchwork devices.
+    note_sequencer_device<public> := class<concrete><final>(patchwork_device) {}
+
+    # Send events to devices based on Patchwork note inputs.
+    note_trigger_device<public> := class<concrete><final>(patchwork_device) {}
+
+    # Turn Patchwork note inputs into audio using customizable sound synthesis.
+    omega_synthesizer_device<public> := class<concrete><final>(patchwork_device) {}
+
+    # Base class for all Patchwork devices.
+    patchwork_device<public> := class<concrete>(creative_device_base) {
+      # Disables this device.
+      Disable<public>(): void = external {}
+
+      # Enables this device.
+      Enable<public>(): void = external {}
+    }
+
+    # Output Patchwork audio for players to hear.
+    speaker_device<public> := class<concrete><final>(patchwork_device) {}
+
+    # Modify a setting on another Patchwork device in steps over time.
+    step_modulator_device<public> := class<concrete><final>(patchwork_device) {}
+
+    # Modify a setting on another Patchwork device when triggered.
+    value_setter_device<public> := class<concrete><final>(patchwork_device) {}
+  }
+
   # Spawns a `creative_prop` at the specified `Position` and `Rotation`. `Position` and `Rotation` units are in cm.
   # Returns tuple:
   #  0: Instance of a `creative_prop`. False if no `creative_prop` could be created. See `spawn_prop_result` for failure cases.
@@ -577,9 +630,22 @@ Devices<public> := module {
     # Enables the turret to rotate, target, and track.
     Enable<public>(): void = external {}
 
+    # Set the supplied `Agent` as the turret's target.
+    #  * The target will only change if `Agent` is within the activation radius, has direct line-of-sight to the turret,
+    # is on a targetable team as determined by `Possible Targets`, and is not Down But Not Out.
+    SetTarget<public>(Agent: agent): void = external {}
+
     # Set the turret to the same team as the supplied `Agent`.
     #  * Only usable if `Possible Targets` is not set to `Everyone`.
     SetTeam<public>(Agent: agent): void = external {}
+
+    # Triggers when the turret finds a target.
+    # Sends the `agent` that was found.
+    TargetFoundEvent<public>: listenable(agent) = external {}
+
+    # Triggers when the turret loses a target.
+    # Sends the `agent` that was lost.
+    TargetLostEvent<public>: listenable(agent) = external {}
 
     # Set the turret to the Default Team.
     #  * Only usable if `Possible Targets` is not set to `Everyone`.
@@ -1582,6 +1648,57 @@ Devices<public> := module {
     Reset<public>(): void = external {}
   }
 
+  # Used to update the camera’s current viewpoint and rotation based on current camera mode.
+  gameplay_camera_device<public> := class<abstract><epic_internal>(creative_device_base) {
+    # Adds the camera to the `Agent`’s camera stack and pushes it to be the active camera.
+    AddTo<public>(Agent: agent): void = external {}
+
+    # Adds the camera to all `Agent`s camera stacks and pushes it to be the active camera.
+    AddToAll<public>(): void = external {}
+
+    # Disables this device.
+    Disable<public>(): void = external {}
+
+    # Enables this device.
+    Enable<public>(): void = external {}
+
+    # Removes the camera from the `Agent`’s camera stack and pops from being the active camera replacing it with the next one in the stack.
+    RemoveFrom<public>(Agent: agent): void = external {}
+
+    # Removes the camera from all `Agent`s camera stacks and pops from being the active camera replacing it with the next one in the stack.
+    RemoveFromAll<public>(): void = external {}
+  }
+
+  # Used to update the camera’s current viewpoint and rotation based on a fixed angle.
+  gameplay_camera_fixed_angle_device<public> := class<concrete><final>(gameplay_camera_device) {}
+
+  # Used to update the camera’s current viewpoint and rotation based on a fixed point.
+  gameplay_camera_fixed_point_device<public> := class<concrete><final>(gameplay_camera_device) {}
+
+  # Used to update the gameplay controls scheme based on current control mode.
+  gameplay_controls_device<public> := class<abstract><epic_internal>(creative_device_base) {
+    # Adds the gameplay control to the `Player`’s gameplay controls stack and pushes it to be the active control.
+    AddTo<public>(Agent: agent): void = external {}
+
+    # Adds the gameplay control to all `Agent`s gameplay controls stack and pushes it to be the active control.
+    AddToAll<public>(): void = external {}
+
+    # Disables this device.
+    Disable<public>(): void = external {}
+
+    # Enables this device.
+    Enable<public>(): void = external {}
+
+    # Removes the gameplay control from the `Agent`’s gameplay controls stack and pops from being the active control replacing it with the next one in the stack.
+    RemoveFrom<public>(Agent: agent): void = external {}
+
+    # Removes the gameplay control from all `Agent`s gameplay controls stack and pops from being the active control replacing it with the next one in the stack.
+    RemoveFromAll<public>(): void = external {}
+  }
+
+  # Used to adapt the controls to the camera perspective
+  gameplay_controls_third_person_device<public> := class<concrete><final>(gameplay_controls_device) {}
+
   # Used to let `agent`s slide on any surface with accompanying visual and audio effects.
   grind_powerup_device<public> := class<concrete><final>(powerup_device) {}
 
@@ -2306,7 +2423,7 @@ Devices<public> := module {
 
     # Signaled when *Button <Index>* on this device is pushed by an `agent`.
     # Sends the `agent` that pushed the button.
-    # Sends the `int` index of the clicked the button.
+    # Sends the `int` index of the button that was clicked.
     RespondingButtonEvent<public>: listenable(tuple(agent, int)) = external {}
 
     # Sets the number of buttons this popup has.
@@ -3956,6 +4073,15 @@ Devices<public> := module {
   using { /UnrealEngine.com/Temporary/SpatialMath }
   # Used to trigger a visual effect (a glow or an outline) when `agent`s pick it up.
   visual_effect_powerup_device<public> := class<concrete><final>(powerup_device) {}
+
+  # Used to track when agents enter and exit a volume.
+  volume_device<public> := class<concrete><final>(creative_device_base) {
+    # Signaled when an `agent` enters the device volume.
+    AgentEntersEvent<public>: listenable(agent) = external {}
+
+    # Signaled when an `agent` exits the device volume.
+    AgentExitsEvent<public>: listenable(agent) = external {}
+  }
 
   # Used to create and manipulate volumes of water where players can swim, fish, or drive boats.
   water_device<public> := class<concrete><final>(creative_device_base) {
