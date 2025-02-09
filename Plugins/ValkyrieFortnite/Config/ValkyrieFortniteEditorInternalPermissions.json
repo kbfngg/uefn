@@ -759,8 +759,8 @@
 			"/Script/Engine.PoseAsset":					{ "Rules": ["View","Create"] },
 			"/Script/Engine.UserDefinedEnum":			{ "Rules": ["View","Create"], "Subclasses": "All"},
 			"/Script/Engine.UserDefinedStruct":			{ "Rules": ["View","Create"], "Subclasses": "All"},
-			"/Script/Entity.CoreEntityPrefabBlueprint": { "Rules": ["View","Create"] },
-			"/Script/HarmonixDsp.FusionPatch":			{ "Rules": ["View","Create"] }
+			"/Script/Entity.EntityPrefab":				{ "Rules": ["View","Create"] },
+			"/Script/HarmonixMidi.MidiFile":			{ "Rules": ["View","Import"] }
 		},
 		"AllowedClasses": {
 			"/Script/AnimGraph.AnimBlueprintExtension_Attributes":		{  },
@@ -953,11 +953,11 @@
 			"/Script/Engine.KismetMathLibrary":							{ "Visible": true },
 			"/Script/Engine.KismetSystemLibrary":						{ "Visible": true },
 			"/Script/Engine.PoseLink": {},
-			"/Script/Entity.CoreEntityPrefabBlueprint":					{ "Visible": true },
-			"/Script/EntityLevel.CoreEntityLevel":						{ },
+			"/Script/Entity.EntityPrefab":								{ "Visible": true },
+			"/Script/EntityLevel.EntityLevel":							{ },
 			"/Script/FortniteGame.BaseUEFNAnimInstance":				{ "Visible": true },
 			"/Script/FortniteGame.UEFNCustomAgentAnimInstance":			{ "Visible": true },
-			"/Script/HarmonixDsp.FusionPatch":							{ },
+			"/Script/HarmonixMidi.MidiFile":							{  },
 			"/Script/UnrealEd.EdGraphNode_Comment":						{ "Visible": true },
 			"/Script/ValkyrieCommon.ValkyrieContentWorkerDebugManager": { "Visible": true },
 			"/Script/VerseQuery.EntityQueryManager":					{ },
@@ -1032,7 +1032,7 @@
 		},
 		"AllowedImportExtensions": {
 			"+": [
-				"fusion"
+				"mid"
 			]
 		}
 	},

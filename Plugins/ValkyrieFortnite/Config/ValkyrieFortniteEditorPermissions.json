@@ -167,7 +167,8 @@
 			"/Script/LiveLinkControlRig.RigUnit_LiveLinkGetTransformByName",
 			"/Script/LiveLinkControlRig.RigUnit_LiveLinkGetParameterValueByName",
 			"/Script/LiveLinkControlRig.RigUnit_LiveLinkEvaluteFrameTransform",
-			"/Script/LiveLinkControlRig.RigUnit_LiveLinkEvaluateInputDeviceValue"
+			"/Script/LiveLinkControlRig.RigUnit_LiveLinkEvaluateInputDeviceValue",
+			"/Script/UMG.WidgetTransform"
 		],
 		"AllowedPinCategories": [
 			"bool",
@@ -207,8 +208,13 @@
 	"_comment_ValkyrieAudioSettings": "Properties related to Audio including SoundWaves, SoundCues, Metasounds, etc.",
 	"ValkyrieAudioSettings": {
 		"MaxSoundWaveImportLengthSeconds": 900,
-		"bEnableLoadingBehaviorForceInline": false
-
+		"bEnableLoadingBehaviorForceInline": false,
+		"AllowedCompressionTypes" : {
+			"+": [
+				"BinkAudio",
+				"PCM"
+			]
+		}
 	},
 	"_comment_ValkyrieUMGSettings": "Properties related to UMG, including the UMG editor and MVVM framework",
 	"ValkyrieUMGSettings": {
@@ -243,8 +249,9 @@
 		],
 		"AllowedMVVMConversionClass": [
 			"/Script/CRD_ModalDialogUI.CreativeModalDialogAllowedConversionFunction",
-			"/Script/VerseFortniteUI.VerseFortniteUIAllowedConversionLibrary"
-		]
+			"/Script/VerseFortniteUI.VerseFortniteUIAllowedConversionLibrary",
+		],
+		"DeniedMVVMConversionClass": []
 	},
 	"_comment_ValkyrieEditorUtilitySettings": "Properties related to EditorUtility, affecting top level Utilities menu (TODO) & scripted actions. Widgets must also be added to LevelEditor tab allowlist.",
 	"ValkyrieEditorUtilitySettings": {
@@ -297,12 +304,13 @@
 			"exr",
 			"fbx",
 			"flac",
+			"fusion",
 			"glb",
 			"gltf",
 			"hdr",
 			"jpeg",
 			"jpg",
-			"json",
+			"json",			
 			"obj",
 			"ogg",
 			"pcx",
@@ -436,15 +444,16 @@
 			"/Script/FortniteGame.FortItemDefinition":			{ "Rules": ["View"], "Subclasses": "All" },
 			"/Script/HairStrandsCore.GroomAsset": 				{ "Rules": [ "View", "Create", "Import" ] },
 			"/Script/HairStrandsCore.GroomBindingAsset":		{ "Rules": [ "View", "Create" ] },
+			"/Script/HarmonixDsp.FusionPatch":					{ "Rules": [ "View", "Create" ] },			
 			"/Script/ImgMedia.ImgMediaSource":					{ "Rules": ["View","Create"] },
 			"/Script/Landscape.LandscapeLayerInfoObject":		{ "Rules": ["View","Create"] },
 			"/Script/Landscape.LandscapeGrassType":				{ "Rules": ["View","Create"] },
 			"/Script/LevelSequence.LevelSequence":				{ "Rules": ["View","Create","Import","Export"], "Subclasses": "NativeOnly" },
-			"/Script/ModelViewViewModel.MVVMViewModelBlueprintGeneratedClass": { "Rules": ["View","Create"] },
 			"/Script/Niagara.NiagaraEffectType":				{ "Rules": ["View"] },
 			"/Script/Niagara.NiagaraEmitter":					{ "Rules": ["View","Create"] },
 			"/Script/Niagara.NiagaraScript":					{ "Rules": ["View","Create"] },
 			"/Script/Niagara.NiagaraSystem":					{ "Rules": ["View","Create","Public"] },
+			"/Script/Niagara.NiagaraAssetTagDefinitions":			{ "Rules": ["View"] },
 			"/Script/PhysicsCore.PhysicalMaterial":				{ "Rules": ["View"] },
 			"/Script/Solaris.VerseClass":						{ "Rules": ["View"] },
 			"/Script/TakesCore.TakePreset":				{ "Rules": ["View","Create"] },
@@ -1409,6 +1418,7 @@
 			"/Script/HairStrandsCore.GroomBindingAsset": 						{ "Visible": true },
 			"/Script/HairStrandsCore.GroomComponent": 							{ "Visible": true },
 			"/Script/HairStrandsCore.GroomImportOptions":						{  },
+			"/Script/HarmonixDsp.FusionPatch":									{  },
 			"/Script/ImgMedia.ImgMediaSource": 									{  },
 			"/Script/InterchangeCore.InterchangeBaseNode":						{  },
 			"/Script/InterchangeCore.InterchangeBaseNodeContainer":				{  },
@@ -1481,6 +1491,8 @@
 			"/Script/MediaAssets.MediaSoundComponent":							{  },
 			"/Script/MediaAssets.MediaTexture":     							{  },
 			"/Script/ModelViewViewModel.MVVMViewClass":							{  },
+			"/Script/ModelViewViewModel.MVVMViewModelBase":						{ "Visible": false },
+			"/Script/ModelViewViewModel.MVVMViewModelContextResolver":			{ "Visible": false },
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintView":			{  },
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewEvent":{  },
 			"/Script/ModelViewViewModelBlueprint.MVVMBlueprintViewConversionFunction":{  },
@@ -1932,7 +1944,7 @@
 				"DenyList": [ "ItemDef_FindInPlaylists", "GameplayTags_Edit" ]
 			},
 			"ContentBrowser.AssetContextMenu.FortPlaysetItemDefinition": {
-				"DenyList": [ "AssetAction_CheckoutPlaysetRelatedFiles", "AssetAction_GenerateAllPlaysetsInTheGame", "AssetAction_GeneratePlayset", "AssetAction_SaveAllPlaysets", "AssetAction_SavePlaysets", "AssetAction_ValidateAllPlaysets", "AssetAction_ValidatePlaysets" ]
+				"DenyList": [ "AssetAction_CheckoutPlaysetRelatedFiles", "AssetAction_GeneratePlaysetProps", "AssetAction_GenerateAllPlaysetsInTheGame", "AssetAction_GeneratePlayset", "AssetAction_SaveAllPlaysets", "AssetAction_SavePlaysets", "AssetAction_ValidateAllPlaysets", "AssetAction_ValidatePlaysets" ]
 			},
 			"ContentBrowser.AssetContextMenu.FortPlaysetPropItemDefinition": {
 				"DenyList": [ "AssetAction_GenerateAllPlaysetPropThumbnailsInTheGame", "AssetAction_GenerateAllPlaysetsInTheGame", "AssetAction_GeneratePlaysetPropThumbnails" ]
@@ -1975,6 +1987,7 @@
 					"ValidateActors",
 					"TransformSubMenu",
 					"PivotSubMenu",
+					"PilotSelectedActor",
 					"GroupMenu",
 					"meshPerfEntry",
 					"DeviceScriptsCopyReference",
@@ -2464,7 +2477,6 @@
 			"VerseDeviceStarterGames",
 			"VKT_Animation101",
 			"VKT_Verse_Standup",
-			"VKT_VerseDevicesStarter",
 			"VKT_Triad_Infiltration",
 			"VKT_Verse_Parkour",
 			"VKT_Verse_Detonation",
@@ -3030,7 +3042,7 @@
 			},
 			{
 				"Type": "/Script/ValkyrieEditor.ValkyrieEditorConfig",
-				"AllowList": [ "DefaultProjectName", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "bAssignProjectVersePathAutomatically", "ReferencedContentCacheSizeGB", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "bEnableIterativeValidation", "bLoadAssetsForValidation", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "EnabledPermissions", "EffectivePermissions", "EntitledPermissions" ]
+				"AllowList": [ "DefaultProjectName", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "bAssignProjectVersePathAutomatically", "bModalProjectBrowser", "ReferencedContentCacheSizeGB", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "bEnableIterativeValidation", "bLoadAssetsForValidation", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "EnabledPermissions", "EffectivePermissions", "EntitledPermissions" ]
 			},
 			{
 				"Type": "/Script/CinematicCamera.CineCameraActor",
@@ -3180,7 +3192,7 @@
 			},
 			{
 				"Type": "/Script/Engine.SoundWave",
-				"AllowList": [ "NumChannels", "SampleRate", "ImportedSampleRate", "Duration", "TotalSamples", "ModulationSettings", "LoadingBehavior" ]
+				"AllowList": [ "NumChannels", "SampleRate", "ImportedSampleRate", "Duration", "TotalSamples", "ModulationSettings", "LoadingBehavior", "SoundAssetCompressionType" ]
 			},
 			{
 				"Type": "/Script/AudioModulation.SoundControlBus",
@@ -3196,7 +3208,7 @@
 			},
 			{
 				"Type": "/Script/Engine.SoundCue",
-				"AllowList": [ "SoundCueGraph", "VirtualizationMode" ]
+				"AllowList": [ "SoundCueGraph", "VirtualizationMode", "AttenuationSettings" ]
 			},
 			{
 				"Type": "/Script/Niagara.NiagaraDataInterfaceAudioPlayer",
@@ -3241,6 +3253,11 @@
 			},
 			{
 				"Type": "/NPCDefault/Types/CharacterType_Guard.CharacterType_Guard_C",
+				"AllowList": [ "DisplayName" ],
+				"DenyList": [ "SelectedAI" ]
+			},
+			{
+				"Type": "/LimeAISpawnerGuard/SpawnDefinitions/Types/CharacterType_LimeGuard.CharacterType_LimeGuard_C",
 				"AllowList": [ "DisplayName" ],
 				"DenyList": [ "SelectedAI" ]
 			},
@@ -3340,6 +3357,60 @@
 				"Type": "/CRD_AISpawner/SpawnDefinitions/Modifiers/CharacterModifier_WildlifeVerseBehavior.CharacterModifier_WildlifeVerseBehavior_C",
 				"AllowList": [ "NPCBehaviorScript"]
 			},
+						{
+				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimeAwareness.CharacterModifier_LimeAwareness_C",
+				"bAllowListAllProperties": true,
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimeEffects.CharacterModifier_LimeEffects_C",
+				"bAllowListAllProperties": false,
+				"bAllowListAllSubclassProperties": false,
+				"AllowList": [ "SpawnEffect", "DeathEffect" ]
+			},
+			{
+				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimeHealth.CharacterModifier_LimeHealth_C",
+				"bAllowListAllProperties": true,
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimeMovement.CharacterModifier_LimeMovement_C",
+				"bAllowListAllProperties": true,
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimeGuardBehavior.CharacterModifier_LimeGuardBehavior_C",
+				"DenyList": [ "bKeepDefaultBehavior", "bCanUseDiving", "bCanUseGliding", "bCanUseZiplines", "bCanReviveTeammates" ],
+				"bAllowListAllProperties": true
+			},
+			{
+				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimeGuardVerseBehavior.CharacterModifier_LimeGuardVerseBehavior_C",
+				"DenyList": [ "bKeepDefaultBehavior", "bCanUseDiving", "bCanUseGliding", "bCanUseZiplines", "bCanReviveTeammates" ],
+				"bAllowListAllProperties": true
+			},
+			{
+				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimeGuardInventory.CharacterModifier_LimeGuardInventory_C",
+				"DenyList": [ "SupportedItemTags" ],
+				"bAllowListAllProperties": true
+			},
+			{
+				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimePatrolPath.CharacterModifier_LimePatrolPath_C",
+				"AllowList": [ "PatrolPathGroup", "ChangePatrolPathTarget", "ChangePatrolPathTimer" ]
+			},
+			{
+				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimeGuardPerception.CharacterModifier_LimeGuardPerception_C",
+				"AllowList": [ "bOverrideSightSettings", "SightPerceptionSettings", "bOverrideHearingSettings", "HearingPerceptionSettings"]
+			},
+			{
+				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimeTeam.CharacterModifier_LimeTeam_C",
+				"bAllowListAllProperties": true,
+				"bAllowListAllSubclassProperties": true
+			},
+			{
+				"Type": "/LimeAISpawner/SpawnDefinitions/Modifiers/CharacterModifier_LimeUI.CharacterModifier_LimeUI_C",
+				"bAllowListAllProperties": true,
+				"bAllowListAllSubclassProperties": true
+			},
 			{
 				"Type": "/Script/DelMarTrackRuntime.DelMarTrack",
 				"AllowList": [ "TrackType", "ShowSplinePointNumbers", "bForceValidOOBTube", "bForceValidTrack" ]
@@ -3399,7 +3470,7 @@
 				"Type": "/Script/Engine.WindDirectionalSourceComponent",
 				"bAllowListAllProperties": true,
 				"bAllowListAllSubclassProperties": true
-			}
+			},
 		]
 	},
 	"PropertyEditorStructPermissionList": {

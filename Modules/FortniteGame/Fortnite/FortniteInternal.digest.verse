@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-29.30-CL-32982357
+# Generated from build: ++Fortnite+Release-29.40-CL-33291686
 #################################################
 
 AI<public> := module {
@@ -73,25 +73,19 @@ AI<public> := module {
 
     ToString<epic_internal>(Type: entity_type)<transacts>: string = external {}
 
+    @hide_in_editor
     companion_ai<epic_internal> := class(npc_behavior) {
       OnBegin<override>()<suspends>: void = external {}
     }
 
-    default_npc_behavior<epic_internal> := class(npc_behavior) {
-      OnBegin<override>()<suspends>: void = external {}
-    }
+    @hide_in_editor
+    default_npc_behavior<epic_internal> := class(npc_behavior) {}
 
     # Fortnite NPC AI Management
-    fort_guard_actions_component<native><epic_internal> := class(guard_actions_component) {
+    follower_actions_component<native><epic_internal> := class(fort_guard_actions_component) {
       IsFollowingBehaviorEnabled<native><epic_internal>()<transacts>: logic
 
       # Run the NPC default behavior
-      RunDefaultBehavior<native><epic_internal>()<suspends>: action_result
-    }
-
-    # Fortnite Creature AI Management
-    fort_npc_actions_component<native><epic_internal> := class(npc_actions_component) {
-      # Run the Creature default behavior
       RunDefaultBehavior<native><epic_internal>()<suspends>: action_result
     }
 
@@ -196,6 +190,119 @@ AI<public> := module {
     MaintainFocus<public>(Location: vector3)<suspends>: void
   }
 
+  # Fortnite NPC AI Management
+  fort_guard_actions_component<native><epic_internal> := class(npc_actions_component) {
+    # Attack the navigation obstacle
+    Attack<native><epic_internal>(Target: fort_obstacle_info)<suspends>: action_result
+
+    # Attack the target
+    Attack<native><epic_internal>(Target: target_info)<suspends>: action_result
+
+    # Change stance to crouch
+    Crouch<native><epic_internal>()<suspends>: fallible_action_result
+
+    # Move in range to attack the current target
+    MoveInRangeToAttack<native><epic_internal>()<suspends>: action_result
+
+    # Play an emote
+    PlayEmote<native><epic_internal>(Emote: emote)<suspends>: play_emote_result
+
+    # Play a random emote from the character emotes bank
+    PlayRandomEmote<native><epic_internal>()<suspends>: play_emote_result
+
+    # Revive the specified target
+    Revive<native><epic_internal>(Target: agent)<suspends>: fallible_action_result
+
+    # Roam around the current position. Use the leash to specify the radius, else will roam anywhere.
+    RoamAround<native><epic_internal>()<suspends>: navigation_result
+
+    # Go back to standing
+    StandUp<native><epic_internal>(): action_result
+
+    # Change movement speed to sprint and switch to tactical sprint when energy is full.
+    TacticalSprint<native><epic_internal>()<suspends>: action_result
+  }
+
+  # The different alert levels of a guard.
+  fort_guard_alert_level<native><epic_internal> := enum {
+    # The guard has identified a hostile target.
+    Alerted
+
+    # The guard has identified a hostile target but can't see it any more.
+    LostTarget
+
+    # The guard has seen a hostile target but hasn't identified it yet.
+    Suspicious
+
+    # The guard has not detected any hostile target.
+    Unaware
+  }
+
+  fort_guard_perception_component<native><epic_internal> := class<epic_internal>(npc_perception_component) {
+    # Event when the alert level of the guard has changed.
+    AlertLevelChangedEvent<epic_internal>(): listenable(fort_guard_alert_level) = external {}
+
+    AlertLevelChangedEventInternal<native><epic_internal>: subscribable_event(fort_guard_alert_level) = external {}
+
+    # Event when the current target has changed.
+    CurrentTargetChangedEvent<epic_internal>(): listenable(target_info) = external {}
+
+    CurrentTargetChangedEventInternal<native><epic_internal>: subscribable_event(target_info) = external {}
+
+    # Get the current alert level of the guard.
+    GetAlertLevel<native><epic_internal>()<transacts>: fort_guard_alert_level
+
+    # Get the current alert level of a target for the guard.
+    GetAlertLevel<native><epic_internal>(TargetInfo: target_info)<transacts>: fort_guard_alert_level
+
+    # Get information about the current target.
+    GetCurrentTargetInfo<native><epic_internal>()<transacts><decides>: target_info
+
+    # Get the current damage settings of the guard for an alert level.
+    GetDamageSettings<native><epic_internal>(GuardAlertLevel: fort_guard_alert_level)<transacts>: damage_perception_settings
+
+    # Get the current hearing settings of the guard for an alert level.
+    GetHearingSettings<native><epic_internal>(GuardAlertLevel: fort_guard_alert_level)<transacts>: hearing_perception_settings
+
+    # Get information about the potential current obstacle
+    GetObstacleInfo<native><epic_internal>()<transacts><decides>: fort_obstacle_info
+
+    # Get the current sight settings of the guard for an alert level.
+    GetSightSettings<native><epic_internal>(GuardAlertLevel: fort_guard_alert_level)<transacts>: sight_perception_settings
+
+    # Get the current touch settings of the guard for an alert level.
+    GetTouchSettings<native><epic_internal>(GuardAlertLevel: fort_guard_alert_level)<transacts>: touch_perception_settings
+
+    # Event when a new best obstacle is detected
+    ObstacleChangedEvent<epic_internal>(): listenable(fort_obstacle_info) = external {}
+
+    ObstacleChangedEventInternal<native><epic_internal>: subscribable_event(fort_obstacle_info) = external {}
+
+    # Set the current damage settings of the guard for an alert level.
+    SetDamageSettings<native><epic_internal>(
+      GuardAlertLevel: fort_guard_alert_level,
+      DamageSettings: damage_perception_settings
+    ): void
+
+    # Set the current hearing settings of the guard for an alert level.
+    SetHearingSettings<native><epic_internal>(
+      GuardAlertLevel: fort_guard_alert_level,
+      HearingSettings: hearing_perception_settings
+    ): void
+
+    # Set the current sight settings of the guard for an alert level.
+    SetSightSettings<native><epic_internal>(
+      GuardAlertLevel: fort_guard_alert_level,
+      SightSettings: sight_perception_settings
+    ): void
+
+    # Set the current touch settings of the guard for an alert level
+    SetTouchSettings<native><epic_internal>(
+      GuardAlertLevel: fort_guard_alert_level,
+      TouchSettings: touch_perception_settings
+    ): void
+  }
+
   fort_leashable<native><public> := interface<epic_internal> {
     # Removes the current leash.
     ClearLeash<public>(): void
@@ -240,122 +347,6 @@ AI<public> := module {
     incoming_obstacle
 
     trap_obstacle
-  }
-
-  # Fortnite NPC AI Management
-  guard_actions_component<native><epic_internal> := class(npc_actions_component) {
-    # Attack the navigation obstacle
-    Attack<native><epic_internal>(Target: fort_obstacle_info)<suspends>: action_result
-
-    # Attack the target
-    Attack<native><epic_internal>(Target: target_info)<suspends>: action_result
-
-    # Change stance to crouch
-    Crouch<native><epic_internal>()<suspends>: fallible_action_result
-
-    # Return the current destination of the character
-    GetCurrentDestination<native><override>()<transacts><decides>: vector3
-
-    # Move in range to attack the current target
-    MoveInRangeToAttack<native><epic_internal>()<suspends>: action_result
-
-    # Play an emote
-    PlayEmote<native><epic_internal>(Emote: emote)<suspends>: play_emote_result
-
-    # Play a random emote from the character emotes bank
-    PlayRandomEmote<native><epic_internal>()<suspends>: play_emote_result
-
-    # Revive the specified target
-    Revive<native><epic_internal>(Target: agent)<suspends>: fallible_action_result
-
-    # Roam around the current position. Use the leash to specify the radius, else will roam anywhere.
-    RoamAround<native><epic_internal>()<suspends>: navigation_result
-
-    # Go back to standing
-    StandUp<native><epic_internal>(): action_result
-
-    # Change movement speed to sprint and switch to tactical sprint when energy is full.
-    TacticalSprint<native><epic_internal>()<suspends>: action_result
-  }
-
-  # The different alert levels of a guard.
-  guard_alert_level<native><epic_internal> := enum {
-    # The guard has identified a hostile target.
-    Alerted
-
-    # The guard has identified a hostile target but can't see it any more.
-    LostTarget
-
-    # The guard has seen a hostile target but hasn't identified it yet.
-    Suspicious
-
-    # The guard has not detected any hostile target.
-    Unaware
-  }
-
-  guard_perception_component<native><epic_internal> := class<epic_internal>(npc_perception_component) {
-    # Event when the alert level of the guard has changed.
-    AlertLevelChangedEvent<epic_internal>(): listenable(guard_alert_level) = external {}
-
-    AlertLevelChangedEventInternal<native><epic_internal>: subscribable_event(guard_alert_level) = external {}
-
-    # Event when the current target has changed.
-    CurrentTargetChangedEvent<epic_internal>(): listenable(target_info) = external {}
-
-    CurrentTargetChangedEventInternal<native><epic_internal>: subscribable_event(target_info) = external {}
-
-    # Get the current alert level of the guard.
-    GetAlertLevel<native><epic_internal>()<transacts>: guard_alert_level
-
-    # Get the current alert level of a target for the guard.
-    GetAlertLevel<native><epic_internal>(TargetInfo: target_info)<transacts>: guard_alert_level
-
-    # Get information about the current target.
-    GetCurrentTargetInfo<native><epic_internal>()<transacts><decides>: target_info
-
-    # Get the current damage settings of the guard for an alert level.
-    GetDamageSettings<native><epic_internal>(GuardAlertLevel: guard_alert_level)<transacts>: damage_perception_settings
-
-    # Get the current hearing settings of the guard for an alert level.
-    GetHearingSettings<native><epic_internal>(GuardAlertLevel: guard_alert_level)<transacts>: hearing_perception_settings
-
-    # Get information about the potential current obstacle
-    GetObstacleInfo<native><epic_internal>()<transacts><decides>: fort_obstacle_info
-
-    # Get the current sight settings of the guard for an alert level.
-    GetSightSettings<native><epic_internal>(GuardAlertLevel: guard_alert_level)<transacts>: sight_perception_settings
-
-    # Get the current touch settings of the guard for an alert level.
-    GetTouchSettings<native><epic_internal>(GuardAlertLevel: guard_alert_level)<transacts>: touch_perception_settings
-
-    # Event when a new best obstacle is detected
-    ObstacleChangedEvent<epic_internal>(): listenable(fort_obstacle_info) = external {}
-
-    ObstacleChangedEventInternal<native><epic_internal>: subscribable_event(fort_obstacle_info) = external {}
-
-    # Set the current damage settings of the guard for an alert level.
-    SetDamageSettings<native><epic_internal>(
-      GuardAlertLevel: guard_alert_level,
-      DamageSettings: damage_perception_settings
-    ): void
-
-    # Set the current hearing settings of the guard for an alert level.
-    SetHearingSettings<native><epic_internal>(
-      GuardAlertLevel: guard_alert_level,
-      HearingSettings: hearing_perception_settings
-    ): void
-
-    # Set the current sight settings of the guard for an alert level.
-    SetSightSettings<native><epic_internal>(
-      GuardAlertLevel: guard_alert_level,
-      SightSettings: sight_perception_settings
-    ): void
-
-    # Set the current touch settings of the guard for an alert level
-    SetTouchSettings<native><epic_internal>(
-      GuardAlertLevel: guard_alert_level,
-      TouchSettings: touch_perception_settings
-    ): void
   }
 
   # Perception settings for hearing.
@@ -649,6 +640,39 @@ Animation<public> := module {
     # Get the play_animation_controller for the specified character.
     (InCharacter: fort_character).GetPlayAnimationController<native><public>()<transacts><decides>: play_animation_controller
 
+    npc_play_animation_component<native><epic_internal> := class<epic_internal>(
+      ai_actions_component,
+      play_animation_controller
+    ) {
+      CanPlayAnimation<native><epic_internal>(AnimationSequence: animation_sequence)<transacts><decides>: void
+
+      Play<override>(
+        AnimationSequence: animation_sequence,
+        ?PlayRate: float = external {},
+        ?StartPositionSeconds: float = external {},
+        ?BlendInTime: float = external {},
+        ?BlendOutTime: float = external {}
+      ): play_animation_instance = external {}
+
+      PlayAndAwait<override>(
+        AnimationSequence: animation_sequence,
+        ?PlayRate: float = external {},
+        ?StartPositionSeconds: float = external {},
+        ?BlendInTime: float = external {},
+        ?BlendOutTime: float = external {}
+      )<suspends>: play_animation_result = external {}
+
+      PlayAnimationInternal<native><epic_internal>(
+        AnimationSequence: animation_sequence,
+        PlayAnimationInstance: play_animation_instance,
+        EndsOnBlendOut: logic,
+        PlayRate: float,
+        StartPositionSeconds: float,
+        BlendInTime: float,
+        BlendOutTime: float
+      )<suspends>: play_animation_result
+    }
+
     # An interface for playing an animation on an object.
     play_animation_controller<native><public> := interface<epic_internal> {
       # Start an animation sequence and obtain an instance to query and manipulate.
@@ -732,36 +756,6 @@ Animation<public> := module {
       # The animation was stopped internally.
       Stopped
     }
-  }
-
-  play_animation_component<native><epic_internal> := class<epic_internal>(ai_actions_component, play_animation_controller) {
-    CanPlayAnimation<native><epic_internal>(AnimationSequence: animation_sequence)<transacts><decides>: void
-
-    Play<override>(
-      AnimationSequence: animation_sequence,
-      ?PlayRate: float = external {},
-      ?StartPositionSeconds: float = external {},
-      ?BlendInTime: float = external {},
-      ?BlendOutTime: float = external {}
-    ): play_animation_instance = external {}
-
-    PlayAndAwait<override>(
-      AnimationSequence: animation_sequence,
-      ?PlayRate: float = external {},
-      ?StartPositionSeconds: float = external {},
-      ?BlendInTime: float = external {},
-      ?BlendOutTime: float = external {}
-    )<suspends>: play_animation_result = external {}
-
-    PlayAnimationInternal<native><epic_internal>(
-      AnimationSequence: animation_sequence,
-      PlayAnimationInstance: play_animation_instance,
-      EndsOnBlendOut: logic,
-      PlayRate: float,
-      StartPositionSeconds: float,
-      BlendInTime: float,
-      BlendOutTime: float
-    )<suspends>: play_animation_result
   }
 }
 
@@ -1289,8 +1283,6 @@ Devices<public> := module {
   GetCreativeObjectsWithTags<native><public>(SearchCriteria: tag_search_criteria)<transacts>: []creative_object_interface
 
   HandleMoveToInternalResult<epic_internal>(Result: move_to_internal_result): move_to_result = external {}
-
-  HandleTeleportToResult<epic_internal>(Result: teleport_to_result)<transacts><decides>: void = external {}
 
   Patchwork<public> := module {
     cable_splitter_device<public> := class<concrete><final>(patchwork_device) {}
@@ -4271,7 +4263,7 @@ Devices<public> := module {
 
   # A device used to damage players who collide with it. Can also be used as a trigger to activate other devices.
   pulse_trigger_device<public> := class<concrete><final>(creative_device_base) {
-    # Starts the damage sequence.
+    # Starts the damage pulse.
     Begin<public>(): void = external {}
 
     # Disables this device.
@@ -4280,36 +4272,41 @@ Devices<public> := module {
     # Enables this device.
     Enable<public>(): void = external {}
 
-    # Stops the damage sequence.
+    # Stops the damage pulse.
     End<public>(): void = external {}
 
-    # Returns the damage to be applied to those hit by an active wave. Clamped between `0 <= GetDamage <= 100000`.
+    # Returns the damage to be applied to those hit by an active pulse. Clamped between `0 <= GetDamage <= 100000`.
     GetDamage<public>()<transacts>: float = external {}
 
-    # Returns the total number of waves this sequence will complete before ending its sequence.
-    # `0` indicates the sequence will continue indefinitely.
+    # Returns the total number of times this pulse will complete before ending.
+    # `0` indicates the pulse will continue indefinitely.
     GetLoopCount<public>()<transacts>: int = external {}
 
-    # Returns the tempo (in beats per minute or BPM) at which the waves generated by this sequencer will travel.
+    # Returns the tempo (in beats per minute or BPM) at which the pulses generated by this pulse trigger will travel.
     GetTempo<epic_internal>()<transacts>: float = external {}
 
-    # Returns the speed (in meters per second) at which the waves generated by this sequencer will travel.
+    # Returns the speed (in meters per second) at which the pulses generated by this pulse trigger will travel.
     GetWaveSpeed<public>()<transacts>: float = external {}
 
+    # Resumes the damage pulse from the last position where it was stopped.
+    ResumePulse<public>(): void = external {}
+
+    @deprecated
+    # This function is deprecated. Use `ResumePulse` instead of this.
     # Resumes the damage sequence from the last position where it was stopped.
     ResumeSequence<public>(): void = external {}
 
-    # Sets the damage to be applied to those hit by an active wave. Clamped between `0 <= GetDamage <= 100000`.
-    # Wave visuals will change to reflect whether the wave causes damage or not.
+    # Sets the damage to be applied to those hit by an active pulse. Clamped between `0 <= GetDamage <= 100000`.
+    # Pulse visuals will change to reflect whether the pulse causes damage or not.
     SetDamage<public>(Damage: float): void = external {}
 
-    # Sets the total number of waves this sequence will complete before ending its sequence. `LoopCount = 0` indicates the sequence should continue indefinitely.
+    # Sets the total number of times this pulse will complete before ending. `LoopCount = 0` indicates the pulse should continue indefinitely.
     SetLoopCount<public>(LoopCount: int): void = external {}
 
-    # Sets the tempo (in beats per minute or BPM) at which the waves generated by this sequencer will travel.
+    # Sets the tempo (in beats per minute or BPM) at which the pulses generated by this pulse trigger will travel.
     SetTempo<epic_internal>(Tempo: float): void = external {}
 
-    # Sets the speed (in meters per second) at which the waves generated by this sequencer will travel.
+    # Sets the speed (in meters per second) at which the pulses generated by this pulse trigger will travel.
     SetWaveSpeed<public>(Speed: float): void = external {}
   }
 
@@ -5090,32 +5087,6 @@ Devices<public> := module {
 
     # Signaled when *Team* runs out of respawns.
     TeamOutOfRespawnsEvent<public>: listenable(tuple()) = external {}
-  }
-
-  teleport_to_debug_log<epic_internal> := class(log_channel) {}
-
-  # Results for `TeleportTo` of creative objects and devices.
-  teleport_to_result<native><epic_internal> := enum {
-    # The destination would cause the object to be at least partially outside the island's boundaries.
-    DestinationOutOfBounds
-
-    # `NaN` or `Infinity` in the requested destination.
-    InvalidDestination
-
-    # The object being moved is no longer valid. Example invalid states:
-    #  * The object has been destroyed during gameplay.
-    #  * The object has been destroyed by Verse.
-    #  * The object has the *Register with Structural Grid* option set in UEFN.
-    InvalidObject
-
-    # Success.
-    Ok
-
-    # The object being moved cannot be scaled.
-    ScaleNotAllowed
-
-    # An unknown error occurred. If this happens frequently, contact Epic support.
-    UnknownError
   }
 
   # Customizable rift that allows `agent`s to move instantly between locations. You can use this to move players around your island, or create multi-island experiences with teleporters that take players from one island to another.
@@ -6233,6 +6204,11 @@ Game<public> := module {
     }
   }
 
+  HandleTeleportToResult<epic_internal>(
+    Result: teleport_to_result,
+    TargetTragsform: transform
+  )<transacts><decides>: void = external {}
+
   # Module import path: /Fortnite.com/Game/Item
   Item<public> := module {
     # Module import path: /Fortnite.com/Game/Item/PlayerPickupComponent
@@ -6821,6 +6797,35 @@ Game<public> := module {
 
     # The team this collection of stats corresponds to.
     Team<native><public>: player_team
+  }
+
+  teleport_to_debug_log<epic_internal> := class(log_channel) {}
+
+  # Results for `TeleportTo` of creative objects and devices.
+  teleport_to_result<native><epic_internal> := enum {
+    # There is something colliding with the requested destination.
+    CollidingDestination
+
+    # The destination would cause the object to be at least partially outside the island's boundaries.
+    DestinationOutOfBounds
+
+    # `NaN` or `Infinity` in the requested destination.
+    InvalidDestination
+
+    # The object being moved is no longer valid. Example invalid states:
+    #  * The object has been destroyed during gameplay.
+    #  * The object has been destroyed by Verse.
+    #  * The object has the *Register with Structural Grid* option set in UEFN.
+    InvalidObject
+
+    # Success.
+    Ok
+
+    # The object being moved cannot be scaled.
+    ScaleNotAllowed
+
+    # An unknown error occurred. If this happens frequently, contact Epic support.
+    UnknownError
   }
 }
 
@@ -7424,7 +7429,6 @@ UI<public> := module {
 }
 
 using { /Fortnite.com/AI }
-using { /Fortnite.com/Animation/PlayAnimation }
 using { /Fortnite.com/Assets }
 using { /Fortnite.com/Teams }
 using { /UnrealEngine.com/Abilities }
@@ -7548,9 +7552,9 @@ VerseFortniteGameScript<public> := module {
 
     OnPlayerEliminated<protected>(ElimResult: player_eliminated_result): void = external {}
 
-    OnPlayerJoined<protected>(__dupe___unnamed_parameter_197: player_component): void = external {}
+    OnPlayerJoined<protected>(__dupe___unnamed_parameter_199: player_component): void = external {}
 
-    OnPlayerLeft<protected>(__dupe___unnamed_parameter_198: player_component): void = external {}
+    OnPlayerLeft<protected>(__dupe___unnamed_parameter_200: player_component): void = external {}
 
     OnPostCreate<override>(): void = external {}
 
