@@ -2,8 +2,219 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-33.30-CL-39435251
+# Generated from build: ++Fortnite+Release-34.00-CL-40085084
 #################################################
+
+using { /Fortnite.com/Playspaces }
+using { /UnrealEngine.com/Temporary/SpatialMath }
+using { /UnrealEngine.com/Temporary/UI }
+using { /Verse.org/Colors }
+# Module import path: /Fortnite.com/UI
+(/Fortnite.com:)UI<public> := module {
+  # Get the `fort_hud_controller` for the current `fort_playspace`.
+  ((local:)Playspace: fort_playspace).GetHUDController<native><public>(): fort_hud_controller
+
+  # Deprecated. This function affects all players. Please use `fort_playspace.GetHUDController().HideElements()`.
+  # Hides a set of HUD elements.
+  (PlayerUI: player_ui).HideHUDElements<native><public>(HUDElements: []hud_element_identifier): void
+
+  # Deprecated. This function affects all players. Please use `fort_playspace.GetHUDController().ResetElementVisibility()`.
+  # Resets the visibility for a set of HUD elements.
+  (PlayerUI: player_ui).ResetHUDElementVisibility<native><public>(HUDElements: []hud_element_identifier): void
+
+  # Deprecated. This function affects all players. Please use `fort_playspace.GetHUDController().ShowElements()`.
+  # Shows a set of HUD elements.
+  (PlayerUI: player_ui).ShowHUDElements<native><public>(HUDElements: []hud_element_identifier): void
+
+  # Text button with big and loud styling applied.
+  button_loud<native><public> := class<final>(text_button_base) {}
+
+  # Text button with quiet styling applied.
+  button_quiet<native><public> := class<final>(text_button_base) {}
+
+  # Text button with normal styling applied.
+  button_regular<native><public> := class<final>(text_button_base) {}
+
+  creative_hud_identifier_all<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_build_menu<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_crafting_resources<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_elimination_counter<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_equipped_item<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_experience_level<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_experience_supercharged<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_experience_ui<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_health<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_health_numbers<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_hud_info<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_interaction_prompts<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_map_prompts<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_mimimap<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_minimap<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_pickup_stream<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_player_count<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_player_inventory<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_round_info<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_round_timer<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_shield_numbers<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_shields<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_shileds<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_storm_notifications<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_storm_timer<public> := class<final>(hud_element_identifier) {}
+
+  creative_hud_identifier_team_info<public> := class<final>(hud_element_identifier) {}
+
+  # A HUD controller that allows for showing and hiding of HUD elements.
+  fort_hud_controller<native><public> := interface<epic_internal> {
+    # Hides a set of HUD elements.
+    HideElements<public>(HUDElements: []hud_element_identifier): void
+
+    # Resets the visibility for a set of HUD elements.
+    ResetElementVisibility<public>(HUDElements: []hud_element_identifier): void
+
+    # Shows a set of HUD elements.
+    ShowElements<public>(HUDElements: []hud_element_identifier): void
+  }
+
+  # Used to identify a HUD element.
+  hud_element_identifier<native><public> := class<abstract><epic_internal> {}
+
+  hud_identifier_visual_sound_effect_all<public> := class<final>(hud_element_identifier) {}
+
+  hud_identifier_visual_sound_effect_healing<public> := class<final>(hud_element_identifier) {}
+
+  hud_identifier_visual_sound_effect_loot<public> := class<final>(hud_element_identifier) {}
+
+  hud_identifier_visual_sound_effect_movement<public> := class<final>(hud_element_identifier) {}
+
+  hud_identifier_visual_sound_effect_vehicle<public> := class<final>(hud_element_identifier) {}
+
+  hud_identifier_visual_sound_effect_weapons<public> := class<final>(hud_element_identifier) {}
+
+  hud_identifier_world_resource_gold_currency<public> := class<final>(hud_element_identifier) {}
+
+  hud_identifier_world_resource_ingredient<public> := class<final>(hud_element_identifier) {}
+
+  hud_identifier_world_resource_metal<public> := class<final>(hud_element_identifier) {}
+
+  hud_identifier_world_resource_permanite<public> := class<final>(hud_element_identifier) {}
+
+  hud_identifier_world_resource_stone<public> := class<final>(hud_element_identifier) {}
+
+  hud_identifier_world_resource_wood<public> := class<final>(hud_element_identifier) {}
+
+  player_hud_identifier_all<public> := class<final>(hud_element_identifier) {}
+
+  # Slider with a text value. Displays a slider, its progress bar and value.
+  slider_regular<native><public> := class<final>(widget) {
+    # The maximum value that the slider can haver. Used only during initialization of the widget and not modified by SetMaxValue.
+    DefaultMaxValue<native><public>: float = external {}
+
+    # The minimum value that the slider can haver. Used only during initialization of the widget and not modified by SetMinValue.
+    DefaultMinValue<native><public>: float = external {}
+
+    # The amount to adjust the value by, when using a controller or keyboard. Used only during initialization of the widget and not modified by SetStepSize.
+    DefaultStepSize<native><public>: float = external {}
+
+    # The value to display to the user. Used only during initialization of the widget and not modified by SetValue.
+    DefaultValue<native><public>: float = external {}
+
+    # Gets the maximum value of the slider.
+    GetMaxValue<native><public>(): float
+
+    # Gets the minimum value of the slider.
+    GetMinValue<native><public>(): float
+
+    # Gets the amount to adjust the value by.
+    GetStepSize<native><public>(): float
+
+    # Gets the value of the slider.
+    GetValue<native><public>(): float
+
+    # Subscribable event that fires when the value of the slider has changed.
+    OnValueChanged<public>(): listenable(widget_message) = external {}
+
+    # Sets the maximum value of the slider, will enforce that the sliders maximum value is always larger than or equal to the minimum value.
+    SetMaxValue<native><public>(InMaxValue: float): void
+
+    # Sets the minimum value of the slider, will enforce that the sliders maximum value is always larger than or equal to the minimum value.
+    SetMinValue<native><public>(InMinValue: float): void
+
+    # Sets the amount to adjust the value by, when using a controller or keyboard.
+    SetStepSize<native><public>(InValue: float): void
+
+    # Sets the value of the slider, will clamp the value to be within the sliders minimum and maximum value.
+    SetValue<native><public>(InValue: float): void
+  }
+
+  # Text block widget. Displays text to the user.
+  text_block<native><public> := class<final>(text_base) {
+    # The color of the shadow. Used only during initialization of the widget and not modified by SetShadowColor.
+    DefaultShadowColor<native><public>: color = external {}
+
+    # The direction the shadow is cast. Used only during initialization of the widget and not modified by SetShadowOffset.
+    DefaultShadowOffset<native><public>: ?vector2 = external {}
+
+    # The opacity of the shadow. Used only during initialization of the widget and not modified by SetShadowOpacity.
+    DefaultShadowOpacity<native><public>: type { _X: float where 0.000000 <= _X, _X <= 1.000000 } = external {}
+
+    # Gets the color of the shadow.
+    GetShadowColor<native><public>(): color
+
+    # Gets the direction the shadow is cast.
+    GetShadowOffset<native><public>(): ?vector2
+
+    # Gets the opacity of the shadow.
+    GetShadowOpacity<native><public>(): type { _X: float where 0.000000 <= _X, _X <= 1.000000 }
+
+    # Sets the color of the shadow.
+    SetShadowColor<native><public>(InColor: color): void
+
+    # Sets the direction the shadow is cast.
+    SetShadowOffset<native><public>(InShadowOffset: ?vector2): void
+
+    # Sets the opacity of the shadow.
+    SetShadowOpacity<native><public>(InOpacity: type { _X: float where 0.000000 <= _X, _X <= 1.000000 }): void
+  }
+
+  # Button with text message common base class. Displays a button with a custom message string.
+  text_button_base<native><public> := class<abstract><epic_internal>(widget) {
+    # The text to display to the user. Used only during initialization of the widget and not modified by SetText.
+    DefaultText<localizes><native><public>: message = external {}
+
+    # Gets the text currently in the widget.
+    GetText<native><public>(): string
+
+    # Subscribable event that fires when the button is clicked.
+    OnClick<public>(): listenable(widget_message) = external {}
+
+    # Sets the text displayed in the widget.
+    SetText<native><public>(InText: message): void
+  }
+}
 
 using { /Fortnite.com/Characters }
 using { /Fortnite.com/Teams }
@@ -19,12 +230,20 @@ AI<public> := module {
   # Get the current fort_guard_actions interface for the specified character.
   (InCharacter: fort_character).GetFortGuardActions<native><public>()<transacts><decides>: fort_guard_actions
 
+  @experimental
+  # Get the current fort_guard_perception interface for the specified character.
+  (InCharacter: fort_character).GetFortGuardPerception<native><public>()<transacts><decides>: fort_guard_perception
+
   # Get the current fort_leashable interface for the specified character.
   (InCharacter: fort_character).GetFortLeashable<native><public>()<transacts><decides>: fort_leashable
 
   @experimental
   # Get the current fort_npc_actions interface for the specified character.
   (InCharacter: fort_character).GetFortNPCActions<native><public>()<transacts><decides>: fort_npc_actions
+
+  @experimental
+  # Get the current fort_npc_perception interface for the specified character.
+  (InCharacter: fort_character).GetFortNPCPerception<native><public>()<transacts><decides>: fort_npc_perception
 
   # Get the navigatable interface for the specified character
   (InCharacter: fort_character).GetNavigatable<native><public>()<transacts><decides>: navigatable
@@ -38,7 +257,7 @@ AI<public> := module {
   MakeNavigationTarget<native><public>(Entity: entity)<decides>: navigation_target
 
   # Generate a navigation_target from any position
-  MakeNavigationTarget<native><public>(Position: vector3): navigation_target
+  MakeNavigationTarget<native><public>(Position: (/UnrealEngine.com/Temporary/SpatialMath:)vector3): navigation_target
 
   # Generate a navigation_target from an agent
   MakeNavigationTarget<native><public>(Target: agent): navigation_target
@@ -49,7 +268,7 @@ AI<public> := module {
 
   @experimental
   # Result of an AI action
-  ai_action_result<native><public> := enum {
+  ai_action_result<native><public> := enum<open> {
     # The action has been canceled before completion
     Canceled
 
@@ -68,7 +287,7 @@ AI<public> := module {
     MaintainFocus<public>(Agent: agent)<suspends>: void
 
     # Look At specified location. Will never complete unless interrupted.
-    MaintainFocus<public>(Location: vector3)<suspends>: void
+    MaintainFocus<public>(Location: (/UnrealEngine.com/Temporary/SpatialMath:)vector3)<suspends>: void
   }
 
   @experimental
@@ -91,30 +310,6 @@ AI<public> := module {
   }
 
   @experimental
-  # Fortnite Guards AI actions management
-  fort_guard_actions_component<native><public> := class<epic_internal>(fort_npc_actions_component, fort_guard_actions) {
-    @experimental
-    # Attack the target
-    Attack<native><override>(Target: fort_target_info)<suspends>: ai_action_result
-
-    @experimental
-    # Move in range to attack the current target
-    MoveInRangeToAttack<native><override>()<suspends>: ai_action_result
-
-    @experimental
-    # Play a random emote from the character emotes bank
-    PlayRandomEmote<native><override>()<suspends>: ai_action_result
-
-    @experimental
-    # Revive the specified target
-    Revive<native><override>(Target: agent)<suspends>: ai_action_result
-
-    @experimental
-    # Roam around the current position. Use the fort_leashable_component to specify the radius, else will roam anywhere.
-    RoamAround<native><override>(?MovementType: movement_type = external {})<suspends>: navigation_result
-  }
-
-  @experimental
   # The different alert levels of a guard.
   fort_guard_alert_level<native><public> := enum {
     # The guard has identified a hostile target.
@@ -131,27 +326,27 @@ AI<public> := module {
   }
 
   @experimental
-  # Fortnite guard perception management
-  fort_guard_perception_component<native><public> := class<epic_internal>(fort_npc_perception_component) {
+  # Fortnite NPC perception management
+  fort_guard_perception<native><public> := interface<epic_internal>(fort_npc_perception) {
     @experimental
     # Event when the alert level of the guard has changed.
-    AlertLevelChangedEvent<native><public>: listenable(fort_guard_alert_level) = external {}
+    AlertLevelChangedEvent<public>: listenable(fort_guard_alert_level)
 
     @experimental
     # Event when the current target has changed.
-    CurrentTargetChangedEvent<native><public>: listenable(fort_target_info) = external {}
+    CurrentTargetChangedEvent<public>: listenable(fort_target_info)
 
     @experimental
     # Get the current alert level of the guard.
-    GetAlertLevel<native><public>()<computes><reads>: fort_guard_alert_level
+    GetAlertLevel<public>()<computes><reads>: fort_guard_alert_level
 
     @experimental
     # Get the current alert level of a target for the guard.
-    GetAlertLevel<native><public>(Target: entity)<computes><decides><reads>: fort_guard_alert_level
+    GetAlertLevel<public>(Target: entity)<computes><decides><reads>: fort_guard_alert_level
 
     @experimental
     # Get information about the current target.
-    GetCurrentTargetInfo<native><public>()<computes><decides><reads>: fort_target_info
+    GetCurrentTargetInfo<public>()<computes><decides><reads>: fort_target_info
   }
 
   fort_leashable<native><public> := interface<epic_internal> {
@@ -166,27 +361,11 @@ AI<public> := module {
     # Set custom leash position.
     #  'InnerRadius' ranges from 0.0 to 20000.0 (in centimeters).
     #  'OuterRadius' ranges from 0.0 to 20000.0 (in centimeters) and no less than 'InnerRadius'.
-    SetLeashPosition<public>(Location: vector3, InnerRadius: float, OuterRadius: float): void
-  }
-
-  @experimental
-  # Fortnite NPC leash management
-  fort_leashable_component<native><public> := class<final_super><epic_internal>(component, fort_leashable) {
-    @experimental
-    # Removes the current leash.
-    ClearLeash<native><override>(): void
-
-    @experimental
-    # Set the agent to be the new center of the leash.
-    #  'InnerRadius' ranges from 0.0 to 20000.0 (in centimeters).
-    #  'OuterRadius' ranges from 0.0 to 20000.0 (in centimeters) and no less than 'InnerRadius'.
-    SetLeashAgent<native><override>(Agent: agent, InnerRadius: float, OuterRadius: float): void
-
-    @experimental
-    # Set custom leash position.
-    #  'InnerRadius' ranges from 0.0 to 20000.0 (in centimeters).
-    #  'OuterRadius' ranges from 0.0 to 20000.0 (in centimeters) and no less than 'InnerRadius'.
-    SetLeashPosition<native><override>(Location: vector3, InnerRadius: float, OuterRadius: float): void
+    SetLeashPosition<public>(
+      Location: (/UnrealEngine.com/Temporary/SpatialMath:)vector3,
+      InnerRadius: float,
+      OuterRadius: float
+    ): void
   }
 
   @experimental
@@ -194,76 +373,39 @@ AI<public> := module {
   fort_npc_actions<native><public> := interface<epic_internal>(navigatable, focus_interface) {}
 
   @experimental
-  # Fortnite NPC AI actions management
-  fort_npc_actions_component<native><public> := class<final_super><epic_internal>(component, fort_npc_actions) {
-    @experimental
-    # Return the current destination of the character
-    GetCurrentDestination<native><override>()<transacts><decides>: vector3
-
-    @experimental
-    # Look At specified Agent. Will never complete unless interrupted.
-    MaintainFocus<native><override>(Agent: agent)<suspends>: void
-
-    @experimental
-    # Look At specified location. Will never complete unless interrupted.
-    MaintainFocus<native><override>(Location: vector3)<suspends>: void
-
-    @experimental
-    # Navigate toward the specified target
-    NavigateTo<native><override>(
-      Target: navigation_target,
-      ?MovementType: movement_type = external {},
-      ?ReachRadius: float = external {},
-      ?AllowPartialPath: logic = external {}
-    )<suspends>: navigation_result
-
-    @experimental
-    # Apply a multiplier on the movement speed (Multiplier is clamped between 0.5 and 2)
-    SetMovementSpeedMultiplier<native><override>(Multiplier: float): void
-
-    @experimental
-    # Stop navigation
-    StopNavigation<native><override>(): void
-
-    @experimental
-    # Wait for a specific duration
-    Wait<native><override>(?Duration: float = external {})<suspends>: void
-  }
-
-  @experimental
   # Fortnite NPC perception management
-  fort_npc_perception_component<native><public> := class<final_super><epic_internal>(component) {
+  fort_npc_perception<native><public> := interface<epic_internal> {
     @experimental
     # Get the last known position of a target.
-    GetLastKnownPosition<native><public>(Target: entity)<computes><decides><reads>: vector3
+    GetLastKnownPosition<public>(Target: entity)<computes><decides><reads>: (/UnrealEngine.com/Temporary/SpatialMath:)vector3
 
     @experimental
     # Event when a target is added.
-    TargetAddedEvent<native><public>: listenable(fort_target_info) = external {}
+    TargetAddedEvent<public>: listenable(fort_target_info)
 
     @experimental
     # Event when a target is heard. Hearing sense must be active.
-    TargetHeardEvent<native><public>: listenable(fort_target_info) = external {}
+    TargetHeardEvent<public>: listenable(fort_target_info)
 
     @experimental
     # Event when the info about a target has been updated.
-    TargetInfoUpdatedEvent<native><public>: listenable(fort_target_info) = external {}
+    TargetInfoUpdatedEvent<public>: listenable(fort_target_info)
 
     @experimental
     # Event when a target was removed.
-    TargetRemovedEvent<native><public>: listenable(entity) = external {}
+    TargetRemovedEvent<public>: listenable(entity)
 
     @experimental
     # Event when a target is seen. Sight sense must be active.
-    TargetSeenEvent<native><public>: listenable(fort_target_info) = external {}
+    TargetSeenEvent<public>: listenable(fort_target_info)
 
     @experimental
     # Event when a target is touched. Touch sense must be active.
-    TargetTouchedEvent<native><public>: listenable(fort_target_info) = external {}
+    TargetTouchedEvent<public>: listenable(fort_target_info)
 
     @experimental
     # Information about all detected targets.
-    var<private> DetectedTargets<native><public>: []fort_target_info
+    var<epic_internal> DetectedTargets<public>: []fort_target_info
   }
 
   @experimental
@@ -293,7 +435,7 @@ AI<public> := module {
 
   navigatable<native><public> := interface<epic_internal> {
     # Return the current destination of the character
-    GetCurrentDestination<public>()<transacts><decides>: vector3
+    GetCurrentDestination<public>()<transacts><decides>: (/UnrealEngine.com/Temporary/SpatialMath:)vector3
 
     # Navigate toward the specified target
     NavigateTo<public>(
@@ -354,34 +496,13 @@ Animation<public> := module {
     # Get the play_animation_controller for the specified character.
     (InCharacter: fort_character).GetPlayAnimationController<native><public>()<transacts><decides>: play_animation_controller
 
-    @experimental
-    fort_npc_play_animation_component<native><public> := class<final_super><epic_internal>(
-      component,
-      play_animation_controller
-    ) {
-      Play<override>(
-        AnimationSequence: animation_sequence,
-        ?PlayRate: float = external {},
-        ?StartPositionSeconds: float = external {},
-        ?BlendInTime: float = external {},
-        ?BlendOutTime: float = external {}
-      ): play_animation_instance = external {}
-
-      PlayAndAwait<override>(
-        AnimationSequence: animation_sequence,
-        ?PlayRate: float = external {},
-        ?StartPositionSeconds: float = external {},
-        ?BlendInTime: float = external {},
-        ?BlendOutTime: float = external {}
-      )<suspends>: play_animation_result = external {}
-    }
-
     # An interface for playing an animation on an object.
     play_animation_controller<native><public> := interface<epic_internal> {
       # Start an animation sequence and obtain an instance to query and manipulate.
       Play<public>(
         AnimationSequence: animation_sequence,
         ?PlayRate: float = external {},
+        ?PlayCount: float = external {},
         ?StartPositionSeconds: float = external {},
         ?BlendInTime: float = external {},
         ?BlendOutTime: float = external {}
@@ -391,6 +512,7 @@ Animation<public> := module {
       PlayAndAwait<public>(
         AnimationSequence: animation_sequence,
         ?PlayRate: float = external {},
+        ?PlayCount: float = external {},
         ?StartPositionSeconds: float = external {},
         ?BlendInTime: float = external {},
         ?BlendOutTime: float = external {}
@@ -496,10 +618,10 @@ Characters<public> := module {
     GetAgent<public>()<transacts><decides>: agent
 
     # Returns the location where this `fort_character` is looking or aiming from.
-    GetViewLocation<public>()<transacts>: vector3
+    GetViewLocation<public>()<transacts>: (/UnrealEngine.com/Temporary/SpatialMath:)vector3
 
     # Returns the rotation where this `fort_character` is looking or aiming at.
-    GetViewRotation<public>()<transacts>: rotation
+    GetViewRotation<public>()<transacts>: (/UnrealEngine.com/Temporary/SpatialMath:)rotation
 
     # Sets this `fort_character` visibility to invisible.
     Hide<public>(): void
@@ -556,7 +678,10 @@ Characters<public> := module {
     SprintedEvent<public>(): listenable(tuple(fort_character, logic))
 
     # Teleports this `fort_character` to the provided `Position` and applies the yaw and pitch of `Rotation`. Will fail if the `Position` specified is e.g. outside of the playspace or specifies a place where the character cannot fit.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void
+    TeleportTo<public>(
+      Position: (/UnrealEngine.com/Temporary/SpatialMath:)vector3,
+      Rotation: (/UnrealEngine.com/Temporary/SpatialMath:)rotation
+    )<transacts><decides>: void
   }
 
   # Parameters for `fort_character.PutInStasis` function.
@@ -585,13 +710,13 @@ Devices<public> := module {
   # Returns the simulation entity at the root of the experience this `creative_device` is operating within.
   #   * The simulation entity is the rootmost entity in an experience.
   #   * Fails if this `creative_device` is not operating in a context with a valid SimulationEntity.
-  (CreativeDevice: creative_device).GetSimulationEntity<native><public>()<transacts><decides>: entity
+  (CreativeDevice: creative_device).(/Fortnite.com/Devices:)GetSimulationEntity<native><public>()<transacts><decides>: entity
 
   @experimental
   # Returns the simulation entity at the root of the experience this `creative_object` is operating within.
   #   * The simulation entity is the rootmost entity in an experience.
   #   * Fails if this `creative_object` is not operating in a context with a valid SimulationEntity.
-  (CreativeObject: creative_object).GetSimulationEntity<native><public>()<transacts><decides>: entity
+  (CreativeObject: creative_object).(/Fortnite.com/Devices:)GetSimulationEntity<native><public>()<transacts><decides>: entity
 
   # Returns the `fort_playspace` that `CreativeObject` belongs to.
   (CreativeObject: creative_object_interface).GetPlayspace<native><public>()<transacts>: fort_playspace
@@ -743,13 +868,13 @@ Devices<public> := module {
     # Instead of specifying the actual keyframe positions, we specify the keyframe *deltas*. This allows us to treat the initial position of the prop as keyframe 0 and avoid the question of how to get the prop to its initial location. For a `animation_mode.Loop` animation, the net rotation and translation must both be zero. Each delta is interpreted as a world-space transformation to be concatenated onto the previous transform(s).
     keyframe_delta<native><public> := struct {
       # Target position of the `creative_prop`. This is a world-space coordinate in cm, with the initial position of the `creative_prop` acting as coordinate (0,0).
-      DeltaLocation<native><public>: vector3
+      DeltaLocation<native><public>: (/UnrealEngine.com/Temporary/SpatialMath:)vector3
 
       # Target rotation for the `creative_prop`. Rotations are relative to the starting rotation of the `creative_prop`
-      DeltaRotation<native><public>: rotation
+      DeltaRotation<native><public>: (/UnrealEngine.com/Temporary/SpatialMath:)rotation
 
       # Target scale for the `creative_prop`. Scale is multiplicative to the starting Scale of the `creative_prop`
-      DeltaScale<native><public>: vector3 = external {}
+      DeltaScale<native><public>: (/UnrealEngine.com/Temporary/SpatialMath:)vector3 = external {}
 
       # Interpolation mode for this `keyframe_delta`. See `InterpolationTypes` for standard interpolation options. See `cubic_bezier_parameters` for authoring custom interpolations.
       # Default = `InterpolationTypes.Linear`
@@ -794,7 +919,7 @@ Devices<public> := module {
     # Modify a setting on another Patchwork device in a regularly repeating pattern.
     lfo_modulator_device<public> := class<concrete><final>(patchwork_device) {}
 
-    # Define shared settings for Patchwork devices.
+    # Provides a shared tempo, key, and timeline for Patchwork devices to follow.
     music_manager_device<public> := class<concrete><final>(patchwork_device) {}
 
     # Transpose Patchwork note inputs to follow a chord progression.
@@ -836,8 +961,8 @@ Devices<public> := module {
   #  1: Success or failure results.
   SpawnProp<native><public>(
     Asset: creative_prop_asset,
-    Position: vector3,
-    Rotation: rotation)<transacts>: tuple(?creative_prop,
+    Position: (/UnrealEngine.com/Temporary/SpatialMath:)vector3,
+    Rotation: (/UnrealEngine.com/Temporary/SpatialMath:)rotation)<transacts>: tuple(?creative_prop,
     spawn_prop_result
   )
 
@@ -847,7 +972,7 @@ Devices<public> := module {
   #  1: Success or failure results.
   SpawnProp<native><public>(
     Asset: creative_prop_asset,
-    Transform: transform)<transacts>: tuple(?creative_prop,
+    Transform: (/UnrealEngine.com/Temporary/SpatialMath:)transform)<transacts>: tuple(?creative_prop,
     spawn_prop_result
   )
 
@@ -873,19 +998,29 @@ Devices<public> := module {
   advanced_storm_beacon_device<public> := class<concrete><final>(creative_device_base) {
     # Moves the `advanced_storm_beacon_device` to the specified `Position` and `Rotation` over the specified time, in seconds.
     # Existing storms will not target the new location, but newly generated storms will.
-    MoveTo<override>(Position: vector3, Rotation: rotation, OverTime: float)<suspends>: move_to_result = external {}
+    MoveTo<override>(
+      Position: (/UnrealEngine.com/Temporary/SpatialMath:)vector3,
+      Rotation: (/UnrealEngine.com/Temporary/SpatialMath:)rotation,
+      OverTime: float
+    )<suspends>: move_to_result = external {}
 
     # Moves the `advanced_storm_beacon_device` to the specified `Transform` over the specified time, in seconds.
     # Existing storms will not target the new location, but newly generated storms will.
-    MoveTo<override>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
+    MoveTo<override>(
+      Transform: (/UnrealEngine.com/Temporary/SpatialMath:)transform,
+      OverTime: float
+    )<suspends>: move_to_result = external {}
 
     # Teleports the `advanced_storm_beacon_device` to the specified `Position` and `Rotation`.
     # Existing storms will not target the new location, but newly generated storms will.
-    TeleportTo<override>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
+    TeleportTo<override>(
+      Position: (/UnrealEngine.com/Temporary/SpatialMath:)vector3,
+      Rotation: (/UnrealEngine.com/Temporary/SpatialMath:)rotation
+    )<transacts><decides>: void = external {}
 
     # Teleports the `advanced_storm_beacon_device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
     # Existing storms will not target the new location, but newly generated storms will.
-    TeleportTo<override>(Transform: transform)<transacts><decides>: void = external {}
+    TeleportTo<override>(Transform: (/UnrealEngine.com/Temporary/SpatialMath:)transform)<transacts><decides>: void = external {}
   }
 
   # Used to control a Battle Royale-style storm with up to 50 phases.
@@ -1028,6 +1163,10 @@ Devices<public> := module {
   using { /Verse.org/Simulation }
   # Used to create a customizable turret that can search for nearby targets.
   automated_turret_device<public> := class<concrete><final>(creative_device_base, healthful, healable) {
+    # Set the turret to the same team as the supplied `Agent`.
+    #  * Only usable if `Possible Targets` is not set to `Everyone`.
+    (/Fortnite.com/Devices/automated_turret_device:)SetTeam<public>(Agent: agent): void = external {}
+
     # Triggers when someone enters the activation radius while nobody else is there.
     # Sends the activating `agent`. If the activator is a non-agent then `false` is returned.
     ActivatedEvent<public>: listenable(?agent) = external {}
@@ -1084,10 +1223,6 @@ Devices<public> := module {
     # This is clamped between `2.0` and `100.0` meters. Setting it lower than 2m will disable Targeting.
     SetTargetRange<public>(Range: float): void = external {}
 
-    # Set the turret to the same team as the supplied `Agent`.
-    #  * Only usable if `Possible Targets` is not set to `Everyone`.
-    SetTeam<public>(Agent: agent): void = external {}
-
     # Triggers when the turret finds a target.
     # Sends the `agent` that was found.
     TargetFoundEvent<public>: listenable(agent) = external {}
@@ -1112,6 +1247,53 @@ Devices<public> := module {
 
     # Shows the floating HUD Icons to players, if these have been configured by the device.
     ShowHUD<public>(): void = external {}
+  }
+
+  # A vault door that requires a start of a sequence to damage a number of weakpoints to open.
+  bank_vault_device<public> := class<concrete><final>(creative_device_base, enableable) {
+    # Triggers when a weakpoint is activated. The weakpoint will begin to glow, but does not become vulnerable until a subsequent `WeakpointVulnerableEvent`
+    #  * Sends the `agent` that activated the vault or none if the sequence was triggered by a function, and the `int` index of the weakpoint from 0-4, in order of activation.
+    ActivateWeakpointEvent<public>: listenable(tuple(?agent, int)) = external {}
+
+    # Triggers when a weakpoint is destroyed.
+    #  * Sends the last `agent` that damaged the weakpoint or the `agent` that started the sequence if no external damage was done or none if the sequence was triggered by a function, and the `int` index of the weakpoint from 0-4, in order of activation.
+    DestroyWeakpointEvent<public>: listenable(tuple(?agent, int)) = external {}
+
+    # Disable the device. Pauses vault sequence.
+    Disable<override>(): void = external {}
+
+    # Enable the device.
+    Enable<override>(): void = external {}
+
+    # Destroys the remaining weakpoints and opens the vault door. Requires the device to be enabled.
+    ForceOpen<public>(): void = external {}
+
+    # Succeeds if the device is enabled, fails if it's disabled.
+    IsEnabled<override>()<transacts><decides>: void = external {}
+
+    # Whether the vault sequence is currently active and not paused.
+    IsSequenceActive<public>()<transacts><decides>: void = external {}
+
+    # Triggers when the vault is opened either by the destruction of its weakpoints or by an event.
+    #  * Sends the last `agent` that damaged a weakpoint or the `agent` that started the sequence if no external damage was done or none if the sequence was triggered by a function.
+    OpenEvent<public>: listenable(?agent) = external {}
+
+    # Disable the weakpoint vulnerability and freeze the progress of each one. Weakpoints can only be damaged while the vault sequence is active.
+    PauseSequence<public>(): void = external {}
+
+    # Restores vault to default state, deactivates the device, and heals all weakpoints to max health. Requires the device to be enabled.
+    Reset<public>(): void = external {}
+
+    # Begin the sequence of events to open the vault door without thermite, or unpauses the sequence if it was paused. Requires the device to be enabled. Weakpoints can only be damaged while the vault sequence is active.
+    StartSequence<public>(): void = external {}
+
+    # Triggers when the vault sequence is started by a player or event.
+    #  * Sends the triggering `agent` or none if the sequence was triggered by a function.
+    StartSequenceEvent<public>: listenable(?agent) = external {}
+
+    # Triggers when a weakpoint becomes vulnerable.
+    #  * Sends the `agent` that activated the vault or none if the sequence was triggered by a function, and the `int` index of the weakpoint from 0-4, in order of activation.
+    WeakpointVulnerableEvent<public>: listenable(tuple(?agent, int)) = external {}
   }
 
   # Creates an impenetrable zone that can block `agent` movement and weapon fire.
@@ -1344,6 +1526,9 @@ Devices<public> := module {
     # Sends the `agent` that entered this device area.
     FirstAgentEntersEvent<public>: listenable(agent) = external {}
 
+    # Returns an array of agents that are currently occupying the Capture Area.
+    GetAgentsInVolume<public>()<computes><reads>: []agent = external {}
+
     # Returns the *Capture Height* (in meters) of the capture area.
     GetHeight<public>()<computes><reads>: float = external {}
 
@@ -1352,6 +1537,9 @@ Devices<public> := module {
 
     # Gives control of this device to the capturing `agent`'s team.
     GiveControl<public>(Agent: agent): void = external {}
+
+    # Is true when `Agent` is in the Capture Area.
+    IsInArea<public>(Agent: agent)<transacts><decides>: void = external {}
 
     # Signaled when an item is consumed by this device.
     # Sends the `agent` that provided the item to this device.
@@ -1581,7 +1769,13 @@ Devices<public> := module {
   }
 
   # Used together with `class_selector_device` to create class based gameplay. Defines custom class attributes and inventory loadouts.
-  class_designer_device<public> := class<concrete><final>(creative_device_base) {}
+  class_designer_device<public> := class<concrete><final>(creative_device_base) {
+    # Returns an array of agents that are currently of *Class* defined by this device.
+    GetClassMembers<public>()<computes><reads>: []agent = external {}
+
+    # Is true if `Agent` is on *Class* defined by this device.
+    IsOfClass<public>(Agent: agent)<transacts><decides>: void = external {}
+  }
 
   # Used to allow players to select their *Class* from a *Class Selector UI*.
   class_selector_ui_device<public> := class<concrete><final>(creative_device_base) {
@@ -1613,16 +1807,16 @@ Devices<public> := module {
 
   # Used to place a collectible item into the world.
   collectible_object_device<public> := class<concrete><final>(creative_device_base) {
+    # Immediately respawns the object for the instigating agent.
+    # This will be affected by the option *Consume If Collected By*.
+    (/Fortnite.com/Devices/collectible_object_device:)Respawn<public>(Agent: agent): void = external {}
+
     # Signaled when the collectible item is collected.
     # Sends the `agent` that collected the item.
     CollectedEvent<public>: listenable(agent) = external {}
 
     # Makes the collectible invisible.
     Hide<public>(): void = external {}
-
-    # Immediately respawns the object for the instigating agent.
-    # This will be affected by the option *Consume If Collected By*.
-    Respawn<public>(Agent: agent): void = external {}
 
     # Immediately respawns the object for all agents.
     RespawnForAll<public>(): void = external {}
@@ -1633,6 +1827,9 @@ Devices<public> := module {
 
   # Used to create a tile that changes colors when `agent`s interact with it.
   color_changing_tiles_device<public> := class<concrete><final>(creative_device_base) {
+    # Sets the color of the tile to `Agent`'s team color.
+    (/Fortnite.com/Devices/color_changing_tiles_device:)SetTeam<public>(Agent: agent): void = external {}
+
     # Signaled when this device changes color.
     # Sends the `agent` that interacted with this device.
     ActivatedEvent<public>: listenable(agent) = external {}
@@ -1648,9 +1845,6 @@ Devices<public> := module {
 
     # Resets this device to its initial settings.
     Reset<public>(): void = external {}
-
-    # Sets the color of the tile to `Agent`'s team color.
-    SetTeam<public>(Agent: agent): void = external {}
 
     # Shows this device in the world.
     Show<public>(): void = external {}
@@ -1751,7 +1945,7 @@ Devices<public> := module {
     # Check if the device is enabled.
     IsEnabled<override>()<transacts><decides>: void = external {}
 
-    # Signalled when a choice node tied to this event is selected by an `agent`.
+    # Signaled when a choice node tied to this event is selected by an `agent`.
     # Sends the `agent` that triggered the event, and `EventNumber` is the number specified in the Conversation Event node.
     OnConversationEvent<public>: listenable(tuple(agent, int)) = external {}
 
@@ -1791,16 +1985,23 @@ Devices<public> := module {
   # Inherit from this to create a custom creative device. Inherited classes will appear in the UEFN content browser the next time Verse compiles. Instances of your derived `creative_device` can then be placed in the island by dragging them from the content browser into the scene.
   creative_device<native><public> := class<concrete>(creative_object_interface) {
     # Returns the transform of the `creative_device` with units in cm.
-    GetTransform<override>()<transacts>: transform = external {}
+    GetTransform<override>()<transacts>: (/UnrealEngine.com/Temporary/SpatialMath:)transform = external {}
 
     # Hides this device in the world.
     Hide<native><public>()<transacts>: void
 
     # Moves the `creative_device` to the specified `Position` and `Rotation` over the specified time, in seconds. If an animation is currently playing on the `creative_device` it will be stopped and put into the `AnimationNotSet` state.
-    MoveTo<public>(Position: vector3, Rotation: rotation, OverTime: float)<suspends>: move_to_result = external {}
+    MoveTo<public>(
+      Position: (/UnrealEngine.com/Temporary/SpatialMath:)vector3,
+      Rotation: (/UnrealEngine.com/Temporary/SpatialMath:)rotation,
+      OverTime: float
+    )<suspends>: move_to_result = external {}
 
     # Moves the `creative_device` to the specified `Transform` over the specified time, in seconds. If an animation is currently playing on the `creative_device` it will be stopped and put into the `AnimationNotSet` state.
-    MoveTo<public>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
+    MoveTo<public>(
+      Transform: (/UnrealEngine.com/Temporary/SpatialMath:)transform,
+      OverTime: float
+    )<suspends>: move_to_result = external {}
 
     # Override to add custom logic when the game experience begins.
     OnBegin<native_callable><public>()<suspends>: void = external {}
@@ -1812,10 +2013,13 @@ Devices<public> := module {
     Show<native><public>()<transacts>: void
 
     # Teleports the `creative_device` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
+    TeleportTo<public>(
+      Position: (/UnrealEngine.com/Temporary/SpatialMath:)vector3,
+      Rotation: (/UnrealEngine.com/Temporary/SpatialMath:)rotation
+    )<transacts><decides>: void = external {}
 
     # Teleports the `creative_device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
+    TeleportTo<public>(Transform: (/UnrealEngine.com/Temporary/SpatialMath:)transform)<transacts><decides>: void = external {}
   }
 
   # Internal asset for representing creative devices.
@@ -1828,19 +2032,29 @@ Devices<public> := module {
   creative_object<native><public> := class<epic_internal>(creative_object_interface) {
     # Returns the transform of the `creative_object` with units in cm. You must check `creative_object.IsValid` before calling this if there is a possibility the object has been disposed or destroyed by gameplay.
     # Otherwise a runtime error will result.
-    GetTransform<override>()<transacts>: transform = external {}
+    GetTransform<override>()<transacts>: (/UnrealEngine.com/Temporary/SpatialMath:)transform = external {}
 
     # Moves the `creative_object` to the specified `Position` and `Rotation` over the specified time, in seconds. If an animation is currently playing on the `creative_object` it will be stopped and put into the `AnimationNotSet` state.
-    MoveTo<public>(Position: vector3, Rotation: rotation, OverTime: float)<suspends>: move_to_result = external {}
+    MoveTo<public>(
+      Position: (/UnrealEngine.com/Temporary/SpatialMath:)vector3,
+      Rotation: (/UnrealEngine.com/Temporary/SpatialMath:)rotation,
+      OverTime: float
+    )<suspends>: move_to_result = external {}
 
     # Moves the `creative_object` to the specified `Transform` over the specified time, in seconds. If an animation is currently playing on the `creative_object` it will be stopped and put into the `AnimationNotSet` state.
-    MoveTo<public>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
+    MoveTo<public>(
+      Transform: (/UnrealEngine.com/Temporary/SpatialMath:)transform,
+      OverTime: float
+    )<suspends>: move_to_result = external {}
 
     # Teleports the `creative_object` to the specified `Position` and `Rotation`.
-    TeleportTo<public>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
+    TeleportTo<public>(
+      Position: (/UnrealEngine.com/Temporary/SpatialMath:)vector3,
+      Rotation: (/UnrealEngine.com/Temporary/SpatialMath:)rotation
+    )<transacts><decides>: void = external {}
 
     # Teleports the `creative_object` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
-    TeleportTo<public>(Transform: transform)<transacts><decides>: void = external {}
+    TeleportTo<public>(Transform: (/UnrealEngine.com/Temporary/SpatialMath:)transform)<transacts><decides>: void = external {}
   }
 
   creative_object_interface<native><public> := interface<epic_internal>(positional) {}
@@ -1987,6 +2201,9 @@ Devices<public> := module {
     # Signaled when an `agent` exits the volume.
     # Sends the `agent` exiting the volume.
     AgentExitsEvent<public>: listenable(agent) = external {}
+
+    # Returns an array of agents that are currently occupying the volume.
+    GetAgentsInVolume<public>()<computes><reads>: []agent = external {}
 
     # Returns the damage to be applied each tick within the volume.
     GetDamage<public>()<transacts>: int = external {}
@@ -2199,6 +2416,9 @@ Devices<public> := module {
 
   # Used to spawn fireflies that can be collected by `agent`s.
   firefly_spawner_device<public> := class<concrete><final>(creative_device_base) {
+    # Spawns new fireflies. The previous fireflies will be destroyed before a new fireflies spawn.
+    (/Fortnite.com/Devices/firefly_spawner_device:)Respawn<public>(): void = external {}
+
     # Disables this device.
     Disable<public>(): void = external {}
 
@@ -2211,9 +2431,6 @@ Devices<public> := module {
 
     # Resets respawn count.
     ResetRespawnCount<public>(): void = external {}
-
-    # Spawns new fireflies. The previous fireflies will be destroyed before a new fireflies spawn.
-    Respawn<public>(): void = external {}
   }
 
   # Used to add fishing mechanics to experiences, such as:
@@ -2678,7 +2895,7 @@ Devices<public> := module {
     GetTimeBetweenSpawns<public>()<transacts>: float = external {}
 
     # Sets device *Respawn Item on Timer* option (see `SetTimeBetweenSpawns`)
-    SetEnableRespawnTimer<public>(Respawn: logic): void = external {}
+    SetEnableRespawnTimer<public>((local:)Respawn: logic): void = external {}
 
     # Sets the *Time Between Spawns* (in seconds) after an item is collected before the next is spawned, if this device has *Respawn Item on Timer* enabled (see `SetEnableRespawnTimer`)
     SetTimeBetweenSpawns<public>(Time: float): void = external {}
@@ -2812,6 +3029,9 @@ Devices<public> := module {
     # Sends the `agent` exiting this zone.
     AgentExitsEvent<public>: listenable(agent) = external {}
 
+    # Returns an array of agents that are currently occupying the volume.
+    GetAgentsInVolume<public>()<computes><reads>: []agent = external {}
+
     # Is true when `Agent` is in the zone.
     IsInVolume<public>(Agent: agent)<transacts><decides>: void = external {}
 
@@ -2883,6 +3103,9 @@ Devices<public> := module {
     # Triggers when the device becomes enabled after being disabled, potentially through the cooldown state.
     EnabledEvent<public>: listenable(tuple()) = external {}
 
+    # Return the duration of the cooldown delay in seconds. This is the delay between triggering a cooldown and entering the cooldown phase.
+    GetCooldownDelay<public>(): float = external {}
+
     # Return the default duration of the cooldown state in seconds.
     GetDefaultCooldownDuration<public>(): float = external {}
 
@@ -2893,6 +3116,11 @@ Devices<public> := module {
     # Triggers when a player triggers the device.
     # Sends the triggering `agent`.
     PlayerTriggeredEvent<public>: listenable(agent) = external {}
+
+    # Set the duration of the cooldown delay to `Seconds`. This is the delay between triggering a cooldown and entering the cooldown phase.
+    #  * The cooldown delay does not apply to cooldowns triggered by *StartCooldown* or *Disable*.
+    #  * `Seconds` is clamped between `0.0` and `5.0`.
+    SetCooldownDelay<public>(Seconds: float): void = external {}
 
     # Set the default duration of the cooldown state to `Seconds`.
     #  * `Seconds` is clamped between `1.0` and `60.0`.
@@ -2996,6 +3224,18 @@ Devices<public> := module {
     # Signaled when this device has direct line of sight to an `agent`.
     # Sends the `agent` seen by this device.
     DeviceSeesAgentEvent<public>: listenable(agent) = external {}
+
+    # Returns an array of agents that are currently of the class defined by this device.
+    GetLookingAtDeviceAgents<public>()<computes><reads>: []agent = external {}
+
+    # Returns an array of agents that are currently of the class defined by this device.
+    GetPerceivedAgents<public>()<computes><reads>: []agent = external {}
+
+    # Succeeds when `Agent` is registered to this checkpoint.
+    IsLookingAtDevice<public>(Agent: agent)<transacts><decides>: void = external {}
+
+    # Succeeds when `Agent` is registered to this checkpoint.
+    IsPerceived<public>(Agent: agent)<transacts><decides>: void = external {}
   }
 
   # Physics boulder that can be dislodged and damage `agent`s, vehicles, creatures, and structures.
@@ -3097,6 +3337,12 @@ Devices<public> := module {
     # Sends the `agent` that activated this device.
     FirstActivationPerAgentEvent<public>: listenable(agent) = external {}
 
+    # Returns an array of agents that are currently registered to this checkpoint.
+    GetRegisteredAgents<public>()<computes><reads>: []agent = external {}
+
+    # Succeeds when `Agent` is registered to this checkpoint.
+    IsRegistered<public>(Agent: agent)<transacts><decides>: void = external {}
+
     # Registers this checkpoint for `Agent`. This sets the respawn point and can clear `Agent`'s inventory depending on this device's settings. Multiple `agent`s can be registered to this device at one time.
     Register<public>(Agent: agent): void = external {}
   }
@@ -3127,6 +3373,9 @@ Devices<public> := module {
 
     # Returns the number of players currently counted by this device
     GetCount<public>()<transacts>: int = external {}
+
+    # Returns an array of agents that are currently counted by the device.
+    GetCountedAgents<public>()<computes><reads>: []agent = external {}
 
     # Returns the number of players required for this counter to succeed.
     GetTargetCount<public>()<transacts>: int = external {}
@@ -3721,6 +3970,40 @@ Devices<public> := module {
     TimeReachedEvent<public>: listenable(tuple()) = external {}
   }
 
+  # The Rift Point volume is used to interface with and manage the Rift Point item,
+  # and provides an area that enables players to plant the item to create search and destroy style gameplay.
+  rift_point_volume_device<public> := class<concrete><final>(creative_device_base, enableable) {
+    # Sends an event when defusing the Rift Point is canceled, passing in the defusing `agent`.
+    DefuseCancelEvent<public>: listenable(agent) = external {}
+
+    # Sends an event when the Rift Point is defused, passing in the defusing `agent`.
+    DefuseEvent<public>: listenable(agent) = external {}
+
+    # Sends an event when defusing the Rift Point is started, passing in the defusing `agent`.
+    DefuseStartEvent<public>: listenable(agent) = external {}
+
+    # Sends an event when the Rift Point detonates, passing in the planting `agent`.
+    DetonateEvent<public>: listenable(agent) = external {}
+
+    # Disables the device, preventing the Rift Point from being planted.
+    Disable<override>(): void = external {}
+
+    # Enables the device, allowing the Rift Point to be planted.
+    Enable<override>(): void = external {}
+
+    # Succeeds if the component is enabled, fails if it’s disabled.
+    IsEnabled<override>()<transacts><decides>: void = external {}
+
+    # Sends an event when planting the Rift Point is canceled, passing in the planting `agent`.
+    PlantCancelEvent<public>: listenable(agent) = external {}
+
+    # Sends an event when the Rift Point is planted, passing in the planting `agent`.
+    PlantEvent<public>: listenable(agent) = external {}
+
+    # Sends an event when planting the Rift Point is started, passing in the planting `agent`.
+    PlantStartEvent<public>: listenable(agent) = external {}
+  }
+
   # Used to generate random numbers between a minimum and maximum value. Events are signaled when numbers are generated.
   #  * *Value Limit 1* is the minimum value for generation.
   #  * *Value Limit 2* is the maximum value for generation.
@@ -4168,6 +4451,9 @@ Devices<public> := module {
     # Enables volume locking which prevents users from leaving the volume once they've entered.
     EnableVolumeLocking<public>(): void = external {}
 
+    # Returns an array of agents that are currently occupying the volume.
+    GetAgentsInVolume<public>()<computes><reads>: []agent = external {}
+
     # Is true when `Agent` is in the volume.
     IsInVolume<public>(Agent: agent)<transacts><decides>: void = external {}
 
@@ -4316,22 +4602,32 @@ Devices<public> := module {
 
     # Moves the `storm_controller_device` to the specified `Position` and `Rotation` over the specified time, in seconds.
     # Existing storms will not target the new location, but newly generated storms will.
-    MoveTo<override>(Position: vector3, Rotation: rotation, OverTime: float)<suspends>: move_to_result = external {}
+    MoveTo<override>(
+      Position: (/UnrealEngine.com/Temporary/SpatialMath:)vector3,
+      Rotation: (/UnrealEngine.com/Temporary/SpatialMath:)rotation,
+      OverTime: float
+    )<suspends>: move_to_result = external {}
 
     # Moves the `storm_controller_device` to the specified `Transform` over the specified time, in seconds.
     # Existing storms will not target the new location, but newly generated storms will.
-    MoveTo<override>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
+    MoveTo<override>(
+      Transform: (/UnrealEngine.com/Temporary/SpatialMath:)transform,
+      OverTime: float
+    )<suspends>: move_to_result = external {}
 
     # Signaled when storm resizing ends. Use this with the *On Finish Behavior* option for better controls.
     PhaseEndedEvent<public>: listenable(tuple()) = external {}
 
     # Teleports the `storm_controller_device` to the specified `Position` and `Rotation`.
     # Existing storms will not target the new location, but newly generated storms will.
-    TeleportTo<override>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
+    TeleportTo<override>(
+      Position: (/UnrealEngine.com/Temporary/SpatialMath:)vector3,
+      Rotation: (/UnrealEngine.com/Temporary/SpatialMath:)rotation
+    )<transacts><decides>: void = external {}
 
     # Teleports the `storm_controller_device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
     # Existing storms will not target the new location, but newly generated storms will.
-    TeleportTo<override>(Transform: transform)<transacts><decides>: void = external {}
+    TeleportTo<override>(Transform: (/UnrealEngine.com/Temporary/SpatialMath:)transform)<transacts><decides>: void = external {}
   }
 
   # Used to spawn and configure an aerial supply drop that can provide players with customized weapons/supplies.
@@ -4501,6 +4797,9 @@ Devices<public> := module {
     # Signaled when an enemy of *Team* is eliminated by a team member.
     # Sends the `agent` team member who eliminated the enemy.
     EnemyEliminatedEvent<public>: listenable(agent) = external {}
+
+    # Returns an array of agents that are currently of the team defined by this device.
+    GetTeamMembers<public>()<computes><reads>: []agent = external {}
 
     # Is true if `Agent` is on *Team*.
     IsOnTeam<public>(Agent: agent)<transacts><decides>: void = external {}
@@ -4761,6 +5060,9 @@ Devices<public> := module {
     # Decrease the tracked value by *Amount to Change on Received Signal* for `Agent`.
     Decrement<public>(Agent: agent): void = external {}
 
+    # Returns an array of agents that currently have this tracker active.
+    GetActiveAgents<public>()<computes><reads>: []agent = external {}
+
     # Returns the target value that must be achieved in order for `CompleteEvent` to trigger.
     # Clamped to `0 <= GetTarget <= 10000`.
     GetTarget<public>()<transacts>: int = external {}
@@ -4850,22 +5152,32 @@ Devices<public> := module {
 
     # Moves the `trick_tile_device` to the specified `Position` and `Rotation` over the specified time, in seconds.
     # Only the trigger will move, the target buildings will not change.
-    MoveTo<override>(Position: vector3, Rotation: rotation, OverTime: float)<suspends>: move_to_result = external {}
+    MoveTo<override>(
+      Position: (/UnrealEngine.com/Temporary/SpatialMath:)vector3,
+      Rotation: (/UnrealEngine.com/Temporary/SpatialMath:)rotation,
+      OverTime: float
+    )<suspends>: move_to_result = external {}
 
     # Moves the `trick_tile_device` to the specified `Transform` over the specified time, in seconds.
     # Only the trigger will move, the target buildings will not change.
-    MoveTo<override>(Transform: transform, OverTime: float)<suspends>: move_to_result = external {}
+    MoveTo<override>(
+      Transform: (/UnrealEngine.com/Temporary/SpatialMath:)transform,
+      OverTime: float
+    )<suspends>: move_to_result = external {}
 
     # Restores the tile removed when this device was triggered.
     Reset<public>(): void = external {}
 
     # Teleports the `trick_tile_device` to the specified `Position` and `Rotation`.
     # Only the trigger will teleport, the target buildings will not change.
-    TeleportTo<override>(Position: vector3, Rotation: rotation)<transacts><decides>: void = external {}
+    TeleportTo<override>(
+      Position: (/UnrealEngine.com/Temporary/SpatialMath:)vector3,
+      Rotation: (/UnrealEngine.com/Temporary/SpatialMath:)rotation
+    )<transacts><decides>: void = external {}
 
     # Teleports the `trick_tile_device` to the specified location defined by `Transform`, also applies rotation and scale accordingly.
     # Only the trigger will teleport, the target buildings will not change.
-    TeleportTo<override>(Transform: transform)<transacts><decides>: void = external {}
+    TeleportTo<override>(Transform: (/UnrealEngine.com/Temporary/SpatialMath:)transform)<transacts><decides>: void = external {}
 
     # Flips the device between `EnableAgentContactTrigger` and `DisableAgentContactTrigger.
     ToggleAgentContactTrigger<public>(): void = external {}
@@ -5431,6 +5743,12 @@ Devices<public> := module {
 
     # Signaled when an `agent` exits the device volume.
     AgentExitsEvent<public>: listenable(agent) = external {}
+
+    # Returns an array of agents that are currently occupying the volume.
+    GetAgentsInVolume<public>()<computes><reads>: []agent = external {}
+
+    # Succeeds when `Agent` is in the volume.
+    IsInVolume<public>(Agent: agent)<transacts><decides>: void = external {}
   }
 
   # Used to create and manipulate volumes of water where players can swim, fish, or drive boats.
@@ -5618,7 +5936,10 @@ FortPlayerUtilities<public> := module {
   (InAgent: agent).IsSpectator<native><public>()<transacts><decides>: void
 
   # Respawns the character for `InAgent` at the provided `RespawnPosition` and applies the yaw of `RespawnRotation`.
-  (InAgent: agent).Respawn<native><public>(RespawnPosition: vector3, RespawnRotation: rotation)<transacts>: void
+  (InAgent: agent).Respawn<native><public>(
+    RespawnPosition: (/UnrealEngine.com/Temporary/SpatialMath:)vector3,
+    RespawnRotation: (/UnrealEngine.com/Temporary/SpatialMath:)rotation
+  )<transacts>: void
 
   # Returns an `[]player`s currently spectating `InPlayer`.
   (InPlayer: player).GetPlayersSpectating<native><public>()<transacts>: []player
@@ -5686,13 +6007,13 @@ Game<public> := module {
   # This interface is implemented by the round manager living on the simulation entity.
   fort_round_manager<native><public> := interface<epic_internal> {
     # Subscribed callbacks will be invoked when a Fortnite round ends
-    SubscribeRoundEnded<public>(Callback: type { __(): void }): cancelable
+    SubscribeRoundEnded<public>(Callback: type { _(): void }): cancelable
 
     # Subscribed callbacks will be invoked in two scenarios:
     #  - When a new Fortnite round starts
     #  - If a round is ongoing, your callback will be invoked immediately
     # Upon the round ending, all callbacks will be canceled
-    SubscribeRoundStarted<public>(Callback: type { __()<suspends>: void }): cancelable
+    SubscribeRoundStarted<public>(Callback: type { _()<suspends>: void }): cancelable
   }
 
   # Implemented by Fortnite objects that can be passed through game action events, such as damage and heal.
@@ -5768,7 +6089,7 @@ Game<public> := module {
   # Implemented by objects to allow reading position information.
   positional<native><public> := interface<epic_internal> {
     # Returns the transform of the object.
-    GetTransform<public>()<transacts>: transform
+    GetTransform<public>()<transacts>: (/UnrealEngine.com/Temporary/SpatialMath:)transform
   }
 
   # Implemented by Fortnite objects that have shields. A shield is a method of protection that can take incoming damage while leaving the health state unchanged.
@@ -5878,205 +6199,6 @@ Teams<public> := module {
 
     # Agents/teams are neutral. In Fortnite games items and AI not belonging to a `friendly` or `hostile` team are `neutral`.
     Neutral
-  }
-}
-
-using { /Fortnite.com/Playspaces }
-using { /UnrealEngine.com/Temporary/SpatialMath }
-using { /UnrealEngine.com/Temporary/UI }
-using { /Verse.org/Colors }
-# Module import path: /Fortnite.com/UI
-UI<public> := module {
-  # Deprecated. This function affects all players. Please use `fort_playspace.GetHUDController().HideElements()`.
-  # Hides a set of HUD elements.
-  (PlayerUI: player_ui).HideHUDElements<native><public>(HUDElements: []hud_element_identifier): void
-
-  # Deprecated. This function affects all players. Please use `fort_playspace.GetHUDController().ResetElementVisibility()`.
-  # Resets the visibility for a set of HUD elements.
-  (PlayerUI: player_ui).ResetHUDElementVisibility<native><public>(HUDElements: []hud_element_identifier): void
-
-  # Deprecated. This function affects all players. Please use `fort_playspace.GetHUDController().ShowElements()`.
-  # Shows a set of HUD elements.
-  (PlayerUI: player_ui).ShowHUDElements<native><public>(HUDElements: []hud_element_identifier): void
-
-  # Get the `fort_hud_controller` for the current `fort_playspace`.
-  (Playspace: fort_playspace).GetHUDController<native><public>(): fort_hud_controller
-
-  # Text button with big and loud styling applied.
-  button_loud<native><public> := class<final>(text_button_base) {}
-
-  # Text button with quiet styling applied.
-  button_quiet<native><public> := class<final>(text_button_base) {}
-
-  # Text button with normal styling applied.
-  button_regular<native><public> := class<final>(text_button_base) {}
-
-  creative_hud_identifier_all<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_build_menu<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_crafting_resources<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_elimination_counter<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_equipped_item<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_experience_level<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_experience_supercharged<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_experience_ui<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_health<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_health_numbers<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_hud_info<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_interaction_prompts<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_map_prompts<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_mimimap<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_minimap<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_pickup_stream<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_player_count<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_player_inventory<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_round_info<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_round_timer<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_shield_numbers<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_shields<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_shileds<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_storm_notifications<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_storm_timer<public> := class<final>(hud_element_identifier) {}
-
-  creative_hud_identifier_team_info<public> := class<final>(hud_element_identifier) {}
-
-  # A HUD controller that allows for showing and hiding of HUD elements.
-  fort_hud_controller<native><public> := interface<epic_internal> {
-    # Hides a set of HUD elements.
-    HideElements<public>(HUDElements: []hud_element_identifier): void
-
-    # Resets the visibility for a set of HUD elements.
-    ResetElementVisibility<public>(HUDElements: []hud_element_identifier): void
-
-    # Shows a set of HUD elements.
-    ShowElements<public>(HUDElements: []hud_element_identifier): void
-  }
-
-  # Used to identify a HUD element.
-  hud_element_identifier<native><public> := class<abstract><epic_internal> {}
-
-  hud_identifier_world_resource_gold_currency<public> := class<final>(hud_element_identifier) {}
-
-  hud_identifier_world_resource_ingredient<public> := class<final>(hud_element_identifier) {}
-
-  hud_identifier_world_resource_metal<public> := class<final>(hud_element_identifier) {}
-
-  hud_identifier_world_resource_permanite<public> := class<final>(hud_element_identifier) {}
-
-  hud_identifier_world_resource_stone<public> := class<final>(hud_element_identifier) {}
-
-  hud_identifier_world_resource_wood<public> := class<final>(hud_element_identifier) {}
-
-  player_hud_identifier_all<public> := class<final>(hud_element_identifier) {}
-
-  # Slider with a text value. Displays a slider, its progress bar and value.
-  slider_regular<native><public> := class<final>(widget) {
-    # The maximum value that the slider can haver. Used only during initialization of the widget and not modified by SetMaxValue.
-    DefaultMaxValue<native><public>: float = external {}
-
-    # The minimum value that the slider can haver. Used only during initialization of the widget and not modified by SetMinValue.
-    DefaultMinValue<native><public>: float = external {}
-
-    # The amount to adjust the value by, when using a controller or keyboard. Used only during initialization of the widget and not modified by SetStepSize.
-    DefaultStepSize<native><public>: float = external {}
-
-    # The value to display to the user. Used only during initialization of the widget and not modified by SetValue.
-    DefaultValue<native><public>: float = external {}
-
-    # Gets the maximum value of the slider.
-    GetMaxValue<native><public>(): float
-
-    # Gets the minimum value of the slider.
-    GetMinValue<native><public>(): float
-
-    # Gets the amount to adjust the value by.
-    GetStepSize<native><public>(): float
-
-    # Gets the value of the slider.
-    GetValue<native><public>(): float
-
-    # Subscribable event that fires when the value of the slider has changed.
-    OnValueChanged<public>(): listenable(widget_message) = external {}
-
-    # Sets the maximum value of the slider, will enforce that the sliders maximum value is always larger than or equal to the minimum value.
-    SetMaxValue<native><public>(InMaxValue: float): void
-
-    # Sets the minimum value of the slider, will enforce that the sliders maximum value is always larger than or equal to the minimum value.
-    SetMinValue<native><public>(InMinValue: float): void
-
-    # Sets the amount to adjust the value by, when using a controller or keyboard.
-    SetStepSize<native><public>(InValue: float): void
-
-    # Sets the value of the slider, will clamp the value to be within the sliders minimum and maximum value.
-    SetValue<native><public>(InValue: float): void
-  }
-
-  # Text block widget. Displays text to the user.
-  text_block<native><public> := class<final>(text_base) {
-    # The color of the shadow. Used only during initialization of the widget and not modified by SetShadowColor.
-    DefaultShadowColor<native><public>: color = external {}
-
-    # The direction the shadow is cast. Used only during initialization of the widget and not modified by SetShadowOffset.
-    DefaultShadowOffset<native><public>: ?vector2 = external {}
-
-    # The opacity of the shadow. Used only during initialization of the widget and not modified by SetShadowOpacity.
-    DefaultShadowOpacity<native><public>: type { _X: float where 0.000000 <= _X, _X <= 1.000000 } = external {}
-
-    # Gets the color of the shadow.
-    GetShadowColor<native><public>(): color
-
-    # Gets the direction the shadow is cast.
-    GetShadowOffset<native><public>(): ?vector2
-
-    # Gets the opacity of the shadow.
-    GetShadowOpacity<native><public>(): type { _X: float where 0.000000 <= _X, _X <= 1.000000 }
-
-    # Sets the color of the shadow.
-    SetShadowColor<native><public>(InColor: color): void
-
-    # Sets the direction the shadow is cast.
-    SetShadowOffset<native><public>(InShadowOffset: ?vector2): void
-
-    # Sets the opacity of the shadow.
-    SetShadowOpacity<native><public>(InOpacity: type { _X: float where 0.000000 <= _X, _X <= 1.000000 }): void
-  }
-
-  # Button with text message common base class. Displays a button with a custom message string.
-  text_button_base<native><public> := class<abstract><epic_internal>(widget) {
-    # The text to display to the user. Used only during initialization of the widget and not modified by SetText.
-    DefaultText<localizes><native><public>: message = external {}
-
-    # Gets the text currently in the widget.
-    GetText<native><public>(): string
-
-    # Subscribable event that fires when the button is clicked.
-    OnClick<public>(): listenable(widget_message) = external {}
-
-    # Sets the text displayed in the widget.
-    SetText<native><public>(InText: message): void
   }
 }
 
