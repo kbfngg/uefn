@@ -2,7 +2,7 @@
 #################################################
 # Generated Digest of Verse API
 # DO NOT modify this manually!
-# Generated from build: ++Fortnite+Release-33.30-CL-39435251
+# Generated from build: ++Fortnite+Release-34.00-CL-40085084
 #################################################
 
 # Module import path: /Verse.org/Assets
@@ -43,11 +43,11 @@ Colors<public> := module {
 
   # Makes an ACES 2065-1 `color` from sRGB components `Red`, `Green`, and `Blue`.
   # Normal sRGB component values are between `0.0` and `1.0`, but this can handle larger values.
-  MakeColorFromSRGB<native><public>(Red: float, Green: float, Blue: float)<converges>: color
+  MakeColorFromSRGB<native><public>((local:)Red: float, (local:)Green: float, (local:)Blue: float)<converges>: color
 
   # Makes an ACES 2065-1 `color` from the integer sRGB components `Red`, `Green`, and `Blue`.
   # Valid sRGB component values are between '0' and '255', inclusive.
-  MakeColorFromSRGBValues<native><public>(Red: int, Green: int, Blue: int)<converges>: color
+  MakeColorFromSRGBValues<native><public>((local:)Red: int, (local:)Green: int, (local:)Blue: int)<converges>: color
 
   # Makes an ACES 2065-1 `color` from the chromaticity of a blackbody radiator at `Temperature` Kelvin.
   # `Temperature` is clamped such that `0 <= Temperature`.
@@ -62,8 +62,6 @@ Colors<public> := module {
   # Module import path: /Verse.org/Colors/NamedColors
   # Color presets from CSS Color Module 3 Extended color keywords.
   NamedColors<public> := module {
-    (/Verse.org/Colors/NamedColors:)Tan<public>: color = external {}
-
     AliceBlue<public>: color = external {}
 
     AntiqueWhite<public>: color = external {}
@@ -336,6 +334,8 @@ Colors<public> := module {
 
     SteelBlue<public>: color = external {}
 
+    (/Verse.org/Colors/NamedColors:)Tan<public>: color = external {}
+
     Teal<public>: color = external {}
 
     Thistle<public>: color = external {}
@@ -374,31 +374,31 @@ Colors<public> := module {
   }
 
   # Makes an ACES 2065-1 `color` from the component-wise product of `c0` and `c1`.
-  operator'*'<native><public>(c0: color, c1: color)<converges>: color
+  (/Verse.org/Colors:)operator'*'<native><public>(c0: color, c1: color)<converges>: color
 
   # Makes an ACES 2065-1 `color` from each component of `c` scaled by `factor`.
-  operator'*'<native><public>(c: color, factor: float)<converges>: color
+  (/Verse.org/Colors:)operator'*'<native><public>(c: color, factor: float)<converges>: color
 
   # Makes an ACES 2065-1 `color` from each component of `c` scaled by `factor`.
-  operator'*'<native><public>(c: color, factor: int)<converges>: color
+  (/Verse.org/Colors:)operator'*'<native><public>(c: color, factor: int)<converges>: color
 
   # Makes an ACES 2065-1 `color` from each component of `c` scaled by `factor`.
-  operator'*'<native><public>(factor: float, c: color)<converges>: color
+  (/Verse.org/Colors:)operator'*'<native><public>(factor: float, c: color)<converges>: color
 
   # Makes an ACES 2065-1 `color` from each component of `c` scaled by `factor`.
-  operator'*'<native><public>(factor: int, c: color)<converges>: color
+  (/Verse.org/Colors:)operator'*'<native><public>(factor: int, c: color)<converges>: color
 
   # Makes an ACES 2065-1 `color` from the component-wise sum of `c0` and `c1`.
-  operator'+'<native><public>(c0: color, c1: color)<converges>: color
+  (/Verse.org/Colors:)operator'+'<native><public>(c0: color, c1: color)<converges>: color
 
   # Makes an ACES 2065-1 `color` from the component-wise difference of `c0` and `c1`.
-  operator'-'<native><public>(c0: color, c1: color)<converges>: color
+  (/Verse.org/Colors:)operator'-'<native><public>(c0: color, c1: color)<converges>: color
 
   # Makes an ACES 2065-1 `color` from each component of `c` divided by `factor`.
-  operator'/'<native><public>(c: color, factor: float)<converges><decides>: color
+  (/Verse.org/Colors:)operator'/'<native><public>(c: color, factor: float)<converges><decides>: color
 
   # Makes an ACES 2065-1 `color` from each component of `c` divided by `factor`.
-  operator'/'<native><public>(c: color, factor: int)<converges><decides>: color
+  (/Verse.org/Colors:)operator'/'<native><public>(c: color, factor: int)<converges><decides>: color
 }
 
 # Module import path: /Verse.org/Concurrency
@@ -422,6 +422,7 @@ Native<public> := module {
 
   @attribscope_class
   @attribscope_struct
+  @attribscope_enum
   import_as_attribute<epic_internal> := class<computes><internal>(attribute) {}
 }
 
@@ -446,7 +447,7 @@ Simulation<public> := module {
   # Get the seconds that have elapsed since the world began simulating
   GetSimulationElapsedTime<native><public>()<transacts>: float
 
-  MakeLocalizableValue<epic_internal>(Agent: agent): localizable_agent = external {}
+  (/Verse.org/Simulation:)MakeLocalizableValue<epic_internal>(Agent: agent): localizable_agent = external {}
 
   # Waits specified number of seconds and then resumes. If `Seconds` = 0.0 then it waits until next tick/frame/update. If `Seconds` = Inf then it waits forever and only calls back if canceled - such as via `race`. If `Seconds` < 0.0 then it completes immediately and does not yield to other aysnc expressions.
   # Waiting until the next update (0.0) is especially useful in a loop of a coroutine that needs to do some work every update and this yields to other coroutines so that it doesn't hog a processor's resources.
@@ -628,6 +629,327 @@ Simulation<public> := module {
   session<native><public> := class<unique><module_scoped_var_weak_map_key><epic_internal> {}
 
   team<native><public> := class<unique><epic_internal> {}
+}
+
+using { /Verse.org/Native }
+# Module import path: /Verse.org/SpatialMath
+SpatialMath<public> := module {
+  @experimental
+  # Makes a `rotation` by applying `AngleRadians` of left-handed rotation around the local +Forward axis to `InitialRotation`.
+  (InitialRotation: rotation).ApplyLocalRotationForward<public>(AngleRadians: float)<computes><reads>: rotation = external {}
+
+  @experimental
+  # Makes a `rotation` by applying `AngleRadians` of left-handed rotation around the local +Right axis to `InitialRotation`.
+  (InitialRotation: rotation).ApplyLocalRotationRight<public>(AngleRadians: float)<computes><reads>: rotation = external {}
+
+  @experimental
+  # Makes a `rotation` by applying `AngleRadians` of left-handed rotation around the local +Up axis to `InitialRotation`.
+  (InitialRotation: rotation).ApplyLocalRotationUp<public>(AngleRadians: float)<computes><reads>: rotation = external {}
+
+  @experimental
+  # Makes a `rotation` by applying `PitchUpRadians` of right-handed rotation around the local +Right axis to `InitialRotation`.
+  (InitialRotation: rotation).ApplyPitch<native><public>(PitchUpRadians: float)<computes><reads>: rotation
+
+  @experimental
+  # Makes a `rotation` by applying `RollClockwiseRadians` of right-handed rotation around the local +Forward axis to `InitialRotation`.
+  (InitialRotation: rotation).ApplyRoll<native><public>(RollClockwiseRadians: float)<computes><reads>: rotation
+
+  @experimental
+  # Makes a `rotation` by applying `AngleRadians` of left-handed rotation around the world +Forward axis to `InitialRotation`.
+  (InitialRotation: rotation).ApplyWorldRotationForward<native><public>(AngleRadians: float)<computes><reads>: rotation
+
+  @experimental
+  # Makes a `rotation` by applying `AngleRadians` of left-handed rotation around the world +Right axis to `InitialRotation`.
+  (InitialRotation: rotation).ApplyWorldRotationRight<native><public>(AngleRadians: float)<computes><reads>: rotation
+
+  @experimental
+  # Makes a `rotation` by applying `AngleRadians` of left-handed rotation around the world +Up axis to `InitialRotation`.
+  (InitialRotation: rotation).ApplyWorldRotationUp<native><public>(AngleRadians: float)<computes><reads>: rotation
+
+  @experimental
+  # Makes a `rotation` by applying `YawRightRadians` of left-handed rotation around the local +Up axis to `InitialRotation`.
+  (InitialRotation: rotation).ApplyYaw<native><public>(YawRightRadians: float)<computes><reads>: rotation
+
+  @experimental
+  # Makes a `rotation` by composing `AdditionalRotation` to `InitialRotation`.
+  (InitialRotation: rotation).RotateBy<native><public>(AdditionalRotation: rotation)<computes><reads>: rotation
+
+  @experimental
+  # Makes a `rotation` by composing the inverse of `RotationToRemove` from `InitialRotation`. such that InitialRotation = RotateBy(UnrotateBy(InitialRotation, RotationToRemove), RotationToRemove). This is equivalent to RotateBy(InitialRotation, InvertRotation(RotationToRemove))
+  (InitialRotation: rotation).UnrotateBy<native><public>(RotationToRemove: rotation)<computes><reads>: rotation
+
+  @experimental
+  # Returns `Rotation` if it does not contain `NaN`, `Inf` or `-Inf`.
+  (Rotation: rotation).(/Verse.org/SpatialMath:)IsFinite<native><public>()<converges><decides>: rotation
+
+  @experimental
+  # Returns the radians of left-handed `rotation` around the axis of `rotation`. See also `GetAxis`.
+  (Rotation: rotation).GetAngle<native><public>()<computes><reads>: float
+
+  @experimental
+  # Makes a `vector3` from the axis of `rotation`.
+  # If `rotation` is nearly identity, this will return the +Forward axis. See also `GetAngle`.
+  (Rotation: rotation).GetAxis<native><public>()<computes><reads>: vector3
+
+  @experimental
+  # Makes a unit `vector3` pointing in the local space *forward* direction in world space coordinates.
+  # This is equivalent to: `RotateVector(Rotation, vector3{Forward:=1.0, Right:=0.0, Up:=0.0})`.
+  (Rotation: rotation).GetLocalForward<public>()<computes><reads>: vector3 = external {}
+
+  @experimental
+  # Makes a unit `vector3` pointing in the the local space *right* direction in world space coordinates.
+  # This is equivalent to: `RotateVector(Rotation, vector3{Forward:=0.0, Right:=1.0, Up:=0.0})`.
+  (Rotation: rotation).GetLocalRight<public>()<computes><reads>: vector3 = external {}
+
+  @experimental
+  # Makes a unit `vector3` pointing in the local space *up* direction in world space coordinates.
+  # This is equivalent to: `RotateVector(Rotation, vector3{Forward:=0.0, Right:=0.0, Up:=1.0})`.
+  (Rotation: rotation).GetLocalUp<public>()<computes><reads>: vector3 = external {}
+
+  @experimental
+  # Makes an `[]float` with three elements:
+  #  * *yaw* degrees of `rotation`
+  #  * *pitch* degrees of `rotation`
+  #  * *roll* degrees of `rotation`
+  # using the conventions of `MakeRotationFromYawPitchRollDegrees`.
+  (Rotation: rotation).GetYawPitchRollDegrees<native><public>()<computes><reads>: []float
+
+  @experimental
+  # Makes a `rotation` by inverting `Rotation` such that `ApplyRotation(Rotation, Rotation.Invert())) = IdentityRotation`.
+  (Rotation: rotation).Invert<native><public>()<computes><reads>: rotation
+
+  @experimental
+  # Makes a `vector3` by applying `Rotation` to `Vector`.
+  (Rotation: rotation).RotateVector<native><public>(Vector: vector3)<computes><reads>: vector3
+
+  @experimental
+  # Makes a `vector3` by applying the inverse of `Rotation` to `Vector`.
+  (Rotation: rotation).UnrotateVector<native><public>(Vector: vector3)<computes><reads>: vector3
+
+  @experimental
+  # Succeeds when each component of `V` is within `AbsoluteTolerance` of `0.0`.
+  (V: vector3).(/Verse.org/SpatialMath:)IsAlmostZero<public>(AbsoluteTolerance: float)<computes><decides>: void = external {}
+
+  @experimental
+  # Returns `V` if all components are finite.
+  # Fails if any of the components are not finite.
+  (V: vector3).(/Verse.org/SpatialMath:)IsFinite<public>()<computes><decides>: vector3 = external {}
+
+  @experimental
+  # Returns the length of `V`.
+  (V: vector3).Length<public>()<computes><reads>: float = external {}
+
+  @experimental
+  # Returns the length of `V` as if `V.Up = 0.0`.
+  (V: vector3).LengthForwardRight<public>()<computes><reads>: float = external {}
+
+  @experimental
+  # Returns the squared length of `V`.
+  (V: vector3).LengthSquared<public>()<computes>: float = external {}
+
+  @experimental
+  # Returns the squared length of `V` as if `V.Up = 0.0`.
+  (V: vector3).LengthSquaredForwardRight<public>()<computes><reads>: float = external {}
+
+  @experimental
+  # Makes a unit length `vector3` pointing in the same direction of `V`.
+  # Fails if `V.IsAlmostZero[] or not V.IsFinite[]`.
+  (V: vector3).MakeUnitVector<native><public>()<computes><decides><reads>: vector3
+
+  @experimental
+  # Returns the 'smallest angular distance' between `Rotation1` and `Rotation2` in radians.
+  AngularDistance<native><public>(Rotation1: rotation, Rotation2: rotation)<computes><reads>: float
+
+  @experimental
+  # Returns the left-handed cross product of `V1` and `V2`.
+  CrossProductLeftHanded<native><public>(V1: vector3, V2: vector3)<computes><reads>: vector3
+
+  @experimental
+  # Returns radians from `Degrees`.
+  DegreesToRadians<public>(Degrees: float)<computes><reads>: float = external {}
+
+  @experimental
+  # Returns the 'distance' between `Rotation1` and `Rotation2`. The result will be between:
+  #  * `0.0`, representing equivalent rotations and
+  #  * `1.0` representing rotations which are 180 degrees apart (i.e., the shortest rotation between them is 180 degrees around some axis).
+  Distance<native><public>(Rotation1: rotation, Rotation2: rotation)<computes><reads>: float
+
+  @experimental
+  # Returns the Euclidean distance between `V1` and `V2`.
+  Distance<native><public>(V1: vector3, V2: vector3)<computes><reads>: float
+
+  @experimental
+  # Returns the 2-D Euclidean distance between `V1` and `V2` by ignoring the difference in `Up`.
+  DistanceForwardRight<native><public>(V1: vector3, V2: vector3)<computes><reads>: float
+
+  @experimental
+  # Returns the squared Euclidean distance between `V1` and `V2`.
+  DistanceSquared<native><public>(V1: vector3, V2: vector3)<computes><reads>: float
+
+  @experimental
+  # Returns the squared 2-D Euclidean distance between `V1` and `V2` by ignoring their difference in `Up`.
+  DistanceSquaredForwardRight<native><public>(V1: vector3, V2: vector3)<computes><reads>: float
+
+  @experimental
+  # Returns the dot product of `V1` and `V2`.
+  DotProduct<native><public>(V1: vector3, V2: vector3)<computes><reads>: float
+
+  @experimental
+  # Makes the identity `rotation`.
+  IdentityRotation<native><public>()<converges>: rotation
+
+  @experimental
+  # Succeeds when each component of `V1` and `V2` are within `AbsoluteTolerance` of each other.
+  (/Verse.org/SpatialMath:)IsAlmostEqual<public>(V1: vector3, V2: vector3, AbsoluteTolerance: float)<computes><decides>: void = external {}
+
+  @experimental
+  # Used to linearly interpolate/extrapolate between `From` (when `Parameter = 0.0`) and `To` (when `Parameter = 1.0`). Expects that all arguments are finite.
+  # Returns `From*(1 - Parameter) + To*Parameter`.
+  (/Verse.org/SpatialMath:)Lerp<public>(From: vector3, To: vector3, Parameter: float)<computes><reads>: vector3 = external {}
+
+  @experimental
+  # Makes a new `rotation` from the component wise subtraction of the Euler angle components in `RotationA` by
+  # the Euler angle components in `RotationB` and ensures the returned value is normalized.
+  MakeComponentWiseDeltaRotation<native><public>(RotationA: rotation, RotationB: rotation)<computes><reads>: rotation
+
+  @experimental
+  # Makes a `rotation` from `Axis` and `AngleRadians` using a left-handed sign convention (e.g. a positive rotation around +Z takes +X to +Y). If `Axis.IsAlmostZero[]`, make the identity rotation.
+  MakeRotation<native><public>(Axis: vector3, AngleRadians: float)<converges><reads>: rotation
+
+  @experimental
+  # Makes a `rotation` by applying `YawRightDegrees`, `PitchUpDegrees`, and `RollClockwiseDegrees`, in that order:
+  #  * first a *yaw* about the Up axis with a positive angle indicating a clockwise rotation when viewed from above,
+  #  * then a *pitch* about the new Right axis with a positive angle indicating 'nose up',
+  #  * followed by a *roll* about the new Forward axis axis with a positive angle indicating a clockwise rotation when viewed along +X.
+  # Note that these conventions differ from `MakeRotation` but match `ApplyYaw`, `ApplyPitch`, and `ApplyRoll`.
+  MakeRotationFromYawPitchRollDegrees<native><public>(
+    YawRightDegrees: float,
+    PitchUpDegrees: float,
+    RollClockwiseDegrees: float
+  )<converges><reads>: rotation
+
+  @experimental
+  # Makes the smallest angular `rotation` from `InitialRotation` to `FinalRotation` such that:
+  # `InitialRotation.RotateBy(MakeShortestRotationBetween(InitialRotation, FinalRotation)) = FinalRotation` and
+  # `MakeShortestRotationBetween(InitialRotation, FinalRotation)?.GetAngle()` is as small as possible.
+  MakeShortestRotationBetween<native><public>(
+    InitialRotation: rotation,
+    FinalRotation: rotation
+  )<computes><reads>: rotation
+
+  @experimental
+  # Makes the smallest angular `rotation` from `InitialVector` to `FinalVector` such that:
+  # `InitialVector.RotateBy(MakeShortestRotationBetween(InitialVector, Vector)) = FinalVector` and
+  # `MakeShortestRotationBetween(InitialVector, FinalVector)?.GetAngle()` is as small as possible.
+  MakeShortestRotationBetween<native><public>(InitialVector: vector3, FinalVector: vector3)<computes><reads>: rotation
+
+  @experimental
+  # Returns degrees from `Radians`.
+  RadiansToDegrees<public>(Radians: float)<computes><reads>: float = external {}
+
+  @experimental
+  # Makes a `vector3` by inverting the `SurfaceNormal` component of `Direction`.
+  # Fails if `not SurfaceNormal.MakeUnitVector[]`.
+  ReflectVector<native><public>(Direction: vector3, SurfaceNormal: vector3)<computes><decides><reads>: vector3
+
+  @experimental
+  # Used to perform spherical linear interpolation between `From` (when `Parameter = 0.0`) and `To` (when `Parameter = 1.0`). Expects that `0.0 <= Parameter <= 1.0`.
+  Slerp<native><public>(
+    InitialRotation: rotation,
+    FinalRotation: rotation,
+    Parameter: float
+  )<computes><decides><reads>: rotation
+
+  @experimental
+  # Makes a `string` representation of `InTransform` where the result is on the form.
+  # `"{Translation = {ToString(`InTransform.Translation`)}, Rotation = {ToString(`InTransform.Rotation`)}, Scale = {ToString(`InTransform.Scale`)}}".
+  (/Verse.org/SpatialMath:)ToString<native><public>(InTransform: transform)<computes><reads>: string
+
+  @experimental
+  # Makes a `string` representation of `rotation` in axis/degrees format with a left-handed sign convention.
+  # `ToString(MakeRotation(vector3{Forward:=1.0, Right:=0.0, Up:=0.0}, PiFloat/2.0))` produces the string: `"{Axis = {x=1.000000,y=0.000000,z=0.000000}, Angle = 90.000000}"`.
+  (/Verse.org/SpatialMath:)ToString<native><public>(Rotation: rotation)<computes><reads>: string
+
+  @experimental
+  # Makes a `string` representation of `V`.
+  (/Verse.org/SpatialMath:)ToString<native><public>(V: vector3)<computes><reads>: string
+
+  @experimental
+  # Makes a `vector3` by applying `InTransform` to `InVector`.
+  TransformVector<native><public>(InTransform: transform, InVector: vector3)<computes><reads>: vector3
+
+  @experimental
+  # Makes a `vector3` by applying `InTransform` to `InVector` without applying `InTransform.Scale`.
+  TransformVectorNoScale<native><public>(InTransform: transform, InVector: vector3)<computes><reads>: vector3
+
+  @experimental
+  # Makes a `vector3` by multiplying the components of `Right` by `Left`.
+  (/Verse.org/SpatialMath:)operator'*'<public>(Left: float, Right: vector3)<computes>: vector3 = external {}
+
+  @experimental
+  # Makes a `vector3` by multiplying the components of `Left` by `Right`.
+  (/Verse.org/SpatialMath:)operator'*'<public>(Left: vector3, Right: float)<computes>: vector3 = external {}
+
+  @experimental
+  # Makes a `vector3` by component-wise multiplication of `Left` and `Right`.
+  (/Verse.org/SpatialMath:)operator'*'<public>(Left: vector3, Right: vector3)<computes>: vector3 = external {}
+
+  @experimental
+  # Makes a `vector3` by component-wise addition of `Left` and `Right`.
+  (/Verse.org/SpatialMath:)operator'+'<public>(Left: vector3, Right: vector3)<computes>: vector3 = external {}
+
+  @experimental
+  # Makes a `vector3` by component-wise subtraction of `Right` from `Left`.
+  (/Verse.org/SpatialMath:)operator'-'<public>(Left: vector3, Right: vector3)<computes>: vector3 = external {}
+
+  @experimental
+  # Makes a `vector3` by dividing the components of `Left` by `Right`.
+  (/Verse.org/SpatialMath:)operator'/'<public>(Left: vector3, Right: float)<computes>: vector3 = external {}
+
+  @experimental
+  # Makes a `vector3` by component-wise division of `Left` by `Right`.
+  (/Verse.org/SpatialMath:)operator'/'<public>(Left: vector3, Right: vector3)<computes>: vector3 = external {}
+
+  @experimental
+  # Makes a `vector3` by inverting the signs of `Operand`.
+  (/Verse.org/SpatialMath:)prefix'-'<public>(Operand: vector3)<computes>: vector3 = external {}
+
+  @import_as("/*.FVRotation")
+  rotation<native><public> := struct<concrete> {}
+
+  @experimental
+  @import_as("/*.FVTransform")
+  # A combination of scale, rotation, and translation, applied in that order.
+  transform<native><public> := struct<concrete><computes> {
+    @editable
+    # The rotation of this `transform`.
+    Rotation<native><public>: rotation = external {}
+
+    @editable
+    # The scale of this `transform`.
+    Scale<native><public>: vector3 = external {}
+
+    @editable
+    # The location of this `transform`.
+    Translation<native><public>: vector3 = external {}
+  }
+
+  @experimental
+  @import_as("/*.FVVector3")
+  # 3-dimensional vector with `float` components.
+  vector3<native><public> := struct<concrete><computes><persistable> {
+    @editable
+    # The Forward (was X) component of this vector.
+    Forward<native><public>: float = external {}
+
+    @editable
+    # The Right (was Y) component of this vector.
+    Right<native><public>: float = external {}
+
+    @editable
+    # The Up (was Z) component of this vector.
+    Up<native><public>: float = external {}
+  }
 }
 
 Verse<public> := module {
@@ -1005,6 +1327,6 @@ Verse<public> := module {
   subscribable<public>(t: type) := interface {
     # Registers `Callback` to be invoked on matching calls to `signable.Signal`.
     # Returns an unsubscriber object. Call `cancelable.Cancel` on the unsubscriber to unregister `Callback`.
-    Subscribe<public>(Callback: type { __(: t): void })<transacts>: cancelable
+    Subscribe<public>(Callback: type { _(: t): void })<transacts>: cancelable
   }
 }
