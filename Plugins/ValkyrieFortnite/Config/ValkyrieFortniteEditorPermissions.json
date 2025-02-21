@@ -21,7 +21,7 @@
 		"bMultiPluginProjectAllowed": false,
 		"bMultiProjectAllowed": false,
 		"bModuleIdNamedPlugins": false,
-		"bVersePathContentBrowserEnabled": false,
+		"bShowingContentVersePath": false,
 		"bWorkspaceAllowed": false,
 		"bProjectRenameAllowed": false,
 		"bProjectKindExposed": false,
@@ -388,6 +388,7 @@
 			"General": {
 				"Names": [
 					"Appearance",
+					"BuildingActorEditorPerProjectUserSettings",
 					"BuildingActorEditorSettings",
 					"InputBindings",
 					"Internationalization",
@@ -452,6 +453,7 @@
 			"/Script/Engine.DataLayerAsset":					{ "Rules": ["View","Create"] },
 			"/Script/Engine.DataTable":							{ "Rules": ["View"] },
 			"/Script/Entity.EntityPrefab":						{ "Rules": ["View","Create"] },
+			"/Script/Engine.Font":						{ "Rules": ["View"] },
 			"/Script/Engine.HLODLayer":							{ "Rules": ["View","Create"] },
 			"/Script/Engine.LocalFogVolume":					{ "Rules": ["View","Create"] },
 			"/Script/Engine.LocalFogVolumeComponent":			{ "Rules": ["View","Create"] },
@@ -559,7 +561,6 @@
 			"/CRD_ItemContainer/ItemContainer_PreviewComponent.ItemContainer_PreviewComponent_C":						{  },
 			"/CRD_Mannequin/Device_Character_Base_V2.Device_Character_Base_V2_C":										{  },
 			"/CRD_Mannequin/SetupAssets/Character_Mannequin.Character_Mannequin_C":										{  },
-			"/CRD_ModularGlobalMusicController/UI/WBP_Fabric_MusicManager_BasicScreen.WBP_Fabric_MusicManager_BasicScreen_C": {  },
 			"/CRD_ModularSequencer/UI/WBP_FabricSequencer_AdvancedScreen.WBP_FabricSequencer_AdvancedScreen_C":			{  },
 			"/CRD_ModularSequencer/UI/WBP_FabricSequencer_BasicScreen.WBP_FabricSequencer_BasicScreen_C":				{  },
 			"/CRD_Papaya_Dance_Mannequin/Assets/Papaya_Dance_Mannequin_MasterCreative.Papaya_Dance_Mannequin_MasterCreative_C":{  },
@@ -955,7 +956,14 @@
 			"/Script/Engine.BrushComponent":									{  },
 			"/Script/Engine.CameraComponent":									{  },
 			"/Script/Engine.CameraShakeBase":									{ "Visible": true },
-			"/Script/Engine.CameraShakePattern":								{ "Visible": true,	"Subclasses": "NativeOnly" },
+			"/Script/Engine.CameraShakePattern":								{ "Visible": true },
+			"/Script/EngineCameras.ConstantCameraShakePattern":					{ "Visible": true },
+			"/Script/EngineCameras.LegacyCameraShakePattern":					{ "Visible": true },
+			"/Script/EngineCameras.SimpleCameraShakePattern":					{ "Visible": true },
+			"/Script/TemplateSequence.SequenceCameraShakePattern":				{ "Visible": true },
+			"/Script/EngineCameras.CompositeCameraShakePattern":				{ "Visible": true },
+			"/Script/EngineCameras.PerlinNoiseCameraShakePattern":				{ "Visible": true },
+			"/Script/EngineCameras.WaveOscillatorCameraShakePattern":			{ "Visible": true },
 			"/Script/Engine.CameraShakeSourceActor":							{ "Visible": true },
 			"/Script/Engine.CameraShakeSourceComponent":						{ "Visible": true },
 			"/Script/Engine.CapsuleComponent":									{  },
@@ -1011,7 +1019,6 @@
 			"/Script/Engine.MaterialExpressionAtmosphericFogColor":								{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionAtmosphericLightColor":							{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionAtmosphericLightVector":							{ "Visible": true,	"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionLess":											{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionBlackBody":										{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionBlendMaterialAttributes":							{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionBreakMaterialAttributes":							{ "Visible": true,	"Subclasses": "NativeOnly" },
@@ -1059,8 +1066,6 @@
 			"/Script/Engine.MaterialExpressionDivide":											{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionDotProduct":										{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionDynamicParameter":								{ "Visible": true,	"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionExecBegin":										{ "Visible": true,	"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionExecEnd":											{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionExponential":										{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionExponential2":									{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionEyeAdaptation":									{ "Visible": true,	"Subclasses": "NativeOnly" },
@@ -1069,20 +1074,17 @@
 			"/Script/Engine.MaterialExpressionFloor":											{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionFmod":											{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionFontSample":										{ "Visible": true,	"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionForLoop":											{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionFrac":											{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionFresnel":											{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionFunctionInput":									{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionFunctionOutput":									{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionConstantDouble":									{ "Visible": true,	"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionGetLocal":										{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionGetMaterialAttributes":							{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionGIReplace":										{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionHairAttributes":									{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionHairColor":										{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionHsvToRgb":										{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionIf":												{ "Visible": true,	"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionIfThenElse":										{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionInverseLinearInterpolate":						{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionIsOrthographic":									{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionLength":											{ "Visible": true,	"Subclasses": "NativeOnly" },
@@ -1159,7 +1161,6 @@
 			"/Script/Engine.MaterialExpressionSceneTexelSize":									{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionSceneTexture":									{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionScreenPosition":									{ "Visible": true,	"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionSetLocal":										{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionSetMaterialAttributes":							{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionShaderStageSwitch":								{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionShadingModel":									{ "Visible": true,	"Subclasses": "NativeOnly" },
@@ -1222,7 +1223,6 @@
 			"/Script/Engine.MaterialExpressionVolumetricCloudEmptySpaceSkippingInput":			{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionVolumetricAdvancedMaterialOutput":				{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionVolumetricCloudEmptySpaceSkippingOutput":			{ "Visible": true,	"Subclasses": "NativeOnly" },
-			"/Script/Engine.MaterialExpressionWhileLoop":										{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Engine.MaterialExpressionWorldPosition":									{ "Visible": true,	"Subclasses": "NativeOnly" },
 			"/Script/Entity.EntityPrefab":														{ "Visible": true },
 			"/Script/EntityLevel.LevelEntity":													{ },
@@ -1344,6 +1344,7 @@
 			"/Script/Engine.RuntimePartition":									{ "Visible": true, "Subclasses": "All" },
 			"/Script/Engine.WorldPartitionStreamingSourceComponent":			{ "Visible": true },
 			"/Script/EntityActor.SimObject":									{ "Visible": true },
+			"/Script/EntityRegistry.EntityContainer":							{  },
 			"/Script/FabricEngineSequencer.FabricAudioSyncSection":				{  },
 			"/Script/FabricEngineSequencer.FabricAudioSyncTrack":				{ "Visible": true },
 			"/Script/FabricRuntime.FabricButtonComponentBase":					{  },
@@ -1451,7 +1452,7 @@
 			"/Script/FortniteGame.FortInspectorCameraCreative":					{  },
 			"/Script/FortniteGame.FortInspectorCameraCreativePreview":			{  },
 			"/Script/FortniteGame.FortItemComponentData_LevelLimits":			{ "Visible": true },
-			"/Script/FortniteGame.FortItemComponentData_LargeIcon":			{ "Visible": true },
+			"/Script/FortniteGame.FortItemComponentData_LargeIcon":				{ "Visible": true },
 			"/Script/FortniteGame.FortLevelInstanceSaveActor":					{  },
 			"/Script/FortniteGame.FortLevelOverlayConfig":						{  },
 			"/Script/FortniteGame.FortLevelScriptActor":						{  },
@@ -1879,6 +1880,7 @@
 			"/Script/PointLight.PointLightNativeComponent":						{  },
 			"/Script/PropManipulation.PropManipulationNativeComponent":			{  },
 			"/Script/RigVM.RigVM":												{  },
+			"/Script/RigVM.RigVMDebugDrawSettings":								{  },
 			"/Script/RigVM.RigVMExecuteContext":								{  },
 			"/Script/RigVM.RigVMMemoryStorage":									{  },
 			"/Script/RigVM.RigVMUnknownType":									{  },
@@ -1985,9 +1987,6 @@
 			"/Wind/Gameplay/WindFields/Parent/WindSpline_Parent.WindSpline_Parent_C":{  },
 			"/Script/Engine.FloatSpringState":									{  },
 			"/Script/Engine.QuaternionSpringState":								{  },
-			"/Script/VerseQuery.EntityQueryManager":							{  },
-			"/Script/VerseQuery.EntityTypeQueryContainer":						{  },
-			"/Script/VerseQuery.TaggedObjectQueryContainer": {},
 			"/Script/FeralCorgiGameplayRuntime.FortUserOptionComponent_TickRate":{ },
 			"/Script/FortniteUI.HUDEquippedItemViewModel":						{ "Visible": true }
 		},
@@ -2058,12 +2057,6 @@
 			"AssetEditor.Conversation Editor.ToolBar.GraphViewMode": {
 				"DenyList": [ "Conversation" ]
 			},
-			"AssetEditor.ParameterCollectionEditor.MainMenu": {
-				"AllowList": [ "File", "Edit", "Asset", "Window", "Help" ]
-			},
-			"AssetEditor.ParameterCollectionEditor.MainMenu.File": {
-				"AllowList": [ "SaveAsset" ]
-			},
 			"AssetEditor.MaterialInstanceEditor.ToolBar": {
 				"AllowList": [ "SaveAsset", "FindInContentBrowser", "Apply", "Hierarchy", "TogglePlatformStats" ]
 			},
@@ -2114,7 +2107,7 @@
 				"AllowList": [ "", "ImportAsset" ]
 			},
 			"ContentBrowser.AssetContextMenu": {
-				"DenyList": [ "ManageCollections", "ViewAssetAudit", "ViewShaderCookStatistics", "ViewSizeMap", "OpenInTakeRecorder_Label", "RecordIntoTakeRecorder_Label", "Plugin" ]
+				"DenyList": [ "ViewAssetAudit", "ViewShaderCookStatistics", "ViewSizeMap", "OpenInTakeRecorder_Label", "RecordIntoTakeRecorder_Label", "Plugin" ]
 			},
 			"ContentBrowser.AssetContextMenu.AnimSequence": {
 				"DenyList": [ "IKRetargetAnimSubmenu", "RetargetAnimSubmenu" ]
@@ -2276,7 +2269,7 @@
 				"AllowList": [ "SelectAll", "SelectNone", "InvertSelection", "Hierarchy", "Advanced", "SelectAllActorsOfSameClass", "ByTypeSection", "Lights", "Material", "SkeletalMeshes", "StaticMeshes" ]
 			},
 			"LevelEditor.MainMenu.Tools": {
-				"AllowList": [ "ViewChangelists", "SubmitContent", "SyncContent", "ConnectToSourceControl", "ChangeSourceControlSettings", "ValkyrieProjectSize", "LiveLinkHub", "SpatialMetricsViewer" ]
+				"AllowList": [ "ViewChangelists", "SubmitContent", "SyncContent", "ConnectToSourceControl", "ChangeSourceControlSettings", "ValkyrieProjectSize", "LiveLinkHub", "SpatialMetricsViewer", "MemoryProfiler" ]
 			},
 			"LevelEditor.MainMenu.Verse": {
 				"AllowList": [ "VisualVerseTab", "VerseLog", "OpenVSCode", "BuildVerse" ]
@@ -2334,13 +2327,13 @@
 				"DenyList": [ "ChangeSettings" ]
 			},
 			"UnrealEd.ViewportToolbar.View": {
-				"AllowList": [ "LitMode", "UnlitMode", "WireframeMode", "DetailLightingMode", "LightingOnlyMode", "ReflectionOverrideMode", "CollisionPawn", "CollisionVisibility", "VisualizeBufferViewMode", "VisualizeNaniteViewMode", "VisualizeLumenViewMode", "VisualizeVirtualShadowMapViewMode" ]
+				"AllowList": [ "LitMode", "UnlitMode", "WireframeMode", "DetailLightingMode", "LightingOnlyMode", "ReflectionOverrideMode", "CollisionPawn", "CollisionVisibility", "VisualizeBufferViewMode", "VisualizeNaniteViewMode", "VisualizeLumenViewMode", "LandscapeVisualizers", "LandscapeLOD" ]
 			},
 			"ViewportToolbarBase.Show": {
 				"AllowList": [ "Common_AntiAliasing", "Common_Atmosphere", "Common_BSP", "Common_Collision", "Common_Decals", "Common_Fog", "Common_Grid", "Common_Landscape", "Common_MediaPlanes", "Common_Navigation", "Common_Particles", "Common_SkeletalMeshes", "Common_StaticMeshes", "Common_Translucency", "ShowHLODsMenu", "ShowRevisionControlMenu", "ShowCoopNotes" ]
 			},
 			"SpatialProfiler.SettingsToolBar.SettingsMenu": {
-				"AllowList": [ "ShowStats" ]
+				"AllowList": [ "ShowHistogram" ]
 			}
 		},
 		"AllowedTabs": {
@@ -2412,6 +2405,7 @@
 					"TakesBrowser",
 					"ValkyrieProjectSettingsEditor",
 					"ValkyrieProjectSize",
+					"MemoryProfiler",
 					"VerseExplorerTab",
 					"NiagaraDebugger",
 					"LoosePropertyFixup"
@@ -2455,6 +2449,7 @@
 					"TopRightModeTab",
 					"BottomRightModeTab",
 					"ValkyrieProjectSize",
+					"MemoryProfiler",
 					"VerseExplorerTab",
 					"WorldBrowserPartitionEditor",
 					"WorldBrowserComposition",
@@ -2710,6 +2705,7 @@
 			"CE_Materials",
 			"CE_Modeling",
 			"CE_UEFN",
+			"CE_UserInterfaces",
 			"ConversationIsland",
 			"DaySequence_Starter",
 			"Deserted",
@@ -2956,6 +2952,10 @@
 				"AllowList": [ "SourceWidth", "SourceHeight", "BarnDoorAngle", "BarnDoorLength", "SourceTexture" ]
 			},
 			{
+				"Type": "/Script/Engine.Font",
+				"AllowList": [ "CompositeFont" ]
+			},
+			{
 				"Type": "/Script/UMG.Widget",
 				"AllowList": [ "Slot", "RenderTransform", "RenderTransformPivot", "FlowDirectionPreference", "bIsEnabled", "Clipping", "Visibility", "RenderOpacity" ]
 			},
@@ -3037,7 +3037,7 @@
 			},
 			{
 				"Type": "/Script/FortniteGame.FortWorldSettings",
-				"AllowList": [ "bIsPlayset", "PlaysetSettings", "bDisableEditorCellSnap", "bAllowLevelEditorToDisableCellSnap", "bDisableAllTimeOfDayManagers", "WorldTimeOfDayManager", "WorldTimeOfDayManagerRotationZ" ]
+				"AllowList": [ "bIsPlayset", "PlaysetSettings", "bAllowLevelEditorToDisableCellSnap", "bDisableAllTimeOfDayManagers", "WorldTimeOfDayManager", "WorldTimeOfDayManagerRotationZ" ]
 			},
 			{
 				"Type": "/Script/FortniteGame.BuildingTextureData",
@@ -3307,7 +3307,7 @@
 			},
 			{
 				"Type": "/Script/FortniteGame.FortStaticMeshActor",
-				"AllowList": [ "bUseAutoNavmeshFlags" ]
+				"AllowList": [ "bUseAutoNavmeshFlags", "bEnabledForPhoneTool" ]
 			},
 			{
 				"Type": "/Script/HairStrandsCore.GroomComponent",
@@ -3351,7 +3351,7 @@
 			},
 			{
 				"Type": "/Script/ValkyrieEditor.ValkyrieEditorConfig",
-				"AllowList": [ "DefaultProjectName", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "bAssignProjectVersePathAutomatically", "bModalProjectBrowser", "ReferencedContentCacheSizeGB", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "bEnableIterativeValidation", "bLoadAssetsForValidation", "bAutoSaveOnLaunch", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "EnabledPermissions", "EffectivePermissions", "EntitledPermissions", "bDevBuildGivesAllEntitlements" ]
+				"AllowList": [ "DefaultProjectName", "bUseUnrealSourceControlForNewProjects", "bShowOnlyLocalProjects", "ProjectSearchPaths", "UserDefinedProjectTemplateSearchPaths", "bAssignProjectVersePathAutomatically", "ReferencedContentCacheSizeGB", "bStartupWithLastProject", "bOnlyShowUnseenNewsOnStartup", "bLoginOnStartup", "bEnableIterativeValidation", "bLoadAssetsForValidation", "bAutoSaveOnLaunch", "ClientResolution", "ClientWindowMode", "bAutomaticallyUpdateConnectedClients", "bAutomaticallyLaunchClientWhenTesting", "AdditionalCommandLineArguments", "bTestOnLocalMachine", "EnabledPermissions", "EffectivePermissions", "EntitledPermissions", "bDevBuildGivesAllEntitlements" ]
 			},
 			{
 				"Type": "/Script/CinematicCamera.CineCameraActor",
@@ -3497,7 +3497,7 @@
 			},
 			{
 				"Type": "/Script/Engine.SoundWave",
-				"AllowList": [ "NumChannels", "SampleRate", "ImportedSampleRate", "Duration", "TotalSamples", "ModulationSettings", "LoadingBehavior", "SoundAssetCompressionType" ]
+				"AllowList": [ "NumChannels", "SampleRate", "ImportedSampleRate", "Duration", "TotalSamples", "ModulationSettings", "LoadingBehavior" ]
 			},
 			{
 				"Type": "/Script/AudioModulation.SoundControlBus",
@@ -3514,6 +3514,10 @@
 			{
 				"Type": "/Script/Engine.SoundBase",
 				"AllowList": [ "SoundCueGraph", "VirtualizationMode", "AttenuationSettings" ]
+			},
+			{
+				"Type": "/Script/MetasoundEngine.MetaSoundSource",
+				"AllowList": [ "ModulationSettings" ]
 			},
 			{
 				"Type": "/Script/Niagara.NiagaraDataInterfaceAudioPlayer",
@@ -3737,6 +3741,10 @@
 			{
 				"Type": "/CRD_EarthSprite/Device_EarthSprite.Device_EarthSprite_C",
 				"DenyList": [ "TestingLocal?", "bNoCollision", "bAllowCustomMaterial", "UseSpecialActorComponent", "SpecialActorComponentClass", "bDoNotBlockMarkerTraceWhenOverlappingPlayer", "TextureData", "bMirrored", "bPlayBounce", "bPropagateBounce", "bPropagatesBounceEffects", "bForciblyStructurallySupported", "bRegisterWithStructuralGrid", "bAllowWeakSpots", "bUseComplexForWeakSpots", "BuildingAttachmentPointOffset", "BuildingAttachmentRadius", "BuildingAttachmentSlot", "BuildingAttachmentType", "BuildingPlacementType", "ParentActorToAttachTo", "SavedHealthPct", "bHidden", "DynamicBuildingPlacementType", "bIsNavigationIndestructible", "bPlayerPlaced", "bForceDamagePing", "bAllowInteract", "bShowFirstInteractPrompt", "bShowSecondInteractPrompt", "bAllowHostileBlueprintInteraction", "InteractionSpeed", "Team", "bAllowTeamDamage", "bEnableAutoLODGeneration", "bIsSpatiallyLoaded", "bCanBeDamaged" ]
+			},
+			{
+				"Type": "/CRD_BankVault/Device_BankVault.Device_BankVault_C",
+				"DenyList": [ "VaultLocationTag", "RootMesh", "WeakPointHitNS", "WeakPointDeathCue", "WeakPointConfigs", "WeakPointMaxHealth", "WeakPointFuzzyDamageRange", "DoorBoneName", "DoorShapeName", "DamageStatHandle", "bAddOwnerVelocity", "bShowInteractKeybind", "ThermiteSound" ]
 			}
 		]
 	},

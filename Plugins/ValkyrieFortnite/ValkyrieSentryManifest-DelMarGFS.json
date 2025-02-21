@@ -21,6 +21,11 @@
 			"FriendlyName": "EBTTaskModulateVehicleSpeedVersion",
 			"Version": 1
 		},
+		"0F98EE36CB3E433BB04023D0557C95B1":
+		{
+			"FriendlyName": "FortInjectedBehaviorVersion",
+			"Version": 3
+		},
 		"11310AED2E554D61AF679AA3C5A1082C":
 		{
 			"FriendlyName": "Paper2DVer",
@@ -89,7 +94,7 @@
 		"2763920D0F784B39986E4BB3A88D666D":
 		{
 			"FriendlyName": "PCGBaseVer",
-			"Version": 23
+			"Version": 24
 		},
 		"28B0103666B4498F99425ACADB78A9B5":
 		{
@@ -209,7 +214,7 @@
 		"601D1886AC644F84AA16D3DE0DEAC7D6":
 		{
 			"FriendlyName": "FortniteMain",
-			"Version": 172
+			"Version": 181
 		},
 		"60C4F0DE8B264C34AA9372015DFF09CC":
 		{
@@ -224,7 +229,7 @@
 		"62915CA31C8E4BF7A30E12C7C8219DF7":
 		{
 			"FriendlyName": "EngineNetworkVersion",
-			"Version": 36
+			"Version": 38
 		},
 		"6304A3E700594F598CFC21BD7721FD4E":
 		{
@@ -249,7 +254,7 @@
 		"697DD581E64F41ABAA4A51ECBEB7B628":
 		{
 			"FriendlyName": "UE5-Main",
-			"Version": 119
+			"Version": 121
 		},
 		"6B266CEC1EC74B8FA30BE4D90942FC07":
 		{
@@ -274,7 +279,7 @@
 		"717F9EE7E9B0493A88B391321B388107":
 		{
 			"FriendlyName": "AssetRegistry",
-			"Version": 17
+			"Version": 19
 		},
 		"76A52329092345B598AED841CF2F6AD8":
 		{
@@ -301,6 +306,11 @@
 			"FriendlyName": "VirtualTextureBuiltDataVersion",
 			"Version": 5
 		},
+		"81A1B2B3AF127711E211B0B21D235409":
+		{
+			"FriendlyName": "MovieRenderPipelineCoreObjectVersion",
+			"Version": 1
+		},
 		"82E77C4E332343A5B46B13C597310DF3":
 		{
 			"FriendlyName": "AudioSynesthesiaVer",
@@ -314,7 +324,7 @@
 		"84F72F2E4181C25526721CB537DFB222":
 		{
 			"FriendlyName": "TG_BaseVer",
-			"Version": 0
+			"Version": 1
 		},
 		"860A4F4F4E87FB68CE1397B7BAA859A7":
 		{
@@ -379,7 +389,7 @@
 		"9DFFBCD6494F0158E22112823C92A888":
 		{
 			"FriendlyName": "Dev-Enterprise",
-			"Version": 10
+			"Version": 11
 		},
 		"A26D36AE26935388A8C5CB962B95B4AF":
 		{
@@ -424,7 +434,7 @@
 		"A7820CFB20A743598C542C149623CF50":
 		{
 			"FriendlyName": "Dev-ControlRig",
-			"Version": 32
+			"Version": 36
 		},
 		"AAFE32BD53954C14B66A5E251032D1DD":
 		{
@@ -484,7 +494,7 @@
 		"C1270312AB730B1E0B1EC74571C70F73":
 		{
 			"FriendlyName": "CustomizableObjectVer",
-			"Version": 75
+			"Version": 76
 		},
 		"C2A15278BFE74AFE6C1790FF531DF755":
 		{
@@ -594,7 +604,7 @@
 		"F6DFBB78BB50A0E44018B84D60CBAF23":
 		{
 			"FriendlyName": "Dev-IKRig",
-			"Version": 2
+			"Version": 4
 		},
 		"F94941FB19B64F5C851315EF0BF61F81":
 		{
@@ -971,8 +981,6 @@
 			"/Script/Engine.MaterialExpressionDotProduct",
 			"/Script/Engine.MaterialExpressionDoubleVectorParameter",
 			"/Script/Engine.MaterialExpressionDynamicParameter",
-			"/Script/Engine.MaterialExpressionExecBegin",
-			"/Script/Engine.MaterialExpressionExecEnd",
 			"/Script/Engine.MaterialExpressionExponential",
 			"/Script/Engine.MaterialExpressionExponential2",
 			"/Script/Engine.MaterialExpressionEyeAdaptation",
@@ -982,24 +990,20 @@
 			"/Script/Engine.MaterialExpressionFmod",
 			"/Script/Engine.MaterialExpressionFontSample",
 			"/Script/Engine.MaterialExpressionFontSampleParameter",
-			"/Script/Engine.MaterialExpressionForLoop",
 			"/Script/Engine.MaterialExpressionFrac",
 			"/Script/Engine.MaterialExpressionFresnel",
 			"/Script/Engine.MaterialExpressionFunctionInput",
 			"/Script/Engine.MaterialExpressionFunctionOutput",
-			"/Script/Engine.MaterialExpressionGetLocal",
 			"/Script/Engine.MaterialExpressionGetMaterialAttributes",
 			"/Script/Engine.MaterialExpressionGIReplace",
 			"/Script/Engine.MaterialExpressionHairAttributes",
 			"/Script/Engine.MaterialExpressionHairColor",
 			"/Script/Engine.MaterialExpressionHsvToRgb",
 			"/Script/Engine.MaterialExpressionIf",
-			"/Script/Engine.MaterialExpressionIfThenElse",
 			"/Script/Engine.MaterialExpressionInverseLinearInterpolate",
 			"/Script/Engine.MaterialExpressionIsOrthographic",
 			"/Script/Engine.MaterialExpressionLegacyBlendMaterialAttributes",
 			"/Script/Engine.MaterialExpressionLength",
-			"/Script/Engine.MaterialExpressionLess",
 			"/Script/Engine.MaterialExpressionLightmapUVs",
 			"/Script/Engine.MaterialExpressionLightmassReplace",
 			"/Script/Engine.MaterialExpressionLightVector",
@@ -1081,7 +1085,6 @@
 			"/Script/Engine.MaterialExpressionSceneTexelSize",
 			"/Script/Engine.MaterialExpressionSceneTexture",
 			"/Script/Engine.MaterialExpressionScreenPosition",
-			"/Script/Engine.MaterialExpressionSetLocal",
 			"/Script/Engine.MaterialExpressionSetMaterialAttributes",
 			"/Script/Engine.MaterialExpressionShaderStageSwitch",
 			"/Script/Engine.MaterialExpressionShadingModel",
@@ -1149,7 +1152,6 @@
 			"/Script/Engine.MaterialExpressionVolumetricAdvancedMaterialOutput",
 			"/Script/Engine.MaterialExpressionVolumetricCloudEmptySpaceSkippingInput",
 			"/Script/Engine.MaterialExpressionVolumetricCloudEmptySpaceSkippingOutput",
-			"/Script/Engine.MaterialExpressionWhileLoop",
 			"/Script/Engine.MaterialExpressionWorldPosition",
 			"/Script/Engine.MaterialFunction",
 			"/Script/Engine.MaterialFunctionEditorOnlyData",
@@ -1252,6 +1254,7 @@
 			"/Script/Entity.EntityPrefab",
 			"/Script/EntityActor.SimObject",
 			"/Script/EntityLevel.LevelEntity",
+			"/Script/EntityRegistry.EntityContainer",
 			"/Script/FabricEngineSequencer.FabricAudioSyncSection",
 			"/Script/FabricEngineSequencer.FabricAudioSyncTrack",
 			"/Script/FabricRuntime.FabricButtonComponentBase",
@@ -1935,9 +1938,6 @@
 			"/Script/VerseFortnite.NPCCharacterType",
 			"/Script/VerseFortniteUI.VerseFortniteUIAllowedConversionLibrary",
 			"/Script/VerseGameplayTags.VerseTagMarkupComponent",
-			"/Script/VerseQuery.EntityQueryManager",
-			"/Script/VerseQuery.EntityTypeQueryContainer",
-			"/Script/VerseQuery.TaggedObjectQueryContainer",
 			"/Script/VirtualHeightfieldMesh.MaterialExpressionHeightfieldMinMaxTexture",
 			"/Script/VolumetricRegion.VolumetricRegionNativeComponent",
 			"/Script/Water.BuoyancyManager",
@@ -2067,6 +2067,7 @@
 			"/Script/AnimGraphRuntime.SequencePlayerLibrary",
 			"/Script/AnimGraphRuntime.SkeletalControlLibrary",
 			"/Script/AudioGameplay.AudioRequirementPreset",
+			"/Script/AudioModulation.SoundModulationPatch",
 			"/Script/BlueprintGraph.K2Node",
 			"/Script/BlueprintGraph.K2Node_AddDelegate",
 			"/Script/BlueprintGraph.K2Node_BitmaskLiteral",
@@ -2174,9 +2175,9 @@
 			"/Script/MovieScene.MovieSceneBindingOverrides",
 			"/Script/NaniteDisplacedMesh.NaniteDisplacedMesh",
 			"/Script/ValkyrieCommon.ValkyrieContentWorkerDebugManager",
-			"/Script/VerseAssets.ParameterCollection",
-			"/Script/VerseAssets.ParameterCollectionGeneratedClass",
-			"/Script/VerseAssetsEditor.ParameterCollectionBlueprint"
+			"/Script/VerseAssets.PropertyInterface",
+			"/Script/VerseAssets.PropertyInterfaceGeneratedClass",
+			"/Script/VerseAssetsEditor.PropertyInterfaceBlueprint"
 		],
 		"VKCreateUGCPartner": [
 			"/Script/FortniteGame.BuildingEditModeMetadata"
@@ -2198,7 +2199,10 @@
 			"/Script/Niagara.NiagaraSystem"
 		],
 		"VKCreateUGCEarlyAccess": [],
-		"VKCreateUGCEpicDeveloper": [],
+		"VKCreateUGCEpicDeveloper": [
+			"/Script/Engine.BlueprintGeneratedClass",
+			"/Script/Entity.EntityPrefab"
+		],
 		"VKCreateUGCPartner": []
 	},
 	"StructAllowLists":
@@ -2342,6 +2346,7 @@
 			"/Script/PBIK.PBIKSolverSettings",
 			"/Script/PBIK.PBIKWorkData",
 			"/Script/PBIK.RootPrePullSettings",
+			"/Script/RigVM.RigVMDebugDrawSettings",
 			"/Script/RigVM.RigVMExecuteContext",
 			"/Script/RigVM.RigVMInstructionSetExecuteState",
 			"/Script/RigVM.RigVMUnknownType",
@@ -3712,8 +3717,11 @@
 			"/CRP_Jungle/SetupAssets/Maps/PID_CP_Jungle_Gallery_e.PID_CP_Jungle_Gallery_e",
 			"/CRP_Jungle/SetupAssets/Maps/PID_CP_Jungle_Gallery_f.PID_CP_Jungle_Gallery_f",
 			"/CRP_Jungle/SetupAssets/Maps/PID_CP_Jungle_Gallery_g.PID_CP_Jungle_Gallery_g",
+			"/CRP_Jungle/SetupAssets/Maps/PID_CP_Jungle_Gallery_h.PID_CP_Jungle_Gallery_h",
+			"/CRP_Jungle/SetupAssets/Maps/PID_CP_Jungle_L_LargeVillageRuins_a.PID_CP_Jungle_L_LargeVillageRuins_a",
 			"/CRP_Jungle/SetupAssets/Maps/PID_CP_Jungle_L_Village_a.PID_CP_Jungle_L_Village_a",
 			"/CRP_Jungle/SetupAssets/Maps/PID_CP_Jungle_M_Village_a.PID_CP_Jungle_M_Village_a",
+			"/CRP_Jungle/SetupAssets/Maps/PID_CP_Jungle_M_VillageRuins_a.PID_CP_Jungle_M_VillageRuins_a",
 			"/CRP_Jungle/SetupAssets/Maps/PID_CP_Jungle_S_Temple_a.PID_CP_Jungle_S_Temple_a",
 			"/CRP_Jungle/SetupAssets/Maps/PID_CP_Jungle_XL_Temple_a.PID_CP_Jungle_XL_Temple_a",
 			"/CRP_Jungle/SetupAssets/TextureData/CP_TD_Cliff_Medium_Corner_180_A.CP_TD_Cliff_Medium_Corner_180_A",
@@ -3730,6 +3738,15 @@
 			"/CRP_Jungle/SetupAssets/TextureData/CP_TD_Cliff_Small_Straight_A.CP_TD_Cliff_Small_Straight_A",
 			"/CRP_Jungle/SetupAssets/TextureData/CP_TD_Cliff_Small_Straight_B.CP_TD_Cliff_Small_Straight_B",
 			"/CRP_Jungle/SetupAssets/TextureData/CP_TD_Cliff_Small_Straight_Ramp_A.CP_TD_Cliff_Small_Straight_Ramp_A",
+			"/CRP_Jungle/SetupAssets/TextureData/CP_TD_MI_Transit_CargoPlaneBroken_CockpitConsole_A_NoRVT.CP_TD_MI_Transit_CargoPlaneBroken_CockpitConsole_A_NoRVT",
+			"/CRP_Jungle/SetupAssets/TextureData/CP_TD_MI_Transit_CargoPlaneBroken_CockpitDoor_A_NoRVT.CP_TD_MI_Transit_CargoPlaneBroken_CockpitDoor_A_NoRVT",
+			"/CRP_Jungle/SetupAssets/TextureData/CP_TD_MI_Transit_CargoPlaneBroken_Engine_A_NoRVT.CP_TD_MI_Transit_CargoPlaneBroken_Engine_A_NoRVT",
+			"/CRP_Jungle/SetupAssets/TextureData/CP_TD_MI_Transit_CargoPlaneBroken_Fuselage_A_NoRVT.CP_TD_MI_Transit_CargoPlaneBroken_Fuselage_A_NoRVT",
+			"/CRP_Jungle/SetupAssets/TextureData/CP_TD_MI_Transit_CargoPlaneBroken_Nose_A_NoRVT.CP_TD_MI_Transit_CargoPlaneBroken_Nose_A_NoRVT",
+			"/CRP_Jungle/SetupAssets/TextureData/CP_TD_MI_Transit_CargoPlaneBroken_Tail_A_NoRVT.CP_TD_MI_Transit_CargoPlaneBroken_Tail_A_NoRVT",
+			"/CRP_Jungle/SetupAssets/TextureData/CP_TD_MI_Transit_CargoPlaneBroken_Tail_Door_A_NoRVT.CP_TD_MI_Transit_CargoPlaneBroken_Tail_Door_A_NoRVT",
+			"/CRP_Jungle/SetupAssets/TextureData/CP_TD_MI_Transit_CargoPlaneBroken_Wing_A_NoRVT.CP_TD_MI_Transit_CargoPlaneBroken_Wing_A_NoRVT",
+			"/CRP_Jungle/SetupAssets/TextureData/CP_TD_MI_Transit_CargoPlaneBrokenCockpitDoor_B_NoRVT.CP_TD_MI_Transit_CargoPlaneBrokenCockpitDoor_B_NoRVT",
 			"/CRP_Jungle/SetupAssets/TextureData/CP_TD_RainForest_TreeTrunk_A.CP_TD_RainForest_TreeTrunk_A",
 			"/CRP_Jungle/SetupAssets/TextureData/CP_TD_RainForest_TreeTrunk_B.CP_TD_RainForest_TreeTrunk_B",
 			"/CRP_Jungle/SetupAssets/TextureData/CP_TD_Rock_Boulders_A_Indestructible_B_Jungle.CP_TD_Rock_Boulders_A_Indestructible_B_Jungle",
@@ -4934,6 +4951,8 @@
 			"/FortniteFoliage/Meshes/CP_CH4_Rock_Boulder_Small_C_01.CP_CH4_Rock_Boulder_Small_C_01",
 			"/FortniteLandscape/Materials/M_FortniteLandscape_Customizable.M_FortniteLandscape_Customizable",
 			"/FortniteLandscape/Materials/MaterialInstances/MI_FortniteLandscape_Customizable_01.MI_FortniteLandscape_Customizable_01",
+			"/FortUILibrary/Fonts/BurbankSmall.BurbankSmall",
+			"/FortUILibrary/Fonts/NotoSans.NotoSans",
 			"/FortWater/Materials/Debug/M_DebugWaterPlane.M_DebugWaterPlane",
 			"/FortWater/Materials/Functions/BilinearFilterTexture.BilinearFilterTexture",
 			"/FortWater/Materials/Functions/WaterBodyData.WaterBodyData",
@@ -9014,6 +9033,7 @@
 			"/Game/Environments/Asteria/Sets/Ancients/TextureData/TD_Ancients_Foundation_A_No_Height.TD_Ancients_Foundation_A_No_Height",
 			"/Game/Environments/Asteria/Sets/Ancients/TextureData/TD_Ancients_RoofTrim_A.TD_Ancients_RoofTrim_A",
 			"/Game/Environments/Asteria/Sets/Ancients/TextureData/TD_Ancients_StoneTrim_A_A.TD_Ancients_StoneTrim_A_A",
+			"/Game/Environments/Asteria/Sets/Ancients/TextureData/TD_Ancients_Window_A.TD_Ancients_Window_A",
 			"/Game/Environments/Asteria/Sets/Ancients/TextureData/TD_Asteria_PRoom_StoneFloor_D.TD_Asteria_PRoom_StoneFloor_D",
 			"/Game/Environments/Asteria/Sets/Ancients/TextureData/TD_Asteria_PRoom_StoneFloor_E.TD_Asteria_PRoom_StoneFloor_E",
 			"/Game/Environments/Asteria/Sets/Ancients/TextureData/TD_Asteria_PRoom_StoneFloor_F.TD_Asteria_PRoom_StoneFloor_F",
@@ -11314,8 +11334,6 @@
 			"/Game/Sounds/Modulation/CB_FortVehicles_Engine.CB_FortVehicles_Engine",
 			"/Game/Sounds/Modulation/CB_FortWeapon.CB_FortWeapon",
 			"/Game/UEFNExposedAssets/Devices/ChildClasses/CrowdVolume/MI_CP_Device_Volume_Frame_CrowdVolume_Placed.MI_CP_Device_Volume_Frame_CrowdVolume_Placed",
-			"/Game/UI/Foundation/Fonts/BurbankSmall.BurbankSmall",
-			"/Game/UI/Foundation/Fonts/NotoSans.NotoSans",
 			"/Game/Valkyrie/Niagara/EffectTypes/UEFN_DefaultEffectType.UEFN_DefaultEffectType",
 			"/Game/Vehicles/FORT_Vehicles_01/Materials/CoolDudeCar.CoolDudeCar",
 			"/Game/Vehicles/FORT_Vehicles_01/TextureData/Const_BackHoe.Const_BackHoe",
@@ -12270,6 +12288,8 @@
 			"/MetaHumanUEFN/Male/Tall/UnderWeight/Poses/m_tal_unw_thumb_03_r_pose.m_tal_unw_thumb_03_r_pose",
 			"/MetaHumanUEFN/Male/Tall/UnderWeight/Poses/m_tal_unw_upperarm_l_pose.m_tal_unw_upperarm_l_pose",
 			"/MetaHumanUEFN/Male/Tall/UnderWeight/Poses/m_tal_unw_upperarm_r_pose.m_tal_unw_upperarm_r_pose",
+			"/Metasound/DefaultAssets/Sources/MSS_PlayRandom_Loop.MSS_PlayRandom_Loop",
+			"/Metasound/DefaultAssets/Sources/MSS_PlayRandom_Oneshot.MSS_PlayRandom_Oneshot",
 			"/MoleEnvironments/TextureData/Mole_Corridor_Floor.Mole_Corridor_Floor",
 			"/MusicBlocks/Playset/PID_PG_Props_S_MusicBlock_Synth_A.PID_PG_Props_S_MusicBlock_Synth_A",
 			"/Niagara/Blueprints/PreviewMat.PreviewMat",
@@ -13288,7 +13308,6 @@
 			"/CRD_ItemContainer/ItemContainer_PreviewComponent.ItemContainer_PreviewComponent_C",
 			"/CRD_Mannequin/Device_Character_Base_V2.Device_Character_Base_V2_C",
 			"/CRD_Mannequin/SetupAssets/Character_Mannequin.Character_Mannequin_C",
-			"/CRD_ModularGlobalMusicController/UI/WBP_Fabric_MusicManager_BasicScreen.WBP_Fabric_MusicManager_BasicScreen_C",
 			"/CRD_ModularSequencer/UI/WBP_FabricSequencer_AdvancedScreen.WBP_FabricSequencer_AdvancedScreen_C",
 			"/CRD_ModularSequencer/UI/WBP_FabricSequencer_BasicScreen.WBP_FabricSequencer_BasicScreen_C",
 			"/CRD_Papaya_Dance_Mannequin/Assets/Papaya_Dance_Mannequin_MasterCreative.Papaya_Dance_Mannequin_MasterCreative_C",
@@ -14334,6 +14353,8 @@
 			"/CRP_Jungle/SetupAssets/Blueprints/CP_Ancients_Foundation_Crn_B_No_Trim.CP_Ancients_Foundation_Crn_B_No_Trim_C",
 			"/CRP_Jungle/SetupAssets/Blueprints/CP_Ancients_InteriorBrazierStand_A.CP_Ancients_InteriorBrazierStand_A_C",
 			"/CRP_Jungle/SetupAssets/Blueprints/CP_Ancients_InteriorStatue_Full_B_Child.CP_Ancients_InteriorStatue_Full_B_Child_C",
+			"/CRP_Jungle/SetupAssets/Blueprints/CP_Ancients_RoofTrim_A_A_Cnr.CP_Ancients_RoofTrim_A_A_Cnr_C",
+			"/CRP_Jungle/SetupAssets/Blueprints/CP_Ancients_RoofTrim_B_B_Cnr.CP_Ancients_RoofTrim_B_B_Cnr_C",
 			"/CRP_Jungle/SetupAssets/Blueprints/CP_Ancients_Statue_Full_A_LargeScale.CP_Ancients_Statue_Full_A_LargeScale_C",
 			"/CRP_Jungle/SetupAssets/Blueprints/CP_Ancients_WallSconce_A.CP_Ancients_WallSconce_A_C",
 			"/CRP_Jungle/SetupAssets/Blueprints/CP_Barrel_FishingRod_Container_a.CP_Barrel_FishingRod_Container_a_C",
@@ -23890,6 +23911,7 @@
 			"/Game/Environments/Asteria/Foliage/Blueprints/BP_Medium_Foliage_Plant_Parent.BP_Medium_Foliage_Plant_Parent_C",
 			"/Game/Environments/Asteria/Foliage/JunglePlants/BananaPalmPlants/Blueprints/BP_JunglePlants_BananaPalmPlant_A.BP_JunglePlants_BananaPalmPlant_A_C",
 			"/Game/Environments/Asteria/Foliage/JunglePlants/FanPlants/Blueprints/BP_JunglePlants_Cluster_A.BP_JunglePlants_Cluster_A_C",
+			"/Game/Environments/Asteria/Foliage/JunglePlants/FanPlants/Blueprints/BP_JunglePlants_FanPlant_A.BP_JunglePlants_FanPlant_A_C",
 			"/Game/Environments/Asteria/Foliage/JunglePlants/IvyPlants/Blueprints/BP_JunglePlants_IvyClimbingPlant_01.BP_JunglePlants_IvyClimbingPlant_01_C",
 			"/Game/Environments/Asteria/Foliage/JunglePlants/IvyPlants/Blueprints/BP_JunglePlants_IvyClimbingPlant_02.BP_JunglePlants_IvyClimbingPlant_02_C",
 			"/Game/Environments/Asteria/Foliage/JunglePlants/IvyPlants/Blueprints/BP_JunglePlants_IvyGroundPlant_01.BP_JunglePlants_IvyGroundPlant_01_C",
@@ -23953,21 +23975,30 @@
 			"/Game/Environments/Asteria/Props/AmberForestTown/Blueprints/Asteria_AmberForestTown_Chair_B.Asteria_AmberForestTown_Chair_B_C",
 			"/Game/Environments/Asteria/Props/Ancients/Ancients_BrazierStand_A/Blueprints/BP_Ancients_BrazierStand_A.BP_Ancients_BrazierStand_A_C",
 			"/Game/Environments/Asteria/Props/Ancients/Ancients_Pot_A/Blueprints/BP_Ancients_Pot_A.BP_Ancients_Pot_A_C",
+			"/Game/Environments/Asteria/Props/Ancients/Ancients_Pot_B/Blueprints/BP_Ancients_Pot_B.BP_Ancients_Pot_B_C",
 			"/Game/Environments/Asteria/Props/Ancients/Ancients_Pot_C/Blueprints/BP_Ancients_Pot_C.BP_Ancients_Pot_C_C",
 			"/Game/Environments/Asteria/Props/Ancients/Ancients_Pot_D/Blueprints/BP_Ancients_Pot_D.BP_Ancients_Pot_D_C",
 			"/Game/Environments/Asteria/Props/Ancients/Ancients_Pot_D/Blueprints/BP_Ancients_Pot_D_Weathered.BP_Ancients_Pot_D_Weathered_C",
 			"/Game/Environments/Asteria/Props/Ancients/Ancients_PotteryLarge_A/Blueprints/BP_Ancients_PotteryLarge_A.BP_Ancients_PotteryLarge_A_C",
+			"/Game/Environments/Asteria/Props/Ancients/Ancients_PotteryLarge_A/Blueprints/BP_Ancients_PotteryLarge_A_B.BP_Ancients_PotteryLarge_A_B_C",
 			"/Game/Environments/Asteria/Props/Ancients/Ancients_PotteryLarge_A/Blueprints/BP_Ancients_PotteryLarge_B.BP_Ancients_PotteryLarge_B_C",
 			"/Game/Environments/Asteria/Props/Ancients/Ancients_PotteryLarge_A/Blueprints/BP_Ancients_PotteryLarge_C.BP_Ancients_PotteryLarge_C_C",
 			"/Game/Environments/Asteria/Props/Ancients/Ancients_PotteryLarge_A/Blueprints/BP_Ancients_PotteryLarge_C_B.BP_Ancients_PotteryLarge_C_B_C",
 			"/Game/Environments/Asteria/Props/Ancients/Ancients_PotteryLarge_A/Blueprints/BP_Ancients_PotteryLarge_D.BP_Ancients_PotteryLarge_D_C",
+			"/Game/Environments/Asteria/Props/Ancients/Ancients_PotteryLarge_A/Blueprints/BP_Ancients_PotteryLarge_D_B.BP_Ancients_PotteryLarge_D_B_C",
 			"/Game/Environments/Asteria/Props/Ancients/Ancients_Rubble_A/Blueprints/BP_Ancients_Rubble_A.BP_Ancients_Rubble_A_C",
 			"/Game/Environments/Asteria/Props/Ancients/Ancients_Rubble_A/Blueprints/BP_Ancients_Rubble_B.BP_Ancients_Rubble_B_C",
 			"/Game/Environments/Asteria/Props/Ancients/Ancients_Rubble_A/Blueprints/BP_Ancients_Rubble_D.BP_Ancients_Rubble_D_C",
 			"/Game/Environments/Asteria/Props/Ancients/Ancients_Rubble_A/Blueprints/BP_Ancients_Rubble_F.BP_Ancients_Rubble_F_C",
 			"/Game/Environments/Asteria/Props/Ancients/Ancients_Rubble_A/Blueprints/BP_Ancients_Rubble_G.BP_Ancients_Rubble_G_C",
+			"/Game/Environments/Asteria/Props/Ancients/Ancients_Rubble_A/Blueprints/BP_Ancients_Rubble_H.BP_Ancients_Rubble_H_C",
 			"/Game/Environments/Asteria/Props/Ancients/Ancients_Rubble_A/Blueprints/BP_Ancients_Rubble_I.BP_Ancients_Rubble_I_C",
 			"/Game/Environments/Asteria/Props/Ancients/Ancients_Statues_A/Blueprints/BP_Ancients_Statue_Full_B.BP_Ancients_Statue_Full_B_C",
+			"/Game/Environments/Asteria/Props/Ancients/Ancients_Statues_A/Blueprints/BP_Ancients_Statue_Full_B_NoBrazier.BP_Ancients_Statue_Full_B_NoBrazier_C",
+			"/Game/Environments/Asteria/Props/Ancients/Ancients_StoneRelief_A/Blueprints/BP_Ancients_StoneRelief_A.BP_Ancients_StoneRelief_A_C",
+			"/Game/Environments/Asteria/Props/Ancients/Ancients_StoneReliefBase_A/Blueprints/BP_Ancients_StoneReliefBase_A.BP_Ancients_StoneReliefBase_A_C",
+			"/Game/Environments/Asteria/Props/Ancients/Ancients_Torches_A/Blueprints/BP_Ancients_WallSconce_A.BP_Ancients_WallSconce_A_C",
+			"/Game/Environments/Asteria/Props/Coastal/Coastal_Boat/Blueprints/BP_Coastal_Boat_A.BP_Coastal_Boat_A_C",
 			"/Game/Environments/Asteria/Props/Coastal/Coastal_Canoe_A/Blueprints/Asteria_Coastal_Canoe_A.Asteria_Coastal_Canoe_A_C",
 			"/Game/Environments/Asteria/Props/Coastal/Coastal_Dinghy_A/Blueprints/BP_Coastal_Dinghy_A.BP_Coastal_Dinghy_A_C",
 			"/Game/Environments/Asteria/Props/Coastal/Coastal_OutriggerBoat_A/Blueprints/BP_Coastal_OutriggerBoat_A.BP_Coastal_OutriggerBoat_A_C",
@@ -24243,6 +24274,17 @@
 			"/Game/Environments/Asteria/Props/Quarry/Quarry_Tank_A/Blueprints/Asteria_Quarry_TankPallet_A.Asteria_Quarry_TankPallet_A_C",
 			"/Game/Environments/Asteria/Props/RainForest/RainForest_TreeTrunk_A/Blueprints/BP_RainForest_TreeTrunk_A.BP_RainForest_TreeTrunk_A_C",
 			"/Game/Environments/Asteria/Props/RainForest/RainForest_TreeTrunk_B/Blueprints/BP_RainForest_TreeTrunk_B.BP_RainForest_TreeTrunk_B_C",
+			"/Game/Environments/Asteria/Props/Transit/Transit_CargoPlaneBroken_A/Blueprints/BP_Transit_CargoPlaneBroken_A_Parent.BP_Transit_CargoPlaneBroken_A_Parent_C",
+			"/Game/Environments/Asteria/Props/Transit/Transit_CargoPlaneBroken_A/Blueprints/BP_Transit_CargoPlaneBroken_Cockpit_Console_A.BP_Transit_CargoPlaneBroken_Cockpit_Console_A_C",
+			"/Game/Environments/Asteria/Props/Transit/Transit_CargoPlaneBroken_A/Blueprints/BP_Transit_CargoPlaneBroken_Cockpit_Door_A.BP_Transit_CargoPlaneBroken_Cockpit_Door_A_C",
+			"/Game/Environments/Asteria/Props/Transit/Transit_CargoPlaneBroken_A/Blueprints/BP_Transit_CargoPlaneBroken_Cockpit_Seat_A.BP_Transit_CargoPlaneBroken_Cockpit_Seat_A_C",
+			"/Game/Environments/Asteria/Props/Transit/Transit_CargoPlaneBroken_A/Blueprints/BP_Transit_CargoPlaneBroken_Engine_A.BP_Transit_CargoPlaneBroken_Engine_A_C",
+			"/Game/Environments/Asteria/Props/Transit/Transit_CargoPlaneBroken_A/Blueprints/BP_Transit_CargoPlaneBroken_Fuselage_A.BP_Transit_CargoPlaneBroken_Fuselage_A_C",
+			"/Game/Environments/Asteria/Props/Transit/Transit_CargoPlaneBroken_A/Blueprints/BP_Transit_CargoPlaneBroken_Nose_A.BP_Transit_CargoPlaneBroken_Nose_A_C",
+			"/Game/Environments/Asteria/Props/Transit/Transit_CargoPlaneBroken_A/Blueprints/BP_Transit_CargoPlaneBroken_Tail_A.BP_Transit_CargoPlaneBroken_Tail_A_C",
+			"/Game/Environments/Asteria/Props/Transit/Transit_CargoPlaneBroken_A/Blueprints/BP_Transit_CargoPlaneBroken_Tail_Door_A.BP_Transit_CargoPlaneBroken_Tail_Door_A_C",
+			"/Game/Environments/Asteria/Props/Transit/Transit_CargoPlaneBroken_A/Blueprints/BP_Transit_CargoPlaneBroken_Wing_A.BP_Transit_CargoPlaneBroken_Wing_A_C",
+			"/Game/Environments/Asteria/Props/Transit/Transit_CargoPlaneBroken_A/Blueprints/BP_Transit_CargoPlaneBrokenCockpitDoor_B.BP_Transit_CargoPlaneBrokenCockpitDoor_B_C",
 			"/Game/Environments/Asteria/Props/Utility/Utility_Ducts_A/Blueprints/Asteria_Utility_Ducts_A.Asteria_Utility_Ducts_A_C",
 			"/Game/Environments/Asteria/Props/Utility/Utility_Ducts_A/Blueprints/Asteria_Utility_Ducts_B.Asteria_Utility_Ducts_B_C",
 			"/Game/Environments/Asteria/Props/Utility/Utility_Ducts_A/Blueprints/Asteria_Utility_Ducts_C.Asteria_Utility_Ducts_C_C",
@@ -24254,11 +24296,16 @@
 			"/Game/Environments/Asteria/Props/Village/Village_Baskets_A/Blueprints/BP_Village_Baskets_A.BP_Village_Baskets_A_C",
 			"/Game/Environments/Asteria/Props/Village/Village_Baskets_A/Blueprints/BP_Village_Baskets_B.BP_Village_Baskets_B_C",
 			"/Game/Environments/Asteria/Props/Village/Village_Baskets_A/Blueprints/BP_Village_Baskets_C.BP_Village_Baskets_C_C",
+			"/Game/Environments/Asteria/Props/Village/Village_Bed_A/Blueprints/BP_Village_Bed_A.BP_Village_Bed_A_C",
+			"/Game/Environments/Asteria/Props/Village/Village_Bed_A/Blueprints/BP_Village_Bed_B.BP_Village_Bed_B_C",
+			"/Game/Environments/Asteria/Props/Village/Village_Bed_A/Blueprints/BP_Village_Bed_C.BP_Village_Bed_C_C",
+			"/Game/Environments/Asteria/Props/Village/Village_Bed_A/Blueprints/BP_Village_BunkBed_A.BP_Village_BunkBed_A_C",
 			"/Game/Environments/Asteria/Props/Village/Village_Chair_A/Blueprints/BP_Village_Chair_A.BP_Village_Chair_A_C",
 			"/Game/Environments/Asteria/Props/Village/Village_CookingTools_A/Blueprints/BP_Village_CookingTools_A.BP_Village_CookingTools_A_C",
 			"/Game/Environments/Asteria/Props/Village/Village_CookingTools_A/Blueprints/BP_Village_CookingTools_B.BP_Village_CookingTools_B_C",
 			"/Game/Environments/Asteria/Props/Village/Village_CookingTools_A/Blueprints/BP_Village_CookingTools_C.BP_Village_CookingTools_C_C",
 			"/Game/Environments/Asteria/Props/Village/Village_FishingNet/Blueprints/BP_Village_FishingNet_A.BP_Village_FishingNet_A_C",
+			"/Game/Environments/Asteria/Props/Village/Village_HanginShelves_A/Blueprints/BP_Village_HangingShelves_A.BP_Village_HangingShelves_A_C",
 			"/Game/Environments/Asteria/Props/Village/Village_HanginShelves_A/Blueprints/BP_Village_HangingShelves_B.BP_Village_HangingShelves_B_C",
 			"/Game/Environments/Asteria/Props/Village/Village_HanginShelves_A/Blueprints/BP_Village_HangingShelves_C.BP_Village_HangingShelves_C_C",
 			"/Game/Environments/Asteria/Props/Village/Village_HideStretcher_A/Blueprints/BP_Village_HideStretcher_A.BP_Village_HideStretcher_A_C",
@@ -24267,6 +24314,11 @@
 			"/Game/Environments/Asteria/Props/Village/Village_MarketTable_A/Blueprints/BP_Village_MarketFishSet_A.BP_Village_MarketFishSet_A_C",
 			"/Game/Environments/Asteria/Props/Village/Village_MarketTable_A/Blueprints/BP_Village_MarketFishSet_B.BP_Village_MarketFishSet_B_C",
 			"/Game/Environments/Asteria/Props/Village/Village_MarketTable_A/Blueprints/BP_Village_MarketFishSet_C.BP_Village_MarketFishSet_C_C",
+			"/Game/Environments/Asteria/Props/Village/Village_MarketTable_A/Blueprints/BP_Village_MarketFruitSet_A.BP_Village_MarketFruitSet_A_C",
+			"/Game/Environments/Asteria/Props/Village/Village_MarketTable_A/Blueprints/BP_Village_MarketFruitSet_B.BP_Village_MarketFruitSet_B_C",
+			"/Game/Environments/Asteria/Props/Village/Village_MarketTable_A/Blueprints/BP_Village_MarketFruitSet_C.BP_Village_MarketFruitSet_C_C",
+			"/Game/Environments/Asteria/Props/Village/Village_MarketTable_A/Blueprints/BP_Village_MarketSpicesSet_A.BP_Village_MarketSpicesSet_A_C",
+			"/Game/Environments/Asteria/Props/Village/Village_MarketTable_A/Blueprints/BP_Village_MarketSpicesSet_B.BP_Village_MarketSpicesSet_B_C",
 			"/Game/Environments/Asteria/Props/Village/Village_MarketTable_A/Blueprints/BP_Village_MarketSpicesSet_C.BP_Village_MarketSpicesSet_C_C",
 			"/Game/Environments/Asteria/Props/Village/Village_MarketTable_A/Blueprints/BP_Village_MarketTable_A.BP_Village_MarketTable_A_C",
 			"/Game/Environments/Asteria/Props/Village/Village_Shelves_A/Blueprints/BP_Village_Shelves_A.BP_Village_Shelves_A_C",
@@ -24274,6 +24326,9 @@
 			"/Game/Environments/Asteria/Props/Village/Village_Shelves_A/Blueprints/BP_Village_ShelvesSet_B.BP_Village_ShelvesSet_B_C",
 			"/Game/Environments/Asteria/Props/Village/Village_SmallTables_A/Blueprints/BP_Village_SmallTables_A.BP_Village_SmallTables_A_C",
 			"/Game/Environments/Asteria/Props/Village/Village_SmallTables_A/Blueprints/BP_Village_SmallTablesSet_A.BP_Village_SmallTablesSet_A_C",
+			"/Game/Environments/Asteria/Props/Village/Village_SmallTables_A/Blueprints/BP_Village_SmallTablesSet_B.BP_Village_SmallTablesSet_B_C",
+			"/Game/Environments/Asteria/Props/Village/Village_Torches_A/Blueprints/BP_Village_Torches_A.BP_Village_Torches_A_C",
+			"/Game/Environments/Asteria/Props/Village/Village_Torches_A/Blueprints/BP_Village_WallSconce_A.BP_Village_WallSconce_A_C",
 			"/Game/Environments/Asteria/Rocks/Boulders/Blueprints/Rock_Boulder_Indestructible_B_Disp.Rock_Boulder_Indestructible_B_Disp_C",
 			"/Game/Environments/Asteria/Rocks/Boulders/Blueprints/Rock_Boulder_Indestructible_C_Disp.Rock_Boulder_Indestructible_C_Disp_C",
 			"/Game/Environments/Asteria/Rocks/Boulders/Blueprints/Rock_Boulder_Large_A_Disp.Rock_Boulder_Large_A_Disp_C",
@@ -24363,6 +24418,8 @@
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Pillars/BP_Ancients_Pillar_A_Base_No_Snap.BP_Ancients_Pillar_A_Base_No_Snap_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Pillars/BP_Ancients_Pillar_A_Mid_No_Snap.BP_Ancients_Pillar_A_Mid_No_Snap_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Pillars/BP_Ancients_Pillar_A_Top_No_Snap.BP_Ancients_Pillar_A_Top_No_Snap_C",
+			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Pillars/BP_Ancients_Pillar_B_Base_No_Snap.BP_Ancients_Pillar_B_Base_No_Snap_C",
+			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Pillars/BP_Ancients_Pillar_B_Top_No_Snap.BP_Ancients_Pillar_B_Top_No_Snap_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Roofs/BP_Ancients_Roof_A_A.BP_Ancients_Roof_A_A_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Roofs/BP_Ancients_Roof_A_B.BP_Ancients_Roof_A_B_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Roofs/BP_Ancients_Roof_B_A.BP_Ancients_Roof_B_A_C",
@@ -24384,6 +24441,7 @@
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Brace_C_A.BP_Ancients_Brace_C_A_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Brace_C_A_Flip.BP_Ancients_Brace_C_A_Flip_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Doorway_A_A.BP_Ancients_Doorway_A_A_C",
+			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Doorway_A_B.BP_Ancients_Doorway_A_B_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Doorway_A_C.BP_Ancients_Doorway_A_C_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Doorway_B_A_Side.BP_Ancients_Doorway_B_A_Side_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Doorway_B_A_Side_Flip.BP_Ancients_Doorway_B_A_Side_Flip_C",
@@ -24398,7 +24456,9 @@
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Rubble_Wall_D.BP_Ancients_Rubble_Wall_D_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Rubble_Wall_D_A.BP_Ancients_Rubble_Wall_D_A_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Rubble_Wall_E.BP_Ancients_Rubble_Wall_E_C",
+			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Rubble_Wall_E_Flip.BP_Ancients_Rubble_Wall_E_Flip_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Rubble_Wall_F.BP_Ancients_Rubble_Wall_F_C",
+			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Rubble_Wall_F_A.BP_Ancients_Rubble_Wall_F_A_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Rubble_Wall_F_A_Flip.BP_Ancients_Rubble_Wall_F_A_Flip_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Rubble_Wall_F_Flip.BP_Ancients_Rubble_Wall_F_Flip_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Rubble_Wall_G.BP_Ancients_Rubble_Wall_G_C",
@@ -24406,6 +24466,7 @@
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Stairs_Wall_A_A.BP_Ancients_Stairs_Wall_A_A_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Stairs_Wall_A_A_Flip.BP_Ancients_Stairs_Wall_A_A_Flip_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Wall_A_A.BP_Ancients_Wall_A_A_C",
+			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Wall_A_A_Win.BP_Ancients_Wall_A_A_Win_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Wall_A_B.BP_Ancients_Wall_A_B_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Wall_A_B_Flip.BP_Ancients_Wall_A_B_Flip_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Wall_A_B_Win.BP_Ancients_Wall_A_B_Win_C",
@@ -24418,6 +24479,8 @@
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Wall_E_B.BP_Ancients_Wall_E_B_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Wall_E_C.BP_Ancients_Wall_E_C_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Wall_E_D.BP_Ancients_Wall_E_D_C",
+			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Wall_E_F.BP_Ancients_Wall_E_F_C",
+			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Wall_E_F_Flip.BP_Ancients_Wall_E_F_Flip_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Wall_E_G.BP_Ancients_Wall_E_G_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Wall_E_H.BP_Ancients_Wall_E_H_C",
 			"/Game/Environments/Asteria/Sets/Ancients/Blueprints/Walls/BP_Ancients_Wall_E_I.BP_Ancients_Wall_E_I_C",
@@ -24720,11 +24783,11 @@
 			"/Game/Environments/Asteria/Sets/Quarry/Quarry_Scaffolding_A/Blueprints/Asteria_Quarry_ScaffoldingStairBalcony_A.Asteria_Quarry_ScaffoldingStairBalcony_A_C",
 			"/Game/Environments/Asteria/Sets/Quarry/Quarry_Scaffolding_A/Blueprints/Asteria_Quarry_ScaffoldingStairF_A.Asteria_Quarry_ScaffoldingStairF_A_C",
 			"/Game/Environments/Asteria/Sets/Quarry/Quarry_Scaffolding_A/Blueprints/Asteria_Quarry_ScaffoldingWall_B.Asteria_Quarry_ScaffoldingWall_B_C",
-			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_SlurpRoom_Doorway_A.Asteria_SlurpRoom_Doorway_A_C",
+			"/Game/Environments/Asteria/Sets/SlurpRoom/Blueprints/Asteria_SlurpRoom_Doorway_A.Asteria_SlurpRoom_Doorway_A_C",
 			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_SlurpRoom_StringLights_A.Asteria_SlurpRoom_StringLights_A_C",
 			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_SlurpRoom_StringLights_B.Asteria_SlurpRoom_StringLights_B_C",
 			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_SlurpRoom_Wall_A.Asteria_SlurpRoom_Wall_A_C",
-			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_SlurpRoom_Window_A.Asteria_SlurpRoom_Window_A_C",
+			"/Game/Environments/Asteria/Sets/SlurpRoom/Blueprints/Asteria_SlurpRoom_Window_A.Asteria_SlurpRoom_Window_A_C",
 			"/Game/Environments/Asteria/Sets/SlurpRoom/Blueprints/Asteria_SlurpRoom_Window_B.Asteria_SlurpRoom_Window_B_C",
 			"/Game/Environments/Asteria/Sets/SlurpRoom/BluePrints/Asteria_StringLights_02.Asteria_StringLights_02_C",
 			"/Game/Environments/Asteria/Sets/TattooShop/BluePrints/Asteria_TattooShop_Wall_A.Asteria_TattooShop_Wall_A_C",
@@ -24740,19 +24803,23 @@
 			"/Game/Environments/Asteria/Sets/Village/Blueprints/Roofs/BP_Village_Roof_Str_A.BP_Village_Roof_Str_A_C",
 			"/Game/Environments/Asteria/Sets/Village/Blueprints/Roofs/BP_Village_Roof_Str_A_B.BP_Village_Roof_Str_A_B_C",
 			"/Game/Environments/Asteria/Sets/Village/Blueprints/Roofs/BP_Village_RoofTop_A.BP_Village_RoofTop_A_C",
+			"/Game/Environments/Asteria/Sets/Village/Blueprints/Roofs/BP_Village_RoofTop_EndCap.BP_Village_RoofTop_EndCap_C",
 			"/Game/Environments/Asteria/Sets/Village/Blueprints/Roofs/BP_Village_RoofTop_EndCap_B.BP_Village_RoofTop_EndCap_B_C",
 			"/Game/Environments/Asteria/Sets/Village/Blueprints/Stairs/BP_Village_Stair_A.BP_Village_Stair_A_C",
+			"/Game/Environments/Asteria/Sets/Village/Blueprints/Stairs/BP_Village_Stair_C.BP_Village_Stair_C_C",
 			"/Game/Environments/Asteria/Sets/Village/Blueprints/Stairs/BP_Village_Stairs_B.BP_Village_Stairs_B_C",
 			"/Game/Environments/Asteria/Sets/Village/Blueprints/Standalones/BP_Village_Tent.BP_Village_Tent_C",
 			"/Game/Environments/Asteria/Sets/Village/Blueprints/Supports/BP_Village_Frame_A.BP_Village_Frame_A_C",
 			"/Game/Environments/Asteria/Sets/Village/Blueprints/Supports/BP_Village_Frame_B.BP_Village_Frame_B_C",
 			"/Game/Environments/Asteria/Sets/Village/Blueprints/Supports/BP_Village_Frame_Half_A.BP_Village_Frame_Half_A_C",
 			"/Game/Environments/Asteria/Sets/Village/Blueprints/Walls/BP_Village_Closed_Wall_W_A.BP_Village_Closed_Wall_W_A_C",
+			"/Game/Environments/Asteria/Sets/Village/Blueprints/Walls/BP_Village_Door_C.BP_Village_Door_C_C",
 			"/Game/Environments/Asteria/Sets/Village/Blueprints/Walls/BP_Village_Doorway_A.BP_Village_Doorway_A_C",
 			"/Game/Environments/Asteria/Sets/Village/Blueprints/Walls/BP_Village_Doorway_B.BP_Village_Doorway_B_C",
 			"/Game/Environments/Asteria/Sets/Village/Blueprints/Walls/BP_Village_Roof_Awning_Str.BP_Village_Roof_Awning_Str_C",
 			"/Game/Environments/Asteria/Sets/Village/Blueprints/Walls/BP_Village_Wall_A.BP_Village_Wall_A_C",
 			"/Game/Environments/Asteria/Sets/Village/Blueprints/Walls/BP_Village_Wall_B.BP_Village_Wall_B_C",
+			"/Game/Environments/Asteria/Sets/Village/Blueprints/Walls/BP_Village_Wall_B_A.BP_Village_Wall_B_A_C",
 			"/Game/Environments/Asteria/Sets/Village/Blueprints/Walls/BP_Village_Wall_B_C.BP_Village_Wall_B_C_C",
 			"/Game/Environments/Asteria/Sets/Village/Blueprints/Walls/BP_Village_Wall_B_D.BP_Village_Wall_B_D_C",
 			"/Game/Environments/Asteria/Sets/Village/Blueprints/Walls/BP_Village_Wall_D_A.BP_Village_Wall_D_A_C",
@@ -25486,6 +25553,6 @@
 		"/Script/RigVM.RigVMBlueprintGeneratedClass",
 		"/Script/RigVM.RigVMMemoryStorageGeneratorClass",
 		"/Script/UMG.WidgetBlueprintGeneratedClass",
-		"/Script/VerseAssets.ParameterCollectionGeneratedClass"
+		"/Script/VerseAssets.PropertyInterfaceGeneratedClass"
 	]
 }
