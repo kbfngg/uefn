@@ -1,0 +1,6 @@
+[/Script/Niagara.NiagaraSettings]
+DefaultEffectType=/Game/Valkyrie/Niagara/EffectTypes/UEFN_DefaultEffectType.UEFN_DefaultEffectType
+bAllowCreateActorFromSystemWithNoEffectType=false
+
+[/Script/NiagaraEditor.NiagaraEditorSettings]
+bForceSilentLoadingOfCachedAssets=true

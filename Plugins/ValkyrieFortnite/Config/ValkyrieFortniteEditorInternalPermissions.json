@@ -5,7 +5,7 @@
 	"ValkyrieProjectSettings": {
 		"bMultiProjectAllowed": true,
 		"bModuleIdNamedPlugins": true,
-		"bVersePathContentBrowserEnabled": true,
+		"bShowingContentVersePath": true,
 		"bWorkspaceAllowed": true,
 		"bProjectRenameAllowed": true,
 		"AllowedVerseScopes": {
@@ -781,6 +781,7 @@
 		"AllowedAssetTypes": {
 			"/Script/AmbientAudio.AmbientAudioComponent": 		{ "Rules": ["View"] },
 			"/Script/AmbientAudio.AmbientAudioDataAsset": 		{ "Rules": ["View","Create"] },
+			"/Script/AudioModulation.SoundModulationPatch":		{ "Rules": [ "View", "Create" ] },
 			"/Script/AnimNext.AnimNextSchedule":				{ "Rules": ["View","Create"] },
 			"/Script/AnimNext.AnimNextGraph":					{ "Rules": ["View","Create"] },
 			"/Script/AnimNext.AnimNextParameterBlock":			{ "Rules": ["View","Create"] },
@@ -793,6 +794,8 @@
 			"/Script/Engine.AnimBlueprintGeneratedClass": 		{ "Rules": ["View","Create"] },
 			"/Script/Engine.AnimComposite":						{ "Rules": ["View","Create"] },
 			"/Script/Engine.BlendSpace":						{ "Rules": ["View","Create"] },
+			"/Script/Engine.BlueprintGeneratedClass":			{ "Rules": ["View","Create","ModuleAPI"] },
+			"/Script/Entity.EntityPrefab":						{ "Rules": ["View","Create","ModuleAPI"] },
 			"/Script/Engine.EulerAnalysisProperties":			{ "Rules": ["View","Create"] },
 			"/Script/Engine.LinearAnalysisProperties":			{ "Rules": ["View","Create"] },
 			"/Script/Engine.PoseAsset":							{ "Rules": ["View","Create"] },
@@ -805,8 +808,8 @@
 			"/Script/GameplayCameras.CameraRigAsset":			{ "Rules": ["View","Create"] },
 			"/Script/GameplayCameras.CameraVariableAsset":		{ "Rules": ["View","Create"], "Subclasses": "All"},
 			"/Script/NaniteDisplacedMesh.NaniteDisplacedMesh":	{ "Rules": [ "View", "Create" ] },
-			"/Script/VerseAssets.ParameterCollectionGeneratedClass":	{ "Rules": ["View","Create"] },
-			"/Script/VerseAssetsEditor.ParameterCollectionBlueprint":	{ "Rules": ["View","Create"] }
+			"/Script/VerseAssets.PropertyInterfaceGeneratedClass":			{ "Rules": ["View","Create"] },
+			"/Script/VerseAssetsEditor.PropertyInterfaceBlueprint":	{ "Rules": ["View","Create"] }
 		},
 		"AllowedClasses": {
 			"/Game/Valkyrie/UMG/UEFN_InputModeWidgetSwitcher.UEFN_InputModeWidgetSwitcher_C":	{ "Visible": true },
@@ -1036,25 +1039,21 @@
 			"/Script/GameplayCameras.PanningFramingCameraNode":			{  },
 			"/Script/UnrealEd.EdGraphNode_Comment":						{ "Visible": true },
 			"/Script/ValkyrieCommon.ValkyrieContentWorkerDebugManager": { "Visible": true },
-			"/Script/VerseAssets.ParameterCollection":					{ "Visible": true },
-			"/Script/VerseAssetsEditor.ParameterCollectionBlueprint":	{ "Visible": true },
+			"/Script/VerseAssets.PropertyInterface":					{ "Visible": true },
+			"/Script/VerseAssetsEditor.PropertyInterfaceBlueprint":		{ "Visible": true },
 			"/Script/Engine.InheritableComponentHandler":				{  },
 			"/Script/MovieScene.MovieSceneBindingOverrides":			{  },
 			"/FNE_UI/UILibrary/Buttons/UEFN_Button_Stylable.UEFN_Button_Stylable_C": { "Visible": true },
 			"/FNE_UI/Systems/Buttons/WBP_FNE_StylableButton_Base.WBP_FNE_StylableButton_Base_C": { }
 		},
 		"AllowedMenus": {
-			"LevelEditor.MainMenu.Tools": {
-				"AllowList": {
-					"+": ["TestAutomation"]
-				}
-			},
-			"AssetEditor.ParameterCollectionEditor.MainMenu": {
+			"AssetEditor.PropertyInterfaceEditor.MainMenu": {
 				"AllowList": [ "File", "Edit", "Asset", "Window", "Help" ]
 			},
-			"AssetEditor.ParameterCollectionEditor.MainMenu.File": {
-				"AllowList": [ "SaveAsset", "SaveAll"]
-			},			"SkeletonTree.BlendProfilesMenu": {
+			"AssetEditor.PropertyInterfaceEditor.MainMenu.File": {
+				"AllowList": [ "SaveAsset" ]
+			},
+			"SkeletonTree.BlendProfilesMenu": {
 				"AllowList": [ "CreateTimeBlendProfile", "CreateWeightBlendProfile", "CreateBlendMask" ]
 			},
 			"SkeletonTree.FilterMenu": {
@@ -1093,6 +1092,11 @@
 					"+": [ "ValkyrieGeneratePersistentLinkToDisplacedMeshForCurrentLevel" ]
 				}
 			},
+			"LevelEditor.MainMenu.Tools": {
+				"AllowList": {
+					"+": ["TestAutomation"]
+				}
+			},
 			"SpatialProfiler.SettingsToolBar.SettingsMenu": {
 				"AllowList": {
 					"=": []
@@ -1103,16 +1107,16 @@
 				}
 		},
 		"AllowedTabs": {
-			"Global": {
-				"AllowList": {
-					"+": [ "SessionFrontend" ]
-				}
-			},
-			"ParameterCollectionEditor": {
+			"PropertyInterfaceEditor": {
 				"AllowList": [
 					"VariableEdition",
 					"DefaultValues"
 				]
+			},
+			"Global": {
+				"AllowList": {
+					"+": [ "SessionFrontend" ]
+				}
 			}
 		},
 		"AllowedPlacementToolEntries": {
@@ -1141,6 +1145,17 @@
 					"DefaultAudioBank",
 					"DefaultAudioBankPriority",
 					"AmbientName"
+				]
+			},
+			{
+				"Type": "/Script/AudioModulation.SoundModulationPatch",
+				"AllowList": [
+					"Bus",
+					"OutputParameter",
+					"Inputs",
+					"bSampleAndHold",
+					"PatchSettings",
+					"bBypass"
 				]
 			},
 			{
